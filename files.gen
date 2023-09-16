@@ -62,6 +62,8 @@ internal/validators/RFC3339Validator.go
 main.go
 terraform-registry-manifest.json
 tools/tools.go
+internal/sdk/pkg/models/operations/assignalias.go
+internal/sdk/pkg/models/operations/deletealias.go
 internal/sdk/pkg/models/operations/getalias.go
 internal/sdk/pkg/models/operations/listdeploymentaliases.go
 internal/sdk/pkg/models/operations/artifactexists.go
