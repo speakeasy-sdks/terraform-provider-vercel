@@ -275,7 +275,7 @@ func (e *UpdateProjectRequestBodySsoProtectionDeploymentType) UnmarshalJSON(data
 // UpdateProjectRequestBodySsoProtection - Ensures visitors to your Preview Deployments are logged into Vercel and have a minimum of Viewer access on your team
 type UpdateProjectRequestBodySsoProtection struct {
 	// Specify if the Vercel Authentication (SSO Protection) will apply to every Deployment Target or just Preview
-	DeploymentType UpdateProjectRequestBodySsoProtectionDeploymentType `json:"deploymentType"`
+	DeploymentType *UpdateProjectRequestBodySsoProtectionDeploymentType `json:"deploymentType,omitempty"`
 }
 
 type UpdateProjectRequestBodyTrustedIpsAddresses struct {
