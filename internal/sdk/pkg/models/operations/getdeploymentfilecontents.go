@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type GetDeploymentFileContentsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetDeploymentFileContentsRequest struct {
 	// The unique file identifier
 	FileID string `pathParam:"style=simple,explode=false,name=fileId"`

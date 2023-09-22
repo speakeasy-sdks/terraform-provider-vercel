@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type CreateEdgeConfigSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CreateEdgeConfigRequest struct {
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`

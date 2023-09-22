@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type GetCertByIDSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetCertByIDRequest struct {
 	// The cert id
 	ID string `pathParam:"style=simple,explode=false,name=id"`

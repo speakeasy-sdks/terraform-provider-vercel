@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RerequestCheckSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RerequestCheckRequest struct {
 	// The check to rerun
 	CheckID string `pathParam:"style=simple,explode=false,name=checkId"`

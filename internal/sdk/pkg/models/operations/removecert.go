@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RemoveCertSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RemoveCertRequest struct {
 	// The cert id to remove
 	ID string `pathParam:"style=simple,explode=false,name=id"`

@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type UpdateProjectDataCacheSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UpdateProjectDataCacheRequestBody struct {
 	// Enable or disable data cache for the project - default: false
 	Disabled *bool `json:"disabled,omitempty"`

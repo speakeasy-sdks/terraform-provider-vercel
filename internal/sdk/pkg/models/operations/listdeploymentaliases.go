@@ -7,10 +7,6 @@ import (
 	"time"
 )
 
-type ListDeploymentAliasesSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type ListDeploymentAliasesRequest struct {
 	// The ID of the deployment the aliases should be listed for
 	ID string `pathParam:"style=simple,explode=false,name=id"`

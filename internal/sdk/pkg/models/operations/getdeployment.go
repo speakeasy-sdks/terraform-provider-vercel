@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GetDeploymentSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetDeploymentRequest struct {
 	// The unique identifier or hostname of the deployment.
 	IDOrURL string `pathParam:"style=simple,explode=false,name=idOrUrl"`

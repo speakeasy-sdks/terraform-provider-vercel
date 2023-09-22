@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type EditProjectEnvSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type EditProjectEnvRequestBodyTarget string
 
 const (

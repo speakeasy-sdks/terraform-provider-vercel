@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type DeleteTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // DeleteTeamRequestBodyReasons - An object describing the reason why the team is being deleted.
 type DeleteTeamRequestBodyReasons struct {
 	// Description of the reason why the team is being deleted.

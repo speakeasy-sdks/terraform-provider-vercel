@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type UpdateRecordSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UpdateRecordRequestBodySrv struct {
 	Port     *int64  `json:"port"`
 	Priority *int64  `json:"priority"`

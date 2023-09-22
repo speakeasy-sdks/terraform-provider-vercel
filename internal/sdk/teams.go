@@ -26,7 +26,7 @@ func newTeams(sdkConfig sdkConfiguration) *teams {
 
 // CreateTeam - Create a Team
 // Create a new Team under your account. You need to send a POST request with the desired Team slug, and optionally the Team name.
-func (s *teams) CreateTeam(ctx context.Context, request operations.CreateTeamRequestBody, security operations.CreateTeamSecurity) (*operations.CreateTeamResponse, error) {
+func (s *teams) CreateTeam(ctx context.Context, request operations.CreateTeamRequestBody) (*operations.CreateTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/teams"
 
@@ -47,7 +47,7 @@ func (s *teams) CreateTeam(ctx context.Context, request operations.CreateTeamReq
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -95,7 +95,7 @@ func (s *teams) CreateTeam(ctx context.Context, request operations.CreateTeamReq
 
 // DeleteTeam - Delete a Team
 // Delete a team under your account. You need to send a `DELETE` request with the desired team `id`. An optional array of reasons for deletion may also be sent.
-func (s *teams) DeleteTeam(ctx context.Context, request operations.DeleteTeamRequest, security operations.DeleteTeamSecurity) (*operations.DeleteTeamResponse, error) {
+func (s *teams) DeleteTeam(ctx context.Context, request operations.DeleteTeamRequest) (*operations.DeleteTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}", request, nil)
 	if err != nil {
@@ -119,7 +119,7 @@ func (s *teams) DeleteTeam(ctx context.Context, request operations.DeleteTeamReq
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -171,7 +171,7 @@ func (s *teams) DeleteTeam(ctx context.Context, request operations.DeleteTeamReq
 
 // DeleteTeamInviteCode - Delete a Team invite code
 // Delete an active Team invite code.
-func (s *teams) DeleteTeamInviteCode(ctx context.Context, request operations.DeleteTeamInviteCodeRequest, security operations.DeleteTeamInviteCodeSecurity) (*operations.DeleteTeamInviteCodeResponse, error) {
+func (s *teams) DeleteTeamInviteCode(ctx context.Context, request operations.DeleteTeamInviteCodeRequest) (*operations.DeleteTeamInviteCodeResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/invites/{inviteId}", request, nil)
 	if err != nil {
@@ -185,7 +185,7 @@ func (s *teams) DeleteTeamInviteCode(ctx context.Context, request operations.Del
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -234,7 +234,7 @@ func (s *teams) DeleteTeamInviteCode(ctx context.Context, request operations.Del
 
 // GetTeam - Get a Team
 // Get information for the Team specified by the `teamId` parameter.
-func (s *teams) GetTeam(ctx context.Context, request operations.GetTeamRequest, security operations.GetTeamSecurity) (*operations.GetTeamResponse, error) {
+func (s *teams) GetTeam(ctx context.Context, request operations.GetTeamRequest) (*operations.GetTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/teams/{teamId}", request, nil)
 	if err != nil {
@@ -252,7 +252,7 @@ func (s *teams) GetTeam(ctx context.Context, request operations.GetTeamRequest, 
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -301,7 +301,7 @@ func (s *teams) GetTeam(ctx context.Context, request operations.GetTeamRequest, 
 
 // GetTeamAccessRequest - Get access request status
 // Check the status of a join request. It'll respond with a 404 if the request has been declined. If no `userId` path segment was provided, this endpoint will instead return the status of the authenticated user.
-func (s *teams) GetTeamAccessRequest(ctx context.Context, request operations.GetTeamAccessRequestRequest, security operations.GetTeamAccessRequestSecurity) (*operations.GetTeamAccessRequestResponse, error) {
+func (s *teams) GetTeamAccessRequest(ctx context.Context, request operations.GetTeamAccessRequestRequest) (*operations.GetTeamAccessRequestResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/request/{userId}", request, nil)
 	if err != nil {
@@ -315,7 +315,7 @@ func (s *teams) GetTeamAccessRequest(ctx context.Context, request operations.Get
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -364,7 +364,7 @@ func (s *teams) GetTeamAccessRequest(ctx context.Context, request operations.Get
 
 // GetTeamMembers - List team members
 // Get a paginated list of team members for the provided team.
-func (s *teams) GetTeamMembers(ctx context.Context, request operations.GetTeamMembersRequest, security operations.GetTeamMembersSecurity) (*operations.GetTeamMembersResponse, error) {
+func (s *teams) GetTeamMembers(ctx context.Context, request operations.GetTeamMembersRequest) (*operations.GetTeamMembersResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/teams/{teamId}/members", request, nil)
 	if err != nil {
@@ -382,7 +382,7 @@ func (s *teams) GetTeamMembers(ctx context.Context, request operations.GetTeamMe
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -431,7 +431,7 @@ func (s *teams) GetTeamMembers(ctx context.Context, request operations.GetTeamMe
 
 // GetTeams - List all teams
 // Get a paginated list of all the Teams the authenticated User is a member of.
-func (s *teams) GetTeams(ctx context.Context, request operations.GetTeamsRequest, security operations.GetTeamsSecurity) (*operations.GetTeamsResponse, error) {
+func (s *teams) GetTeams(ctx context.Context, request operations.GetTeamsRequest) (*operations.GetTeamsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v2/teams"
 
@@ -446,7 +446,7 @@ func (s *teams) GetTeams(ctx context.Context, request operations.GetTeamsRequest
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -493,7 +493,7 @@ func (s *teams) GetTeams(ctx context.Context, request operations.GetTeamsRequest
 
 // InviteUserToTeam - Invite a user
 // Invite a user to join the team specified in the URL. The authenticated user needs to be an `OWNER` in order to successfully invoke this endpoint. The user can be specified with an email or an ID. If both email and ID are provided, ID will take priority.
-func (s *teams) InviteUserToTeam(ctx context.Context, request operations.InviteUserToTeamRequest, security operations.InviteUserToTeamSecurity) (*operations.InviteUserToTeamResponse, error) {
+func (s *teams) InviteUserToTeam(ctx context.Context, request operations.InviteUserToTeamRequest) (*operations.InviteUserToTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/members", request, nil)
 	if err != nil {
@@ -517,7 +517,7 @@ func (s *teams) InviteUserToTeam(ctx context.Context, request operations.InviteU
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -567,7 +567,7 @@ func (s *teams) InviteUserToTeam(ctx context.Context, request operations.InviteU
 
 // JoinTeam - Join a team
 // Join a team with a provided invite code or team ID.
-func (s *teams) JoinTeam(ctx context.Context, request operations.JoinTeamRequest, security operations.JoinTeamSecurity) (*operations.JoinTeamResponse, error) {
+func (s *teams) JoinTeam(ctx context.Context, request operations.JoinTeamRequest) (*operations.JoinTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/members/teams/join", request, nil)
 	if err != nil {
@@ -591,7 +591,7 @@ func (s *teams) JoinTeam(ctx context.Context, request operations.JoinTeamRequest
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -643,7 +643,7 @@ func (s *teams) JoinTeam(ctx context.Context, request operations.JoinTeamRequest
 
 // PatchTeam - Update a Team
 // Update the information of a Team specified by the `teamId` parameter. The request body should contain the information that will be updated on the Team.
-func (s *teams) PatchTeam(ctx context.Context, request operations.PatchTeamRequest, security operations.PatchTeamSecurity) (*operations.PatchTeamResponse, error) {
+func (s *teams) PatchTeam(ctx context.Context, request operations.PatchTeamRequest) (*operations.PatchTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/teams/{teamId}", request, nil)
 	if err != nil {
@@ -667,7 +667,7 @@ func (s *teams) PatchTeam(ctx context.Context, request operations.PatchTeamReque
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -719,7 +719,7 @@ func (s *teams) PatchTeam(ctx context.Context, request operations.PatchTeamReque
 
 // RemoveTeamMember - Remove a Team Member
 // Remove a Team Member from the Team, or dismiss a user that requested access, or leave a team.
-func (s *teams) RemoveTeamMember(ctx context.Context, request operations.RemoveTeamMemberRequest, security operations.RemoveTeamMemberSecurity) (*operations.RemoveTeamMemberResponse, error) {
+func (s *teams) RemoveTeamMember(ctx context.Context, request operations.RemoveTeamMemberRequest) (*operations.RemoveTeamMemberResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/members/{uid}", request, nil)
 	if err != nil {
@@ -733,7 +733,7 @@ func (s *teams) RemoveTeamMember(ctx context.Context, request operations.RemoveT
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -782,7 +782,7 @@ func (s *teams) RemoveTeamMember(ctx context.Context, request operations.RemoveT
 
 // RequestAccessToTeam - Request access to a team
 // Request access to a team as a member. An owner has to approve the request. Only 10 users can request access to a team at the same time.
-func (s *teams) RequestAccessToTeam(ctx context.Context, request operations.RequestAccessToTeamRequest, security operations.RequestAccessToTeamSecurity) (*operations.RequestAccessToTeamResponse, error) {
+func (s *teams) RequestAccessToTeam(ctx context.Context, request operations.RequestAccessToTeamRequest) (*operations.RequestAccessToTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/request", request, nil)
 	if err != nil {
@@ -806,7 +806,7 @@ func (s *teams) RequestAccessToTeam(ctx context.Context, request operations.Requ
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -856,7 +856,7 @@ func (s *teams) RequestAccessToTeam(ctx context.Context, request operations.Requ
 
 // UpdateTeamMember - Update a Team Member
 // Update the membership of a Team Member on the Team specified by `teamId`, such as changing the _role_ of the member, or confirming a request to join the Team for an unconfirmed member. The authenticated user must be an `OWNER` of the Team.
-func (s *teams) UpdateTeamMember(ctx context.Context, request operations.UpdateTeamMemberRequest, security operations.UpdateTeamMemberSecurity) (*operations.UpdateTeamMemberResponse, error) {
+func (s *teams) UpdateTeamMember(ctx context.Context, request operations.UpdateTeamMemberRequest) (*operations.UpdateTeamMemberResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/members/{uid}", request, nil)
 	if err != nil {
@@ -880,7 +880,7 @@ func (s *teams) UpdateTeamMember(ctx context.Context, request operations.UpdateT
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

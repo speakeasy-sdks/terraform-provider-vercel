@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type GetAllChecksSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetAllChecksRequest struct {
 	// The deployment to get all checks for
 	DeploymentID string `pathParam:"style=simple,explode=false,name=deploymentId"`

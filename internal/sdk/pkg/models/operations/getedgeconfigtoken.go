@@ -7,10 +7,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetEdgeConfigTokenSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetEdgeConfigTokenRequest struct {
 	EdgeConfigID string `pathParam:"style=simple,explode=false,name=edgeConfigId"`
 	// The Team identifier or slug to perform the request on behalf of.

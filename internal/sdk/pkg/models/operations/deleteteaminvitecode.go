@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type DeleteTeamInviteCodeSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type DeleteTeamInviteCodeRequest struct {
 	// The Team invite code ID.
 	InviteID string `pathParam:"style=simple,explode=false,name=inviteId"`

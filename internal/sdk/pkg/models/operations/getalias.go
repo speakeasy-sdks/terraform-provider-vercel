@@ -9,10 +9,6 @@ import (
 	"time"
 )
 
-type GetAliasSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetAliasRequest struct {
 	// Get the alias only if it was created after the provided timestamp
 	From *int64 `queryParam:"style=form,explode=true,name=from"`

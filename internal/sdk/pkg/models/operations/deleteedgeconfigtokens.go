@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type DeleteEdgeConfigTokensSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type DeleteEdgeConfigTokensRequestBody struct {
 	Tokens []string `json:"tokens"`
 }

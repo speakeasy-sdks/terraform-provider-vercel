@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RequestDeleteSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // RequestDeleteRequestBodyReasons - An object describing the reason why the User account is being deleted.
 type RequestDeleteRequestBodyReasons struct {
 	// Description of the reason why the User account is being deleted.

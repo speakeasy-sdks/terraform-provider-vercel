@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type CreateTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CreateTeamRequestBody struct {
 	// The desired name for the Team. It will be generated from the provided slug if nothing is provided
 	Name *string `json:"name,omitempty"`

@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type CheckDomainStatusSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CheckDomainStatusRequest struct {
 	// The name of the domain for which we would like to check the status.
 	Name string `queryParam:"style=form,explode=true,name=name"`

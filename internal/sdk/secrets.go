@@ -25,7 +25,7 @@ func newSecrets(sdkConfig sdkConfiguration) *secrets {
 
 // DeleteSecret - Delete a secret
 // This deletes the user's secret defined in the URL.
-func (s *secrets) DeleteSecret(ctx context.Context, request operations.DeleteSecretRequest, security operations.DeleteSecretSecurity) (*operations.DeleteSecretResponse, error) {
+func (s *secrets) DeleteSecret(ctx context.Context, request operations.DeleteSecretRequest) (*operations.DeleteSecretResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/secrets/{idOrName}", request, nil)
 	if err != nil {
@@ -43,7 +43,7 @@ func (s *secrets) DeleteSecret(ctx context.Context, request operations.DeleteSec
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -90,7 +90,7 @@ func (s *secrets) DeleteSecret(ctx context.Context, request operations.DeleteSec
 
 // GetSecret - Get a single secret
 // Retrieves the information for a specific secret by passing either the secret id or name in the URL.
-func (s *secrets) GetSecret(ctx context.Context, request operations.GetSecretRequest, security operations.GetSecretSecurity) (*operations.GetSecretResponse, error) {
+func (s *secrets) GetSecret(ctx context.Context, request operations.GetSecretRequest) (*operations.GetSecretResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v3/secrets/{idOrName}", request, nil)
 	if err != nil {
@@ -108,7 +108,7 @@ func (s *secrets) GetSecret(ctx context.Context, request operations.GetSecretReq
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -157,7 +157,7 @@ func (s *secrets) GetSecret(ctx context.Context, request operations.GetSecretReq
 
 // GetSecrets - List secrets
 // Retrieves the active Vercel secrets for the authenticated user. By default it returns 20 secrets. The rest can be retrieved using the pagination options. The body will contain an entry for each secret.
-func (s *secrets) GetSecrets(ctx context.Context, request operations.GetSecretsRequest, security operations.GetSecretsSecurity) (*operations.GetSecretsResponse, error) {
+func (s *secrets) GetSecrets(ctx context.Context, request operations.GetSecretsRequest) (*operations.GetSecretsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v3/secrets"
 
@@ -172,7 +172,7 @@ func (s *secrets) GetSecrets(ctx context.Context, request operations.GetSecretsR
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
