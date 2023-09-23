@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type DeleteProjectSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type DeleteProjectRequest struct {
 	// The unique project identifier or the project name
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`

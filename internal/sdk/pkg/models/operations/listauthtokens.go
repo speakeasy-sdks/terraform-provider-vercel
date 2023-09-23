@@ -7,10 +7,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type ListAuthTokensSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type ListAuthTokens200ApplicationJSON struct {
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 	Pagination shared.Pagination `json:"pagination"`

@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type ArtifactExistsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type ArtifactExistsRequest struct {
 	// The artifact hash
 	Hash string `pathParam:"style=simple,explode=false,name=hash"`

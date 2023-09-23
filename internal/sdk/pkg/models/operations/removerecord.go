@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RemoveRecordSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RemoveRecordRequest struct {
 	Domain   string `pathParam:"style=simple,explode=false,name=domain"`
 	RecordID string `pathParam:"style=simple,explode=false,name=recordId"`

@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type InviteUserToTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // InviteUserToTeamRequestBodyProjectsRole - Sets the project roles for the invited user
 type InviteUserToTeamRequestBodyProjectsRole string
 

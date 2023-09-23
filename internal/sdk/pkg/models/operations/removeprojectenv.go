@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type RemoveProjectEnvSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RemoveProjectEnvRequest struct {
 	// The unique environment variable identifier
 	ID string `pathParam:"style=simple,explode=false,name=id"`

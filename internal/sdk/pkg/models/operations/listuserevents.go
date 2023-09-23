@@ -7,10 +7,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type ListUserEventsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type ListUserEventsRequest struct {
 	// Maximum number of items which may be returned.
 	Limit *int64 `queryParam:"style=form,explode=true,name=limit"`

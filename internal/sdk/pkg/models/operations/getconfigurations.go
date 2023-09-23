@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GetConfigurationsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // GetConfigurationsView
 type GetConfigurationsView string
 

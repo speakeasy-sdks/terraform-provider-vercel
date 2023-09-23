@@ -25,7 +25,7 @@ func newCerts(sdkConfig sdkConfiguration) *certs {
 
 // GetCertByID - Get cert by id
 // Get cert by id
-func (s *certs) GetCertByID(ctx context.Context, request operations.GetCertByIDRequest, security operations.GetCertByIDSecurity) (*operations.GetCertByIDResponse, error) {
+func (s *certs) GetCertByID(ctx context.Context, request operations.GetCertByIDRequest) (*operations.GetCertByIDResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v7/certs/{id}", request, nil)
 	if err != nil {
@@ -43,7 +43,7 @@ func (s *certs) GetCertByID(ctx context.Context, request operations.GetCertByIDR
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -92,7 +92,7 @@ func (s *certs) GetCertByID(ctx context.Context, request operations.GetCertByIDR
 
 // IssueCert - Issue a new cert
 // Issue a new cert
-func (s *certs) IssueCert(ctx context.Context, request operations.IssueCertRequest, security operations.IssueCertSecurity) (*operations.IssueCertResponse, error) {
+func (s *certs) IssueCert(ctx context.Context, request operations.IssueCertRequest) (*operations.IssueCertResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v7/certs"
 
@@ -117,7 +117,7 @@ func (s *certs) IssueCert(ctx context.Context, request operations.IssueCertReque
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -173,7 +173,7 @@ func (s *certs) IssueCert(ctx context.Context, request operations.IssueCertReque
 
 // RemoveCert - Remove cert
 // Remove cert
-func (s *certs) RemoveCert(ctx context.Context, request operations.RemoveCertRequest, security operations.RemoveCertSecurity) (*operations.RemoveCertResponse, error) {
+func (s *certs) RemoveCert(ctx context.Context, request operations.RemoveCertRequest) (*operations.RemoveCertResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v7/certs/{id}", request, nil)
 	if err != nil {
@@ -191,7 +191,7 @@ func (s *certs) RemoveCert(ctx context.Context, request operations.RemoveCertReq
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -240,7 +240,7 @@ func (s *certs) RemoveCert(ctx context.Context, request operations.RemoveCertReq
 
 // UploadCert - Upload a cert
 // Upload a cert
-func (s *certs) UploadCert(ctx context.Context, request operations.UploadCertRequest, security operations.UploadCertSecurity) (*operations.UploadCertResponse, error) {
+func (s *certs) UploadCert(ctx context.Context, request operations.UploadCertRequest) (*operations.UploadCertResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v7/certs"
 
@@ -265,7 +265,7 @@ func (s *certs) UploadCert(ctx context.Context, request operations.UploadCertReq
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

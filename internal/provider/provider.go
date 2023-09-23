@@ -5,6 +5,7 @@ package provider
 import (
 	"context"
 	"vercel/internal/sdk"
+	"vercel/internal/sdk/pkg/models/shared"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
@@ -24,7 +25,8 @@ type VercelProvider struct {
 
 // VercelProviderModel describes the provider data model.
 type VercelProviderModel struct {
-	ServerURL types.String `tfsdk:"server_url"`
+	ServerURL   types.String `tfsdk:"server_url"`
+	BearerToken types.String `tfsdk:"bearer_token"`
 }
 
 func (p *VercelProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -40,6 +42,10 @@ func (p *VercelProvider) Schema(ctx context.Context, req provider.SchemaRequest,
 				MarkdownDescription: "Server URL (defaults to https://api.vercel.com)",
 				Optional:            true,
 				Required:            false,
+			},
+			"bearer_token": schema.StringAttribute{
+				Optional:  true,
+				Sensitive: true,
 			},
 		},
 	}
@@ -60,8 +66,14 @@ func (p *VercelProvider) Configure(ctx context.Context, req provider.ConfigureRe
 		ServerURL = "https://api.vercel.com"
 	}
 
+	bearerToken := data.BearerToken.ValueString()
+	security := shared.Security{
+		BearerToken: bearerToken,
+	}
+
 	opts := []sdk.SDKOption{
 		sdk.WithServerURL(ServerURL),
+		sdk.WithSecurity(security),
 	}
 	client := sdk.New(opts...)
 

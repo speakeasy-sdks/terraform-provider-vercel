@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type IssueCertSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type IssueCertRequestBody struct {
 	// The common names the cert should be issued for
 	Cns []string `json:"cns,omitempty"`

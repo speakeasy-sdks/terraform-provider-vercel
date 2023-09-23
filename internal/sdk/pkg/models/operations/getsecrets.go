@@ -8,10 +8,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetSecretsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetSecretsRequest struct {
 	// Filter out secrets based on comma separated secret ids.
 	ID *string `queryParam:"style=form,explode=true,name=id"`

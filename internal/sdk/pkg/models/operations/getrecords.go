@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetRecordsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetRecordsRequest struct {
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
 	// Maximum number of records to list from a request.

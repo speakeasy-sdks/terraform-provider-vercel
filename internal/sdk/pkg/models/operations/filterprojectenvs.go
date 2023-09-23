@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type FilterProjectEnvsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // FilterProjectEnvsDecrypt - If true, the environment variable value will be decrypted
 //
 // @deprecated null: This will be removed in a future release, please migrate away from it as soon as possible.

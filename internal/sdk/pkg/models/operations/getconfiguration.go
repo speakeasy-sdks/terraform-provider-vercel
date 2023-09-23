@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GetConfigurationSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetConfigurationRequest struct {
 	// ID of the configuration to check
 	ID string `pathParam:"style=simple,explode=false,name=id"`
