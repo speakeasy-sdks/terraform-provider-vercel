@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type UpdateTeamMemberSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UpdateTeamMemberRequestBodyJoinedFrom struct {
 	SsoUserID *string `json:"ssoUserId,omitempty"`
 }

@@ -7,10 +7,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetAuthTokenSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetAuthTokenRequest struct {
 	// The identifier of the token to retrieve. The special value \"current\" may be supplied, which returns the metadata for the token that the current HTTP request is authenticated with.
 	TokenID string `pathParam:"style=simple,explode=false,name=tokenId"`

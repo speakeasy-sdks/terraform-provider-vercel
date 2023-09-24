@@ -10,10 +10,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetAuthUserSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetAuthUser200ApplicationJSONUserType string
 
 const (

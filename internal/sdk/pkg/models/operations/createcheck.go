@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type CreateCheckSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CreateCheckRequestBody struct {
 	// Whether the check should block a deployment from succeeding
 	Blocking bool `json:"blocking"`

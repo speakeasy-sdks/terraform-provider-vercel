@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type JoinTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type JoinTeamRequestBody struct {
 	// The invite code to join the team.
 	InviteCode *string `json:"inviteCode,omitempty"`

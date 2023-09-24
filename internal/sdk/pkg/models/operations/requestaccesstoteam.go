@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type RequestAccessToTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RequestAccessToTeamRequestBodyJoinedFromGitUserIDType string
 
 const (

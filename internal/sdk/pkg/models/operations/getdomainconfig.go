@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type GetDomainConfigSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetDomainConfigRequest struct {
 	// The name of the domain.
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`

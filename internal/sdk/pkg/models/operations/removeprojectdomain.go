@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RemoveProjectDomainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RemoveProjectDomainRequest struct {
 	// The project domain name
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`

@@ -9,10 +9,6 @@ import (
 	"net/http"
 )
 
-type UploadFileSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UploadFileRequest struct {
 	// The file size in bytes
 	ContentLength *int64 `header:"style=simple,explode=false,name=Content-Length"`

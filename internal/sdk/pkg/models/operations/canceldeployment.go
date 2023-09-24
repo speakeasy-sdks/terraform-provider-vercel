@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type CancelDeploymentSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CancelDeploymentRequest struct {
 	// The unique identifier of the deployment.
 	ID string `pathParam:"style=simple,explode=false,name=id"`

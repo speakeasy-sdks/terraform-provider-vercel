@@ -10,10 +10,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetTeamsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetTeamsRequest struct {
 	// Maximum number of Teams which may be returned.
 	Limit *int64 `queryParam:"style=form,explode=true,name=limit"`

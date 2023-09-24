@@ -26,7 +26,7 @@ func newEdgeConfig(sdkConfig sdkConfiguration) *edgeConfig {
 
 // CreateEdgeConfig - Create an Edge Config
 // Creates an Edge Config.
-func (s *edgeConfig) CreateEdgeConfig(ctx context.Context, request operations.CreateEdgeConfigRequest, security operations.CreateEdgeConfigSecurity) (*operations.CreateEdgeConfigResponse, error) {
+func (s *edgeConfig) CreateEdgeConfig(ctx context.Context, request operations.CreateEdgeConfigRequest) (*operations.CreateEdgeConfigResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/edge-config"
 
@@ -41,7 +41,7 @@ func (s *edgeConfig) CreateEdgeConfig(ctx context.Context, request operations.Cr
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -90,7 +90,7 @@ func (s *edgeConfig) CreateEdgeConfig(ctx context.Context, request operations.Cr
 
 // CreateEdgeConfigToken - Create an Edge Config token
 // Adds a token to an existing Edge Config.
-func (s *edgeConfig) CreateEdgeConfigToken(ctx context.Context, request operations.CreateEdgeConfigTokenRequest, security operations.CreateEdgeConfigTokenSecurity) (*operations.CreateEdgeConfigTokenResponse, error) {
+func (s *edgeConfig) CreateEdgeConfigToken(ctx context.Context, request operations.CreateEdgeConfigTokenRequest) (*operations.CreateEdgeConfigTokenResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/edge-config/{edgeConfigId}/token", request, nil)
 	if err != nil {
@@ -118,7 +118,7 @@ func (s *edgeConfig) CreateEdgeConfigToken(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -170,7 +170,7 @@ func (s *edgeConfig) CreateEdgeConfigToken(ctx context.Context, request operatio
 
 // DeleteEdgeConfig - Delete an Edge Config
 // Delete an Edge Config by id.
-func (s *edgeConfig) DeleteEdgeConfig(ctx context.Context, request operations.DeleteEdgeConfigRequest, security operations.DeleteEdgeConfigSecurity) (*operations.DeleteEdgeConfigResponse, error) {
+func (s *edgeConfig) DeleteEdgeConfig(ctx context.Context, request operations.DeleteEdgeConfigRequest) (*operations.DeleteEdgeConfigResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/edge-config/{edgeConfigId}", request, nil)
 	if err != nil {
@@ -188,7 +188,7 @@ func (s *edgeConfig) DeleteEdgeConfig(ctx context.Context, request operations.De
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -229,7 +229,7 @@ func (s *edgeConfig) DeleteEdgeConfig(ctx context.Context, request operations.De
 
 // DeleteEdgeConfigTokens - Delete one or more Edge Config tokens
 // Deletes one or more tokens of an existing Edge Config.
-func (s *edgeConfig) DeleteEdgeConfigTokens(ctx context.Context, request operations.DeleteEdgeConfigTokensRequest, security operations.DeleteEdgeConfigTokensSecurity) (*operations.DeleteEdgeConfigTokensResponse, error) {
+func (s *edgeConfig) DeleteEdgeConfigTokens(ctx context.Context, request operations.DeleteEdgeConfigTokensRequest) (*operations.DeleteEdgeConfigTokensResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/edge-config/{edgeConfigId}/tokens", request, nil)
 	if err != nil {
@@ -257,7 +257,7 @@ func (s *edgeConfig) DeleteEdgeConfigTokens(ctx context.Context, request operati
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -301,7 +301,7 @@ func (s *edgeConfig) DeleteEdgeConfigTokens(ctx context.Context, request operati
 
 // GetEdgeConfig - Get an Edge Config
 // Returns an Edge Config.
-func (s *edgeConfig) GetEdgeConfig(ctx context.Context, request operations.GetEdgeConfigRequest, security operations.GetEdgeConfigSecurity) (*operations.GetEdgeConfigResponse, error) {
+func (s *edgeConfig) GetEdgeConfig(ctx context.Context, request operations.GetEdgeConfigRequest) (*operations.GetEdgeConfigResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/edge-config/{edgeConfigId}", request, nil)
 	if err != nil {
@@ -319,7 +319,7 @@ func (s *edgeConfig) GetEdgeConfig(ctx context.Context, request operations.GetEd
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -368,7 +368,7 @@ func (s *edgeConfig) GetEdgeConfig(ctx context.Context, request operations.GetEd
 
 // GetEdgeConfigItem - Get an Edge Config item
 // Returns a specific Edge Config Item.
-func (s *edgeConfig) GetEdgeConfigItem(ctx context.Context, request operations.GetEdgeConfigItemRequest, security operations.GetEdgeConfigItemSecurity) (*operations.GetEdgeConfigItemResponse, error) {
+func (s *edgeConfig) GetEdgeConfigItem(ctx context.Context, request operations.GetEdgeConfigItemRequest) (*operations.GetEdgeConfigItemResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/edge-config/{edgeConfigId}/item/{edgeConfigItemKey}", request, nil)
 	if err != nil {
@@ -386,7 +386,7 @@ func (s *edgeConfig) GetEdgeConfigItem(ctx context.Context, request operations.G
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -435,7 +435,7 @@ func (s *edgeConfig) GetEdgeConfigItem(ctx context.Context, request operations.G
 
 // GetEdgeConfigItems - Get Edge Config items
 // Returns all items of an Edge Config.
-func (s *edgeConfig) GetEdgeConfigItems(ctx context.Context, request operations.GetEdgeConfigItemsRequest, security operations.GetEdgeConfigItemsSecurity) (*operations.GetEdgeConfigItemsResponse, error) {
+func (s *edgeConfig) GetEdgeConfigItems(ctx context.Context, request operations.GetEdgeConfigItemsRequest) (*operations.GetEdgeConfigItemsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/edge-config/{edgeConfigId}/items", request, nil)
 	if err != nil {
@@ -453,7 +453,7 @@ func (s *edgeConfig) GetEdgeConfigItems(ctx context.Context, request operations.
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -502,7 +502,7 @@ func (s *edgeConfig) GetEdgeConfigItems(ctx context.Context, request operations.
 
 // GetEdgeConfigToken - Get Edge Config token meta data
 // Return meta data about an Edge Config token.
-func (s *edgeConfig) GetEdgeConfigToken(ctx context.Context, request operations.GetEdgeConfigTokenRequest, security operations.GetEdgeConfigTokenSecurity) (*operations.GetEdgeConfigTokenResponse, error) {
+func (s *edgeConfig) GetEdgeConfigToken(ctx context.Context, request operations.GetEdgeConfigTokenRequest) (*operations.GetEdgeConfigTokenResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/edge-config/{edgeConfigId}/token/{token}", request, nil)
 	if err != nil {
@@ -520,7 +520,7 @@ func (s *edgeConfig) GetEdgeConfigToken(ctx context.Context, request operations.
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -569,7 +569,7 @@ func (s *edgeConfig) GetEdgeConfigToken(ctx context.Context, request operations.
 
 // GetEdgeConfigTokens - Get all tokens of an Edge Config
 // Returns all tokens of an Edge Config.
-func (s *edgeConfig) GetEdgeConfigTokens(ctx context.Context, request operations.GetEdgeConfigTokensRequest, security operations.GetEdgeConfigTokensSecurity) (*operations.GetEdgeConfigTokensResponse, error) {
+func (s *edgeConfig) GetEdgeConfigTokens(ctx context.Context, request operations.GetEdgeConfigTokensRequest) (*operations.GetEdgeConfigTokensResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/edge-config/{edgeConfigId}/tokens", request, nil)
 	if err != nil {
@@ -587,7 +587,7 @@ func (s *edgeConfig) GetEdgeConfigTokens(ctx context.Context, request operations
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -636,7 +636,7 @@ func (s *edgeConfig) GetEdgeConfigTokens(ctx context.Context, request operations
 
 // GetEdgeConfigs - Get Edge Configs
 // Returns all Edge Configs.
-func (s *edgeConfig) GetEdgeConfigs(ctx context.Context, request operations.GetEdgeConfigsRequest, security operations.GetEdgeConfigsSecurity) (*operations.GetEdgeConfigsResponse, error) {
+func (s *edgeConfig) GetEdgeConfigs(ctx context.Context, request operations.GetEdgeConfigsRequest) (*operations.GetEdgeConfigsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/edge-config"
 
@@ -651,7 +651,7 @@ func (s *edgeConfig) GetEdgeConfigs(ctx context.Context, request operations.GetE
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -698,7 +698,7 @@ func (s *edgeConfig) GetEdgeConfigs(ctx context.Context, request operations.GetE
 
 // PatchtEdgeConfigItems - Update Edge Config items in batch
 // Update multiple Edge Config Items in batch.
-func (s *edgeConfig) PatchtEdgeConfigItems(ctx context.Context, request operations.PatchtEdgeConfigItemsRequest, security operations.PatchtEdgeConfigItemsSecurity) (*operations.PatchtEdgeConfigItemsResponse, error) {
+func (s *edgeConfig) PatchtEdgeConfigItems(ctx context.Context, request operations.PatchtEdgeConfigItemsRequest) (*operations.PatchtEdgeConfigItemsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/edge-config/{edgeConfigId}/items", request, nil)
 	if err != nil {
@@ -716,7 +716,7 @@ func (s *edgeConfig) PatchtEdgeConfigItems(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -769,7 +769,7 @@ func (s *edgeConfig) PatchtEdgeConfigItems(ctx context.Context, request operatio
 
 // UpdateEdgeConfig - Update an Edge Config
 // Updates an Edge Config.
-func (s *edgeConfig) UpdateEdgeConfig(ctx context.Context, request operations.UpdateEdgeConfigRequest, security operations.UpdateEdgeConfigSecurity) (*operations.UpdateEdgeConfigResponse, error) {
+func (s *edgeConfig) UpdateEdgeConfig(ctx context.Context, request operations.UpdateEdgeConfigRequest) (*operations.UpdateEdgeConfigResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/edge-config/{edgeConfigId}", request, nil)
 	if err != nil {
@@ -797,7 +797,7 @@ func (s *edgeConfig) UpdateEdgeConfig(ctx context.Context, request operations.Up
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

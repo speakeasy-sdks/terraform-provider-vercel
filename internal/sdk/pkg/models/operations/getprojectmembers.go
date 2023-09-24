@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GetProjectMembersSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetProjectMembersRequest struct {
 	// The ID or name of the Project.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`

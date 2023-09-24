@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type CheckDomainPriceSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // CheckDomainPriceType - In which status of the domain the price needs to be checked.
 type CheckDomainPriceType string
 

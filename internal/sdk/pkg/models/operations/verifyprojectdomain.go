@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type VerifyProjectDomainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type VerifyProjectDomainRequest struct {
 	// The domain name you want to verify
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`

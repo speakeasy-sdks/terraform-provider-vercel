@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GetTeamAccessRequestSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetTeamAccessRequestRequest struct {
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 	UserID string `pathParam:"style=simple,explode=false,name=userId"`

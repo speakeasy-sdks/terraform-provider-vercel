@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type UpdateProjectDomainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // UpdateProjectDomainRequestBodyRedirectStatusCode - Status code for domain redirect
 type UpdateProjectDomainRequestBodyRedirectStatusCode int64
 
