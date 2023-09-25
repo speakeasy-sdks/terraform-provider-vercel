@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type BuyDomainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type BuyDomainRequestBody struct {
 	// The price you expect to be charged for the purchase.
 	ExpectedPrice *int64 `json:"expectedPrice,omitempty"`

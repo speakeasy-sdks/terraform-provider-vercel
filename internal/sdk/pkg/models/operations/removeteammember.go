@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RemoveTeamMemberSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RemoveTeamMemberRequest struct {
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 	// The user ID of the member.

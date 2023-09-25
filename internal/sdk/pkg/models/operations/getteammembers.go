@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GetTeamMembersSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // GetTeamMembersRole - Only return members with the specified team role.
 type GetTeamMembersRole string
 

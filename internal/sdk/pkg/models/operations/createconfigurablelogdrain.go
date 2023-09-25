@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type CreateConfigurableLogDrainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // CreateConfigurableLogDrainRequestBodyDeliveryFormat - The delivery log format
 type CreateConfigurableLogDrainRequestBodyDeliveryFormat string
 

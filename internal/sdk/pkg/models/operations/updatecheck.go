@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type UpdateCheckSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // UpdateCheckRequestBodyConclusion - The result of the check being run
 type UpdateCheckRequestBodyConclusion string
 

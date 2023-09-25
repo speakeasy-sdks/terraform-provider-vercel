@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type DeleteAuthTokenSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type DeleteAuthTokenRequest struct {
 	// The identifier of the token to invalidate. The special value \"current\" may be supplied, which invalidates the token that the HTTP request was authenticated with.
 	TokenID string `pathParam:"style=simple,explode=false,name=tokenId"`

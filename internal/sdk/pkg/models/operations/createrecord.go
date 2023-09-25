@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type CreateRecordSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // CreateRecordRequestBody9Type - Must be of type `NS`.
 type CreateRecordRequestBody9Type string
 

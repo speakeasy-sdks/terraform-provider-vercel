@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type UpdateEdgeConfigSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UpdateEdgeConfigRequestBody struct {
 	Slug string `json:"slug"`
 }

@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type ArtifactQuerySecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type ArtifactQueryRequestBody struct {
 	// artifact hashes
 	Hashes []string `json:"hashes"`

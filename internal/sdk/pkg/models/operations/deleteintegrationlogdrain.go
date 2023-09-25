@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type DeleteIntegrationLogDrainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type DeleteIntegrationLogDrainRequest struct {
 	// ID of the log drain to be deleted
 	ID string `pathParam:"style=simple,explode=false,name=id"`

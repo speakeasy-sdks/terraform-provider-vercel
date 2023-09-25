@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GetProjectEnvSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetProjectEnvRequest struct {
 	// The unique ID for the environment variable to get the decrypted value.
 	ID string `pathParam:"style=simple,explode=false,name=id"`

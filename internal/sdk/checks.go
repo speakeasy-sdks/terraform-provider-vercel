@@ -24,7 +24,7 @@ func newChecks(sdkConfig sdkConfiguration) *checks {
 
 // CreateCheck - Creates a new Check
 // Creates a new check. This endpoint must be called with an OAuth2 or it will produce a 400 error.
-func (s *checks) CreateCheck(ctx context.Context, request operations.CreateCheckRequest, security operations.CreateCheckSecurity) (*operations.CreateCheckResponse, error) {
+func (s *checks) CreateCheck(ctx context.Context, request operations.CreateCheckRequest) (*operations.CreateCheckResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/deployments/{deploymentId}/checks", request, nil)
 	if err != nil {
@@ -52,7 +52,7 @@ func (s *checks) CreateCheck(ctx context.Context, request operations.CreateCheck
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -102,7 +102,7 @@ func (s *checks) CreateCheck(ctx context.Context, request operations.CreateCheck
 
 // GetAllChecks - Retrieve a list of all checks
 // List all of the checks created for a deployment.
-func (s *checks) GetAllChecks(ctx context.Context, request operations.GetAllChecksRequest, security operations.GetAllChecksSecurity) (*operations.GetAllChecksResponse, error) {
+func (s *checks) GetAllChecks(ctx context.Context, request operations.GetAllChecksRequest) (*operations.GetAllChecksResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/deployments/{deploymentId}/checks", request, nil)
 	if err != nil {
@@ -120,7 +120,7 @@ func (s *checks) GetAllChecks(ctx context.Context, request operations.GetAllChec
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -169,7 +169,7 @@ func (s *checks) GetAllChecks(ctx context.Context, request operations.GetAllChec
 
 // GetCheck - Get a single check
 // Return a detailed response for a single check.
-func (s *checks) GetCheck(ctx context.Context, request operations.GetCheckRequest, security operations.GetCheckSecurity) (*operations.GetCheckResponse, error) {
+func (s *checks) GetCheck(ctx context.Context, request operations.GetCheckRequest) (*operations.GetCheckResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/deployments/{deploymentId}/checks/{checkId}", request, nil)
 	if err != nil {
@@ -187,7 +187,7 @@ func (s *checks) GetCheck(ctx context.Context, request operations.GetCheckReques
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -236,7 +236,7 @@ func (s *checks) GetCheck(ctx context.Context, request operations.GetCheckReques
 
 // RerequestCheck - Rerequest a check
 // Rerequest a selected check that has failed.
-func (s *checks) RerequestCheck(ctx context.Context, request operations.RerequestCheckRequest, security operations.RerequestCheckSecurity) (*operations.RerequestCheckResponse, error) {
+func (s *checks) RerequestCheck(ctx context.Context, request operations.RerequestCheckRequest) (*operations.RerequestCheckResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/deployments/{deploymentId}/checks/{checkId}/rerequest", request, nil)
 	if err != nil {
@@ -254,7 +254,7 @@ func (s *checks) RerequestCheck(ctx context.Context, request operations.Rereques
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -303,7 +303,7 @@ func (s *checks) RerequestCheck(ctx context.Context, request operations.Rereques
 
 // UpdateCheck - Update a check
 // Update an existing check. This endpoint must be called with an OAuth2 or it will produce a 400 error.
-func (s *checks) UpdateCheck(ctx context.Context, request operations.UpdateCheckRequest, security operations.UpdateCheckSecurity) (*operations.UpdateCheckResponse, error) {
+func (s *checks) UpdateCheck(ctx context.Context, request operations.UpdateCheckRequest) (*operations.UpdateCheckResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/deployments/{deploymentId}/checks/{checkId}", request, nil)
 	if err != nil {
@@ -331,7 +331,7 @@ func (s *checks) UpdateCheck(ctx context.Context, request operations.UpdateCheck
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

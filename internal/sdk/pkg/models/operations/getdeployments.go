@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetDeploymentsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // GetDeploymentsTarget - Filter deployments based on the environment.
 type GetDeploymentsTarget string
 

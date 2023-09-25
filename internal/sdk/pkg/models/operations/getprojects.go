@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetProjectsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // GetProjectsGitForkProtection - Specifies whether PRs from Git forks should require a team member's authorization before it can be deployed
 type GetProjectsGitForkProtection string
 

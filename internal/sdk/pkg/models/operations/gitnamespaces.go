@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GitNamespacesSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // GitNamespacesProvider
 type GitNamespacesProvider string
 

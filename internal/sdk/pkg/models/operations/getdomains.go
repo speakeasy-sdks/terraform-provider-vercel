@@ -9,10 +9,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetDomainsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetDomainsRequest struct {
 	// Maximum number of domains to list from a request.
 	Limit *int64 `queryParam:"style=form,explode=true,name=limit"`

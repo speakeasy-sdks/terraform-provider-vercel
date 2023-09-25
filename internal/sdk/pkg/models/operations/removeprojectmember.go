@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RemoveProjectMemberSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RemoveProjectMemberRequest struct {
 	// The ID or name of the Project.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`

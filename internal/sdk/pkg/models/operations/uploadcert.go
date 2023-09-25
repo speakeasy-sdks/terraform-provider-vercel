@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type UploadCertSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UploadCertRequestBody struct {
 	// The certificate authority
 	Ca string `json:"ca"`

@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type CreateDeploymentSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CreateDeploymentRequestBodyBranchCurrentState string
 
 const (

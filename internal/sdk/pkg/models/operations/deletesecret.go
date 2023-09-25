@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type DeleteSecretSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type DeleteSecretRequest struct {
 	// The name or the unique identifier to which the secret belongs to.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`

@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type GetConfigurableLogDrainsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetConfigurableLogDrainsRequest struct {
 	ProjectID *string `queryParam:"style=form,explode=true,name=projectId"`
 	// The Team identifier or slug to perform the request on behalf of.

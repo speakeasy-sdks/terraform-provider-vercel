@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type CreateOrTransferDomainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // CreateOrTransferDomainRequestBody3 - transfer-in
 type CreateOrTransferDomainRequestBody3 struct {
 	// The authorization code assigned to the domain.

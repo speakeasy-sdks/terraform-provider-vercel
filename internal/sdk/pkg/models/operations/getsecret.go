@@ -9,10 +9,6 @@ import (
 	"time"
 )
 
-type GetSecretSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // GetSecretDecrypt - Whether to try to decrypt the value of the secret. Only works if `decryptable` has been set to `true` when the secret was created.
 type GetSecretDecrypt string
 
