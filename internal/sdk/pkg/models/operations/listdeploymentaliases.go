@@ -7,10 +7,6 @@ import (
 	"time"
 )
 
-type ListDeploymentAliasesSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type ListDeploymentAliasesRequest struct {
 	// The ID of the deployment the aliases should be listed for
 	ID string `pathParam:"style=simple,explode=false,name=id"`
@@ -39,8 +35,11 @@ type ListDeploymentAliases200ApplicationJSON struct {
 }
 
 type ListDeploymentAliasesResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The list of aliases assigned to the deployment
 	ListDeploymentAliases200ApplicationJSONObject *ListDeploymentAliases200ApplicationJSON

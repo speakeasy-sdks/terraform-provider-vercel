@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RerequestCheckSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RerequestCheckRequest struct {
 	// The check to rerun
 	CheckID string `pathParam:"style=simple,explode=false,name=checkId"`
@@ -23,8 +19,11 @@ type RerequestCheck200ApplicationJSON struct {
 }
 
 type RerequestCheckResponse struct {
-	ContentType                            string
-	StatusCode                             int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                            *http.Response
 	RerequestCheck200ApplicationJSONObject *RerequestCheck200ApplicationJSON
 }

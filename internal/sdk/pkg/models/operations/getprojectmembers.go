@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GetProjectMembersSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetProjectMembersRequest struct {
 	// The ID or name of the Project.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
@@ -165,8 +161,11 @@ func (u GetProjectMembers200ApplicationJSON) MarshalJSON() ([]byte, error) {
 }
 
 type GetProjectMembersResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Paginated list of members for the project.
 	GetProjectMembers200ApplicationJSONOneOf *GetProjectMembers200ApplicationJSON

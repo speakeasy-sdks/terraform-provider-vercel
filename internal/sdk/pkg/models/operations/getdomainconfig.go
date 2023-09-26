@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type GetDomainConfigSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetDomainConfigRequest struct {
 	// The name of the domain.
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
@@ -88,8 +84,11 @@ type GetDomainConfig200ApplicationJSON struct {
 }
 
 type GetDomainConfigResponse struct {
-	ContentType                             string
-	StatusCode                              int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                             *http.Response
 	GetDomainConfig200ApplicationJSONObject *GetDomainConfig200ApplicationJSON
 }

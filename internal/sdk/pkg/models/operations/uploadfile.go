@@ -9,10 +9,6 @@ import (
 	"net/http"
 )
 
-type UploadFileSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UploadFileRequest struct {
 	// The file size in bytes
 	ContentLength *int64 `header:"style=simple,explode=false,name=Content-Length"`
@@ -103,8 +99,11 @@ func (u UploadFile200ApplicationJSON) MarshalJSON() ([]byte, error) {
 }
 
 type UploadFileResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// File already uploaded
 	// File successfully uploaded

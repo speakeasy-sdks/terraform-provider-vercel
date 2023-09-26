@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type DeleteEdgeConfigTokensSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type DeleteEdgeConfigTokensRequestBody struct {
 	Tokens []string `json:"tokens"`
 }
@@ -22,7 +18,10 @@ type DeleteEdgeConfigTokensRequest struct {
 }
 
 type DeleteEdgeConfigTokensResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 }
