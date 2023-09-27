@@ -7,10 +7,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetTeamRequest struct {
 	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier or slug to perform the request on behalf of.
@@ -18,8 +14,11 @@ type GetTeamRequest struct {
 }
 
 type GetTeamResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The requested team
 	Team *shared.Team

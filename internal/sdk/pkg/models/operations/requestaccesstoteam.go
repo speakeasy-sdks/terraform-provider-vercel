@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type RequestAccessToTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RequestAccessToTeamRequestBodyJoinedFromGitUserIDType string
 
 const (
@@ -311,8 +307,11 @@ type RequestAccessToTeam200ApplicationJSON struct {
 }
 
 type RequestAccessToTeamResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successfuly requested access to the team.
 	RequestAccessToTeam200ApplicationJSONObject *RequestAccessToTeam200ApplicationJSON

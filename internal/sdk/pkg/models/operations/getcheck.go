@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type GetCheckSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetCheckRequest struct {
 	// The check to fetch
 	CheckID string `pathParam:"style=simple,explode=false,name=checkId"`
@@ -272,8 +268,11 @@ type GetCheck200ApplicationJSON struct {
 }
 
 type GetCheckResponse struct {
-	ContentType                      string
-	StatusCode                       int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                      *http.Response
 	GetCheck200ApplicationJSONObject *GetCheck200ApplicationJSON
 }

@@ -25,7 +25,7 @@ func newLogDrains(sdkConfig sdkConfiguration) *logDrains {
 
 // CreateConfigurableLogDrain - Creates a Configurable Log Drain
 // Creates a configurable log drain. This endpoint must be called with a team AccessToken (integration OAuth2 clients are not allowed)
-func (s *logDrains) CreateConfigurableLogDrain(ctx context.Context, request operations.CreateConfigurableLogDrainRequest, security operations.CreateConfigurableLogDrainSecurity) (*operations.CreateConfigurableLogDrainResponse, error) {
+func (s *logDrains) CreateConfigurableLogDrain(ctx context.Context, request operations.CreateConfigurableLogDrainRequest) (*operations.CreateConfigurableLogDrainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/log-drains"
 
@@ -50,7 +50,7 @@ func (s *logDrains) CreateConfigurableLogDrain(ctx context.Context, request oper
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -98,7 +98,7 @@ func (s *logDrains) CreateConfigurableLogDrain(ctx context.Context, request oper
 
 // CreateLogDrain - Creates a new Integration Log Drain
 // Creates an Integration log drain. This endpoint must be called with an OAuth2 client (integration), since log drains are tied to integrations. If it is called with a different token type it will produce a 400 error.
-func (s *logDrains) CreateLogDrain(ctx context.Context, request operations.CreateLogDrainRequest, security operations.CreateLogDrainSecurity) (*operations.CreateLogDrainResponse, error) {
+func (s *logDrains) CreateLogDrain(ctx context.Context, request operations.CreateLogDrainRequest) (*operations.CreateLogDrainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v2/integrations/log-drains"
 
@@ -123,7 +123,7 @@ func (s *logDrains) CreateLogDrain(ctx context.Context, request operations.Creat
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -171,7 +171,7 @@ func (s *logDrains) CreateLogDrain(ctx context.Context, request operations.Creat
 
 // DeleteConfigurableLogDrain - Deletes a Configurable Log Drain
 // Deletes a Configurable Log Drain. This endpoint must be called with a team AccessToken (integration OAuth2 clients are not allowed). Only log drains owned by the authenticated team can be deleted.
-func (s *logDrains) DeleteConfigurableLogDrain(ctx context.Context, request operations.DeleteConfigurableLogDrainRequest, security operations.DeleteConfigurableLogDrainSecurity) (*operations.DeleteConfigurableLogDrainResponse, error) {
+func (s *logDrains) DeleteConfigurableLogDrain(ctx context.Context, request operations.DeleteConfigurableLogDrainRequest) (*operations.DeleteConfigurableLogDrainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/log-drains/{id}", request, nil)
 	if err != nil {
@@ -189,7 +189,7 @@ func (s *logDrains) DeleteConfigurableLogDrain(ctx context.Context, request oper
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -230,7 +230,7 @@ func (s *logDrains) DeleteConfigurableLogDrain(ctx context.Context, request oper
 
 // DeleteIntegrationLogDrain - Deletes the Integration log drain with the provided `id`
 // Deletes the Integration log drain with the provided `id`. When using an OAuth2 Token, the log drain can be deleted only if the integration owns it.
-func (s *logDrains) DeleteIntegrationLogDrain(ctx context.Context, request operations.DeleteIntegrationLogDrainRequest, security operations.DeleteIntegrationLogDrainSecurity) (*operations.DeleteIntegrationLogDrainResponse, error) {
+func (s *logDrains) DeleteIntegrationLogDrain(ctx context.Context, request operations.DeleteIntegrationLogDrainRequest) (*operations.DeleteIntegrationLogDrainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/integrations/log-drains/{id}", request, nil)
 	if err != nil {
@@ -248,7 +248,7 @@ func (s *logDrains) DeleteIntegrationLogDrain(ctx context.Context, request opera
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -289,7 +289,7 @@ func (s *logDrains) DeleteIntegrationLogDrain(ctx context.Context, request opera
 
 // GetConfigurableLogDrain - Retrieves a Configurable Log Drain
 // Retrieves a Configurable Log Drain. This endpoint must be called with a team AccessToken (integration OAuth2 clients are not allowed). Only log drains owned by the authenticated team can be accessed.
-func (s *logDrains) GetConfigurableLogDrain(ctx context.Context, request operations.GetConfigurableLogDrainRequest, security operations.GetConfigurableLogDrainSecurity) (*operations.GetConfigurableLogDrainResponse, error) {
+func (s *logDrains) GetConfigurableLogDrain(ctx context.Context, request operations.GetConfigurableLogDrainRequest) (*operations.GetConfigurableLogDrainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/log-drains/{id}", request, nil)
 	if err != nil {
@@ -307,7 +307,7 @@ func (s *logDrains) GetConfigurableLogDrain(ctx context.Context, request operati
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -356,7 +356,7 @@ func (s *logDrains) GetConfigurableLogDrain(ctx context.Context, request operati
 
 // GetConfigurableLogDrains - Retrieves a list of Configurable Log Drains
 // Retrieves a list of Configurable Log Drains. This endpoint must be called with a team AccessToken (integration OAuth2 clients are not allowed). Only log drains owned by the authenticated team can be accessed.
-func (s *logDrains) GetConfigurableLogDrains(ctx context.Context, request operations.GetConfigurableLogDrainsRequest, security operations.GetConfigurableLogDrainsSecurity) (*operations.GetConfigurableLogDrainsResponse, error) {
+func (s *logDrains) GetConfigurableLogDrains(ctx context.Context, request operations.GetConfigurableLogDrainsRequest) (*operations.GetConfigurableLogDrainsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/log-drains"
 
@@ -371,7 +371,7 @@ func (s *logDrains) GetConfigurableLogDrains(ctx context.Context, request operat
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -418,7 +418,7 @@ func (s *logDrains) GetConfigurableLogDrains(ctx context.Context, request operat
 
 // GetIntegrationLogDrains - Retrieves a list of Integration log drains
 // Retrieves a list of all Integration log drains that are defined for the authorized account. When using an OAuth2 token, the list is limited to log drains created by the authenticated integration.
-func (s *logDrains) GetIntegrationLogDrains(ctx context.Context, request operations.GetIntegrationLogDrainsRequest, security operations.GetIntegrationLogDrainsSecurity) (*operations.GetIntegrationLogDrainsResponse, error) {
+func (s *logDrains) GetIntegrationLogDrains(ctx context.Context, request operations.GetIntegrationLogDrainsRequest) (*operations.GetIntegrationLogDrainsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v2/integrations/log-drains"
 
@@ -433,7 +433,7 @@ func (s *logDrains) GetIntegrationLogDrains(ctx context.Context, request operati
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

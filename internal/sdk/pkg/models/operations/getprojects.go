@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetProjectsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // GetProjectsGitForkProtection - Specifies whether PRs from Git forks should require a team member's authorization before it can be deployed
 type GetProjectsGitForkProtection string
 
@@ -2471,8 +2467,11 @@ type GetProjects200ApplicationJSON struct {
 }
 
 type GetProjectsResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The paginated list of projects
 	GetProjects200ApplicationJSONObject *GetProjects200ApplicationJSON

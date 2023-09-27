@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type GetIntegrationLogDrainsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetIntegrationLogDrainsRequest struct {
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
@@ -177,8 +173,11 @@ type GetIntegrationLogDrains200ApplicationJSON struct {
 }
 
 type GetIntegrationLogDrainsResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// A list of log drains
 	GetIntegrationLogDrains200ApplicationJSONObjects []GetIntegrationLogDrains200ApplicationJSON

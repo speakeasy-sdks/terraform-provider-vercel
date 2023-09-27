@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RemoveProjectDomainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RemoveProjectDomainRequest struct {
 	// The project domain name
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
@@ -24,8 +20,11 @@ type RemoveProjectDomain200ApplicationJSON struct {
 }
 
 type RemoveProjectDomainResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The domain was succesfully removed from the project
 	RemoveProjectDomain200ApplicationJSONObject *RemoveProjectDomain200ApplicationJSON

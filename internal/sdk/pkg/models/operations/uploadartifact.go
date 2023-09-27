@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type UploadArtifactSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UploadArtifactRequest struct {
 	// The artifact size in bytes
 	ContentLength int64  `header:"style=simple,explode=false,name=Content-Length"`
@@ -35,8 +31,11 @@ type UploadArtifact202ApplicationJSON struct {
 }
 
 type UploadArtifactResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// File successfully uploaded
 	UploadArtifact202ApplicationJSONObject *UploadArtifact202ApplicationJSON

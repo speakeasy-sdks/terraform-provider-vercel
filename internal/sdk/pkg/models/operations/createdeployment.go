@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type CreateDeploymentSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CreateDeploymentRequestBodyBranchCurrentState string
 
 const (
@@ -4666,8 +4662,11 @@ type CreateDeployment200ApplicationJSON struct {
 }
 
 type CreateDeploymentResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The successfully created deployment
 	CreateDeployment200ApplicationJSONObject *CreateDeployment200ApplicationJSON
