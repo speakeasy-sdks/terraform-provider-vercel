@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type RemoveProjectEnvSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RemoveProjectEnvRequest struct {
 	// The unique environment variable identifier
 	ID string `pathParam:"style=simple,explode=false,name=id"`
@@ -2634,8 +2630,11 @@ func (u RemoveProjectEnv200ApplicationJSON) MarshalJSON() ([]byte, error) {
 }
 
 type RemoveProjectEnvResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The environment variable was successfully removed
 	RemoveProjectEnv200ApplicationJSONOneOf *RemoveProjectEnv200ApplicationJSON

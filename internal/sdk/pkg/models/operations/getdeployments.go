@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetDeploymentsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // GetDeploymentsTarget - Filter deployments based on the environment.
 type GetDeploymentsTarget string
 
@@ -649,8 +645,11 @@ type GetDeployments200ApplicationJSON struct {
 }
 
 type GetDeploymentsResponse struct {
-	ContentType                            string
-	StatusCode                             int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                            *http.Response
 	GetDeployments200ApplicationJSONObject *GetDeployments200ApplicationJSON
 }

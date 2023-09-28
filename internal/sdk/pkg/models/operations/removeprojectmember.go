@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RemoveProjectMemberSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RemoveProjectMemberRequest struct {
 	// The ID or name of the Project.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
@@ -24,8 +20,11 @@ type RemoveProjectMember200ApplicationJSON struct {
 }
 
 type RemoveProjectMemberResponse struct {
-	ContentType                                 string
-	StatusCode                                  int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                 *http.Response
 	RemoveProjectMember200ApplicationJSONObject *RemoveProjectMember200ApplicationJSON
 }

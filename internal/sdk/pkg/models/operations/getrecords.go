@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetRecordsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetRecordsRequest struct {
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
 	// Maximum number of records to list from a request.
@@ -257,8 +253,11 @@ func (u GetRecords200ApplicationJSON) MarshalJSON() ([]byte, error) {
 }
 
 type GetRecordsResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response retrieving a list of paginated DNS records.
 	GetRecords200ApplicationJSONOneOf *GetRecords200ApplicationJSON

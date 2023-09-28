@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type VerifyProjectDomainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type VerifyProjectDomainRequest struct {
 	// The domain name you want to verify
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
@@ -80,8 +76,11 @@ type VerifyProjectDomain200ApplicationJSON struct {
 }
 
 type VerifyProjectDomainResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The project domain was verified successfully
 	// Domain is already verified

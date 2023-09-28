@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type DeleteTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // DeleteTeamRequestBodyReasons - An object describing the reason why the team is being deleted.
 type DeleteTeamRequestBodyReasons struct {
 	// Description of the reason why the team is being deleted.
@@ -36,8 +32,11 @@ type DeleteTeam200ApplicationJSON struct {
 }
 
 type DeleteTeamResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The Team was successfuly deleted
 	DeleteTeam200ApplicationJSONObject *DeleteTeam200ApplicationJSON

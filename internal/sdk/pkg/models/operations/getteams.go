@@ -10,10 +10,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetTeamsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetTeamsRequest struct {
 	// Maximum number of Teams which may be returned.
 	Limit *int64 `queryParam:"style=form,explode=true,name=limit"`
@@ -99,8 +95,11 @@ type GetTeams200ApplicationJSON struct {
 }
 
 type GetTeamsResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// A paginated list of teams.
 	GetTeams200ApplicationJSONObject *GetTeams200ApplicationJSON

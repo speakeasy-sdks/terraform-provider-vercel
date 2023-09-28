@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type UploadCertSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UploadCertRequestBody struct {
 	// The certificate authority
 	Ca string `json:"ca"`
@@ -36,8 +32,11 @@ type UploadCert200ApplicationJSON struct {
 }
 
 type UploadCertResponse struct {
-	ContentType                        string
-	StatusCode                         int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                        *http.Response
 	UploadCert200ApplicationJSONObject *UploadCert200ApplicationJSON
 }

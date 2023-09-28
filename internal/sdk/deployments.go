@@ -26,7 +26,7 @@ func newDeployments(sdkConfig sdkConfiguration) *deployments {
 
 // CancelDeployment - Cancel a deployment
 // This endpoint allows you to cancel a deployment which is currently building, by supplying its `id` in the URL.
-func (s *deployments) CancelDeployment(ctx context.Context, request operations.CancelDeploymentRequest, security operations.CancelDeploymentSecurity) (*operations.CancelDeploymentResponse, error) {
+func (s *deployments) CancelDeployment(ctx context.Context, request operations.CancelDeploymentRequest) (*operations.CancelDeploymentResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v12/deployments/{id}/cancel", request, nil)
 	if err != nil {
@@ -44,7 +44,7 @@ func (s *deployments) CancelDeployment(ctx context.Context, request operations.C
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -93,7 +93,7 @@ func (s *deployments) CancelDeployment(ctx context.Context, request operations.C
 
 // CreateDeployment - Create a new deployment
 // Create a new deployment with all the required and intended data. If the deployment is not a git deployment, all files must be provided with the request, either referenced or inlined. Additionally, a deployment id can be specified to redeploy a previous deployment.
-func (s *deployments) CreateDeployment(ctx context.Context, request operations.CreateDeploymentRequestBody, security operations.CreateDeploymentSecurity) (*operations.CreateDeploymentResponse, error) {
+func (s *deployments) CreateDeployment(ctx context.Context, request operations.CreateDeploymentRequestBody) (*operations.CreateDeploymentResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v13/deployments"
 
@@ -114,7 +114,7 @@ func (s *deployments) CreateDeployment(ctx context.Context, request operations.C
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -168,7 +168,7 @@ func (s *deployments) CreateDeployment(ctx context.Context, request operations.C
 
 // GetDeployment - Get a deployment by ID or URL
 // Retrieves information for a deployment either by supplying its ID (`id` property) or Hostname (`url` property). Additional details will be included when the authenticated user is an owner of the deployment.
-func (s *deployments) GetDeployment(ctx context.Context, request operations.GetDeploymentRequest, security operations.GetDeploymentSecurity) (*operations.GetDeploymentResponse, error) {
+func (s *deployments) GetDeployment(ctx context.Context, request operations.GetDeploymentRequest) (*operations.GetDeploymentResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v13/deployments/{idOrUrl}", request, nil)
 	if err != nil {
@@ -186,7 +186,7 @@ func (s *deployments) GetDeployment(ctx context.Context, request operations.GetD
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -233,7 +233,7 @@ func (s *deployments) GetDeployment(ctx context.Context, request operations.GetD
 
 // GetDeploymentEvents - Get deployment events
 // Get the build logs of a deployment by deployment ID and build ID. It can work as an infinite stream of logs or as a JSON endpoint depending on the input parameters.
-func (s *deployments) GetDeploymentEvents(ctx context.Context, request operations.GetDeploymentEventsRequest, security operations.GetDeploymentEventsSecurity) (*operations.GetDeploymentEventsResponse, error) {
+func (s *deployments) GetDeploymentEvents(ctx context.Context, request operations.GetDeploymentEventsRequest) (*operations.GetDeploymentEventsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/deployments/{idOrUrl}/events", request, nil)
 	if err != nil {
@@ -251,7 +251,7 @@ func (s *deployments) GetDeploymentEvents(ctx context.Context, request operation
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -307,7 +307,7 @@ func (s *deployments) GetDeploymentEvents(ctx context.Context, request operation
 
 // GetDeploymentFileContents - Get Deployment File Contents
 // Allows to retrieve the content of a file by supplying the file identifier and the deployment unique identifier. The response body will contain the raw content of the file.
-func (s *deployments) GetDeploymentFileContents(ctx context.Context, request operations.GetDeploymentFileContentsRequest, security operations.GetDeploymentFileContentsSecurity) (*operations.GetDeploymentFileContentsResponse, error) {
+func (s *deployments) GetDeploymentFileContents(ctx context.Context, request operations.GetDeploymentFileContentsRequest) (*operations.GetDeploymentFileContentsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v6/deployments/{id}/files/{fileId}", request, nil)
 	if err != nil {
@@ -325,7 +325,7 @@ func (s *deployments) GetDeploymentFileContents(ctx context.Context, request ope
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -364,7 +364,7 @@ func (s *deployments) GetDeploymentFileContents(ctx context.Context, request ope
 
 // GetDeployments - List deployments
 // List deployments under the account corresponding to the API token. If a deployment hasn't finished uploading (is incomplete), the `url` property will have a value of `null`.
-func (s *deployments) GetDeployments(ctx context.Context, request operations.GetDeploymentsRequest, security operations.GetDeploymentsSecurity) (*operations.GetDeploymentsResponse, error) {
+func (s *deployments) GetDeployments(ctx context.Context, request operations.GetDeploymentsRequest) (*operations.GetDeploymentsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v6/deployments"
 
@@ -379,7 +379,7 @@ func (s *deployments) GetDeployments(ctx context.Context, request operations.Get
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -430,7 +430,7 @@ func (s *deployments) GetDeployments(ctx context.Context, request operations.Get
 
 // ListDeploymentFiles - List Deployment Files
 // Allows to retrieve the file structure of a deployment by supplying the deployment unique identifier.
-func (s *deployments) ListDeploymentFiles(ctx context.Context, request operations.ListDeploymentFilesRequest, security operations.ListDeploymentFilesSecurity) (*operations.ListDeploymentFilesResponse, error) {
+func (s *deployments) ListDeploymentFiles(ctx context.Context, request operations.ListDeploymentFilesRequest) (*operations.ListDeploymentFilesResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v6/deployments/{id}/files", request, nil)
 	if err != nil {
@@ -448,7 +448,7 @@ func (s *deployments) ListDeploymentFiles(ctx context.Context, request operation
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -497,7 +497,7 @@ func (s *deployments) ListDeploymentFiles(ctx context.Context, request operation
 
 // UploadFile - Upload Deployment Files
 // Before you create a deployment you need to upload the required files for that deployment. To do it, you need to first upload each file to this endpoint. Once that's completed, you can create a new deployment with the uploaded files. The file content must be placed inside the body of the request. In the case of a successful response you'll receive a status code 200 with an empty body.
-func (s *deployments) UploadFile(ctx context.Context, request operations.UploadFileRequest, security operations.UploadFileSecurity) (*operations.UploadFileResponse, error) {
+func (s *deployments) UploadFile(ctx context.Context, request operations.UploadFileRequest) (*operations.UploadFileResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v2/files"
 
@@ -514,7 +514,7 @@ func (s *deployments) UploadFile(ctx context.Context, request operations.UploadF
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type CancelDeploymentSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CancelDeploymentRequest struct {
 	// The unique identifier of the deployment.
 	ID string `pathParam:"style=simple,explode=false,name=id"`
@@ -1961,8 +1957,11 @@ type CancelDeployment200ApplicationJSON struct {
 }
 
 type CancelDeploymentResponse struct {
-	ContentType                              string
-	StatusCode                               int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                              *http.Response
 	CancelDeployment200ApplicationJSONObject *CancelDeployment200ApplicationJSON
 }

@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type UpdateCheckSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // UpdateCheckRequestBodyConclusion - The result of the check being run
 type UpdateCheckRequestBodyConclusion string
 
@@ -530,8 +526,11 @@ type UpdateCheck200ApplicationJSON struct {
 }
 
 type UpdateCheckResponse struct {
-	ContentType                         string
-	StatusCode                          int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                         *http.Response
 	UpdateCheck200ApplicationJSONObject *UpdateCheck200ApplicationJSON
 }

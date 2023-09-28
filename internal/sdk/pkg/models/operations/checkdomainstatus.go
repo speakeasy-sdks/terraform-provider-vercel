@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type CheckDomainStatusSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CheckDomainStatusRequest struct {
 	// The name of the domain for which we would like to check the status.
 	Name string `queryParam:"style=form,explode=true,name=name"`
@@ -23,8 +19,11 @@ type CheckDomainStatus200ApplicationJSON struct {
 }
 
 type CheckDomainStatusResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response checking if a Domain's name is available.
 	CheckDomainStatus200ApplicationJSONObject *CheckDomainStatus200ApplicationJSON

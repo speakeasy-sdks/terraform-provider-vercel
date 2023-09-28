@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type CheckDomainPriceSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // CheckDomainPriceType - In which status of the domain the price needs to be checked.
 type CheckDomainPriceType string
 
@@ -58,8 +54,11 @@ type CheckDomainPrice200ApplicationJSON struct {
 }
 
 type CheckDomainPriceResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response which returns the price of the domain and the period.
 	CheckDomainPrice200ApplicationJSONObject *CheckDomainPrice200ApplicationJSON

@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type GetAllChecksSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetAllChecksRequest struct {
 	// The deployment to get all checks for
 	DeploymentID string `pathParam:"style=simple,explode=false,name=deploymentId"`
@@ -271,8 +267,11 @@ type GetAllChecks200ApplicationJSON struct {
 }
 
 type GetAllChecksResponse struct {
-	ContentType                          string
-	StatusCode                           int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                          *http.Response
 	GetAllChecks200ApplicationJSONObject *GetAllChecks200ApplicationJSON
 }

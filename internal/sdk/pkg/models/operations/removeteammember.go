@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RemoveTeamMemberSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type RemoveTeamMemberRequest struct {
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 	// The user ID of the member.
@@ -23,8 +19,11 @@ type RemoveTeamMember200ApplicationJSON struct {
 }
 
 type RemoveTeamMemberResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successfully removed a member of the team.
 	RemoveTeamMember200ApplicationJSONObject *RemoveTeamMember200ApplicationJSON
