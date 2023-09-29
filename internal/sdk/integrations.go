@@ -25,7 +25,7 @@ func newIntegrations(sdkConfig sdkConfiguration) *integrations {
 
 // DeleteConfiguration - Delete an integration configuration
 // Allows to remove the configuration with the `id` provided in the parameters. The configuration and all of its resources will be removed. This includes Webhooks, LogDrains and Project Env variables.
-func (s *integrations) DeleteConfiguration(ctx context.Context, request operations.DeleteConfigurationRequest, security operations.DeleteConfigurationSecurity) (*operations.DeleteConfigurationResponse, error) {
+func (s *integrations) DeleteConfiguration(ctx context.Context, request operations.DeleteConfigurationRequest) (*operations.DeleteConfigurationResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/integrations/configuration/{id}", request, nil)
 	if err != nil {
@@ -37,13 +37,13 @@ func (s *integrations) DeleteConfiguration(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "*/*")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -84,7 +84,7 @@ func (s *integrations) DeleteConfiguration(ctx context.Context, request operatio
 
 // GetConfiguration - Retrieve an integration configuration
 // Allows to retrieve a the configuration with the provided id in case it exists. The authenticated user or team must be the owner of the config in order to access it.
-func (s *integrations) GetConfiguration(ctx context.Context, request operations.GetConfigurationRequest, security operations.GetConfigurationSecurity) (*operations.GetConfigurationResponse, error) {
+func (s *integrations) GetConfiguration(ctx context.Context, request operations.GetConfigurationRequest) (*operations.GetConfigurationResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/integrations/configuration/{id}", request, nil)
 	if err != nil {
@@ -96,13 +96,13 @@ func (s *integrations) GetConfiguration(ctx context.Context, request operations.
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -151,7 +151,7 @@ func (s *integrations) GetConfiguration(ctx context.Context, request operations.
 
 // GetConfigurations - Get configurations for the authenticated user or team
 // Allows to retrieve all configurations for an authenticated integration. When the `project` view is used, configurations generated for the authorization flow will be filtered out of the results.
-func (s *integrations) GetConfigurations(ctx context.Context, request operations.GetConfigurationsRequest, security operations.GetConfigurationsSecurity) (*operations.GetConfigurationsResponse, error) {
+func (s *integrations) GetConfigurations(ctx context.Context, request operations.GetConfigurationsRequest) (*operations.GetConfigurationsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/integrations/configurations"
 
@@ -160,13 +160,13 @@ func (s *integrations) GetConfigurations(ctx context.Context, request operations
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -213,7 +213,7 @@ func (s *integrations) GetConfigurations(ctx context.Context, request operations
 
 // GitNamespaces - List git namespaces by provider
 // Lists git namespaces for a supported provider. Supported providers are `github`, `gitlab` and `bitbucket`. If the provider is not provided, it will try to obtain it from the user that authenticated the request.
-func (s *integrations) GitNamespaces(ctx context.Context, request operations.GitNamespacesRequest, security operations.GitNamespacesSecurity) (*operations.GitNamespacesResponse, error) {
+func (s *integrations) GitNamespaces(ctx context.Context, request operations.GitNamespacesRequest) (*operations.GitNamespacesResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/integrations/git-namespaces"
 
@@ -222,13 +222,13 @@ func (s *integrations) GitNamespaces(ctx context.Context, request operations.Git
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

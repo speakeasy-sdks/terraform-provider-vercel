@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type JoinTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type JoinTeamRequestBody struct {
 	// The invite code to join the team.
 	InviteCode *string `json:"inviteCode,omitempty"`
@@ -35,8 +31,11 @@ type JoinTeam200ApplicationJSON struct {
 }
 
 type JoinTeamResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successfully joined a team.
 	JoinTeam200ApplicationJSONObject *JoinTeam200ApplicationJSON

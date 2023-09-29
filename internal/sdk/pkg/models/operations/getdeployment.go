@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GetDeploymentSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetDeploymentRequest struct {
 	// The unique identifier or hostname of the deployment.
 	IDOrURL string `pathParam:"style=simple,explode=false,name=idOrUrl"`
@@ -3078,8 +3074,11 @@ func (u GetDeployment200ApplicationJSON) MarshalJSON() ([]byte, error) {
 }
 
 type GetDeploymentResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The deployment including only public information
 	// The deployment including both public and private information

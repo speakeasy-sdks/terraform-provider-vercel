@@ -25,7 +25,7 @@ func newProjects(sdkConfig sdkConfiguration) *projects {
 
 // AddProjectDomain - Add a domain to a project
 // Add a domain to the project by passing its domain name and by specifying the project by either passing the project `id` or `name` in the URL. If the domain is not yet verified to be used on this project, the request will return `verified = false`, and the domain will need to be verified according to the `verification` challenge via `POST /projects/:idOrName/domains/:domain/verify`. If the domain already exists on the project, the request will fail with a `400` status code.
-func (s *projects) AddProjectDomain(ctx context.Context, request operations.AddProjectDomainRequest, security operations.AddProjectDomainSecurity) (*operations.AddProjectDomainResponse, error) {
+func (s *projects) AddProjectDomain(ctx context.Context, request operations.AddProjectDomainRequest) (*operations.AddProjectDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v10/projects/{idOrName}/domains", request, nil)
 	if err != nil {
@@ -45,7 +45,7 @@ func (s *projects) AddProjectDomain(ctx context.Context, request operations.AddP
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -53,7 +53,7 @@ func (s *projects) AddProjectDomain(ctx context.Context, request operations.AddP
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -107,7 +107,7 @@ func (s *projects) AddProjectDomain(ctx context.Context, request operations.AddP
 
 // CreateProject - Create a new project
 // Allows to create a new project with the provided configuration. It only requires the project `name` but more configuration can be provided to override the defaults.
-func (s *projects) CreateProject(ctx context.Context, request operations.CreateProjectRequest, security operations.CreateProjectSecurity) (*operations.CreateProjectResponse, error) {
+func (s *projects) CreateProject(ctx context.Context, request operations.CreateProjectRequest) (*operations.CreateProjectResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v9/projects"
 
@@ -124,7 +124,7 @@ func (s *projects) CreateProject(ctx context.Context, request operations.CreateP
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -132,7 +132,7 @@ func (s *projects) CreateProject(ctx context.Context, request operations.CreateP
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -184,7 +184,7 @@ func (s *projects) CreateProject(ctx context.Context, request operations.CreateP
 
 // CreateProjectEnv - Create one or more environment variables
 // Create one ore more environment variables for a project by passing its `key`, `value`, `type` and `target` and by specifying the project by either passing the project `id` or `name` in the URL.
-func (s *projects) CreateProjectEnv(ctx context.Context, request operations.CreateProjectEnvRequest, security operations.CreateProjectEnvSecurity) (*operations.CreateProjectEnvResponse, error) {
+func (s *projects) CreateProjectEnv(ctx context.Context, request operations.CreateProjectEnvRequest) (*operations.CreateProjectEnvResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v10/projects/{idOrName}/env", request, nil)
 	if err != nil {
@@ -204,7 +204,7 @@ func (s *projects) CreateProjectEnv(ctx context.Context, request operations.Crea
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -212,7 +212,7 @@ func (s *projects) CreateProjectEnv(ctx context.Context, request operations.Crea
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -266,7 +266,7 @@ func (s *projects) CreateProjectEnv(ctx context.Context, request operations.Crea
 
 // DeleteProject - Delete a Project
 // Delete a specific project by passing either the project `id` or `name` in the URL.
-func (s *projects) DeleteProject(ctx context.Context, request operations.DeleteProjectRequest, security operations.DeleteProjectSecurity) (*operations.DeleteProjectResponse, error) {
+func (s *projects) DeleteProject(ctx context.Context, request operations.DeleteProjectRequest) (*operations.DeleteProjectResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}", request, nil)
 	if err != nil {
@@ -278,13 +278,13 @@ func (s *projects) DeleteProject(ctx context.Context, request operations.DeleteP
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "*/*")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -327,7 +327,7 @@ func (s *projects) DeleteProject(ctx context.Context, request operations.DeleteP
 
 // EditProjectEnv - Edit an environment variable
 // Edit a specific environment variable for a given project by passing the environment variable identifier and either passing the project `id` or `name` in the URL.
-func (s *projects) EditProjectEnv(ctx context.Context, request operations.EditProjectEnvRequest, security operations.EditProjectEnvSecurity) (*operations.EditProjectEnvResponse, error) {
+func (s *projects) EditProjectEnv(ctx context.Context, request operations.EditProjectEnvRequest) (*operations.EditProjectEnvResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/env/{id}", request, nil)
 	if err != nil {
@@ -347,7 +347,7 @@ func (s *projects) EditProjectEnv(ctx context.Context, request operations.EditPr
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -355,7 +355,7 @@ func (s *projects) EditProjectEnv(ctx context.Context, request operations.EditPr
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -407,7 +407,7 @@ func (s *projects) EditProjectEnv(ctx context.Context, request operations.EditPr
 
 // FilterProjectEnvs - Retrieve the environment variables of a project by id or name
 // Retrieve the environment variables for a given project by passing either the project `id` or `name` in the URL.
-func (s *projects) FilterProjectEnvs(ctx context.Context, request operations.FilterProjectEnvsRequest, security operations.FilterProjectEnvsSecurity) (*operations.FilterProjectEnvsResponse, error) {
+func (s *projects) FilterProjectEnvs(ctx context.Context, request operations.FilterProjectEnvsRequest) (*operations.FilterProjectEnvsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/env", request, nil)
 	if err != nil {
@@ -419,13 +419,13 @@ func (s *projects) FilterProjectEnvs(ctx context.Context, request operations.Fil
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -474,7 +474,7 @@ func (s *projects) FilterProjectEnvs(ctx context.Context, request operations.Fil
 
 // GetProjectDomain - Get a project domain
 // Get project domain by project id/name and domain name.
-func (s *projects) GetProjectDomain(ctx context.Context, request operations.GetProjectDomainRequest, security operations.GetProjectDomainSecurity) (*operations.GetProjectDomainResponse, error) {
+func (s *projects) GetProjectDomain(ctx context.Context, request operations.GetProjectDomainRequest) (*operations.GetProjectDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/domains/{domain}", request, nil)
 	if err != nil {
@@ -486,13 +486,13 @@ func (s *projects) GetProjectDomain(ctx context.Context, request operations.GetP
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -541,7 +541,7 @@ func (s *projects) GetProjectDomain(ctx context.Context, request operations.GetP
 
 // GetProjectEnv - Retrieve the decrypted value of an environment variable of a project by id
 // Retrieve the environment variable for a given project.
-func (s *projects) GetProjectEnv(ctx context.Context, request operations.GetProjectEnvRequest, security operations.GetProjectEnvSecurity) (*operations.GetProjectEnvResponse, error) {
+func (s *projects) GetProjectEnv(ctx context.Context, request operations.GetProjectEnvRequest) (*operations.GetProjectEnvResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{idOrName}/env/{id}", request, nil)
 	if err != nil {
@@ -553,13 +553,13 @@ func (s *projects) GetProjectEnv(ctx context.Context, request operations.GetProj
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -608,7 +608,7 @@ func (s *projects) GetProjectEnv(ctx context.Context, request operations.GetProj
 
 // GetProjects - Retrieve a list of projects
 // Allows to retrieve the list of projects of the authenticated user. The list will be paginated and the provided query parameters allow filtering the returned projects.
-func (s *projects) GetProjects(ctx context.Context, request operations.GetProjectsRequest, security operations.GetProjectsSecurity) (*operations.GetProjectsResponse, error) {
+func (s *projects) GetProjects(ctx context.Context, request operations.GetProjectsRequest) (*operations.GetProjectsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v9/projects"
 
@@ -617,13 +617,13 @@ func (s *projects) GetProjects(ctx context.Context, request operations.GetProjec
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -670,7 +670,7 @@ func (s *projects) GetProjects(ctx context.Context, request operations.GetProjec
 
 // RemoveProjectDomain - Remove a domain from a project
 // Remove a domain from a project by passing the domain name and by specifying the project by either passing the project `id` or `name` in the URL.
-func (s *projects) RemoveProjectDomain(ctx context.Context, request operations.RemoveProjectDomainRequest, security operations.RemoveProjectDomainSecurity) (*operations.RemoveProjectDomainResponse, error) {
+func (s *projects) RemoveProjectDomain(ctx context.Context, request operations.RemoveProjectDomainRequest) (*operations.RemoveProjectDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/domains/{domain}", request, nil)
 	if err != nil {
@@ -682,13 +682,13 @@ func (s *projects) RemoveProjectDomain(ctx context.Context, request operations.R
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -739,7 +739,7 @@ func (s *projects) RemoveProjectDomain(ctx context.Context, request operations.R
 
 // RemoveProjectEnv - Remove an environment variable
 // Delete a specific environment variable for a given project by passing the environment variable identifier and either passing the project `id` or `name` in the URL.
-func (s *projects) RemoveProjectEnv(ctx context.Context, request operations.RemoveProjectEnvRequest, security operations.RemoveProjectEnvSecurity) (*operations.RemoveProjectEnvResponse, error) {
+func (s *projects) RemoveProjectEnv(ctx context.Context, request operations.RemoveProjectEnvRequest) (*operations.RemoveProjectEnvResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/env/{id}", request, nil)
 	if err != nil {
@@ -751,13 +751,13 @@ func (s *projects) RemoveProjectEnv(ctx context.Context, request operations.Remo
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -808,7 +808,7 @@ func (s *projects) RemoveProjectEnv(ctx context.Context, request operations.Remo
 
 // UpdateProject - Update an existing project
 // Update the fields of a project using either its `name` or `id`.
-func (s *projects) UpdateProject(ctx context.Context, request operations.UpdateProjectRequest, security operations.UpdateProjectSecurity) (*operations.UpdateProjectResponse, error) {
+func (s *projects) UpdateProject(ctx context.Context, request operations.UpdateProjectRequest) (*operations.UpdateProjectResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}", request, nil)
 	if err != nil {
@@ -828,7 +828,7 @@ func (s *projects) UpdateProject(ctx context.Context, request operations.UpdateP
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -836,7 +836,7 @@ func (s *projects) UpdateProject(ctx context.Context, request operations.UpdateP
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -888,7 +888,7 @@ func (s *projects) UpdateProject(ctx context.Context, request operations.UpdateP
 
 // UpdateProjectDataCache - Update the data cache feature
 // Update the data cache feature on a project.
-func (s *projects) UpdateProjectDataCache(ctx context.Context, request operations.UpdateProjectDataCacheRequest, security operations.UpdateProjectDataCacheSecurity) (*operations.UpdateProjectDataCacheResponse, error) {
+func (s *projects) UpdateProjectDataCache(ctx context.Context, request operations.UpdateProjectDataCacheRequest) (*operations.UpdateProjectDataCacheResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/data-cache/projects/{projectId}", request, nil)
 	if err != nil {
@@ -908,7 +908,7 @@ func (s *projects) UpdateProjectDataCache(ctx context.Context, request operation
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -916,7 +916,7 @@ func (s *projects) UpdateProjectDataCache(ctx context.Context, request operation
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -966,7 +966,7 @@ func (s *projects) UpdateProjectDataCache(ctx context.Context, request operation
 
 // UpdateProjectDomain - Update a project domain
 // Update a project domain's configuration, including the name, git branch and redirect of the domain.
-func (s *projects) UpdateProjectDomain(ctx context.Context, request operations.UpdateProjectDomainRequest, security operations.UpdateProjectDomainSecurity) (*operations.UpdateProjectDomainResponse, error) {
+func (s *projects) UpdateProjectDomain(ctx context.Context, request operations.UpdateProjectDomainRequest) (*operations.UpdateProjectDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/domains/{domain}", request, nil)
 	if err != nil {
@@ -986,7 +986,7 @@ func (s *projects) UpdateProjectDomain(ctx context.Context, request operations.U
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -994,7 +994,7 @@ func (s *projects) UpdateProjectDomain(ctx context.Context, request operations.U
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -1046,7 +1046,7 @@ func (s *projects) UpdateProjectDomain(ctx context.Context, request operations.U
 
 // VerifyProjectDomain - Verify project domain
 // Attempts to verify a project domain with `verified = false` by checking the correctness of the project domain's `verification` challenge.
-func (s *projects) VerifyProjectDomain(ctx context.Context, request operations.VerifyProjectDomainRequest, security operations.VerifyProjectDomainSecurity) (*operations.VerifyProjectDomainResponse, error) {
+func (s *projects) VerifyProjectDomain(ctx context.Context, request operations.VerifyProjectDomainRequest) (*operations.VerifyProjectDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/domains/{domain}/verify", request, nil)
 	if err != nil {
@@ -1058,13 +1058,13 @@ func (s *projects) VerifyProjectDomain(ctx context.Context, request operations.V
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

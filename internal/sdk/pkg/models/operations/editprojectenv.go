@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type EditProjectEnvSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type EditProjectEnvRequestBodyTarget string
 
 const (
@@ -945,8 +941,11 @@ type EditProjectEnv200ApplicationJSON struct {
 }
 
 type EditProjectEnvResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The environment variable was successfully edited
 	EditProjectEnv200ApplicationJSONObject *EditProjectEnv200ApplicationJSON

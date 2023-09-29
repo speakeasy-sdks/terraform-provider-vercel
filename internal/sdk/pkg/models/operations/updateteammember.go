@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type UpdateTeamMemberSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UpdateTeamMemberRequestBodyJoinedFrom struct {
 	SsoUserID *string `json:"ssoUserId,omitempty"`
 }
@@ -80,8 +76,11 @@ type UpdateTeamMember200ApplicationJSON struct {
 }
 
 type UpdateTeamMemberResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successfully updated the membership.
 	UpdateTeamMember200ApplicationJSONObject *UpdateTeamMember200ApplicationJSON

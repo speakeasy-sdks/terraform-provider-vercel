@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type GetEdgeConfigsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetEdgeConfigsRequest struct {
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
@@ -38,8 +34,11 @@ type GetEdgeConfigs200ApplicationJSON struct {
 }
 
 type GetEdgeConfigsResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// List of all edge configs.
 	GetEdgeConfigs200ApplicationJSONObject *GetEdgeConfigs200ApplicationJSON

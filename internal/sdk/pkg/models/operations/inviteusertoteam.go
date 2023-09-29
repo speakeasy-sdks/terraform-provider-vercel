@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type InviteUserToTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // InviteUserToTeamRequestBodyProjectsRole - Sets the project roles for the invited user
 type InviteUserToTeamRequestBodyProjectsRole string
 
@@ -273,8 +269,11 @@ func (u InviteUserToTeam200ApplicationJSON) MarshalJSON() ([]byte, error) {
 }
 
 type InviteUserToTeamResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The member was successfully added to the team
 	InviteUserToTeam200ApplicationJSONOneOf *InviteUserToTeam200ApplicationJSON

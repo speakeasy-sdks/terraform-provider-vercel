@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type CreateCheckSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CreateCheckRequestBody struct {
 	// Whether the check should block a deployment from succeeding
 	Blocking bool `json:"blocking"`
@@ -286,8 +282,11 @@ type CreateCheck200ApplicationJSON struct {
 }
 
 type CreateCheckResponse struct {
-	ContentType                         string
-	StatusCode                          int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                         *http.Response
 	CreateCheck200ApplicationJSONObject *CreateCheck200ApplicationJSON
 }

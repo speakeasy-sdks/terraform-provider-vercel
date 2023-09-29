@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type DeleteConfigurableLogDrainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type DeleteConfigurableLogDrainRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 	// The Team identifier or slug to perform the request on behalf of.
@@ -17,7 +13,10 @@ type DeleteConfigurableLogDrainRequest struct {
 }
 
 type DeleteConfigurableLogDrainResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 }
