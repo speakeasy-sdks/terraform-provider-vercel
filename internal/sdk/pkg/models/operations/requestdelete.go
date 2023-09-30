@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type RequestDeleteSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // RequestDeleteRequestBodyReasons - An object describing the reason why the User account is being deleted.
 type RequestDeleteRequestBodyReasons struct {
 	// Description of the reason why the User account is being deleted.
@@ -34,8 +30,11 @@ type RequestDelete202ApplicationJSON struct {
 }
 
 type RequestDeleteResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Response indicating that the User deletion process has been initiated, and a confirmation email has been sent.
 	RequestDelete202ApplicationJSONObject *RequestDelete202ApplicationJSON

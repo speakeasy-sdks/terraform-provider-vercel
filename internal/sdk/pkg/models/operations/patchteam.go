@@ -9,10 +9,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type PatchTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // PatchTeamRequestBodyRemoteCaching - Whether or not remote caching is enabled for the team
 type PatchTeamRequestBodyRemoteCaching struct {
 	// Enable or disable remote caching for the team.
@@ -98,8 +94,11 @@ type PatchTeamRequest struct {
 }
 
 type PatchTeamResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	Team        *shared.Team
 }

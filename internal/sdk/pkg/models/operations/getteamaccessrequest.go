@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GetTeamAccessRequestSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetTeamAccessRequestRequest struct {
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 	UserID string `pathParam:"style=simple,explode=false,name=userId"`
@@ -192,8 +188,11 @@ type GetTeamAccessRequest200ApplicationJSON struct {
 }
 
 type GetTeamAccessRequestResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successfully
 	GetTeamAccessRequest200ApplicationJSONObject *GetTeamAccessRequest200ApplicationJSON

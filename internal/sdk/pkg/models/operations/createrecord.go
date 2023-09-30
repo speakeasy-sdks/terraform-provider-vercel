@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type CreateRecordSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // CreateRecordRequestBody9Type - Must be of type `NS`.
 type CreateRecordRequestBody9Type string
 
@@ -682,8 +678,11 @@ func (u CreateRecord200ApplicationJSON) MarshalJSON() ([]byte, error) {
 }
 
 type CreateRecordResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response showing the uid of the newly created DNS record.
 	CreateRecord200ApplicationJSONOneOf *CreateRecord200ApplicationJSON

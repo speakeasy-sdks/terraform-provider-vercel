@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type UpdateRecordSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UpdateRecordRequestBodySrv struct {
 	Port     *int64  `json:"port"`
 	Priority *int64  `json:"priority"`
@@ -181,8 +177,11 @@ type UpdateRecord200ApplicationJSON struct {
 }
 
 type UpdateRecordResponse struct {
-	ContentType                          string
-	StatusCode                           int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                          *http.Response
 	UpdateRecord200ApplicationJSONObject *UpdateRecord200ApplicationJSON
 }

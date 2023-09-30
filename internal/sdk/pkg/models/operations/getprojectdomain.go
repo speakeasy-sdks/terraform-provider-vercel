@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type GetProjectDomainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetProjectDomainRequest struct {
 	// The project domain name
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
@@ -78,8 +74,11 @@ type GetProjectDomain200ApplicationJSON struct {
 }
 
 type GetProjectDomainResponse struct {
-	ContentType                              string
-	StatusCode                               int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                              *http.Response
 	GetProjectDomain200ApplicationJSONObject *GetProjectDomain200ApplicationJSON
 }

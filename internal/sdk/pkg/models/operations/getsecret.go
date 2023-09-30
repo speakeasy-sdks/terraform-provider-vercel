@@ -9,10 +9,6 @@ import (
 	"time"
 )
 
-type GetSecretSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // GetSecretDecrypt - Whether to try to decrypt the value of the secret. Only works if `decryptable` has been set to `true` when the secret was created.
 type GetSecretDecrypt string
 
@@ -73,8 +69,11 @@ type GetSecret200ApplicationJSON struct {
 }
 
 type GetSecretResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response retrieving a secret.
 	GetSecret200ApplicationJSONObject *GetSecret200ApplicationJSON

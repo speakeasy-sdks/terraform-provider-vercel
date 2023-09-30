@@ -11,23 +11,19 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type CreateProjectSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
-type CreateProjectRequestBodyEnvironmentVariablesTarget2 string
+type CreateProjectRequestBodyEnvironmentVariablesTarget string
 
 const (
-	CreateProjectRequestBodyEnvironmentVariablesTarget2Production  CreateProjectRequestBodyEnvironmentVariablesTarget2 = "production"
-	CreateProjectRequestBodyEnvironmentVariablesTarget2Preview     CreateProjectRequestBodyEnvironmentVariablesTarget2 = "preview"
-	CreateProjectRequestBodyEnvironmentVariablesTarget2Development CreateProjectRequestBodyEnvironmentVariablesTarget2 = "development"
+	CreateProjectRequestBodyEnvironmentVariablesTargetProduction  CreateProjectRequestBodyEnvironmentVariablesTarget = "production"
+	CreateProjectRequestBodyEnvironmentVariablesTargetPreview     CreateProjectRequestBodyEnvironmentVariablesTarget = "preview"
+	CreateProjectRequestBodyEnvironmentVariablesTargetDevelopment CreateProjectRequestBodyEnvironmentVariablesTarget = "development"
 )
 
-func (e CreateProjectRequestBodyEnvironmentVariablesTarget2) ToPointer() *CreateProjectRequestBodyEnvironmentVariablesTarget2 {
+func (e CreateProjectRequestBodyEnvironmentVariablesTarget) ToPointer() *CreateProjectRequestBodyEnvironmentVariablesTarget {
 	return &e
 }
 
-func (e *CreateProjectRequestBodyEnvironmentVariablesTarget2) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectRequestBodyEnvironmentVariablesTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -38,110 +34,11 @@ func (e *CreateProjectRequestBodyEnvironmentVariablesTarget2) UnmarshalJSON(data
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectRequestBodyEnvironmentVariablesTarget2(v)
+		*e = CreateProjectRequestBodyEnvironmentVariablesTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectRequestBodyEnvironmentVariablesTarget2: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectRequestBodyEnvironmentVariablesTarget: %v", v)
 	}
-}
-
-// CreateProjectRequestBodyEnvironmentVariablesTarget1 - Deployment Target or Targets in which the ENV variable will be used
-type CreateProjectRequestBodyEnvironmentVariablesTarget1 string
-
-const (
-	CreateProjectRequestBodyEnvironmentVariablesTarget1Production  CreateProjectRequestBodyEnvironmentVariablesTarget1 = "production"
-	CreateProjectRequestBodyEnvironmentVariablesTarget1Preview     CreateProjectRequestBodyEnvironmentVariablesTarget1 = "preview"
-	CreateProjectRequestBodyEnvironmentVariablesTarget1Development CreateProjectRequestBodyEnvironmentVariablesTarget1 = "development"
-)
-
-func (e CreateProjectRequestBodyEnvironmentVariablesTarget1) ToPointer() *CreateProjectRequestBodyEnvironmentVariablesTarget1 {
-	return &e
-}
-
-func (e *CreateProjectRequestBodyEnvironmentVariablesTarget1) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "production":
-		fallthrough
-	case "preview":
-		fallthrough
-	case "development":
-		*e = CreateProjectRequestBodyEnvironmentVariablesTarget1(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateProjectRequestBodyEnvironmentVariablesTarget1: %v", v)
-	}
-}
-
-type CreateProjectRequestBodyEnvironmentVariablesTargetType string
-
-const (
-	CreateProjectRequestBodyEnvironmentVariablesTargetTypeCreateProjectRequestBodyEnvironmentVariablesTarget1        CreateProjectRequestBodyEnvironmentVariablesTargetType = "createProject_requestBody_environmentVariables_target_1"
-	CreateProjectRequestBodyEnvironmentVariablesTargetTypeArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 CreateProjectRequestBodyEnvironmentVariablesTargetType = "arrayOfcreateProject_requestBody_environmentVariables_target_2"
-)
-
-type CreateProjectRequestBodyEnvironmentVariablesTarget struct {
-	CreateProjectRequestBodyEnvironmentVariablesTarget1        *CreateProjectRequestBodyEnvironmentVariablesTarget1
-	ArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 []CreateProjectRequestBodyEnvironmentVariablesTarget2
-
-	Type CreateProjectRequestBodyEnvironmentVariablesTargetType
-}
-
-func CreateCreateProjectRequestBodyEnvironmentVariablesTargetCreateProjectRequestBodyEnvironmentVariablesTarget1(createProjectRequestBodyEnvironmentVariablesTarget1 CreateProjectRequestBodyEnvironmentVariablesTarget1) CreateProjectRequestBodyEnvironmentVariablesTarget {
-	typ := CreateProjectRequestBodyEnvironmentVariablesTargetTypeCreateProjectRequestBodyEnvironmentVariablesTarget1
-
-	return CreateProjectRequestBodyEnvironmentVariablesTarget{
-		CreateProjectRequestBodyEnvironmentVariablesTarget1: &createProjectRequestBodyEnvironmentVariablesTarget1,
-		Type: typ,
-	}
-}
-
-func CreateCreateProjectRequestBodyEnvironmentVariablesTargetArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2(arrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 []CreateProjectRequestBodyEnvironmentVariablesTarget2) CreateProjectRequestBodyEnvironmentVariablesTarget {
-	typ := CreateProjectRequestBodyEnvironmentVariablesTargetTypeArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2
-
-	return CreateProjectRequestBodyEnvironmentVariablesTarget{
-		ArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2: arrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2,
-		Type: typ,
-	}
-}
-
-func (u *CreateProjectRequestBodyEnvironmentVariablesTarget) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	createProjectRequestBodyEnvironmentVariablesTarget1 := new(CreateProjectRequestBodyEnvironmentVariablesTarget1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectRequestBodyEnvironmentVariablesTarget1); err == nil {
-		u.CreateProjectRequestBodyEnvironmentVariablesTarget1 = createProjectRequestBodyEnvironmentVariablesTarget1
-		u.Type = CreateProjectRequestBodyEnvironmentVariablesTargetTypeCreateProjectRequestBodyEnvironmentVariablesTarget1
-		return nil
-	}
-
-	arrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 := []CreateProjectRequestBodyEnvironmentVariablesTarget2{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2); err == nil {
-		u.ArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 = arrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2
-		u.Type = CreateProjectRequestBodyEnvironmentVariablesTargetTypeArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u CreateProjectRequestBodyEnvironmentVariablesTarget) MarshalJSON() ([]byte, error) {
-	if u.CreateProjectRequestBodyEnvironmentVariablesTarget1 != nil {
-		return json.Marshal(u.CreateProjectRequestBodyEnvironmentVariablesTarget1)
-	}
-
-	if u.ArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 != nil {
-		return json.Marshal(u.ArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2)
-	}
-
-	return nil, nil
 }
 
 // CreateProjectRequestBodyEnvironmentVariablesType - Type of the ENV variable
@@ -184,7 +81,7 @@ type CreateProjectRequestBodyEnvironmentVariables struct {
 	// Name of the ENV variable
 	Key string `json:"key"`
 	// Deployment Target or Targets in which the ENV variable will be used
-	Target CreateProjectRequestBodyEnvironmentVariablesTarget `json:"target"`
+	Target []CreateProjectRequestBodyEnvironmentVariablesTarget `json:"target"`
 	// Type of the ENV variable
 	Type *CreateProjectRequestBodyEnvironmentVariablesType `json:"type,omitempty"`
 	// Value for the ENV variable
@@ -2814,8 +2711,11 @@ type CreateProject200ApplicationJSON struct {
 }
 
 type CreateProjectResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The project was successfuly created
 	CreateProject200ApplicationJSONObject *CreateProject200ApplicationJSON

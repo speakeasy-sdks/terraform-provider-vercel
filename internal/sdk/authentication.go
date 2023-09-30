@@ -25,7 +25,7 @@ func newAuthentication(sdkConfig sdkConfiguration) *authentication {
 
 // CreateAuthToken - Create an Auth Token
 // Creates and returns a new authentication token for the currently authenticated User. The `bearerToken` property is only provided once, in the response body, so be sure to save it on the client for use with API requests.
-func (s *authentication) CreateAuthToken(ctx context.Context, request operations.CreateAuthTokenRequest, security operations.CreateAuthTokenSecurity) (*operations.CreateAuthTokenResponse, error) {
+func (s *authentication) CreateAuthToken(ctx context.Context, request operations.CreateAuthTokenRequest) (*operations.CreateAuthTokenResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v3/user/tokens"
 
@@ -42,7 +42,7 @@ func (s *authentication) CreateAuthToken(ctx context.Context, request operations
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -50,7 +50,7 @@ func (s *authentication) CreateAuthToken(ctx context.Context, request operations
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -100,7 +100,7 @@ func (s *authentication) CreateAuthToken(ctx context.Context, request operations
 
 // DeleteAuthToken - Delete an authentication token
 // Invalidate an authentication token, such that it will no longer be valid for future HTTP requests.
-func (s *authentication) DeleteAuthToken(ctx context.Context, request operations.DeleteAuthTokenRequest, security operations.DeleteAuthTokenSecurity) (*operations.DeleteAuthTokenResponse, error) {
+func (s *authentication) DeleteAuthToken(ctx context.Context, request operations.DeleteAuthTokenRequest) (*operations.DeleteAuthTokenResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v3/user/tokens/{tokenId}", request, nil)
 	if err != nil {
@@ -112,9 +112,9 @@ func (s *authentication) DeleteAuthToken(ctx context.Context, request operations
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -180,11 +180,11 @@ func (s *authentication) EmailLogin(ctx context.Context, request operations.Emai
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -228,7 +228,7 @@ func (s *authentication) EmailLogin(ctx context.Context, request operations.Emai
 
 // GetAuthToken - Get Auth Token Metadata
 // Retrieve metadata about an authentication token belonging to the currently authenticated User.
-func (s *authentication) GetAuthToken(ctx context.Context, request operations.GetAuthTokenRequest, security operations.GetAuthTokenSecurity) (*operations.GetAuthTokenResponse, error) {
+func (s *authentication) GetAuthToken(ctx context.Context, request operations.GetAuthTokenRequest) (*operations.GetAuthTokenResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v5/user/tokens/{tokenId}", request, nil)
 	if err != nil {
@@ -240,9 +240,9 @@ func (s *authentication) GetAuthToken(ctx context.Context, request operations.Ge
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -289,7 +289,7 @@ func (s *authentication) GetAuthToken(ctx context.Context, request operations.Ge
 
 // ListAuthTokens - List Auth Tokens
 // Retrieve a list of the current User's authentication tokens.
-func (s *authentication) ListAuthTokens(ctx context.Context, security operations.ListAuthTokensSecurity) (*operations.ListAuthTokensResponse, error) {
+func (s *authentication) ListAuthTokens(ctx context.Context) (*operations.ListAuthTokensResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v5/user/tokens"
 
@@ -298,9 +298,9 @@ func (s *authentication) ListAuthTokens(ctx context.Context, security operations
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -356,13 +356,13 @@ func (s *authentication) VerifyToken(ctx context.Context, request operations.Ver
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

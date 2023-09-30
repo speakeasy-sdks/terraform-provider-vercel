@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type CreateEdgeConfigTokenSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CreateEdgeConfigTokenRequestBody struct {
 	Label string `json:"label"`
 }
@@ -27,8 +23,11 @@ type CreateEdgeConfigToken201ApplicationJSON struct {
 }
 
 type CreateEdgeConfigTokenResponse struct {
-	ContentType                                   string
-	StatusCode                                    int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                   *http.Response
 	CreateEdgeConfigToken201ApplicationJSONObject *CreateEdgeConfigToken201ApplicationJSON
 }

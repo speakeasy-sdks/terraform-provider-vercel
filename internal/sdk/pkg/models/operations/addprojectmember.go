@@ -6,228 +6,24 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 )
 
-type AddProjectMemberSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
-// AddProjectMemberRequestBody3Role - The project role of the member that will be added.
-type AddProjectMemberRequestBody3Role string
-
-const (
-	AddProjectMemberRequestBody3RoleAdmin            AddProjectMemberRequestBody3Role = "ADMIN"
-	AddProjectMemberRequestBody3RoleProjectDeveloper AddProjectMemberRequestBody3Role = "PROJECT_DEVELOPER"
-	AddProjectMemberRequestBody3RoleProjectViewer    AddProjectMemberRequestBody3Role = "PROJECT_VIEWER"
-)
-
-func (e AddProjectMemberRequestBody3Role) ToPointer() *AddProjectMemberRequestBody3Role {
-	return &e
-}
-
-func (e *AddProjectMemberRequestBody3Role) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ADMIN":
-		fallthrough
-	case "PROJECT_DEVELOPER":
-		fallthrough
-	case "PROJECT_VIEWER":
-		*e = AddProjectMemberRequestBody3Role(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AddProjectMemberRequestBody3Role: %v", v)
-	}
-}
-
-type AddProjectMemberRequestBody3 struct {
-	// The email of the team member that should be added to this project.
-	Email string `json:"email"`
-	// The project role of the member that will be added.
-	Role AddProjectMemberRequestBody3Role `json:"role"`
-	// The ID of the team member that should be added to this project.
-	UID *string `json:"uid,omitempty"`
-	// The username of the team member that should be added to this project.
-	Username *string `json:"username,omitempty"`
-}
-
-// AddProjectMemberRequestBody2Role - The project role of the member that will be added.
-type AddProjectMemberRequestBody2Role string
-
-const (
-	AddProjectMemberRequestBody2RoleAdmin            AddProjectMemberRequestBody2Role = "ADMIN"
-	AddProjectMemberRequestBody2RoleProjectDeveloper AddProjectMemberRequestBody2Role = "PROJECT_DEVELOPER"
-	AddProjectMemberRequestBody2RoleProjectViewer    AddProjectMemberRequestBody2Role = "PROJECT_VIEWER"
-)
-
-func (e AddProjectMemberRequestBody2Role) ToPointer() *AddProjectMemberRequestBody2Role {
-	return &e
-}
-
-func (e *AddProjectMemberRequestBody2Role) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ADMIN":
-		fallthrough
-	case "PROJECT_DEVELOPER":
-		fallthrough
-	case "PROJECT_VIEWER":
-		*e = AddProjectMemberRequestBody2Role(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AddProjectMemberRequestBody2Role: %v", v)
-	}
-}
-
-type AddProjectMemberRequestBody2 struct {
-	// The email of the team member that should be added to this project.
-	Email *string `json:"email,omitempty"`
-	// The project role of the member that will be added.
-	Role AddProjectMemberRequestBody2Role `json:"role"`
-	// The ID of the team member that should be added to this project.
-	UID *string `json:"uid,omitempty"`
-	// The username of the team member that should be added to this project.
-	Username string `json:"username"`
-}
-
-// AddProjectMemberRequestBody1Role - The project role of the member that will be added.
-type AddProjectMemberRequestBody1Role string
-
-const (
-	AddProjectMemberRequestBody1RoleAdmin            AddProjectMemberRequestBody1Role = "ADMIN"
-	AddProjectMemberRequestBody1RoleProjectDeveloper AddProjectMemberRequestBody1Role = "PROJECT_DEVELOPER"
-	AddProjectMemberRequestBody1RoleProjectViewer    AddProjectMemberRequestBody1Role = "PROJECT_VIEWER"
-)
-
-func (e AddProjectMemberRequestBody1Role) ToPointer() *AddProjectMemberRequestBody1Role {
-	return &e
-}
-
-func (e *AddProjectMemberRequestBody1Role) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ADMIN":
-		fallthrough
-	case "PROJECT_DEVELOPER":
-		fallthrough
-	case "PROJECT_VIEWER":
-		*e = AddProjectMemberRequestBody1Role(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AddProjectMemberRequestBody1Role: %v", v)
-	}
-}
-
-type AddProjectMemberRequestBody1 struct {
-	// The email of the team member that should be added to this project.
-	Email *string `json:"email,omitempty"`
-	// The project role of the member that will be added.
-	Role AddProjectMemberRequestBody1Role `json:"role"`
-	// The ID of the team member that should be added to this project.
-	UID string `json:"uid"`
-	// The username of the team member that should be added to this project.
-	Username *string `json:"username,omitempty"`
-}
-
 type AddProjectMemberRequestBodyType string
 
-const (
-	AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody1 AddProjectMemberRequestBodyType = "addProjectMember_requestBody_1"
-	AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody2 AddProjectMemberRequestBodyType = "addProjectMember_requestBody_2"
-	AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody3 AddProjectMemberRequestBodyType = "addProjectMember_requestBody_3"
-)
+const ()
 
 type AddProjectMemberRequestBody struct {
-	AddProjectMemberRequestBody1 *AddProjectMemberRequestBody1
-	AddProjectMemberRequestBody2 *AddProjectMemberRequestBody2
-	AddProjectMemberRequestBody3 *AddProjectMemberRequestBody3
-
 	Type AddProjectMemberRequestBodyType
-}
-
-func CreateAddProjectMemberRequestBodyAddProjectMemberRequestBody1(addProjectMemberRequestBody1 AddProjectMemberRequestBody1) AddProjectMemberRequestBody {
-	typ := AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody1
-
-	return AddProjectMemberRequestBody{
-		AddProjectMemberRequestBody1: &addProjectMemberRequestBody1,
-		Type:                         typ,
-	}
-}
-
-func CreateAddProjectMemberRequestBodyAddProjectMemberRequestBody2(addProjectMemberRequestBody2 AddProjectMemberRequestBody2) AddProjectMemberRequestBody {
-	typ := AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody2
-
-	return AddProjectMemberRequestBody{
-		AddProjectMemberRequestBody2: &addProjectMemberRequestBody2,
-		Type:                         typ,
-	}
-}
-
-func CreateAddProjectMemberRequestBodyAddProjectMemberRequestBody3(addProjectMemberRequestBody3 AddProjectMemberRequestBody3) AddProjectMemberRequestBody {
-	typ := AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody3
-
-	return AddProjectMemberRequestBody{
-		AddProjectMemberRequestBody3: &addProjectMemberRequestBody3,
-		Type:                         typ,
-	}
 }
 
 func (u *AddProjectMemberRequestBody) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	addProjectMemberRequestBody1 := new(AddProjectMemberRequestBody1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&addProjectMemberRequestBody1); err == nil {
-		u.AddProjectMemberRequestBody1 = addProjectMemberRequestBody1
-		u.Type = AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody1
-		return nil
-	}
-
-	addProjectMemberRequestBody2 := new(AddProjectMemberRequestBody2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&addProjectMemberRequestBody2); err == nil {
-		u.AddProjectMemberRequestBody2 = addProjectMemberRequestBody2
-		u.Type = AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody2
-		return nil
-	}
-
-	addProjectMemberRequestBody3 := new(AddProjectMemberRequestBody3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&addProjectMemberRequestBody3); err == nil {
-		u.AddProjectMemberRequestBody3 = addProjectMemberRequestBody3
-		u.Type = AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody3
-		return nil
-	}
-
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u AddProjectMemberRequestBody) MarshalJSON() ([]byte, error) {
-	if u.AddProjectMemberRequestBody1 != nil {
-		return json.Marshal(u.AddProjectMemberRequestBody1)
-	}
-
-	if u.AddProjectMemberRequestBody2 != nil {
-		return json.Marshal(u.AddProjectMemberRequestBody2)
-	}
-
-	if u.AddProjectMemberRequestBody3 != nil {
-		return json.Marshal(u.AddProjectMemberRequestBody3)
-	}
 
 	return nil, nil
 }
@@ -246,8 +42,11 @@ type AddProjectMember200ApplicationJSON struct {
 }
 
 type AddProjectMemberResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Responds with the project ID on success.
 	AddProjectMember200ApplicationJSONObject *AddProjectMember200ApplicationJSON

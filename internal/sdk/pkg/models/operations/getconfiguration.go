@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type GetConfigurationSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetConfigurationRequest struct {
 	// ID of the configuration to check
 	ID string `pathParam:"style=simple,explode=false,name=id"`
@@ -691,8 +687,11 @@ func (u GetConfiguration200ApplicationJSON) MarshalJSON() ([]byte, error) {
 }
 
 type GetConfigurationResponse struct {
-	ContentType                             string
-	StatusCode                              int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                             *http.Response
 	GetConfiguration200ApplicationJSONOneOf *GetConfiguration200ApplicationJSON
 }
