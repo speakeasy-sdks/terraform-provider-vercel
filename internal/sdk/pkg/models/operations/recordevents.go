@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type RecordEventsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // RecordEventsRequestBodyEvent - One of `HIT` or `MISS`. `HIT` specifies that a cached artifact for `hash` was found in the cache. `MISS` specifies that a cached artifact with `hash` was not found.
 type RecordEventsRequestBodyEvent string
 
@@ -92,7 +88,10 @@ type RecordEventsRequest struct {
 }
 
 type RecordEventsResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 }

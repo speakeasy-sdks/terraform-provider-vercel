@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type PatchtEdgeConfigItemsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type PatchtEdgeConfigItemsRequest struct {
 	EdgeConfigID string `pathParam:"style=simple,explode=false,name=edgeConfigId"`
 	// The Team identifier or slug to perform the request on behalf of.
@@ -21,8 +17,11 @@ type PatchtEdgeConfigItems200ApplicationJSON struct {
 }
 
 type PatchtEdgeConfigItemsResponse struct {
-	ContentType                                   string
-	StatusCode                                    int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                   *http.Response
 	PatchtEdgeConfigItems200ApplicationJSONObject *PatchtEdgeConfigItems200ApplicationJSON
 }

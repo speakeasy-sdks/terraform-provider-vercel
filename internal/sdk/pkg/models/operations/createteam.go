@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type CreateTeamSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CreateTeamRequestBody struct {
 	// The desired name for the Team. It will be generated from the provided slug if nothing is provided
 	Name *string `json:"name,omitempty"`
@@ -1462,8 +1458,11 @@ type CreateTeam200ApplicationJSON struct {
 }
 
 type CreateTeamResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The team was created successfully
 	CreateTeam200ApplicationJSONObject *CreateTeam200ApplicationJSON

@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type IssueCertSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type IssueCertRequestBody struct {
 	// The common names the cert should be issued for
 	Cns []string `json:"cns,omitempty"`
@@ -30,8 +26,11 @@ type IssueCert200ApplicationJSON struct {
 }
 
 type IssueCertResponse struct {
-	ContentType                       string
-	StatusCode                        int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                       *http.Response
 	IssueCert200ApplicationJSONObject *IssueCert200ApplicationJSON
 }

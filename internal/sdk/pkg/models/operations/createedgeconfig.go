@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type CreateEdgeConfigSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CreateEdgeConfigRequest struct {
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
@@ -38,8 +34,11 @@ type CreateEdgeConfig201ApplicationJSON struct {
 }
 
 type CreateEdgeConfigResponse struct {
-	ContentType                              string
-	StatusCode                               int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                              *http.Response
 	CreateEdgeConfig201ApplicationJSONObject *CreateEdgeConfig201ApplicationJSON
 }

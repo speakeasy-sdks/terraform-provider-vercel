@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type UpdateProjectSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // UpdateProjectRequestBodyFramework - The framework that is being used for this project. When `null` is used no framework is selected
 type UpdateProjectRequestBodyFramework string
 
@@ -275,7 +271,7 @@ func (e *UpdateProjectRequestBodySsoProtectionDeploymentType) UnmarshalJSON(data
 // UpdateProjectRequestBodySsoProtection - Ensures visitors to your Preview Deployments are logged into Vercel and have a minimum of Viewer access on your team
 type UpdateProjectRequestBodySsoProtection struct {
 	// Specify if the Vercel Authentication (SSO Protection) will apply to every Deployment Target or just Preview
-	DeploymentType UpdateProjectRequestBodySsoProtectionDeploymentType `json:"deploymentType"`
+	DeploymentType *UpdateProjectRequestBodySsoProtectionDeploymentType `json:"deploymentType,omitempty"`
 }
 
 type UpdateProjectRequestBodyTrustedIpsAddresses struct {
@@ -2808,8 +2804,11 @@ type UpdateProject200ApplicationJSON struct {
 }
 
 type UpdateProjectResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The project was successfully updated
 	UpdateProject200ApplicationJSONObject *UpdateProject200ApplicationJSON

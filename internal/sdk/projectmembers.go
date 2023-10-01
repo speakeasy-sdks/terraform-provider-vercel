@@ -24,7 +24,7 @@ func newProjectMembers(sdkConfig sdkConfiguration) *projectMembers {
 
 // AddProjectMember - Adds a new member to a project.
 // Adds a new member to the project.
-func (s *projectMembers) AddProjectMember(ctx context.Context, request operations.AddProjectMemberRequest, security operations.AddProjectMemberSecurity) (*operations.AddProjectMemberResponse, error) {
+func (s *projectMembers) AddProjectMember(ctx context.Context, request operations.AddProjectMemberRequest) (*operations.AddProjectMemberResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{idOrName}/members", request, nil)
 	if err != nil {
@@ -44,7 +44,7 @@ func (s *projectMembers) AddProjectMember(ctx context.Context, request operation
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -52,7 +52,7 @@ func (s *projectMembers) AddProjectMember(ctx context.Context, request operation
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -104,7 +104,7 @@ func (s *projectMembers) AddProjectMember(ctx context.Context, request operation
 
 // GetProjectMembers - List project members
 // Lists all members of a project.
-func (s *projectMembers) GetProjectMembers(ctx context.Context, request operations.GetProjectMembersRequest, security operations.GetProjectMembersSecurity) (*operations.GetProjectMembersResponse, error) {
+func (s *projectMembers) GetProjectMembers(ctx context.Context, request operations.GetProjectMembersRequest) (*operations.GetProjectMembersResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{idOrName}/members", request, nil)
 	if err != nil {
@@ -116,13 +116,13 @@ func (s *projectMembers) GetProjectMembers(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -171,7 +171,7 @@ func (s *projectMembers) GetProjectMembers(ctx context.Context, request operatio
 
 // RemoveProjectMember - Remove a Project Member
 // Remove a member from a specific project
-func (s *projectMembers) RemoveProjectMember(ctx context.Context, request operations.RemoveProjectMemberRequest, security operations.RemoveProjectMemberSecurity) (*operations.RemoveProjectMemberResponse, error) {
+func (s *projectMembers) RemoveProjectMember(ctx context.Context, request operations.RemoveProjectMemberRequest) (*operations.RemoveProjectMemberResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{idOrName}/members/{uid}", request, nil)
 	if err != nil {
@@ -183,13 +183,13 @@ func (s *projectMembers) RemoveProjectMember(ctx context.Context, request operat
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

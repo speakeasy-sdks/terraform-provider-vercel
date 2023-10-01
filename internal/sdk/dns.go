@@ -24,7 +24,7 @@ func newDNS(sdkConfig sdkConfiguration) *dns {
 
 // CreateRecord - Create a DNS record
 // Creates a DNS record for a domain.
-func (s *dns) CreateRecord(ctx context.Context, request operations.CreateRecordRequest, security operations.CreateRecordSecurity) (*operations.CreateRecordResponse, error) {
+func (s *dns) CreateRecord(ctx context.Context, request operations.CreateRecordRequest) (*operations.CreateRecordResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/domains/{domain}/records", request, nil)
 	if err != nil {
@@ -44,7 +44,7 @@ func (s *dns) CreateRecord(ctx context.Context, request operations.CreateRecordR
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -52,7 +52,7 @@ func (s *dns) CreateRecord(ctx context.Context, request operations.CreateRecordR
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -106,7 +106,7 @@ func (s *dns) CreateRecord(ctx context.Context, request operations.CreateRecordR
 
 // GetRecords - List existing DNS records
 // Retrieves a list of DNS records created for a domain name. By default it returns 20 records if no limit is provided. The rest can be retrieved using the pagination options.
-func (s *dns) GetRecords(ctx context.Context, request operations.GetRecordsRequest, security operations.GetRecordsSecurity) (*operations.GetRecordsResponse, error) {
+func (s *dns) GetRecords(ctx context.Context, request operations.GetRecordsRequest) (*operations.GetRecordsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v4/domains/{domain}/records", request, nil)
 	if err != nil {
@@ -118,13 +118,13 @@ func (s *dns) GetRecords(ctx context.Context, request operations.GetRecordsReque
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -173,7 +173,7 @@ func (s *dns) GetRecords(ctx context.Context, request operations.GetRecordsReque
 
 // RemoveRecord - Delete a DNS record
 // Removes an existing DNS record from a domain name.
-func (s *dns) RemoveRecord(ctx context.Context, request operations.RemoveRecordRequest, security operations.RemoveRecordSecurity) (*operations.RemoveRecordResponse, error) {
+func (s *dns) RemoveRecord(ctx context.Context, request operations.RemoveRecordRequest) (*operations.RemoveRecordResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/domains/{domain}/records/{recordId}", request, nil)
 	if err != nil {
@@ -185,13 +185,13 @@ func (s *dns) RemoveRecord(ctx context.Context, request operations.RemoveRecordR
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -240,7 +240,7 @@ func (s *dns) RemoveRecord(ctx context.Context, request operations.RemoveRecordR
 
 // UpdateRecord - Update an existing DNS record
 // Updates an existing DNS record for a domain name.
-func (s *dns) UpdateRecord(ctx context.Context, request operations.UpdateRecordRequest, security operations.UpdateRecordSecurity) (*operations.UpdateRecordResponse, error) {
+func (s *dns) UpdateRecord(ctx context.Context, request operations.UpdateRecordRequest) (*operations.UpdateRecordResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/domains/records/{recordId}", request, nil)
 	if err != nil {
@@ -260,7 +260,7 @@ func (s *dns) UpdateRecord(ctx context.Context, request operations.UpdateRecordR
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -268,7 +268,7 @@ func (s *dns) UpdateRecord(ctx context.Context, request operations.UpdateRecordR
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

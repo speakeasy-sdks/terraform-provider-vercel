@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type FilterProjectEnvsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // FilterProjectEnvsDecrypt - If true, the environment variable value will be decrypted
 //
 // @deprecated null: This will be removed in a future release, please migrate away from it as soon as possible.
@@ -2682,8 +2678,11 @@ func (u FilterProjectEnvs200ApplicationJSON) MarshalJSON() ([]byte, error) {
 }
 
 type FilterProjectEnvsResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The list of environment variables for the given project
 	FilterProjectEnvs200ApplicationJSONOneOf *FilterProjectEnvs200ApplicationJSON

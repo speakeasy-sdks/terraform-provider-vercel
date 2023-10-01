@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type AddProjectMemberSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // AddProjectMemberRequestBody3Role - The project role of the member that will be added.
 type AddProjectMemberRequestBody3Role string
 
@@ -246,8 +242,11 @@ type AddProjectMember200ApplicationJSON struct {
 }
 
 type AddProjectMemberResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Responds with the project ID on success.
 	AddProjectMember200ApplicationJSONObject *AddProjectMember200ApplicationJSON

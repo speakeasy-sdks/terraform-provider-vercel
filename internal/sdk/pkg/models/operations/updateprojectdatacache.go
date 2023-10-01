@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type UpdateProjectDataCacheSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type UpdateProjectDataCacheRequestBody struct {
 	// Enable or disable data cache for the project - default: false
 	Disabled *bool `json:"disabled,omitempty"`
@@ -2443,8 +2439,11 @@ type UpdateProjectDataCache200ApplicationJSON struct {
 }
 
 type UpdateProjectDataCacheResponse struct {
-	ContentType                                    string
-	StatusCode                                     int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                    *http.Response
 	UpdateProjectDataCache200ApplicationJSONObject *UpdateProjectDataCache200ApplicationJSON
 }

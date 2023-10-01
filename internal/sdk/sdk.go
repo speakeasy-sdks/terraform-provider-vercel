@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 	"vercel/internal/sdk/pkg/models/operations"
+	"vercel/internal/sdk/pkg/models/shared"
 	"vercel/internal/sdk/pkg/utils"
 )
 
@@ -44,15 +45,16 @@ func Float32(f float32) *float32 { return &f }
 func Float64(f float64) *float64 { return &f }
 
 type sdkConfiguration struct {
-	DefaultClient  HTTPClient
-	SecurityClient HTTPClient
-
+	DefaultClient     HTTPClient
+	SecurityClient    HTTPClient
+	Security          *shared.Security
 	ServerURL         string
 	ServerIndex       int
 	Language          string
 	OpenAPIDocVersion string
 	SDKVersion        string
 	GenVersion        string
+	UserAgent         string
 }
 
 func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
@@ -123,14 +125,22 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
+// WithSecurity configures the SDK to use the provided security details
+func WithSecurity(security shared.Security) SDKOption {
+	return func(sdk *Vercel) {
+		sdk.sdkConfiguration.Security = &security
+	}
+}
+
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Vercel {
 	sdk := &Vercel{
 		sdkConfiguration: sdkConfiguration{
 			Language:          "terraform",
 			OpenAPIDocVersion: "0.0.1",
-			SDKVersion:        "0.1.0",
-			GenVersion:        "2.107.3",
+			SDKVersion:        "0.2.0",
+			GenVersion:        "2.142.2",
+			UserAgent:         "speakeasy-sdk/terraform 0.2.0 2.142.2 0.0.1 vercel",
 		},
 	}
 	for _, opt := range opts {
@@ -142,7 +152,11 @@ func New(opts ...SDKOption) *Vercel {
 		sdk.sdkConfiguration.DefaultClient = &http.Client{Timeout: 60 * time.Second}
 	}
 	if sdk.sdkConfiguration.SecurityClient == nil {
-		sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
+		if sdk.sdkConfiguration.Security != nil {
+			sdk.sdkConfiguration.SecurityClient = utils.ConfigureSecurityClient(sdk.sdkConfiguration.DefaultClient, sdk.sdkConfiguration.Security)
+		} else {
+			sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
+		}
 	}
 
 	sdk.Aliases = newAliases(sdk.sdkConfiguration)
@@ -189,13 +203,13 @@ func (s *Vercel) DeleteDataCachePurgeAll(ctx context.Context, request operations
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "*/*")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -247,9 +261,9 @@ func (s *Vercel) GetDeploymentsDeploymentIDBuilds(ctx context.Context, request o
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -313,11 +327,11 @@ func (s *Vercel) PatchDataCacheBillingSettings(ctx context.Context, request oper
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

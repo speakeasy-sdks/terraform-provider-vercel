@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type GetConfigurableLogDrainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetConfigurableLogDrainRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 	// The Team identifier or slug to perform the request on behalf of.
@@ -226,8 +222,11 @@ type GetConfigurableLogDrain200ApplicationJSON struct {
 }
 
 type GetConfigurableLogDrainResponse struct {
-	ContentType                                     string
-	StatusCode                                      int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                     *http.Response
 	GetConfigurableLogDrain200ApplicationJSONObject *GetConfigurableLogDrain200ApplicationJSON
 }

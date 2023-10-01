@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type DeleteSecretSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type DeleteSecretRequest struct {
 	// The name or the unique identifier to which the secret belongs to.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
@@ -27,8 +23,11 @@ type DeleteSecret200ApplicationJSON struct {
 }
 
 type DeleteSecretResponse struct {
-	ContentType                          string
-	StatusCode                           int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                          *http.Response
 	DeleteSecret200ApplicationJSONObject *DeleteSecret200ApplicationJSON
 }

@@ -25,7 +25,7 @@ func newDomains(sdkConfig sdkConfiguration) *domains {
 
 // BuyDomain - Purchase a domain
 // Allows to purchase the specified domain.
-func (s *domains) BuyDomain(ctx context.Context, request operations.BuyDomainRequest, security operations.BuyDomainSecurity) (*operations.BuyDomainResponse, error) {
+func (s *domains) BuyDomain(ctx context.Context, request operations.BuyDomainRequest) (*operations.BuyDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v4/domains/buy"
 
@@ -42,7 +42,7 @@ func (s *domains) BuyDomain(ctx context.Context, request operations.BuyDomainReq
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -50,7 +50,7 @@ func (s *domains) BuyDomain(ctx context.Context, request operations.BuyDomainReq
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -112,7 +112,7 @@ func (s *domains) BuyDomain(ctx context.Context, request operations.BuyDomainReq
 
 // CheckDomainPrice - Check the price for a domain
 // Check the price to purchase a domain and how long a single purchase period is.
-func (s *domains) CheckDomainPrice(ctx context.Context, request operations.CheckDomainPriceRequest, security operations.CheckDomainPriceSecurity) (*operations.CheckDomainPriceResponse, error) {
+func (s *domains) CheckDomainPrice(ctx context.Context, request operations.CheckDomainPriceRequest) (*operations.CheckDomainPriceResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v4/domains/price"
 
@@ -121,13 +121,13 @@ func (s *domains) CheckDomainPrice(ctx context.Context, request operations.Check
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -174,7 +174,7 @@ func (s *domains) CheckDomainPrice(ctx context.Context, request operations.Check
 
 // CheckDomainStatus - Check a Domain Availability
 // Check if a domain name is available for purchase.
-func (s *domains) CheckDomainStatus(ctx context.Context, request operations.CheckDomainStatusRequest, security operations.CheckDomainStatusSecurity) (*operations.CheckDomainStatusResponse, error) {
+func (s *domains) CheckDomainStatus(ctx context.Context, request operations.CheckDomainStatusRequest) (*operations.CheckDomainStatusResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v4/domains/status"
 
@@ -183,13 +183,13 @@ func (s *domains) CheckDomainStatus(ctx context.Context, request operations.Chec
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -236,7 +236,7 @@ func (s *domains) CheckDomainStatus(ctx context.Context, request operations.Chec
 
 // CreateOrTransferDomain - Register or transfer-in a new Domain
 // This endpoint is used for adding a new apex domain name with Vercel for the authenticating user. Can also be used for initiating a domain transfer request from an external Registrar to Vercel.
-func (s *domains) CreateOrTransferDomain(ctx context.Context, request operations.CreateOrTransferDomainRequest, security operations.CreateOrTransferDomainSecurity) (*operations.CreateOrTransferDomainResponse, error) {
+func (s *domains) CreateOrTransferDomain(ctx context.Context, request operations.CreateOrTransferDomainRequest) (*operations.CreateOrTransferDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v5/domains"
 
@@ -253,7 +253,7 @@ func (s *domains) CreateOrTransferDomain(ctx context.Context, request operations
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -261,7 +261,7 @@ func (s *domains) CreateOrTransferDomain(ctx context.Context, request operations
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -315,7 +315,7 @@ func (s *domains) CreateOrTransferDomain(ctx context.Context, request operations
 
 // DeleteDomain - Remove a domain by name
 // Delete a previously registered domain name from Vercel. Deleting a domain will automatically remove any associated aliases.
-func (s *domains) DeleteDomain(ctx context.Context, request operations.DeleteDomainRequest, security operations.DeleteDomainSecurity) (*operations.DeleteDomainResponse, error) {
+func (s *domains) DeleteDomain(ctx context.Context, request operations.DeleteDomainRequest) (*operations.DeleteDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v6/domains/{domain}", request, nil)
 	if err != nil {
@@ -327,13 +327,13 @@ func (s *domains) DeleteDomain(ctx context.Context, request operations.DeleteDom
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -384,7 +384,7 @@ func (s *domains) DeleteDomain(ctx context.Context, request operations.DeleteDom
 
 // GetDomain - Get Information for a Single Domain
 // Get information for a single domain in an account or team.
-func (s *domains) GetDomain(ctx context.Context, request operations.GetDomainRequest, security operations.GetDomainSecurity) (*operations.GetDomainResponse, error) {
+func (s *domains) GetDomain(ctx context.Context, request operations.GetDomainRequest) (*operations.GetDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v5/domains/{domain}", request, nil)
 	if err != nil {
@@ -396,13 +396,13 @@ func (s *domains) GetDomain(ctx context.Context, request operations.GetDomainReq
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -451,7 +451,7 @@ func (s *domains) GetDomain(ctx context.Context, request operations.GetDomainReq
 
 // GetDomainConfig - Get a Domain's configuration
 // Get a Domain's configuration.
-func (s *domains) GetDomainConfig(ctx context.Context, request operations.GetDomainConfigRequest, security operations.GetDomainConfigSecurity) (*operations.GetDomainConfigResponse, error) {
+func (s *domains) GetDomainConfig(ctx context.Context, request operations.GetDomainConfigRequest) (*operations.GetDomainConfigResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v6/domains/{domain}/config", request, nil)
 	if err != nil {
@@ -463,13 +463,13 @@ func (s *domains) GetDomainConfig(ctx context.Context, request operations.GetDom
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -516,7 +516,7 @@ func (s *domains) GetDomainConfig(ctx context.Context, request operations.GetDom
 
 // GetDomains - List all the domains
 // Retrieves a list of domains registered for the authenticating user. By default it returns the last 20 domains if no limit is provided.
-func (s *domains) GetDomains(ctx context.Context, request operations.GetDomainsRequest, security operations.GetDomainsSecurity) (*operations.GetDomainsResponse, error) {
+func (s *domains) GetDomains(ctx context.Context, request operations.GetDomainsRequest) (*operations.GetDomainsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v5/domains"
 
@@ -525,13 +525,13 @@ func (s *domains) GetDomains(ctx context.Context, request operations.GetDomainsR
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

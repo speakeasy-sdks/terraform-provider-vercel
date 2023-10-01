@@ -11,10 +11,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type CreateProjectSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type CreateProjectRequestBodyEnvironmentVariablesTarget2 string
 
 const (
@@ -2814,8 +2810,11 @@ type CreateProject200ApplicationJSON struct {
 }
 
 type CreateProjectResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The project was successfuly created
 	CreateProject200ApplicationJSONObject *CreateProject200ApplicationJSON

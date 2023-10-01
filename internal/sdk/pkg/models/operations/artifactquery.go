@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type ArtifactQuerySecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type ArtifactQueryRequestBody struct {
 	// artifact hashes
 	Hashes []string `json:"hashes"`
@@ -22,8 +18,11 @@ type ArtifactQueryRequest struct {
 }
 
 type ArtifactQueryResponse struct {
-	ContentType                           string
-	StatusCode                            int
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                           *http.Response
 	ArtifactQuery200ApplicationJSONObject map[string]interface{}
 }

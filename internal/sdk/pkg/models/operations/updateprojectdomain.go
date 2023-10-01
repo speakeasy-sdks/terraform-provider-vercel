@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-type UpdateProjectDomainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 // UpdateProjectDomainRequestBodyRedirectStatusCode - Status code for domain redirect
 type UpdateProjectDomainRequestBodyRedirectStatusCode int64
 
@@ -123,8 +119,11 @@ type UpdateProjectDomain200ApplicationJSON struct {
 }
 
 type UpdateProjectDomainResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The domain was updated successfuly
 	UpdateProjectDomain200ApplicationJSONObject *UpdateProjectDomain200ApplicationJSON

@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type BuyDomainSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type BuyDomainRequestBody struct {
 	// The price you expect to be charged for the purchase.
 	ExpectedPrice *int64 `json:"expectedPrice,omitempty"`
@@ -52,8 +48,11 @@ type BuyDomain201ApplicationJSON struct {
 }
 
 type BuyDomainResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response for purchasing a Domain.
 	BuyDomain201ApplicationJSONObject *BuyDomain201ApplicationJSON

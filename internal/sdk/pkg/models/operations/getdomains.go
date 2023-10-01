@@ -9,10 +9,6 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type GetDomainsSecurity struct {
-	BearerToken string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
-}
-
 type GetDomainsRequest struct {
 	// Maximum number of domains to list from a request.
 	Limit *int64 `queryParam:"style=form,explode=true,name=limit"`
@@ -105,8 +101,11 @@ type GetDomains200ApplicationJSON struct {
 }
 
 type GetDomainsResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response retrieving a list of domains.
 	GetDomains200ApplicationJSONObject *GetDomains200ApplicationJSON
