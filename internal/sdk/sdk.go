@@ -138,9 +138,9 @@ func New(opts ...SDKOption) *Vercel {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "terraform",
 			OpenAPIDocVersion: "0.0.1",
-			SDKVersion:        "0.2.0",
-			GenVersion:        "2.142.2",
-			UserAgent:         "speakeasy-sdk/terraform 0.2.0 2.142.2 0.0.1 vercel",
+			SDKVersion:        "0.2.1",
+			GenVersion:        "2.143.2",
+			UserAgent:         "speakeasy-sdk/terraform 0.2.1 2.143.2 0.0.1 vercel",
 		},
 	}
 	for _, opt := range opts {
