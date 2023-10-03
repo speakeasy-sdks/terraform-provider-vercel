@@ -16,7 +16,7 @@ terraform {
   required_providers {
     vercel = {
       source  = "zchee/vercel"
-      version = "0.2.1"
+      version = "0.3.0"
     }
   }
 }
