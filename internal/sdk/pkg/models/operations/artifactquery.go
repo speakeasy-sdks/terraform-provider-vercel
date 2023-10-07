@@ -3,6 +3,9 @@
 package operations
 
 import (
+	"bytes"
+	"encoding/json"
+	"errors"
 	"net/http"
 )
 
@@ -17,6 +20,88 @@ type ArtifactQueryRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+type ArtifactQuery200ApplicationJSON2Error struct {
+	Message string `json:"message"`
+}
+
+type ArtifactQuery200ApplicationJSON2 struct {
+	Error ArtifactQuery200ApplicationJSON2Error `json:"error"`
+}
+
+type ArtifactQuery200ApplicationJSON1 struct {
+	Size           int64   `json:"size"`
+	Tag            *string `json:"tag,omitempty"`
+	TaskDurationMs int64   `json:"taskDurationMs"`
+}
+
+type ArtifactQuery200ApplicationJSONType string
+
+const (
+	ArtifactQuery200ApplicationJSONTypeArtifactQuery200ApplicationJSON1 ArtifactQuery200ApplicationJSONType = "artifactQuery_200ApplicationJSON_1"
+	ArtifactQuery200ApplicationJSONTypeArtifactQuery200ApplicationJSON2 ArtifactQuery200ApplicationJSONType = "artifactQuery_200ApplicationJSON_2"
+)
+
+type ArtifactQuery200ApplicationJSON struct {
+	ArtifactQuery200ApplicationJSON1 *ArtifactQuery200ApplicationJSON1
+	ArtifactQuery200ApplicationJSON2 *ArtifactQuery200ApplicationJSON2
+
+	Type ArtifactQuery200ApplicationJSONType
+}
+
+func CreateArtifactQuery200ApplicationJSONArtifactQuery200ApplicationJSON1(artifactQuery200ApplicationJSON1 ArtifactQuery200ApplicationJSON1) ArtifactQuery200ApplicationJSON {
+	typ := ArtifactQuery200ApplicationJSONTypeArtifactQuery200ApplicationJSON1
+
+	return ArtifactQuery200ApplicationJSON{
+		ArtifactQuery200ApplicationJSON1: &artifactQuery200ApplicationJSON1,
+		Type:                             typ,
+	}
+}
+
+func CreateArtifactQuery200ApplicationJSONArtifactQuery200ApplicationJSON2(artifactQuery200ApplicationJSON2 ArtifactQuery200ApplicationJSON2) ArtifactQuery200ApplicationJSON {
+	typ := ArtifactQuery200ApplicationJSONTypeArtifactQuery200ApplicationJSON2
+
+	return ArtifactQuery200ApplicationJSON{
+		ArtifactQuery200ApplicationJSON2: &artifactQuery200ApplicationJSON2,
+		Type:                             typ,
+	}
+}
+
+func (u *ArtifactQuery200ApplicationJSON) UnmarshalJSON(data []byte) error {
+	var d *json.Decoder
+
+	artifactQuery200ApplicationJSON2 := new(ArtifactQuery200ApplicationJSON2)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&artifactQuery200ApplicationJSON2); err == nil {
+		u.ArtifactQuery200ApplicationJSON2 = artifactQuery200ApplicationJSON2
+		u.Type = ArtifactQuery200ApplicationJSONTypeArtifactQuery200ApplicationJSON2
+		return nil
+	}
+
+	artifactQuery200ApplicationJSON1 := new(ArtifactQuery200ApplicationJSON1)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&artifactQuery200ApplicationJSON1); err == nil {
+		u.ArtifactQuery200ApplicationJSON1 = artifactQuery200ApplicationJSON1
+		u.Type = ArtifactQuery200ApplicationJSONTypeArtifactQuery200ApplicationJSON1
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ArtifactQuery200ApplicationJSON) MarshalJSON() ([]byte, error) {
+	if u.ArtifactQuery200ApplicationJSON2 != nil {
+		return json.Marshal(u.ArtifactQuery200ApplicationJSON2)
+	}
+
+	if u.ArtifactQuery200ApplicationJSON1 != nil {
+		return json.Marshal(u.ArtifactQuery200ApplicationJSON1)
+	}
+
+	return nil, nil
+}
+
 type ArtifactQueryResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -24,5 +109,5 @@ type ArtifactQueryResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                           *http.Response
-	ArtifactQuery200ApplicationJSONObject map[string]interface{}
+	ArtifactQuery200ApplicationJSONObject map[string]ArtifactQuery200ApplicationJSON
 }

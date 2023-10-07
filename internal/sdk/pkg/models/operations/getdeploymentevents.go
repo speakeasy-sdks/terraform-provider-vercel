@@ -1080,15 +1080,6 @@ func CreateGetDeploymentEvents200ApplicationStreamPlusJSONGetDeploymentEvents200
 func (u *GetDeploymentEvents200ApplicationStreamPlusJSON) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	getDeploymentEvents200ApplicationStreamPlusJSON7 := new(GetDeploymentEvents200ApplicationStreamPlusJSON7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON7); err == nil {
-		u.GetDeploymentEvents200ApplicationStreamPlusJSON7 = getDeploymentEvents200ApplicationStreamPlusJSON7
-		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSONTypeGetDeploymentEvents200ApplicationStreamPlusJSON7
-		return nil
-	}
-
 	getDeploymentEvents200ApplicationStreamPlusJSON1 := new(GetDeploymentEvents200ApplicationStreamPlusJSON1)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -1134,6 +1125,15 @@ func (u *GetDeploymentEvents200ApplicationStreamPlusJSON) UnmarshalJSON(data []b
 		return nil
 	}
 
+	getDeploymentEvents200ApplicationStreamPlusJSON7 := new(GetDeploymentEvents200ApplicationStreamPlusJSON7)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON7); err == nil {
+		u.GetDeploymentEvents200ApplicationStreamPlusJSON7 = getDeploymentEvents200ApplicationStreamPlusJSON7
+		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSONTypeGetDeploymentEvents200ApplicationStreamPlusJSON7
+		return nil
+	}
+
 	getDeploymentEvents200ApplicationStreamPlusJSON6 := new(GetDeploymentEvents200ApplicationStreamPlusJSON6)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -1147,10 +1147,6 @@ func (u *GetDeploymentEvents200ApplicationStreamPlusJSON) UnmarshalJSON(data []b
 }
 
 func (u GetDeploymentEvents200ApplicationStreamPlusJSON) MarshalJSON() ([]byte, error) {
-	if u.GetDeploymentEvents200ApplicationStreamPlusJSON7 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON7)
-	}
-
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON1 != nil {
 		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON1)
 	}
@@ -1169,6 +1165,10 @@ func (u GetDeploymentEvents200ApplicationStreamPlusJSON) MarshalJSON() ([]byte, 
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON5 != nil {
 		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON5)
+	}
+
+	if u.GetDeploymentEvents200ApplicationStreamPlusJSON7 != nil {
+		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON7)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON6 != nil {

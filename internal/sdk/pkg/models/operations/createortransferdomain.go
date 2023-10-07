@@ -20,6 +20,55 @@ type CreateOrTransferDomainRequestBody3 struct {
 	Method string `json:"method"`
 	// The domain name you want to add.
 	Name string `json:"name"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _CreateOrTransferDomainRequestBody3 CreateOrTransferDomainRequestBody3
+
+func (c *CreateOrTransferDomainRequestBody3) UnmarshalJSON(bs []byte) error {
+	data := _CreateOrTransferDomainRequestBody3{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = CreateOrTransferDomainRequestBody3(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "authCode")
+	delete(additionalFields, "expectedPrice")
+	delete(additionalFields, "method")
+	delete(additionalFields, "name")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c CreateOrTransferDomainRequestBody3) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_CreateOrTransferDomainRequestBody3(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 // CreateOrTransferDomainRequestBody2 - move-in
@@ -30,6 +79,54 @@ type CreateOrTransferDomainRequestBody2 struct {
 	Name string `json:"name"`
 	// The move-in token from Move Requested email.
 	Token *string `json:"token,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _CreateOrTransferDomainRequestBody2 CreateOrTransferDomainRequestBody2
+
+func (c *CreateOrTransferDomainRequestBody2) UnmarshalJSON(bs []byte) error {
+	data := _CreateOrTransferDomainRequestBody2{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = CreateOrTransferDomainRequestBody2(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "method")
+	delete(additionalFields, "name")
+	delete(additionalFields, "token")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c CreateOrTransferDomainRequestBody2) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_CreateOrTransferDomainRequestBody2(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 // CreateOrTransferDomainRequestBody1 - add
@@ -41,6 +138,55 @@ type CreateOrTransferDomainRequestBody1 struct {
 	// The domain name you want to add.
 	Name string `json:"name"`
 	Zone *bool  `json:"zone,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _CreateOrTransferDomainRequestBody1 CreateOrTransferDomainRequestBody1
+
+func (c *CreateOrTransferDomainRequestBody1) UnmarshalJSON(bs []byte) error {
+	data := _CreateOrTransferDomainRequestBody1{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = CreateOrTransferDomainRequestBody1(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "cdnEnabled")
+	delete(additionalFields, "method")
+	delete(additionalFields, "name")
+	delete(additionalFields, "zone")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c CreateOrTransferDomainRequestBody1) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_CreateOrTransferDomainRequestBody1(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type CreateOrTransferDomainRequestBodyType string

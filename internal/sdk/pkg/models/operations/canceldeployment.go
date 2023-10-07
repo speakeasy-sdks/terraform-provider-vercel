@@ -1009,24 +1009,6 @@ func CreateCancelDeployment200ApplicationJSONGitSourceCancelDeployment200Applica
 func (u *CancelDeployment200ApplicationJSONGitSource) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	cancelDeployment200ApplicationJSONGitSource6 := new(CancelDeployment200ApplicationJSONGitSource6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource6); err == nil {
-		u.CancelDeployment200ApplicationJSONGitSource6 = cancelDeployment200ApplicationJSONGitSource6
-		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource6
-		return nil
-	}
-
-	cancelDeployment200ApplicationJSONGitSource8 := new(CancelDeployment200ApplicationJSONGitSource8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource8); err == nil {
-		u.CancelDeployment200ApplicationJSONGitSource8 = cancelDeployment200ApplicationJSONGitSource8
-		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource8
-		return nil
-	}
-
 	cancelDeployment200ApplicationJSONGitSource1 := new(CancelDeployment200ApplicationJSONGitSource1)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -1063,12 +1045,30 @@ func (u *CancelDeployment200ApplicationJSONGitSource) UnmarshalJSON(data []byte)
 		return nil
 	}
 
+	cancelDeployment200ApplicationJSONGitSource6 := new(CancelDeployment200ApplicationJSONGitSource6)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource6); err == nil {
+		u.CancelDeployment200ApplicationJSONGitSource6 = cancelDeployment200ApplicationJSONGitSource6
+		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource6
+		return nil
+	}
+
 	cancelDeployment200ApplicationJSONGitSource5 := new(CancelDeployment200ApplicationJSONGitSource5)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource5); err == nil {
 		u.CancelDeployment200ApplicationJSONGitSource5 = cancelDeployment200ApplicationJSONGitSource5
 		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource5
+		return nil
+	}
+
+	cancelDeployment200ApplicationJSONGitSource8 := new(CancelDeployment200ApplicationJSONGitSource8)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource8); err == nil {
+		u.CancelDeployment200ApplicationJSONGitSource8 = cancelDeployment200ApplicationJSONGitSource8
+		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource8
 		return nil
 	}
 
@@ -1094,14 +1094,6 @@ func (u *CancelDeployment200ApplicationJSONGitSource) UnmarshalJSON(data []byte)
 }
 
 func (u CancelDeployment200ApplicationJSONGitSource) MarshalJSON() ([]byte, error) {
-	if u.CancelDeployment200ApplicationJSONGitSource6 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource6)
-	}
-
-	if u.CancelDeployment200ApplicationJSONGitSource8 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource8)
-	}
-
 	if u.CancelDeployment200ApplicationJSONGitSource1 != nil {
 		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource1)
 	}
@@ -1118,8 +1110,16 @@ func (u CancelDeployment200ApplicationJSONGitSource) MarshalJSON() ([]byte, erro
 		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource4)
 	}
 
+	if u.CancelDeployment200ApplicationJSONGitSource6 != nil {
+		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource6)
+	}
+
 	if u.CancelDeployment200ApplicationJSONGitSource5 != nil {
 		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource5)
+	}
+
+	if u.CancelDeployment200ApplicationJSONGitSource8 != nil {
+		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource8)
 	}
 
 	if u.CancelDeployment200ApplicationJSONGitSource7 != nil {
@@ -1700,21 +1700,21 @@ func CreateCancelDeployment200ApplicationJSONRoutesCancelDeployment200Applicatio
 func (u *CancelDeployment200ApplicationJSONRoutes) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	cancelDeployment200ApplicationJSONRoutes3 := new(CancelDeployment200ApplicationJSONRoutes3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONRoutes3); err == nil {
-		u.CancelDeployment200ApplicationJSONRoutes3 = cancelDeployment200ApplicationJSONRoutes3
-		u.Type = CancelDeployment200ApplicationJSONRoutesTypeCancelDeployment200ApplicationJSONRoutes3
-		return nil
-	}
-
 	cancelDeployment200ApplicationJSONRoutes2 := new(CancelDeployment200ApplicationJSONRoutes2)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&cancelDeployment200ApplicationJSONRoutes2); err == nil {
 		u.CancelDeployment200ApplicationJSONRoutes2 = cancelDeployment200ApplicationJSONRoutes2
 		u.Type = CancelDeployment200ApplicationJSONRoutesTypeCancelDeployment200ApplicationJSONRoutes2
+		return nil
+	}
+
+	cancelDeployment200ApplicationJSONRoutes3 := new(CancelDeployment200ApplicationJSONRoutes3)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&cancelDeployment200ApplicationJSONRoutes3); err == nil {
+		u.CancelDeployment200ApplicationJSONRoutes3 = cancelDeployment200ApplicationJSONRoutes3
+		u.Type = CancelDeployment200ApplicationJSONRoutesTypeCancelDeployment200ApplicationJSONRoutes3
 		return nil
 	}
 
@@ -1731,12 +1731,12 @@ func (u *CancelDeployment200ApplicationJSONRoutes) UnmarshalJSON(data []byte) er
 }
 
 func (u CancelDeployment200ApplicationJSONRoutes) MarshalJSON() ([]byte, error) {
-	if u.CancelDeployment200ApplicationJSONRoutes3 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONRoutes3)
-	}
-
 	if u.CancelDeployment200ApplicationJSONRoutes2 != nil {
 		return json.Marshal(u.CancelDeployment200ApplicationJSONRoutes2)
+	}
+
+	if u.CancelDeployment200ApplicationJSONRoutes3 != nil {
+		return json.Marshal(u.CancelDeployment200ApplicationJSONRoutes3)
 	}
 
 	if u.CancelDeployment200ApplicationJSONRoutes1 != nil {

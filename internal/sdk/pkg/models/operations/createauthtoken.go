@@ -41,11 +41,108 @@ type CreateAuthTokenRequestBody2 struct {
 	InstallationID *string                         `json:"installationId,omitempty"`
 	Name           string                          `json:"name"`
 	Type           CreateAuthTokenRequestBody2Type `json:"type"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _CreateAuthTokenRequestBody2 CreateAuthTokenRequestBody2
+
+func (c *CreateAuthTokenRequestBody2) UnmarshalJSON(bs []byte) error {
+	data := _CreateAuthTokenRequestBody2{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = CreateAuthTokenRequestBody2(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "clientId")
+	delete(additionalFields, "expiresAt")
+	delete(additionalFields, "installationId")
+	delete(additionalFields, "name")
+	delete(additionalFields, "type")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c CreateAuthTokenRequestBody2) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_CreateAuthTokenRequestBody2(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type CreateAuthTokenRequestBody1 struct {
 	ExpiresAt *int64 `json:"expiresAt,omitempty"`
 	Name      string `json:"name"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _CreateAuthTokenRequestBody1 CreateAuthTokenRequestBody1
+
+func (c *CreateAuthTokenRequestBody1) UnmarshalJSON(bs []byte) error {
+	data := _CreateAuthTokenRequestBody1{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = CreateAuthTokenRequestBody1(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "expiresAt")
+	delete(additionalFields, "name")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c CreateAuthTokenRequestBody1) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_CreateAuthTokenRequestBody1(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type CreateAuthTokenRequestBodyType string

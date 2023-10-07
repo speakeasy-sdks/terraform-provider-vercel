@@ -3,6 +3,7 @@
 package operations
 
 import (
+	"encoding/json"
 	"net/http"
 )
 
@@ -15,6 +16,55 @@ type UploadCertRequestBody struct {
 	Key string `json:"key"`
 	// Skip validation of the certificate
 	SkipValidation *bool `json:"skipValidation,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _UploadCertRequestBody UploadCertRequestBody
+
+func (c *UploadCertRequestBody) UnmarshalJSON(bs []byte) error {
+	data := _UploadCertRequestBody{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = UploadCertRequestBody(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "ca")
+	delete(additionalFields, "cert")
+	delete(additionalFields, "key")
+	delete(additionalFields, "skipValidation")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c UploadCertRequestBody) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_UploadCertRequestBody(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type UploadCertRequest struct {

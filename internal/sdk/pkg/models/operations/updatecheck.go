@@ -212,6 +212,56 @@ type UpdateCheckRequestBodyOutputMetrics struct {
 	Lcp                    UpdateCheckRequestBodyOutputMetricsLCP                     `json:"LCP"`
 	Tbt                    UpdateCheckRequestBodyOutputMetricsTBT                     `json:"TBT"`
 	VirtualExperienceScore *UpdateCheckRequestBodyOutputMetricsVirtualExperienceScore `json:"virtualExperienceScore,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _UpdateCheckRequestBodyOutputMetrics UpdateCheckRequestBodyOutputMetrics
+
+func (c *UpdateCheckRequestBodyOutputMetrics) UnmarshalJSON(bs []byte) error {
+	data := _UpdateCheckRequestBodyOutputMetrics{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = UpdateCheckRequestBodyOutputMetrics(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "CLS")
+	delete(additionalFields, "FCP")
+	delete(additionalFields, "LCP")
+	delete(additionalFields, "TBT")
+	delete(additionalFields, "virtualExperienceScore")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c UpdateCheckRequestBodyOutputMetrics) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_UpdateCheckRequestBodyOutputMetrics(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 // UpdateCheckRequestBodyOutput - The results of the check Run

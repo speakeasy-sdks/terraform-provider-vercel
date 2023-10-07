@@ -75,6 +75,56 @@ type RecordEventsRequestBody struct {
 	SessionID string `json:"sessionId"`
 	// One of `LOCAL` or `REMOTE`. `LOCAL` specifies that the cache event was from the user's filesystem cache. `REMOTE` specifies that the cache event is from a remote cache.
 	Source RecordEventsRequestBodySource `json:"source"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _RecordEventsRequestBody RecordEventsRequestBody
+
+func (c *RecordEventsRequestBody) UnmarshalJSON(bs []byte) error {
+	data := _RecordEventsRequestBody{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = RecordEventsRequestBody(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "duration")
+	delete(additionalFields, "event")
+	delete(additionalFields, "hash")
+	delete(additionalFields, "sessionId")
+	delete(additionalFields, "source")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c RecordEventsRequestBody) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_RecordEventsRequestBody(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type RecordEventsRequest struct {

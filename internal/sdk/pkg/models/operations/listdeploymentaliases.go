@@ -3,6 +3,10 @@
 package operations
 
 import (
+	"bytes"
+	"encoding/json"
+	"errors"
+	"fmt"
 	"net/http"
 	"time"
 )
@@ -14,6 +18,168 @@ type ListDeploymentAliasesRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access string
+
+const (
+	ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2AccessRequested ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access = "requested"
+	ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2AccessGranted   ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access = "granted"
+)
+
+func (e ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access) ToPointer() *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access {
+	return &e
+}
+
+func (e *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "requested":
+		fallthrough
+	case "granted":
+		*e = ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access: %v", v)
+	}
+}
+
+type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Scope string
+
+const (
+	ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2ScopeUser ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Scope = "user"
+)
+
+func (e ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Scope) ToPointer() *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Scope {
+	return &e
+}
+
+func (e *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Scope) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "user":
+		*e = ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Scope(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Scope: %v", v)
+	}
+}
+
+// ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 - The protection bypass for the alias
+type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 struct {
+	Access        ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access `json:"access"`
+	CreatedAt     int64                                                                 `json:"createdAt"`
+	LastUpdatedAt int64                                                                 `json:"lastUpdatedAt"`
+	LastUpdatedBy string                                                                `json:"lastUpdatedBy"`
+	Scope         ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Scope  `json:"scope"`
+}
+
+type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope string
+
+const (
+	ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1ScopeShareableLink    ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope = "shareable-link"
+	ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1ScopeAutomationBypass ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope = "automation-bypass"
+)
+
+func (e ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope) ToPointer() *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope {
+	return &e
+}
+
+func (e *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "shareable-link":
+		fallthrough
+	case "automation-bypass":
+		*e = ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope: %v", v)
+	}
+}
+
+// ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 - The protection bypass for the alias
+type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 struct {
+	CreatedAt int64                                                                `json:"createdAt"`
+	CreatedBy string                                                               `json:"createdBy"`
+	Scope     ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope `json:"scope"`
+}
+
+type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassType string
+
+const (
+	ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassTypeListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassType = "listDeploymentAliases_200ApplicationJSON_aliases_protectionBypass_1"
+	ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassTypeListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassType = "listDeploymentAliases_200ApplicationJSON_aliases_protectionBypass_2"
+)
+
+type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass struct {
+	ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1
+	ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2
+
+	Type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassType
+}
+
+func CreateListDeploymentAliases200ApplicationJSONAliasesProtectionBypassListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1(listDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1) ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass {
+	typ := ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassTypeListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1
+
+	return ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass{
+		ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1: &listDeploymentAliases200ApplicationJSONAliasesProtectionBypass1,
+		Type: typ,
+	}
+}
+
+func CreateListDeploymentAliases200ApplicationJSONAliasesProtectionBypassListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2(listDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2) ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass {
+	typ := ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassTypeListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2
+
+	return ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass{
+		ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2: &listDeploymentAliases200ApplicationJSONAliasesProtectionBypass2,
+		Type: typ,
+	}
+}
+
+func (u *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass) UnmarshalJSON(data []byte) error {
+	var d *json.Decoder
+
+	listDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 := new(ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&listDeploymentAliases200ApplicationJSONAliasesProtectionBypass1); err == nil {
+		u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 = listDeploymentAliases200ApplicationJSONAliasesProtectionBypass1
+		u.Type = ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassTypeListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1
+		return nil
+	}
+
+	listDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 := new(ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&listDeploymentAliases200ApplicationJSONAliasesProtectionBypass2); err == nil {
+		u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 = listDeploymentAliases200ApplicationJSONAliasesProtectionBypass2
+		u.Type = ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassTypeListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass) MarshalJSON() ([]byte, error) {
+	if u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 != nil {
+		return json.Marshal(u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1)
+	}
+
+	if u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 != nil {
+		return json.Marshal(u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2)
+	}
+
+	return nil, nil
+}
+
 // ListDeploymentAliases200ApplicationJSONAliases - A list of the aliases assigned to the deployment
 type ListDeploymentAliases200ApplicationJSONAliases struct {
 	// The alias name, it could be a `.vercel.app` subdomain or a custom domain
@@ -21,7 +187,7 @@ type ListDeploymentAliases200ApplicationJSONAliases struct {
 	// The date when the alias was created
 	Created time.Time `json:"created"`
 	// The protection bypass for the alias
-	ProtectionBypass map[string]interface{} `json:"protectionBypass,omitempty"`
+	ProtectionBypass map[string]ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass `json:"protectionBypass,omitempty"`
 	// Target destination domain for redirect when the alias is a redirect
 	Redirect *string `json:"redirect,omitempty"`
 	// The unique identifier of the alias

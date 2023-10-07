@@ -3,11 +3,58 @@
 package operations
 
 import (
+	"encoding/json"
 	"net/http"
 )
 
 type DeleteEdgeConfigTokensRequestBody struct {
 	Tokens []string `json:"tokens"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _DeleteEdgeConfigTokensRequestBody DeleteEdgeConfigTokensRequestBody
+
+func (c *DeleteEdgeConfigTokensRequestBody) UnmarshalJSON(bs []byte) error {
+	data := _DeleteEdgeConfigTokensRequestBody{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = DeleteEdgeConfigTokensRequestBody(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "tokens")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c DeleteEdgeConfigTokensRequestBody) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_DeleteEdgeConfigTokensRequestBody(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type DeleteEdgeConfigTokensRequest struct {

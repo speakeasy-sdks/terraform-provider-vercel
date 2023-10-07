@@ -10,6 +10,52 @@ import (
 
 type UpdateTeamMemberRequestBodyJoinedFrom struct {
 	SsoUserID *string `json:"ssoUserId,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _UpdateTeamMemberRequestBodyJoinedFrom UpdateTeamMemberRequestBodyJoinedFrom
+
+func (c *UpdateTeamMemberRequestBodyJoinedFrom) UnmarshalJSON(bs []byte) error {
+	data := _UpdateTeamMemberRequestBodyJoinedFrom{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = UpdateTeamMemberRequestBodyJoinedFrom(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "ssoUserId")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c UpdateTeamMemberRequestBodyJoinedFrom) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_UpdateTeamMemberRequestBodyJoinedFrom(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 // UpdateTeamMemberRequestBodyProjectsRole - The project role of the member that will be added. \"null\" will remove this project level role.
@@ -51,6 +97,53 @@ type UpdateTeamMemberRequestBodyProjects struct {
 	ProjectID string `json:"projectId"`
 	// The project role of the member that will be added. \"null\" will remove this project level role.
 	Role *UpdateTeamMemberRequestBodyProjectsRole `json:"role"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _UpdateTeamMemberRequestBodyProjects UpdateTeamMemberRequestBodyProjects
+
+func (c *UpdateTeamMemberRequestBodyProjects) UnmarshalJSON(bs []byte) error {
+	data := _UpdateTeamMemberRequestBodyProjects{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = UpdateTeamMemberRequestBodyProjects(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "projectId")
+	delete(additionalFields, "role")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c UpdateTeamMemberRequestBodyProjects) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_UpdateTeamMemberRequestBodyProjects(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type UpdateTeamMemberRequestBody struct {

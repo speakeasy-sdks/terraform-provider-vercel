@@ -13,6 +13,53 @@ type CreateTeamRequestBody struct {
 	Name *string `json:"name,omitempty"`
 	// The desired slug for the Team
 	Slug string `json:"slug"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _CreateTeamRequestBody CreateTeamRequestBody
+
+func (c *CreateTeamRequestBody) UnmarshalJSON(bs []byte) error {
+	data := _CreateTeamRequestBody{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = CreateTeamRequestBody(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "name")
+	delete(additionalFields, "slug")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c CreateTeamRequestBody) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_CreateTeamRequestBody(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type CreateTeam200ApplicationJSONBillingAddress struct {

@@ -2631,21 +2631,21 @@ func CreateFilterProjectEnvs200ApplicationJSONFilterProjectEnvs200ApplicationJSO
 func (u *FilterProjectEnvs200ApplicationJSON) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	filterProjectEnvs200ApplicationJSON3 := new(FilterProjectEnvs200ApplicationJSON3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3); err == nil {
-		u.FilterProjectEnvs200ApplicationJSON3 = filterProjectEnvs200ApplicationJSON3
-		u.Type = FilterProjectEnvs200ApplicationJSONTypeFilterProjectEnvs200ApplicationJSON3
-		return nil
-	}
-
 	filterProjectEnvs200ApplicationJSON2 := new(FilterProjectEnvs200ApplicationJSON2)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2 = filterProjectEnvs200ApplicationJSON2
 		u.Type = FilterProjectEnvs200ApplicationJSONTypeFilterProjectEnvs200ApplicationJSON2
+		return nil
+	}
+
+	filterProjectEnvs200ApplicationJSON3 := new(FilterProjectEnvs200ApplicationJSON3)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3); err == nil {
+		u.FilterProjectEnvs200ApplicationJSON3 = filterProjectEnvs200ApplicationJSON3
+		u.Type = FilterProjectEnvs200ApplicationJSONTypeFilterProjectEnvs200ApplicationJSON3
 		return nil
 	}
 
@@ -2662,12 +2662,12 @@ func (u *FilterProjectEnvs200ApplicationJSON) UnmarshalJSON(data []byte) error {
 }
 
 func (u FilterProjectEnvs200ApplicationJSON) MarshalJSON() ([]byte, error) {
-	if u.FilterProjectEnvs200ApplicationJSON3 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3)
-	}
-
 	if u.FilterProjectEnvs200ApplicationJSON2 != nil {
 		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2)
+	}
+
+	if u.FilterProjectEnvs200ApplicationJSON3 != nil {
+		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1 != nil {

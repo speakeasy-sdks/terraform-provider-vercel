@@ -13,6 +13,55 @@ type UpdateRecordRequestBodySrv struct {
 	Priority *int64  `json:"priority"`
 	Target   *string `json:"target"`
 	Weight   *int64  `json:"weight"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _UpdateRecordRequestBodySrv UpdateRecordRequestBodySrv
+
+func (c *UpdateRecordRequestBodySrv) UnmarshalJSON(bs []byte) error {
+	data := _UpdateRecordRequestBodySrv{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = UpdateRecordRequestBodySrv(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "port")
+	delete(additionalFields, "priority")
+	delete(additionalFields, "target")
+	delete(additionalFields, "weight")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c UpdateRecordRequestBodySrv) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_UpdateRecordRequestBodySrv(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 // UpdateRecordRequestBodyType - The type of the DNS record

@@ -643,24 +643,6 @@ func CreateGetDeployment200ApplicationJSON2GitSourceGetDeployment200ApplicationJ
 func (u *GetDeployment200ApplicationJSON2GitSource) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	getDeployment200ApplicationJSON2GitSource6 := new(GetDeployment200ApplicationJSON2GitSource6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource6); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource6 = getDeployment200ApplicationJSON2GitSource6
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource6
-		return nil
-	}
-
-	getDeployment200ApplicationJSON2GitSource8 := new(GetDeployment200ApplicationJSON2GitSource8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource8); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource8 = getDeployment200ApplicationJSON2GitSource8
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource8
-		return nil
-	}
-
 	getDeployment200ApplicationJSON2GitSource1 := new(GetDeployment200ApplicationJSON2GitSource1)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -697,12 +679,30 @@ func (u *GetDeployment200ApplicationJSON2GitSource) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
+	getDeployment200ApplicationJSON2GitSource6 := new(GetDeployment200ApplicationJSON2GitSource6)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource6); err == nil {
+		u.GetDeployment200ApplicationJSON2GitSource6 = getDeployment200ApplicationJSON2GitSource6
+		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource6
+		return nil
+	}
+
 	getDeployment200ApplicationJSON2GitSource5 := new(GetDeployment200ApplicationJSON2GitSource5)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource5); err == nil {
 		u.GetDeployment200ApplicationJSON2GitSource5 = getDeployment200ApplicationJSON2GitSource5
 		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource5
+		return nil
+	}
+
+	getDeployment200ApplicationJSON2GitSource8 := new(GetDeployment200ApplicationJSON2GitSource8)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource8); err == nil {
+		u.GetDeployment200ApplicationJSON2GitSource8 = getDeployment200ApplicationJSON2GitSource8
+		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource8
 		return nil
 	}
 
@@ -728,14 +728,6 @@ func (u *GetDeployment200ApplicationJSON2GitSource) UnmarshalJSON(data []byte) e
 }
 
 func (u GetDeployment200ApplicationJSON2GitSource) MarshalJSON() ([]byte, error) {
-	if u.GetDeployment200ApplicationJSON2GitSource6 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource6)
-	}
-
-	if u.GetDeployment200ApplicationJSON2GitSource8 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource8)
-	}
-
 	if u.GetDeployment200ApplicationJSON2GitSource1 != nil {
 		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource1)
 	}
@@ -752,8 +744,16 @@ func (u GetDeployment200ApplicationJSON2GitSource) MarshalJSON() ([]byte, error)
 		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource4)
 	}
 
+	if u.GetDeployment200ApplicationJSON2GitSource6 != nil {
+		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource6)
+	}
+
 	if u.GetDeployment200ApplicationJSON2GitSource5 != nil {
 		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource5)
+	}
+
+	if u.GetDeployment200ApplicationJSON2GitSource8 != nil {
+		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource8)
 	}
 
 	if u.GetDeployment200ApplicationJSON2GitSource7 != nil {
@@ -2057,24 +2057,6 @@ func CreateGetDeployment200ApplicationJSON1GitSourceGetDeployment200ApplicationJ
 func (u *GetDeployment200ApplicationJSON1GitSource) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	getDeployment200ApplicationJSON1GitSource6 := new(GetDeployment200ApplicationJSON1GitSource6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource6); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource6 = getDeployment200ApplicationJSON1GitSource6
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource6
-		return nil
-	}
-
-	getDeployment200ApplicationJSON1GitSource8 := new(GetDeployment200ApplicationJSON1GitSource8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource8); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource8 = getDeployment200ApplicationJSON1GitSource8
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource8
-		return nil
-	}
-
 	getDeployment200ApplicationJSON1GitSource1 := new(GetDeployment200ApplicationJSON1GitSource1)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -2111,12 +2093,30 @@ func (u *GetDeployment200ApplicationJSON1GitSource) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
+	getDeployment200ApplicationJSON1GitSource6 := new(GetDeployment200ApplicationJSON1GitSource6)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource6); err == nil {
+		u.GetDeployment200ApplicationJSON1GitSource6 = getDeployment200ApplicationJSON1GitSource6
+		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource6
+		return nil
+	}
+
 	getDeployment200ApplicationJSON1GitSource5 := new(GetDeployment200ApplicationJSON1GitSource5)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource5); err == nil {
 		u.GetDeployment200ApplicationJSON1GitSource5 = getDeployment200ApplicationJSON1GitSource5
 		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource5
+		return nil
+	}
+
+	getDeployment200ApplicationJSON1GitSource8 := new(GetDeployment200ApplicationJSON1GitSource8)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource8); err == nil {
+		u.GetDeployment200ApplicationJSON1GitSource8 = getDeployment200ApplicationJSON1GitSource8
+		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource8
 		return nil
 	}
 
@@ -2142,14 +2142,6 @@ func (u *GetDeployment200ApplicationJSON1GitSource) UnmarshalJSON(data []byte) e
 }
 
 func (u GetDeployment200ApplicationJSON1GitSource) MarshalJSON() ([]byte, error) {
-	if u.GetDeployment200ApplicationJSON1GitSource6 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource6)
-	}
-
-	if u.GetDeployment200ApplicationJSON1GitSource8 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource8)
-	}
-
 	if u.GetDeployment200ApplicationJSON1GitSource1 != nil {
 		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource1)
 	}
@@ -2166,8 +2158,16 @@ func (u GetDeployment200ApplicationJSON1GitSource) MarshalJSON() ([]byte, error)
 		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource4)
 	}
 
+	if u.GetDeployment200ApplicationJSON1GitSource6 != nil {
+		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource6)
+	}
+
 	if u.GetDeployment200ApplicationJSON1GitSource5 != nil {
 		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource5)
+	}
+
+	if u.GetDeployment200ApplicationJSON1GitSource8 != nil {
+		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource8)
 	}
 
 	if u.GetDeployment200ApplicationJSON1GitSource7 != nil {
@@ -2748,21 +2748,21 @@ func CreateGetDeployment200ApplicationJSON1RoutesGetDeployment200ApplicationJSON
 func (u *GetDeployment200ApplicationJSON1Routes) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	getDeployment200ApplicationJSON1Routes3 := new(GetDeployment200ApplicationJSON1Routes3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1Routes3); err == nil {
-		u.GetDeployment200ApplicationJSON1Routes3 = getDeployment200ApplicationJSON1Routes3
-		u.Type = GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes3
-		return nil
-	}
-
 	getDeployment200ApplicationJSON1Routes2 := new(GetDeployment200ApplicationJSON1Routes2)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&getDeployment200ApplicationJSON1Routes2); err == nil {
 		u.GetDeployment200ApplicationJSON1Routes2 = getDeployment200ApplicationJSON1Routes2
 		u.Type = GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes2
+		return nil
+	}
+
+	getDeployment200ApplicationJSON1Routes3 := new(GetDeployment200ApplicationJSON1Routes3)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&getDeployment200ApplicationJSON1Routes3); err == nil {
+		u.GetDeployment200ApplicationJSON1Routes3 = getDeployment200ApplicationJSON1Routes3
+		u.Type = GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes3
 		return nil
 	}
 
@@ -2779,12 +2779,12 @@ func (u *GetDeployment200ApplicationJSON1Routes) UnmarshalJSON(data []byte) erro
 }
 
 func (u GetDeployment200ApplicationJSON1Routes) MarshalJSON() ([]byte, error) {
-	if u.GetDeployment200ApplicationJSON1Routes3 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1Routes3)
-	}
-
 	if u.GetDeployment200ApplicationJSON1Routes2 != nil {
 		return json.Marshal(u.GetDeployment200ApplicationJSON1Routes2)
+	}
+
+	if u.GetDeployment200ApplicationJSON1Routes3 != nil {
+		return json.Marshal(u.GetDeployment200ApplicationJSON1Routes3)
 	}
 
 	if u.GetDeployment200ApplicationJSON1Routes1 != nil {

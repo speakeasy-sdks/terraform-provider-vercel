@@ -140,7 +140,7 @@ func (s *artifacts) ArtifactQuery(ctx context.Context, request operations.Artifa
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out map[string]interface{}
+			var out map[string]operations.ArtifactQuery200ApplicationJSON
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}

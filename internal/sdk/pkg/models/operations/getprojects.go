@@ -1886,6 +1886,166 @@ type GetProjects200ApplicationJSONProjectsPermissions struct {
 	WebhookEvent                             []shared.ACLAction `json:"webhook-event,omitempty"`
 }
 
+type GetProjects200ApplicationJSONProjectsProtectionBypass2Access string
+
+const (
+	GetProjects200ApplicationJSONProjectsProtectionBypass2AccessRequested GetProjects200ApplicationJSONProjectsProtectionBypass2Access = "requested"
+	GetProjects200ApplicationJSONProjectsProtectionBypass2AccessGranted   GetProjects200ApplicationJSONProjectsProtectionBypass2Access = "granted"
+)
+
+func (e GetProjects200ApplicationJSONProjectsProtectionBypass2Access) ToPointer() *GetProjects200ApplicationJSONProjectsProtectionBypass2Access {
+	return &e
+}
+
+func (e *GetProjects200ApplicationJSONProjectsProtectionBypass2Access) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "requested":
+		fallthrough
+	case "granted":
+		*e = GetProjects200ApplicationJSONProjectsProtectionBypass2Access(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetProjects200ApplicationJSONProjectsProtectionBypass2Access: %v", v)
+	}
+}
+
+type GetProjects200ApplicationJSONProjectsProtectionBypass2Scope string
+
+const (
+	GetProjects200ApplicationJSONProjectsProtectionBypass2ScopeUser GetProjects200ApplicationJSONProjectsProtectionBypass2Scope = "user"
+)
+
+func (e GetProjects200ApplicationJSONProjectsProtectionBypass2Scope) ToPointer() *GetProjects200ApplicationJSONProjectsProtectionBypass2Scope {
+	return &e
+}
+
+func (e *GetProjects200ApplicationJSONProjectsProtectionBypass2Scope) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "user":
+		*e = GetProjects200ApplicationJSONProjectsProtectionBypass2Scope(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetProjects200ApplicationJSONProjectsProtectionBypass2Scope: %v", v)
+	}
+}
+
+type GetProjects200ApplicationJSONProjectsProtectionBypass2 struct {
+	Access        GetProjects200ApplicationJSONProjectsProtectionBypass2Access `json:"access"`
+	CreatedAt     int64                                                        `json:"createdAt"`
+	LastUpdatedAt int64                                                        `json:"lastUpdatedAt"`
+	LastUpdatedBy string                                                       `json:"lastUpdatedBy"`
+	Scope         GetProjects200ApplicationJSONProjectsProtectionBypass2Scope  `json:"scope"`
+}
+
+type GetProjects200ApplicationJSONProjectsProtectionBypass1Scope string
+
+const (
+	GetProjects200ApplicationJSONProjectsProtectionBypass1ScopeShareableLink    GetProjects200ApplicationJSONProjectsProtectionBypass1Scope = "shareable-link"
+	GetProjects200ApplicationJSONProjectsProtectionBypass1ScopeAutomationBypass GetProjects200ApplicationJSONProjectsProtectionBypass1Scope = "automation-bypass"
+)
+
+func (e GetProjects200ApplicationJSONProjectsProtectionBypass1Scope) ToPointer() *GetProjects200ApplicationJSONProjectsProtectionBypass1Scope {
+	return &e
+}
+
+func (e *GetProjects200ApplicationJSONProjectsProtectionBypass1Scope) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "shareable-link":
+		fallthrough
+	case "automation-bypass":
+		*e = GetProjects200ApplicationJSONProjectsProtectionBypass1Scope(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetProjects200ApplicationJSONProjectsProtectionBypass1Scope: %v", v)
+	}
+}
+
+type GetProjects200ApplicationJSONProjectsProtectionBypass1 struct {
+	CreatedAt int64                                                       `json:"createdAt"`
+	CreatedBy string                                                      `json:"createdBy"`
+	Scope     GetProjects200ApplicationJSONProjectsProtectionBypass1Scope `json:"scope"`
+}
+
+type GetProjects200ApplicationJSONProjectsProtectionBypassType string
+
+const (
+	GetProjects200ApplicationJSONProjectsProtectionBypassTypeGetProjects200ApplicationJSONProjectsProtectionBypass1 GetProjects200ApplicationJSONProjectsProtectionBypassType = "getProjects_200ApplicationJSON_projects_protectionBypass_1"
+	GetProjects200ApplicationJSONProjectsProtectionBypassTypeGetProjects200ApplicationJSONProjectsProtectionBypass2 GetProjects200ApplicationJSONProjectsProtectionBypassType = "getProjects_200ApplicationJSON_projects_protectionBypass_2"
+)
+
+type GetProjects200ApplicationJSONProjectsProtectionBypass struct {
+	GetProjects200ApplicationJSONProjectsProtectionBypass1 *GetProjects200ApplicationJSONProjectsProtectionBypass1
+	GetProjects200ApplicationJSONProjectsProtectionBypass2 *GetProjects200ApplicationJSONProjectsProtectionBypass2
+
+	Type GetProjects200ApplicationJSONProjectsProtectionBypassType
+}
+
+func CreateGetProjects200ApplicationJSONProjectsProtectionBypassGetProjects200ApplicationJSONProjectsProtectionBypass1(getProjects200ApplicationJSONProjectsProtectionBypass1 GetProjects200ApplicationJSONProjectsProtectionBypass1) GetProjects200ApplicationJSONProjectsProtectionBypass {
+	typ := GetProjects200ApplicationJSONProjectsProtectionBypassTypeGetProjects200ApplicationJSONProjectsProtectionBypass1
+
+	return GetProjects200ApplicationJSONProjectsProtectionBypass{
+		GetProjects200ApplicationJSONProjectsProtectionBypass1: &getProjects200ApplicationJSONProjectsProtectionBypass1,
+		Type: typ,
+	}
+}
+
+func CreateGetProjects200ApplicationJSONProjectsProtectionBypassGetProjects200ApplicationJSONProjectsProtectionBypass2(getProjects200ApplicationJSONProjectsProtectionBypass2 GetProjects200ApplicationJSONProjectsProtectionBypass2) GetProjects200ApplicationJSONProjectsProtectionBypass {
+	typ := GetProjects200ApplicationJSONProjectsProtectionBypassTypeGetProjects200ApplicationJSONProjectsProtectionBypass2
+
+	return GetProjects200ApplicationJSONProjectsProtectionBypass{
+		GetProjects200ApplicationJSONProjectsProtectionBypass2: &getProjects200ApplicationJSONProjectsProtectionBypass2,
+		Type: typ,
+	}
+}
+
+func (u *GetProjects200ApplicationJSONProjectsProtectionBypass) UnmarshalJSON(data []byte) error {
+	var d *json.Decoder
+
+	getProjects200ApplicationJSONProjectsProtectionBypass1 := new(GetProjects200ApplicationJSONProjectsProtectionBypass1)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&getProjects200ApplicationJSONProjectsProtectionBypass1); err == nil {
+		u.GetProjects200ApplicationJSONProjectsProtectionBypass1 = getProjects200ApplicationJSONProjectsProtectionBypass1
+		u.Type = GetProjects200ApplicationJSONProjectsProtectionBypassTypeGetProjects200ApplicationJSONProjectsProtectionBypass1
+		return nil
+	}
+
+	getProjects200ApplicationJSONProjectsProtectionBypass2 := new(GetProjects200ApplicationJSONProjectsProtectionBypass2)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&getProjects200ApplicationJSONProjectsProtectionBypass2); err == nil {
+		u.GetProjects200ApplicationJSONProjectsProtectionBypass2 = getProjects200ApplicationJSONProjectsProtectionBypass2
+		u.Type = GetProjects200ApplicationJSONProjectsProtectionBypassTypeGetProjects200ApplicationJSONProjectsProtectionBypass2
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u GetProjects200ApplicationJSONProjectsProtectionBypass) MarshalJSON() ([]byte, error) {
+	if u.GetProjects200ApplicationJSONProjectsProtectionBypass1 != nil {
+		return json.Marshal(u.GetProjects200ApplicationJSONProjectsProtectionBypass1)
+	}
+
+	if u.GetProjects200ApplicationJSONProjectsProtectionBypass2 != nil {
+		return json.Marshal(u.GetProjects200ApplicationJSONProjectsProtectionBypass2)
+	}
+
+	return nil, nil
+}
+
 type GetProjects200ApplicationJSONProjectsSsoProtectionDeploymentType string
 
 const (
@@ -2407,56 +2567,56 @@ func (u GetProjects200ApplicationJSONProjectsTrustedIps) MarshalJSON() ([]byte, 
 }
 
 type GetProjects200ApplicationJSONProjects struct {
-	AccountID                        string                                                   `json:"accountId"`
-	Analytics                        *GetProjects200ApplicationJSONProjectsAnalytics          `json:"analytics,omitempty"`
-	AutoAssignCustomDomains          *bool                                                    `json:"autoAssignCustomDomains,omitempty"`
-	AutoAssignCustomDomainsUpdatedBy *string                                                  `json:"autoAssignCustomDomainsUpdatedBy,omitempty"`
-	AutoExposeSystemEnvs             *bool                                                    `json:"autoExposeSystemEnvs,omitempty"`
-	BuildCommand                     *string                                                  `json:"buildCommand,omitempty"`
-	CommandForIgnoringBuildStep      *string                                                  `json:"commandForIgnoringBuildStep,omitempty"`
-	ConnectBuildsEnabled             *bool                                                    `json:"connectBuildsEnabled,omitempty"`
-	ConnectConfigurationID           *string                                                  `json:"connectConfigurationId,omitempty"`
-	CreatedAt                        *int64                                                   `json:"createdAt,omitempty"`
-	Crons                            *GetProjects200ApplicationJSONProjectsCrons              `json:"crons,omitempty"`
-	CustomerSupportCodeVisibility    *bool                                                    `json:"customerSupportCodeVisibility,omitempty"`
-	DataCache                        *GetProjects200ApplicationJSONProjectsDataCache          `json:"dataCache,omitempty"`
-	DevCommand                       *string                                                  `json:"devCommand,omitempty"`
-	DirectoryListing                 bool                                                     `json:"directoryListing"`
-	EnablePreviewFeedback            *bool                                                    `json:"enablePreviewFeedback,omitempty"`
-	Env                              []GetProjects200ApplicationJSONProjectsEnv               `json:"env,omitempty"`
-	Framework                        *GetProjects200ApplicationJSONProjectsFramework          `json:"framework,omitempty"`
-	GitComments                      *GetProjects200ApplicationJSONProjectsGitComments        `json:"gitComments,omitempty"`
-	GitForkProtection                *bool                                                    `json:"gitForkProtection,omitempty"`
-	GitLFS                           *bool                                                    `json:"gitLFS,omitempty"`
-	HasActiveBranches                *bool                                                    `json:"hasActiveBranches,omitempty"`
-	HasFloatingAliases               *bool                                                    `json:"hasFloatingAliases,omitempty"`
-	ID                               string                                                   `json:"id"`
-	InstallCommand                   *string                                                  `json:"installCommand,omitempty"`
-	LastAliasRequest                 *GetProjects200ApplicationJSONProjectsLastAliasRequest   `json:"lastAliasRequest,omitempty"`
-	LastRollbackTarget               *GetProjects200ApplicationJSONProjectsLastRollbackTarget `json:"lastRollbackTarget,omitempty"`
-	LatestDeployments                []GetProjects200ApplicationJSONProjectsLatestDeployments `json:"latestDeployments,omitempty"`
-	Link                             *GetProjects200ApplicationJSONProjectsLink               `json:"link,omitempty"`
-	Live                             *bool                                                    `json:"live,omitempty"`
-	Name                             string                                                   `json:"name"`
-	NodeVersion                      GetProjects200ApplicationJSONProjectsNodeVersion         `json:"nodeVersion"`
-	OutputDirectory                  *string                                                  `json:"outputDirectory,omitempty"`
-	PasswordProtection               *GetProjects200ApplicationJSONProjectsPasswordProtection `json:"passwordProtection,omitempty"`
-	Permissions                      *GetProjects200ApplicationJSONProjectsPermissions        `json:"permissions,omitempty"`
-	ProductionDeploymentsFastLane    *bool                                                    `json:"productionDeploymentsFastLane,omitempty"`
-	ProtectionBypass                 map[string]interface{}                                   `json:"protectionBypass,omitempty"`
-	PublicSource                     *bool                                                    `json:"publicSource,omitempty"`
-	RootDirectory                    *string                                                  `json:"rootDirectory,omitempty"`
-	ServerlessFunctionRegion         *string                                                  `json:"serverlessFunctionRegion,omitempty"`
-	SkipGitConnectDuringLink         *bool                                                    `json:"skipGitConnectDuringLink,omitempty"`
-	SourceFilesOutsideRootDirectory  *bool                                                    `json:"sourceFilesOutsideRootDirectory,omitempty"`
-	SsoProtection                    *GetProjects200ApplicationJSONProjectsSsoProtection      `json:"ssoProtection,omitempty"`
-	Targets                          map[string]GetProjects200ApplicationJSONProjectsTargets  `json:"targets,omitempty"`
-	TransferCompletedAt              *int64                                                   `json:"transferCompletedAt,omitempty"`
-	TransferStartedAt                *int64                                                   `json:"transferStartedAt,omitempty"`
-	TransferToAccountID              *string                                                  `json:"transferToAccountId,omitempty"`
-	TransferredFromAccountID         *string                                                  `json:"transferredFromAccountId,omitempty"`
-	TrustedIps                       *GetProjects200ApplicationJSONProjectsTrustedIps         `json:"trustedIps,omitempty"`
-	UpdatedAt                        *int64                                                   `json:"updatedAt,omitempty"`
+	AccountID                        string                                                           `json:"accountId"`
+	Analytics                        *GetProjects200ApplicationJSONProjectsAnalytics                  `json:"analytics,omitempty"`
+	AutoAssignCustomDomains          *bool                                                            `json:"autoAssignCustomDomains,omitempty"`
+	AutoAssignCustomDomainsUpdatedBy *string                                                          `json:"autoAssignCustomDomainsUpdatedBy,omitempty"`
+	AutoExposeSystemEnvs             *bool                                                            `json:"autoExposeSystemEnvs,omitempty"`
+	BuildCommand                     *string                                                          `json:"buildCommand,omitempty"`
+	CommandForIgnoringBuildStep      *string                                                          `json:"commandForIgnoringBuildStep,omitempty"`
+	ConnectBuildsEnabled             *bool                                                            `json:"connectBuildsEnabled,omitempty"`
+	ConnectConfigurationID           *string                                                          `json:"connectConfigurationId,omitempty"`
+	CreatedAt                        *int64                                                           `json:"createdAt,omitempty"`
+	Crons                            *GetProjects200ApplicationJSONProjectsCrons                      `json:"crons,omitempty"`
+	CustomerSupportCodeVisibility    *bool                                                            `json:"customerSupportCodeVisibility,omitempty"`
+	DataCache                        *GetProjects200ApplicationJSONProjectsDataCache                  `json:"dataCache,omitempty"`
+	DevCommand                       *string                                                          `json:"devCommand,omitempty"`
+	DirectoryListing                 bool                                                             `json:"directoryListing"`
+	EnablePreviewFeedback            *bool                                                            `json:"enablePreviewFeedback,omitempty"`
+	Env                              []GetProjects200ApplicationJSONProjectsEnv                       `json:"env,omitempty"`
+	Framework                        *GetProjects200ApplicationJSONProjectsFramework                  `json:"framework,omitempty"`
+	GitComments                      *GetProjects200ApplicationJSONProjectsGitComments                `json:"gitComments,omitempty"`
+	GitForkProtection                *bool                                                            `json:"gitForkProtection,omitempty"`
+	GitLFS                           *bool                                                            `json:"gitLFS,omitempty"`
+	HasActiveBranches                *bool                                                            `json:"hasActiveBranches,omitempty"`
+	HasFloatingAliases               *bool                                                            `json:"hasFloatingAliases,omitempty"`
+	ID                               string                                                           `json:"id"`
+	InstallCommand                   *string                                                          `json:"installCommand,omitempty"`
+	LastAliasRequest                 *GetProjects200ApplicationJSONProjectsLastAliasRequest           `json:"lastAliasRequest,omitempty"`
+	LastRollbackTarget               *GetProjects200ApplicationJSONProjectsLastRollbackTarget         `json:"lastRollbackTarget,omitempty"`
+	LatestDeployments                []GetProjects200ApplicationJSONProjectsLatestDeployments         `json:"latestDeployments,omitempty"`
+	Link                             *GetProjects200ApplicationJSONProjectsLink                       `json:"link,omitempty"`
+	Live                             *bool                                                            `json:"live,omitempty"`
+	Name                             string                                                           `json:"name"`
+	NodeVersion                      GetProjects200ApplicationJSONProjectsNodeVersion                 `json:"nodeVersion"`
+	OutputDirectory                  *string                                                          `json:"outputDirectory,omitempty"`
+	PasswordProtection               *GetProjects200ApplicationJSONProjectsPasswordProtection         `json:"passwordProtection,omitempty"`
+	Permissions                      *GetProjects200ApplicationJSONProjectsPermissions                `json:"permissions,omitempty"`
+	ProductionDeploymentsFastLane    *bool                                                            `json:"productionDeploymentsFastLane,omitempty"`
+	ProtectionBypass                 map[string]GetProjects200ApplicationJSONProjectsProtectionBypass `json:"protectionBypass,omitempty"`
+	PublicSource                     *bool                                                            `json:"publicSource,omitempty"`
+	RootDirectory                    *string                                                          `json:"rootDirectory,omitempty"`
+	ServerlessFunctionRegion         *string                                                          `json:"serverlessFunctionRegion,omitempty"`
+	SkipGitConnectDuringLink         *bool                                                            `json:"skipGitConnectDuringLink,omitempty"`
+	SourceFilesOutsideRootDirectory  *bool                                                            `json:"sourceFilesOutsideRootDirectory,omitempty"`
+	SsoProtection                    *GetProjects200ApplicationJSONProjectsSsoProtection              `json:"ssoProtection,omitempty"`
+	Targets                          map[string]GetProjects200ApplicationJSONProjectsTargets          `json:"targets,omitempty"`
+	TransferCompletedAt              *int64                                                           `json:"transferCompletedAt,omitempty"`
+	TransferStartedAt                *int64                                                           `json:"transferStartedAt,omitempty"`
+	TransferToAccountID              *string                                                          `json:"transferToAccountId,omitempty"`
+	TransferredFromAccountID         *string                                                          `json:"transferredFromAccountId,omitempty"`
+	TrustedIps                       *GetProjects200ApplicationJSONProjectsTrustedIps                 `json:"trustedIps,omitempty"`
+	UpdatedAt                        *int64                                                           `json:"updatedAt,omitempty"`
 }
 
 // GetProjects200ApplicationJSON - The paginated list of projects

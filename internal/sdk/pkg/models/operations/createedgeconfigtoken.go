@@ -3,11 +3,58 @@
 package operations
 
 import (
+	"encoding/json"
 	"net/http"
 )
 
 type CreateEdgeConfigTokenRequestBody struct {
 	Label string `json:"label"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _CreateEdgeConfigTokenRequestBody CreateEdgeConfigTokenRequestBody
+
+func (c *CreateEdgeConfigTokenRequestBody) UnmarshalJSON(bs []byte) error {
+	data := _CreateEdgeConfigTokenRequestBody{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = CreateEdgeConfigTokenRequestBody(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "label")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c CreateEdgeConfigTokenRequestBody) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_CreateEdgeConfigTokenRequestBody(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type CreateEdgeConfigTokenRequest struct {

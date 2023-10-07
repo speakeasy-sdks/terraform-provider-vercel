@@ -13,6 +13,52 @@ import (
 type PatchTeamRequestBodyRemoteCaching struct {
 	// Enable or disable remote caching for the team.
 	Enabled *bool `json:"enabled,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _PatchTeamRequestBodyRemoteCaching PatchTeamRequestBodyRemoteCaching
+
+func (c *PatchTeamRequestBodyRemoteCaching) UnmarshalJSON(bs []byte) error {
+	data := _PatchTeamRequestBodyRemoteCaching{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = PatchTeamRequestBodyRemoteCaching(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "enabled")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c PatchTeamRequestBodyRemoteCaching) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_PatchTeamRequestBodyRemoteCaching(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type PatchTeamRequestBodySamlRoles string
@@ -58,6 +104,53 @@ type PatchTeamRequestBodySaml struct {
 	// Require that members of the team use SAML Single Sign-On.
 	Enforced *bool                                    `json:"enforced,omitempty"`
 	Roles    map[string]PatchTeamRequestBodySamlRoles `json:"roles,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _PatchTeamRequestBodySaml PatchTeamRequestBodySaml
+
+func (c *PatchTeamRequestBodySaml) UnmarshalJSON(bs []byte) error {
+	data := _PatchTeamRequestBodySaml{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = PatchTeamRequestBodySaml(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "enforced")
+	delete(additionalFields, "roles")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c PatchTeamRequestBodySaml) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_PatchTeamRequestBodySaml(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type PatchTeamRequestBody struct {
@@ -85,6 +178,64 @@ type PatchTeamRequestBody struct {
 	SensitiveEnvironmentVariablePolicy *string `json:"sensitiveEnvironmentVariablePolicy,omitempty"`
 	// A new slug for the team.
 	Slug *string `json:"slug,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _PatchTeamRequestBody PatchTeamRequestBody
+
+func (c *PatchTeamRequestBody) UnmarshalJSON(bs []byte) error {
+	data := _PatchTeamRequestBody{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = PatchTeamRequestBody(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "avatar")
+	delete(additionalFields, "description")
+	delete(additionalFields, "emailDomain")
+	delete(additionalFields, "enablePreviewFeedback")
+	delete(additionalFields, "hideIpAddresses")
+	delete(additionalFields, "migrateExistingEnvVariablesToSensitive")
+	delete(additionalFields, "name")
+	delete(additionalFields, "previewDeploymentSuffix")
+	delete(additionalFields, "regenerateInviteCode")
+	delete(additionalFields, "remoteCaching")
+	delete(additionalFields, "saml")
+	delete(additionalFields, "sensitiveEnvironmentVariablePolicy")
+	delete(additionalFields, "slug")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c PatchTeamRequestBody) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_PatchTeamRequestBody(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type PatchTeamRequest struct {

@@ -46,6 +46,53 @@ type InviteUserToTeamRequestBodyProjects struct {
 	ProjectID string `json:"projectId"`
 	// Sets the project roles for the invited user
 	Role InviteUserToTeamRequestBodyProjectsRole `json:"role"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _InviteUserToTeamRequestBodyProjects InviteUserToTeamRequestBodyProjects
+
+func (c *InviteUserToTeamRequestBodyProjects) UnmarshalJSON(bs []byte) error {
+	data := _InviteUserToTeamRequestBodyProjects{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = InviteUserToTeamRequestBodyProjects(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "projectId")
+	delete(additionalFields, "role")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c InviteUserToTeamRequestBodyProjects) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_InviteUserToTeamRequestBodyProjects(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 // InviteUserToTeamRequestBodyRole - The role of the user to invite

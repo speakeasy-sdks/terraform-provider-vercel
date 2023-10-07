@@ -1874,6 +1874,166 @@ type UpdateProjectDataCache200ApplicationJSONPermissions struct {
 	WebhookEvent                             []shared.ACLAction `json:"webhook-event,omitempty"`
 }
 
+type UpdateProjectDataCache200ApplicationJSONProtectionBypass2Access string
+
+const (
+	UpdateProjectDataCache200ApplicationJSONProtectionBypass2AccessRequested UpdateProjectDataCache200ApplicationJSONProtectionBypass2Access = "requested"
+	UpdateProjectDataCache200ApplicationJSONProtectionBypass2AccessGranted   UpdateProjectDataCache200ApplicationJSONProtectionBypass2Access = "granted"
+)
+
+func (e UpdateProjectDataCache200ApplicationJSONProtectionBypass2Access) ToPointer() *UpdateProjectDataCache200ApplicationJSONProtectionBypass2Access {
+	return &e
+}
+
+func (e *UpdateProjectDataCache200ApplicationJSONProtectionBypass2Access) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "requested":
+		fallthrough
+	case "granted":
+		*e = UpdateProjectDataCache200ApplicationJSONProtectionBypass2Access(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCache200ApplicationJSONProtectionBypass2Access: %v", v)
+	}
+}
+
+type UpdateProjectDataCache200ApplicationJSONProtectionBypass2Scope string
+
+const (
+	UpdateProjectDataCache200ApplicationJSONProtectionBypass2ScopeUser UpdateProjectDataCache200ApplicationJSONProtectionBypass2Scope = "user"
+)
+
+func (e UpdateProjectDataCache200ApplicationJSONProtectionBypass2Scope) ToPointer() *UpdateProjectDataCache200ApplicationJSONProtectionBypass2Scope {
+	return &e
+}
+
+func (e *UpdateProjectDataCache200ApplicationJSONProtectionBypass2Scope) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "user":
+		*e = UpdateProjectDataCache200ApplicationJSONProtectionBypass2Scope(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCache200ApplicationJSONProtectionBypass2Scope: %v", v)
+	}
+}
+
+type UpdateProjectDataCache200ApplicationJSONProtectionBypass2 struct {
+	Access        UpdateProjectDataCache200ApplicationJSONProtectionBypass2Access `json:"access"`
+	CreatedAt     int64                                                           `json:"createdAt"`
+	LastUpdatedAt int64                                                           `json:"lastUpdatedAt"`
+	LastUpdatedBy string                                                          `json:"lastUpdatedBy"`
+	Scope         UpdateProjectDataCache200ApplicationJSONProtectionBypass2Scope  `json:"scope"`
+}
+
+type UpdateProjectDataCache200ApplicationJSONProtectionBypass1Scope string
+
+const (
+	UpdateProjectDataCache200ApplicationJSONProtectionBypass1ScopeShareableLink    UpdateProjectDataCache200ApplicationJSONProtectionBypass1Scope = "shareable-link"
+	UpdateProjectDataCache200ApplicationJSONProtectionBypass1ScopeAutomationBypass UpdateProjectDataCache200ApplicationJSONProtectionBypass1Scope = "automation-bypass"
+)
+
+func (e UpdateProjectDataCache200ApplicationJSONProtectionBypass1Scope) ToPointer() *UpdateProjectDataCache200ApplicationJSONProtectionBypass1Scope {
+	return &e
+}
+
+func (e *UpdateProjectDataCache200ApplicationJSONProtectionBypass1Scope) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "shareable-link":
+		fallthrough
+	case "automation-bypass":
+		*e = UpdateProjectDataCache200ApplicationJSONProtectionBypass1Scope(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCache200ApplicationJSONProtectionBypass1Scope: %v", v)
+	}
+}
+
+type UpdateProjectDataCache200ApplicationJSONProtectionBypass1 struct {
+	CreatedAt int64                                                          `json:"createdAt"`
+	CreatedBy string                                                         `json:"createdBy"`
+	Scope     UpdateProjectDataCache200ApplicationJSONProtectionBypass1Scope `json:"scope"`
+}
+
+type UpdateProjectDataCache200ApplicationJSONProtectionBypassType string
+
+const (
+	UpdateProjectDataCache200ApplicationJSONProtectionBypassTypeUpdateProjectDataCache200ApplicationJSONProtectionBypass1 UpdateProjectDataCache200ApplicationJSONProtectionBypassType = "updateProjectDataCache_200ApplicationJSON_protectionBypass_1"
+	UpdateProjectDataCache200ApplicationJSONProtectionBypassTypeUpdateProjectDataCache200ApplicationJSONProtectionBypass2 UpdateProjectDataCache200ApplicationJSONProtectionBypassType = "updateProjectDataCache_200ApplicationJSON_protectionBypass_2"
+)
+
+type UpdateProjectDataCache200ApplicationJSONProtectionBypass struct {
+	UpdateProjectDataCache200ApplicationJSONProtectionBypass1 *UpdateProjectDataCache200ApplicationJSONProtectionBypass1
+	UpdateProjectDataCache200ApplicationJSONProtectionBypass2 *UpdateProjectDataCache200ApplicationJSONProtectionBypass2
+
+	Type UpdateProjectDataCache200ApplicationJSONProtectionBypassType
+}
+
+func CreateUpdateProjectDataCache200ApplicationJSONProtectionBypassUpdateProjectDataCache200ApplicationJSONProtectionBypass1(updateProjectDataCache200ApplicationJSONProtectionBypass1 UpdateProjectDataCache200ApplicationJSONProtectionBypass1) UpdateProjectDataCache200ApplicationJSONProtectionBypass {
+	typ := UpdateProjectDataCache200ApplicationJSONProtectionBypassTypeUpdateProjectDataCache200ApplicationJSONProtectionBypass1
+
+	return UpdateProjectDataCache200ApplicationJSONProtectionBypass{
+		UpdateProjectDataCache200ApplicationJSONProtectionBypass1: &updateProjectDataCache200ApplicationJSONProtectionBypass1,
+		Type: typ,
+	}
+}
+
+func CreateUpdateProjectDataCache200ApplicationJSONProtectionBypassUpdateProjectDataCache200ApplicationJSONProtectionBypass2(updateProjectDataCache200ApplicationJSONProtectionBypass2 UpdateProjectDataCache200ApplicationJSONProtectionBypass2) UpdateProjectDataCache200ApplicationJSONProtectionBypass {
+	typ := UpdateProjectDataCache200ApplicationJSONProtectionBypassTypeUpdateProjectDataCache200ApplicationJSONProtectionBypass2
+
+	return UpdateProjectDataCache200ApplicationJSONProtectionBypass{
+		UpdateProjectDataCache200ApplicationJSONProtectionBypass2: &updateProjectDataCache200ApplicationJSONProtectionBypass2,
+		Type: typ,
+	}
+}
+
+func (u *UpdateProjectDataCache200ApplicationJSONProtectionBypass) UnmarshalJSON(data []byte) error {
+	var d *json.Decoder
+
+	updateProjectDataCache200ApplicationJSONProtectionBypass1 := new(UpdateProjectDataCache200ApplicationJSONProtectionBypass1)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&updateProjectDataCache200ApplicationJSONProtectionBypass1); err == nil {
+		u.UpdateProjectDataCache200ApplicationJSONProtectionBypass1 = updateProjectDataCache200ApplicationJSONProtectionBypass1
+		u.Type = UpdateProjectDataCache200ApplicationJSONProtectionBypassTypeUpdateProjectDataCache200ApplicationJSONProtectionBypass1
+		return nil
+	}
+
+	updateProjectDataCache200ApplicationJSONProtectionBypass2 := new(UpdateProjectDataCache200ApplicationJSONProtectionBypass2)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&updateProjectDataCache200ApplicationJSONProtectionBypass2); err == nil {
+		u.UpdateProjectDataCache200ApplicationJSONProtectionBypass2 = updateProjectDataCache200ApplicationJSONProtectionBypass2
+		u.Type = UpdateProjectDataCache200ApplicationJSONProtectionBypassTypeUpdateProjectDataCache200ApplicationJSONProtectionBypass2
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u UpdateProjectDataCache200ApplicationJSONProtectionBypass) MarshalJSON() ([]byte, error) {
+	if u.UpdateProjectDataCache200ApplicationJSONProtectionBypass1 != nil {
+		return json.Marshal(u.UpdateProjectDataCache200ApplicationJSONProtectionBypass1)
+	}
+
+	if u.UpdateProjectDataCache200ApplicationJSONProtectionBypass2 != nil {
+		return json.Marshal(u.UpdateProjectDataCache200ApplicationJSONProtectionBypass2)
+	}
+
+	return nil, nil
+}
+
 type UpdateProjectDataCache200ApplicationJSONSsoProtectionDeploymentType string
 
 const (
@@ -2386,56 +2546,56 @@ func (u UpdateProjectDataCache200ApplicationJSONTrustedIps) MarshalJSON() ([]byt
 }
 
 type UpdateProjectDataCache200ApplicationJSON struct {
-	AccountID                        string                                                      `json:"accountId"`
-	Analytics                        *UpdateProjectDataCache200ApplicationJSONAnalytics          `json:"analytics,omitempty"`
-	AutoAssignCustomDomains          *bool                                                       `json:"autoAssignCustomDomains,omitempty"`
-	AutoAssignCustomDomainsUpdatedBy *string                                                     `json:"autoAssignCustomDomainsUpdatedBy,omitempty"`
-	AutoExposeSystemEnvs             *bool                                                       `json:"autoExposeSystemEnvs,omitempty"`
-	BuildCommand                     *string                                                     `json:"buildCommand,omitempty"`
-	CommandForIgnoringBuildStep      *string                                                     `json:"commandForIgnoringBuildStep,omitempty"`
-	ConnectBuildsEnabled             *bool                                                       `json:"connectBuildsEnabled,omitempty"`
-	ConnectConfigurationID           *string                                                     `json:"connectConfigurationId,omitempty"`
-	CreatedAt                        *int64                                                      `json:"createdAt,omitempty"`
-	Crons                            *UpdateProjectDataCache200ApplicationJSONCrons              `json:"crons,omitempty"`
-	CustomerSupportCodeVisibility    *bool                                                       `json:"customerSupportCodeVisibility,omitempty"`
-	DataCache                        *UpdateProjectDataCache200ApplicationJSONDataCache          `json:"dataCache,omitempty"`
-	DevCommand                       *string                                                     `json:"devCommand,omitempty"`
-	DirectoryListing                 bool                                                        `json:"directoryListing"`
-	EnablePreviewFeedback            *bool                                                       `json:"enablePreviewFeedback,omitempty"`
-	Env                              []UpdateProjectDataCache200ApplicationJSONEnv               `json:"env,omitempty"`
-	Framework                        *UpdateProjectDataCache200ApplicationJSONFramework          `json:"framework,omitempty"`
-	GitComments                      *UpdateProjectDataCache200ApplicationJSONGitComments        `json:"gitComments,omitempty"`
-	GitForkProtection                *bool                                                       `json:"gitForkProtection,omitempty"`
-	GitLFS                           *bool                                                       `json:"gitLFS,omitempty"`
-	HasActiveBranches                *bool                                                       `json:"hasActiveBranches,omitempty"`
-	HasFloatingAliases               *bool                                                       `json:"hasFloatingAliases,omitempty"`
-	ID                               string                                                      `json:"id"`
-	InstallCommand                   *string                                                     `json:"installCommand,omitempty"`
-	LastAliasRequest                 *UpdateProjectDataCache200ApplicationJSONLastAliasRequest   `json:"lastAliasRequest,omitempty"`
-	LastRollbackTarget               *UpdateProjectDataCache200ApplicationJSONLastRollbackTarget `json:"lastRollbackTarget,omitempty"`
-	LatestDeployments                []UpdateProjectDataCache200ApplicationJSONLatestDeployments `json:"latestDeployments,omitempty"`
-	Link                             *UpdateProjectDataCache200ApplicationJSONLink               `json:"link,omitempty"`
-	Live                             *bool                                                       `json:"live,omitempty"`
-	Name                             string                                                      `json:"name"`
-	NodeVersion                      UpdateProjectDataCache200ApplicationJSONNodeVersion         `json:"nodeVersion"`
-	OutputDirectory                  *string                                                     `json:"outputDirectory,omitempty"`
-	PasswordProtection               *UpdateProjectDataCache200ApplicationJSONPasswordProtection `json:"passwordProtection,omitempty"`
-	Permissions                      *UpdateProjectDataCache200ApplicationJSONPermissions        `json:"permissions,omitempty"`
-	ProductionDeploymentsFastLane    *bool                                                       `json:"productionDeploymentsFastLane,omitempty"`
-	ProtectionBypass                 map[string]interface{}                                      `json:"protectionBypass,omitempty"`
-	PublicSource                     *bool                                                       `json:"publicSource,omitempty"`
-	RootDirectory                    *string                                                     `json:"rootDirectory,omitempty"`
-	ServerlessFunctionRegion         *string                                                     `json:"serverlessFunctionRegion,omitempty"`
-	SkipGitConnectDuringLink         *bool                                                       `json:"skipGitConnectDuringLink,omitempty"`
-	SourceFilesOutsideRootDirectory  *bool                                                       `json:"sourceFilesOutsideRootDirectory,omitempty"`
-	SsoProtection                    *UpdateProjectDataCache200ApplicationJSONSsoProtection      `json:"ssoProtection,omitempty"`
-	Targets                          map[string]UpdateProjectDataCache200ApplicationJSONTargets  `json:"targets,omitempty"`
-	TransferCompletedAt              *int64                                                      `json:"transferCompletedAt,omitempty"`
-	TransferStartedAt                *int64                                                      `json:"transferStartedAt,omitempty"`
-	TransferToAccountID              *string                                                     `json:"transferToAccountId,omitempty"`
-	TransferredFromAccountID         *string                                                     `json:"transferredFromAccountId,omitempty"`
-	TrustedIps                       *UpdateProjectDataCache200ApplicationJSONTrustedIps         `json:"trustedIps,omitempty"`
-	UpdatedAt                        *int64                                                      `json:"updatedAt,omitempty"`
+	AccountID                        string                                                              `json:"accountId"`
+	Analytics                        *UpdateProjectDataCache200ApplicationJSONAnalytics                  `json:"analytics,omitempty"`
+	AutoAssignCustomDomains          *bool                                                               `json:"autoAssignCustomDomains,omitempty"`
+	AutoAssignCustomDomainsUpdatedBy *string                                                             `json:"autoAssignCustomDomainsUpdatedBy,omitempty"`
+	AutoExposeSystemEnvs             *bool                                                               `json:"autoExposeSystemEnvs,omitempty"`
+	BuildCommand                     *string                                                             `json:"buildCommand,omitempty"`
+	CommandForIgnoringBuildStep      *string                                                             `json:"commandForIgnoringBuildStep,omitempty"`
+	ConnectBuildsEnabled             *bool                                                               `json:"connectBuildsEnabled,omitempty"`
+	ConnectConfigurationID           *string                                                             `json:"connectConfigurationId,omitempty"`
+	CreatedAt                        *int64                                                              `json:"createdAt,omitempty"`
+	Crons                            *UpdateProjectDataCache200ApplicationJSONCrons                      `json:"crons,omitempty"`
+	CustomerSupportCodeVisibility    *bool                                                               `json:"customerSupportCodeVisibility,omitempty"`
+	DataCache                        *UpdateProjectDataCache200ApplicationJSONDataCache                  `json:"dataCache,omitempty"`
+	DevCommand                       *string                                                             `json:"devCommand,omitempty"`
+	DirectoryListing                 bool                                                                `json:"directoryListing"`
+	EnablePreviewFeedback            *bool                                                               `json:"enablePreviewFeedback,omitempty"`
+	Env                              []UpdateProjectDataCache200ApplicationJSONEnv                       `json:"env,omitempty"`
+	Framework                        *UpdateProjectDataCache200ApplicationJSONFramework                  `json:"framework,omitempty"`
+	GitComments                      *UpdateProjectDataCache200ApplicationJSONGitComments                `json:"gitComments,omitempty"`
+	GitForkProtection                *bool                                                               `json:"gitForkProtection,omitempty"`
+	GitLFS                           *bool                                                               `json:"gitLFS,omitempty"`
+	HasActiveBranches                *bool                                                               `json:"hasActiveBranches,omitempty"`
+	HasFloatingAliases               *bool                                                               `json:"hasFloatingAliases,omitempty"`
+	ID                               string                                                              `json:"id"`
+	InstallCommand                   *string                                                             `json:"installCommand,omitempty"`
+	LastAliasRequest                 *UpdateProjectDataCache200ApplicationJSONLastAliasRequest           `json:"lastAliasRequest,omitempty"`
+	LastRollbackTarget               *UpdateProjectDataCache200ApplicationJSONLastRollbackTarget         `json:"lastRollbackTarget,omitempty"`
+	LatestDeployments                []UpdateProjectDataCache200ApplicationJSONLatestDeployments         `json:"latestDeployments,omitempty"`
+	Link                             *UpdateProjectDataCache200ApplicationJSONLink                       `json:"link,omitempty"`
+	Live                             *bool                                                               `json:"live,omitempty"`
+	Name                             string                                                              `json:"name"`
+	NodeVersion                      UpdateProjectDataCache200ApplicationJSONNodeVersion                 `json:"nodeVersion"`
+	OutputDirectory                  *string                                                             `json:"outputDirectory,omitempty"`
+	PasswordProtection               *UpdateProjectDataCache200ApplicationJSONPasswordProtection         `json:"passwordProtection,omitempty"`
+	Permissions                      *UpdateProjectDataCache200ApplicationJSONPermissions                `json:"permissions,omitempty"`
+	ProductionDeploymentsFastLane    *bool                                                               `json:"productionDeploymentsFastLane,omitempty"`
+	ProtectionBypass                 map[string]UpdateProjectDataCache200ApplicationJSONProtectionBypass `json:"protectionBypass,omitempty"`
+	PublicSource                     *bool                                                               `json:"publicSource,omitempty"`
+	RootDirectory                    *string                                                             `json:"rootDirectory,omitempty"`
+	ServerlessFunctionRegion         *string                                                             `json:"serverlessFunctionRegion,omitempty"`
+	SkipGitConnectDuringLink         *bool                                                               `json:"skipGitConnectDuringLink,omitempty"`
+	SourceFilesOutsideRootDirectory  *bool                                                               `json:"sourceFilesOutsideRootDirectory,omitempty"`
+	SsoProtection                    *UpdateProjectDataCache200ApplicationJSONSsoProtection              `json:"ssoProtection,omitempty"`
+	Targets                          map[string]UpdateProjectDataCache200ApplicationJSONTargets          `json:"targets,omitempty"`
+	TransferCompletedAt              *int64                                                              `json:"transferCompletedAt,omitempty"`
+	TransferStartedAt                *int64                                                              `json:"transferStartedAt,omitempty"`
+	TransferToAccountID              *string                                                             `json:"transferToAccountId,omitempty"`
+	TransferredFromAccountID         *string                                                             `json:"transferredFromAccountId,omitempty"`
+	TrustedIps                       *UpdateProjectDataCache200ApplicationJSONTrustedIps                 `json:"trustedIps,omitempty"`
+	UpdatedAt                        *int64                                                              `json:"updatedAt,omitempty"`
 }
 
 type UpdateProjectDataCacheResponse struct {

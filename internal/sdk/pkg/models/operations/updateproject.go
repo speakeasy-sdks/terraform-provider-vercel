@@ -235,6 +235,53 @@ type UpdateProjectRequestBodyPasswordProtection struct {
 	DeploymentType UpdateProjectRequestBodyPasswordProtectionDeploymentType `json:"deploymentType"`
 	// The password that will be used to protect Project Deployments
 	Password *string `json:"password,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _UpdateProjectRequestBodyPasswordProtection UpdateProjectRequestBodyPasswordProtection
+
+func (c *UpdateProjectRequestBodyPasswordProtection) UnmarshalJSON(bs []byte) error {
+	data := _UpdateProjectRequestBodyPasswordProtection{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = UpdateProjectRequestBodyPasswordProtection(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "deploymentType")
+	delete(additionalFields, "password")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c UpdateProjectRequestBodyPasswordProtection) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_UpdateProjectRequestBodyPasswordProtection(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 // UpdateProjectRequestBodySsoProtectionDeploymentType - Specify if the Vercel Authentication (SSO Protection) will apply to every Deployment Target or just Preview
@@ -272,6 +319,52 @@ func (e *UpdateProjectRequestBodySsoProtectionDeploymentType) UnmarshalJSON(data
 type UpdateProjectRequestBodySsoProtection struct {
 	// Specify if the Vercel Authentication (SSO Protection) will apply to every Deployment Target or just Preview
 	DeploymentType *UpdateProjectRequestBodySsoProtectionDeploymentType `json:"deploymentType,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _UpdateProjectRequestBodySsoProtection UpdateProjectRequestBodySsoProtection
+
+func (c *UpdateProjectRequestBodySsoProtection) UnmarshalJSON(bs []byte) error {
+	data := _UpdateProjectRequestBodySsoProtection{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = UpdateProjectRequestBodySsoProtection(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "deploymentType")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c UpdateProjectRequestBodySsoProtection) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_UpdateProjectRequestBodySsoProtection(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type UpdateProjectRequestBodyTrustedIpsAddresses struct {
@@ -279,6 +372,53 @@ type UpdateProjectRequestBodyTrustedIpsAddresses struct {
 	Note *string `json:"note,omitempty"`
 	// The IP addresses that are allowlisted. Supported formats are IPv4 and CIDR.
 	Value string `json:"value"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _UpdateProjectRequestBodyTrustedIpsAddresses UpdateProjectRequestBodyTrustedIpsAddresses
+
+func (c *UpdateProjectRequestBodyTrustedIpsAddresses) UnmarshalJSON(bs []byte) error {
+	data := _UpdateProjectRequestBodyTrustedIpsAddresses{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = UpdateProjectRequestBodyTrustedIpsAddresses(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "note")
+	delete(additionalFields, "value")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c UpdateProjectRequestBodyTrustedIpsAddresses) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_UpdateProjectRequestBodyTrustedIpsAddresses(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 // UpdateProjectRequestBodyTrustedIpsDeploymentType - Specify if the Trusted IPs will apply to every Deployment Target or just Preview
@@ -350,6 +490,54 @@ type UpdateProjectRequestBodyTrustedIps struct {
 	DeploymentType UpdateProjectRequestBodyTrustedIpsDeploymentType `json:"deploymentType"`
 	// exclusive: ip match is enough to bypass deployment protection (regardless of other settings). additional: ip must match + any other protection should be also provided (password, vercel auth, shareable link, automation bypass header, automation bypass query param)
 	ProtectionMode UpdateProjectRequestBodyTrustedIpsProtectionMode `json:"protectionMode"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _UpdateProjectRequestBodyTrustedIps UpdateProjectRequestBodyTrustedIps
+
+func (c *UpdateProjectRequestBodyTrustedIps) UnmarshalJSON(bs []byte) error {
+	data := _UpdateProjectRequestBodyTrustedIps{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = UpdateProjectRequestBodyTrustedIps(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "addresses")
+	delete(additionalFields, "deploymentType")
+	delete(additionalFields, "protectionMode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c UpdateProjectRequestBodyTrustedIps) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_UpdateProjectRequestBodyTrustedIps(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type UpdateProjectRequestBody struct {
@@ -397,6 +585,75 @@ type UpdateProjectRequestBody struct {
 	SsoProtection *UpdateProjectRequestBodySsoProtection `json:"ssoProtection,omitempty"`
 	// Restricts access to deployments based on the incoming request IP address
 	TrustedIps *UpdateProjectRequestBodyTrustedIps `json:"trustedIps,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _UpdateProjectRequestBody UpdateProjectRequestBody
+
+func (c *UpdateProjectRequestBody) UnmarshalJSON(bs []byte) error {
+	data := _UpdateProjectRequestBody{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = UpdateProjectRequestBody(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "autoAssignCustomDomains")
+	delete(additionalFields, "autoAssignCustomDomainsUpdatedBy")
+	delete(additionalFields, "autoExposeSystemEnvs")
+	delete(additionalFields, "buildCommand")
+	delete(additionalFields, "commandForIgnoringBuildStep")
+	delete(additionalFields, "customerSupportCodeVisibility")
+	delete(additionalFields, "devCommand")
+	delete(additionalFields, "directoryListing")
+	delete(additionalFields, "enablePreviewFeedback")
+	delete(additionalFields, "framework")
+	delete(additionalFields, "gitForkProtection")
+	delete(additionalFields, "gitLFS")
+	delete(additionalFields, "installCommand")
+	delete(additionalFields, "name")
+	delete(additionalFields, "nodeVersion")
+	delete(additionalFields, "outputDirectory")
+	delete(additionalFields, "passwordProtection")
+	delete(additionalFields, "publicSource")
+	delete(additionalFields, "rootDirectory")
+	delete(additionalFields, "serverlessFunctionRegion")
+	delete(additionalFields, "skipGitConnectDuringLink")
+	delete(additionalFields, "sourceFilesOutsideRootDirectory")
+	delete(additionalFields, "ssoProtection")
+	delete(additionalFields, "trustedIps")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c UpdateProjectRequestBody) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_UpdateProjectRequestBody(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type UpdateProjectRequest struct {
@@ -2229,6 +2486,166 @@ type UpdateProject200ApplicationJSONPermissions struct {
 	WebhookEvent                             []shared.ACLAction `json:"webhook-event,omitempty"`
 }
 
+type UpdateProject200ApplicationJSONProtectionBypass2Access string
+
+const (
+	UpdateProject200ApplicationJSONProtectionBypass2AccessRequested UpdateProject200ApplicationJSONProtectionBypass2Access = "requested"
+	UpdateProject200ApplicationJSONProtectionBypass2AccessGranted   UpdateProject200ApplicationJSONProtectionBypass2Access = "granted"
+)
+
+func (e UpdateProject200ApplicationJSONProtectionBypass2Access) ToPointer() *UpdateProject200ApplicationJSONProtectionBypass2Access {
+	return &e
+}
+
+func (e *UpdateProject200ApplicationJSONProtectionBypass2Access) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "requested":
+		fallthrough
+	case "granted":
+		*e = UpdateProject200ApplicationJSONProtectionBypass2Access(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProject200ApplicationJSONProtectionBypass2Access: %v", v)
+	}
+}
+
+type UpdateProject200ApplicationJSONProtectionBypass2Scope string
+
+const (
+	UpdateProject200ApplicationJSONProtectionBypass2ScopeUser UpdateProject200ApplicationJSONProtectionBypass2Scope = "user"
+)
+
+func (e UpdateProject200ApplicationJSONProtectionBypass2Scope) ToPointer() *UpdateProject200ApplicationJSONProtectionBypass2Scope {
+	return &e
+}
+
+func (e *UpdateProject200ApplicationJSONProtectionBypass2Scope) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "user":
+		*e = UpdateProject200ApplicationJSONProtectionBypass2Scope(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProject200ApplicationJSONProtectionBypass2Scope: %v", v)
+	}
+}
+
+type UpdateProject200ApplicationJSONProtectionBypass2 struct {
+	Access        UpdateProject200ApplicationJSONProtectionBypass2Access `json:"access"`
+	CreatedAt     int64                                                  `json:"createdAt"`
+	LastUpdatedAt int64                                                  `json:"lastUpdatedAt"`
+	LastUpdatedBy string                                                 `json:"lastUpdatedBy"`
+	Scope         UpdateProject200ApplicationJSONProtectionBypass2Scope  `json:"scope"`
+}
+
+type UpdateProject200ApplicationJSONProtectionBypass1Scope string
+
+const (
+	UpdateProject200ApplicationJSONProtectionBypass1ScopeShareableLink    UpdateProject200ApplicationJSONProtectionBypass1Scope = "shareable-link"
+	UpdateProject200ApplicationJSONProtectionBypass1ScopeAutomationBypass UpdateProject200ApplicationJSONProtectionBypass1Scope = "automation-bypass"
+)
+
+func (e UpdateProject200ApplicationJSONProtectionBypass1Scope) ToPointer() *UpdateProject200ApplicationJSONProtectionBypass1Scope {
+	return &e
+}
+
+func (e *UpdateProject200ApplicationJSONProtectionBypass1Scope) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "shareable-link":
+		fallthrough
+	case "automation-bypass":
+		*e = UpdateProject200ApplicationJSONProtectionBypass1Scope(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProject200ApplicationJSONProtectionBypass1Scope: %v", v)
+	}
+}
+
+type UpdateProject200ApplicationJSONProtectionBypass1 struct {
+	CreatedAt int64                                                 `json:"createdAt"`
+	CreatedBy string                                                `json:"createdBy"`
+	Scope     UpdateProject200ApplicationJSONProtectionBypass1Scope `json:"scope"`
+}
+
+type UpdateProject200ApplicationJSONProtectionBypassType string
+
+const (
+	UpdateProject200ApplicationJSONProtectionBypassTypeUpdateProject200ApplicationJSONProtectionBypass1 UpdateProject200ApplicationJSONProtectionBypassType = "updateProject_200ApplicationJSON_protectionBypass_1"
+	UpdateProject200ApplicationJSONProtectionBypassTypeUpdateProject200ApplicationJSONProtectionBypass2 UpdateProject200ApplicationJSONProtectionBypassType = "updateProject_200ApplicationJSON_protectionBypass_2"
+)
+
+type UpdateProject200ApplicationJSONProtectionBypass struct {
+	UpdateProject200ApplicationJSONProtectionBypass1 *UpdateProject200ApplicationJSONProtectionBypass1
+	UpdateProject200ApplicationJSONProtectionBypass2 *UpdateProject200ApplicationJSONProtectionBypass2
+
+	Type UpdateProject200ApplicationJSONProtectionBypassType
+}
+
+func CreateUpdateProject200ApplicationJSONProtectionBypassUpdateProject200ApplicationJSONProtectionBypass1(updateProject200ApplicationJSONProtectionBypass1 UpdateProject200ApplicationJSONProtectionBypass1) UpdateProject200ApplicationJSONProtectionBypass {
+	typ := UpdateProject200ApplicationJSONProtectionBypassTypeUpdateProject200ApplicationJSONProtectionBypass1
+
+	return UpdateProject200ApplicationJSONProtectionBypass{
+		UpdateProject200ApplicationJSONProtectionBypass1: &updateProject200ApplicationJSONProtectionBypass1,
+		Type: typ,
+	}
+}
+
+func CreateUpdateProject200ApplicationJSONProtectionBypassUpdateProject200ApplicationJSONProtectionBypass2(updateProject200ApplicationJSONProtectionBypass2 UpdateProject200ApplicationJSONProtectionBypass2) UpdateProject200ApplicationJSONProtectionBypass {
+	typ := UpdateProject200ApplicationJSONProtectionBypassTypeUpdateProject200ApplicationJSONProtectionBypass2
+
+	return UpdateProject200ApplicationJSONProtectionBypass{
+		UpdateProject200ApplicationJSONProtectionBypass2: &updateProject200ApplicationJSONProtectionBypass2,
+		Type: typ,
+	}
+}
+
+func (u *UpdateProject200ApplicationJSONProtectionBypass) UnmarshalJSON(data []byte) error {
+	var d *json.Decoder
+
+	updateProject200ApplicationJSONProtectionBypass1 := new(UpdateProject200ApplicationJSONProtectionBypass1)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&updateProject200ApplicationJSONProtectionBypass1); err == nil {
+		u.UpdateProject200ApplicationJSONProtectionBypass1 = updateProject200ApplicationJSONProtectionBypass1
+		u.Type = UpdateProject200ApplicationJSONProtectionBypassTypeUpdateProject200ApplicationJSONProtectionBypass1
+		return nil
+	}
+
+	updateProject200ApplicationJSONProtectionBypass2 := new(UpdateProject200ApplicationJSONProtectionBypass2)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&updateProject200ApplicationJSONProtectionBypass2); err == nil {
+		u.UpdateProject200ApplicationJSONProtectionBypass2 = updateProject200ApplicationJSONProtectionBypass2
+		u.Type = UpdateProject200ApplicationJSONProtectionBypassTypeUpdateProject200ApplicationJSONProtectionBypass2
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u UpdateProject200ApplicationJSONProtectionBypass) MarshalJSON() ([]byte, error) {
+	if u.UpdateProject200ApplicationJSONProtectionBypass1 != nil {
+		return json.Marshal(u.UpdateProject200ApplicationJSONProtectionBypass1)
+	}
+
+	if u.UpdateProject200ApplicationJSONProtectionBypass2 != nil {
+		return json.Marshal(u.UpdateProject200ApplicationJSONProtectionBypass2)
+	}
+
+	return nil, nil
+}
+
 type UpdateProject200ApplicationJSONSsoProtectionDeploymentType string
 
 const (
@@ -2751,56 +3168,56 @@ func (u UpdateProject200ApplicationJSONTrustedIps) MarshalJSON() ([]byte, error)
 
 // UpdateProject200ApplicationJSON - The project was successfully updated
 type UpdateProject200ApplicationJSON struct {
-	AccountID                        string                                             `json:"accountId"`
-	Analytics                        *UpdateProject200ApplicationJSONAnalytics          `json:"analytics,omitempty"`
-	AutoAssignCustomDomains          *bool                                              `json:"autoAssignCustomDomains,omitempty"`
-	AutoAssignCustomDomainsUpdatedBy *string                                            `json:"autoAssignCustomDomainsUpdatedBy,omitempty"`
-	AutoExposeSystemEnvs             *bool                                              `json:"autoExposeSystemEnvs,omitempty"`
-	BuildCommand                     *string                                            `json:"buildCommand,omitempty"`
-	CommandForIgnoringBuildStep      *string                                            `json:"commandForIgnoringBuildStep,omitempty"`
-	ConnectBuildsEnabled             *bool                                              `json:"connectBuildsEnabled,omitempty"`
-	ConnectConfigurationID           *string                                            `json:"connectConfigurationId,omitempty"`
-	CreatedAt                        *int64                                             `json:"createdAt,omitempty"`
-	Crons                            *UpdateProject200ApplicationJSONCrons              `json:"crons,omitempty"`
-	CustomerSupportCodeVisibility    *bool                                              `json:"customerSupportCodeVisibility,omitempty"`
-	DataCache                        *UpdateProject200ApplicationJSONDataCache          `json:"dataCache,omitempty"`
-	DevCommand                       *string                                            `json:"devCommand,omitempty"`
-	DirectoryListing                 bool                                               `json:"directoryListing"`
-	EnablePreviewFeedback            *bool                                              `json:"enablePreviewFeedback,omitempty"`
-	Env                              []UpdateProject200ApplicationJSONEnv               `json:"env,omitempty"`
-	Framework                        *UpdateProject200ApplicationJSONFramework          `json:"framework,omitempty"`
-	GitComments                      *UpdateProject200ApplicationJSONGitComments        `json:"gitComments,omitempty"`
-	GitForkProtection                *bool                                              `json:"gitForkProtection,omitempty"`
-	GitLFS                           *bool                                              `json:"gitLFS,omitempty"`
-	HasActiveBranches                *bool                                              `json:"hasActiveBranches,omitempty"`
-	HasFloatingAliases               *bool                                              `json:"hasFloatingAliases,omitempty"`
-	ID                               string                                             `json:"id"`
-	InstallCommand                   *string                                            `json:"installCommand,omitempty"`
-	LastAliasRequest                 *UpdateProject200ApplicationJSONLastAliasRequest   `json:"lastAliasRequest,omitempty"`
-	LastRollbackTarget               *UpdateProject200ApplicationJSONLastRollbackTarget `json:"lastRollbackTarget,omitempty"`
-	LatestDeployments                []UpdateProject200ApplicationJSONLatestDeployments `json:"latestDeployments,omitempty"`
-	Link                             *UpdateProject200ApplicationJSONLink               `json:"link,omitempty"`
-	Live                             *bool                                              `json:"live,omitempty"`
-	Name                             string                                             `json:"name"`
-	NodeVersion                      UpdateProject200ApplicationJSONNodeVersion         `json:"nodeVersion"`
-	OutputDirectory                  *string                                            `json:"outputDirectory,omitempty"`
-	PasswordProtection               *UpdateProject200ApplicationJSONPasswordProtection `json:"passwordProtection,omitempty"`
-	Permissions                      *UpdateProject200ApplicationJSONPermissions        `json:"permissions,omitempty"`
-	ProductionDeploymentsFastLane    *bool                                              `json:"productionDeploymentsFastLane,omitempty"`
-	ProtectionBypass                 map[string]interface{}                             `json:"protectionBypass,omitempty"`
-	PublicSource                     *bool                                              `json:"publicSource,omitempty"`
-	RootDirectory                    *string                                            `json:"rootDirectory,omitempty"`
-	ServerlessFunctionRegion         *string                                            `json:"serverlessFunctionRegion,omitempty"`
-	SkipGitConnectDuringLink         *bool                                              `json:"skipGitConnectDuringLink,omitempty"`
-	SourceFilesOutsideRootDirectory  *bool                                              `json:"sourceFilesOutsideRootDirectory,omitempty"`
-	SsoProtection                    *UpdateProject200ApplicationJSONSsoProtection      `json:"ssoProtection,omitempty"`
-	Targets                          map[string]UpdateProject200ApplicationJSONTargets  `json:"targets,omitempty"`
-	TransferCompletedAt              *int64                                             `json:"transferCompletedAt,omitempty"`
-	TransferStartedAt                *int64                                             `json:"transferStartedAt,omitempty"`
-	TransferToAccountID              *string                                            `json:"transferToAccountId,omitempty"`
-	TransferredFromAccountID         *string                                            `json:"transferredFromAccountId,omitempty"`
-	TrustedIps                       *UpdateProject200ApplicationJSONTrustedIps         `json:"trustedIps,omitempty"`
-	UpdatedAt                        *int64                                             `json:"updatedAt,omitempty"`
+	AccountID                        string                                                     `json:"accountId"`
+	Analytics                        *UpdateProject200ApplicationJSONAnalytics                  `json:"analytics,omitempty"`
+	AutoAssignCustomDomains          *bool                                                      `json:"autoAssignCustomDomains,omitempty"`
+	AutoAssignCustomDomainsUpdatedBy *string                                                    `json:"autoAssignCustomDomainsUpdatedBy,omitempty"`
+	AutoExposeSystemEnvs             *bool                                                      `json:"autoExposeSystemEnvs,omitempty"`
+	BuildCommand                     *string                                                    `json:"buildCommand,omitempty"`
+	CommandForIgnoringBuildStep      *string                                                    `json:"commandForIgnoringBuildStep,omitempty"`
+	ConnectBuildsEnabled             *bool                                                      `json:"connectBuildsEnabled,omitempty"`
+	ConnectConfigurationID           *string                                                    `json:"connectConfigurationId,omitempty"`
+	CreatedAt                        *int64                                                     `json:"createdAt,omitempty"`
+	Crons                            *UpdateProject200ApplicationJSONCrons                      `json:"crons,omitempty"`
+	CustomerSupportCodeVisibility    *bool                                                      `json:"customerSupportCodeVisibility,omitempty"`
+	DataCache                        *UpdateProject200ApplicationJSONDataCache                  `json:"dataCache,omitempty"`
+	DevCommand                       *string                                                    `json:"devCommand,omitempty"`
+	DirectoryListing                 bool                                                       `json:"directoryListing"`
+	EnablePreviewFeedback            *bool                                                      `json:"enablePreviewFeedback,omitempty"`
+	Env                              []UpdateProject200ApplicationJSONEnv                       `json:"env,omitempty"`
+	Framework                        *UpdateProject200ApplicationJSONFramework                  `json:"framework,omitempty"`
+	GitComments                      *UpdateProject200ApplicationJSONGitComments                `json:"gitComments,omitempty"`
+	GitForkProtection                *bool                                                      `json:"gitForkProtection,omitempty"`
+	GitLFS                           *bool                                                      `json:"gitLFS,omitempty"`
+	HasActiveBranches                *bool                                                      `json:"hasActiveBranches,omitempty"`
+	HasFloatingAliases               *bool                                                      `json:"hasFloatingAliases,omitempty"`
+	ID                               string                                                     `json:"id"`
+	InstallCommand                   *string                                                    `json:"installCommand,omitempty"`
+	LastAliasRequest                 *UpdateProject200ApplicationJSONLastAliasRequest           `json:"lastAliasRequest,omitempty"`
+	LastRollbackTarget               *UpdateProject200ApplicationJSONLastRollbackTarget         `json:"lastRollbackTarget,omitempty"`
+	LatestDeployments                []UpdateProject200ApplicationJSONLatestDeployments         `json:"latestDeployments,omitempty"`
+	Link                             *UpdateProject200ApplicationJSONLink                       `json:"link,omitempty"`
+	Live                             *bool                                                      `json:"live,omitempty"`
+	Name                             string                                                     `json:"name"`
+	NodeVersion                      UpdateProject200ApplicationJSONNodeVersion                 `json:"nodeVersion"`
+	OutputDirectory                  *string                                                    `json:"outputDirectory,omitempty"`
+	PasswordProtection               *UpdateProject200ApplicationJSONPasswordProtection         `json:"passwordProtection,omitempty"`
+	Permissions                      *UpdateProject200ApplicationJSONPermissions                `json:"permissions,omitempty"`
+	ProductionDeploymentsFastLane    *bool                                                      `json:"productionDeploymentsFastLane,omitempty"`
+	ProtectionBypass                 map[string]UpdateProject200ApplicationJSONProtectionBypass `json:"protectionBypass,omitempty"`
+	PublicSource                     *bool                                                      `json:"publicSource,omitempty"`
+	RootDirectory                    *string                                                    `json:"rootDirectory,omitempty"`
+	ServerlessFunctionRegion         *string                                                    `json:"serverlessFunctionRegion,omitempty"`
+	SkipGitConnectDuringLink         *bool                                                      `json:"skipGitConnectDuringLink,omitempty"`
+	SourceFilesOutsideRootDirectory  *bool                                                      `json:"sourceFilesOutsideRootDirectory,omitempty"`
+	SsoProtection                    *UpdateProject200ApplicationJSONSsoProtection              `json:"ssoProtection,omitempty"`
+	Targets                          map[string]UpdateProject200ApplicationJSONTargets          `json:"targets,omitempty"`
+	TransferCompletedAt              *int64                                                     `json:"transferCompletedAt,omitempty"`
+	TransferStartedAt                *int64                                                     `json:"transferStartedAt,omitempty"`
+	TransferToAccountID              *string                                                    `json:"transferToAccountId,omitempty"`
+	TransferredFromAccountID         *string                                                    `json:"transferredFromAccountId,omitempty"`
+	TrustedIps                       *UpdateProject200ApplicationJSONTrustedIps                 `json:"trustedIps,omitempty"`
+	UpdatedAt                        *int64                                                     `json:"updatedAt,omitempty"`
 }
 
 type UpdateProjectResponse struct {

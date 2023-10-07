@@ -3,6 +3,7 @@
 package operations
 
 import (
+	"encoding/json"
 	"net/http"
 )
 
@@ -12,11 +13,104 @@ type DeleteTeamRequestBodyReasons struct {
 	Description string `json:"description"`
 	// Idenitifier slug of the reason why the team is being deleted.
 	Slug string `json:"slug"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _DeleteTeamRequestBodyReasons DeleteTeamRequestBodyReasons
+
+func (c *DeleteTeamRequestBodyReasons) UnmarshalJSON(bs []byte) error {
+	data := _DeleteTeamRequestBodyReasons{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = DeleteTeamRequestBodyReasons(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "description")
+	delete(additionalFields, "slug")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c DeleteTeamRequestBodyReasons) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_DeleteTeamRequestBodyReasons(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type DeleteTeamRequestBody struct {
 	// Optional array of objects that describe the reason why the team is being deleted.
 	Reasons []DeleteTeamRequestBodyReasons `json:"reasons,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _DeleteTeamRequestBody DeleteTeamRequestBody
+
+func (c *DeleteTeamRequestBody) UnmarshalJSON(bs []byte) error {
+	data := _DeleteTeamRequestBody{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = DeleteTeamRequestBody(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "reasons")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c DeleteTeamRequestBody) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_DeleteTeamRequestBody(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type DeleteTeamRequest struct {

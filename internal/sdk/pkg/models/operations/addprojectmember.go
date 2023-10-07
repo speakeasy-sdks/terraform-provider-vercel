@@ -50,6 +50,55 @@ type AddProjectMemberRequestBody3 struct {
 	UID *string `json:"uid,omitempty"`
 	// The username of the team member that should be added to this project.
 	Username *string `json:"username,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _AddProjectMemberRequestBody3 AddProjectMemberRequestBody3
+
+func (c *AddProjectMemberRequestBody3) UnmarshalJSON(bs []byte) error {
+	data := _AddProjectMemberRequestBody3{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = AddProjectMemberRequestBody3(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "email")
+	delete(additionalFields, "role")
+	delete(additionalFields, "uid")
+	delete(additionalFields, "username")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c AddProjectMemberRequestBody3) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_AddProjectMemberRequestBody3(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 // AddProjectMemberRequestBody2Role - The project role of the member that will be added.
@@ -92,6 +141,55 @@ type AddProjectMemberRequestBody2 struct {
 	UID *string `json:"uid,omitempty"`
 	// The username of the team member that should be added to this project.
 	Username string `json:"username"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _AddProjectMemberRequestBody2 AddProjectMemberRequestBody2
+
+func (c *AddProjectMemberRequestBody2) UnmarshalJSON(bs []byte) error {
+	data := _AddProjectMemberRequestBody2{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = AddProjectMemberRequestBody2(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "email")
+	delete(additionalFields, "role")
+	delete(additionalFields, "uid")
+	delete(additionalFields, "username")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c AddProjectMemberRequestBody2) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_AddProjectMemberRequestBody2(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 // AddProjectMemberRequestBody1Role - The project role of the member that will be added.
@@ -134,6 +232,55 @@ type AddProjectMemberRequestBody1 struct {
 	UID string `json:"uid"`
 	// The username of the team member that should be added to this project.
 	Username *string `json:"username,omitempty"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _AddProjectMemberRequestBody1 AddProjectMemberRequestBody1
+
+func (c *AddProjectMemberRequestBody1) UnmarshalJSON(bs []byte) error {
+	data := _AddProjectMemberRequestBody1{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = AddProjectMemberRequestBody1(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "email")
+	delete(additionalFields, "role")
+	delete(additionalFields, "uid")
+	delete(additionalFields, "username")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c AddProjectMemberRequestBody1) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_AddProjectMemberRequestBody1(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type AddProjectMemberRequestBodyType string

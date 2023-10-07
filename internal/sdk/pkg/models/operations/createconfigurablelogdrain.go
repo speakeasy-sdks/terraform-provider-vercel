@@ -115,6 +115,59 @@ type CreateConfigurableLogDrainRequestBody struct {
 	Sources []CreateConfigurableLogDrainRequestBodySources `json:"sources"`
 	// The log drain url
 	URL string `json:"url"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _CreateConfigurableLogDrainRequestBody CreateConfigurableLogDrainRequestBody
+
+func (c *CreateConfigurableLogDrainRequestBody) UnmarshalJSON(bs []byte) error {
+	data := _CreateConfigurableLogDrainRequestBody{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = CreateConfigurableLogDrainRequestBody(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "branch")
+	delete(additionalFields, "deliveryFormat")
+	delete(additionalFields, "environment")
+	delete(additionalFields, "headers")
+	delete(additionalFields, "projectIds")
+	delete(additionalFields, "secret")
+	delete(additionalFields, "sources")
+	delete(additionalFields, "url")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c CreateConfigurableLogDrainRequestBody) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_CreateConfigurableLogDrainRequestBody(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type CreateConfigurableLogDrainRequest struct {
