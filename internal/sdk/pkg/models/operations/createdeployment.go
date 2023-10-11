@@ -56,52 +56,6 @@ type CreateDeploymentRequestBodyBuild struct {
 	//
 	// @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Env map[string]string `json:"env,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyBuild CreateDeploymentRequestBodyBuild
-
-func (c *CreateDeploymentRequestBodyBuild) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyBuild{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyBuild(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "env")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyBuild) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyBuild(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyBuildsConfig - Optionally, an object including arbitrary metadata to be passed to the Builder
@@ -115,54 +69,6 @@ type CreateDeploymentRequestBodyBuilds struct {
 	Src *string `json:"src,omitempty"`
 	// An npm module to be installed by the build process. It can include a semver compatible version (e.g.: `@org/proj@1`)
 	Use string `json:"use"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyBuilds CreateDeploymentRequestBodyBuilds
-
-func (c *CreateDeploymentRequestBodyBuilds) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyBuilds{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyBuilds(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "config")
-	delete(additionalFields, "src")
-	delete(additionalFields, "use")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyBuilds) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyBuilds(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyConnectionUris struct {
@@ -240,54 +146,6 @@ type CreateDeploymentRequestBodyFilesUploadedFile struct {
 	Sha *string `json:"sha,omitempty"`
 	// The file size in bytes
 	Size *int64 `json:"size,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyFilesUploadedFile CreateDeploymentRequestBodyFilesUploadedFile
-
-func (c *CreateDeploymentRequestBodyFilesUploadedFile) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyFilesUploadedFile{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyFilesUploadedFile(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "file")
-	delete(additionalFields, "sha")
-	delete(additionalFields, "size")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyFilesUploadedFile) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyFilesUploadedFile(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyFilesInlinedFileEncoding - The file content encoding, it could be either a base64 (useful for images, etc.) of the files or the plain text for source code.
@@ -326,54 +184,6 @@ type CreateDeploymentRequestBodyFilesInlinedFile struct {
 	Encoding *CreateDeploymentRequestBodyFilesInlinedFileEncoding `json:"encoding,omitempty"`
 	// The file name including the whole path
 	File string `json:"file"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyFilesInlinedFile CreateDeploymentRequestBodyFilesInlinedFile
-
-func (c *CreateDeploymentRequestBodyFilesInlinedFile) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyFilesInlinedFile{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyFilesInlinedFile(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "data")
-	delete(additionalFields, "encoding")
-	delete(additionalFields, "file")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyFilesInlinedFile) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyFilesInlinedFile(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyFilesType string
@@ -606,56 +416,6 @@ type CreateDeploymentRequestBodyFunctions struct {
 	Memory *int64 `json:"memory,omitempty"`
 	// The npm package name of a Runtime, including its version
 	Runtime *string `json:"runtime,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyFunctions CreateDeploymentRequestBodyFunctions
-
-func (c *CreateDeploymentRequestBodyFunctions) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyFunctions{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyFunctions(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "excludeFiles")
-	delete(additionalFields, "includeFiles")
-	delete(additionalFields, "maxDuration")
-	delete(additionalFields, "memory")
-	delete(additionalFields, "runtime")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyFunctions) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyFunctions(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyGitDeploymentEnabledType string
@@ -745,57 +505,6 @@ type CreateDeploymentRequestBodyGitMetadata struct {
 	Dirty *bool `json:"dirty,omitempty"`
 	// The git repository's remote origin url
 	RemoteURL *string `json:"remoteUrl,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyGitMetadata CreateDeploymentRequestBodyGitMetadata
-
-func (c *CreateDeploymentRequestBodyGitMetadata) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyGitMetadata{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyGitMetadata(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "commitAuthorName")
-	delete(additionalFields, "commitMessage")
-	delete(additionalFields, "commitRef")
-	delete(additionalFields, "commitSha")
-	delete(additionalFields, "dirty")
-	delete(additionalFields, "remoteUrl")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyGitMetadata) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyGitMetadata(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyGitSource5Type string
@@ -1275,54 +984,6 @@ type CreateDeploymentRequestBodyHeadersHas2 struct {
 	Type CreateDeploymentRequestBodyHeadersHas2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyHeadersHas2 CreateDeploymentRequestBodyHeadersHas2
-
-func (c *CreateDeploymentRequestBodyHeadersHas2) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyHeadersHas2{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyHeadersHas2(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "key")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyHeadersHas2) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyHeadersHas2(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyHeadersHas1Type - The type of request element to check
@@ -1355,53 +1016,6 @@ type CreateDeploymentRequestBodyHeadersHas1 struct {
 	Type CreateDeploymentRequestBodyHeadersHas1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyHeadersHas1 CreateDeploymentRequestBodyHeadersHas1
-
-func (c *CreateDeploymentRequestBodyHeadersHas1) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyHeadersHas1{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyHeadersHas1(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyHeadersHas1) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyHeadersHas1(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyHeadersHasType string
@@ -1475,53 +1089,6 @@ func (u CreateDeploymentRequestBodyHeadersHas) MarshalJSON() ([]byte, error) {
 type CreateDeploymentRequestBodyHeadersHeaders struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyHeadersHeaders CreateDeploymentRequestBodyHeadersHeaders
-
-func (c *CreateDeploymentRequestBodyHeadersHeaders) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyHeadersHeaders{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyHeadersHeaders(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "key")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyHeadersHeaders) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyHeadersHeaders(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyHeadersMissing2Type - The type of request element to check
@@ -1562,54 +1129,6 @@ type CreateDeploymentRequestBodyHeadersMissing2 struct {
 	Type CreateDeploymentRequestBodyHeadersMissing2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyHeadersMissing2 CreateDeploymentRequestBodyHeadersMissing2
-
-func (c *CreateDeploymentRequestBodyHeadersMissing2) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyHeadersMissing2{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyHeadersMissing2(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "key")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyHeadersMissing2) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyHeadersMissing2(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyHeadersMissing1Type - The type of request element to check
@@ -1642,53 +1161,6 @@ type CreateDeploymentRequestBodyHeadersMissing1 struct {
 	Type CreateDeploymentRequestBodyHeadersMissing1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyHeadersMissing1 CreateDeploymentRequestBodyHeadersMissing1
-
-func (c *CreateDeploymentRequestBodyHeadersMissing1) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyHeadersMissing1{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyHeadersMissing1(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyHeadersMissing1) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyHeadersMissing1(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyHeadersMissingType string
@@ -1768,55 +1240,6 @@ type CreateDeploymentRequestBodyHeaders struct {
 	Missing []CreateDeploymentRequestBodyHeadersMissing `json:"missing,omitempty"`
 	// A pattern that matches each incoming pathname (excluding querystring)
 	Source string `json:"source"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyHeaders CreateDeploymentRequestBodyHeaders
-
-func (c *CreateDeploymentRequestBodyHeaders) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyHeaders{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyHeaders(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "has")
-	delete(additionalFields, "headers")
-	delete(additionalFields, "missing")
-	delete(additionalFields, "source")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyHeaders) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyHeaders(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyImagesContentDispositionType string
@@ -1911,55 +1334,6 @@ type CreateDeploymentRequestBodyImagesRemotePatterns struct {
 	Pathname *string                                                  `json:"pathname,omitempty"`
 	Port     *string                                                  `json:"port,omitempty"`
 	Protocol *CreateDeploymentRequestBodyImagesRemotePatternsProtocol `json:"protocol,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyImagesRemotePatterns CreateDeploymentRequestBodyImagesRemotePatterns
-
-func (c *CreateDeploymentRequestBodyImagesRemotePatterns) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyImagesRemotePatterns{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyImagesRemotePatterns(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "hostname")
-	delete(additionalFields, "pathname")
-	delete(additionalFields, "port")
-	delete(additionalFields, "protocol")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyImagesRemotePatterns) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyImagesRemotePatterns(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyImages struct {
@@ -1971,59 +1345,6 @@ type CreateDeploymentRequestBodyImages struct {
 	MinimumCacheTTL        *int64                                                   `json:"minimumCacheTTL,omitempty"`
 	RemotePatterns         []CreateDeploymentRequestBodyImagesRemotePatterns        `json:"remotePatterns,omitempty"`
 	Sizes                  []int64                                                  `json:"sizes"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyImages CreateDeploymentRequestBodyImages
-
-func (c *CreateDeploymentRequestBodyImages) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyImages{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyImages(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "contentDispositionType")
-	delete(additionalFields, "contentSecurityPolicy")
-	delete(additionalFields, "dangerouslyAllowSVG")
-	delete(additionalFields, "domains")
-	delete(additionalFields, "formats")
-	delete(additionalFields, "minimumCacheTTL")
-	delete(additionalFields, "remotePatterns")
-	delete(additionalFields, "sizes")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyImages) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyImages(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyPagination struct {
@@ -2246,61 +1567,6 @@ type CreateDeploymentRequestBodyProjectSettings1 struct {
 	SkipGitConnectDuringLink *bool `json:"skipGitConnectDuringLink,omitempty"`
 	// Indicates if there are source files outside of the root directory, typically used for monorepos
 	SourceFilesOutsideRootDirectory *bool `json:"sourceFilesOutsideRootDirectory,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyProjectSettings1 CreateDeploymentRequestBodyProjectSettings1
-
-func (c *CreateDeploymentRequestBodyProjectSettings1) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyProjectSettings1{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyProjectSettings1(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "buildCommand")
-	delete(additionalFields, "commandForIgnoringBuildStep")
-	delete(additionalFields, "devCommand")
-	delete(additionalFields, "framework")
-	delete(additionalFields, "installCommand")
-	delete(additionalFields, "outputDirectory")
-	delete(additionalFields, "rootDirectory")
-	delete(additionalFields, "serverlessFunctionRegion")
-	delete(additionalFields, "skipGitConnectDuringLink")
-	delete(additionalFields, "sourceFilesOutsideRootDirectory")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyProjectSettings1) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyProjectSettings1(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyProjects struct {
@@ -2355,54 +1621,6 @@ type CreateDeploymentRequestBodyRedirectsHas2 struct {
 	Type CreateDeploymentRequestBodyRedirectsHas2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRedirectsHas2 CreateDeploymentRequestBodyRedirectsHas2
-
-func (c *CreateDeploymentRequestBodyRedirectsHas2) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRedirectsHas2{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRedirectsHas2(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "key")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRedirectsHas2) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRedirectsHas2(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyRedirectsHas1Type - The type of request element to check
@@ -2435,53 +1653,6 @@ type CreateDeploymentRequestBodyRedirectsHas1 struct {
 	Type CreateDeploymentRequestBodyRedirectsHas1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRedirectsHas1 CreateDeploymentRequestBodyRedirectsHas1
-
-func (c *CreateDeploymentRequestBodyRedirectsHas1) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRedirectsHas1{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRedirectsHas1(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRedirectsHas1) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRedirectsHas1(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyRedirectsHasType string
@@ -2590,54 +1761,6 @@ type CreateDeploymentRequestBodyRedirectsMissing2 struct {
 	Type CreateDeploymentRequestBodyRedirectsMissing2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRedirectsMissing2 CreateDeploymentRequestBodyRedirectsMissing2
-
-func (c *CreateDeploymentRequestBodyRedirectsMissing2) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRedirectsMissing2{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRedirectsMissing2(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "key")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRedirectsMissing2) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRedirectsMissing2(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyRedirectsMissing1Type - The type of request element to check
@@ -2670,53 +1793,6 @@ type CreateDeploymentRequestBodyRedirectsMissing1 struct {
 	Type CreateDeploymentRequestBodyRedirectsMissing1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRedirectsMissing1 CreateDeploymentRequestBodyRedirectsMissing1
-
-func (c *CreateDeploymentRequestBodyRedirectsMissing1) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRedirectsMissing1{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRedirectsMissing1(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRedirectsMissing1) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRedirectsMissing1(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyRedirectsMissingType string
@@ -2798,56 +1874,6 @@ type CreateDeploymentRequestBodyRedirects struct {
 	Permanent *bool `json:"permanent,omitempty"`
 	// A pattern that matches each incoming pathname (excluding querystring).
 	Source string `json:"source"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRedirects CreateDeploymentRequestBodyRedirects
-
-func (c *CreateDeploymentRequestBodyRedirects) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRedirects{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRedirects(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "destination")
-	delete(additionalFields, "has")
-	delete(additionalFields, "missing")
-	delete(additionalFields, "permanent")
-	delete(additionalFields, "source")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRedirects) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRedirects(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyRewritesHas2Type - The type of request element to check
@@ -2888,54 +1914,6 @@ type CreateDeploymentRequestBodyRewritesHas2 struct {
 	Type CreateDeploymentRequestBodyRewritesHas2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRewritesHas2 CreateDeploymentRequestBodyRewritesHas2
-
-func (c *CreateDeploymentRequestBodyRewritesHas2) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRewritesHas2{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRewritesHas2(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "key")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRewritesHas2) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRewritesHas2(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyRewritesHas1Type - The type of request element to check
@@ -2968,53 +1946,6 @@ type CreateDeploymentRequestBodyRewritesHas1 struct {
 	Type CreateDeploymentRequestBodyRewritesHas1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRewritesHas1 CreateDeploymentRequestBodyRewritesHas1
-
-func (c *CreateDeploymentRequestBodyRewritesHas1) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRewritesHas1{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRewritesHas1(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRewritesHas1) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRewritesHas1(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyRewritesHasType string
@@ -3123,54 +2054,6 @@ type CreateDeploymentRequestBodyRewritesMissing2 struct {
 	Type CreateDeploymentRequestBodyRewritesMissing2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRewritesMissing2 CreateDeploymentRequestBodyRewritesMissing2
-
-func (c *CreateDeploymentRequestBodyRewritesMissing2) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRewritesMissing2{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRewritesMissing2(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "key")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRewritesMissing2) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRewritesMissing2(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyRewritesMissing1Type - The type of request element to check
@@ -3203,53 +2086,6 @@ type CreateDeploymentRequestBodyRewritesMissing1 struct {
 	Type CreateDeploymentRequestBodyRewritesMissing1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRewritesMissing1 CreateDeploymentRequestBodyRewritesMissing1
-
-func (c *CreateDeploymentRequestBodyRewritesMissing1) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRewritesMissing1{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRewritesMissing1(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRewritesMissing1) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRewritesMissing1(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyRewritesMissingType string
@@ -3329,55 +2165,6 @@ type CreateDeploymentRequestBodyRewrites struct {
 	Missing []CreateDeploymentRequestBodyRewritesMissing `json:"missing,omitempty"`
 	// A pattern that matches each incoming pathname (excluding querystring).
 	Source string `json:"source"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRewrites CreateDeploymentRequestBodyRewrites
-
-func (c *CreateDeploymentRequestBodyRewrites) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRewrites{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRewrites(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "destination")
-	delete(additionalFields, "has")
-	delete(additionalFields, "missing")
-	delete(additionalFields, "source")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRewrites) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRewrites(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyRole struct {
@@ -3439,52 +2226,6 @@ func (e *CreateDeploymentRequestBodyRoutes2Handle) UnmarshalJSON(data []byte) er
 
 type CreateDeploymentRequestBodyRoutes2 struct {
 	Handle CreateDeploymentRequestBodyRoutes2Handle `json:"handle"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRoutes2 CreateDeploymentRequestBodyRoutes2
-
-func (c *CreateDeploymentRequestBodyRoutes2) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRoutes2{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRoutes2(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "handle")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRoutes2) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRoutes2(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyRoutes1Has2Type - The type of request element to check
@@ -3525,54 +2266,6 @@ type CreateDeploymentRequestBodyRoutes1Has2 struct {
 	Type CreateDeploymentRequestBodyRoutes1Has2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRoutes1Has2 CreateDeploymentRequestBodyRoutes1Has2
-
-func (c *CreateDeploymentRequestBodyRoutes1Has2) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRoutes1Has2{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRoutes1Has2(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "key")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRoutes1Has2) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRoutes1Has2(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyRoutes1Has1Type - The type of request element to check
@@ -3605,53 +2298,6 @@ type CreateDeploymentRequestBodyRoutes1Has1 struct {
 	Type CreateDeploymentRequestBodyRoutes1Has1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRoutes1Has1 CreateDeploymentRequestBodyRoutes1Has1
-
-func (c *CreateDeploymentRequestBodyRoutes1Has1) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRoutes1Has1{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRoutes1Has1(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRoutes1Has1) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRoutes1Has1(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyRoutes1HasType string
@@ -3728,56 +2374,6 @@ type CreateDeploymentRequestBodyRoutes1Locale struct {
 	Path     *string           `json:"path,omitempty"`
 	Redirect map[string]string `json:"redirect,omitempty"`
 	Value    *string           `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRoutes1Locale CreateDeploymentRequestBodyRoutes1Locale
-
-func (c *CreateDeploymentRequestBodyRoutes1Locale) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRoutes1Locale{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRoutes1Locale(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "cookie")
-	delete(additionalFields, "default")
-	delete(additionalFields, "path")
-	delete(additionalFields, "redirect")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRoutes1Locale) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRoutes1Locale(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyRoutes1Missing2Type - The type of request element to check
@@ -3818,54 +2414,6 @@ type CreateDeploymentRequestBodyRoutes1Missing2 struct {
 	Type CreateDeploymentRequestBodyRoutes1Missing2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRoutes1Missing2 CreateDeploymentRequestBodyRoutes1Missing2
-
-func (c *CreateDeploymentRequestBodyRoutes1Missing2) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRoutes1Missing2{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRoutes1Missing2(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "key")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRoutes1Missing2) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRoutes1Missing2(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateDeploymentRequestBodyRoutes1Missing1Type - The type of request element to check
@@ -3898,53 +2446,6 @@ type CreateDeploymentRequestBodyRoutes1Missing1 struct {
 	Type CreateDeploymentRequestBodyRoutes1Missing1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRoutes1Missing1 CreateDeploymentRequestBodyRoutes1Missing1
-
-func (c *CreateDeploymentRequestBodyRoutes1Missing1) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRoutes1Missing1{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRoutes1Missing1(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRoutes1Missing1) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRoutes1Missing1(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyRoutes1MissingType string
@@ -4036,69 +2537,6 @@ type CreateDeploymentRequestBodyRoutes1 struct {
 	Src      string                                      `json:"src"`
 	Status   *int64                                      `json:"status,omitempty"`
 	User     *bool                                       `json:"user,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBodyRoutes1 CreateDeploymentRequestBodyRoutes1
-
-func (c *CreateDeploymentRequestBodyRoutes1) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBodyRoutes1{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBodyRoutes1(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "caseSensitive")
-	delete(additionalFields, "check")
-	delete(additionalFields, "continue")
-	delete(additionalFields, "dest")
-	delete(additionalFields, "has")
-	delete(additionalFields, "headers")
-	delete(additionalFields, "important")
-	delete(additionalFields, "isInternal")
-	delete(additionalFields, "locale")
-	delete(additionalFields, "methods")
-	delete(additionalFields, "middleware")
-	delete(additionalFields, "middlewarePath")
-	delete(additionalFields, "middlewareRawSrc")
-	delete(additionalFields, "missing")
-	delete(additionalFields, "override")
-	delete(additionalFields, "src")
-	delete(additionalFields, "status")
-	delete(additionalFields, "user")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBodyRoutes1) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBodyRoutes1(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeploymentRequestBodyRoutesType string
@@ -4281,96 +2719,6 @@ type CreateDeploymentRequestBody struct {
 	TrailingSlash *bool `json:"trailingSlash,omitempty"`
 	// When `true` and `deploymentId` is passed in, the sha from the previous deployment's `gitSource` is removed forcing the latest commit to be used.
 	WithLatestCommit *bool `json:"withLatestCommit,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateDeploymentRequestBody CreateDeploymentRequestBody
-
-func (c *CreateDeploymentRequestBody) UnmarshalJSON(bs []byte) error {
-	data := _CreateDeploymentRequestBody{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateDeploymentRequestBody(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "$schema")
-	delete(additionalFields, "alias")
-	delete(additionalFields, "branch")
-	delete(additionalFields, "build")
-	delete(additionalFields, "buildCommand")
-	delete(additionalFields, "builds")
-	delete(additionalFields, "cleanUrls")
-	delete(additionalFields, "connection_uris")
-	delete(additionalFields, "crons")
-	delete(additionalFields, "database")
-	delete(additionalFields, "databases")
-	delete(additionalFields, "deploymentId")
-	delete(additionalFields, "devCommand")
-	delete(additionalFields, "endpoint")
-	delete(additionalFields, "endpoints")
-	delete(additionalFields, "env")
-	delete(additionalFields, "files")
-	delete(additionalFields, "framework")
-	delete(additionalFields, "functions")
-	delete(additionalFields, "git")
-	delete(additionalFields, "gitMetadata")
-	delete(additionalFields, "gitSource")
-	delete(additionalFields, "headers")
-	delete(additionalFields, "ignoreCommand")
-	delete(additionalFields, "images")
-	delete(additionalFields, "installCommand")
-	delete(additionalFields, "meta")
-	delete(additionalFields, "monorepoManager")
-	delete(additionalFields, "name")
-	delete(additionalFields, "outputDirectory")
-	delete(additionalFields, "pagination")
-	delete(additionalFields, "password")
-	delete(additionalFields, "project")
-	delete(additionalFields, "projectSettings")
-	delete(additionalFields, "projects")
-	delete(additionalFields, "public")
-	delete(additionalFields, "redirects")
-	delete(additionalFields, "regions")
-	delete(additionalFields, "rewrites")
-	delete(additionalFields, "role")
-	delete(additionalFields, "roles")
-	delete(additionalFields, "routes")
-	delete(additionalFields, "target")
-	delete(additionalFields, "trailingSlash")
-	delete(additionalFields, "withLatestCommit")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateDeploymentRequestBody) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateDeploymentRequestBody(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateDeployment200ApplicationJSONAliasAssignedAtType string

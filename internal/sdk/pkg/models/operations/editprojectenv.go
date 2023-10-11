@@ -88,56 +88,6 @@ type EditProjectEnvRequestBody struct {
 	Type *EditProjectEnvRequestBodyType `json:"type,omitempty"`
 	// The value of the environment variable
 	Value *string `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _EditProjectEnvRequestBody EditProjectEnvRequestBody
-
-func (c *EditProjectEnvRequestBody) UnmarshalJSON(bs []byte) error {
-	data := _EditProjectEnvRequestBody{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = EditProjectEnvRequestBody(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "gitBranch")
-	delete(additionalFields, "key")
-	delete(additionalFields, "target")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c EditProjectEnvRequestBody) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_EditProjectEnvRequestBody(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type EditProjectEnvRequest struct {

@@ -405,64 +405,6 @@ type CreateProjectRequestBody struct {
 	//
 	// @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	SkipGitConnectDuringLink *bool `json:"skipGitConnectDuringLink,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateProjectRequestBody CreateProjectRequestBody
-
-func (c *CreateProjectRequestBody) UnmarshalJSON(bs []byte) error {
-	data := _CreateProjectRequestBody{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateProjectRequestBody(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "buildCommand")
-	delete(additionalFields, "commandForIgnoringBuildStep")
-	delete(additionalFields, "devCommand")
-	delete(additionalFields, "environmentVariables")
-	delete(additionalFields, "framework")
-	delete(additionalFields, "gitRepository")
-	delete(additionalFields, "installCommand")
-	delete(additionalFields, "name")
-	delete(additionalFields, "outputDirectory")
-	delete(additionalFields, "publicSource")
-	delete(additionalFields, "rootDirectory")
-	delete(additionalFields, "serverlessFunctionRegion")
-	delete(additionalFields, "skipGitConnectDuringLink")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateProjectRequestBody) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateProjectRequestBody(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateProjectRequest struct {

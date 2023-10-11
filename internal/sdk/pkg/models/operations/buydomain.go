@@ -3,7 +3,6 @@
 package operations
 
 import (
-	"encoding/json"
 	"net/http"
 )
 
@@ -14,54 +13,6 @@ type BuyDomainRequestBody struct {
 	Name string `json:"name"`
 	// Indicates whether the domain should be automatically renewed.
 	Renew *bool `json:"renew,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _BuyDomainRequestBody BuyDomainRequestBody
-
-func (c *BuyDomainRequestBody) UnmarshalJSON(bs []byte) error {
-	data := _BuyDomainRequestBody{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = BuyDomainRequestBody(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "expectedPrice")
-	delete(additionalFields, "name")
-	delete(additionalFields, "renew")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c BuyDomainRequestBody) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_BuyDomainRequestBody(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type BuyDomainRequest struct {

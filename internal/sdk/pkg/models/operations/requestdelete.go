@@ -3,7 +3,6 @@
 package operations
 
 import (
-	"encoding/json"
 	"net/http"
 )
 
@@ -13,104 +12,11 @@ type RequestDeleteRequestBodyReasons struct {
 	Description string `json:"description"`
 	// Idenitifier slug of the reason why the User account is being deleted.
 	Slug string `json:"slug"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _RequestDeleteRequestBodyReasons RequestDeleteRequestBodyReasons
-
-func (c *RequestDeleteRequestBodyReasons) UnmarshalJSON(bs []byte) error {
-	data := _RequestDeleteRequestBodyReasons{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = RequestDeleteRequestBodyReasons(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "description")
-	delete(additionalFields, "slug")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c RequestDeleteRequestBodyReasons) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_RequestDeleteRequestBodyReasons(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type RequestDeleteRequestBody struct {
 	// Optional array of objects that describe the reason why the User account is being deleted.
 	Reasons []RequestDeleteRequestBodyReasons `json:"reasons,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _RequestDeleteRequestBody RequestDeleteRequestBody
-
-func (c *RequestDeleteRequestBody) UnmarshalJSON(bs []byte) error {
-	data := _RequestDeleteRequestBody{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = RequestDeleteRequestBody(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "reasons")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c RequestDeleteRequestBody) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_RequestDeleteRequestBody(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // RequestDelete202ApplicationJSON - Response indicating that the User deletion process has been initiated, and a confirmation email has been sent.

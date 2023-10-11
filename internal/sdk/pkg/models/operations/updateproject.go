@@ -235,53 +235,6 @@ type UpdateProjectRequestBodyPasswordProtection struct {
 	DeploymentType UpdateProjectRequestBodyPasswordProtectionDeploymentType `json:"deploymentType"`
 	// The password that will be used to protect Project Deployments
 	Password *string `json:"password,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _UpdateProjectRequestBodyPasswordProtection UpdateProjectRequestBodyPasswordProtection
-
-func (c *UpdateProjectRequestBodyPasswordProtection) UnmarshalJSON(bs []byte) error {
-	data := _UpdateProjectRequestBodyPasswordProtection{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = UpdateProjectRequestBodyPasswordProtection(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "deploymentType")
-	delete(additionalFields, "password")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c UpdateProjectRequestBodyPasswordProtection) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_UpdateProjectRequestBodyPasswordProtection(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // UpdateProjectRequestBodySsoProtectionDeploymentType - Specify if the Vercel Authentication (SSO Protection) will apply to every Deployment Target or just Preview
@@ -319,52 +272,6 @@ func (e *UpdateProjectRequestBodySsoProtectionDeploymentType) UnmarshalJSON(data
 type UpdateProjectRequestBodySsoProtection struct {
 	// Specify if the Vercel Authentication (SSO Protection) will apply to every Deployment Target or just Preview
 	DeploymentType *UpdateProjectRequestBodySsoProtectionDeploymentType `json:"deploymentType,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _UpdateProjectRequestBodySsoProtection UpdateProjectRequestBodySsoProtection
-
-func (c *UpdateProjectRequestBodySsoProtection) UnmarshalJSON(bs []byte) error {
-	data := _UpdateProjectRequestBodySsoProtection{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = UpdateProjectRequestBodySsoProtection(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "deploymentType")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c UpdateProjectRequestBodySsoProtection) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_UpdateProjectRequestBodySsoProtection(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type UpdateProjectRequestBodyTrustedIpsAddresses struct {
@@ -372,53 +279,6 @@ type UpdateProjectRequestBodyTrustedIpsAddresses struct {
 	Note *string `json:"note,omitempty"`
 	// The IP addresses that are allowlisted. Supported formats are IPv4 and CIDR.
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _UpdateProjectRequestBodyTrustedIpsAddresses UpdateProjectRequestBodyTrustedIpsAddresses
-
-func (c *UpdateProjectRequestBodyTrustedIpsAddresses) UnmarshalJSON(bs []byte) error {
-	data := _UpdateProjectRequestBodyTrustedIpsAddresses{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = UpdateProjectRequestBodyTrustedIpsAddresses(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "note")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c UpdateProjectRequestBodyTrustedIpsAddresses) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_UpdateProjectRequestBodyTrustedIpsAddresses(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // UpdateProjectRequestBodyTrustedIpsDeploymentType - Specify if the Trusted IPs will apply to every Deployment Target or just Preview
@@ -490,54 +350,6 @@ type UpdateProjectRequestBodyTrustedIps struct {
 	DeploymentType UpdateProjectRequestBodyTrustedIpsDeploymentType `json:"deploymentType"`
 	// exclusive: ip match is enough to bypass deployment protection (regardless of other settings). additional: ip must match + any other protection should be also provided (password, vercel auth, shareable link, automation bypass header, automation bypass query param)
 	ProtectionMode UpdateProjectRequestBodyTrustedIpsProtectionMode `json:"protectionMode"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _UpdateProjectRequestBodyTrustedIps UpdateProjectRequestBodyTrustedIps
-
-func (c *UpdateProjectRequestBodyTrustedIps) UnmarshalJSON(bs []byte) error {
-	data := _UpdateProjectRequestBodyTrustedIps{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = UpdateProjectRequestBodyTrustedIps(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "addresses")
-	delete(additionalFields, "deploymentType")
-	delete(additionalFields, "protectionMode")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c UpdateProjectRequestBodyTrustedIps) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_UpdateProjectRequestBodyTrustedIps(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type UpdateProjectRequestBody struct {
@@ -585,75 +397,6 @@ type UpdateProjectRequestBody struct {
 	SsoProtection *UpdateProjectRequestBodySsoProtection `json:"ssoProtection,omitempty"`
 	// Restricts access to deployments based on the incoming request IP address
 	TrustedIps *UpdateProjectRequestBodyTrustedIps `json:"trustedIps,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _UpdateProjectRequestBody UpdateProjectRequestBody
-
-func (c *UpdateProjectRequestBody) UnmarshalJSON(bs []byte) error {
-	data := _UpdateProjectRequestBody{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = UpdateProjectRequestBody(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "autoAssignCustomDomains")
-	delete(additionalFields, "autoAssignCustomDomainsUpdatedBy")
-	delete(additionalFields, "autoExposeSystemEnvs")
-	delete(additionalFields, "buildCommand")
-	delete(additionalFields, "commandForIgnoringBuildStep")
-	delete(additionalFields, "customerSupportCodeVisibility")
-	delete(additionalFields, "devCommand")
-	delete(additionalFields, "directoryListing")
-	delete(additionalFields, "enablePreviewFeedback")
-	delete(additionalFields, "framework")
-	delete(additionalFields, "gitForkProtection")
-	delete(additionalFields, "gitLFS")
-	delete(additionalFields, "installCommand")
-	delete(additionalFields, "name")
-	delete(additionalFields, "nodeVersion")
-	delete(additionalFields, "outputDirectory")
-	delete(additionalFields, "passwordProtection")
-	delete(additionalFields, "publicSource")
-	delete(additionalFields, "rootDirectory")
-	delete(additionalFields, "serverlessFunctionRegion")
-	delete(additionalFields, "skipGitConnectDuringLink")
-	delete(additionalFields, "sourceFilesOutsideRootDirectory")
-	delete(additionalFields, "ssoProtection")
-	delete(additionalFields, "trustedIps")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c UpdateProjectRequestBody) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_UpdateProjectRequestBody(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type UpdateProjectRequest struct {

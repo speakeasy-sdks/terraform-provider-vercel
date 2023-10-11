@@ -135,108 +135,10 @@ type RequestAccessToTeamRequestBodyJoinedFrom struct {
 	// The path to the repository for the given Git provider.
 	RepoPath *string `json:"repoPath,omitempty"`
 	UserID   *string `json:"userId,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _RequestAccessToTeamRequestBodyJoinedFrom RequestAccessToTeamRequestBodyJoinedFrom
-
-func (c *RequestAccessToTeamRequestBodyJoinedFrom) UnmarshalJSON(bs []byte) error {
-	data := _RequestAccessToTeamRequestBodyJoinedFrom{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = RequestAccessToTeamRequestBodyJoinedFrom(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "commitId")
-	delete(additionalFields, "gitUserId")
-	delete(additionalFields, "gitUserLogin")
-	delete(additionalFields, "origin")
-	delete(additionalFields, "repoId")
-	delete(additionalFields, "repoPath")
-	delete(additionalFields, "userId")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c RequestAccessToTeamRequestBodyJoinedFrom) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_RequestAccessToTeamRequestBodyJoinedFrom(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type RequestAccessToTeamRequestBody struct {
 	JoinedFrom RequestAccessToTeamRequestBodyJoinedFrom `json:"joinedFrom"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _RequestAccessToTeamRequestBody RequestAccessToTeamRequestBody
-
-func (c *RequestAccessToTeamRequestBody) UnmarshalJSON(bs []byte) error {
-	data := _RequestAccessToTeamRequestBody{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = RequestAccessToTeamRequestBody(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "joinedFrom")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c RequestAccessToTeamRequestBody) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_RequestAccessToTeamRequestBody(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type RequestAccessToTeamRequest struct {

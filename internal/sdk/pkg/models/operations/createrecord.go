@@ -46,56 +46,6 @@ type CreateRecordRequestBody9 struct {
 	Type CreateRecordRequestBody9Type `json:"type"`
 	// An NS domain value.
 	Value *string `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateRecordRequestBody9 CreateRecordRequestBody9
-
-func (c *CreateRecordRequestBody9) UnmarshalJSON(bs []byte) error {
-	data := _CreateRecordRequestBody9{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateRecordRequestBody9(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "comment")
-	delete(additionalFields, "name")
-	delete(additionalFields, "ttl")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateRecordRequestBody9) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateRecordRequestBody9(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateRecordRequestBody8Type - Must be of type `TXT`.
@@ -132,55 +82,6 @@ type CreateRecordRequestBody8 struct {
 	Type CreateRecordRequestBody8Type `json:"type"`
 	// A TXT record containing arbitrary text.
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateRecordRequestBody8 CreateRecordRequestBody8
-
-func (c *CreateRecordRequestBody8) UnmarshalJSON(bs []byte) error {
-	data := _CreateRecordRequestBody8{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateRecordRequestBody8(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "comment")
-	delete(additionalFields, "ttl")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateRecordRequestBody8) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateRecordRequestBody8(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateRecordRequestBody7Srv struct {
@@ -188,55 +89,6 @@ type CreateRecordRequestBody7Srv struct {
 	Priority int64   `json:"priority"`
 	Target   *string `json:"target,omitempty"`
 	Weight   int64   `json:"weight"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateRecordRequestBody7Srv CreateRecordRequestBody7Srv
-
-func (c *CreateRecordRequestBody7Srv) UnmarshalJSON(bs []byte) error {
-	data := _CreateRecordRequestBody7Srv{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateRecordRequestBody7Srv(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "port")
-	delete(additionalFields, "priority")
-	delete(additionalFields, "target")
-	delete(additionalFields, "weight")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateRecordRequestBody7Srv) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateRecordRequestBody7Srv(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateRecordRequestBody7Type - Must be of type `SRV`.
@@ -272,55 +124,6 @@ type CreateRecordRequestBody7 struct {
 	TTL *int64 `json:"ttl,omitempty"`
 	// Must be of type `SRV`.
 	Type CreateRecordRequestBody7Type `json:"type"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateRecordRequestBody7 CreateRecordRequestBody7
-
-func (c *CreateRecordRequestBody7) UnmarshalJSON(bs []byte) error {
-	data := _CreateRecordRequestBody7{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateRecordRequestBody7(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "comment")
-	delete(additionalFields, "srv")
-	delete(additionalFields, "ttl")
-	delete(additionalFields, "type")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateRecordRequestBody7) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateRecordRequestBody7(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateRecordRequestBody6Type - Must be of type `MX`.
@@ -360,57 +163,6 @@ type CreateRecordRequestBody6 struct {
 	Type CreateRecordRequestBody6Type `json:"type"`
 	// An MX record specifying the mail server responsible for accepting messages on behalf of the domain name.
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateRecordRequestBody6 CreateRecordRequestBody6
-
-func (c *CreateRecordRequestBody6) UnmarshalJSON(bs []byte) error {
-	data := _CreateRecordRequestBody6{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateRecordRequestBody6(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "comment")
-	delete(additionalFields, "mxPriority")
-	delete(additionalFields, "name")
-	delete(additionalFields, "ttl")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateRecordRequestBody6) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateRecordRequestBody6(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateRecordRequestBody5Type - Must be of type `CNAME`.
@@ -449,56 +201,6 @@ type CreateRecordRequestBody5 struct {
 	Type CreateRecordRequestBody5Type `json:"type"`
 	// A CNAME record mapping to another domain name.
 	Value *string `json:"value,omitempty"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateRecordRequestBody5 CreateRecordRequestBody5
-
-func (c *CreateRecordRequestBody5) UnmarshalJSON(bs []byte) error {
-	data := _CreateRecordRequestBody5{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateRecordRequestBody5(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "comment")
-	delete(additionalFields, "name")
-	delete(additionalFields, "ttl")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateRecordRequestBody5) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateRecordRequestBody5(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateRecordRequestBody4Type - Must be of type `CAA`.
@@ -537,56 +239,6 @@ type CreateRecordRequestBody4 struct {
 	Type CreateRecordRequestBody4Type `json:"type"`
 	// A CAA record to specify which Certificate Authorities (CAs) are allowed to issue certificates for the domain.
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateRecordRequestBody4 CreateRecordRequestBody4
-
-func (c *CreateRecordRequestBody4) UnmarshalJSON(bs []byte) error {
-	data := _CreateRecordRequestBody4{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateRecordRequestBody4(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "comment")
-	delete(additionalFields, "name")
-	delete(additionalFields, "ttl")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateRecordRequestBody4) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateRecordRequestBody4(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateRecordRequestBody3Type - Must be of type `ALIAS`.
@@ -625,56 +277,6 @@ type CreateRecordRequestBody3 struct {
 	Type CreateRecordRequestBody3Type `json:"type"`
 	// An ALIAS virtual record pointing to a hostname resolved to an A record on server side.
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateRecordRequestBody3 CreateRecordRequestBody3
-
-func (c *CreateRecordRequestBody3) UnmarshalJSON(bs []byte) error {
-	data := _CreateRecordRequestBody3{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateRecordRequestBody3(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "comment")
-	delete(additionalFields, "name")
-	delete(additionalFields, "ttl")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateRecordRequestBody3) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateRecordRequestBody3(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateRecordRequestBody2Type - Must be of type `AAAA`.
@@ -713,56 +315,6 @@ type CreateRecordRequestBody2 struct {
 	Type CreateRecordRequestBody2Type `json:"type"`
 	// An AAAA record pointing to an IPv6 address.
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateRecordRequestBody2 CreateRecordRequestBody2
-
-func (c *CreateRecordRequestBody2) UnmarshalJSON(bs []byte) error {
-	data := _CreateRecordRequestBody2{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateRecordRequestBody2(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "comment")
-	delete(additionalFields, "name")
-	delete(additionalFields, "ttl")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateRecordRequestBody2) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateRecordRequestBody2(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 // CreateRecordRequestBody1Type - Must be of type `A`.
@@ -801,56 +353,6 @@ type CreateRecordRequestBody1 struct {
 	Type CreateRecordRequestBody1Type `json:"type"`
 	// The record value must be a valid IPv4 address.
 	Value string `json:"value"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _CreateRecordRequestBody1 CreateRecordRequestBody1
-
-func (c *CreateRecordRequestBody1) UnmarshalJSON(bs []byte) error {
-	data := _CreateRecordRequestBody1{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = CreateRecordRequestBody1(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "comment")
-	delete(additionalFields, "name")
-	delete(additionalFields, "ttl")
-	delete(additionalFields, "type")
-	delete(additionalFields, "value")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c CreateRecordRequestBody1) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_CreateRecordRequestBody1(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type CreateRecordRequestBodyType string
