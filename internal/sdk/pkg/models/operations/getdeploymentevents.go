@@ -3,14 +3,13 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
-// GetDeploymentEventsBuilds
 type GetDeploymentEventsBuilds int64
 
 const (
@@ -38,7 +37,6 @@ func (e *GetDeploymentEventsBuilds) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// GetDeploymentEventsDelimiter
 type GetDeploymentEventsDelimiter int64
 
 const (
@@ -155,21 +153,16 @@ func CreateGetDeploymentEventsStatusCodeStr(str string) GetDeploymentEventsStatu
 }
 
 func (u *GetDeploymentEventsStatusCode) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = GetDeploymentEventsStatusCodeTypeInteger
 		return nil
 	}
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = GetDeploymentEventsStatusCodeTypeStr
 		return nil
@@ -180,21 +173,21 @@ func (u *GetDeploymentEventsStatusCode) UnmarshalJSON(data []byte) error {
 
 func (u GetDeploymentEventsStatusCode) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeploymentEventsRequest struct {
 	Builds    *GetDeploymentEventsBuilds    `queryParam:"style=form,explode=true,name=builds"`
 	Delimiter *GetDeploymentEventsDelimiter `queryParam:"style=form,explode=true,name=delimiter"`
 	// Order of the returned events based on the timestamp.
-	Direction *GetDeploymentEventsDirection `queryParam:"style=form,explode=true,name=direction"`
+	Direction *GetDeploymentEventsDirection `default:"forward" queryParam:"style=form,explode=true,name=direction"`
 	// When enabled, this endpoint will return live events as they happen.
 	Follow *GetDeploymentEventsFollow `queryParam:"style=form,explode=true,name=follow"`
 	// The unique identifier or hostname of the deployment.
@@ -213,12 +206,135 @@ type GetDeploymentEventsRequest struct {
 	Until *int64 `queryParam:"style=form,explode=true,name=until"`
 }
 
+func (g GetDeploymentEventsRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(g, "", false)
+}
+
+func (g *GetDeploymentEventsRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetDeploymentEventsRequest) GetBuilds() *GetDeploymentEventsBuilds {
+	if o == nil {
+		return nil
+	}
+	return o.Builds
+}
+
+func (o *GetDeploymentEventsRequest) GetDelimiter() *GetDeploymentEventsDelimiter {
+	if o == nil {
+		return nil
+	}
+	return o.Delimiter
+}
+
+func (o *GetDeploymentEventsRequest) GetDirection() *GetDeploymentEventsDirection {
+	if o == nil {
+		return nil
+	}
+	return o.Direction
+}
+
+func (o *GetDeploymentEventsRequest) GetFollow() *GetDeploymentEventsFollow {
+	if o == nil {
+		return nil
+	}
+	return o.Follow
+}
+
+func (o *GetDeploymentEventsRequest) GetIDOrURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrURL
+}
+
+func (o *GetDeploymentEventsRequest) GetLimit() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
+func (o *GetDeploymentEventsRequest) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEventsRequest) GetSince() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Since
+}
+
+func (o *GetDeploymentEventsRequest) GetStatusCode() *GetDeploymentEventsStatusCode {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentEventsRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetDeploymentEventsRequest) GetUntil() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Until
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON77PayloadInfo struct {
 	Entrypoint *string `json:"entrypoint,omitempty"`
 	Name       string  `json:"name"`
 	Path       *string `json:"path,omitempty"`
 	Step       *string `json:"step,omitempty"`
 	Type       string  `json:"type"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON77Payload struct {
@@ -230,6 +346,62 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON77Payload struct {
 	Serial       string                                                       `json:"serial"`
 	StatusCode   *int64                                                       `json:"statusCode,omitempty"`
 	Text         *string                                                      `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77Payload) GetInfo() GetDeploymentEvents200ApplicationStreamPlusJSON77PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON77PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77Payload) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77Payload) GetStatusCode() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON77Type string
@@ -289,12 +461,68 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON77 struct {
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON77Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON77Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON77Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON77) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON77Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON77Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON76PayloadInfo struct {
 	Entrypoint *string `json:"entrypoint,omitempty"`
 	Name       string  `json:"name"`
 	Path       *string `json:"path,omitempty"`
 	Step       *string `json:"step,omitempty"`
 	Type       string  `json:"type"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON76Payload struct {
@@ -305,6 +533,55 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON76Payload struct {
 	RequestID    *string                                                      `json:"requestId,omitempty"`
 	Serial       string                                                       `json:"serial"`
 	Text         *string                                                      `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76Payload) GetInfo() GetDeploymentEvents200ApplicationStreamPlusJSON76PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON76PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76Payload) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON76Type string
@@ -337,6 +614,27 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON76 struct {
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON76Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON76Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON76Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON76) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON76Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON76Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON75Payload struct {
 	Created      int64   `json:"created"`
 	Date         int64   `json:"date"`
@@ -344,6 +642,48 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON75Payload struct {
 	ID           string  `json:"id"`
 	Serial       string  `json:"serial"`
 	Text         *string `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON75Payload) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON75Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON75Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON75Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON75Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON75Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON75Type string
@@ -376,6 +716,27 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON75 struct {
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON75Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON75) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON75) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON75Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON75Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON75) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON75Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON75Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON74PayloadInfo struct {
 	Entrypoint *string `json:"entrypoint,omitempty"`
 	Name       string  `json:"name"`
@@ -384,12 +745,82 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON74PayloadInfo struct {
 	Type       string  `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON74Payload struct {
 	Date         int64                                                        `json:"date"`
 	DeploymentID string                                                       `json:"deploymentId"`
 	ID           string                                                       `json:"id"`
 	Info         GetDeploymentEvents200ApplicationStreamPlusJSON74PayloadInfo `json:"info"`
 	Serial       string                                                       `json:"serial"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74Payload) GetInfo() GetDeploymentEvents200ApplicationStreamPlusJSON74PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON74PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON74Type string
@@ -422,6 +853,27 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON74 struct {
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON74Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON74Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON74Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON74) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON74Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON74Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON73PayloadInfo struct {
 	Entrypoint *string `json:"entrypoint,omitempty"`
 	Name       string  `json:"name"`
@@ -430,12 +882,82 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON73PayloadInfo struct {
 	Type       string  `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON73Payload struct {
 	Date         int64                                                        `json:"date"`
 	DeploymentID string                                                       `json:"deploymentId"`
 	ID           string                                                       `json:"id"`
 	Info         GetDeploymentEvents200ApplicationStreamPlusJSON73PayloadInfo `json:"info"`
 	Serial       string                                                       `json:"serial"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73Payload) GetInfo() GetDeploymentEvents200ApplicationStreamPlusJSON73PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON73PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON73Type string
@@ -468,12 +990,68 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON73 struct {
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON73Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON73Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON73Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON73) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON73Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON73Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON72Payload struct {
 	Date         int64   `json:"date"`
 	DeploymentID string  `json:"deploymentId"`
 	ID           string  `json:"id"`
 	Serial       string  `json:"serial"`
 	Text         *string `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON72Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON72Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON72Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON72Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON72Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON72Type string
@@ -504,6 +1082,27 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON72 struct {
 	Created int64                                                    `json:"created"`
 	Payload GetDeploymentEvents200ApplicationStreamPlusJSON72Payload `json:"payload"`
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON72Type    `json:"type"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON72) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON72) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON72Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON72Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON72) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON72Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON72Type("")
+	}
+	return o.Type
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON71 struct {
@@ -597,66 +1196,51 @@ func CreateGetDeploymentEvents200ApplicationStreamPlusJSON7GetDeploymentEvents20
 }
 
 func (u *GetDeploymentEvents200ApplicationStreamPlusJSON7) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	getDeploymentEvents200ApplicationStreamPlusJSON71 := new(GetDeploymentEvents200ApplicationStreamPlusJSON71)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON71); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON71, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON71 = getDeploymentEvents200ApplicationStreamPlusJSON71
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSON7TypeGetDeploymentEvents200ApplicationStreamPlusJSON71
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationStreamPlusJSON72 := new(GetDeploymentEvents200ApplicationStreamPlusJSON72)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON72); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON72, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON72 = getDeploymentEvents200ApplicationStreamPlusJSON72
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSON7TypeGetDeploymentEvents200ApplicationStreamPlusJSON72
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationStreamPlusJSON73 := new(GetDeploymentEvents200ApplicationStreamPlusJSON73)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON73); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON73, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON73 = getDeploymentEvents200ApplicationStreamPlusJSON73
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSON7TypeGetDeploymentEvents200ApplicationStreamPlusJSON73
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationStreamPlusJSON74 := new(GetDeploymentEvents200ApplicationStreamPlusJSON74)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON74); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON74, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON74 = getDeploymentEvents200ApplicationStreamPlusJSON74
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSON7TypeGetDeploymentEvents200ApplicationStreamPlusJSON74
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationStreamPlusJSON75 := new(GetDeploymentEvents200ApplicationStreamPlusJSON75)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON75); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON75, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON75 = getDeploymentEvents200ApplicationStreamPlusJSON75
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSON7TypeGetDeploymentEvents200ApplicationStreamPlusJSON75
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationStreamPlusJSON76 := new(GetDeploymentEvents200ApplicationStreamPlusJSON76)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON76); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON76, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON76 = getDeploymentEvents200ApplicationStreamPlusJSON76
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSON7TypeGetDeploymentEvents200ApplicationStreamPlusJSON76
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationStreamPlusJSON77 := new(GetDeploymentEvents200ApplicationStreamPlusJSON77)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON77); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON77, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON77 = getDeploymentEvents200ApplicationStreamPlusJSON77
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSON7TypeGetDeploymentEvents200ApplicationStreamPlusJSON77
 		return nil
@@ -667,34 +1251,34 @@ func (u *GetDeploymentEvents200ApplicationStreamPlusJSON7) UnmarshalJSON(data []
 
 func (u GetDeploymentEvents200ApplicationStreamPlusJSON7) MarshalJSON() ([]byte, error) {
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON71 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON71)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON71, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON72 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON72)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON72, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON73 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON73)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON73, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON74 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON74)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON74, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON75 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON75)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON75, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON76 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON76)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON76, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON77 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON77)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON77, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON6PayloadInfo struct {
@@ -703,6 +1287,41 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON6PayloadInfo struct {
 	Path       *string `json:"path,omitempty"`
 	Step       *string `json:"step,omitempty"`
 	Type       string  `json:"type"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON6Payload struct {
@@ -714,6 +1333,62 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON6Payload struct {
 	Serial       string                                                      `json:"serial"`
 	StatusCode   *int64                                                      `json:"statusCode,omitempty"`
 	Text         *string                                                     `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6Payload) GetInfo() GetDeploymentEvents200ApplicationStreamPlusJSON6PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON6PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6Payload) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6Payload) GetStatusCode() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON6Type string
@@ -773,12 +1448,68 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON6 struct {
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON6Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON6Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON6Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON6) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON6Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON6Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON5PayloadInfo struct {
 	Entrypoint *string `json:"entrypoint,omitempty"`
 	Name       string  `json:"name"`
 	Path       *string `json:"path,omitempty"`
 	Step       *string `json:"step,omitempty"`
 	Type       string  `json:"type"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON5Payload struct {
@@ -789,6 +1520,55 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON5Payload struct {
 	RequestID    *string                                                     `json:"requestId,omitempty"`
 	Serial       string                                                      `json:"serial"`
 	Text         *string                                                     `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5Payload) GetInfo() GetDeploymentEvents200ApplicationStreamPlusJSON5PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON5PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5Payload) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON5Type string
@@ -821,6 +1601,27 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON5 struct {
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON5Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON5Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON5Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON5) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON5Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON5Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON4Payload struct {
 	Created      int64   `json:"created"`
 	Date         int64   `json:"date"`
@@ -828,6 +1629,48 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON4Payload struct {
 	ID           string  `json:"id"`
 	Serial       string  `json:"serial"`
 	Text         *string `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON4Payload) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON4Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON4Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON4Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON4Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON4Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON4Type string
@@ -860,6 +1703,27 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON4 struct {
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON4Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON4) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON4) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON4Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON4Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON4) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON4Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON4Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON3PayloadInfo struct {
 	Entrypoint *string `json:"entrypoint,omitempty"`
 	Name       string  `json:"name"`
@@ -868,12 +1732,82 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON3PayloadInfo struct {
 	Type       string  `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON3Payload struct {
 	Date         int64                                                       `json:"date"`
 	DeploymentID string                                                      `json:"deploymentId"`
 	ID           string                                                      `json:"id"`
 	Info         GetDeploymentEvents200ApplicationStreamPlusJSON3PayloadInfo `json:"info"`
 	Serial       string                                                      `json:"serial"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3Payload) GetInfo() GetDeploymentEvents200ApplicationStreamPlusJSON3PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON3PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON3Type string
@@ -906,6 +1840,27 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON3 struct {
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON3Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON3Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON3Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON3) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON3Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON3Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON2PayloadInfo struct {
 	Entrypoint *string `json:"entrypoint,omitempty"`
 	Name       string  `json:"name"`
@@ -914,12 +1869,82 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON2PayloadInfo struct {
 	Type       string  `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON2Payload struct {
 	Date         int64                                                       `json:"date"`
 	DeploymentID string                                                      `json:"deploymentId"`
 	ID           string                                                      `json:"id"`
 	Info         GetDeploymentEvents200ApplicationStreamPlusJSON2PayloadInfo `json:"info"`
 	Serial       string                                                      `json:"serial"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2Payload) GetInfo() GetDeploymentEvents200ApplicationStreamPlusJSON2PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON2PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON2Type string
@@ -952,12 +1977,68 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON2 struct {
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON2Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON2Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON2Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON2) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON2Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON2Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationStreamPlusJSON1Payload struct {
 	Date         int64   `json:"date"`
 	DeploymentID string  `json:"deploymentId"`
 	ID           string  `json:"id"`
 	Serial       string  `json:"serial"`
 	Text         *string `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON1Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON1Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON1Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON1Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON1Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSON1Type string
@@ -988,6 +2069,27 @@ type GetDeploymentEvents200ApplicationStreamPlusJSON1 struct {
 	Created int64                                                   `json:"created"`
 	Payload GetDeploymentEvents200ApplicationStreamPlusJSON1Payload `json:"payload"`
 	Type    GetDeploymentEvents200ApplicationStreamPlusJSON1Type    `json:"type"`
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON1) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON1) GetPayload() GetDeploymentEvents200ApplicationStreamPlusJSON1Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON1Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationStreamPlusJSON1) GetType() GetDeploymentEvents200ApplicationStreamPlusJSON1Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationStreamPlusJSON1Type("")
+	}
+	return o.Type
 }
 
 type GetDeploymentEvents200ApplicationStreamPlusJSONType string
@@ -1078,68 +2180,53 @@ func CreateGetDeploymentEvents200ApplicationStreamPlusJSONGetDeploymentEvents200
 }
 
 func (u *GetDeploymentEvents200ApplicationStreamPlusJSON) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	getDeploymentEvents200ApplicationStreamPlusJSON1 := new(GetDeploymentEvents200ApplicationStreamPlusJSON1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON1, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON1 = getDeploymentEvents200ApplicationStreamPlusJSON1
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSONTypeGetDeploymentEvents200ApplicationStreamPlusJSON1
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationStreamPlusJSON2 := new(GetDeploymentEvents200ApplicationStreamPlusJSON2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON2); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON2, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON2 = getDeploymentEvents200ApplicationStreamPlusJSON2
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSONTypeGetDeploymentEvents200ApplicationStreamPlusJSON2
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationStreamPlusJSON3 := new(GetDeploymentEvents200ApplicationStreamPlusJSON3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON3); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON3, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON3 = getDeploymentEvents200ApplicationStreamPlusJSON3
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSONTypeGetDeploymentEvents200ApplicationStreamPlusJSON3
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationStreamPlusJSON4 := new(GetDeploymentEvents200ApplicationStreamPlusJSON4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON4); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON4, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON4 = getDeploymentEvents200ApplicationStreamPlusJSON4
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSONTypeGetDeploymentEvents200ApplicationStreamPlusJSON4
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationStreamPlusJSON5 := new(GetDeploymentEvents200ApplicationStreamPlusJSON5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON5); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON5, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationStreamPlusJSON5 = getDeploymentEvents200ApplicationStreamPlusJSON5
 		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSONTypeGetDeploymentEvents200ApplicationStreamPlusJSON5
 		return nil
 	}
 
-	getDeploymentEvents200ApplicationStreamPlusJSON7 := new(GetDeploymentEvents200ApplicationStreamPlusJSON7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON7); err == nil {
-		u.GetDeploymentEvents200ApplicationStreamPlusJSON7 = getDeploymentEvents200ApplicationStreamPlusJSON7
-		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSONTypeGetDeploymentEvents200ApplicationStreamPlusJSON7
+	getDeploymentEvents200ApplicationStreamPlusJSON6 := new(GetDeploymentEvents200ApplicationStreamPlusJSON6)
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON6, "", true, true); err == nil {
+		u.GetDeploymentEvents200ApplicationStreamPlusJSON6 = getDeploymentEvents200ApplicationStreamPlusJSON6
+		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSONTypeGetDeploymentEvents200ApplicationStreamPlusJSON6
 		return nil
 	}
 
-	getDeploymentEvents200ApplicationStreamPlusJSON6 := new(GetDeploymentEvents200ApplicationStreamPlusJSON6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationStreamPlusJSON6); err == nil {
-		u.GetDeploymentEvents200ApplicationStreamPlusJSON6 = getDeploymentEvents200ApplicationStreamPlusJSON6
-		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSONTypeGetDeploymentEvents200ApplicationStreamPlusJSON6
+	getDeploymentEvents200ApplicationStreamPlusJSON7 := new(GetDeploymentEvents200ApplicationStreamPlusJSON7)
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationStreamPlusJSON7, "", true, true); err == nil {
+		u.GetDeploymentEvents200ApplicationStreamPlusJSON7 = getDeploymentEvents200ApplicationStreamPlusJSON7
+		u.Type = GetDeploymentEvents200ApplicationStreamPlusJSONTypeGetDeploymentEvents200ApplicationStreamPlusJSON7
 		return nil
 	}
 
@@ -1148,34 +2235,34 @@ func (u *GetDeploymentEvents200ApplicationStreamPlusJSON) UnmarshalJSON(data []b
 
 func (u GetDeploymentEvents200ApplicationStreamPlusJSON) MarshalJSON() ([]byte, error) {
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON1 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON1)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON1, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON2 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON2)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON2, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON3 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON3)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON3, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON4 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON4)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON4, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON5 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON5)
-	}
-
-	if u.GetDeploymentEvents200ApplicationStreamPlusJSON7 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON7)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON5, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationStreamPlusJSON6 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationStreamPlusJSON6)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON6, "", true)
 	}
 
-	return nil, nil
+	if u.GetDeploymentEvents200ApplicationStreamPlusJSON7 != nil {
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationStreamPlusJSON7, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeploymentEvents200ApplicationJSON6PayloadInfo struct {
@@ -1184,6 +2271,41 @@ type GetDeploymentEvents200ApplicationJSON6PayloadInfo struct {
 	Path       *string `json:"path,omitempty"`
 	Step       *string `json:"step,omitempty"`
 	Type       string  `json:"type"`
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
 }
 
 type GetDeploymentEvents200ApplicationJSON6Payload struct {
@@ -1195,6 +2317,62 @@ type GetDeploymentEvents200ApplicationJSON6Payload struct {
 	Serial       string                                            `json:"serial"`
 	StatusCode   *int64                                            `json:"statusCode,omitempty"`
 	Text         *string                                           `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6Payload) GetInfo() GetDeploymentEvents200ApplicationJSON6PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON6PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6Payload) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6Payload) GetStatusCode() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationJSON6Type string
@@ -1254,12 +2432,68 @@ type GetDeploymentEvents200ApplicationJSON6 struct {
 	Type    GetDeploymentEvents200ApplicationJSON6Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationJSON6) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6) GetPayload() GetDeploymentEvents200ApplicationJSON6Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON6Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON6) GetType() GetDeploymentEvents200ApplicationJSON6Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON6Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationJSON5PayloadInfo struct {
 	Entrypoint *string `json:"entrypoint,omitempty"`
 	Name       string  `json:"name"`
 	Path       *string `json:"path,omitempty"`
 	Step       *string `json:"step,omitempty"`
 	Type       string  `json:"type"`
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
 }
 
 type GetDeploymentEvents200ApplicationJSON5Payload struct {
@@ -1270,6 +2504,55 @@ type GetDeploymentEvents200ApplicationJSON5Payload struct {
 	RequestID    *string                                           `json:"requestId,omitempty"`
 	Serial       string                                            `json:"serial"`
 	Text         *string                                           `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5Payload) GetInfo() GetDeploymentEvents200ApplicationJSON5PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON5PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5Payload) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationJSON5Type string
@@ -1302,6 +2585,27 @@ type GetDeploymentEvents200ApplicationJSON5 struct {
 	Type    GetDeploymentEvents200ApplicationJSON5Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationJSON5) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5) GetPayload() GetDeploymentEvents200ApplicationJSON5Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON5Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON5) GetType() GetDeploymentEvents200ApplicationJSON5Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON5Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationJSON4Payload struct {
 	Created      int64   `json:"created"`
 	Date         int64   `json:"date"`
@@ -1309,6 +2613,48 @@ type GetDeploymentEvents200ApplicationJSON4Payload struct {
 	ID           string  `json:"id"`
 	Serial       string  `json:"serial"`
 	Text         *string `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON4Payload) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON4Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON4Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON4Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON4Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON4Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationJSON4Type string
@@ -1341,6 +2687,27 @@ type GetDeploymentEvents200ApplicationJSON4 struct {
 	Type    GetDeploymentEvents200ApplicationJSON4Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationJSON4) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON4) GetPayload() GetDeploymentEvents200ApplicationJSON4Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON4Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON4) GetType() GetDeploymentEvents200ApplicationJSON4Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON4Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationJSON3PayloadInfo struct {
 	Entrypoint *string `json:"entrypoint,omitempty"`
 	Name       string  `json:"name"`
@@ -1349,12 +2716,82 @@ type GetDeploymentEvents200ApplicationJSON3PayloadInfo struct {
 	Type       string  `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationJSON3PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON3PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON3PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON3PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON3PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationJSON3Payload struct {
 	Date         int64                                             `json:"date"`
 	DeploymentID string                                            `json:"deploymentId"`
 	ID           string                                            `json:"id"`
 	Info         GetDeploymentEvents200ApplicationJSON3PayloadInfo `json:"info"`
 	Serial       string                                            `json:"serial"`
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON3Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON3Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON3Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON3Payload) GetInfo() GetDeploymentEvents200ApplicationJSON3PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON3PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON3Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
 }
 
 type GetDeploymentEvents200ApplicationJSON3Type string
@@ -1387,6 +2824,27 @@ type GetDeploymentEvents200ApplicationJSON3 struct {
 	Type    GetDeploymentEvents200ApplicationJSON3Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationJSON3) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON3) GetPayload() GetDeploymentEvents200ApplicationJSON3Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON3Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON3) GetType() GetDeploymentEvents200ApplicationJSON3Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON3Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationJSON2PayloadInfo struct {
 	Entrypoint *string `json:"entrypoint,omitempty"`
 	Name       string  `json:"name"`
@@ -1395,12 +2853,82 @@ type GetDeploymentEvents200ApplicationJSON2PayloadInfo struct {
 	Type       string  `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationJSON2PayloadInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON2PayloadInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON2PayloadInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON2PayloadInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON2PayloadInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationJSON2Payload struct {
 	Date         int64                                             `json:"date"`
 	DeploymentID string                                            `json:"deploymentId"`
 	ID           string                                            `json:"id"`
 	Info         GetDeploymentEvents200ApplicationJSON2PayloadInfo `json:"info"`
 	Serial       string                                            `json:"serial"`
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON2Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON2Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON2Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON2Payload) GetInfo() GetDeploymentEvents200ApplicationJSON2PayloadInfo {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON2PayloadInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON2Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
 }
 
 type GetDeploymentEvents200ApplicationJSON2Type string
@@ -1433,12 +2961,68 @@ type GetDeploymentEvents200ApplicationJSON2 struct {
 	Type    GetDeploymentEvents200ApplicationJSON2Type    `json:"type"`
 }
 
+func (o *GetDeploymentEvents200ApplicationJSON2) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON2) GetPayload() GetDeploymentEvents200ApplicationJSON2Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON2Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON2) GetType() GetDeploymentEvents200ApplicationJSON2Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON2Type("")
+	}
+	return o.Type
+}
+
 type GetDeploymentEvents200ApplicationJSON1Payload struct {
 	Date         int64   `json:"date"`
 	DeploymentID string  `json:"deploymentId"`
 	ID           string  `json:"id"`
 	Serial       string  `json:"serial"`
 	Text         *string `json:"text,omitempty"`
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON1Payload) GetDate() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON1Payload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON1Payload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON1Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON1Payload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
 }
 
 type GetDeploymentEvents200ApplicationJSON1Type string
@@ -1469,6 +3053,27 @@ type GetDeploymentEvents200ApplicationJSON1 struct {
 	Created int64                                         `json:"created"`
 	Payload GetDeploymentEvents200ApplicationJSON1Payload `json:"payload"`
 	Type    GetDeploymentEvents200ApplicationJSON1Type    `json:"type"`
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON1) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON1) GetPayload() GetDeploymentEvents200ApplicationJSON1Payload {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON1Payload{}
+	}
+	return o.Payload
+}
+
+func (o *GetDeploymentEvents200ApplicationJSON1) GetType() GetDeploymentEvents200ApplicationJSON1Type {
+	if o == nil {
+		return GetDeploymentEvents200ApplicationJSON1Type("")
+	}
+	return o.Type
 }
 
 type GetDeploymentEvents200ApplicationJSONType string
@@ -1548,57 +3153,44 @@ func CreateGetDeploymentEvents200ApplicationJSONGetDeploymentEvents200Applicatio
 }
 
 func (u *GetDeploymentEvents200ApplicationJSON) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	getDeploymentEvents200ApplicationJSON1 := new(GetDeploymentEvents200ApplicationJSON1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationJSON1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationJSON1, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationJSON1 = getDeploymentEvents200ApplicationJSON1
 		u.Type = GetDeploymentEvents200ApplicationJSONTypeGetDeploymentEvents200ApplicationJSON1
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationJSON2 := new(GetDeploymentEvents200ApplicationJSON2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationJSON2); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationJSON2, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationJSON2 = getDeploymentEvents200ApplicationJSON2
 		u.Type = GetDeploymentEvents200ApplicationJSONTypeGetDeploymentEvents200ApplicationJSON2
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationJSON3 := new(GetDeploymentEvents200ApplicationJSON3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationJSON3); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationJSON3, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationJSON3 = getDeploymentEvents200ApplicationJSON3
 		u.Type = GetDeploymentEvents200ApplicationJSONTypeGetDeploymentEvents200ApplicationJSON3
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationJSON4 := new(GetDeploymentEvents200ApplicationJSON4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationJSON4); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationJSON4, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationJSON4 = getDeploymentEvents200ApplicationJSON4
 		u.Type = GetDeploymentEvents200ApplicationJSONTypeGetDeploymentEvents200ApplicationJSON4
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationJSON5 := new(GetDeploymentEvents200ApplicationJSON5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationJSON5); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationJSON5, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationJSON5 = getDeploymentEvents200ApplicationJSON5
 		u.Type = GetDeploymentEvents200ApplicationJSONTypeGetDeploymentEvents200ApplicationJSON5
 		return nil
 	}
 
 	getDeploymentEvents200ApplicationJSON6 := new(GetDeploymentEvents200ApplicationJSON6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeploymentEvents200ApplicationJSON6); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeploymentEvents200ApplicationJSON6, "", true, true); err == nil {
 		u.GetDeploymentEvents200ApplicationJSON6 = getDeploymentEvents200ApplicationJSON6
 		u.Type = GetDeploymentEvents200ApplicationJSONTypeGetDeploymentEvents200ApplicationJSON6
 		return nil
@@ -1609,30 +3201,30 @@ func (u *GetDeploymentEvents200ApplicationJSON) UnmarshalJSON(data []byte) error
 
 func (u GetDeploymentEvents200ApplicationJSON) MarshalJSON() ([]byte, error) {
 	if u.GetDeploymentEvents200ApplicationJSON1 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationJSON1)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationJSON1, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationJSON2 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationJSON2)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationJSON2, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationJSON3 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationJSON3)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationJSON3, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationJSON4 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationJSON4)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationJSON4, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationJSON5 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationJSON5)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationJSON5, "", true)
 	}
 
 	if u.GetDeploymentEvents200ApplicationJSON6 != nil {
-		return json.Marshal(u.GetDeploymentEvents200ApplicationJSON6)
+		return utils.MarshalJSON(u.GetDeploymentEvents200ApplicationJSON6, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeploymentEventsResponse struct {
@@ -1648,4 +3240,39 @@ type GetDeploymentEventsResponse struct {
 	// A stream of jsonlines where each line is a deployment log item.
 	// Array of deployment logs for the provided query.
 	GetDeploymentEvents200ApplicationStreamPlusJSONOneOf *GetDeploymentEvents200ApplicationStreamPlusJSON
+}
+
+func (o *GetDeploymentEventsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetDeploymentEventsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentEventsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetDeploymentEventsResponse) GetGetDeploymentEvents200ApplicationJSONOneoves() []GetDeploymentEvents200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetDeploymentEvents200ApplicationJSONOneoves
+}
+
+func (o *GetDeploymentEventsResponse) GetGetDeploymentEvents200ApplicationStreamPlusJSONOneOf() *GetDeploymentEvents200ApplicationStreamPlusJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetDeploymentEvents200ApplicationStreamPlusJSONOneOf
 }

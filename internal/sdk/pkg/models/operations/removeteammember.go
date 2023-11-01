@@ -12,10 +12,31 @@ type RemoveTeamMemberRequest struct {
 	UID string `pathParam:"style=simple,explode=false,name=uid"`
 }
 
+func (o *RemoveTeamMemberRequest) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
+}
+
+func (o *RemoveTeamMemberRequest) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
 // RemoveTeamMember200ApplicationJSON - Successfully removed a member of the team.
 type RemoveTeamMember200ApplicationJSON struct {
 	// ID of the team.
 	ID string `json:"id"`
+}
+
+func (o *RemoveTeamMember200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 type RemoveTeamMemberResponse struct {
@@ -27,4 +48,32 @@ type RemoveTeamMemberResponse struct {
 	RawResponse *http.Response
 	// Successfully removed a member of the team.
 	RemoveTeamMember200ApplicationJSONObject *RemoveTeamMember200ApplicationJSON
+}
+
+func (o *RemoveTeamMemberResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *RemoveTeamMemberResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *RemoveTeamMemberResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *RemoveTeamMemberResponse) GetRemoveTeamMember200ApplicationJSONObject() *RemoveTeamMember200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.RemoveTeamMember200ApplicationJSONObject
 }

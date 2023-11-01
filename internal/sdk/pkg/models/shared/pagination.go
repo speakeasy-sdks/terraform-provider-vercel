@@ -11,3 +11,24 @@ type Pagination struct {
 	// Timestamp that must be used to request the previous page.
 	Prev *int64 `json:"prev"`
 }
+
+func (o *Pagination) GetCount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Count
+}
+
+func (o *Pagination) GetNext() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Next
+}
+
+func (o *Pagination) GetPrev() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Prev
+}

@@ -15,6 +15,27 @@ type RemoveProjectDomainRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *RemoveProjectDomainRequest) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *RemoveProjectDomainRequest) GetIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrName
+}
+
+func (o *RemoveProjectDomainRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 // RemoveProjectDomain200ApplicationJSON - The domain was succesfully removed from the project
 type RemoveProjectDomain200ApplicationJSON struct {
 }
@@ -28,4 +49,32 @@ type RemoveProjectDomainResponse struct {
 	RawResponse *http.Response
 	// The domain was succesfully removed from the project
 	RemoveProjectDomain200ApplicationJSONObject *RemoveProjectDomain200ApplicationJSON
+}
+
+func (o *RemoveProjectDomainResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *RemoveProjectDomainResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *RemoveProjectDomainResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *RemoveProjectDomainResponse) GetRemoveProjectDomain200ApplicationJSONObject() *RemoveProjectDomain200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.RemoveProjectDomain200ApplicationJSONObject
 }

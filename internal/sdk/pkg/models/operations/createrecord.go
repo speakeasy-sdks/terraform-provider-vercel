@@ -3,11 +3,11 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 // CreateRecordRequestBody9Type - Must be of type `NS`.
@@ -48,6 +48,41 @@ type CreateRecordRequestBody9 struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (o *CreateRecordRequestBody9) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *CreateRecordRequestBody9) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateRecordRequestBody9) GetTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TTL
+}
+
+func (o *CreateRecordRequestBody9) GetType() CreateRecordRequestBody9Type {
+	if o == nil {
+		return CreateRecordRequestBody9Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateRecordRequestBody9) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 // CreateRecordRequestBody8Type - Must be of type `TXT`.
 type CreateRecordRequestBody8Type string
 
@@ -84,11 +119,67 @@ type CreateRecordRequestBody8 struct {
 	Value string `json:"value"`
 }
 
+func (o *CreateRecordRequestBody8) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *CreateRecordRequestBody8) GetTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TTL
+}
+
+func (o *CreateRecordRequestBody8) GetType() CreateRecordRequestBody8Type {
+	if o == nil {
+		return CreateRecordRequestBody8Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateRecordRequestBody8) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 type CreateRecordRequestBody7Srv struct {
 	Port     int64   `json:"port"`
 	Priority int64   `json:"priority"`
 	Target   *string `json:"target,omitempty"`
 	Weight   int64   `json:"weight"`
+}
+
+func (o *CreateRecordRequestBody7Srv) GetPort() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Port
+}
+
+func (o *CreateRecordRequestBody7Srv) GetPriority() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Priority
+}
+
+func (o *CreateRecordRequestBody7Srv) GetTarget() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *CreateRecordRequestBody7Srv) GetWeight() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Weight
 }
 
 // CreateRecordRequestBody7Type - Must be of type `SRV`.
@@ -124,6 +215,34 @@ type CreateRecordRequestBody7 struct {
 	TTL *int64 `json:"ttl,omitempty"`
 	// Must be of type `SRV`.
 	Type CreateRecordRequestBody7Type `json:"type"`
+}
+
+func (o *CreateRecordRequestBody7) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *CreateRecordRequestBody7) GetSrv() CreateRecordRequestBody7Srv {
+	if o == nil {
+		return CreateRecordRequestBody7Srv{}
+	}
+	return o.Srv
+}
+
+func (o *CreateRecordRequestBody7) GetTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TTL
+}
+
+func (o *CreateRecordRequestBody7) GetType() CreateRecordRequestBody7Type {
+	if o == nil {
+		return CreateRecordRequestBody7Type("")
+	}
+	return o.Type
 }
 
 // CreateRecordRequestBody6Type - Must be of type `MX`.
@@ -165,6 +284,48 @@ type CreateRecordRequestBody6 struct {
 	Value string `json:"value"`
 }
 
+func (o *CreateRecordRequestBody6) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *CreateRecordRequestBody6) GetMxPriority() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.MxPriority
+}
+
+func (o *CreateRecordRequestBody6) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateRecordRequestBody6) GetTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TTL
+}
+
+func (o *CreateRecordRequestBody6) GetType() CreateRecordRequestBody6Type {
+	if o == nil {
+		return CreateRecordRequestBody6Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateRecordRequestBody6) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 // CreateRecordRequestBody5Type - Must be of type `CNAME`.
 type CreateRecordRequestBody5Type string
 
@@ -201,6 +362,41 @@ type CreateRecordRequestBody5 struct {
 	Type CreateRecordRequestBody5Type `json:"type"`
 	// A CNAME record mapping to another domain name.
 	Value *string `json:"value,omitempty"`
+}
+
+func (o *CreateRecordRequestBody5) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *CreateRecordRequestBody5) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateRecordRequestBody5) GetTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TTL
+}
+
+func (o *CreateRecordRequestBody5) GetType() CreateRecordRequestBody5Type {
+	if o == nil {
+		return CreateRecordRequestBody5Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateRecordRequestBody5) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
 }
 
 // CreateRecordRequestBody4Type - Must be of type `CAA`.
@@ -241,6 +437,41 @@ type CreateRecordRequestBody4 struct {
 	Value string `json:"value"`
 }
 
+func (o *CreateRecordRequestBody4) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *CreateRecordRequestBody4) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateRecordRequestBody4) GetTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TTL
+}
+
+func (o *CreateRecordRequestBody4) GetType() CreateRecordRequestBody4Type {
+	if o == nil {
+		return CreateRecordRequestBody4Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateRecordRequestBody4) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 // CreateRecordRequestBody3Type - Must be of type `ALIAS`.
 type CreateRecordRequestBody3Type string
 
@@ -277,6 +508,41 @@ type CreateRecordRequestBody3 struct {
 	Type CreateRecordRequestBody3Type `json:"type"`
 	// An ALIAS virtual record pointing to a hostname resolved to an A record on server side.
 	Value string `json:"value"`
+}
+
+func (o *CreateRecordRequestBody3) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *CreateRecordRequestBody3) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateRecordRequestBody3) GetTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TTL
+}
+
+func (o *CreateRecordRequestBody3) GetType() CreateRecordRequestBody3Type {
+	if o == nil {
+		return CreateRecordRequestBody3Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateRecordRequestBody3) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 // CreateRecordRequestBody2Type - Must be of type `AAAA`.
@@ -317,6 +583,41 @@ type CreateRecordRequestBody2 struct {
 	Value string `json:"value"`
 }
 
+func (o *CreateRecordRequestBody2) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *CreateRecordRequestBody2) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateRecordRequestBody2) GetTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TTL
+}
+
+func (o *CreateRecordRequestBody2) GetType() CreateRecordRequestBody2Type {
+	if o == nil {
+		return CreateRecordRequestBody2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateRecordRequestBody2) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 // CreateRecordRequestBody1Type - Must be of type `A`.
 type CreateRecordRequestBody1Type string
 
@@ -353,6 +654,41 @@ type CreateRecordRequestBody1 struct {
 	Type CreateRecordRequestBody1Type `json:"type"`
 	// The record value must be a valid IPv4 address.
 	Value string `json:"value"`
+}
+
+func (o *CreateRecordRequestBody1) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *CreateRecordRequestBody1) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateRecordRequestBody1) GetTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TTL
+}
+
+func (o *CreateRecordRequestBody1) GetType() CreateRecordRequestBody1Type {
+	if o == nil {
+		return CreateRecordRequestBody1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateRecordRequestBody1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CreateRecordRequestBodyType string
@@ -465,86 +801,67 @@ func CreateCreateRecordRequestBodyCreateRecordRequestBody9(createRecordRequestBo
 }
 
 func (u *CreateRecordRequestBody) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+
+	createRecordRequestBody7 := new(CreateRecordRequestBody7)
+	if err := utils.UnmarshalJSON(data, &createRecordRequestBody7, "", true, true); err == nil {
+		u.CreateRecordRequestBody7 = createRecordRequestBody7
+		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody7
+		return nil
+	}
+
+	createRecordRequestBody8 := new(CreateRecordRequestBody8)
+	if err := utils.UnmarshalJSON(data, &createRecordRequestBody8, "", true, true); err == nil {
+		u.CreateRecordRequestBody8 = createRecordRequestBody8
+		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody8
+		return nil
+	}
 
 	createRecordRequestBody1 := new(CreateRecordRequestBody1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createRecordRequestBody1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createRecordRequestBody1, "", true, true); err == nil {
 		u.CreateRecordRequestBody1 = createRecordRequestBody1
 		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody1
 		return nil
 	}
 
 	createRecordRequestBody2 := new(CreateRecordRequestBody2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createRecordRequestBody2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createRecordRequestBody2, "", true, true); err == nil {
 		u.CreateRecordRequestBody2 = createRecordRequestBody2
 		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody2
 		return nil
 	}
 
 	createRecordRequestBody3 := new(CreateRecordRequestBody3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createRecordRequestBody3); err == nil {
+	if err := utils.UnmarshalJSON(data, &createRecordRequestBody3, "", true, true); err == nil {
 		u.CreateRecordRequestBody3 = createRecordRequestBody3
 		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody3
 		return nil
 	}
 
 	createRecordRequestBody4 := new(CreateRecordRequestBody4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createRecordRequestBody4); err == nil {
+	if err := utils.UnmarshalJSON(data, &createRecordRequestBody4, "", true, true); err == nil {
 		u.CreateRecordRequestBody4 = createRecordRequestBody4
 		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody4
 		return nil
 	}
 
 	createRecordRequestBody5 := new(CreateRecordRequestBody5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createRecordRequestBody5); err == nil {
+	if err := utils.UnmarshalJSON(data, &createRecordRequestBody5, "", true, true); err == nil {
 		u.CreateRecordRequestBody5 = createRecordRequestBody5
 		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody5
 		return nil
 	}
 
-	createRecordRequestBody7 := new(CreateRecordRequestBody7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createRecordRequestBody7); err == nil {
-		u.CreateRecordRequestBody7 = createRecordRequestBody7
-		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody7
+	createRecordRequestBody9 := new(CreateRecordRequestBody9)
+	if err := utils.UnmarshalJSON(data, &createRecordRequestBody9, "", true, true); err == nil {
+		u.CreateRecordRequestBody9 = createRecordRequestBody9
+		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody9
 		return nil
 	}
 
 	createRecordRequestBody6 := new(CreateRecordRequestBody6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createRecordRequestBody6); err == nil {
+	if err := utils.UnmarshalJSON(data, &createRecordRequestBody6, "", true, true); err == nil {
 		u.CreateRecordRequestBody6 = createRecordRequestBody6
 		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody6
-		return nil
-	}
-
-	createRecordRequestBody8 := new(CreateRecordRequestBody8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createRecordRequestBody8); err == nil {
-		u.CreateRecordRequestBody8 = createRecordRequestBody8
-		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody8
-		return nil
-	}
-
-	createRecordRequestBody9 := new(CreateRecordRequestBody9)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createRecordRequestBody9); err == nil {
-		u.CreateRecordRequestBody9 = createRecordRequestBody9
-		u.Type = CreateRecordRequestBodyTypeCreateRecordRequestBody9
 		return nil
 	}
 
@@ -553,42 +870,42 @@ func (u *CreateRecordRequestBody) UnmarshalJSON(data []byte) error {
 
 func (u CreateRecordRequestBody) MarshalJSON() ([]byte, error) {
 	if u.CreateRecordRequestBody1 != nil {
-		return json.Marshal(u.CreateRecordRequestBody1)
+		return utils.MarshalJSON(u.CreateRecordRequestBody1, "", true)
 	}
 
 	if u.CreateRecordRequestBody2 != nil {
-		return json.Marshal(u.CreateRecordRequestBody2)
+		return utils.MarshalJSON(u.CreateRecordRequestBody2, "", true)
 	}
 
 	if u.CreateRecordRequestBody3 != nil {
-		return json.Marshal(u.CreateRecordRequestBody3)
+		return utils.MarshalJSON(u.CreateRecordRequestBody3, "", true)
 	}
 
 	if u.CreateRecordRequestBody4 != nil {
-		return json.Marshal(u.CreateRecordRequestBody4)
+		return utils.MarshalJSON(u.CreateRecordRequestBody4, "", true)
 	}
 
 	if u.CreateRecordRequestBody5 != nil {
-		return json.Marshal(u.CreateRecordRequestBody5)
-	}
-
-	if u.CreateRecordRequestBody7 != nil {
-		return json.Marshal(u.CreateRecordRequestBody7)
+		return utils.MarshalJSON(u.CreateRecordRequestBody5, "", true)
 	}
 
 	if u.CreateRecordRequestBody6 != nil {
-		return json.Marshal(u.CreateRecordRequestBody6)
+		return utils.MarshalJSON(u.CreateRecordRequestBody6, "", true)
+	}
+
+	if u.CreateRecordRequestBody7 != nil {
+		return utils.MarshalJSON(u.CreateRecordRequestBody7, "", true)
 	}
 
 	if u.CreateRecordRequestBody8 != nil {
-		return json.Marshal(u.CreateRecordRequestBody8)
+		return utils.MarshalJSON(u.CreateRecordRequestBody8, "", true)
 	}
 
 	if u.CreateRecordRequestBody9 != nil {
-		return json.Marshal(u.CreateRecordRequestBody9)
+		return utils.MarshalJSON(u.CreateRecordRequestBody9, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateRecordRequest struct {
@@ -599,14 +916,56 @@ type CreateRecordRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *CreateRecordRequest) GetRequestBody() *CreateRecordRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *CreateRecordRequest) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *CreateRecordRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type CreateRecord200ApplicationJSON2 struct {
 	// The id of the newly created DNS record
 	UID string `json:"uid"`
 }
 
+func (o *CreateRecord200ApplicationJSON2) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
 type CreateRecord200ApplicationJSON1 struct {
 	UID     string `json:"uid"`
 	Updated int64  `json:"updated"`
+}
+
+func (o *CreateRecord200ApplicationJSON1) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *CreateRecord200ApplicationJSON1) GetUpdated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Updated
 }
 
 type CreateRecord200ApplicationJSONType string
@@ -642,21 +1001,16 @@ func CreateCreateRecord200ApplicationJSONCreateRecord200ApplicationJSON2(createR
 }
 
 func (u *CreateRecord200ApplicationJSON) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createRecord200ApplicationJSON2 := new(CreateRecord200ApplicationJSON2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createRecord200ApplicationJSON2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createRecord200ApplicationJSON2, "", true, true); err == nil {
 		u.CreateRecord200ApplicationJSON2 = createRecord200ApplicationJSON2
 		u.Type = CreateRecord200ApplicationJSONTypeCreateRecord200ApplicationJSON2
 		return nil
 	}
 
 	createRecord200ApplicationJSON1 := new(CreateRecord200ApplicationJSON1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createRecord200ApplicationJSON1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createRecord200ApplicationJSON1, "", true, true); err == nil {
 		u.CreateRecord200ApplicationJSON1 = createRecord200ApplicationJSON1
 		u.Type = CreateRecord200ApplicationJSONTypeCreateRecord200ApplicationJSON1
 		return nil
@@ -666,15 +1020,15 @@ func (u *CreateRecord200ApplicationJSON) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateRecord200ApplicationJSON) MarshalJSON() ([]byte, error) {
-	if u.CreateRecord200ApplicationJSON2 != nil {
-		return json.Marshal(u.CreateRecord200ApplicationJSON2)
-	}
-
 	if u.CreateRecord200ApplicationJSON1 != nil {
-		return json.Marshal(u.CreateRecord200ApplicationJSON1)
+		return utils.MarshalJSON(u.CreateRecord200ApplicationJSON1, "", true)
 	}
 
-	return nil, nil
+	if u.CreateRecord200ApplicationJSON2 != nil {
+		return utils.MarshalJSON(u.CreateRecord200ApplicationJSON2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateRecordResponse struct {
@@ -686,4 +1040,32 @@ type CreateRecordResponse struct {
 	RawResponse *http.Response
 	// Successful response showing the uid of the newly created DNS record.
 	CreateRecord200ApplicationJSONOneOf *CreateRecord200ApplicationJSON
+}
+
+func (o *CreateRecordResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CreateRecordResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CreateRecordResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *CreateRecordResponse) GetCreateRecord200ApplicationJSONOneOf() *CreateRecord200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.CreateRecord200ApplicationJSONOneOf
 }

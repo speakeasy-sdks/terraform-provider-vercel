@@ -13,12 +13,61 @@ type GetCertByIDRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *GetCertByIDRequest) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetCertByIDRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type GetCertByID200ApplicationJSON struct {
 	AutoRenew bool     `json:"autoRenew"`
 	Cns       []string `json:"cns"`
 	CreatedAt int64    `json:"createdAt"`
 	ExpiresAt int64    `json:"expiresAt"`
 	ID        string   `json:"id"`
+}
+
+func (o *GetCertByID200ApplicationJSON) GetAutoRenew() bool {
+	if o == nil {
+		return false
+	}
+	return o.AutoRenew
+}
+
+func (o *GetCertByID200ApplicationJSON) GetCns() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Cns
+}
+
+func (o *GetCertByID200ApplicationJSON) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetCertByID200ApplicationJSON) GetExpiresAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ExpiresAt
+}
+
+func (o *GetCertByID200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 type GetCertByIDResponse struct {
@@ -29,4 +78,32 @@ type GetCertByIDResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                         *http.Response
 	GetCertByID200ApplicationJSONObject *GetCertByID200ApplicationJSON
+}
+
+func (o *GetCertByIDResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetCertByIDResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetCertByIDResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetCertByIDResponse) GetGetCertByID200ApplicationJSONObject() *GetCertByID200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetCertByID200ApplicationJSONObject
 }

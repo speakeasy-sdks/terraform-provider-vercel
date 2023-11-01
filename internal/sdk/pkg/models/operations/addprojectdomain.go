@@ -53,12 +53,61 @@ type AddProjectDomainRequestBody struct {
 	RedirectStatusCode *AddProjectDomainRequestBodyRedirectStatusCode `json:"redirectStatusCode,omitempty"`
 }
 
+func (o *AddProjectDomainRequestBody) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *AddProjectDomainRequestBody) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *AddProjectDomainRequestBody) GetRedirect() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Redirect
+}
+
+func (o *AddProjectDomainRequestBody) GetRedirectStatusCode() *AddProjectDomainRequestBodyRedirectStatusCode {
+	if o == nil {
+		return nil
+	}
+	return o.RedirectStatusCode
+}
+
 type AddProjectDomainRequest struct {
 	RequestBody *AddProjectDomainRequestBody `request:"mediaType=application/json"`
 	// The unique project identifier or the project name
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *AddProjectDomainRequest) GetRequestBody() *AddProjectDomainRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *AddProjectDomainRequest) GetIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrName
+}
+
+func (o *AddProjectDomainRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 type AddProjectDomain200ApplicationJSONRedirectStatusCode int64
@@ -102,6 +151,34 @@ type AddProjectDomain200ApplicationJSONVerification struct {
 	Value  string `json:"value"`
 }
 
+func (o *AddProjectDomain200ApplicationJSONVerification) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *AddProjectDomain200ApplicationJSONVerification) GetReason() string {
+	if o == nil {
+		return ""
+	}
+	return o.Reason
+}
+
+func (o *AddProjectDomain200ApplicationJSONVerification) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
+func (o *AddProjectDomain200ApplicationJSONVerification) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 // AddProjectDomain200ApplicationJSON - The domain was successfully added to the project
 type AddProjectDomain200ApplicationJSON struct {
 	ApexName           string                                                `json:"apexName"`
@@ -118,6 +195,76 @@ type AddProjectDomain200ApplicationJSON struct {
 	Verified bool `json:"verified"`
 }
 
+func (o *AddProjectDomain200ApplicationJSON) GetApexName() string {
+	if o == nil {
+		return ""
+	}
+	return o.ApexName
+}
+
+func (o *AddProjectDomain200ApplicationJSON) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AddProjectDomain200ApplicationJSON) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *AddProjectDomain200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *AddProjectDomain200ApplicationJSON) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *AddProjectDomain200ApplicationJSON) GetRedirect() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Redirect
+}
+
+func (o *AddProjectDomain200ApplicationJSON) GetRedirectStatusCode() *AddProjectDomain200ApplicationJSONRedirectStatusCode {
+	if o == nil {
+		return nil
+	}
+	return o.RedirectStatusCode
+}
+
+func (o *AddProjectDomain200ApplicationJSON) GetUpdatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *AddProjectDomain200ApplicationJSON) GetVerification() []AddProjectDomain200ApplicationJSONVerification {
+	if o == nil {
+		return nil
+	}
+	return o.Verification
+}
+
+func (o *AddProjectDomain200ApplicationJSON) GetVerified() bool {
+	if o == nil {
+		return false
+	}
+	return o.Verified
+}
+
 type AddProjectDomainResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -127,4 +274,32 @@ type AddProjectDomainResponse struct {
 	RawResponse *http.Response
 	// The domain was successfully added to the project
 	AddProjectDomain200ApplicationJSONObject *AddProjectDomain200ApplicationJSON
+}
+
+func (o *AddProjectDomainResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *AddProjectDomainResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *AddProjectDomainResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *AddProjectDomainResponse) GetAddProjectDomain200ApplicationJSONObject() *AddProjectDomain200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.AddProjectDomain200ApplicationJSONObject
 }

@@ -3,14 +3,13 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
-// GitNamespacesProvider
 type GitNamespacesProvider string
 
 const (
@@ -47,6 +46,20 @@ type GitNamespacesRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *GitNamespacesRequest) GetProvider() *GitNamespacesProvider {
+	if o == nil {
+		return nil
+	}
+	return o.Provider
+}
+
+func (o *GitNamespacesRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type GitNamespaces200ApplicationJSONIDType string
 
 const (
@@ -80,21 +93,16 @@ func CreateGitNamespaces200ApplicationJSONIDInteger(integer int64) GitNamespaces
 }
 
 func (u *GitNamespaces200ApplicationJSONID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = GitNamespaces200ApplicationJSONIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = GitNamespaces200ApplicationJSONIDTypeInteger
 		return nil
@@ -105,14 +113,14 @@ func (u *GitNamespaces200ApplicationJSONID) UnmarshalJSON(data []byte) error {
 
 func (u GitNamespaces200ApplicationJSONID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GitNamespaces200ApplicationJSON struct {
@@ -126,6 +134,62 @@ type GitNamespaces200ApplicationJSON struct {
 	Slug               string                            `json:"slug"`
 }
 
+func (o *GitNamespaces200ApplicationJSON) GetID() GitNamespaces200ApplicationJSONID {
+	if o == nil {
+		return GitNamespaces200ApplicationJSONID{}
+	}
+	return o.ID
+}
+
+func (o *GitNamespaces200ApplicationJSON) GetInstallationID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InstallationID
+}
+
+func (o *GitNamespaces200ApplicationJSON) GetIsAccessRestricted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsAccessRestricted
+}
+
+func (o *GitNamespaces200ApplicationJSON) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *GitNamespaces200ApplicationJSON) GetOwnerType() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerType
+}
+
+func (o *GitNamespaces200ApplicationJSON) GetProvider() string {
+	if o == nil {
+		return ""
+	}
+	return o.Provider
+}
+
+func (o *GitNamespaces200ApplicationJSON) GetRequireReauth() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireReauth
+}
+
+func (o *GitNamespaces200ApplicationJSON) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
 type GitNamespacesResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -134,4 +198,32 @@ type GitNamespacesResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                            *http.Response
 	GitNamespaces200ApplicationJSONObjects []GitNamespaces200ApplicationJSON
+}
+
+func (o *GitNamespacesResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GitNamespacesResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GitNamespacesResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GitNamespacesResponse) GetGitNamespaces200ApplicationJSONObjects() []GitNamespaces200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GitNamespaces200ApplicationJSONObjects
 }

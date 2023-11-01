@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"strings"
 	"vercel/internal/sdk/pkg/models/operations"
+	"vercel/internal/sdk/pkg/models/sdkerrors"
 	"vercel/internal/sdk/pkg/utils"
 )
 
@@ -130,12 +131,14 @@ func (s *integrations) GetConfiguration(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *operations.GetConfiguration200ApplicationJSON
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return res, err
+			var out operations.GetConfiguration200ApplicationJSON
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
 			}
 
-			res.GetConfiguration200ApplicationJSONOneOf = out
+			res.GetConfiguration200ApplicationJSONOneOf = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -195,11 +198,13 @@ func (s *integrations) GetConfigurations(ctx context.Context, request operations
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out []operations.GetConfigurations200ApplicationJSON
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return res, err
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
 			}
 
 			res.GetConfigurations200ApplicationJSONObjects = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -257,11 +262,13 @@ func (s *integrations) GitNamespaces(ctx context.Context, request operations.Git
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
 			var out []operations.GitNamespaces200ApplicationJSON
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return res, err
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
 			}
 
 			res.GitNamespaces200ApplicationJSONObjects = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough

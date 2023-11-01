@@ -11,11 +11,39 @@ type GetEdgeConfigsRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *GetEdgeConfigsRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 // GetEdgeConfigs200ApplicationJSONTransfer - Keeps track of the current state of the Edge Config while it gets transferred.
 type GetEdgeConfigs200ApplicationJSONTransfer struct {
 	DoneAt        *int64 `json:"doneAt"`
 	FromAccountID string `json:"fromAccountId"`
 	StartedAt     int64  `json:"startedAt"`
+}
+
+func (o *GetEdgeConfigs200ApplicationJSONTransfer) GetDoneAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DoneAt
+}
+
+func (o *GetEdgeConfigs200ApplicationJSONTransfer) GetFromAccountID() string {
+	if o == nil {
+		return ""
+	}
+	return o.FromAccountID
+}
+
+func (o *GetEdgeConfigs200ApplicationJSONTransfer) GetStartedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.StartedAt
 }
 
 // GetEdgeConfigs200ApplicationJSON - List of all edge configs.
@@ -33,6 +61,69 @@ type GetEdgeConfigs200ApplicationJSON struct {
 	UpdatedAt *int64                                    `json:"updatedAt,omitempty"`
 }
 
+func (o *GetEdgeConfigs200ApplicationJSON) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *GetEdgeConfigs200ApplicationJSON) GetDigest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Digest
+}
+
+func (o *GetEdgeConfigs200ApplicationJSON) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *GetEdgeConfigs200ApplicationJSON) GetItemCount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ItemCount
+}
+
+func (o *GetEdgeConfigs200ApplicationJSON) GetOwnerID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OwnerID
+}
+
+func (o *GetEdgeConfigs200ApplicationJSON) GetSizeInBytes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.SizeInBytes
+}
+
+func (o *GetEdgeConfigs200ApplicationJSON) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *GetEdgeConfigs200ApplicationJSON) GetTransfer() *GetEdgeConfigs200ApplicationJSONTransfer {
+	if o == nil {
+		return nil
+	}
+	return o.Transfer
+}
+
+func (o *GetEdgeConfigs200ApplicationJSON) GetUpdatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
 type GetEdgeConfigsResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -42,4 +133,32 @@ type GetEdgeConfigsResponse struct {
 	RawResponse *http.Response
 	// List of all edge configs.
 	GetEdgeConfigs200ApplicationJSONObject *GetEdgeConfigs200ApplicationJSON
+}
+
+func (o *GetEdgeConfigsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetEdgeConfigsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetEdgeConfigsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetEdgeConfigsResponse) GetGetEdgeConfigs200ApplicationJSONObject() *GetEdgeConfigs200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetEdgeConfigs200ApplicationJSONObject
 }

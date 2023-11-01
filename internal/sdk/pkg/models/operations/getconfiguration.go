@@ -3,11 +3,11 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type GetConfigurationRequest struct {
@@ -15,6 +15,20 @@ type GetConfigurationRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *GetConfigurationRequest) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetConfigurationRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 type GetConfiguration200ApplicationJSON2DisabledReason string
@@ -230,11 +244,53 @@ type GetConfiguration200ApplicationJSON2ScopesQueueScopes struct {
 	Upgraded []GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded `json:"upgraded"`
 }
 
+func (o *GetConfiguration200ApplicationJSON2ScopesQueueScopes) GetAdded() []GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded {
+	if o == nil {
+		return []GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded{}
+	}
+	return o.Added
+}
+
+func (o *GetConfiguration200ApplicationJSON2ScopesQueueScopes) GetUpgraded() []GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded {
+	if o == nil {
+		return []GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded{}
+	}
+	return o.Upgraded
+}
+
 type GetConfiguration200ApplicationJSON2ScopesQueue struct {
 	ConfirmedAt *int64                                               `json:"confirmedAt,omitempty"`
 	Note        string                                               `json:"note"`
 	RequestedAt int64                                                `json:"requestedAt"`
 	Scopes      GetConfiguration200ApplicationJSON2ScopesQueueScopes `json:"scopes"`
+}
+
+func (o *GetConfiguration200ApplicationJSON2ScopesQueue) GetConfirmedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ConfirmedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON2ScopesQueue) GetNote() string {
+	if o == nil {
+		return ""
+	}
+	return o.Note
+}
+
+func (o *GetConfiguration200ApplicationJSON2ScopesQueue) GetRequestedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RequestedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON2ScopesQueue) GetScopes() GetConfiguration200ApplicationJSON2ScopesQueueScopes {
+	if o == nil {
+		return GetConfiguration200ApplicationJSON2ScopesQueueScopes{}
+	}
+	return o.Scopes
 }
 
 // GetConfiguration200ApplicationJSON2Source - Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
@@ -331,6 +387,167 @@ type GetConfiguration200ApplicationJSON2 struct {
 	UpdatedAt int64 `json:"updatedAt"`
 	// The ID of the user that created the configuration.
 	UserID string `json:"userId"`
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetCanConfigureOpenTelemetry() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CanConfigureOpenTelemetry
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetCompletedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CompletedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetDeletedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetDisabledReason() *GetConfiguration200ApplicationJSON2DisabledReason {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledReason
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetIntegrationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.IntegrationID
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerID
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetProjectSelection() GetConfiguration200ApplicationJSON2ProjectSelection {
+	if o == nil {
+		return GetConfiguration200ApplicationJSON2ProjectSelection("")
+	}
+	return o.ProjectSelection
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetProjects() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Projects
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetRemovedLogDrainsAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedLogDrainsAt
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetRemovedProjectEnvsAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedProjectEnvsAt
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetRemovedTokensAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedTokensAt
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetRemovedWebhooksAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedWebhooksAt
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetScopes() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Scopes
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetScopesQueue() []GetConfiguration200ApplicationJSON2ScopesQueue {
+	if o == nil {
+		return nil
+	}
+	return o.ScopesQueue
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetSource() *GetConfiguration200ApplicationJSON2Source {
+	if o == nil {
+		return nil
+	}
+	return o.Source
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetType() GetConfiguration200ApplicationJSON2Type {
+	if o == nil {
+		return GetConfiguration200ApplicationJSON2Type("")
+	}
+	return o.Type
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetUpdatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.UpdatedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON2) GetUserID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserID
 }
 
 type GetConfiguration200ApplicationJSON1DisabledReason string
@@ -518,11 +735,53 @@ type GetConfiguration200ApplicationJSON1ScopesQueueScopes struct {
 	Upgraded []GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded `json:"upgraded"`
 }
 
+func (o *GetConfiguration200ApplicationJSON1ScopesQueueScopes) GetAdded() []GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded {
+	if o == nil {
+		return []GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded{}
+	}
+	return o.Added
+}
+
+func (o *GetConfiguration200ApplicationJSON1ScopesQueueScopes) GetUpgraded() []GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded {
+	if o == nil {
+		return []GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded{}
+	}
+	return o.Upgraded
+}
+
 type GetConfiguration200ApplicationJSON1ScopesQueue struct {
 	ConfirmedAt *int64                                               `json:"confirmedAt,omitempty"`
 	Note        string                                               `json:"note"`
 	RequestedAt int64                                                `json:"requestedAt"`
 	Scopes      GetConfiguration200ApplicationJSON1ScopesQueueScopes `json:"scopes"`
+}
+
+func (o *GetConfiguration200ApplicationJSON1ScopesQueue) GetConfirmedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ConfirmedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON1ScopesQueue) GetNote() string {
+	if o == nil {
+		return ""
+	}
+	return o.Note
+}
+
+func (o *GetConfiguration200ApplicationJSON1ScopesQueue) GetRequestedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RequestedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON1ScopesQueue) GetScopes() GetConfiguration200ApplicationJSON1ScopesQueueScopes {
+	if o == nil {
+		return GetConfiguration200ApplicationJSON1ScopesQueueScopes{}
+	}
+	return o.Scopes
 }
 
 // GetConfiguration200ApplicationJSON1Source - Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
@@ -618,6 +877,153 @@ type GetConfiguration200ApplicationJSON1 struct {
 	UserID string `json:"userId"`
 }
 
+func (o *GetConfiguration200ApplicationJSON1) GetCompletedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CompletedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetDeletedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetDisabledReason() *GetConfiguration200ApplicationJSON1DisabledReason {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledReason
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetIntegrationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.IntegrationID
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerID
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetProjects() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Projects
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetRemovedLogDrainsAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedLogDrainsAt
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetRemovedProjectEnvsAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedProjectEnvsAt
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetRemovedTokensAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedTokensAt
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetRemovedWebhooksAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedWebhooksAt
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetScopes() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Scopes
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetScopesQueue() []GetConfiguration200ApplicationJSON1ScopesQueue {
+	if o == nil {
+		return nil
+	}
+	return o.ScopesQueue
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetSource() *GetConfiguration200ApplicationJSON1Source {
+	if o == nil {
+		return nil
+	}
+	return o.Source
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetType() GetConfiguration200ApplicationJSON1Type {
+	if o == nil {
+		return GetConfiguration200ApplicationJSON1Type("")
+	}
+	return o.Type
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetUpdatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.UpdatedAt
+}
+
+func (o *GetConfiguration200ApplicationJSON1) GetUserID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserID
+}
+
 type GetConfiguration200ApplicationJSONType string
 
 const (
@@ -651,21 +1057,16 @@ func CreateGetConfiguration200ApplicationJSONGetConfiguration200ApplicationJSON2
 }
 
 func (u *GetConfiguration200ApplicationJSON) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	getConfiguration200ApplicationJSON1 := new(GetConfiguration200ApplicationJSON1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getConfiguration200ApplicationJSON1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getConfiguration200ApplicationJSON1, "", true, true); err == nil {
 		u.GetConfiguration200ApplicationJSON1 = getConfiguration200ApplicationJSON1
 		u.Type = GetConfiguration200ApplicationJSONTypeGetConfiguration200ApplicationJSON1
 		return nil
 	}
 
 	getConfiguration200ApplicationJSON2 := new(GetConfiguration200ApplicationJSON2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getConfiguration200ApplicationJSON2); err == nil {
+	if err := utils.UnmarshalJSON(data, &getConfiguration200ApplicationJSON2, "", true, true); err == nil {
 		u.GetConfiguration200ApplicationJSON2 = getConfiguration200ApplicationJSON2
 		u.Type = GetConfiguration200ApplicationJSONTypeGetConfiguration200ApplicationJSON2
 		return nil
@@ -676,14 +1077,14 @@ func (u *GetConfiguration200ApplicationJSON) UnmarshalJSON(data []byte) error {
 
 func (u GetConfiguration200ApplicationJSON) MarshalJSON() ([]byte, error) {
 	if u.GetConfiguration200ApplicationJSON1 != nil {
-		return json.Marshal(u.GetConfiguration200ApplicationJSON1)
+		return utils.MarshalJSON(u.GetConfiguration200ApplicationJSON1, "", true)
 	}
 
 	if u.GetConfiguration200ApplicationJSON2 != nil {
-		return json.Marshal(u.GetConfiguration200ApplicationJSON2)
+		return utils.MarshalJSON(u.GetConfiguration200ApplicationJSON2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetConfigurationResponse struct {
@@ -694,4 +1095,32 @@ type GetConfigurationResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                             *http.Response
 	GetConfiguration200ApplicationJSONOneOf *GetConfiguration200ApplicationJSON
+}
+
+func (o *GetConfigurationResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetConfigurationResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetConfigurationResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetConfigurationResponse) GetGetConfiguration200ApplicationJSONOneOf() *GetConfiguration200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetConfiguration200ApplicationJSONOneOf
 }

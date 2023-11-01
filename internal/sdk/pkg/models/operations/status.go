@@ -13,6 +13,13 @@ type StatusRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *StatusRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type Status200ApplicationJSONStatus string
 
 const (
@@ -50,6 +57,13 @@ type Status200ApplicationJSON struct {
 	Status Status200ApplicationJSONStatus `json:"status"`
 }
 
+func (o *Status200ApplicationJSON) GetStatus() Status200ApplicationJSONStatus {
+	if o == nil {
+		return Status200ApplicationJSONStatus("")
+	}
+	return o.Status
+}
+
 type StatusResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -58,4 +72,32 @@ type StatusResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                    *http.Response
 	Status200ApplicationJSONObject *Status200ApplicationJSON
+}
+
+func (o *StatusResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *StatusResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *StatusResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *StatusResponse) GetStatus200ApplicationJSONObject() *Status200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.Status200ApplicationJSONObject
 }

@@ -17,6 +17,27 @@ type VerifyProjectDomainRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *VerifyProjectDomainRequest) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *VerifyProjectDomainRequest) GetIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrName
+}
+
+func (o *VerifyProjectDomainRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type VerifyProjectDomain200ApplicationJSONRedirectStatusCode int64
 
 const (
@@ -58,6 +79,34 @@ type VerifyProjectDomain200ApplicationJSONVerification struct {
 	Value  string `json:"value"`
 }
 
+func (o *VerifyProjectDomain200ApplicationJSONVerification) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *VerifyProjectDomain200ApplicationJSONVerification) GetReason() string {
+	if o == nil {
+		return ""
+	}
+	return o.Reason
+}
+
+func (o *VerifyProjectDomain200ApplicationJSONVerification) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
+func (o *VerifyProjectDomain200ApplicationJSONVerification) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 // VerifyProjectDomain200ApplicationJSON - The project domain was verified successfully
 // Domain is already verified
 type VerifyProjectDomain200ApplicationJSON struct {
@@ -75,6 +124,76 @@ type VerifyProjectDomain200ApplicationJSON struct {
 	Verified bool `json:"verified"`
 }
 
+func (o *VerifyProjectDomain200ApplicationJSON) GetApexName() string {
+	if o == nil {
+		return ""
+	}
+	return o.ApexName
+}
+
+func (o *VerifyProjectDomain200ApplicationJSON) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *VerifyProjectDomain200ApplicationJSON) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *VerifyProjectDomain200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *VerifyProjectDomain200ApplicationJSON) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *VerifyProjectDomain200ApplicationJSON) GetRedirect() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Redirect
+}
+
+func (o *VerifyProjectDomain200ApplicationJSON) GetRedirectStatusCode() *VerifyProjectDomain200ApplicationJSONRedirectStatusCode {
+	if o == nil {
+		return nil
+	}
+	return o.RedirectStatusCode
+}
+
+func (o *VerifyProjectDomain200ApplicationJSON) GetUpdatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *VerifyProjectDomain200ApplicationJSON) GetVerification() []VerifyProjectDomain200ApplicationJSONVerification {
+	if o == nil {
+		return nil
+	}
+	return o.Verification
+}
+
+func (o *VerifyProjectDomain200ApplicationJSON) GetVerified() bool {
+	if o == nil {
+		return false
+	}
+	return o.Verified
+}
+
 type VerifyProjectDomainResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -85,4 +204,32 @@ type VerifyProjectDomainResponse struct {
 	// The project domain was verified successfully
 	// Domain is already verified
 	VerifyProjectDomain200ApplicationJSONObject *VerifyProjectDomain200ApplicationJSON
+}
+
+func (o *VerifyProjectDomainResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *VerifyProjectDomainResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *VerifyProjectDomainResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *VerifyProjectDomainResponse) GetVerifyProjectDomain200ApplicationJSONObject() *VerifyProjectDomain200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.VerifyProjectDomain200ApplicationJSONObject
 }

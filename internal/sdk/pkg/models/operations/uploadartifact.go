@@ -24,10 +24,73 @@ type UploadArtifactRequest struct {
 	XArtifactTag *string `header:"style=simple,explode=false,name=x-artifact-tag"`
 }
 
+func (o *UploadArtifactRequest) GetContentLength() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ContentLength
+}
+
+func (o *UploadArtifactRequest) GetRequestBody() []byte {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *UploadArtifactRequest) GetHash() string {
+	if o == nil {
+		return ""
+	}
+	return o.Hash
+}
+
+func (o *UploadArtifactRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *UploadArtifactRequest) GetXArtifactClientCi() *string {
+	if o == nil {
+		return nil
+	}
+	return o.XArtifactClientCi
+}
+
+func (o *UploadArtifactRequest) GetXArtifactClientInteractive() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.XArtifactClientInteractive
+}
+
+func (o *UploadArtifactRequest) GetXArtifactDuration() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.XArtifactDuration
+}
+
+func (o *UploadArtifactRequest) GetXArtifactTag() *string {
+	if o == nil {
+		return nil
+	}
+	return o.XArtifactTag
+}
+
 // UploadArtifact202ApplicationJSON - File successfully uploaded
 type UploadArtifact202ApplicationJSON struct {
 	// Array of URLs where the artifact was updated
 	Urls []string `json:"urls"`
+}
+
+func (o *UploadArtifact202ApplicationJSON) GetUrls() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Urls
 }
 
 type UploadArtifactResponse struct {
@@ -39,4 +102,32 @@ type UploadArtifactResponse struct {
 	RawResponse *http.Response
 	// File successfully uploaded
 	UploadArtifact202ApplicationJSONObject *UploadArtifact202ApplicationJSON
+}
+
+func (o *UploadArtifactResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *UploadArtifactResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *UploadArtifactResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *UploadArtifactResponse) GetUploadArtifact202ApplicationJSONObject() *UploadArtifact202ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.UploadArtifact202ApplicationJSONObject
 }

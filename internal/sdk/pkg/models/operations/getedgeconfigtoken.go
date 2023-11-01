@@ -14,6 +14,27 @@ type GetEdgeConfigTokenRequest struct {
 	Token  string  `pathParam:"style=simple,explode=false,name=token"`
 }
 
+func (o *GetEdgeConfigTokenRequest) GetEdgeConfigID() string {
+	if o == nil {
+		return ""
+	}
+	return o.EdgeConfigID
+}
+
+func (o *GetEdgeConfigTokenRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetEdgeConfigTokenRequest) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
+}
+
 type GetEdgeConfigTokenResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -23,4 +44,32 @@ type GetEdgeConfigTokenResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *GetEdgeConfigTokenResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetEdgeConfigTokenResponse) GetEdgeConfigToken() *shared.EdgeConfigToken {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigToken
+}
+
+func (o *GetEdgeConfigTokenResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetEdgeConfigTokenResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

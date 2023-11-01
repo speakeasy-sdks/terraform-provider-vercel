@@ -13,6 +13,20 @@ type RemoveCertRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *RemoveCertRequest) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *RemoveCertRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type RemoveCert200ApplicationJSON struct {
 }
 
@@ -24,4 +38,32 @@ type RemoveCertResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                        *http.Response
 	RemoveCert200ApplicationJSONObject *RemoveCert200ApplicationJSON
+}
+
+func (o *RemoveCertResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *RemoveCertResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *RemoveCertResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *RemoveCertResponse) GetRemoveCert200ApplicationJSONObject() *RemoveCert200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.RemoveCert200ApplicationJSONObject
 }

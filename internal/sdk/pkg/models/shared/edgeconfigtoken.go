@@ -11,3 +11,38 @@ type EdgeConfigToken struct {
 	Label string `json:"label"`
 	Token string `json:"token"`
 }
+
+func (o *EdgeConfigToken) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *EdgeConfigToken) GetEdgeConfigID() string {
+	if o == nil {
+		return ""
+	}
+	return o.EdgeConfigID
+}
+
+func (o *EdgeConfigToken) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *EdgeConfigToken) GetLabel() string {
+	if o == nil {
+		return ""
+	}
+	return o.Label
+}
+
+func (o *EdgeConfigToken) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
+}

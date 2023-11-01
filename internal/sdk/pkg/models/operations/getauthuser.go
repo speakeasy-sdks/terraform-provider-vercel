@@ -3,11 +3,10 @@
 package operations
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
 	"net/http"
 	"vercel/internal/sdk/pkg/models/shared"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type GetAuthUser200ApplicationJSONUserType string
@@ -43,21 +42,16 @@ func CreateGetAuthUser200ApplicationJSONUserAuthUserLimited(authUserLimited shar
 }
 
 func (u *GetAuthUser200ApplicationJSONUser) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	authUserLimited := new(shared.AuthUserLimited)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&authUserLimited); err == nil {
+	if err := utils.UnmarshalJSON(data, &authUserLimited, "", true, true); err == nil {
 		u.AuthUserLimited = authUserLimited
 		u.Type = GetAuthUser200ApplicationJSONUserTypeAuthUserLimited
 		return nil
 	}
 
 	authUser := new(shared.AuthUser)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&authUser); err == nil {
+	if err := utils.UnmarshalJSON(data, &authUser, "", true, true); err == nil {
 		u.AuthUser = authUser
 		u.Type = GetAuthUser200ApplicationJSONUserTypeAuthUser
 		return nil
@@ -67,20 +61,27 @@ func (u *GetAuthUser200ApplicationJSONUser) UnmarshalJSON(data []byte) error {
 }
 
 func (u GetAuthUser200ApplicationJSONUser) MarshalJSON() ([]byte, error) {
-	if u.AuthUserLimited != nil {
-		return json.Marshal(u.AuthUserLimited)
-	}
-
 	if u.AuthUser != nil {
-		return json.Marshal(u.AuthUser)
+		return utils.MarshalJSON(u.AuthUser, "", true)
 	}
 
-	return nil, nil
+	if u.AuthUserLimited != nil {
+		return utils.MarshalJSON(u.AuthUserLimited, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // GetAuthUser200ApplicationJSON - Successful response.
 type GetAuthUser200ApplicationJSON struct {
 	User GetAuthUser200ApplicationJSONUser `json:"user"`
+}
+
+func (o *GetAuthUser200ApplicationJSON) GetUser() GetAuthUser200ApplicationJSONUser {
+	if o == nil {
+		return GetAuthUser200ApplicationJSONUser{}
+	}
+	return o.User
 }
 
 type GetAuthUserResponse struct {
@@ -92,4 +93,32 @@ type GetAuthUserResponse struct {
 	RawResponse *http.Response
 	// Successful response.
 	GetAuthUser200ApplicationJSONObject *GetAuthUser200ApplicationJSON
+}
+
+func (o *GetAuthUserResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetAuthUserResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetAuthUserResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetAuthUserResponse) GetGetAuthUser200ApplicationJSONObject() *GetAuthUser200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetAuthUser200ApplicationJSONObject
 }

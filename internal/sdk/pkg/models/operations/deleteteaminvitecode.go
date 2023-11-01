@@ -13,10 +13,31 @@ type DeleteTeamInviteCodeRequest struct {
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 }
 
+func (o *DeleteTeamInviteCodeRequest) GetInviteID() string {
+	if o == nil {
+		return ""
+	}
+	return o.InviteID
+}
+
+func (o *DeleteTeamInviteCodeRequest) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
+}
+
 // DeleteTeamInviteCode200ApplicationJSON - Successfully deleted Team invite code.
 type DeleteTeamInviteCode200ApplicationJSON struct {
 	// ID of the team.
 	ID string `json:"id"`
+}
+
+func (o *DeleteTeamInviteCode200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 type DeleteTeamInviteCodeResponse struct {
@@ -28,4 +49,32 @@ type DeleteTeamInviteCodeResponse struct {
 	RawResponse *http.Response
 	// Successfully deleted Team invite code.
 	DeleteTeamInviteCode200ApplicationJSONObject *DeleteTeamInviteCode200ApplicationJSON
+}
+
+func (o *DeleteTeamInviteCodeResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *DeleteTeamInviteCodeResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *DeleteTeamInviteCodeResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *DeleteTeamInviteCodeResponse) GetDeleteTeamInviteCode200ApplicationJSONObject() *DeleteTeamInviteCode200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.DeleteTeamInviteCode200ApplicationJSONObject
 }

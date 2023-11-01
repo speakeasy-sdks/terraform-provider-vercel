@@ -17,6 +17,27 @@ type GetCheckRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *GetCheckRequest) GetCheckID() string {
+	if o == nil {
+		return ""
+	}
+	return o.CheckID
+}
+
+func (o *GetCheckRequest) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetCheckRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type GetCheck200ApplicationJSONConclusion string
 
 const (
@@ -86,6 +107,27 @@ type GetCheck200ApplicationJSONOutputMetricsCLS struct {
 	Value         *int64                                           `json:"value"`
 }
 
+func (o *GetCheck200ApplicationJSONOutputMetricsCLS) GetPreviousValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PreviousValue
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsCLS) GetSource() GetCheck200ApplicationJSONOutputMetricsCLSSource {
+	if o == nil {
+		return GetCheck200ApplicationJSONOutputMetricsCLSSource("")
+	}
+	return o.Source
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsCLS) GetValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type GetCheck200ApplicationJSONOutputMetricsFCPSource string
 
 const (
@@ -114,6 +156,27 @@ type GetCheck200ApplicationJSONOutputMetricsFCP struct {
 	PreviousValue *int64                                           `json:"previousValue,omitempty"`
 	Source        GetCheck200ApplicationJSONOutputMetricsFCPSource `json:"source"`
 	Value         *int64                                           `json:"value"`
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsFCP) GetPreviousValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PreviousValue
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsFCP) GetSource() GetCheck200ApplicationJSONOutputMetricsFCPSource {
+	if o == nil {
+		return GetCheck200ApplicationJSONOutputMetricsFCPSource("")
+	}
+	return o.Source
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsFCP) GetValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
 }
 
 type GetCheck200ApplicationJSONOutputMetricsLCPSource string
@@ -146,6 +209,27 @@ type GetCheck200ApplicationJSONOutputMetricsLCP struct {
 	Value         *int64                                           `json:"value"`
 }
 
+func (o *GetCheck200ApplicationJSONOutputMetricsLCP) GetPreviousValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PreviousValue
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsLCP) GetSource() GetCheck200ApplicationJSONOutputMetricsLCPSource {
+	if o == nil {
+		return GetCheck200ApplicationJSONOutputMetricsLCPSource("")
+	}
+	return o.Source
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsLCP) GetValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type GetCheck200ApplicationJSONOutputMetricsTBTSource string
 
 const (
@@ -174,6 +258,27 @@ type GetCheck200ApplicationJSONOutputMetricsTBT struct {
 	PreviousValue *int64                                           `json:"previousValue,omitempty"`
 	Source        GetCheck200ApplicationJSONOutputMetricsTBTSource `json:"source"`
 	Value         *int64                                           `json:"value"`
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsTBT) GetPreviousValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PreviousValue
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsTBT) GetSource() GetCheck200ApplicationJSONOutputMetricsTBTSource {
+	if o == nil {
+		return GetCheck200ApplicationJSONOutputMetricsTBTSource("")
+	}
+	return o.Source
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsTBT) GetValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
 }
 
 type GetCheck200ApplicationJSONOutputMetricsVirtualExperienceScoreSource string
@@ -206,6 +311,27 @@ type GetCheck200ApplicationJSONOutputMetricsVirtualExperienceScore struct {
 	Value         *int64                                                              `json:"value"`
 }
 
+func (o *GetCheck200ApplicationJSONOutputMetricsVirtualExperienceScore) GetPreviousValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PreviousValue
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsVirtualExperienceScore) GetSource() GetCheck200ApplicationJSONOutputMetricsVirtualExperienceScoreSource {
+	if o == nil {
+		return GetCheck200ApplicationJSONOutputMetricsVirtualExperienceScoreSource("")
+	}
+	return o.Source
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetricsVirtualExperienceScore) GetValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type GetCheck200ApplicationJSONOutputMetrics struct {
 	Cls                    GetCheck200ApplicationJSONOutputMetricsCLS                     `json:"CLS"`
 	Fcp                    GetCheck200ApplicationJSONOutputMetricsFCP                     `json:"FCP"`
@@ -214,8 +340,50 @@ type GetCheck200ApplicationJSONOutputMetrics struct {
 	VirtualExperienceScore *GetCheck200ApplicationJSONOutputMetricsVirtualExperienceScore `json:"virtualExperienceScore,omitempty"`
 }
 
+func (o *GetCheck200ApplicationJSONOutputMetrics) GetCls() GetCheck200ApplicationJSONOutputMetricsCLS {
+	if o == nil {
+		return GetCheck200ApplicationJSONOutputMetricsCLS{}
+	}
+	return o.Cls
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetrics) GetFcp() GetCheck200ApplicationJSONOutputMetricsFCP {
+	if o == nil {
+		return GetCheck200ApplicationJSONOutputMetricsFCP{}
+	}
+	return o.Fcp
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetrics) GetLcp() GetCheck200ApplicationJSONOutputMetricsLCP {
+	if o == nil {
+		return GetCheck200ApplicationJSONOutputMetricsLCP{}
+	}
+	return o.Lcp
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetrics) GetTbt() GetCheck200ApplicationJSONOutputMetricsTBT {
+	if o == nil {
+		return GetCheck200ApplicationJSONOutputMetricsTBT{}
+	}
+	return o.Tbt
+}
+
+func (o *GetCheck200ApplicationJSONOutputMetrics) GetVirtualExperienceScore() *GetCheck200ApplicationJSONOutputMetricsVirtualExperienceScore {
+	if o == nil {
+		return nil
+	}
+	return o.VirtualExperienceScore
+}
+
 type GetCheck200ApplicationJSONOutput struct {
 	Metrics *GetCheck200ApplicationJSONOutputMetrics `json:"metrics,omitempty"`
+}
+
+func (o *GetCheck200ApplicationJSONOutput) GetMetrics() *GetCheck200ApplicationJSONOutputMetrics {
+	if o == nil {
+		return nil
+	}
+	return o.Metrics
 }
 
 type GetCheck200ApplicationJSONStatus string
@@ -267,6 +435,118 @@ type GetCheck200ApplicationJSON struct {
 	UpdatedAt     int64                                 `json:"updatedAt"`
 }
 
+func (o *GetCheck200ApplicationJSON) GetBlocking() bool {
+	if o == nil {
+		return false
+	}
+	return o.Blocking
+}
+
+func (o *GetCheck200ApplicationJSON) GetCompletedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CompletedAt
+}
+
+func (o *GetCheck200ApplicationJSON) GetConclusion() *GetCheck200ApplicationJSONConclusion {
+	if o == nil {
+		return nil
+	}
+	return o.Conclusion
+}
+
+func (o *GetCheck200ApplicationJSON) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetCheck200ApplicationJSON) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetCheck200ApplicationJSON) GetDetailsURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DetailsURL
+}
+
+func (o *GetCheck200ApplicationJSON) GetExternalID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalID
+}
+
+func (o *GetCheck200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetCheck200ApplicationJSON) GetIntegrationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.IntegrationID
+}
+
+func (o *GetCheck200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetCheck200ApplicationJSON) GetOutput() *GetCheck200ApplicationJSONOutput {
+	if o == nil {
+		return nil
+	}
+	return o.Output
+}
+
+func (o *GetCheck200ApplicationJSON) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetCheck200ApplicationJSON) GetRerequestable() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Rerequestable
+}
+
+func (o *GetCheck200ApplicationJSON) GetStartedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.StartedAt
+}
+
+func (o *GetCheck200ApplicationJSON) GetStatus() GetCheck200ApplicationJSONStatus {
+	if o == nil {
+		return GetCheck200ApplicationJSONStatus("")
+	}
+	return o.Status
+}
+
+func (o *GetCheck200ApplicationJSON) GetUpdatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.UpdatedAt
+}
+
 type GetCheckResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -275,4 +555,32 @@ type GetCheckResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                      *http.Response
 	GetCheck200ApplicationJSONObject *GetCheck200ApplicationJSON
+}
+
+func (o *GetCheckResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetCheckResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetCheckResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetCheckResponse) GetGetCheck200ApplicationJSONObject() *GetCheck200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetCheck200ApplicationJSONObject
 }

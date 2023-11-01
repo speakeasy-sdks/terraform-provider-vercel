@@ -10,6 +10,13 @@ type DeleteDataCachePurgeAllRequest struct {
 	ProjectIDOrName string `queryParam:"style=form,explode=true,name=projectIdOrName"`
 }
 
+func (o *DeleteDataCachePurgeAllRequest) GetProjectIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectIDOrName
+}
+
 type DeleteDataCachePurgeAllResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -17,4 +24,25 @@ type DeleteDataCachePurgeAllResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *DeleteDataCachePurgeAllResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *DeleteDataCachePurgeAllResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *DeleteDataCachePurgeAllResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

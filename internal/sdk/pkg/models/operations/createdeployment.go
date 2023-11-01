@@ -3,11 +3,11 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type CreateDeploymentRequestBodyBranchCurrentState string
@@ -48,14 +48,77 @@ type CreateDeploymentRequestBodyBranch struct {
 	UpdatedAt    string                                        `json:"updated_at"`
 }
 
+func (o *CreateDeploymentRequestBodyBranch) GetCreatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateDeploymentRequestBodyBranch) GetCurrentState() CreateDeploymentRequestBodyBranchCurrentState {
+	if o == nil {
+		return CreateDeploymentRequestBodyBranchCurrentState("")
+	}
+	return o.CurrentState
+}
+
+func (o *CreateDeploymentRequestBodyBranch) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateDeploymentRequestBodyBranch) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeploymentRequestBodyBranch) GetParentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ParentID
+}
+
+func (o *CreateDeploymentRequestBodyBranch) GetPrimary() bool {
+	if o == nil {
+		return false
+	}
+	return o.Primary
+}
+
+func (o *CreateDeploymentRequestBodyBranch) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *CreateDeploymentRequestBodyBranch) GetUpdatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.UpdatedAt
+}
+
 // CreateDeploymentRequestBodyBuild - An object containing another object with information to be passed to the Build Process
 //
-// @deprecated null: This will be removed in a future release, please migrate away from it as soon as possible.
+// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
 type CreateDeploymentRequestBodyBuild struct {
 	// An object containing the deployment's environment variable names and values to be passed to Builds. Secrets can be referenced by prefixing the value with `@`
 	//
-	// @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Env map[string]string `json:"env,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBodyBuild) GetEnv() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Env
 }
 
 // CreateDeploymentRequestBodyBuildsConfig - Optionally, an object including arbitrary metadata to be passed to the Builder
@@ -71,13 +134,55 @@ type CreateDeploymentRequestBodyBuilds struct {
 	Use string `json:"use"`
 }
 
+func (o *CreateDeploymentRequestBodyBuilds) GetConfig() *CreateDeploymentRequestBodyBuildsConfig {
+	if o == nil {
+		return nil
+	}
+	return o.Config
+}
+
+func (o *CreateDeploymentRequestBodyBuilds) GetSrc() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Src
+}
+
+func (o *CreateDeploymentRequestBodyBuilds) GetUse() string {
+	if o == nil {
+		return ""
+	}
+	return o.Use
+}
+
 type CreateDeploymentRequestBodyConnectionUris struct {
 	ConnectionURI string `json:"connection_uri"`
+}
+
+func (o *CreateDeploymentRequestBodyConnectionUris) GetConnectionURI() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionURI
 }
 
 type CreateDeploymentRequestBodyCrons struct {
 	Path     string `json:"path"`
 	Schedule string `json:"schedule"`
+}
+
+func (o *CreateDeploymentRequestBodyCrons) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *CreateDeploymentRequestBodyCrons) GetSchedule() string {
+	if o == nil {
+		return ""
+	}
+	return o.Schedule
 }
 
 type CreateDeploymentRequestBodyDatabase struct {
@@ -89,6 +194,48 @@ type CreateDeploymentRequestBodyDatabase struct {
 	UpdatedAt string `json:"updated_at"`
 }
 
+func (o *CreateDeploymentRequestBodyDatabase) GetBranchID() string {
+	if o == nil {
+		return ""
+	}
+	return o.BranchID
+}
+
+func (o *CreateDeploymentRequestBodyDatabase) GetCreatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateDeploymentRequestBodyDatabase) GetID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ID
+}
+
+func (o *CreateDeploymentRequestBodyDatabase) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeploymentRequestBodyDatabase) GetOwnerName() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerName
+}
+
+func (o *CreateDeploymentRequestBodyDatabase) GetUpdatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.UpdatedAt
+}
+
 type CreateDeploymentRequestBodyDatabases struct {
 	BranchID  string `json:"branch_id"`
 	CreatedAt string `json:"created_at"`
@@ -96,6 +243,48 @@ type CreateDeploymentRequestBodyDatabases struct {
 	Name      string `json:"name"`
 	OwnerName string `json:"owner_name"`
 	UpdatedAt string `json:"updated_at"`
+}
+
+func (o *CreateDeploymentRequestBodyDatabases) GetBranchID() string {
+	if o == nil {
+		return ""
+	}
+	return o.BranchID
+}
+
+func (o *CreateDeploymentRequestBodyDatabases) GetCreatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateDeploymentRequestBodyDatabases) GetID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ID
+}
+
+func (o *CreateDeploymentRequestBodyDatabases) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeploymentRequestBodyDatabases) GetOwnerName() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerName
+}
+
+func (o *CreateDeploymentRequestBodyDatabases) GetUpdatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.UpdatedAt
 }
 
 type CreateDeploymentRequestBodyEndpoint struct {
@@ -118,6 +307,125 @@ type CreateDeploymentRequestBodyEndpoint struct {
 	UpdatedAt             string  `json:"updated_at"`
 }
 
+func (o *CreateDeploymentRequestBodyEndpoint) GetAutoscalingLimitMaxCu() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.AutoscalingLimitMaxCu
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetAutoscalingLimitMinCu() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.AutoscalingLimitMinCu
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetBranchID() string {
+	if o == nil {
+		return ""
+	}
+	return o.BranchID
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetCreatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetCurrentState() string {
+	if o == nil {
+		return ""
+	}
+	return o.CurrentState
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetDisabled() bool {
+	if o == nil {
+		return false
+	}
+	return o.Disabled
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetLastActive() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LastActive
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetPasswordlessAccess() bool {
+	if o == nil {
+		return false
+	}
+	return o.PasswordlessAccess
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetPoolerEnabled() bool {
+	if o == nil {
+		return false
+	}
+	return o.PoolerEnabled
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetPoolerMode() string {
+	if o == nil {
+		return ""
+	}
+	return o.PoolerMode
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetRegionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RegionID
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetSuspendTimeoutSeconds() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.SuspendTimeoutSeconds
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyEndpoint) GetUpdatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.UpdatedAt
+}
+
 type CreateDeploymentRequestBodyEndpoints struct {
 	AutoscalingLimitMaxCu int64   `json:"autoscaling_limit_max_cu"`
 	AutoscalingLimitMinCu int64   `json:"autoscaling_limit_min_cu"`
@@ -138,6 +446,125 @@ type CreateDeploymentRequestBodyEndpoints struct {
 	UpdatedAt             string  `json:"updated_at"`
 }
 
+func (o *CreateDeploymentRequestBodyEndpoints) GetAutoscalingLimitMaxCu() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.AutoscalingLimitMaxCu
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetAutoscalingLimitMinCu() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.AutoscalingLimitMinCu
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetBranchID() string {
+	if o == nil {
+		return ""
+	}
+	return o.BranchID
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetCreatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetCurrentState() string {
+	if o == nil {
+		return ""
+	}
+	return o.CurrentState
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetDisabled() bool {
+	if o == nil {
+		return false
+	}
+	return o.Disabled
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetLastActive() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LastActive
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetPasswordlessAccess() bool {
+	if o == nil {
+		return false
+	}
+	return o.PasswordlessAccess
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetPoolerEnabled() bool {
+	if o == nil {
+		return false
+	}
+	return o.PoolerEnabled
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetPoolerMode() string {
+	if o == nil {
+		return ""
+	}
+	return o.PoolerMode
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetRegionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RegionID
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetSuspendTimeoutSeconds() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.SuspendTimeoutSeconds
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyEndpoints) GetUpdatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.UpdatedAt
+}
+
 // CreateDeploymentRequestBodyFilesUploadedFile - Used in the case you want to reference a file that was already uploaded
 type CreateDeploymentRequestBodyFilesUploadedFile struct {
 	// The file path relative to the project root
@@ -146,6 +573,27 @@ type CreateDeploymentRequestBodyFilesUploadedFile struct {
 	Sha *string `json:"sha,omitempty"`
 	// The file size in bytes
 	Size *int64 `json:"size,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBodyFilesUploadedFile) GetFile() string {
+	if o == nil {
+		return ""
+	}
+	return o.File
+}
+
+func (o *CreateDeploymentRequestBodyFilesUploadedFile) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CreateDeploymentRequestBodyFilesUploadedFile) GetSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Size
 }
 
 // CreateDeploymentRequestBodyFilesInlinedFileEncoding - The file content encoding, it could be either a base64 (useful for images, etc.) of the files or the plain text for source code.
@@ -186,6 +634,27 @@ type CreateDeploymentRequestBodyFilesInlinedFile struct {
 	File string `json:"file"`
 }
 
+func (o *CreateDeploymentRequestBodyFilesInlinedFile) GetData() string {
+	if o == nil {
+		return ""
+	}
+	return o.Data
+}
+
+func (o *CreateDeploymentRequestBodyFilesInlinedFile) GetEncoding() *CreateDeploymentRequestBodyFilesInlinedFileEncoding {
+	if o == nil {
+		return nil
+	}
+	return o.Encoding
+}
+
+func (o *CreateDeploymentRequestBodyFilesInlinedFile) GetFile() string {
+	if o == nil {
+		return ""
+	}
+	return o.File
+}
+
 type CreateDeploymentRequestBodyFilesType string
 
 const (
@@ -219,21 +688,16 @@ func CreateCreateDeploymentRequestBodyFilesCreateDeploymentRequestBodyFilesUploa
 }
 
 func (u *CreateDeploymentRequestBodyFiles) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeploymentRequestBodyFilesInlinedFile := new(CreateDeploymentRequestBodyFilesInlinedFile)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyFilesInlinedFile); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyFilesInlinedFile, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyFilesInlinedFile = createDeploymentRequestBodyFilesInlinedFile
 		u.Type = CreateDeploymentRequestBodyFilesTypeCreateDeploymentRequestBodyFilesInlinedFile
 		return nil
 	}
 
 	createDeploymentRequestBodyFilesUploadedFile := new(CreateDeploymentRequestBodyFilesUploadedFile)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyFilesUploadedFile); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyFilesUploadedFile, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyFilesUploadedFile = createDeploymentRequestBodyFilesUploadedFile
 		u.Type = CreateDeploymentRequestBodyFilesTypeCreateDeploymentRequestBodyFilesUploadedFile
 		return nil
@@ -244,14 +708,14 @@ func (u *CreateDeploymentRequestBodyFiles) UnmarshalJSON(data []byte) error {
 
 func (u CreateDeploymentRequestBodyFiles) MarshalJSON() ([]byte, error) {
 	if u.CreateDeploymentRequestBodyFilesInlinedFile != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyFilesInlinedFile)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyFilesInlinedFile, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyFilesUploadedFile != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyFilesUploadedFile)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyFilesUploadedFile, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // CreateDeploymentRequestBodyFramework - The framework that is being used for this project. When `null` is used no framework is selected
@@ -418,6 +882,41 @@ type CreateDeploymentRequestBodyFunctions struct {
 	Runtime *string `json:"runtime,omitempty"`
 }
 
+func (o *CreateDeploymentRequestBodyFunctions) GetExcludeFiles() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeFiles
+}
+
+func (o *CreateDeploymentRequestBodyFunctions) GetIncludeFiles() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeFiles
+}
+
+func (o *CreateDeploymentRequestBodyFunctions) GetMaxDuration() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxDuration
+}
+
+func (o *CreateDeploymentRequestBodyFunctions) GetMemory() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Memory
+}
+
+func (o *CreateDeploymentRequestBodyFunctions) GetRuntime() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Runtime
+}
+
 type CreateDeploymentRequestBodyGitDeploymentEnabledType string
 
 const (
@@ -451,21 +950,16 @@ func CreateCreateDeploymentRequestBodyGitDeploymentEnabledMapOfboolean(mapOfbool
 }
 
 func (u *CreateDeploymentRequestBodyGitDeploymentEnabled) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	boolean := new(bool)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&boolean); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
 		u.Type = CreateDeploymentRequestBodyGitDeploymentEnabledTypeBoolean
 		return nil
 	}
 
 	mapOfboolean := map[string]bool{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&mapOfboolean); err == nil {
+	if err := utils.UnmarshalJSON(data, &mapOfboolean, "", true, true); err == nil {
 		u.MapOfboolean = mapOfboolean
 		u.Type = CreateDeploymentRequestBodyGitDeploymentEnabledTypeMapOfboolean
 		return nil
@@ -476,19 +970,26 @@ func (u *CreateDeploymentRequestBodyGitDeploymentEnabled) UnmarshalJSON(data []b
 
 func (u CreateDeploymentRequestBodyGitDeploymentEnabled) MarshalJSON() ([]byte, error) {
 	if u.Boolean != nil {
-		return json.Marshal(u.Boolean)
+		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
 	if u.MapOfboolean != nil {
-		return json.Marshal(u.MapOfboolean)
+		return utils.MarshalJSON(u.MapOfboolean, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeploymentRequestBodyGit struct {
 	// Specifies the branches that will not trigger an auto-deployment when committing to them. Any non specified branch is `true` by default.
 	DeploymentEnabled *CreateDeploymentRequestBodyGitDeploymentEnabled `json:"deploymentEnabled,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBodyGit) GetDeploymentEnabled() *CreateDeploymentRequestBodyGitDeploymentEnabled {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentEnabled
 }
 
 // CreateDeploymentRequestBodyGitMetadata - Populates initial git metadata for different git providers.
@@ -505,6 +1006,48 @@ type CreateDeploymentRequestBodyGitMetadata struct {
 	Dirty *bool `json:"dirty,omitempty"`
 	// The git repository's remote origin url
 	RemoteURL *string `json:"remoteUrl,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBodyGitMetadata) GetCommitAuthorName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommitAuthorName
+}
+
+func (o *CreateDeploymentRequestBodyGitMetadata) GetCommitMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommitMessage
+}
+
+func (o *CreateDeploymentRequestBodyGitMetadata) GetCommitRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommitRef
+}
+
+func (o *CreateDeploymentRequestBodyGitMetadata) GetCommitSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommitSha
+}
+
+func (o *CreateDeploymentRequestBodyGitMetadata) GetDirty() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Dirty
+}
+
+func (o *CreateDeploymentRequestBodyGitMetadata) GetRemoteURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RemoteURL
 }
 
 type CreateDeploymentRequestBodyGitSource5Type string
@@ -540,6 +1083,41 @@ type CreateDeploymentRequestBodyGitSource5 struct {
 	Type  CreateDeploymentRequestBodyGitSource5Type `json:"type"`
 }
 
+func (o *CreateDeploymentRequestBodyGitSource5) GetOwner() string {
+	if o == nil {
+		return ""
+	}
+	return o.Owner
+}
+
+func (o *CreateDeploymentRequestBodyGitSource5) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CreateDeploymentRequestBodyGitSource5) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CreateDeploymentRequestBodyGitSource5) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *CreateDeploymentRequestBodyGitSource5) GetType() CreateDeploymentRequestBodyGitSource5Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyGitSource5Type("")
+	}
+	return o.Type
+}
+
 type CreateDeploymentRequestBodyGitSource4Type string
 
 const (
@@ -571,6 +1149,41 @@ type CreateDeploymentRequestBodyGitSource4 struct {
 	Sha           *string                                   `json:"sha,omitempty"`
 	Type          CreateDeploymentRequestBodyGitSource4Type `json:"type"`
 	WorkspaceUUID *string                                   `json:"workspaceUuid,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBodyGitSource4) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CreateDeploymentRequestBodyGitSource4) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *CreateDeploymentRequestBodyGitSource4) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CreateDeploymentRequestBodyGitSource4) GetType() CreateDeploymentRequestBodyGitSource4Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyGitSource4Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyGitSource4) GetWorkspaceUUID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WorkspaceUUID
 }
 
 type CreateDeploymentRequestBodyGitSource3ProjectIDType string
@@ -606,21 +1219,16 @@ func CreateCreateDeploymentRequestBodyGitSource3ProjectIDStr(str string) CreateD
 }
 
 func (u *CreateDeploymentRequestBodyGitSource3ProjectID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = CreateDeploymentRequestBodyGitSource3ProjectIDTypeInteger
 		return nil
 	}
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = CreateDeploymentRequestBodyGitSource3ProjectIDTypeStr
 		return nil
@@ -631,14 +1239,14 @@ func (u *CreateDeploymentRequestBodyGitSource3ProjectID) UnmarshalJSON(data []by
 
 func (u CreateDeploymentRequestBodyGitSource3ProjectID) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeploymentRequestBodyGitSource3Type string
@@ -671,6 +1279,34 @@ type CreateDeploymentRequestBodyGitSource3 struct {
 	Ref       string                                         `json:"ref"`
 	Sha       *string                                        `json:"sha,omitempty"`
 	Type      CreateDeploymentRequestBodyGitSource3Type      `json:"type"`
+}
+
+func (o *CreateDeploymentRequestBodyGitSource3) GetProjectID() CreateDeploymentRequestBodyGitSource3ProjectID {
+	if o == nil {
+		return CreateDeploymentRequestBodyGitSource3ProjectID{}
+	}
+	return o.ProjectID
+}
+
+func (o *CreateDeploymentRequestBodyGitSource3) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CreateDeploymentRequestBodyGitSource3) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CreateDeploymentRequestBodyGitSource3) GetType() CreateDeploymentRequestBodyGitSource3Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyGitSource3Type("")
+	}
+	return o.Type
 }
 
 type CreateDeploymentRequestBodyGitSource2Type string
@@ -706,6 +1342,41 @@ type CreateDeploymentRequestBodyGitSource2 struct {
 	Type CreateDeploymentRequestBodyGitSource2Type `json:"type"`
 }
 
+func (o *CreateDeploymentRequestBodyGitSource2) GetOrg() string {
+	if o == nil {
+		return ""
+	}
+	return o.Org
+}
+
+func (o *CreateDeploymentRequestBodyGitSource2) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CreateDeploymentRequestBodyGitSource2) GetRepo() string {
+	if o == nil {
+		return ""
+	}
+	return o.Repo
+}
+
+func (o *CreateDeploymentRequestBodyGitSource2) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CreateDeploymentRequestBodyGitSource2) GetType() CreateDeploymentRequestBodyGitSource2Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyGitSource2Type("")
+	}
+	return o.Type
+}
+
 type CreateDeploymentRequestBodyGitSource1RepoIDType string
 
 const (
@@ -739,21 +1410,16 @@ func CreateCreateDeploymentRequestBodyGitSource1RepoIDStr(str string) CreateDepl
 }
 
 func (u *CreateDeploymentRequestBodyGitSource1RepoID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = CreateDeploymentRequestBodyGitSource1RepoIDTypeInteger
 		return nil
 	}
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = CreateDeploymentRequestBodyGitSource1RepoIDTypeStr
 		return nil
@@ -764,14 +1430,14 @@ func (u *CreateDeploymentRequestBodyGitSource1RepoID) UnmarshalJSON(data []byte)
 
 func (u CreateDeploymentRequestBodyGitSource1RepoID) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeploymentRequestBodyGitSource1Type string
@@ -804,6 +1470,34 @@ type CreateDeploymentRequestBodyGitSource1 struct {
 	RepoID CreateDeploymentRequestBodyGitSource1RepoID `json:"repoId"`
 	Sha    *string                                     `json:"sha,omitempty"`
 	Type   CreateDeploymentRequestBodyGitSource1Type   `json:"type"`
+}
+
+func (o *CreateDeploymentRequestBodyGitSource1) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CreateDeploymentRequestBodyGitSource1) GetRepoID() CreateDeploymentRequestBodyGitSource1RepoID {
+	if o == nil {
+		return CreateDeploymentRequestBodyGitSource1RepoID{}
+	}
+	return o.RepoID
+}
+
+func (o *CreateDeploymentRequestBodyGitSource1) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CreateDeploymentRequestBodyGitSource1) GetType() CreateDeploymentRequestBodyGitSource1Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyGitSource1Type("")
+	}
+	return o.Type
 }
 
 type CreateDeploymentRequestBodyGitSourceType string
@@ -872,48 +1566,37 @@ func CreateCreateDeploymentRequestBodyGitSourceCreateDeploymentRequestBodyGitSou
 }
 
 func (u *CreateDeploymentRequestBodyGitSource) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeploymentRequestBodyGitSource1 := new(CreateDeploymentRequestBodyGitSource1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyGitSource1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyGitSource1, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyGitSource1 = createDeploymentRequestBodyGitSource1
 		u.Type = CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource1
 		return nil
 	}
 
 	createDeploymentRequestBodyGitSource3 := new(CreateDeploymentRequestBodyGitSource3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyGitSource3); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyGitSource3, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyGitSource3 = createDeploymentRequestBodyGitSource3
 		u.Type = CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource3
 		return nil
 	}
 
 	createDeploymentRequestBodyGitSource2 := new(CreateDeploymentRequestBodyGitSource2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyGitSource2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyGitSource2, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyGitSource2 = createDeploymentRequestBodyGitSource2
 		u.Type = CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource2
 		return nil
 	}
 
 	createDeploymentRequestBodyGitSource4 := new(CreateDeploymentRequestBodyGitSource4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyGitSource4); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyGitSource4, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyGitSource4 = createDeploymentRequestBodyGitSource4
 		u.Type = CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource4
 		return nil
 	}
 
 	createDeploymentRequestBodyGitSource5 := new(CreateDeploymentRequestBodyGitSource5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyGitSource5); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyGitSource5, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyGitSource5 = createDeploymentRequestBodyGitSource5
 		u.Type = CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource5
 		return nil
@@ -924,26 +1607,26 @@ func (u *CreateDeploymentRequestBodyGitSource) UnmarshalJSON(data []byte) error 
 
 func (u CreateDeploymentRequestBodyGitSource) MarshalJSON() ([]byte, error) {
 	if u.CreateDeploymentRequestBodyGitSource1 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyGitSource1)
-	}
-
-	if u.CreateDeploymentRequestBodyGitSource3 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyGitSource3)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyGitSource1, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyGitSource2 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyGitSource2)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyGitSource2, "", true)
+	}
+
+	if u.CreateDeploymentRequestBodyGitSource3 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyGitSource3, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyGitSource4 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyGitSource4)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyGitSource4, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyGitSource5 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyGitSource5)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyGitSource5, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // CreateDeploymentRequestBodyHeadersHas2Type - The type of request element to check
@@ -986,6 +1669,27 @@ type CreateDeploymentRequestBodyHeadersHas2 struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (o *CreateDeploymentRequestBodyHeadersHas2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateDeploymentRequestBodyHeadersHas2) GetType() CreateDeploymentRequestBodyHeadersHas2Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyHeadersHas2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyHeadersHas2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 // CreateDeploymentRequestBodyHeadersHas1Type - The type of request element to check
 type CreateDeploymentRequestBodyHeadersHas1Type string
 
@@ -1016,6 +1720,20 @@ type CreateDeploymentRequestBodyHeadersHas1 struct {
 	Type CreateDeploymentRequestBodyHeadersHas1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
+}
+
+func (o *CreateDeploymentRequestBodyHeadersHas1) GetType() CreateDeploymentRequestBodyHeadersHas1Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyHeadersHas1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyHeadersHas1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CreateDeploymentRequestBodyHeadersHasType string
@@ -1051,21 +1769,16 @@ func CreateCreateDeploymentRequestBodyHeadersHasCreateDeploymentRequestBodyHeade
 }
 
 func (u *CreateDeploymentRequestBodyHeadersHas) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeploymentRequestBodyHeadersHas1 := new(CreateDeploymentRequestBodyHeadersHas1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyHeadersHas1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyHeadersHas1, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyHeadersHas1 = createDeploymentRequestBodyHeadersHas1
 		u.Type = CreateDeploymentRequestBodyHeadersHasTypeCreateDeploymentRequestBodyHeadersHas1
 		return nil
 	}
 
 	createDeploymentRequestBodyHeadersHas2 := new(CreateDeploymentRequestBodyHeadersHas2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyHeadersHas2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyHeadersHas2, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyHeadersHas2 = createDeploymentRequestBodyHeadersHas2
 		u.Type = CreateDeploymentRequestBodyHeadersHasTypeCreateDeploymentRequestBodyHeadersHas2
 		return nil
@@ -1076,19 +1789,33 @@ func (u *CreateDeploymentRequestBodyHeadersHas) UnmarshalJSON(data []byte) error
 
 func (u CreateDeploymentRequestBodyHeadersHas) MarshalJSON() ([]byte, error) {
 	if u.CreateDeploymentRequestBodyHeadersHas1 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyHeadersHas1)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyHeadersHas1, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyHeadersHas2 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyHeadersHas2)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyHeadersHas2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeploymentRequestBodyHeadersHeaders struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
+}
+
+func (o *CreateDeploymentRequestBodyHeadersHeaders) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateDeploymentRequestBodyHeadersHeaders) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 // CreateDeploymentRequestBodyHeadersMissing2Type - The type of request element to check
@@ -1131,6 +1858,27 @@ type CreateDeploymentRequestBodyHeadersMissing2 struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (o *CreateDeploymentRequestBodyHeadersMissing2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateDeploymentRequestBodyHeadersMissing2) GetType() CreateDeploymentRequestBodyHeadersMissing2Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyHeadersMissing2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyHeadersMissing2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 // CreateDeploymentRequestBodyHeadersMissing1Type - The type of request element to check
 type CreateDeploymentRequestBodyHeadersMissing1Type string
 
@@ -1161,6 +1909,20 @@ type CreateDeploymentRequestBodyHeadersMissing1 struct {
 	Type CreateDeploymentRequestBodyHeadersMissing1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
+}
+
+func (o *CreateDeploymentRequestBodyHeadersMissing1) GetType() CreateDeploymentRequestBodyHeadersMissing1Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyHeadersMissing1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyHeadersMissing1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CreateDeploymentRequestBodyHeadersMissingType string
@@ -1196,21 +1958,16 @@ func CreateCreateDeploymentRequestBodyHeadersMissingCreateDeploymentRequestBodyH
 }
 
 func (u *CreateDeploymentRequestBodyHeadersMissing) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeploymentRequestBodyHeadersMissing1 := new(CreateDeploymentRequestBodyHeadersMissing1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyHeadersMissing1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyHeadersMissing1, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyHeadersMissing1 = createDeploymentRequestBodyHeadersMissing1
 		u.Type = CreateDeploymentRequestBodyHeadersMissingTypeCreateDeploymentRequestBodyHeadersMissing1
 		return nil
 	}
 
 	createDeploymentRequestBodyHeadersMissing2 := new(CreateDeploymentRequestBodyHeadersMissing2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyHeadersMissing2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyHeadersMissing2, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyHeadersMissing2 = createDeploymentRequestBodyHeadersMissing2
 		u.Type = CreateDeploymentRequestBodyHeadersMissingTypeCreateDeploymentRequestBodyHeadersMissing2
 		return nil
@@ -1221,14 +1978,14 @@ func (u *CreateDeploymentRequestBodyHeadersMissing) UnmarshalJSON(data []byte) e
 
 func (u CreateDeploymentRequestBodyHeadersMissing) MarshalJSON() ([]byte, error) {
 	if u.CreateDeploymentRequestBodyHeadersMissing1 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyHeadersMissing1)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyHeadersMissing1, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyHeadersMissing2 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyHeadersMissing2)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyHeadersMissing2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeploymentRequestBodyHeaders struct {
@@ -1240,6 +1997,34 @@ type CreateDeploymentRequestBodyHeaders struct {
 	Missing []CreateDeploymentRequestBodyHeadersMissing `json:"missing,omitempty"`
 	// A pattern that matches each incoming pathname (excluding querystring)
 	Source string `json:"source"`
+}
+
+func (o *CreateDeploymentRequestBodyHeaders) GetHas() []CreateDeploymentRequestBodyHeadersHas {
+	if o == nil {
+		return nil
+	}
+	return o.Has
+}
+
+func (o *CreateDeploymentRequestBodyHeaders) GetHeaders() []CreateDeploymentRequestBodyHeadersHeaders {
+	if o == nil {
+		return []CreateDeploymentRequestBodyHeadersHeaders{}
+	}
+	return o.Headers
+}
+
+func (o *CreateDeploymentRequestBodyHeaders) GetMissing() []CreateDeploymentRequestBodyHeadersMissing {
+	if o == nil {
+		return nil
+	}
+	return o.Missing
+}
+
+func (o *CreateDeploymentRequestBodyHeaders) GetSource() string {
+	if o == nil {
+		return ""
+	}
+	return o.Source
 }
 
 type CreateDeploymentRequestBodyImagesContentDispositionType string
@@ -1336,6 +2121,34 @@ type CreateDeploymentRequestBodyImagesRemotePatterns struct {
 	Protocol *CreateDeploymentRequestBodyImagesRemotePatternsProtocol `json:"protocol,omitempty"`
 }
 
+func (o *CreateDeploymentRequestBodyImagesRemotePatterns) GetHostname() string {
+	if o == nil {
+		return ""
+	}
+	return o.Hostname
+}
+
+func (o *CreateDeploymentRequestBodyImagesRemotePatterns) GetPathname() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Pathname
+}
+
+func (o *CreateDeploymentRequestBodyImagesRemotePatterns) GetPort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *CreateDeploymentRequestBodyImagesRemotePatterns) GetProtocol() *CreateDeploymentRequestBodyImagesRemotePatternsProtocol {
+	if o == nil {
+		return nil
+	}
+	return o.Protocol
+}
+
 type CreateDeploymentRequestBodyImages struct {
 	ContentDispositionType *CreateDeploymentRequestBodyImagesContentDispositionType `json:"contentDispositionType,omitempty"`
 	ContentSecurityPolicy  *string                                                  `json:"contentSecurityPolicy,omitempty"`
@@ -1347,8 +2160,71 @@ type CreateDeploymentRequestBodyImages struct {
 	Sizes                  []int64                                                  `json:"sizes"`
 }
 
+func (o *CreateDeploymentRequestBodyImages) GetContentDispositionType() *CreateDeploymentRequestBodyImagesContentDispositionType {
+	if o == nil {
+		return nil
+	}
+	return o.ContentDispositionType
+}
+
+func (o *CreateDeploymentRequestBodyImages) GetContentSecurityPolicy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ContentSecurityPolicy
+}
+
+func (o *CreateDeploymentRequestBodyImages) GetDangerouslyAllowSVG() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DangerouslyAllowSVG
+}
+
+func (o *CreateDeploymentRequestBodyImages) GetDomains() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Domains
+}
+
+func (o *CreateDeploymentRequestBodyImages) GetFormats() []CreateDeploymentRequestBodyImagesFormats {
+	if o == nil {
+		return nil
+	}
+	return o.Formats
+}
+
+func (o *CreateDeploymentRequestBodyImages) GetMinimumCacheTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MinimumCacheTTL
+}
+
+func (o *CreateDeploymentRequestBodyImages) GetRemotePatterns() []CreateDeploymentRequestBodyImagesRemotePatterns {
+	if o == nil {
+		return nil
+	}
+	return o.RemotePatterns
+}
+
+func (o *CreateDeploymentRequestBodyImages) GetSizes() []int64 {
+	if o == nil {
+		return []int64{}
+	}
+	return o.Sizes
+}
+
 type CreateDeploymentRequestBodyPagination struct {
 	Cursor string `json:"cursor"`
+}
+
+func (o *CreateDeploymentRequestBodyPagination) GetCursor() string {
+	if o == nil {
+		return ""
+	}
+	return o.Cursor
 }
 
 type CreateDeploymentRequestBodyProjectSettingsQuota struct {
@@ -1364,8 +2240,50 @@ type CreateDeploymentRequestBodyProjectSettingsQuota struct {
 	WrittenDataBytes *int64 `json:"written_data_bytes,omitempty"`
 }
 
+func (o *CreateDeploymentRequestBodyProjectSettingsQuota) GetActiveTimeSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ActiveTimeSeconds
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettingsQuota) GetComputeTimeSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ComputeTimeSeconds
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettingsQuota) GetDataTransferBytes() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DataTransferBytes
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettingsQuota) GetLogicalSizeBytes() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LogicalSizeBytes
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettingsQuota) GetWrittenDataBytes() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.WrittenDataBytes
+}
+
 type CreateDeploymentRequestBodyProjectSettings struct {
 	Quota *CreateDeploymentRequestBodyProjectSettingsQuota `json:"quota,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettings) GetQuota() *CreateDeploymentRequestBodyProjectSettingsQuota {
+	if o == nil {
+		return nil
+	}
+	return o.Quota
 }
 
 type CreateDeploymentRequestBodyProject struct {
@@ -1391,6 +2309,139 @@ type CreateDeploymentRequestBodyProject struct {
 	SyntheticStorageSize *int64 `json:"synthetic_storage_size,omitempty"`
 	UpdatedAt            string `json:"updated_at"`
 	WrittenDataBytes     *int64 `json:"written_data_bytes,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetActiveTimeSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ActiveTimeSeconds
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetBranchLogicalSizeLimit() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BranchLogicalSizeLimit
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetBranchLogicalSizeLimitBytes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BranchLogicalSizeLimitBytes
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetComputeTimeSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ComputeTimeSeconds
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetCreatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetDataStorageBytesHour() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DataStorageBytesHour
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetDataTransferBytes() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DataTransferBytes
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerID
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetPgVersion() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.PgVersion
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetProxyHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProxyHost
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetQuotaResetAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QuotaResetAt
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetRegionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RegionID
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetSettings() *CreateDeploymentRequestBodyProjectSettings {
+	if o == nil {
+		return nil
+	}
+	return o.Settings
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetStorePasswords() bool {
+	if o == nil {
+		return false
+	}
+	return o.StorePasswords
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetSyntheticStorageSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SyntheticStorageSize
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetUpdatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.UpdatedAt
+}
+
+func (o *CreateDeploymentRequestBodyProject) GetWrittenDataBytes() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.WrittenDataBytes
 }
 
 // CreateDeploymentRequestBodyProjectSettingsFramework - The framework that is being used for this project. When `null` is used no framework is selected
@@ -1563,10 +2614,80 @@ type CreateDeploymentRequestBodyProjectSettings1 struct {
 	ServerlessFunctionRegion *string `json:"serverlessFunctionRegion,omitempty"`
 	// Opts-out of the message prompting a CLI user to connect a Git repository in `vercel link`.
 	//
-	// @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	SkipGitConnectDuringLink *bool `json:"skipGitConnectDuringLink,omitempty"`
 	// Indicates if there are source files outside of the root directory, typically used for monorepos
 	SourceFilesOutsideRootDirectory *bool `json:"sourceFilesOutsideRootDirectory,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettings1) GetBuildCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BuildCommand
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettings1) GetCommandForIgnoringBuildStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommandForIgnoringBuildStep
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettings1) GetDevCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DevCommand
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettings1) GetFramework() *CreateDeploymentRequestBodyProjectSettingsFramework {
+	if o == nil {
+		return nil
+	}
+	return o.Framework
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettings1) GetInstallCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InstallCommand
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettings1) GetOutputDirectory() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OutputDirectory
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettings1) GetRootDirectory() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RootDirectory
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettings1) GetServerlessFunctionRegion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ServerlessFunctionRegion
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettings1) GetSkipGitConnectDuringLink() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SkipGitConnectDuringLink
+}
+
+func (o *CreateDeploymentRequestBodyProjectSettings1) GetSourceFilesOutsideRootDirectory() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SourceFilesOutsideRootDirectory
 }
 
 type CreateDeploymentRequestBodyProjects struct {
@@ -1581,6 +2702,83 @@ type CreateDeploymentRequestBodyProjects struct {
 	SyntheticStorageSizeUpdatedAt *string `json:"synthetic_storage_size_updated_at,omitempty"`
 	WrittenDataBytes              int64   `json:"written_data_bytes"`
 	WrittenDataBytesUpdatedAt     *string `json:"written_data_bytes_updated_at,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBodyProjects) GetComputeTimeSeconds() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ComputeTimeSeconds
+}
+
+func (o *CreateDeploymentRequestBodyProjects) GetComputeTimeSecondsUpdatedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ComputeTimeSecondsUpdatedAt
+}
+
+func (o *CreateDeploymentRequestBodyProjects) GetDataStorageBytesHour() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DataStorageBytesHour
+}
+
+func (o *CreateDeploymentRequestBodyProjects) GetDataStorageBytesHourUpdatedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DataStorageBytesHourUpdatedAt
+}
+
+func (o *CreateDeploymentRequestBodyProjects) GetDataTransferBytes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DataTransferBytes
+}
+
+func (o *CreateDeploymentRequestBodyProjects) GetDataTransferBytesUpdatedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DataTransferBytesUpdatedAt
+}
+
+func (o *CreateDeploymentRequestBodyProjects) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateDeploymentRequestBodyProjects) GetSyntheticStorageSize() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.SyntheticStorageSize
+}
+
+func (o *CreateDeploymentRequestBodyProjects) GetSyntheticStorageSizeUpdatedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SyntheticStorageSizeUpdatedAt
+}
+
+func (o *CreateDeploymentRequestBodyProjects) GetWrittenDataBytes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.WrittenDataBytes
+}
+
+func (o *CreateDeploymentRequestBodyProjects) GetWrittenDataBytesUpdatedAt() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WrittenDataBytesUpdatedAt
 }
 
 // CreateDeploymentRequestBodyRedirectsHas2Type - The type of request element to check
@@ -1623,6 +2821,27 @@ type CreateDeploymentRequestBodyRedirectsHas2 struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (o *CreateDeploymentRequestBodyRedirectsHas2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateDeploymentRequestBodyRedirectsHas2) GetType() CreateDeploymentRequestBodyRedirectsHas2Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRedirectsHas2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRedirectsHas2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 // CreateDeploymentRequestBodyRedirectsHas1Type - The type of request element to check
 type CreateDeploymentRequestBodyRedirectsHas1Type string
 
@@ -1653,6 +2872,20 @@ type CreateDeploymentRequestBodyRedirectsHas1 struct {
 	Type CreateDeploymentRequestBodyRedirectsHas1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
+}
+
+func (o *CreateDeploymentRequestBodyRedirectsHas1) GetType() CreateDeploymentRequestBodyRedirectsHas1Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRedirectsHas1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRedirectsHas1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CreateDeploymentRequestBodyRedirectsHasType string
@@ -1688,21 +2921,16 @@ func CreateCreateDeploymentRequestBodyRedirectsHasCreateDeploymentRequestBodyRed
 }
 
 func (u *CreateDeploymentRequestBodyRedirectsHas) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeploymentRequestBodyRedirectsHas1 := new(CreateDeploymentRequestBodyRedirectsHas1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRedirectsHas1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRedirectsHas1, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRedirectsHas1 = createDeploymentRequestBodyRedirectsHas1
 		u.Type = CreateDeploymentRequestBodyRedirectsHasTypeCreateDeploymentRequestBodyRedirectsHas1
 		return nil
 	}
 
 	createDeploymentRequestBodyRedirectsHas2 := new(CreateDeploymentRequestBodyRedirectsHas2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRedirectsHas2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRedirectsHas2, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRedirectsHas2 = createDeploymentRequestBodyRedirectsHas2
 		u.Type = CreateDeploymentRequestBodyRedirectsHasTypeCreateDeploymentRequestBodyRedirectsHas2
 		return nil
@@ -1713,14 +2941,14 @@ func (u *CreateDeploymentRequestBodyRedirectsHas) UnmarshalJSON(data []byte) err
 
 func (u CreateDeploymentRequestBodyRedirectsHas) MarshalJSON() ([]byte, error) {
 	if u.CreateDeploymentRequestBodyRedirectsHas1 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRedirectsHas1)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRedirectsHas1, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyRedirectsHas2 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRedirectsHas2)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRedirectsHas2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // CreateDeploymentRequestBodyRedirectsMissing2Type - The type of request element to check
@@ -1763,6 +2991,27 @@ type CreateDeploymentRequestBodyRedirectsMissing2 struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (o *CreateDeploymentRequestBodyRedirectsMissing2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateDeploymentRequestBodyRedirectsMissing2) GetType() CreateDeploymentRequestBodyRedirectsMissing2Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRedirectsMissing2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRedirectsMissing2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 // CreateDeploymentRequestBodyRedirectsMissing1Type - The type of request element to check
 type CreateDeploymentRequestBodyRedirectsMissing1Type string
 
@@ -1793,6 +3042,20 @@ type CreateDeploymentRequestBodyRedirectsMissing1 struct {
 	Type CreateDeploymentRequestBodyRedirectsMissing1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
+}
+
+func (o *CreateDeploymentRequestBodyRedirectsMissing1) GetType() CreateDeploymentRequestBodyRedirectsMissing1Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRedirectsMissing1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRedirectsMissing1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CreateDeploymentRequestBodyRedirectsMissingType string
@@ -1828,21 +3091,16 @@ func CreateCreateDeploymentRequestBodyRedirectsMissingCreateDeploymentRequestBod
 }
 
 func (u *CreateDeploymentRequestBodyRedirectsMissing) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeploymentRequestBodyRedirectsMissing1 := new(CreateDeploymentRequestBodyRedirectsMissing1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRedirectsMissing1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRedirectsMissing1, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRedirectsMissing1 = createDeploymentRequestBodyRedirectsMissing1
 		u.Type = CreateDeploymentRequestBodyRedirectsMissingTypeCreateDeploymentRequestBodyRedirectsMissing1
 		return nil
 	}
 
 	createDeploymentRequestBodyRedirectsMissing2 := new(CreateDeploymentRequestBodyRedirectsMissing2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRedirectsMissing2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRedirectsMissing2, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRedirectsMissing2 = createDeploymentRequestBodyRedirectsMissing2
 		u.Type = CreateDeploymentRequestBodyRedirectsMissingTypeCreateDeploymentRequestBodyRedirectsMissing2
 		return nil
@@ -1853,14 +3111,14 @@ func (u *CreateDeploymentRequestBodyRedirectsMissing) UnmarshalJSON(data []byte)
 
 func (u CreateDeploymentRequestBodyRedirectsMissing) MarshalJSON() ([]byte, error) {
 	if u.CreateDeploymentRequestBodyRedirectsMissing1 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRedirectsMissing1)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRedirectsMissing1, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyRedirectsMissing2 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRedirectsMissing2)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRedirectsMissing2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeploymentRequestBodyRedirects struct {
@@ -1874,6 +3132,41 @@ type CreateDeploymentRequestBodyRedirects struct {
 	Permanent *bool `json:"permanent,omitempty"`
 	// A pattern that matches each incoming pathname (excluding querystring).
 	Source string `json:"source"`
+}
+
+func (o *CreateDeploymentRequestBodyRedirects) GetDestination() string {
+	if o == nil {
+		return ""
+	}
+	return o.Destination
+}
+
+func (o *CreateDeploymentRequestBodyRedirects) GetHas() []CreateDeploymentRequestBodyRedirectsHas {
+	if o == nil {
+		return nil
+	}
+	return o.Has
+}
+
+func (o *CreateDeploymentRequestBodyRedirects) GetMissing() []CreateDeploymentRequestBodyRedirectsMissing {
+	if o == nil {
+		return nil
+	}
+	return o.Missing
+}
+
+func (o *CreateDeploymentRequestBodyRedirects) GetPermanent() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Permanent
+}
+
+func (o *CreateDeploymentRequestBodyRedirects) GetSource() string {
+	if o == nil {
+		return ""
+	}
+	return o.Source
 }
 
 // CreateDeploymentRequestBodyRewritesHas2Type - The type of request element to check
@@ -1916,6 +3209,27 @@ type CreateDeploymentRequestBodyRewritesHas2 struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (o *CreateDeploymentRequestBodyRewritesHas2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateDeploymentRequestBodyRewritesHas2) GetType() CreateDeploymentRequestBodyRewritesHas2Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRewritesHas2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRewritesHas2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 // CreateDeploymentRequestBodyRewritesHas1Type - The type of request element to check
 type CreateDeploymentRequestBodyRewritesHas1Type string
 
@@ -1946,6 +3260,20 @@ type CreateDeploymentRequestBodyRewritesHas1 struct {
 	Type CreateDeploymentRequestBodyRewritesHas1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
+}
+
+func (o *CreateDeploymentRequestBodyRewritesHas1) GetType() CreateDeploymentRequestBodyRewritesHas1Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRewritesHas1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRewritesHas1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CreateDeploymentRequestBodyRewritesHasType string
@@ -1981,21 +3309,16 @@ func CreateCreateDeploymentRequestBodyRewritesHasCreateDeploymentRequestBodyRewr
 }
 
 func (u *CreateDeploymentRequestBodyRewritesHas) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeploymentRequestBodyRewritesHas1 := new(CreateDeploymentRequestBodyRewritesHas1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRewritesHas1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRewritesHas1, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRewritesHas1 = createDeploymentRequestBodyRewritesHas1
 		u.Type = CreateDeploymentRequestBodyRewritesHasTypeCreateDeploymentRequestBodyRewritesHas1
 		return nil
 	}
 
 	createDeploymentRequestBodyRewritesHas2 := new(CreateDeploymentRequestBodyRewritesHas2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRewritesHas2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRewritesHas2, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRewritesHas2 = createDeploymentRequestBodyRewritesHas2
 		u.Type = CreateDeploymentRequestBodyRewritesHasTypeCreateDeploymentRequestBodyRewritesHas2
 		return nil
@@ -2006,14 +3329,14 @@ func (u *CreateDeploymentRequestBodyRewritesHas) UnmarshalJSON(data []byte) erro
 
 func (u CreateDeploymentRequestBodyRewritesHas) MarshalJSON() ([]byte, error) {
 	if u.CreateDeploymentRequestBodyRewritesHas1 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRewritesHas1)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRewritesHas1, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyRewritesHas2 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRewritesHas2)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRewritesHas2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // CreateDeploymentRequestBodyRewritesMissing2Type - The type of request element to check
@@ -2056,6 +3379,27 @@ type CreateDeploymentRequestBodyRewritesMissing2 struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (o *CreateDeploymentRequestBodyRewritesMissing2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateDeploymentRequestBodyRewritesMissing2) GetType() CreateDeploymentRequestBodyRewritesMissing2Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRewritesMissing2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRewritesMissing2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 // CreateDeploymentRequestBodyRewritesMissing1Type - The type of request element to check
 type CreateDeploymentRequestBodyRewritesMissing1Type string
 
@@ -2086,6 +3430,20 @@ type CreateDeploymentRequestBodyRewritesMissing1 struct {
 	Type CreateDeploymentRequestBodyRewritesMissing1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
+}
+
+func (o *CreateDeploymentRequestBodyRewritesMissing1) GetType() CreateDeploymentRequestBodyRewritesMissing1Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRewritesMissing1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRewritesMissing1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CreateDeploymentRequestBodyRewritesMissingType string
@@ -2121,21 +3479,16 @@ func CreateCreateDeploymentRequestBodyRewritesMissingCreateDeploymentRequestBody
 }
 
 func (u *CreateDeploymentRequestBodyRewritesMissing) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeploymentRequestBodyRewritesMissing1 := new(CreateDeploymentRequestBodyRewritesMissing1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRewritesMissing1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRewritesMissing1, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRewritesMissing1 = createDeploymentRequestBodyRewritesMissing1
 		u.Type = CreateDeploymentRequestBodyRewritesMissingTypeCreateDeploymentRequestBodyRewritesMissing1
 		return nil
 	}
 
 	createDeploymentRequestBodyRewritesMissing2 := new(CreateDeploymentRequestBodyRewritesMissing2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRewritesMissing2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRewritesMissing2, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRewritesMissing2 = createDeploymentRequestBodyRewritesMissing2
 		u.Type = CreateDeploymentRequestBodyRewritesMissingTypeCreateDeploymentRequestBodyRewritesMissing2
 		return nil
@@ -2146,14 +3499,14 @@ func (u *CreateDeploymentRequestBodyRewritesMissing) UnmarshalJSON(data []byte) 
 
 func (u CreateDeploymentRequestBodyRewritesMissing) MarshalJSON() ([]byte, error) {
 	if u.CreateDeploymentRequestBodyRewritesMissing1 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRewritesMissing1)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRewritesMissing1, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyRewritesMissing2 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRewritesMissing2)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRewritesMissing2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeploymentRequestBodyRewrites struct {
@@ -2167,6 +3520,34 @@ type CreateDeploymentRequestBodyRewrites struct {
 	Source string `json:"source"`
 }
 
+func (o *CreateDeploymentRequestBodyRewrites) GetDestination() string {
+	if o == nil {
+		return ""
+	}
+	return o.Destination
+}
+
+func (o *CreateDeploymentRequestBodyRewrites) GetHas() []CreateDeploymentRequestBodyRewritesHas {
+	if o == nil {
+		return nil
+	}
+	return o.Has
+}
+
+func (o *CreateDeploymentRequestBodyRewrites) GetMissing() []CreateDeploymentRequestBodyRewritesMissing {
+	if o == nil {
+		return nil
+	}
+	return o.Missing
+}
+
+func (o *CreateDeploymentRequestBodyRewrites) GetSource() string {
+	if o == nil {
+		return ""
+	}
+	return o.Source
+}
+
 type CreateDeploymentRequestBodyRole struct {
 	BranchID  string  `json:"branch_id"`
 	CreatedAt string  `json:"created_at"`
@@ -2176,6 +3557,48 @@ type CreateDeploymentRequestBodyRole struct {
 	UpdatedAt string  `json:"updated_at"`
 }
 
+func (o *CreateDeploymentRequestBodyRole) GetBranchID() string {
+	if o == nil {
+		return ""
+	}
+	return o.BranchID
+}
+
+func (o *CreateDeploymentRequestBodyRole) GetCreatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateDeploymentRequestBodyRole) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeploymentRequestBodyRole) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *CreateDeploymentRequestBodyRole) GetProtected() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Protected
+}
+
+func (o *CreateDeploymentRequestBodyRole) GetUpdatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.UpdatedAt
+}
+
 type CreateDeploymentRequestBodyRoles struct {
 	BranchID  string  `json:"branch_id"`
 	CreatedAt string  `json:"created_at"`
@@ -2183,6 +3606,48 @@ type CreateDeploymentRequestBodyRoles struct {
 	Password  *string `json:"password,omitempty"`
 	Protected *bool   `json:"protected,omitempty"`
 	UpdatedAt string  `json:"updated_at"`
+}
+
+func (o *CreateDeploymentRequestBodyRoles) GetBranchID() string {
+	if o == nil {
+		return ""
+	}
+	return o.BranchID
+}
+
+func (o *CreateDeploymentRequestBodyRoles) GetCreatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateDeploymentRequestBodyRoles) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeploymentRequestBodyRoles) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *CreateDeploymentRequestBodyRoles) GetProtected() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Protected
+}
+
+func (o *CreateDeploymentRequestBodyRoles) GetUpdatedAt() string {
+	if o == nil {
+		return ""
+	}
+	return o.UpdatedAt
 }
 
 type CreateDeploymentRequestBodyRoutes2Handle string
@@ -2228,6 +3693,13 @@ type CreateDeploymentRequestBodyRoutes2 struct {
 	Handle CreateDeploymentRequestBodyRoutes2Handle `json:"handle"`
 }
 
+func (o *CreateDeploymentRequestBodyRoutes2) GetHandle() CreateDeploymentRequestBodyRoutes2Handle {
+	if o == nil {
+		return CreateDeploymentRequestBodyRoutes2Handle("")
+	}
+	return o.Handle
+}
+
 // CreateDeploymentRequestBodyRoutes1Has2Type - The type of request element to check
 type CreateDeploymentRequestBodyRoutes1Has2Type string
 
@@ -2268,6 +3740,27 @@ type CreateDeploymentRequestBodyRoutes1Has2 struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (o *CreateDeploymentRequestBodyRoutes1Has2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Has2) GetType() CreateDeploymentRequestBodyRoutes1Has2Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRoutes1Has2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Has2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 // CreateDeploymentRequestBodyRoutes1Has1Type - The type of request element to check
 type CreateDeploymentRequestBodyRoutes1Has1Type string
 
@@ -2298,6 +3791,20 @@ type CreateDeploymentRequestBodyRoutes1Has1 struct {
 	Type CreateDeploymentRequestBodyRoutes1Has1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Has1) GetType() CreateDeploymentRequestBodyRoutes1Has1Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRoutes1Has1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Has1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CreateDeploymentRequestBodyRoutes1HasType string
@@ -2333,21 +3840,16 @@ func CreateCreateDeploymentRequestBodyRoutes1HasCreateDeploymentRequestBodyRoute
 }
 
 func (u *CreateDeploymentRequestBodyRoutes1Has) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeploymentRequestBodyRoutes1Has1 := new(CreateDeploymentRequestBodyRoutes1Has1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRoutes1Has1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes1Has1, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRoutes1Has1 = createDeploymentRequestBodyRoutes1Has1
 		u.Type = CreateDeploymentRequestBodyRoutes1HasTypeCreateDeploymentRequestBodyRoutes1Has1
 		return nil
 	}
 
 	createDeploymentRequestBodyRoutes1Has2 := new(CreateDeploymentRequestBodyRoutes1Has2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRoutes1Has2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes1Has2, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRoutes1Has2 = createDeploymentRequestBodyRoutes1Has2
 		u.Type = CreateDeploymentRequestBodyRoutes1HasTypeCreateDeploymentRequestBodyRoutes1Has2
 		return nil
@@ -2358,14 +3860,14 @@ func (u *CreateDeploymentRequestBodyRoutes1Has) UnmarshalJSON(data []byte) error
 
 func (u CreateDeploymentRequestBodyRoutes1Has) MarshalJSON() ([]byte, error) {
 	if u.CreateDeploymentRequestBodyRoutes1Has1 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRoutes1Has1)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes1Has1, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyRoutes1Has2 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRoutes1Has2)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes1Has2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeploymentRequestBodyRoutes1Locale struct {
@@ -2374,6 +3876,41 @@ type CreateDeploymentRequestBodyRoutes1Locale struct {
 	Path     *string           `json:"path,omitempty"`
 	Redirect map[string]string `json:"redirect,omitempty"`
 	Value    *string           `json:"value,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Locale) GetCookie() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Cookie
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Locale) GetDefault() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Default
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Locale) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Locale) GetRedirect() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Redirect
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Locale) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
 }
 
 // CreateDeploymentRequestBodyRoutes1Missing2Type - The type of request element to check
@@ -2416,6 +3953,27 @@ type CreateDeploymentRequestBodyRoutes1Missing2 struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (o *CreateDeploymentRequestBodyRoutes1Missing2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Missing2) GetType() CreateDeploymentRequestBodyRoutes1Missing2Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRoutes1Missing2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Missing2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 // CreateDeploymentRequestBodyRoutes1Missing1Type - The type of request element to check
 type CreateDeploymentRequestBodyRoutes1Missing1Type string
 
@@ -2446,6 +4004,20 @@ type CreateDeploymentRequestBodyRoutes1Missing1 struct {
 	Type CreateDeploymentRequestBodyRoutes1Missing1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Missing1) GetType() CreateDeploymentRequestBodyRoutes1Missing1Type {
+	if o == nil {
+		return CreateDeploymentRequestBodyRoutes1Missing1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1Missing1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CreateDeploymentRequestBodyRoutes1MissingType string
@@ -2481,21 +4053,16 @@ func CreateCreateDeploymentRequestBodyRoutes1MissingCreateDeploymentRequestBodyR
 }
 
 func (u *CreateDeploymentRequestBodyRoutes1Missing) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeploymentRequestBodyRoutes1Missing1 := new(CreateDeploymentRequestBodyRoutes1Missing1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRoutes1Missing1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes1Missing1, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRoutes1Missing1 = createDeploymentRequestBodyRoutes1Missing1
 		u.Type = CreateDeploymentRequestBodyRoutes1MissingTypeCreateDeploymentRequestBodyRoutes1Missing1
 		return nil
 	}
 
 	createDeploymentRequestBodyRoutes1Missing2 := new(CreateDeploymentRequestBodyRoutes1Missing2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRoutes1Missing2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes1Missing2, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRoutes1Missing2 = createDeploymentRequestBodyRoutes1Missing2
 		u.Type = CreateDeploymentRequestBodyRoutes1MissingTypeCreateDeploymentRequestBodyRoutes1Missing2
 		return nil
@@ -2506,14 +4073,14 @@ func (u *CreateDeploymentRequestBodyRoutes1Missing) UnmarshalJSON(data []byte) e
 
 func (u CreateDeploymentRequestBodyRoutes1Missing) MarshalJSON() ([]byte, error) {
 	if u.CreateDeploymentRequestBodyRoutes1Missing1 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRoutes1Missing1)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes1Missing1, "", true)
 	}
 
 	if u.CreateDeploymentRequestBodyRoutes1Missing2 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRoutes1Missing2)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes1Missing2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeploymentRequestBodyRoutes1 struct {
@@ -2537,6 +4104,132 @@ type CreateDeploymentRequestBodyRoutes1 struct {
 	Src      string                                      `json:"src"`
 	Status   *int64                                      `json:"status,omitempty"`
 	User     *bool                                       `json:"user,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetCaseSensitive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CaseSensitive
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetCheck() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Check
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetContinue() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Continue
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetDest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Dest
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetHas() []CreateDeploymentRequestBodyRoutes1Has {
+	if o == nil {
+		return nil
+	}
+	return o.Has
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetHeaders() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetImportant() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Important
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetIsInternal() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsInternal
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetLocale() *CreateDeploymentRequestBodyRoutes1Locale {
+	if o == nil {
+		return nil
+	}
+	return o.Locale
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetMethods() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Methods
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetMiddleware() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Middleware
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetMiddlewarePath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MiddlewarePath
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetMiddlewareRawSrc() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MiddlewareRawSrc
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetMissing() []CreateDeploymentRequestBodyRoutes1Missing {
+	if o == nil {
+		return nil
+	}
+	return o.Missing
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetOverride() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Override
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetSrc() string {
+	if o == nil {
+		return ""
+	}
+	return o.Src
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
+func (o *CreateDeploymentRequestBodyRoutes1) GetUser() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.User
 }
 
 type CreateDeploymentRequestBodyRoutesType string
@@ -2572,21 +4265,16 @@ func CreateCreateDeploymentRequestBodyRoutesCreateDeploymentRequestBodyRoutes2(c
 }
 
 func (u *CreateDeploymentRequestBodyRoutes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeploymentRequestBodyRoutes2 := new(CreateDeploymentRequestBodyRoutes2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRoutes2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes2, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRoutes2 = createDeploymentRequestBodyRoutes2
 		u.Type = CreateDeploymentRequestBodyRoutesTypeCreateDeploymentRequestBodyRoutes2
 		return nil
 	}
 
 	createDeploymentRequestBodyRoutes1 := new(CreateDeploymentRequestBodyRoutes1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeploymentRequestBodyRoutes1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes1, "", true, true); err == nil {
 		u.CreateDeploymentRequestBodyRoutes1 = createDeploymentRequestBodyRoutes1
 		u.Type = CreateDeploymentRequestBodyRoutesTypeCreateDeploymentRequestBodyRoutes1
 		return nil
@@ -2596,15 +4284,15 @@ func (u *CreateDeploymentRequestBodyRoutes) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateDeploymentRequestBodyRoutes) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyRoutes2 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRoutes2)
-	}
-
 	if u.CreateDeploymentRequestBodyRoutes1 != nil {
-		return json.Marshal(u.CreateDeploymentRequestBodyRoutes1)
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes1, "", true)
 	}
 
-	return nil, nil
+	if u.CreateDeploymentRequestBodyRoutes2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // CreateDeploymentRequestBodyTarget - Either not defined, `staging`, or `production`. If `staging`, a staging alias in the format `<project>-<team>.vercel.app` will be assigned. If `production`, any aliases defined in `alias` will be assigned. If omitted, the target will be `preview`
@@ -2643,13 +4331,13 @@ type CreateDeploymentRequestBody struct {
 	Branch CreateDeploymentRequestBodyBranch `json:"branch"`
 	// An object containing another object with information to be passed to the Build Process
 	//
-	// @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Build *CreateDeploymentRequestBodyBuild `json:"build,omitempty"`
 	// The build command for this project. When `null` is used this value will be automatically detected
 	BuildCommand *string `json:"buildCommand,omitempty"`
 	// A list of build descriptions whose src references valid source files.
 	//
-	// @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Builds []CreateDeploymentRequestBodyBuilds `json:"builds,omitempty"`
 	// When set to `true`, all HTML files and Serverless Functions will have their extension removed. When visiting a path that ends with the extension, a 308 response will redirect the client to the extensionless path.
 	CleanUrls      *bool                                       `json:"cleanUrls,omitempty"`
@@ -2666,7 +4354,7 @@ type CreateDeploymentRequestBody struct {
 	Endpoints  []CreateDeploymentRequestBodyEndpoints `json:"endpoints"`
 	// An object containing the deployment's environment variable names and values. Secrets can be referenced by prefixing the value with `@`
 	//
-	// @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Env map[string]string `json:"env,omitempty"`
 	// A list of objects with the files to be deployed
 	Files []CreateDeploymentRequestBodyFiles `json:"files,omitempty"`
@@ -2711,7 +4399,7 @@ type CreateDeploymentRequestBody struct {
 	Roles    []CreateDeploymentRequestBodyRoles    `json:"roles"`
 	// A list of routes objects used to rewrite paths to point towards other internal or external paths
 	//
-	// @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Routes []CreateDeploymentRequestBodyRoutes `json:"routes,omitempty"`
 	// Either not defined, `staging`, or `production`. If `staging`, a staging alias in the format `<project>-<team>.vercel.app` will be assigned. If `production`, any aliases defined in `alias` will be assigned. If omitted, the target will be `preview`
 	Target *CreateDeploymentRequestBodyTarget `json:"target,omitempty"`
@@ -2719,6 +4407,321 @@ type CreateDeploymentRequestBody struct {
 	TrailingSlash *bool `json:"trailingSlash,omitempty"`
 	// When `true` and `deploymentId` is passed in, the sha from the previous deployment's `gitSource` is removed forcing the latest commit to be used.
 	WithLatestCommit *bool `json:"withLatestCommit,omitempty"`
+}
+
+func (o *CreateDeploymentRequestBody) GetDollarSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DollarSchema
+}
+
+func (o *CreateDeploymentRequestBody) GetAlias() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Alias
+}
+
+func (o *CreateDeploymentRequestBody) GetBranch() CreateDeploymentRequestBodyBranch {
+	if o == nil {
+		return CreateDeploymentRequestBodyBranch{}
+	}
+	return o.Branch
+}
+
+func (o *CreateDeploymentRequestBody) GetBuild() *CreateDeploymentRequestBodyBuild {
+	if o == nil {
+		return nil
+	}
+	return o.Build
+}
+
+func (o *CreateDeploymentRequestBody) GetBuildCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BuildCommand
+}
+
+func (o *CreateDeploymentRequestBody) GetBuilds() []CreateDeploymentRequestBodyBuilds {
+	if o == nil {
+		return nil
+	}
+	return o.Builds
+}
+
+func (o *CreateDeploymentRequestBody) GetCleanUrls() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CleanUrls
+}
+
+func (o *CreateDeploymentRequestBody) GetConnectionUris() []CreateDeploymentRequestBodyConnectionUris {
+	if o == nil {
+		return []CreateDeploymentRequestBodyConnectionUris{}
+	}
+	return o.ConnectionUris
+}
+
+func (o *CreateDeploymentRequestBody) GetCrons() []CreateDeploymentRequestBodyCrons {
+	if o == nil {
+		return nil
+	}
+	return o.Crons
+}
+
+func (o *CreateDeploymentRequestBody) GetDatabase() CreateDeploymentRequestBodyDatabase {
+	if o == nil {
+		return CreateDeploymentRequestBodyDatabase{}
+	}
+	return o.Database
+}
+
+func (o *CreateDeploymentRequestBody) GetDatabases() []CreateDeploymentRequestBodyDatabases {
+	if o == nil {
+		return []CreateDeploymentRequestBodyDatabases{}
+	}
+	return o.Databases
+}
+
+func (o *CreateDeploymentRequestBody) GetDeploymentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentID
+}
+
+func (o *CreateDeploymentRequestBody) GetDevCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DevCommand
+}
+
+func (o *CreateDeploymentRequestBody) GetEndpoint() CreateDeploymentRequestBodyEndpoint {
+	if o == nil {
+		return CreateDeploymentRequestBodyEndpoint{}
+	}
+	return o.Endpoint
+}
+
+func (o *CreateDeploymentRequestBody) GetEndpoints() []CreateDeploymentRequestBodyEndpoints {
+	if o == nil {
+		return []CreateDeploymentRequestBodyEndpoints{}
+	}
+	return o.Endpoints
+}
+
+func (o *CreateDeploymentRequestBody) GetEnv() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Env
+}
+
+func (o *CreateDeploymentRequestBody) GetFiles() []CreateDeploymentRequestBodyFiles {
+	if o == nil {
+		return nil
+	}
+	return o.Files
+}
+
+func (o *CreateDeploymentRequestBody) GetFramework() *CreateDeploymentRequestBodyFramework {
+	if o == nil {
+		return nil
+	}
+	return o.Framework
+}
+
+func (o *CreateDeploymentRequestBody) GetFunctions() map[string]CreateDeploymentRequestBodyFunctions {
+	if o == nil {
+		return nil
+	}
+	return o.Functions
+}
+
+func (o *CreateDeploymentRequestBody) GetGit() *CreateDeploymentRequestBodyGit {
+	if o == nil {
+		return nil
+	}
+	return o.Git
+}
+
+func (o *CreateDeploymentRequestBody) GetGitMetadata() *CreateDeploymentRequestBodyGitMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.GitMetadata
+}
+
+func (o *CreateDeploymentRequestBody) GetGitSource() *CreateDeploymentRequestBodyGitSource {
+	if o == nil {
+		return nil
+	}
+	return o.GitSource
+}
+
+func (o *CreateDeploymentRequestBody) GetHeaders() []CreateDeploymentRequestBodyHeaders {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *CreateDeploymentRequestBody) GetIgnoreCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IgnoreCommand
+}
+
+func (o *CreateDeploymentRequestBody) GetImages() *CreateDeploymentRequestBodyImages {
+	if o == nil {
+		return nil
+	}
+	return o.Images
+}
+
+func (o *CreateDeploymentRequestBody) GetInstallCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InstallCommand
+}
+
+func (o *CreateDeploymentRequestBody) GetMeta() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Meta
+}
+
+func (o *CreateDeploymentRequestBody) GetMonorepoManager() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MonorepoManager
+}
+
+func (o *CreateDeploymentRequestBody) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeploymentRequestBody) GetOutputDirectory() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OutputDirectory
+}
+
+func (o *CreateDeploymentRequestBody) GetPagination() CreateDeploymentRequestBodyPagination {
+	if o == nil {
+		return CreateDeploymentRequestBodyPagination{}
+	}
+	return o.Pagination
+}
+
+func (o *CreateDeploymentRequestBody) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *CreateDeploymentRequestBody) GetProject() CreateDeploymentRequestBodyProject {
+	if o == nil {
+		return CreateDeploymentRequestBodyProject{}
+	}
+	return o.Project
+}
+
+func (o *CreateDeploymentRequestBody) GetProjectSettings() *CreateDeploymentRequestBodyProjectSettings1 {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectSettings
+}
+
+func (o *CreateDeploymentRequestBody) GetProjects() []CreateDeploymentRequestBodyProjects {
+	if o == nil {
+		return []CreateDeploymentRequestBodyProjects{}
+	}
+	return o.Projects
+}
+
+func (o *CreateDeploymentRequestBody) GetPublic() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Public
+}
+
+func (o *CreateDeploymentRequestBody) GetRedirects() []CreateDeploymentRequestBodyRedirects {
+	if o == nil {
+		return nil
+	}
+	return o.Redirects
+}
+
+func (o *CreateDeploymentRequestBody) GetRegions() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Regions
+}
+
+func (o *CreateDeploymentRequestBody) GetRewrites() []CreateDeploymentRequestBodyRewrites {
+	if o == nil {
+		return nil
+	}
+	return o.Rewrites
+}
+
+func (o *CreateDeploymentRequestBody) GetRole() CreateDeploymentRequestBodyRole {
+	if o == nil {
+		return CreateDeploymentRequestBodyRole{}
+	}
+	return o.Role
+}
+
+func (o *CreateDeploymentRequestBody) GetRoles() []CreateDeploymentRequestBodyRoles {
+	if o == nil {
+		return []CreateDeploymentRequestBodyRoles{}
+	}
+	return o.Roles
+}
+
+func (o *CreateDeploymentRequestBody) GetRoutes() []CreateDeploymentRequestBodyRoutes {
+	if o == nil {
+		return nil
+	}
+	return o.Routes
+}
+
+func (o *CreateDeploymentRequestBody) GetTarget() *CreateDeploymentRequestBodyTarget {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *CreateDeploymentRequestBody) GetTrailingSlash() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.TrailingSlash
+}
+
+func (o *CreateDeploymentRequestBody) GetWithLatestCommit() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.WithLatestCommit
 }
 
 type CreateDeployment200ApplicationJSONAliasAssignedAtType string
@@ -2754,21 +4757,16 @@ func CreateCreateDeployment200ApplicationJSONAliasAssignedAtBoolean(boolean bool
 }
 
 func (u *CreateDeployment200ApplicationJSONAliasAssignedAt) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = CreateDeployment200ApplicationJSONAliasAssignedAtTypeInteger
 		return nil
 	}
 
 	boolean := new(bool)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&boolean); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
 		u.Type = CreateDeployment200ApplicationJSONAliasAssignedAtTypeBoolean
 		return nil
@@ -2779,20 +4777,34 @@ func (u *CreateDeployment200ApplicationJSONAliasAssignedAt) UnmarshalJSON(data [
 
 func (u CreateDeployment200ApplicationJSONAliasAssignedAt) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
 	if u.Boolean != nil {
-		return json.Marshal(u.Boolean)
+		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // CreateDeployment200ApplicationJSONAliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
 type CreateDeployment200ApplicationJSONAliasError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
+}
+
+func (o *CreateDeployment200ApplicationJSONAliasError) GetCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.Code
+}
+
+func (o *CreateDeployment200ApplicationJSONAliasError) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
 }
 
 type CreateDeployment200ApplicationJSONAliasWarning struct {
@@ -2802,9 +4814,44 @@ type CreateDeployment200ApplicationJSONAliasWarning struct {
 	Message string  `json:"message"`
 }
 
+func (o *CreateDeployment200ApplicationJSONAliasWarning) GetAction() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Action
+}
+
+func (o *CreateDeployment200ApplicationJSONAliasWarning) GetCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.Code
+}
+
+func (o *CreateDeployment200ApplicationJSONAliasWarning) GetLink() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Link
+}
+
+func (o *CreateDeployment200ApplicationJSONAliasWarning) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
+}
+
 type CreateDeployment200ApplicationJSONBuild struct {
 	// The keys of the environment variables that were assigned during the build phase.
 	Env []string `json:"env"`
+}
+
+func (o *CreateDeployment200ApplicationJSONBuild) GetEnv() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Env
 }
 
 type CreateDeployment200ApplicationJSONBuilds struct {
@@ -2881,6 +4928,20 @@ type CreateDeployment200ApplicationJSONCreator struct {
 	Username *string `json:"username,omitempty"`
 }
 
+func (o *CreateDeployment200ApplicationJSONCreator) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *CreateDeployment200ApplicationJSONCreator) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
+}
+
 // CreateDeployment200ApplicationJSONFunctions - An object used to configure your Serverless Functions
 type CreateDeployment200ApplicationJSONFunctions struct {
 	ExcludeFiles *string `json:"excludeFiles,omitempty"`
@@ -2888,6 +4949,41 @@ type CreateDeployment200ApplicationJSONFunctions struct {
 	MaxDuration  *int64  `json:"maxDuration,omitempty"`
 	Memory       *int64  `json:"memory,omitempty"`
 	Runtime      *string `json:"runtime,omitempty"`
+}
+
+func (o *CreateDeployment200ApplicationJSONFunctions) GetExcludeFiles() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeFiles
+}
+
+func (o *CreateDeployment200ApplicationJSONFunctions) GetIncludeFiles() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeFiles
+}
+
+func (o *CreateDeployment200ApplicationJSONFunctions) GetMaxDuration() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxDuration
+}
+
+func (o *CreateDeployment200ApplicationJSONFunctions) GetMemory() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Memory
+}
+
+func (o *CreateDeployment200ApplicationJSONFunctions) GetRuntime() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Runtime
 }
 
 type CreateDeployment200ApplicationJSONGitRepo3OwnerType string
@@ -2954,6 +5050,76 @@ type CreateDeployment200ApplicationJSONGitRepo3 struct {
 	WorkspaceUUID string                                              `json:"workspaceUuid"`
 }
 
+func (o *CreateDeployment200ApplicationJSONGitRepo3) GetDefaultBranch() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultBranch
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo3) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo3) GetOwner() string {
+	if o == nil {
+		return ""
+	}
+	return o.Owner
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo3) GetOwnerType() CreateDeployment200ApplicationJSONGitRepo3OwnerType {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitRepo3OwnerType("")
+	}
+	return o.OwnerType
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo3) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo3) GetPrivate() bool {
+	if o == nil {
+		return false
+	}
+	return o.Private
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo3) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo3) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo3) GetType() CreateDeployment200ApplicationJSONGitRepo3Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitRepo3Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo3) GetWorkspaceUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceUUID
+}
+
 type CreateDeployment200ApplicationJSONGitRepo2OwnerType string
 
 const (
@@ -3016,6 +5182,76 @@ type CreateDeployment200ApplicationJSONGitRepo2 struct {
 	RepoID        int64                                               `json:"repoId"`
 	RepoOwnerID   string                                              `json:"repoOwnerId"`
 	Type          CreateDeployment200ApplicationJSONGitRepo2Type      `json:"type"`
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo2) GetDefaultBranch() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultBranch
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo2) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo2) GetOrg() string {
+	if o == nil {
+		return ""
+	}
+	return o.Org
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo2) GetOwnerType() CreateDeployment200ApplicationJSONGitRepo2OwnerType {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitRepo2OwnerType("")
+	}
+	return o.OwnerType
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo2) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo2) GetPrivate() bool {
+	if o == nil {
+		return false
+	}
+	return o.Private
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo2) GetRepo() string {
+	if o == nil {
+		return ""
+	}
+	return o.Repo
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo2) GetRepoID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RepoID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo2) GetRepoOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoOwnerID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo2) GetType() CreateDeployment200ApplicationJSONGitRepo2Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitRepo2Type("")
+	}
+	return o.Type
 }
 
 type CreateDeployment200ApplicationJSONGitRepo1OwnerType string
@@ -3081,6 +5317,69 @@ type CreateDeployment200ApplicationJSONGitRepo1 struct {
 	URL           string                                              `json:"url"`
 }
 
+func (o *CreateDeployment200ApplicationJSONGitRepo1) GetDefaultBranch() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultBranch
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo1) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo1) GetNamespace() string {
+	if o == nil {
+		return ""
+	}
+	return o.Namespace
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo1) GetOwnerType() CreateDeployment200ApplicationJSONGitRepo1OwnerType {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitRepo1OwnerType("")
+	}
+	return o.OwnerType
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo1) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo1) GetPrivate() bool {
+	if o == nil {
+		return false
+	}
+	return o.Private
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo1) GetProjectID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ProjectID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo1) GetType() CreateDeployment200ApplicationJSONGitRepo1Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitRepo1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeployment200ApplicationJSONGitRepo1) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 type CreateDeployment200ApplicationJSONGitRepoType string
 
 const (
@@ -3125,30 +5424,23 @@ func CreateCreateDeployment200ApplicationJSONGitRepoCreateDeployment200Applicati
 }
 
 func (u *CreateDeployment200ApplicationJSONGitRepo) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeployment200ApplicationJSONGitRepo1 := new(CreateDeployment200ApplicationJSONGitRepo1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitRepo1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitRepo1, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONGitRepo1 = createDeployment200ApplicationJSONGitRepo1
 		u.Type = CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo1
 		return nil
 	}
 
 	createDeployment200ApplicationJSONGitRepo2 := new(CreateDeployment200ApplicationJSONGitRepo2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitRepo2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitRepo2, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONGitRepo2 = createDeployment200ApplicationJSONGitRepo2
 		u.Type = CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo2
 		return nil
 	}
 
 	createDeployment200ApplicationJSONGitRepo3 := new(CreateDeployment200ApplicationJSONGitRepo3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitRepo3); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitRepo3, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONGitRepo3 = createDeployment200ApplicationJSONGitRepo3
 		u.Type = CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo3
 		return nil
@@ -3159,18 +5451,18 @@ func (u *CreateDeployment200ApplicationJSONGitRepo) UnmarshalJSON(data []byte) e
 
 func (u CreateDeployment200ApplicationJSONGitRepo) MarshalJSON() ([]byte, error) {
 	if u.CreateDeployment200ApplicationJSONGitRepo1 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitRepo1)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitRepo1, "", true)
 	}
 
 	if u.CreateDeployment200ApplicationJSONGitRepo2 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitRepo2)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitRepo2, "", true)
 	}
 
 	if u.CreateDeployment200ApplicationJSONGitRepo3 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitRepo3)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitRepo3, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeployment200ApplicationJSONGitSource9Type string
@@ -3207,6 +5499,55 @@ type CreateDeployment200ApplicationJSONGitSource9 struct {
 	WorkspaceUUID string                                           `json:"workspaceUuid"`
 }
 
+func (o *CreateDeployment200ApplicationJSONGitSource9) GetOwner() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Owner
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource9) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource9) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource9) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource9) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource9) GetType() CreateDeployment200ApplicationJSONGitSource9Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitSource9Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource9) GetWorkspaceUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceUUID
+}
+
 type CreateDeployment200ApplicationJSONGitSource8Type string
 
 const (
@@ -3236,6 +5577,34 @@ type CreateDeployment200ApplicationJSONGitSource8 struct {
 	Ref       string                                           `json:"ref"`
 	Sha       string                                           `json:"sha"`
 	Type      CreateDeployment200ApplicationJSONGitSource8Type `json:"type"`
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource8) GetProjectID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ProjectID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource8) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource8) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource8) GetType() CreateDeployment200ApplicationJSONGitSource8Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitSource8Type("")
+	}
+	return o.Type
 }
 
 type CreateDeployment200ApplicationJSONGitSource7Type string
@@ -3271,6 +5640,48 @@ type CreateDeployment200ApplicationJSONGitSource7 struct {
 	Type   CreateDeployment200ApplicationJSONGitSource7Type `json:"type"`
 }
 
+func (o *CreateDeployment200ApplicationJSONGitSource7) GetOrg() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Org
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource7) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource7) GetRepo() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Repo
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource7) GetRepoID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RepoID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource7) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource7) GetType() CreateDeployment200ApplicationJSONGitSource7Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitSource7Type("")
+	}
+	return o.Type
+}
+
 type CreateDeployment200ApplicationJSONGitSource6Type string
 
 const (
@@ -3300,6 +5711,34 @@ type CreateDeployment200ApplicationJSONGitSource6 struct {
 	Ref    string                                           `json:"ref"`
 	Sha    string                                           `json:"sha"`
 	Type   CreateDeployment200ApplicationJSONGitSource6Type `json:"type"`
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource6) GetGitURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.GitURL
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource6) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource6) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource6) GetType() CreateDeployment200ApplicationJSONGitSource6Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitSource6Type("")
+	}
+	return o.Type
 }
 
 type CreateDeployment200ApplicationJSONGitSource5Type string
@@ -3335,6 +5774,48 @@ type CreateDeployment200ApplicationJSONGitSource5 struct {
 	Type  CreateDeployment200ApplicationJSONGitSource5Type `json:"type"`
 }
 
+func (o *CreateDeployment200ApplicationJSONGitSource5) GetOwner() string {
+	if o == nil {
+		return ""
+	}
+	return o.Owner
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource5) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource5) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource5) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource5) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource5) GetType() CreateDeployment200ApplicationJSONGitSource5Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitSource5Type("")
+	}
+	return o.Type
+}
+
 type CreateDeployment200ApplicationJSONGitSource4Type string
 
 const (
@@ -3366,6 +5847,48 @@ type CreateDeployment200ApplicationJSONGitSource4 struct {
 	Sha           *string                                          `json:"sha,omitempty"`
 	Type          CreateDeployment200ApplicationJSONGitSource4Type `json:"type"`
 	WorkspaceUUID *string                                          `json:"workspaceUuid,omitempty"`
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource4) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource4) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource4) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource4) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource4) GetType() CreateDeployment200ApplicationJSONGitSource4Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitSource4Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource4) GetWorkspaceUUID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WorkspaceUUID
 }
 
 type CreateDeployment200ApplicationJSONGitSource3ProjectIDType string
@@ -3401,21 +5924,16 @@ func CreateCreateDeployment200ApplicationJSONGitSource3ProjectIDInteger(integer 
 }
 
 func (u *CreateDeployment200ApplicationJSONGitSource3ProjectID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = CreateDeployment200ApplicationJSONGitSource3ProjectIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = CreateDeployment200ApplicationJSONGitSource3ProjectIDTypeInteger
 		return nil
@@ -3426,14 +5944,14 @@ func (u *CreateDeployment200ApplicationJSONGitSource3ProjectID) UnmarshalJSON(da
 
 func (u CreateDeployment200ApplicationJSONGitSource3ProjectID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeployment200ApplicationJSONGitSource3Type string
@@ -3466,6 +5984,41 @@ type CreateDeployment200ApplicationJSONGitSource3 struct {
 	Ref       *string                                               `json:"ref,omitempty"`
 	Sha       *string                                               `json:"sha,omitempty"`
 	Type      CreateDeployment200ApplicationJSONGitSource3Type      `json:"type"`
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource3) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource3) GetProjectID() CreateDeployment200ApplicationJSONGitSource3ProjectID {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitSource3ProjectID{}
+	}
+	return o.ProjectID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource3) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource3) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource3) GetType() CreateDeployment200ApplicationJSONGitSource3Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitSource3Type("")
+	}
+	return o.Type
 }
 
 type CreateDeployment200ApplicationJSONGitSource2Type string
@@ -3501,6 +6054,48 @@ type CreateDeployment200ApplicationJSONGitSource2 struct {
 	Type CreateDeployment200ApplicationJSONGitSource2Type `json:"type"`
 }
 
+func (o *CreateDeployment200ApplicationJSONGitSource2) GetOrg() string {
+	if o == nil {
+		return ""
+	}
+	return o.Org
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource2) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource2) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource2) GetRepo() string {
+	if o == nil {
+		return ""
+	}
+	return o.Repo
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource2) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource2) GetType() CreateDeployment200ApplicationJSONGitSource2Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitSource2Type("")
+	}
+	return o.Type
+}
+
 type CreateDeployment200ApplicationJSONGitSource1RepoIDType string
 
 const (
@@ -3534,21 +6129,16 @@ func CreateCreateDeployment200ApplicationJSONGitSource1RepoIDInteger(integer int
 }
 
 func (u *CreateDeployment200ApplicationJSONGitSource1RepoID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = CreateDeployment200ApplicationJSONGitSource1RepoIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = CreateDeployment200ApplicationJSONGitSource1RepoIDTypeInteger
 		return nil
@@ -3559,14 +6149,14 @@ func (u *CreateDeployment200ApplicationJSONGitSource1RepoID) UnmarshalJSON(data 
 
 func (u CreateDeployment200ApplicationJSONGitSource1RepoID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeployment200ApplicationJSONGitSource1Type string
@@ -3599,6 +6189,41 @@ type CreateDeployment200ApplicationJSONGitSource1 struct {
 	RepoID CreateDeployment200ApplicationJSONGitSource1RepoID `json:"repoId"`
 	Sha    *string                                            `json:"sha,omitempty"`
 	Type   CreateDeployment200ApplicationJSONGitSource1Type   `json:"type"`
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource1) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource1) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource1) GetRepoID() CreateDeployment200ApplicationJSONGitSource1RepoID {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitSource1RepoID{}
+	}
+	return o.RepoID
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource1) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CreateDeployment200ApplicationJSONGitSource1) GetType() CreateDeployment200ApplicationJSONGitSource1Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONGitSource1Type("")
+	}
+	return o.Type
 }
 
 type CreateDeployment200ApplicationJSONGitSourceType string
@@ -3711,84 +6336,65 @@ func CreateCreateDeployment200ApplicationJSONGitSourceCreateDeployment200Applica
 }
 
 func (u *CreateDeployment200ApplicationJSONGitSource) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+
+	createDeployment200ApplicationJSONGitSource6 := new(CreateDeployment200ApplicationJSONGitSource6)
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource6, "", true, true); err == nil {
+		u.CreateDeployment200ApplicationJSONGitSource6 = createDeployment200ApplicationJSONGitSource6
+		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource6
+		return nil
+	}
+
+	createDeployment200ApplicationJSONGitSource8 := new(CreateDeployment200ApplicationJSONGitSource8)
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource8, "", true, true); err == nil {
+		u.CreateDeployment200ApplicationJSONGitSource8 = createDeployment200ApplicationJSONGitSource8
+		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource8
+		return nil
+	}
 
 	createDeployment200ApplicationJSONGitSource1 := new(CreateDeployment200ApplicationJSONGitSource1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitSource1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource1, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONGitSource1 = createDeployment200ApplicationJSONGitSource1
 		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource1
 		return nil
 	}
 
 	createDeployment200ApplicationJSONGitSource3 := new(CreateDeployment200ApplicationJSONGitSource3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitSource3); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource3, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONGitSource3 = createDeployment200ApplicationJSONGitSource3
 		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource3
 		return nil
 	}
 
 	createDeployment200ApplicationJSONGitSource2 := new(CreateDeployment200ApplicationJSONGitSource2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitSource2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource2, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONGitSource2 = createDeployment200ApplicationJSONGitSource2
 		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource2
 		return nil
 	}
 
 	createDeployment200ApplicationJSONGitSource4 := new(CreateDeployment200ApplicationJSONGitSource4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitSource4); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource4, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONGitSource4 = createDeployment200ApplicationJSONGitSource4
 		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource4
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitSource6 := new(CreateDeployment200ApplicationJSONGitSource6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitSource6); err == nil {
-		u.CreateDeployment200ApplicationJSONGitSource6 = createDeployment200ApplicationJSONGitSource6
-		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource6
-		return nil
-	}
-
 	createDeployment200ApplicationJSONGitSource5 := new(CreateDeployment200ApplicationJSONGitSource5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitSource5); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource5, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONGitSource5 = createDeployment200ApplicationJSONGitSource5
 		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource5
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitSource8 := new(CreateDeployment200ApplicationJSONGitSource8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitSource8); err == nil {
-		u.CreateDeployment200ApplicationJSONGitSource8 = createDeployment200ApplicationJSONGitSource8
-		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource8
-		return nil
-	}
-
 	createDeployment200ApplicationJSONGitSource7 := new(CreateDeployment200ApplicationJSONGitSource7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitSource7); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource7, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONGitSource7 = createDeployment200ApplicationJSONGitSource7
 		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource7
 		return nil
 	}
 
 	createDeployment200ApplicationJSONGitSource9 := new(CreateDeployment200ApplicationJSONGitSource9)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONGitSource9); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource9, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONGitSource9 = createDeployment200ApplicationJSONGitSource9
 		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource9
 		return nil
@@ -3799,47 +6405,61 @@ func (u *CreateDeployment200ApplicationJSONGitSource) UnmarshalJSON(data []byte)
 
 func (u CreateDeployment200ApplicationJSONGitSource) MarshalJSON() ([]byte, error) {
 	if u.CreateDeployment200ApplicationJSONGitSource1 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitSource1)
-	}
-
-	if u.CreateDeployment200ApplicationJSONGitSource3 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitSource3)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource1, "", true)
 	}
 
 	if u.CreateDeployment200ApplicationJSONGitSource2 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitSource2)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource2, "", true)
+	}
+
+	if u.CreateDeployment200ApplicationJSONGitSource3 != nil {
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource3, "", true)
 	}
 
 	if u.CreateDeployment200ApplicationJSONGitSource4 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitSource4)
-	}
-
-	if u.CreateDeployment200ApplicationJSONGitSource6 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitSource6)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource4, "", true)
 	}
 
 	if u.CreateDeployment200ApplicationJSONGitSource5 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitSource5)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource5, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONGitSource8 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitSource8)
+	if u.CreateDeployment200ApplicationJSONGitSource6 != nil {
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource6, "", true)
 	}
 
 	if u.CreateDeployment200ApplicationJSONGitSource7 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitSource7)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource7, "", true)
+	}
+
+	if u.CreateDeployment200ApplicationJSONGitSource8 != nil {
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource8, "", true)
 	}
 
 	if u.CreateDeployment200ApplicationJSONGitSource9 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONGitSource9)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource9, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeployment200ApplicationJSONLambdasOutput struct {
 	FunctionName string `json:"functionName"`
 	Path         string `json:"path"`
+}
+
+func (o *CreateDeployment200ApplicationJSONLambdasOutput) GetFunctionName() string {
+	if o == nil {
+		return ""
+	}
+	return o.FunctionName
+}
+
+func (o *CreateDeployment200ApplicationJSONLambdasOutput) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
 }
 
 type CreateDeployment200ApplicationJSONLambdasReadyState string
@@ -3882,6 +6502,48 @@ type CreateDeployment200ApplicationJSONLambdas struct {
 	Output       []CreateDeployment200ApplicationJSONLambdasOutput    `json:"output"`
 	ReadyState   *CreateDeployment200ApplicationJSONLambdasReadyState `json:"readyState,omitempty"`
 	ReadyStateAt *int64                                               `json:"readyStateAt,omitempty"`
+}
+
+func (o *CreateDeployment200ApplicationJSONLambdas) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateDeployment200ApplicationJSONLambdas) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *CreateDeployment200ApplicationJSONLambdas) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateDeployment200ApplicationJSONLambdas) GetOutput() []CreateDeployment200ApplicationJSONLambdasOutput {
+	if o == nil {
+		return []CreateDeployment200ApplicationJSONLambdasOutput{}
+	}
+	return o.Output
+}
+
+func (o *CreateDeployment200ApplicationJSONLambdas) GetReadyState() *CreateDeployment200ApplicationJSONLambdasReadyState {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyState
+}
+
+func (o *CreateDeployment200ApplicationJSONLambdas) GetReadyStateAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyStateAt
 }
 
 // CreateDeployment200ApplicationJSONPlan - The pricing plan the deployment was made under
@@ -4017,6 +6679,27 @@ type CreateDeployment200ApplicationJSONRoutes3 struct {
 	Src        string                                              `json:"src"`
 }
 
+func (o *CreateDeployment200ApplicationJSONRoutes3) GetContinue() bool {
+	if o == nil {
+		return false
+	}
+	return o.Continue
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes3) GetMiddleware() CreateDeployment200ApplicationJSONRoutes3Middleware {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONRoutes3Middleware(0)
+	}
+	return o.Middleware
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes3) GetSrc() string {
+	if o == nil {
+		return ""
+	}
+	return o.Src
+}
+
 type CreateDeployment200ApplicationJSONRoutes2Handle string
 
 const (
@@ -4064,6 +6747,34 @@ type CreateDeployment200ApplicationJSONRoutes2 struct {
 	Status *int64                                          `json:"status,omitempty"`
 }
 
+func (o *CreateDeployment200ApplicationJSONRoutes2) GetDest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Dest
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes2) GetHandle() CreateDeployment200ApplicationJSONRoutes2Handle {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONRoutes2Handle("")
+	}
+	return o.Handle
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes2) GetSrc() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Src
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes2) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type CreateDeployment200ApplicationJSONRoutes1Has2Type string
 
 const (
@@ -4100,6 +6811,27 @@ type CreateDeployment200ApplicationJSONRoutes1Has2 struct {
 	Value *string                                           `json:"value,omitempty"`
 }
 
+func (o *CreateDeployment200ApplicationJSONRoutes1Has2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1Has2) GetType() CreateDeployment200ApplicationJSONRoutes1Has2Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONRoutes1Has2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1Has2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type CreateDeployment200ApplicationJSONRoutes1Has1Type string
 
 const (
@@ -4127,6 +6859,20 @@ func (e *CreateDeployment200ApplicationJSONRoutes1Has1Type) UnmarshalJSON(data [
 type CreateDeployment200ApplicationJSONRoutes1Has1 struct {
 	Type  CreateDeployment200ApplicationJSONRoutes1Has1Type `json:"type"`
 	Value string                                            `json:"value"`
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1Has1) GetType() CreateDeployment200ApplicationJSONRoutes1Has1Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONRoutes1Has1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1Has1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CreateDeployment200ApplicationJSONRoutes1HasType string
@@ -4162,21 +6908,16 @@ func CreateCreateDeployment200ApplicationJSONRoutes1HasCreateDeployment200Applic
 }
 
 func (u *CreateDeployment200ApplicationJSONRoutes1Has) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeployment200ApplicationJSONRoutes1Has1 := new(CreateDeployment200ApplicationJSONRoutes1Has1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONRoutes1Has1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes1Has1, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONRoutes1Has1 = createDeployment200ApplicationJSONRoutes1Has1
 		u.Type = CreateDeployment200ApplicationJSONRoutes1HasTypeCreateDeployment200ApplicationJSONRoutes1Has1
 		return nil
 	}
 
 	createDeployment200ApplicationJSONRoutes1Has2 := new(CreateDeployment200ApplicationJSONRoutes1Has2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONRoutes1Has2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes1Has2, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONRoutes1Has2 = createDeployment200ApplicationJSONRoutes1Has2
 		u.Type = CreateDeployment200ApplicationJSONRoutes1HasTypeCreateDeployment200ApplicationJSONRoutes1Has2
 		return nil
@@ -4187,19 +6928,33 @@ func (u *CreateDeployment200ApplicationJSONRoutes1Has) UnmarshalJSON(data []byte
 
 func (u CreateDeployment200ApplicationJSONRoutes1Has) MarshalJSON() ([]byte, error) {
 	if u.CreateDeployment200ApplicationJSONRoutes1Has1 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONRoutes1Has1)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes1Has1, "", true)
 	}
 
 	if u.CreateDeployment200ApplicationJSONRoutes1Has2 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONRoutes1Has2)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes1Has2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateDeployment200ApplicationJSONRoutes1Locale struct {
 	Cookie   *string           `json:"cookie,omitempty"`
 	Redirect map[string]string `json:"redirect,omitempty"`
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1Locale) GetCookie() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Cookie
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1Locale) GetRedirect() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Redirect
 }
 
 type CreateDeployment200ApplicationJSONRoutes1Missing2Type string
@@ -4238,6 +6993,27 @@ type CreateDeployment200ApplicationJSONRoutes1Missing2 struct {
 	Value *string                                               `json:"value,omitempty"`
 }
 
+func (o *CreateDeployment200ApplicationJSONRoutes1Missing2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1Missing2) GetType() CreateDeployment200ApplicationJSONRoutes1Missing2Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONRoutes1Missing2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1Missing2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type CreateDeployment200ApplicationJSONRoutes1Missing1Type string
 
 const (
@@ -4265,6 +7041,20 @@ func (e *CreateDeployment200ApplicationJSONRoutes1Missing1Type) UnmarshalJSON(da
 type CreateDeployment200ApplicationJSONRoutes1Missing1 struct {
 	Type  CreateDeployment200ApplicationJSONRoutes1Missing1Type `json:"type"`
 	Value string                                                `json:"value"`
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1Missing1) GetType() CreateDeployment200ApplicationJSONRoutes1Missing1Type {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONRoutes1Missing1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1Missing1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CreateDeployment200ApplicationJSONRoutes1MissingType string
@@ -4300,21 +7090,16 @@ func CreateCreateDeployment200ApplicationJSONRoutes1MissingCreateDeployment200Ap
 }
 
 func (u *CreateDeployment200ApplicationJSONRoutes1Missing) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createDeployment200ApplicationJSONRoutes1Missing1 := new(CreateDeployment200ApplicationJSONRoutes1Missing1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONRoutes1Missing1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes1Missing1, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONRoutes1Missing1 = createDeployment200ApplicationJSONRoutes1Missing1
 		u.Type = CreateDeployment200ApplicationJSONRoutes1MissingTypeCreateDeployment200ApplicationJSONRoutes1Missing1
 		return nil
 	}
 
 	createDeployment200ApplicationJSONRoutes1Missing2 := new(CreateDeployment200ApplicationJSONRoutes1Missing2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONRoutes1Missing2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes1Missing2, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONRoutes1Missing2 = createDeployment200ApplicationJSONRoutes1Missing2
 		u.Type = CreateDeployment200ApplicationJSONRoutes1MissingTypeCreateDeployment200ApplicationJSONRoutes1Missing2
 		return nil
@@ -4325,14 +7110,14 @@ func (u *CreateDeployment200ApplicationJSONRoutes1Missing) UnmarshalJSON(data []
 
 func (u CreateDeployment200ApplicationJSONRoutes1Missing) MarshalJSON() ([]byte, error) {
 	if u.CreateDeployment200ApplicationJSONRoutes1Missing1 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONRoutes1Missing1)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes1Missing1, "", true)
 	}
 
 	if u.CreateDeployment200ApplicationJSONRoutes1Missing2 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONRoutes1Missing2)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes1Missing2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // CreateDeployment200ApplicationJSONRoutes1 - A list of routes objects used to rewrite paths to point towards other internal or external paths
@@ -4356,6 +7141,118 @@ type CreateDeployment200ApplicationJSONRoutes1 struct {
 	Override         *bool                                              `json:"override,omitempty"`
 	Src              string                                             `json:"src"`
 	Status           *int64                                             `json:"status,omitempty"`
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetCaseSensitive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CaseSensitive
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetCheck() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Check
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetContinue() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Continue
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetDest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Dest
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetHas() []CreateDeployment200ApplicationJSONRoutes1Has {
+	if o == nil {
+		return nil
+	}
+	return o.Has
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetHeaders() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetImportant() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Important
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetLocale() *CreateDeployment200ApplicationJSONRoutes1Locale {
+	if o == nil {
+		return nil
+	}
+	return o.Locale
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetMethods() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Methods
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetMiddleware() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Middleware
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetMiddlewarePath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MiddlewarePath
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetMiddlewareRawSrc() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MiddlewareRawSrc
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetMissing() []CreateDeployment200ApplicationJSONRoutes1Missing {
+	if o == nil {
+		return nil
+	}
+	return o.Missing
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetOverride() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Override
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetSrc() string {
+	if o == nil {
+		return ""
+	}
+	return o.Src
+}
+
+func (o *CreateDeployment200ApplicationJSONRoutes1) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
 }
 
 type CreateDeployment200ApplicationJSONRoutesType string
@@ -4402,30 +7299,23 @@ func CreateCreateDeployment200ApplicationJSONRoutesCreateDeployment200Applicatio
 }
 
 func (u *CreateDeployment200ApplicationJSONRoutes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	createDeployment200ApplicationJSONRoutes2 := new(CreateDeployment200ApplicationJSONRoutes2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONRoutes2); err == nil {
-		u.CreateDeployment200ApplicationJSONRoutes2 = createDeployment200ApplicationJSONRoutes2
-		u.Type = CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes2
-		return nil
-	}
 
 	createDeployment200ApplicationJSONRoutes3 := new(CreateDeployment200ApplicationJSONRoutes3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONRoutes3); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes3, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONRoutes3 = createDeployment200ApplicationJSONRoutes3
 		u.Type = CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes3
 		return nil
 	}
 
+	createDeployment200ApplicationJSONRoutes2 := new(CreateDeployment200ApplicationJSONRoutes2)
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes2, "", true, true); err == nil {
+		u.CreateDeployment200ApplicationJSONRoutes2 = createDeployment200ApplicationJSONRoutes2
+		u.Type = CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes2
+		return nil
+	}
+
 	createDeployment200ApplicationJSONRoutes1 := new(CreateDeployment200ApplicationJSONRoutes1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createDeployment200ApplicationJSONRoutes1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes1, "", true, true); err == nil {
 		u.CreateDeployment200ApplicationJSONRoutes1 = createDeployment200ApplicationJSONRoutes1
 		u.Type = CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes1
 		return nil
@@ -4435,19 +7325,19 @@ func (u *CreateDeployment200ApplicationJSONRoutes) UnmarshalJSON(data []byte) er
 }
 
 func (u CreateDeployment200ApplicationJSONRoutes) MarshalJSON() ([]byte, error) {
+	if u.CreateDeployment200ApplicationJSONRoutes1 != nil {
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes1, "", true)
+	}
+
 	if u.CreateDeployment200ApplicationJSONRoutes2 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONRoutes2)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes2, "", true)
 	}
 
 	if u.CreateDeployment200ApplicationJSONRoutes3 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONRoutes3)
+		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes3, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONRoutes1 != nil {
-		return json.Marshal(u.CreateDeployment200ApplicationJSONRoutes1)
-	}
-
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // CreateDeployment200ApplicationJSONSource - Where was the deployment created from
@@ -4523,6 +7413,27 @@ type CreateDeployment200ApplicationJSONTeam struct {
 	Name string `json:"name"`
 	// The slug of the team owner
 	Slug string `json:"slug"`
+}
+
+func (o *CreateDeployment200ApplicationJSONTeam) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateDeployment200ApplicationJSONTeam) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeployment200ApplicationJSONTeam) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
 }
 
 type CreateDeployment200ApplicationJSONType string
@@ -4661,6 +7572,370 @@ type CreateDeployment200ApplicationJSON struct {
 	Version CreateDeployment200ApplicationJSONVersion `json:"version"`
 }
 
+func (o *CreateDeployment200ApplicationJSON) GetAlias() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Alias
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetAliasAssigned() bool {
+	if o == nil {
+		return false
+	}
+	return o.AliasAssigned
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetAliasAssignedAt() *CreateDeployment200ApplicationJSONAliasAssignedAt {
+	if o == nil {
+		return nil
+	}
+	return o.AliasAssignedAt
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetAliasError() *CreateDeployment200ApplicationJSONAliasError {
+	if o == nil {
+		return nil
+	}
+	return o.AliasError
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetAliasFinal() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AliasFinal
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetAliasWarning() *CreateDeployment200ApplicationJSONAliasWarning {
+	if o == nil {
+		return nil
+	}
+	return o.AliasWarning
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetAutoAssignCustomDomains() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AutoAssignCustomDomains
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetAutomaticAliases() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AutomaticAliases
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetBootedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BootedAt
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetBuild() CreateDeployment200ApplicationJSONBuild {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONBuild{}
+	}
+	return o.Build
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetBuildErrorAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BuildErrorAt
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetBuildingAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BuildingAt
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetBuilds() []CreateDeployment200ApplicationJSONBuilds {
+	if o == nil {
+		return nil
+	}
+	return o.Builds
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetCanceledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CanceledAt
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetChecksConclusion() *CreateDeployment200ApplicationJSONChecksConclusion {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksConclusion
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetChecksState() *CreateDeployment200ApplicationJSONChecksState {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksState
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetConnectBuildsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectBuildsEnabled
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetConnectConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectConfigurationID
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetCreatedIn() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedIn
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetCreator() CreateDeployment200ApplicationJSONCreator {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONCreator{}
+	}
+	return o.Creator
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetEnv() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Env
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetErrorCode() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorCode
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetErrorLink() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorLink
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetErrorMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorMessage
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetErrorStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorStep
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetFunctions() map[string]CreateDeployment200ApplicationJSONFunctions {
+	if o == nil {
+		return nil
+	}
+	return o.Functions
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetGitRepo() *CreateDeployment200ApplicationJSONGitRepo {
+	if o == nil {
+		return nil
+	}
+	return o.GitRepo
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetGitSource() *CreateDeployment200ApplicationJSONGitSource {
+	if o == nil {
+		return nil
+	}
+	return o.GitSource
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetInspectorURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InspectorURL
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetIsInConcurrentBuildsQueue() bool {
+	if o == nil {
+		return false
+	}
+	return o.IsInConcurrentBuildsQueue
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetLambdas() []CreateDeployment200ApplicationJSONLambdas {
+	if o == nil {
+		return nil
+	}
+	return o.Lambdas
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetMeta() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.Meta
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetMonorepoManager() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MonorepoManager
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerID
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetPlan() CreateDeployment200ApplicationJSONPlan {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONPlan("")
+	}
+	return o.Plan
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetPreviewCommentsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PreviewCommentsEnabled
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetPublic() bool {
+	if o == nil {
+		return false
+	}
+	return o.Public
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetReadyState() CreateDeployment200ApplicationJSONReadyState {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONReadyState("")
+	}
+	return o.ReadyState
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetReadySubstate() *CreateDeployment200ApplicationJSONReadySubstate {
+	if o == nil {
+		return nil
+	}
+	return o.ReadySubstate
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetRegions() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Regions
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetRoutes() []CreateDeployment200ApplicationJSONRoutes {
+	if o == nil {
+		return nil
+	}
+	return o.Routes
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetSource() *CreateDeployment200ApplicationJSONSource {
+	if o == nil {
+		return nil
+	}
+	return o.Source
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetTarget() *CreateDeployment200ApplicationJSONTarget {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetTeam() *CreateDeployment200ApplicationJSONTeam {
+	if o == nil {
+		return nil
+	}
+	return o.Team
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetType() CreateDeployment200ApplicationJSONType {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONType("")
+	}
+	return o.Type
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetUserAliases() []string {
+	if o == nil {
+		return nil
+	}
+	return o.UserAliases
+}
+
+func (o *CreateDeployment200ApplicationJSON) GetVersion() CreateDeployment200ApplicationJSONVersion {
+	if o == nil {
+		return CreateDeployment200ApplicationJSONVersion(0)
+	}
+	return o.Version
+}
+
 type CreateDeploymentResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -4670,4 +7945,32 @@ type CreateDeploymentResponse struct {
 	RawResponse *http.Response
 	// The successfully created deployment
 	CreateDeployment200ApplicationJSONObject *CreateDeployment200ApplicationJSON
+}
+
+func (o *CreateDeploymentResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CreateDeploymentResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CreateDeploymentResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *CreateDeploymentResponse) GetCreateDeployment200ApplicationJSONObject() *CreateDeployment200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.CreateDeployment200ApplicationJSONObject
 }

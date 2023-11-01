@@ -3,11 +3,11 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type GetProjectMembersRequest struct {
@@ -23,6 +23,48 @@ type GetProjectMembersRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Timestamp in milliseconds to only include members added until then.
 	Until *int64 `queryParam:"style=form,explode=true,name=until"`
+}
+
+func (o *GetProjectMembersRequest) GetIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrName
+}
+
+func (o *GetProjectMembersRequest) GetLimit() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
+func (o *GetProjectMembersRequest) GetSearch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Search
+}
+
+func (o *GetProjectMembersRequest) GetSince() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Since
+}
+
+func (o *GetProjectMembersRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetProjectMembersRequest) GetUntil() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Until
 }
 
 // GetProjectMembers200ApplicationJSON2MembersRole - Role of this user in the project.
@@ -73,6 +115,55 @@ type GetProjectMembers200ApplicationJSON2Members struct {
 	Username string `json:"username"`
 }
 
+func (o *GetProjectMembers200ApplicationJSON2Members) GetAvatar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Avatar
+}
+
+func (o *GetProjectMembers200ApplicationJSON2Members) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetProjectMembers200ApplicationJSON2Members) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *GetProjectMembers200ApplicationJSON2Members) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *GetProjectMembers200ApplicationJSON2Members) GetRole() GetProjectMembers200ApplicationJSON2MembersRole {
+	if o == nil {
+		return GetProjectMembers200ApplicationJSON2MembersRole("")
+	}
+	return o.Role
+}
+
+func (o *GetProjectMembers200ApplicationJSON2Members) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *GetProjectMembers200ApplicationJSON2Members) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
 type GetProjectMembers200ApplicationJSON2Pagination struct {
 	// Amount of items in the current page.
 	Count   int64 `json:"count"`
@@ -83,10 +174,52 @@ type GetProjectMembers200ApplicationJSON2Pagination struct {
 	Prev *int64 `json:"prev"`
 }
 
+func (o *GetProjectMembers200ApplicationJSON2Pagination) GetCount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Count
+}
+
+func (o *GetProjectMembers200ApplicationJSON2Pagination) GetHasNext() bool {
+	if o == nil {
+		return false
+	}
+	return o.HasNext
+}
+
+func (o *GetProjectMembers200ApplicationJSON2Pagination) GetNext() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Next
+}
+
+func (o *GetProjectMembers200ApplicationJSON2Pagination) GetPrev() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Prev
+}
+
 // GetProjectMembers200ApplicationJSON2 - Paginated list of members for the project.
 type GetProjectMembers200ApplicationJSON2 struct {
 	Members    []GetProjectMembers200ApplicationJSON2Members  `json:"members"`
 	Pagination GetProjectMembers200ApplicationJSON2Pagination `json:"pagination"`
+}
+
+func (o *GetProjectMembers200ApplicationJSON2) GetMembers() []GetProjectMembers200ApplicationJSON2Members {
+	if o == nil {
+		return []GetProjectMembers200ApplicationJSON2Members{}
+	}
+	return o.Members
+}
+
+func (o *GetProjectMembers200ApplicationJSON2) GetPagination() GetProjectMembers200ApplicationJSON2Pagination {
+	if o == nil {
+		return GetProjectMembers200ApplicationJSON2Pagination{}
+	}
+	return o.Pagination
 }
 
 type GetProjectMembers200ApplicationJSON1 struct {
@@ -125,21 +258,16 @@ func CreateGetProjectMembers200ApplicationJSONGetProjectMembers200ApplicationJSO
 }
 
 func (u *GetProjectMembers200ApplicationJSON) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	getProjectMembers200ApplicationJSON1 := new(GetProjectMembers200ApplicationJSON1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getProjectMembers200ApplicationJSON1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getProjectMembers200ApplicationJSON1, "", true, true); err == nil {
 		u.GetProjectMembers200ApplicationJSON1 = getProjectMembers200ApplicationJSON1
 		u.Type = GetProjectMembers200ApplicationJSONTypeGetProjectMembers200ApplicationJSON1
 		return nil
 	}
 
 	getProjectMembers200ApplicationJSON2 := new(GetProjectMembers200ApplicationJSON2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getProjectMembers200ApplicationJSON2); err == nil {
+	if err := utils.UnmarshalJSON(data, &getProjectMembers200ApplicationJSON2, "", true, true); err == nil {
 		u.GetProjectMembers200ApplicationJSON2 = getProjectMembers200ApplicationJSON2
 		u.Type = GetProjectMembers200ApplicationJSONTypeGetProjectMembers200ApplicationJSON2
 		return nil
@@ -150,14 +278,14 @@ func (u *GetProjectMembers200ApplicationJSON) UnmarshalJSON(data []byte) error {
 
 func (u GetProjectMembers200ApplicationJSON) MarshalJSON() ([]byte, error) {
 	if u.GetProjectMembers200ApplicationJSON1 != nil {
-		return json.Marshal(u.GetProjectMembers200ApplicationJSON1)
+		return utils.MarshalJSON(u.GetProjectMembers200ApplicationJSON1, "", true)
 	}
 
 	if u.GetProjectMembers200ApplicationJSON2 != nil {
-		return json.Marshal(u.GetProjectMembers200ApplicationJSON2)
+		return utils.MarshalJSON(u.GetProjectMembers200ApplicationJSON2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetProjectMembersResponse struct {
@@ -169,4 +297,32 @@ type GetProjectMembersResponse struct {
 	RawResponse *http.Response
 	// Paginated list of members for the project.
 	GetProjectMembers200ApplicationJSONOneOf *GetProjectMembers200ApplicationJSON
+}
+
+func (o *GetProjectMembersResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetProjectMembersResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetProjectMembersResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetProjectMembersResponse) GetGetProjectMembers200ApplicationJSONOneOf() *GetProjectMembers200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetProjectMembers200ApplicationJSONOneOf
 }

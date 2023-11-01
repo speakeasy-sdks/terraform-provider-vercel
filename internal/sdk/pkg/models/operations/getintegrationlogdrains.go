@@ -13,6 +13,13 @@ type GetIntegrationLogDrainsRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *GetIntegrationLogDrainsRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 // GetIntegrationLogDrains200ApplicationJSONCreatedFrom - Whether the log drain was created by an integration or by a user
 type GetIntegrationLogDrains200ApplicationJSONCreatedFrom string
 
@@ -172,6 +179,111 @@ type GetIntegrationLogDrains200ApplicationJSON struct {
 	URL string `json:"url"`
 }
 
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Branch
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetCreatedFrom() *GetIntegrationLogDrains200ApplicationJSONCreatedFrom {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedFrom
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetDeliveryFormat() *GetIntegrationLogDrains200ApplicationJSONDeliveryFormat {
+	if o == nil {
+		return nil
+	}
+	return o.DeliveryFormat
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetEnvironment() *GetIntegrationLogDrains200ApplicationJSONEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.Environment
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetHeaders() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerID
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetProjectIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectIds
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetSources() []GetIntegrationLogDrains200ApplicationJSONSources {
+	if o == nil {
+		return nil
+	}
+	return o.Sources
+}
+
+func (o *GetIntegrationLogDrains200ApplicationJSON) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 type GetIntegrationLogDrainsResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -181,4 +293,32 @@ type GetIntegrationLogDrainsResponse struct {
 	RawResponse *http.Response
 	// A list of log drains
 	GetIntegrationLogDrains200ApplicationJSONObjects []GetIntegrationLogDrains200ApplicationJSON
+}
+
+func (o *GetIntegrationLogDrainsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetIntegrationLogDrainsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetIntegrationLogDrainsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetIntegrationLogDrainsResponse) GetGetIntegrationLogDrains200ApplicationJSONObjects() []GetIntegrationLogDrains200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetIntegrationLogDrains200ApplicationJSONObjects
 }

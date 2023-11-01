@@ -3,10 +3,10 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type AuthUserActiveDashboardViewsViewPreference string
@@ -42,6 +42,20 @@ type AuthUserActiveDashboardViews struct {
 	ViewPreference AuthUserActiveDashboardViewsViewPreference `json:"viewPreference"`
 }
 
+func (o *AuthUserActiveDashboardViews) GetScopeID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ScopeID
+}
+
+func (o *AuthUserActiveDashboardViews) GetViewPreference() AuthUserActiveDashboardViewsViewPreference {
+	if o == nil {
+		return AuthUserActiveDashboardViewsViewPreference("")
+	}
+	return o.ViewPreference
+}
+
 type AuthUserBillingAddress struct {
 	City       *string `json:"city,omitempty"`
 	Country    *string `json:"country,omitempty"`
@@ -51,14 +65,84 @@ type AuthUserBillingAddress struct {
 	State      *string `json:"state,omitempty"`
 }
 
+func (o *AuthUserBillingAddress) GetCity() *string {
+	if o == nil {
+		return nil
+	}
+	return o.City
+}
+
+func (o *AuthUserBillingAddress) GetCountry() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Country
+}
+
+func (o *AuthUserBillingAddress) GetLine1() string {
+	if o == nil {
+		return ""
+	}
+	return o.Line1
+}
+
+func (o *AuthUserBillingAddress) GetLine2() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Line2
+}
+
+func (o *AuthUserBillingAddress) GetPostalCode() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PostalCode
+}
+
+func (o *AuthUserBillingAddress) GetState() *string {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}
+
 type AuthUserBillingContract struct {
 	End   int64 `json:"end"`
 	Start int64 `json:"start"`
 }
 
+func (o *AuthUserBillingContract) GetEnd() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.End
+}
+
+func (o *AuthUserBillingContract) GetStart() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Start
+}
+
 type AuthUserBillingControls struct {
 	AnalyticsSampleRateInPercent *int64 `json:"analyticsSampleRateInPercent,omitempty"`
 	AnalyticsSpendLimitInDollars *int64 `json:"analyticsSpendLimitInDollars,omitempty"`
+}
+
+func (o *AuthUserBillingControls) GetAnalyticsSampleRateInPercent() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AnalyticsSampleRateInPercent
+}
+
+func (o *AuthUserBillingControls) GetAnalyticsSpendLimitInDollars() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AnalyticsSpendLimitInDollars
 }
 
 type AuthUserBillingCurrency string
@@ -153,6 +237,20 @@ type AuthUserBillingInvoiceItemsAnalyticsFrequency struct {
 	IntervalCount AuthUserBillingInvoiceItemsAnalyticsFrequencyIntervalCount `json:"intervalCount"`
 }
 
+func (o *AuthUserBillingInvoiceItemsAnalyticsFrequency) GetInterval() AuthUserBillingInvoiceItemsAnalyticsFrequencyInterval {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsAnalyticsFrequencyInterval("")
+	}
+	return o.Interval
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalyticsFrequency) GetIntervalCount() AuthUserBillingInvoiceItemsAnalyticsFrequencyIntervalCount {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsAnalyticsFrequencyIntervalCount(0)
+	}
+	return o.IntervalCount
+}
+
 // AuthUserBillingInvoiceItemsAnalytics - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserBillingInvoiceItemsAnalytics struct {
 	CreatedAt   *int64                                         `json:"createdAt,omitempty"`
@@ -166,6 +264,69 @@ type AuthUserBillingInvoiceItemsAnalytics struct {
 	Tier        *int64                                         `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsAnalytics) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalytics) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalytics) GetFrequency() *AuthUserBillingInvoiceItemsAnalyticsFrequency {
+	if o == nil {
+		return nil
+	}
+	return o.Frequency
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalytics) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalytics) GetMaxQuantity() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxQuantity
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalytics) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalytics) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalytics) GetQuantity() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Quantity
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalytics) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsAnalyticsUsage struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -175,6 +336,62 @@ type AuthUserBillingInvoiceItemsAnalyticsUsage struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalyticsUsage) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalyticsUsage) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalyticsUsage) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalyticsUsage) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalyticsUsage) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalyticsUsage) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalyticsUsage) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsAnalyticsUsage) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsArtifacts struct {
@@ -188,6 +405,62 @@ type AuthUserBillingInvoiceItemsArtifacts struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsArtifacts) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsArtifacts) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsArtifacts) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsArtifacts) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsArtifacts) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsArtifacts) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsArtifacts) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsArtifacts) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsBandwidth struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -197,6 +470,62 @@ type AuthUserBillingInvoiceItemsBandwidth struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsBandwidth) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsBandwidth) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsBandwidth) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsBandwidth) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsBandwidth) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsBandwidth) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsBandwidth) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsBandwidth) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsConcurrentBuildsFrequencyInterval string
@@ -264,6 +593,20 @@ type AuthUserBillingInvoiceItemsConcurrentBuildsFrequency struct {
 	IntervalCount AuthUserBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount `json:"intervalCount"`
 }
 
+func (o *AuthUserBillingInvoiceItemsConcurrentBuildsFrequency) GetInterval() AuthUserBillingInvoiceItemsConcurrentBuildsFrequencyInterval {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsConcurrentBuildsFrequencyInterval("")
+	}
+	return o.Interval
+}
+
+func (o *AuthUserBillingInvoiceItemsConcurrentBuildsFrequency) GetIntervalCount() AuthUserBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount(0)
+	}
+	return o.IntervalCount
+}
+
 // AuthUserBillingInvoiceItemsConcurrentBuilds - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserBillingInvoiceItemsConcurrentBuilds struct {
 	CreatedAt   *int64                                                `json:"createdAt,omitempty"`
@@ -277,6 +620,69 @@ type AuthUserBillingInvoiceItemsConcurrentBuilds struct {
 	Tier        *int64                                                `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsConcurrentBuilds) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUserBillingInvoiceItemsConcurrentBuilds) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsConcurrentBuilds) GetFrequency() *AuthUserBillingInvoiceItemsConcurrentBuildsFrequency {
+	if o == nil {
+		return nil
+	}
+	return o.Frequency
+}
+
+func (o *AuthUserBillingInvoiceItemsConcurrentBuilds) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsConcurrentBuilds) GetMaxQuantity() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxQuantity
+}
+
+func (o *AuthUserBillingInvoiceItemsConcurrentBuilds) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsConcurrentBuilds) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsConcurrentBuilds) GetQuantity() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Quantity
+}
+
+func (o *AuthUserBillingInvoiceItemsConcurrentBuilds) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsCronJobInvocation struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -286,6 +692,62 @@ type AuthUserBillingInvoiceItemsCronJobInvocation struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsCronJobInvocation) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsCronJobInvocation) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsCronJobInvocation) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsCronJobInvocation) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsCronJobInvocation) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsCronJobInvocation) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsCronJobInvocation) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsCronJobInvocation) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsDataCacheRead struct {
@@ -299,6 +761,62 @@ type AuthUserBillingInvoiceItemsDataCacheRead struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsDataCacheRead) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRead) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRead) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRead) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRead) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRead) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRead) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRead) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsDataCacheRevalidation struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -308,6 +826,62 @@ type AuthUserBillingInvoiceItemsDataCacheRevalidation struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRevalidation) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRevalidation) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRevalidation) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRevalidation) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRevalidation) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRevalidation) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRevalidation) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheRevalidation) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsDataCacheWrite struct {
@@ -321,6 +895,62 @@ type AuthUserBillingInvoiceItemsDataCacheWrite struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsDataCacheWrite) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheWrite) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheWrite) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheWrite) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheWrite) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheWrite) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheWrite) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsDataCacheWrite) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsEdgeConfigRead struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -330,6 +960,62 @@ type AuthUserBillingInvoiceItemsEdgeConfigRead struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigRead) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigRead) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigRead) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigRead) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigRead) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigRead) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigRead) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigRead) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsEdgeConfigWrite struct {
@@ -343,6 +1029,62 @@ type AuthUserBillingInvoiceItemsEdgeConfigWrite struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsEdgeConfigWrite) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigWrite) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigWrite) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigWrite) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigWrite) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigWrite) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigWrite) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeConfigWrite) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -354,6 +1096,62 @@ type AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -363,6 +1161,62 @@ type AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsEnterpriseFrequencyInterval string
@@ -430,6 +1284,20 @@ type AuthUserBillingInvoiceItemsEnterpriseFrequency struct {
 	IntervalCount AuthUserBillingInvoiceItemsEnterpriseFrequencyIntervalCount `json:"intervalCount"`
 }
 
+func (o *AuthUserBillingInvoiceItemsEnterpriseFrequency) GetInterval() AuthUserBillingInvoiceItemsEnterpriseFrequencyInterval {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsEnterpriseFrequencyInterval("")
+	}
+	return o.Interval
+}
+
+func (o *AuthUserBillingInvoiceItemsEnterpriseFrequency) GetIntervalCount() AuthUserBillingInvoiceItemsEnterpriseFrequencyIntervalCount {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsEnterpriseFrequencyIntervalCount(0)
+	}
+	return o.IntervalCount
+}
+
 // AuthUserBillingInvoiceItemsEnterprise - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserBillingInvoiceItemsEnterprise struct {
 	CreatedAt   *int64                                          `json:"createdAt,omitempty"`
@@ -441,6 +1309,69 @@ type AuthUserBillingInvoiceItemsEnterprise struct {
 	Price       int64                                           `json:"price"`
 	Quantity    int64                                           `json:"quantity"`
 	Tier        *int64                                          `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsEnterprise) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUserBillingInvoiceItemsEnterprise) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsEnterprise) GetFrequency() *AuthUserBillingInvoiceItemsEnterpriseFrequency {
+	if o == nil {
+		return nil
+	}
+	return o.Frequency
+}
+
+func (o *AuthUserBillingInvoiceItemsEnterprise) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsEnterprise) GetMaxQuantity() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxQuantity
+}
+
+func (o *AuthUserBillingInvoiceItemsEnterprise) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsEnterprise) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsEnterprise) GetQuantity() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Quantity
+}
+
+func (o *AuthUserBillingInvoiceItemsEnterprise) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsMonitoringFrequencyInterval string
@@ -508,6 +1439,20 @@ type AuthUserBillingInvoiceItemsMonitoringFrequency struct {
 	IntervalCount AuthUserBillingInvoiceItemsMonitoringFrequencyIntervalCount `json:"intervalCount"`
 }
 
+func (o *AuthUserBillingInvoiceItemsMonitoringFrequency) GetInterval() AuthUserBillingInvoiceItemsMonitoringFrequencyInterval {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsMonitoringFrequencyInterval("")
+	}
+	return o.Interval
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoringFrequency) GetIntervalCount() AuthUserBillingInvoiceItemsMonitoringFrequencyIntervalCount {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsMonitoringFrequencyIntervalCount(0)
+	}
+	return o.IntervalCount
+}
+
 // AuthUserBillingInvoiceItemsMonitoring - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserBillingInvoiceItemsMonitoring struct {
 	CreatedAt   *int64                                          `json:"createdAt,omitempty"`
@@ -521,6 +1466,69 @@ type AuthUserBillingInvoiceItemsMonitoring struct {
 	Tier        *int64                                          `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsMonitoring) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoring) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoring) GetFrequency() *AuthUserBillingInvoiceItemsMonitoringFrequency {
+	if o == nil {
+		return nil
+	}
+	return o.Frequency
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoring) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoring) GetMaxQuantity() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxQuantity
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoring) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoring) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoring) GetQuantity() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Quantity
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoring) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsMonitoringMetric struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -530,6 +1538,62 @@ type AuthUserBillingInvoiceItemsMonitoringMetric struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoringMetric) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoringMetric) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoringMetric) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoringMetric) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoringMetric) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoringMetric) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoringMetric) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsMonitoringMetric) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsPasswordProtectionFrequencyInterval string
@@ -597,6 +1661,20 @@ type AuthUserBillingInvoiceItemsPasswordProtectionFrequency struct {
 	IntervalCount AuthUserBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount `json:"intervalCount"`
 }
 
+func (o *AuthUserBillingInvoiceItemsPasswordProtectionFrequency) GetInterval() AuthUserBillingInvoiceItemsPasswordProtectionFrequencyInterval {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsPasswordProtectionFrequencyInterval("")
+	}
+	return o.Interval
+}
+
+func (o *AuthUserBillingInvoiceItemsPasswordProtectionFrequency) GetIntervalCount() AuthUserBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount(0)
+	}
+	return o.IntervalCount
+}
+
 // AuthUserBillingInvoiceItemsPasswordProtection - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserBillingInvoiceItemsPasswordProtection struct {
 	CreatedAt   *int64                                                  `json:"createdAt,omitempty"`
@@ -610,6 +1688,69 @@ type AuthUserBillingInvoiceItemsPasswordProtection struct {
 	Tier        *int64                                                  `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsPasswordProtection) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPasswordProtection) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPasswordProtection) GetFrequency() *AuthUserBillingInvoiceItemsPasswordProtectionFrequency {
+	if o == nil {
+		return nil
+	}
+	return o.Frequency
+}
+
+func (o *AuthUserBillingInvoiceItemsPasswordProtection) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsPasswordProtection) GetMaxQuantity() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxQuantity
+}
+
+func (o *AuthUserBillingInvoiceItemsPasswordProtection) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsPasswordProtection) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsPasswordProtection) GetQuantity() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Quantity
+}
+
+func (o *AuthUserBillingInvoiceItemsPasswordProtection) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsPostgresComputeTime struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -619,6 +1760,62 @@ type AuthUserBillingInvoiceItemsPostgresComputeTime struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresComputeTime) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresComputeTime) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresComputeTime) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresComputeTime) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresComputeTime) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresComputeTime) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresComputeTime) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresComputeTime) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsPostgresDataStorage struct {
@@ -632,6 +1829,62 @@ type AuthUserBillingInvoiceItemsPostgresDataStorage struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsPostgresDataStorage) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataStorage) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataStorage) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataStorage) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataStorage) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataStorage) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataStorage) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataStorage) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsPostgresDataTransfer struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -641,6 +1894,62 @@ type AuthUserBillingInvoiceItemsPostgresDataTransfer struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataTransfer) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataTransfer) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataTransfer) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataTransfer) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataTransfer) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataTransfer) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataTransfer) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDataTransfer) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsPostgresDatabase struct {
@@ -654,6 +1963,62 @@ type AuthUserBillingInvoiceItemsPostgresDatabase struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsPostgresDatabase) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDatabase) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDatabase) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDatabase) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDatabase) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDatabase) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDatabase) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresDatabase) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsPostgresWrittenData struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -663,6 +2028,62 @@ type AuthUserBillingInvoiceItemsPostgresWrittenData struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresWrittenData) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresWrittenData) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresWrittenData) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresWrittenData) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresWrittenData) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresWrittenData) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresWrittenData) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsPostgresWrittenData) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval string
@@ -730,6 +2151,20 @@ type AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequency struct {
 	IntervalCount AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount `json:"intervalCount"`
 }
 
+func (o *AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequency) GetInterval() AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval("")
+	}
+	return o.Interval
+}
+
+func (o *AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequency) GetIntervalCount() AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount(0)
+	}
+	return o.IntervalCount
+}
+
 // AuthUserBillingInvoiceItemsPreviewDeploymentSuffix - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserBillingInvoiceItemsPreviewDeploymentSuffix struct {
 	CreatedAt   *int64                                                       `json:"createdAt,omitempty"`
@@ -741,6 +2176,69 @@ type AuthUserBillingInvoiceItemsPreviewDeploymentSuffix struct {
 	Price       int64                                                        `json:"price"`
 	Quantity    int64                                                        `json:"quantity"`
 	Tier        *int64                                                       `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsPreviewDeploymentSuffix) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPreviewDeploymentSuffix) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPreviewDeploymentSuffix) GetFrequency() *AuthUserBillingInvoiceItemsPreviewDeploymentSuffixFrequency {
+	if o == nil {
+		return nil
+	}
+	return o.Frequency
+}
+
+func (o *AuthUserBillingInvoiceItemsPreviewDeploymentSuffix) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsPreviewDeploymentSuffix) GetMaxQuantity() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxQuantity
+}
+
+func (o *AuthUserBillingInvoiceItemsPreviewDeploymentSuffix) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsPreviewDeploymentSuffix) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsPreviewDeploymentSuffix) GetQuantity() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Quantity
+}
+
+func (o *AuthUserBillingInvoiceItemsPreviewDeploymentSuffix) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsProFrequencyInterval string
@@ -808,6 +2306,20 @@ type AuthUserBillingInvoiceItemsProFrequency struct {
 	IntervalCount AuthUserBillingInvoiceItemsProFrequencyIntervalCount `json:"intervalCount"`
 }
 
+func (o *AuthUserBillingInvoiceItemsProFrequency) GetInterval() AuthUserBillingInvoiceItemsProFrequencyInterval {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsProFrequencyInterval("")
+	}
+	return o.Interval
+}
+
+func (o *AuthUserBillingInvoiceItemsProFrequency) GetIntervalCount() AuthUserBillingInvoiceItemsProFrequencyIntervalCount {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsProFrequencyIntervalCount(0)
+	}
+	return o.IntervalCount
+}
+
 // AuthUserBillingInvoiceItemsPro - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserBillingInvoiceItemsPro struct {
 	CreatedAt   *int64                                   `json:"createdAt,omitempty"`
@@ -819,6 +2331,69 @@ type AuthUserBillingInvoiceItemsPro struct {
 	Price       int64                                    `json:"price"`
 	Quantity    int64                                    `json:"quantity"`
 	Tier        *int64                                   `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsPro) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPro) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsPro) GetFrequency() *AuthUserBillingInvoiceItemsProFrequency {
+	if o == nil {
+		return nil
+	}
+	return o.Frequency
+}
+
+func (o *AuthUserBillingInvoiceItemsPro) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsPro) GetMaxQuantity() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxQuantity
+}
+
+func (o *AuthUserBillingInvoiceItemsPro) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsPro) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsPro) GetQuantity() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Quantity
+}
+
+func (o *AuthUserBillingInvoiceItemsPro) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsSamlFrequencyInterval string
@@ -886,6 +2461,20 @@ type AuthUserBillingInvoiceItemsSamlFrequency struct {
 	IntervalCount AuthUserBillingInvoiceItemsSamlFrequencyIntervalCount `json:"intervalCount"`
 }
 
+func (o *AuthUserBillingInvoiceItemsSamlFrequency) GetInterval() AuthUserBillingInvoiceItemsSamlFrequencyInterval {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsSamlFrequencyInterval("")
+	}
+	return o.Interval
+}
+
+func (o *AuthUserBillingInvoiceItemsSamlFrequency) GetIntervalCount() AuthUserBillingInvoiceItemsSamlFrequencyIntervalCount {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsSamlFrequencyIntervalCount(0)
+	}
+	return o.IntervalCount
+}
+
 // AuthUserBillingInvoiceItemsSaml - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserBillingInvoiceItemsSaml struct {
 	CreatedAt   *int64                                    `json:"createdAt,omitempty"`
@@ -899,6 +2488,69 @@ type AuthUserBillingInvoiceItemsSaml struct {
 	Tier        *int64                                    `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsSaml) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUserBillingInvoiceItemsSaml) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsSaml) GetFrequency() *AuthUserBillingInvoiceItemsSamlFrequency {
+	if o == nil {
+		return nil
+	}
+	return o.Frequency
+}
+
+func (o *AuthUserBillingInvoiceItemsSaml) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsSaml) GetMaxQuantity() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxQuantity
+}
+
+func (o *AuthUserBillingInvoiceItemsSaml) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsSaml) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsSaml) GetQuantity() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Quantity
+}
+
+func (o *AuthUserBillingInvoiceItemsSaml) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsServerlessFunctionExecution struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -908,6 +2560,62 @@ type AuthUserBillingInvoiceItemsServerlessFunctionExecution struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsServerlessFunctionExecution) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsServerlessFunctionExecution) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsServerlessFunctionExecution) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsServerlessFunctionExecution) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsServerlessFunctionExecution) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsServerlessFunctionExecution) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsServerlessFunctionExecution) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsServerlessFunctionExecution) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsSourceImages struct {
@@ -921,6 +2629,62 @@ type AuthUserBillingInvoiceItemsSourceImages struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsSourceImages) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsSourceImages) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsSourceImages) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsSourceImages) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsSourceImages) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsSourceImages) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsSourceImages) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsSourceImages) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -930,6 +2694,62 @@ type AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsStorageRedisTotalCommands struct {
@@ -943,6 +2763,62 @@ type AuthUserBillingInvoiceItemsStorageRedisTotalCommands struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalCommands) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalCommands) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalCommands) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalCommands) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalCommands) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalCommands) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalCommands) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalCommands) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -954,6 +2830,62 @@ type AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsStorageRedisTotalDatabases struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -963,6 +2895,62 @@ type AuthUserBillingInvoiceItemsStorageRedisTotalDatabases struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDatabases) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDatabases) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDatabases) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDatabases) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDatabases) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDatabases) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDatabases) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsStorageRedisTotalDatabases) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsTeamSeatsFrequencyInterval string
@@ -1030,6 +3018,20 @@ type AuthUserBillingInvoiceItemsTeamSeatsFrequency struct {
 	IntervalCount AuthUserBillingInvoiceItemsTeamSeatsFrequencyIntervalCount `json:"intervalCount"`
 }
 
+func (o *AuthUserBillingInvoiceItemsTeamSeatsFrequency) GetInterval() AuthUserBillingInvoiceItemsTeamSeatsFrequencyInterval {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsTeamSeatsFrequencyInterval("")
+	}
+	return o.Interval
+}
+
+func (o *AuthUserBillingInvoiceItemsTeamSeatsFrequency) GetIntervalCount() AuthUserBillingInvoiceItemsTeamSeatsFrequencyIntervalCount {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsTeamSeatsFrequencyIntervalCount(0)
+	}
+	return o.IntervalCount
+}
+
 // AuthUserBillingInvoiceItemsTeamSeats - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserBillingInvoiceItemsTeamSeats struct {
 	CreatedAt   *int64                                         `json:"createdAt,omitempty"`
@@ -1041,6 +3043,69 @@ type AuthUserBillingInvoiceItemsTeamSeats struct {
 	Price       int64                                          `json:"price"`
 	Quantity    int64                                          `json:"quantity"`
 	Tier        *int64                                         `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsTeamSeats) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUserBillingInvoiceItemsTeamSeats) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsTeamSeats) GetFrequency() *AuthUserBillingInvoiceItemsTeamSeatsFrequency {
+	if o == nil {
+		return nil
+	}
+	return o.Frequency
+}
+
+func (o *AuthUserBillingInvoiceItemsTeamSeats) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsTeamSeats) GetMaxQuantity() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxQuantity
+}
+
+func (o *AuthUserBillingInvoiceItemsTeamSeats) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsTeamSeats) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsTeamSeats) GetQuantity() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Quantity
+}
+
+func (o *AuthUserBillingInvoiceItemsTeamSeats) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItemsWebAnalyticsFrequencyInterval string
@@ -1108,6 +3173,20 @@ type AuthUserBillingInvoiceItemsWebAnalyticsFrequency struct {
 	IntervalCount AuthUserBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount `json:"intervalCount"`
 }
 
+func (o *AuthUserBillingInvoiceItemsWebAnalyticsFrequency) GetInterval() AuthUserBillingInvoiceItemsWebAnalyticsFrequencyInterval {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsWebAnalyticsFrequencyInterval("")
+	}
+	return o.Interval
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalyticsFrequency) GetIntervalCount() AuthUserBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount {
+	if o == nil {
+		return AuthUserBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount(0)
+	}
+	return o.IntervalCount
+}
+
 // AuthUserBillingInvoiceItemsWebAnalytics - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserBillingInvoiceItemsWebAnalytics struct {
 	CreatedAt   *int64                                            `json:"createdAt,omitempty"`
@@ -1121,6 +3200,69 @@ type AuthUserBillingInvoiceItemsWebAnalytics struct {
 	Tier        *int64                                            `json:"tier,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItemsWebAnalytics) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalytics) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalytics) GetFrequency() *AuthUserBillingInvoiceItemsWebAnalyticsFrequency {
+	if o == nil {
+		return nil
+	}
+	return o.Frequency
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalytics) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalytics) GetMaxQuantity() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxQuantity
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalytics) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalytics) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalytics) GetQuantity() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Quantity
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalytics) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
 type AuthUserBillingInvoiceItemsWebAnalyticsEvent struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
@@ -1130,6 +3272,62 @@ type AuthUserBillingInvoiceItemsWebAnalyticsEvent struct {
 	Price      int64   `json:"price"`
 	Threshold  int64   `json:"threshold"`
 	Tier       *int64  `json:"tier,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalyticsEvent) GetBatch() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Batch
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalyticsEvent) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalyticsEvent) GetEnabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalyticsEvent) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalyticsEvent) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalyticsEvent) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalyticsEvent) GetThreshold() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Threshold
+}
+
+func (o *AuthUserBillingInvoiceItemsWebAnalyticsEvent) GetTier() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
 }
 
 type AuthUserBillingInvoiceItems struct {
@@ -1179,13 +3377,272 @@ type AuthUserBillingInvoiceItems struct {
 	WebAnalyticsEvent *AuthUserBillingInvoiceItemsWebAnalyticsEvent `json:"webAnalyticsEvent,omitempty"`
 }
 
+func (o *AuthUserBillingInvoiceItems) GetAnalytics() *AuthUserBillingInvoiceItemsAnalytics {
+	if o == nil {
+		return nil
+	}
+	return o.Analytics
+}
+
+func (o *AuthUserBillingInvoiceItems) GetAnalyticsUsage() *AuthUserBillingInvoiceItemsAnalyticsUsage {
+	if o == nil {
+		return nil
+	}
+	return o.AnalyticsUsage
+}
+
+func (o *AuthUserBillingInvoiceItems) GetArtifacts() *AuthUserBillingInvoiceItemsArtifacts {
+	if o == nil {
+		return nil
+	}
+	return o.Artifacts
+}
+
+func (o *AuthUserBillingInvoiceItems) GetBandwidth() *AuthUserBillingInvoiceItemsBandwidth {
+	if o == nil {
+		return nil
+	}
+	return o.Bandwidth
+}
+
+func (o *AuthUserBillingInvoiceItems) GetConcurrentBuilds() *AuthUserBillingInvoiceItemsConcurrentBuilds {
+	if o == nil {
+		return nil
+	}
+	return o.ConcurrentBuilds
+}
+
+func (o *AuthUserBillingInvoiceItems) GetCronJobInvocation() *AuthUserBillingInvoiceItemsCronJobInvocation {
+	if o == nil {
+		return nil
+	}
+	return o.CronJobInvocation
+}
+
+func (o *AuthUserBillingInvoiceItems) GetDataCacheRead() *AuthUserBillingInvoiceItemsDataCacheRead {
+	if o == nil {
+		return nil
+	}
+	return o.DataCacheRead
+}
+
+func (o *AuthUserBillingInvoiceItems) GetDataCacheRevalidation() *AuthUserBillingInvoiceItemsDataCacheRevalidation {
+	if o == nil {
+		return nil
+	}
+	return o.DataCacheRevalidation
+}
+
+func (o *AuthUserBillingInvoiceItems) GetDataCacheWrite() *AuthUserBillingInvoiceItemsDataCacheWrite {
+	if o == nil {
+		return nil
+	}
+	return o.DataCacheWrite
+}
+
+func (o *AuthUserBillingInvoiceItems) GetEdgeConfigRead() *AuthUserBillingInvoiceItemsEdgeConfigRead {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigRead
+}
+
+func (o *AuthUserBillingInvoiceItems) GetEdgeConfigWrite() *AuthUserBillingInvoiceItemsEdgeConfigWrite {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigWrite
+}
+
+func (o *AuthUserBillingInvoiceItems) GetEdgeFunctionExecutionUnits() *AuthUserBillingInvoiceItemsEdgeFunctionExecutionUnits {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeFunctionExecutionUnits
+}
+
+func (o *AuthUserBillingInvoiceItems) GetEdgeMiddlewareInvocations() *AuthUserBillingInvoiceItemsEdgeMiddlewareInvocations {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeMiddlewareInvocations
+}
+
+func (o *AuthUserBillingInvoiceItems) GetEnterprise() *AuthUserBillingInvoiceItemsEnterprise {
+	if o == nil {
+		return nil
+	}
+	return o.Enterprise
+}
+
+func (o *AuthUserBillingInvoiceItems) GetMonitoring() *AuthUserBillingInvoiceItemsMonitoring {
+	if o == nil {
+		return nil
+	}
+	return o.Monitoring
+}
+
+func (o *AuthUserBillingInvoiceItems) GetMonitoringMetric() *AuthUserBillingInvoiceItemsMonitoringMetric {
+	if o == nil {
+		return nil
+	}
+	return o.MonitoringMetric
+}
+
+func (o *AuthUserBillingInvoiceItems) GetPasswordProtection() *AuthUserBillingInvoiceItemsPasswordProtection {
+	if o == nil {
+		return nil
+	}
+	return o.PasswordProtection
+}
+
+func (o *AuthUserBillingInvoiceItems) GetPostgresComputeTime() *AuthUserBillingInvoiceItemsPostgresComputeTime {
+	if o == nil {
+		return nil
+	}
+	return o.PostgresComputeTime
+}
+
+func (o *AuthUserBillingInvoiceItems) GetPostgresDataStorage() *AuthUserBillingInvoiceItemsPostgresDataStorage {
+	if o == nil {
+		return nil
+	}
+	return o.PostgresDataStorage
+}
+
+func (o *AuthUserBillingInvoiceItems) GetPostgresDataTransfer() *AuthUserBillingInvoiceItemsPostgresDataTransfer {
+	if o == nil {
+		return nil
+	}
+	return o.PostgresDataTransfer
+}
+
+func (o *AuthUserBillingInvoiceItems) GetPostgresDatabase() *AuthUserBillingInvoiceItemsPostgresDatabase {
+	if o == nil {
+		return nil
+	}
+	return o.PostgresDatabase
+}
+
+func (o *AuthUserBillingInvoiceItems) GetPostgresWrittenData() *AuthUserBillingInvoiceItemsPostgresWrittenData {
+	if o == nil {
+		return nil
+	}
+	return o.PostgresWrittenData
+}
+
+func (o *AuthUserBillingInvoiceItems) GetPreviewDeploymentSuffix() *AuthUserBillingInvoiceItemsPreviewDeploymentSuffix {
+	if o == nil {
+		return nil
+	}
+	return o.PreviewDeploymentSuffix
+}
+
+func (o *AuthUserBillingInvoiceItems) GetPro() *AuthUserBillingInvoiceItemsPro {
+	if o == nil {
+		return nil
+	}
+	return o.Pro
+}
+
+func (o *AuthUserBillingInvoiceItems) GetSaml() *AuthUserBillingInvoiceItemsSaml {
+	if o == nil {
+		return nil
+	}
+	return o.Saml
+}
+
+func (o *AuthUserBillingInvoiceItems) GetServerlessFunctionExecution() *AuthUserBillingInvoiceItemsServerlessFunctionExecution {
+	if o == nil {
+		return nil
+	}
+	return o.ServerlessFunctionExecution
+}
+
+func (o *AuthUserBillingInvoiceItems) GetSourceImages() *AuthUserBillingInvoiceItemsSourceImages {
+	if o == nil {
+		return nil
+	}
+	return o.SourceImages
+}
+
+func (o *AuthUserBillingInvoiceItems) GetStorageRedisTotalBandwidthInBytes() *AuthUserBillingInvoiceItemsStorageRedisTotalBandwidthInBytes {
+	if o == nil {
+		return nil
+	}
+	return o.StorageRedisTotalBandwidthInBytes
+}
+
+func (o *AuthUserBillingInvoiceItems) GetStorageRedisTotalCommands() *AuthUserBillingInvoiceItemsStorageRedisTotalCommands {
+	if o == nil {
+		return nil
+	}
+	return o.StorageRedisTotalCommands
+}
+
+func (o *AuthUserBillingInvoiceItems) GetStorageRedisTotalDailyAvgStorageInBytes() *AuthUserBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes {
+	if o == nil {
+		return nil
+	}
+	return o.StorageRedisTotalDailyAvgStorageInBytes
+}
+
+func (o *AuthUserBillingInvoiceItems) GetStorageRedisTotalDatabases() *AuthUserBillingInvoiceItemsStorageRedisTotalDatabases {
+	if o == nil {
+		return nil
+	}
+	return o.StorageRedisTotalDatabases
+}
+
+func (o *AuthUserBillingInvoiceItems) GetTeamSeats() *AuthUserBillingInvoiceItemsTeamSeats {
+	if o == nil {
+		return nil
+	}
+	return o.TeamSeats
+}
+
+func (o *AuthUserBillingInvoiceItems) GetWebAnalytics() *AuthUserBillingInvoiceItemsWebAnalytics {
+	if o == nil {
+		return nil
+	}
+	return o.WebAnalytics
+}
+
+func (o *AuthUserBillingInvoiceItems) GetWebAnalyticsEvent() *AuthUserBillingInvoiceItemsWebAnalyticsEvent {
+	if o == nil {
+		return nil
+	}
+	return o.WebAnalyticsEvent
+}
+
 type AuthUserBillingInvoiceSettings struct {
 	Footer *string `json:"footer,omitempty"`
+}
+
+func (o *AuthUserBillingInvoiceSettings) GetFooter() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Footer
 }
 
 type AuthUserBillingPeriod struct {
 	End   int64 `json:"end"`
 	Start int64 `json:"start"`
+}
+
+func (o *AuthUserBillingPeriod) GetEnd() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.End
+}
+
+func (o *AuthUserBillingPeriod) GetStart() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Start
 }
 
 type AuthUserBillingPlan string
@@ -1371,9 +3828,65 @@ type AuthUserBillingSubscriptionsDiscountCoupon struct {
 	PercentageOff    *int64                                             `json:"percentageOff"`
 }
 
+func (o *AuthUserBillingSubscriptionsDiscountCoupon) GetAmountOff() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AmountOff
+}
+
+func (o *AuthUserBillingSubscriptionsDiscountCoupon) GetDuration() AuthUserBillingSubscriptionsDiscountCouponDuration {
+	if o == nil {
+		return AuthUserBillingSubscriptionsDiscountCouponDuration("")
+	}
+	return o.Duration
+}
+
+func (o *AuthUserBillingSubscriptionsDiscountCoupon) GetDurationInMonths() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DurationInMonths
+}
+
+func (o *AuthUserBillingSubscriptionsDiscountCoupon) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *AuthUserBillingSubscriptionsDiscountCoupon) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBillingSubscriptionsDiscountCoupon) GetPercentageOff() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PercentageOff
+}
+
 type AuthUserBillingSubscriptionsDiscount struct {
 	Coupon AuthUserBillingSubscriptionsDiscountCoupon `json:"coupon"`
 	ID     string                                     `json:"id"`
+}
+
+func (o *AuthUserBillingSubscriptionsDiscount) GetCoupon() AuthUserBillingSubscriptionsDiscountCoupon {
+	if o == nil {
+		return AuthUserBillingSubscriptionsDiscountCoupon{}
+	}
+	return o.Coupon
+}
+
+func (o *AuthUserBillingSubscriptionsDiscount) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 type AuthUserBillingSubscriptionsFrequencyInterval string
@@ -1414,6 +3927,20 @@ type AuthUserBillingSubscriptionsFrequency struct {
 	IntervalCount int64                                         `json:"intervalCount"`
 }
 
+func (o *AuthUserBillingSubscriptionsFrequency) GetInterval() AuthUserBillingSubscriptionsFrequencyInterval {
+	if o == nil {
+		return AuthUserBillingSubscriptionsFrequencyInterval("")
+	}
+	return o.Interval
+}
+
+func (o *AuthUserBillingSubscriptionsFrequency) GetIntervalCount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalCount
+}
+
 type AuthUserBillingSubscriptionsItems struct {
 	Amount    int64  `json:"amount"`
 	ID        string `json:"id"`
@@ -1422,14 +3949,77 @@ type AuthUserBillingSubscriptionsItems struct {
 	Quantity  int64  `json:"quantity"`
 }
 
+func (o *AuthUserBillingSubscriptionsItems) GetAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Amount
+}
+
+func (o *AuthUserBillingSubscriptionsItems) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *AuthUserBillingSubscriptionsItems) GetPriceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.PriceID
+}
+
+func (o *AuthUserBillingSubscriptionsItems) GetProductID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProductID
+}
+
+func (o *AuthUserBillingSubscriptionsItems) GetQuantity() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Quantity
+}
+
 type AuthUserBillingSubscriptionsPeriod struct {
 	End   int64 `json:"end"`
 	Start int64 `json:"start"`
 }
 
+func (o *AuthUserBillingSubscriptionsPeriod) GetEnd() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.End
+}
+
+func (o *AuthUserBillingSubscriptionsPeriod) GetStart() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Start
+}
+
 type AuthUserBillingSubscriptionsTrial struct {
 	End   int64 `json:"end"`
 	Start int64 `json:"start"`
+}
+
+func (o *AuthUserBillingSubscriptionsTrial) GetEnd() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.End
+}
+
+func (o *AuthUserBillingSubscriptionsTrial) GetStart() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Start
 }
 
 type AuthUserBillingSubscriptions struct {
@@ -1441,14 +4031,84 @@ type AuthUserBillingSubscriptions struct {
 	Trial     *AuthUserBillingSubscriptionsTrial    `json:"trial"`
 }
 
+func (o *AuthUserBillingSubscriptions) GetDiscount() *AuthUserBillingSubscriptionsDiscount {
+	if o == nil {
+		return nil
+	}
+	return o.Discount
+}
+
+func (o *AuthUserBillingSubscriptions) GetFrequency() AuthUserBillingSubscriptionsFrequency {
+	if o == nil {
+		return AuthUserBillingSubscriptionsFrequency{}
+	}
+	return o.Frequency
+}
+
+func (o *AuthUserBillingSubscriptions) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *AuthUserBillingSubscriptions) GetItems() []AuthUserBillingSubscriptionsItems {
+	if o == nil {
+		return []AuthUserBillingSubscriptionsItems{}
+	}
+	return o.Items
+}
+
+func (o *AuthUserBillingSubscriptions) GetPeriod() AuthUserBillingSubscriptionsPeriod {
+	if o == nil {
+		return AuthUserBillingSubscriptionsPeriod{}
+	}
+	return o.Period
+}
+
+func (o *AuthUserBillingSubscriptions) GetTrial() *AuthUserBillingSubscriptionsTrial {
+	if o == nil {
+		return nil
+	}
+	return o.Trial
+}
+
 type AuthUserBillingTax struct {
 	ID   string `json:"id"`
 	Type string `json:"type"`
 }
 
+func (o *AuthUserBillingTax) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *AuthUserBillingTax) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
 type AuthUserBillingTrial struct {
 	End   int64 `json:"end"`
 	Start int64 `json:"start"`
+}
+
+func (o *AuthUserBillingTrial) GetEnd() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.End
+}
+
+func (o *AuthUserBillingTrial) GetStart() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Start
 }
 
 // AuthUserBilling - An object containing billing infomation associated with the User account.
@@ -1478,9 +4138,177 @@ type AuthUserBilling struct {
 	Trial                   *AuthUserBillingTrial             `json:"trial,omitempty"`
 }
 
+func (o *AuthUserBilling) GetAddress() *AuthUserBillingAddress {
+	if o == nil {
+		return nil
+	}
+	return o.Address
+}
+
+func (o *AuthUserBilling) GetCancelation() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Cancelation
+}
+
+func (o *AuthUserBilling) GetContract() *AuthUserBillingContract {
+	if o == nil {
+		return nil
+	}
+	return o.Contract
+}
+
+func (o *AuthUserBilling) GetControls() *AuthUserBillingControls {
+	if o == nil {
+		return nil
+	}
+	return o.Controls
+}
+
+func (o *AuthUserBilling) GetCurrency() *AuthUserBillingCurrency {
+	if o == nil {
+		return nil
+	}
+	return o.Currency
+}
+
+func (o *AuthUserBilling) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *AuthUserBilling) GetInvoiceItems() *AuthUserBillingInvoiceItems {
+	if o == nil {
+		return nil
+	}
+	return o.InvoiceItems
+}
+
+func (o *AuthUserBilling) GetInvoiceSettings() *AuthUserBillingInvoiceSettings {
+	if o == nil {
+		return nil
+	}
+	return o.InvoiceSettings
+}
+
+func (o *AuthUserBilling) GetLanguage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Language
+}
+
+func (o *AuthUserBilling) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserBilling) GetOrbCustomerID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OrbCustomerID
+}
+
+func (o *AuthUserBilling) GetOrbMigrationScheduledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.OrbMigrationScheduledAt
+}
+
+func (o *AuthUserBilling) GetPeriod() *AuthUserBillingPeriod {
+	if o == nil {
+		return nil
+	}
+	return o.Period
+}
+
+func (o *AuthUserBilling) GetPlan() AuthUserBillingPlan {
+	if o == nil {
+		return AuthUserBillingPlan("")
+	}
+	return o.Plan
+}
+
+func (o *AuthUserBilling) GetPlatform() *AuthUserBillingPlatform {
+	if o == nil {
+		return nil
+	}
+	return o.Platform
+}
+
+func (o *AuthUserBilling) GetPricingExperiment() *AuthUserBillingPricingExperiment {
+	if o == nil {
+		return nil
+	}
+	return o.PricingExperiment
+}
+
+func (o *AuthUserBilling) GetProgramType() *AuthUserBillingProgramType {
+	if o == nil {
+		return nil
+	}
+	return o.ProgramType
+}
+
+func (o *AuthUserBilling) GetPurchaseOrder() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PurchaseOrder
+}
+
+func (o *AuthUserBilling) GetStatus() *AuthUserBillingStatus {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
+func (o *AuthUserBilling) GetSubscriptions() []AuthUserBillingSubscriptions {
+	if o == nil {
+		return nil
+	}
+	return o.Subscriptions
+}
+
+func (o *AuthUserBilling) GetSyncedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SyncedAt
+}
+
+func (o *AuthUserBilling) GetTax() *AuthUserBillingTax {
+	if o == nil {
+		return nil
+	}
+	return o.Tax
+}
+
+func (o *AuthUserBilling) GetTrial() *AuthUserBillingTrial {
+	if o == nil {
+		return nil
+	}
+	return o.Trial
+}
+
 // AuthUserDataCache - data cache settings
 type AuthUserDataCache struct {
 	ExcessBillingEnabled *bool `json:"excessBillingEnabled,omitempty"`
+}
+
+func (o *AuthUserDataCache) GetExcessBillingEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ExcessBillingEnabled
 }
 
 type AuthUserDismissedToastsDismissals struct {
@@ -1488,10 +4316,38 @@ type AuthUserDismissedToastsDismissals struct {
 	ScopeID   string `json:"scopeId"`
 }
 
+func (o *AuthUserDismissedToastsDismissals) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUserDismissedToastsDismissals) GetScopeID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ScopeID
+}
+
 // AuthUserDismissedToasts - A record of when, under a certain scopeId, a toast was dismissed
 type AuthUserDismissedToasts struct {
 	Dismissals []AuthUserDismissedToastsDismissals `json:"dismissals"`
 	Name       string                              `json:"name"`
+}
+
+func (o *AuthUserDismissedToasts) GetDismissals() []AuthUserDismissedToastsDismissals {
+	if o == nil {
+		return []AuthUserDismissedToastsDismissals{}
+	}
+	return o.Dismissals
+}
+
+func (o *AuthUserDismissedToasts) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 // AuthUserFavoriteProjectsAndSpaces2 - A list of projects and spaces across teams that a user has marked as a favorite.
@@ -1501,11 +4357,53 @@ type AuthUserFavoriteProjectsAndSpaces2 struct {
 	SpaceID   string `json:"spaceId"`
 }
 
+func (o *AuthUserFavoriteProjectsAndSpaces2) GetScopeID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ScopeID
+}
+
+func (o *AuthUserFavoriteProjectsAndSpaces2) GetScopeSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.ScopeSlug
+}
+
+func (o *AuthUserFavoriteProjectsAndSpaces2) GetSpaceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SpaceID
+}
+
 // AuthUserFavoriteProjectsAndSpaces1 - A list of projects and spaces across teams that a user has marked as a favorite.
 type AuthUserFavoriteProjectsAndSpaces1 struct {
 	ProjectID string `json:"projectId"`
 	ScopeID   string `json:"scopeId"`
 	ScopeSlug string `json:"scopeSlug"`
+}
+
+func (o *AuthUserFavoriteProjectsAndSpaces1) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *AuthUserFavoriteProjectsAndSpaces1) GetScopeID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ScopeID
+}
+
+func (o *AuthUserFavoriteProjectsAndSpaces1) GetScopeSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.ScopeSlug
 }
 
 type AuthUserFavoriteProjectsAndSpacesType string
@@ -1541,21 +4439,16 @@ func CreateAuthUserFavoriteProjectsAndSpacesAuthUserFavoriteProjectsAndSpaces2(a
 }
 
 func (u *AuthUserFavoriteProjectsAndSpaces) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	authUserFavoriteProjectsAndSpaces1 := new(AuthUserFavoriteProjectsAndSpaces1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&authUserFavoriteProjectsAndSpaces1); err == nil {
+	if err := utils.UnmarshalJSON(data, &authUserFavoriteProjectsAndSpaces1, "", true, true); err == nil {
 		u.AuthUserFavoriteProjectsAndSpaces1 = authUserFavoriteProjectsAndSpaces1
 		u.Type = AuthUserFavoriteProjectsAndSpacesTypeAuthUserFavoriteProjectsAndSpaces1
 		return nil
 	}
 
 	authUserFavoriteProjectsAndSpaces2 := new(AuthUserFavoriteProjectsAndSpaces2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&authUserFavoriteProjectsAndSpaces2); err == nil {
+	if err := utils.UnmarshalJSON(data, &authUserFavoriteProjectsAndSpaces2, "", true, true); err == nil {
 		u.AuthUserFavoriteProjectsAndSpaces2 = authUserFavoriteProjectsAndSpaces2
 		u.Type = AuthUserFavoriteProjectsAndSpacesTypeAuthUserFavoriteProjectsAndSpaces2
 		return nil
@@ -1566,14 +4459,14 @@ func (u *AuthUserFavoriteProjectsAndSpaces) UnmarshalJSON(data []byte) error {
 
 func (u AuthUserFavoriteProjectsAndSpaces) MarshalJSON() ([]byte, error) {
 	if u.AuthUserFavoriteProjectsAndSpaces1 != nil {
-		return json.Marshal(u.AuthUserFavoriteProjectsAndSpaces1)
+		return utils.MarshalJSON(u.AuthUserFavoriteProjectsAndSpaces1, "", true)
 	}
 
 	if u.AuthUserFavoriteProjectsAndSpaces2 != nil {
-		return json.Marshal(u.AuthUserFavoriteProjectsAndSpaces2)
+		return utils.MarshalJSON(u.AuthUserFavoriteProjectsAndSpaces2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type AuthUserFeatureBlocksWebAnalytics struct {
@@ -1582,9 +4475,37 @@ type AuthUserFeatureBlocksWebAnalytics struct {
 	IsCurrentlyBlocked bool   `json:"isCurrentlyBlocked"`
 }
 
+func (o *AuthUserFeatureBlocksWebAnalytics) GetBlockedFrom() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BlockedFrom
+}
+
+func (o *AuthUserFeatureBlocksWebAnalytics) GetBlockedUntil() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BlockedUntil
+}
+
+func (o *AuthUserFeatureBlocksWebAnalytics) GetIsCurrentlyBlocked() bool {
+	if o == nil {
+		return false
+	}
+	return o.IsCurrentlyBlocked
+}
+
 // AuthUserFeatureBlocks - Feature blocks for the user
 type AuthUserFeatureBlocks struct {
 	WebAnalytics *AuthUserFeatureBlocksWebAnalytics `json:"webAnalytics,omitempty"`
+}
+
+func (o *AuthUserFeatureBlocks) GetWebAnalytics() *AuthUserFeatureBlocksWebAnalytics {
+	if o == nil {
+		return nil
+	}
+	return o.WebAnalytics
 }
 
 type AuthUserImportFlowGitNamespaceType string
@@ -1620,21 +4541,16 @@ func CreateAuthUserImportFlowGitNamespaceInteger(integer int64) AuthUserImportFl
 }
 
 func (u *AuthUserImportFlowGitNamespace) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = AuthUserImportFlowGitNamespaceTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = AuthUserImportFlowGitNamespaceTypeInteger
 		return nil
@@ -1645,14 +4561,14 @@ func (u *AuthUserImportFlowGitNamespace) UnmarshalJSON(data []byte) error {
 
 func (u AuthUserImportFlowGitNamespace) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type AuthUserImportFlowGitNamespaceIDType string
@@ -1688,21 +4604,16 @@ func CreateAuthUserImportFlowGitNamespaceIDInteger(integer int64) AuthUserImport
 }
 
 func (u *AuthUserImportFlowGitNamespaceID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = AuthUserImportFlowGitNamespaceIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = AuthUserImportFlowGitNamespaceIDTypeInteger
 		return nil
@@ -1713,14 +4624,14 @@ func (u *AuthUserImportFlowGitNamespaceID) UnmarshalJSON(data []byte) error {
 
 func (u AuthUserImportFlowGitNamespaceID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type AuthUserImportFlowGitProvider string
@@ -1786,21 +4697,16 @@ func CreateAuthUserPreferredScopesAndGitNamespacesGitNamespaceIDInteger(integer 
 }
 
 func (u *AuthUserPreferredScopesAndGitNamespacesGitNamespaceID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = AuthUserPreferredScopesAndGitNamespacesGitNamespaceIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = AuthUserPreferredScopesAndGitNamespacesGitNamespaceIDTypeInteger
 		return nil
@@ -1811,14 +4717,14 @@ func (u *AuthUserPreferredScopesAndGitNamespacesGitNamespaceID) UnmarshalJSON(da
 
 func (u AuthUserPreferredScopesAndGitNamespacesGitNamespaceID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type AuthUserPreferredScopesAndGitNamespaces struct {
@@ -1826,9 +4732,30 @@ type AuthUserPreferredScopesAndGitNamespaces struct {
 	ScopeID        string                                                 `json:"scopeId"`
 }
 
+func (o *AuthUserPreferredScopesAndGitNamespaces) GetGitNamespaceID() *AuthUserPreferredScopesAndGitNamespacesGitNamespaceID {
+	if o == nil {
+		return nil
+	}
+	return o.GitNamespaceID
+}
+
+func (o *AuthUserPreferredScopesAndGitNamespaces) GetScopeID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ScopeID
+}
+
 // AuthUserRemoteCaching - remote caching settings
 type AuthUserRemoteCaching struct {
 	Enabled *bool `json:"enabled,omitempty"`
+}
+
+func (o *AuthUserRemoteCaching) GetEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Enabled
 }
 
 // AuthUserResourceConfig - An object containing infomation related to the amount of platform resources may be allocated to the User account.
@@ -1859,6 +4786,97 @@ type AuthUserResourceConfig struct {
 	PostgresDatabases *int64 `json:"postgresDatabases,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
 	ServerlessFunctionDefaultMaxExecutionTime *int64 `json:"serverlessFunctionDefaultMaxExecutionTime,omitempty"`
+}
+
+func (o *AuthUserResourceConfig) GetAwsAccountIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AwsAccountIds
+}
+
+func (o *AuthUserResourceConfig) GetAwsAccountType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AwsAccountType
+}
+
+func (o *AuthUserResourceConfig) GetBlobStores() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BlobStores
+}
+
+func (o *AuthUserResourceConfig) GetCfZoneName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CfZoneName
+}
+
+func (o *AuthUserResourceConfig) GetConcurrentBuilds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ConcurrentBuilds
+}
+
+func (o *AuthUserResourceConfig) GetEdgeConfigSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigSize
+}
+
+func (o *AuthUserResourceConfig) GetEdgeConfigs() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigs
+}
+
+func (o *AuthUserResourceConfig) GetEdgeFunctionExecutionTimeoutMs() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeFunctionExecutionTimeoutMs
+}
+
+func (o *AuthUserResourceConfig) GetEdgeFunctionMaxSizeBytes() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeFunctionMaxSizeBytes
+}
+
+func (o *AuthUserResourceConfig) GetKvDatabases() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.KvDatabases
+}
+
+func (o *AuthUserResourceConfig) GetNodeType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NodeType
+}
+
+func (o *AuthUserResourceConfig) GetPostgresDatabases() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PostgresDatabases
+}
+
+func (o *AuthUserResourceConfig) GetServerlessFunctionDefaultMaxExecutionTime() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ServerlessFunctionDefaultMaxExecutionTime
 }
 
 type AuthUserSoftBlockBlockedDueToOverageType string
@@ -2000,6 +5018,27 @@ type AuthUserSoftBlock struct {
 	Reason                  AuthUserSoftBlockReason                   `json:"reason"`
 }
 
+func (o *AuthUserSoftBlock) GetBlockedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BlockedAt
+}
+
+func (o *AuthUserSoftBlock) GetBlockedDueToOverageType() *AuthUserSoftBlockBlockedDueToOverageType {
+	if o == nil {
+		return nil
+	}
+	return o.BlockedDueToOverageType
+}
+
+func (o *AuthUserSoftBlock) GetReason() AuthUserSoftBlockReason {
+	if o == nil {
+		return AuthUserSoftBlockReason("")
+	}
+	return o.Reason
+}
+
 // AuthUserVersion - The user's version. Will either be unset or `northstar`.
 type AuthUserVersion string
 
@@ -2025,20 +5064,209 @@ func (e *AuthUserVersion) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// AuthUserLimited - A limited form of data for the currently authenticated User, due to the authentication token missing privileges to read the full User data.
-type AuthUserLimited struct {
+// AuthUser - Data for the currently authenticated User.
+type AuthUser struct {
+	// set of dashboard view preferences (cards or list) per scopeId
+	ActiveDashboardViews []AuthUserActiveDashboardViews `json:"activeDashboardViews,omitempty"`
 	// SHA1 hash of the avatar for the User account. Can be used in conjuction with the ... endpoint to retrieve the avatar image.
 	Avatar *string `json:"avatar"`
+	// An object containing billing infomation associated with the User account.
+	Billing *AuthUserBilling `json:"billing"`
+	// UNIX timestamp (in milliseconds) when the User account was created.
+	CreatedAt int64 `json:"createdAt"`
+	// data cache settings
+	DataCache *AuthUserDataCache `json:"dataCache,omitempty"`
+	// The user's default team. Only applies if the user's `version` is `'northstar'`.
+	DefaultTeamID *string `json:"defaultTeamId"`
+	// A record of when, under a certain scopeId, a toast was dismissed
+	DismissedToasts []AuthUserDismissedToasts `json:"dismissedToasts,omitempty"`
 	// Email address associated with the User account.
 	Email string `json:"email"`
+	// A list of projects and spaces across teams that a user has marked as a favorite.
+	FavoriteProjectsAndSpaces []AuthUserFavoriteProjectsAndSpaces `json:"favoriteProjectsAndSpaces,omitempty"`
+	// Feature blocks for the user
+	FeatureBlocks *AuthUserFeatureBlocks `json:"featureBlocks,omitempty"`
+	// Whether the user has a trial available for a paid plan subscription.
+	HasTrialAvailable bool `json:"hasTrialAvailable"`
 	// The User's unique identifier.
-	ID string `json:"id"`
-	// Property indicating that this User data contains only limited information, due to the authentication token missing privileges to read the full User data. Re-login with email, GitHub, GitLab or Bitbucket in order to upgrade the authentication token with the necessary privileges.
-	Limited bool `json:"limited"`
+	ID                       string                            `json:"id"`
+	ImportFlowGitNamespace   *AuthUserImportFlowGitNamespace   `json:"importFlowGitNamespace,omitempty"`
+	ImportFlowGitNamespaceID *AuthUserImportFlowGitNamespaceID `json:"importFlowGitNamespaceId,omitempty"`
+	ImportFlowGitProvider    *AuthUserImportFlowGitProvider    `json:"importFlowGitProvider,omitempty"`
 	// Name associated with the User account, or `null` if none has been provided.
-	Name *string `json:"name"`
+	Name                            *string                                   `json:"name"`
+	PreferredScopesAndGitNamespaces []AuthUserPreferredScopesAndGitNamespaces `json:"preferredScopesAndGitNamespaces,omitempty"`
+	// remote caching settings
+	RemoteCaching *AuthUserRemoteCaching `json:"remoteCaching,omitempty"`
+	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
+	ResourceConfig AuthUserResourceConfig `json:"resourceConfig"`
+	// When the User account has been "soft blocked", this property will contain the date when the restriction was enacted, and the identifier for why.
+	SoftBlock *AuthUserSoftBlock `json:"softBlock"`
+	// Prefix that will be used in the URL of "Preview" deployments created by the User account.
+	StagingPrefix string `json:"stagingPrefix"`
 	// Unique username associated with the User account.
 	Username string `json:"username"`
 	// The user's version. Will either be unset or `northstar`.
-	Version *AuthUserLimitedVersion `json:"version"`
+	Version *AuthUserVersion `json:"version"`
+}
+
+func (o *AuthUser) GetActiveDashboardViews() []AuthUserActiveDashboardViews {
+	if o == nil {
+		return nil
+	}
+	return o.ActiveDashboardViews
+}
+
+func (o *AuthUser) GetAvatar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Avatar
+}
+
+func (o *AuthUser) GetBilling() *AuthUserBilling {
+	if o == nil {
+		return nil
+	}
+	return o.Billing
+}
+
+func (o *AuthUser) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthUser) GetDataCache() *AuthUserDataCache {
+	if o == nil {
+		return nil
+	}
+	return o.DataCache
+}
+
+func (o *AuthUser) GetDefaultTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultTeamID
+}
+
+func (o *AuthUser) GetDismissedToasts() []AuthUserDismissedToasts {
+	if o == nil {
+		return nil
+	}
+	return o.DismissedToasts
+}
+
+func (o *AuthUser) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *AuthUser) GetFavoriteProjectsAndSpaces() []AuthUserFavoriteProjectsAndSpaces {
+	if o == nil {
+		return nil
+	}
+	return o.FavoriteProjectsAndSpaces
+}
+
+func (o *AuthUser) GetFeatureBlocks() *AuthUserFeatureBlocks {
+	if o == nil {
+		return nil
+	}
+	return o.FeatureBlocks
+}
+
+func (o *AuthUser) GetHasTrialAvailable() bool {
+	if o == nil {
+		return false
+	}
+	return o.HasTrialAvailable
+}
+
+func (o *AuthUser) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *AuthUser) GetImportFlowGitNamespace() *AuthUserImportFlowGitNamespace {
+	if o == nil {
+		return nil
+	}
+	return o.ImportFlowGitNamespace
+}
+
+func (o *AuthUser) GetImportFlowGitNamespaceID() *AuthUserImportFlowGitNamespaceID {
+	if o == nil {
+		return nil
+	}
+	return o.ImportFlowGitNamespaceID
+}
+
+func (o *AuthUser) GetImportFlowGitProvider() *AuthUserImportFlowGitProvider {
+	if o == nil {
+		return nil
+	}
+	return o.ImportFlowGitProvider
+}
+
+func (o *AuthUser) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUser) GetPreferredScopesAndGitNamespaces() []AuthUserPreferredScopesAndGitNamespaces {
+	if o == nil {
+		return nil
+	}
+	return o.PreferredScopesAndGitNamespaces
+}
+
+func (o *AuthUser) GetRemoteCaching() *AuthUserRemoteCaching {
+	if o == nil {
+		return nil
+	}
+	return o.RemoteCaching
+}
+
+func (o *AuthUser) GetResourceConfig() AuthUserResourceConfig {
+	if o == nil {
+		return AuthUserResourceConfig{}
+	}
+	return o.ResourceConfig
+}
+
+func (o *AuthUser) GetSoftBlock() *AuthUserSoftBlock {
+	if o == nil {
+		return nil
+	}
+	return o.SoftBlock
+}
+
+func (o *AuthUser) GetStagingPrefix() string {
+	if o == nil {
+		return ""
+	}
+	return o.StagingPrefix
+}
+
+func (o *AuthUser) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+func (o *AuthUser) GetVersion() *AuthUserVersion {
+	if o == nil {
+		return nil
+	}
+	return o.Version
 }

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 	"vercel/internal/sdk/pkg/models/shared"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type GetSecretsRequest struct {
@@ -15,6 +16,27 @@ type GetSecretsRequest struct {
 	ProjectID *string `queryParam:"style=form,explode=true,name=projectId"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *GetSecretsRequest) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *GetSecretsRequest) GetProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *GetSecretsRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 // GetSecrets200ApplicationJSONSecrets - Data representing a secret.
@@ -39,11 +61,99 @@ type GetSecrets200ApplicationJSONSecrets struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (g GetSecrets200ApplicationJSONSecrets) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(g, "", false)
+}
+
+func (g *GetSecrets200ApplicationJSONSecrets) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetSecrets200ApplicationJSONSecrets) GetCreated() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Created
+}
+
+func (o *GetSecrets200ApplicationJSONSecrets) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *GetSecrets200ApplicationJSONSecrets) GetDecryptable() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Decryptable
+}
+
+func (o *GetSecrets200ApplicationJSONSecrets) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetSecrets200ApplicationJSONSecrets) GetProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *GetSecrets200ApplicationJSONSecrets) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetSecrets200ApplicationJSONSecrets) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *GetSecrets200ApplicationJSONSecrets) GetUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserID
+}
+
+func (o *GetSecrets200ApplicationJSONSecrets) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 // GetSecrets200ApplicationJSON - Successful response retrieving a list of secrets.
 type GetSecrets200ApplicationJSON struct {
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 	Pagination shared.Pagination                     `json:"pagination"`
 	Secrets    []GetSecrets200ApplicationJSONSecrets `json:"secrets"`
+}
+
+func (o *GetSecrets200ApplicationJSON) GetPagination() shared.Pagination {
+	if o == nil {
+		return shared.Pagination{}
+	}
+	return o.Pagination
+}
+
+func (o *GetSecrets200ApplicationJSON) GetSecrets() []GetSecrets200ApplicationJSONSecrets {
+	if o == nil {
+		return []GetSecrets200ApplicationJSONSecrets{}
+	}
+	return o.Secrets
 }
 
 type GetSecretsResponse struct {
@@ -55,4 +165,32 @@ type GetSecretsResponse struct {
 	RawResponse *http.Response
 	// Successful response retrieving a list of secrets.
 	GetSecrets200ApplicationJSONObject *GetSecrets200ApplicationJSON
+}
+
+func (o *GetSecretsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetSecretsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetSecretsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetSecretsResponse) GetGetSecrets200ApplicationJSONObject() *GetSecrets200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetSecrets200ApplicationJSONObject
 }

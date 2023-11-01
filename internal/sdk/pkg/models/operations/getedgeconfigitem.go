@@ -14,6 +14,27 @@ type GetEdgeConfigItemRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *GetEdgeConfigItemRequest) GetEdgeConfigID() string {
+	if o == nil {
+		return ""
+	}
+	return o.EdgeConfigID
+}
+
+func (o *GetEdgeConfigItemRequest) GetEdgeConfigItemKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.EdgeConfigItemKey
+}
+
+func (o *GetEdgeConfigItemRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type GetEdgeConfigItemResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -23,4 +44,32 @@ type GetEdgeConfigItemResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *GetEdgeConfigItemResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetEdgeConfigItemResponse) GetEdgeConfigItem() *shared.EdgeConfigItem {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigItem
+}
+
+func (o *GetEdgeConfigItemResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetEdgeConfigItemResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

@@ -13,6 +13,13 @@ type GetDeploymentsDeploymentIDBuildsRequest struct {
 	DeploymentID string `pathParam:"style=simple,explode=false,name=deploymentId"`
 }
 
+func (o *GetDeploymentsDeploymentIDBuildsRequest) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
 // GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsConfig - An object that contains the Build's configuration
 type GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsConfig struct {
 	DistDir           *string `json:"distDir,omitempty"`
@@ -21,10 +28,45 @@ type GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsConfig struct {
 	ZeroConfig        *bool   `json:"zeroConfig,omitempty"`
 }
 
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsConfig) GetDistDir() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DistDir
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsConfig) GetForceBuildIn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ForceBuildIn
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsConfig) GetReuseWorkPathFrom() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReuseWorkPathFrom
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsConfig) GetZeroConfig() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ZeroConfig
+}
+
 // GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputEdge - Exists if the output is an edge function.
 type GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputEdge struct {
 	// The regions where the edge function will be invoked. Only exists if the edge function as a regional edge function, see: https://vercel.com/docs/concepts/edge-network/regions#setting-edge-function-regions
 	Regions []string `json:"regions"`
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputEdge) GetRegions() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Regions
 }
 
 // GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputLambda - If the output is a Serverless Function, an object containing the name, location and memory size of the function
@@ -34,6 +76,41 @@ type GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputLambda struct
 	Layers       []string `json:"layers,omitempty"`
 	MemorySize   *int64   `json:"memorySize,omitempty"`
 	Timeout      *int64   `json:"timeout,omitempty"`
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputLambda) GetDeployedTo() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.DeployedTo
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputLambda) GetFunctionName() string {
+	if o == nil {
+		return ""
+	}
+	return o.FunctionName
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputLambda) GetLayers() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Layers
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputLambda) GetMemorySize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MemorySize
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputLambda) GetTimeout() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Timeout
 }
 
 // GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputType - The type of the output
@@ -83,6 +160,55 @@ type GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutput struct {
 	Size *int64 `json:"size,omitempty"`
 	// The type of the output
 	Type *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputType `json:"type,omitempty"`
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutput) GetDigest() string {
+	if o == nil {
+		return ""
+	}
+	return o.Digest
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutput) GetEdge() *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputEdge {
+	if o == nil {
+		return nil
+	}
+	return o.Edge
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutput) GetLambda() *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputLambda {
+	if o == nil {
+		return nil
+	}
+	return o.Lambda
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutput) GetMode() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Mode
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutput) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutput) GetSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Size
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutput) GetType() *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutputType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }
 
 // GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsReadyState - The state of the deployment depending on the process of deploying, or if it is ready or in an error state
@@ -165,8 +291,113 @@ type GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds struct {
 	Use *string `json:"use,omitempty"`
 }
 
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetConfig() *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsConfig {
+	if o == nil {
+		return nil
+	}
+	return o.Config
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetCopiedFrom() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CopiedFrom
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetCreatedIn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedIn
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetDeployedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DeployedAt
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetEntrypoint() string {
+	if o == nil {
+		return ""
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetFingerprint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Fingerprint
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetOutput() []GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutput {
+	if o == nil {
+		return []GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsOutput{}
+	}
+	return o.Output
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetReadyState() GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsReadyState {
+	if o == nil {
+		return GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuildsReadyState("")
+	}
+	return o.ReadyState
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetReadyStateAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyStateAt
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetScheduledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ScheduledAt
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds) GetUse() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Use
+}
+
 type GetDeploymentsDeploymentIDBuilds200ApplicationJSON struct {
 	Builds []GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds `json:"builds"`
+}
+
+func (o *GetDeploymentsDeploymentIDBuilds200ApplicationJSON) GetBuilds() []GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds {
+	if o == nil {
+		return []GetDeploymentsDeploymentIDBuilds200ApplicationJSONBuilds{}
+	}
+	return o.Builds
 }
 
 type GetDeploymentsDeploymentIDBuildsResponse struct {
@@ -177,4 +408,32 @@ type GetDeploymentsDeploymentIDBuildsResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                              *http.Response
 	GetDeploymentsDeploymentIDBuilds200ApplicationJSONObject *GetDeploymentsDeploymentIDBuilds200ApplicationJSON
+}
+
+func (o *GetDeploymentsDeploymentIDBuildsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetDeploymentsDeploymentIDBuildsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentsDeploymentIDBuildsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetDeploymentsDeploymentIDBuildsResponse) GetGetDeploymentsDeploymentIDBuilds200ApplicationJSONObject() *GetDeploymentsDeploymentIDBuilds200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetDeploymentsDeploymentIDBuilds200ApplicationJSONObject
 }

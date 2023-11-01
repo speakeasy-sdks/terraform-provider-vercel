@@ -15,6 +15,20 @@ type GetDomainConfigRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *GetDomainConfigRequest) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *GetDomainConfigRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 // GetDomainConfig200ApplicationJSONAcceptedChallenges - Which challenge types the domain can use for issuing certs.
 type GetDomainConfig200ApplicationJSONAcceptedChallenges string
 
@@ -83,6 +97,27 @@ type GetDomainConfig200ApplicationJSON struct {
 	Misconfigured bool `json:"misconfigured"`
 }
 
+func (o *GetDomainConfig200ApplicationJSON) GetAcceptedChallenges() []GetDomainConfig200ApplicationJSONAcceptedChallenges {
+	if o == nil {
+		return nil
+	}
+	return o.AcceptedChallenges
+}
+
+func (o *GetDomainConfig200ApplicationJSON) GetConfiguredBy() *GetDomainConfig200ApplicationJSONConfiguredBy {
+	if o == nil {
+		return nil
+	}
+	return o.ConfiguredBy
+}
+
+func (o *GetDomainConfig200ApplicationJSON) GetMisconfigured() bool {
+	if o == nil {
+		return false
+	}
+	return o.Misconfigured
+}
+
 type GetDomainConfigResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -91,4 +126,32 @@ type GetDomainConfigResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                             *http.Response
 	GetDomainConfig200ApplicationJSONObject *GetDomainConfig200ApplicationJSON
+}
+
+func (o *GetDomainConfigResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetDomainConfigResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetDomainConfigResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetDomainConfigResponse) GetGetDomainConfig200ApplicationJSONObject() *GetDomainConfig200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetDomainConfig200ApplicationJSONObject
 }

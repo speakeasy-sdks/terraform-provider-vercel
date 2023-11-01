@@ -13,9 +13,30 @@ type DeleteDomainRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *DeleteDomainRequest) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *DeleteDomainRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 // DeleteDomain200ApplicationJSON - Successful response removing a domain.
 type DeleteDomain200ApplicationJSON struct {
 	UID string `json:"uid"`
+}
+
+func (o *DeleteDomain200ApplicationJSON) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
 }
 
 type DeleteDomainResponse struct {
@@ -27,4 +48,32 @@ type DeleteDomainResponse struct {
 	RawResponse *http.Response
 	// Successful response removing a domain.
 	DeleteDomain200ApplicationJSONObject *DeleteDomain200ApplicationJSON
+}
+
+func (o *DeleteDomainResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *DeleteDomainResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *DeleteDomainResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *DeleteDomainResponse) GetDeleteDomain200ApplicationJSONObject() *DeleteDomain200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.DeleteDomain200ApplicationJSONObject
 }

@@ -11,10 +11,24 @@ type DeleteAuthTokenRequest struct {
 	TokenID string `pathParam:"style=simple,explode=false,name=tokenId"`
 }
 
+func (o *DeleteAuthTokenRequest) GetTokenID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenID
+}
+
 // DeleteAuthToken200ApplicationJSON - Authentication token successfully deleted.
 type DeleteAuthToken200ApplicationJSON struct {
 	// The unique identifier of the token that was deleted.
 	TokenID string `json:"tokenId"`
+}
+
+func (o *DeleteAuthToken200ApplicationJSON) GetTokenID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenID
 }
 
 type DeleteAuthTokenResponse struct {
@@ -26,4 +40,32 @@ type DeleteAuthTokenResponse struct {
 	RawResponse *http.Response
 	// Authentication token successfully deleted.
 	DeleteAuthToken200ApplicationJSONObject *DeleteAuthToken200ApplicationJSON
+}
+
+func (o *DeleteAuthTokenResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *DeleteAuthTokenResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *DeleteAuthTokenResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *DeleteAuthTokenResponse) GetDeleteAuthToken200ApplicationJSONObject() *DeleteAuthToken200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.DeleteAuthToken200ApplicationJSONObject
 }

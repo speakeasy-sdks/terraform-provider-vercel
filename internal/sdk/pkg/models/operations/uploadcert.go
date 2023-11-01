@@ -17,10 +17,52 @@ type UploadCertRequestBody struct {
 	SkipValidation *bool `json:"skipValidation,omitempty"`
 }
 
+func (o *UploadCertRequestBody) GetCa() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ca
+}
+
+func (o *UploadCertRequestBody) GetCert() string {
+	if o == nil {
+		return ""
+	}
+	return o.Cert
+}
+
+func (o *UploadCertRequestBody) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *UploadCertRequestBody) GetSkipValidation() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SkipValidation
+}
+
 type UploadCertRequest struct {
 	RequestBody *UploadCertRequestBody `request:"mediaType=application/json"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *UploadCertRequest) GetRequestBody() *UploadCertRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *UploadCertRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 type UploadCert200ApplicationJSON struct {
@@ -31,6 +73,41 @@ type UploadCert200ApplicationJSON struct {
 	ID        string   `json:"id"`
 }
 
+func (o *UploadCert200ApplicationJSON) GetAutoRenew() bool {
+	if o == nil {
+		return false
+	}
+	return o.AutoRenew
+}
+
+func (o *UploadCert200ApplicationJSON) GetCns() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Cns
+}
+
+func (o *UploadCert200ApplicationJSON) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *UploadCert200ApplicationJSON) GetExpiresAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ExpiresAt
+}
+
+func (o *UploadCert200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
 type UploadCertResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -39,4 +116,32 @@ type UploadCertResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                        *http.Response
 	UploadCert200ApplicationJSONObject *UploadCert200ApplicationJSON
+}
+
+func (o *UploadCertResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *UploadCertResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *UploadCertResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *UploadCertResponse) GetUploadCert200ApplicationJSONObject() *UploadCert200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.UploadCert200ApplicationJSONObject
 }

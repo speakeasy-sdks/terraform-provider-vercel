@@ -15,6 +15,13 @@ type PatchTeamRequestBodyRemoteCaching struct {
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
+func (o *PatchTeamRequestBodyRemoteCaching) GetEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Enabled
+}
+
 type PatchTeamRequestBodySamlRoles string
 
 const (
@@ -60,6 +67,20 @@ type PatchTeamRequestBodySaml struct {
 	Roles    map[string]PatchTeamRequestBodySamlRoles `json:"roles,omitempty"`
 }
 
+func (o *PatchTeamRequestBodySaml) GetEnforced() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Enforced
+}
+
+func (o *PatchTeamRequestBodySaml) GetRoles() map[string]PatchTeamRequestBodySamlRoles {
+	if o == nil {
+		return nil
+	}
+	return o.Roles
+}
+
 type PatchTeamRequestBody struct {
 	// The hash value of an uploaded image.
 	Avatar *string `json:"avatar,omitempty"`
@@ -87,10 +108,115 @@ type PatchTeamRequestBody struct {
 	Slug *string `json:"slug,omitempty"`
 }
 
+func (o *PatchTeamRequestBody) GetAvatar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Avatar
+}
+
+func (o *PatchTeamRequestBody) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *PatchTeamRequestBody) GetEmailDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EmailDomain
+}
+
+func (o *PatchTeamRequestBody) GetEnablePreviewFeedback() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EnablePreviewFeedback
+}
+
+func (o *PatchTeamRequestBody) GetHideIPAddresses() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.HideIPAddresses
+}
+
+func (o *PatchTeamRequestBody) GetMigrateExistingEnvVariablesToSensitive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.MigrateExistingEnvVariablesToSensitive
+}
+
+func (o *PatchTeamRequestBody) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *PatchTeamRequestBody) GetPreviewDeploymentSuffix() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PreviewDeploymentSuffix
+}
+
+func (o *PatchTeamRequestBody) GetRegenerateInviteCode() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RegenerateInviteCode
+}
+
+func (o *PatchTeamRequestBody) GetRemoteCaching() *PatchTeamRequestBodyRemoteCaching {
+	if o == nil {
+		return nil
+	}
+	return o.RemoteCaching
+}
+
+func (o *PatchTeamRequestBody) GetSaml() *PatchTeamRequestBodySaml {
+	if o == nil {
+		return nil
+	}
+	return o.Saml
+}
+
+func (o *PatchTeamRequestBody) GetSensitiveEnvironmentVariablePolicy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SensitiveEnvironmentVariablePolicy
+}
+
+func (o *PatchTeamRequestBody) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 type PatchTeamRequest struct {
 	RequestBody *PatchTeamRequestBody `request:"mediaType=application/json"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
+}
+
+func (o *PatchTeamRequest) GetRequestBody() *PatchTeamRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *PatchTeamRequest) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
 }
 
 type PatchTeamResponse struct {
@@ -101,4 +227,32 @@ type PatchTeamResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	Team        *shared.Team
+}
+
+func (o *PatchTeamResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PatchTeamResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PatchTeamResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *PatchTeamResponse) GetTeam() *shared.Team {
+	if o == nil {
+		return nil
+	}
+	return o.Team
 }

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 // GetSecretDecrypt - Whether to try to decrypt the value of the secret. Only works if `decryptable` has been set to `true` when the secret was created.
@@ -46,6 +47,27 @@ type GetSecretRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *GetSecretRequest) GetDecrypt() *GetSecretDecrypt {
+	if o == nil {
+		return nil
+	}
+	return o.Decrypt
+}
+
+func (o *GetSecretRequest) GetIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrName
+}
+
+func (o *GetSecretRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 // GetSecret200ApplicationJSON - Data representing a secret.
 type GetSecret200ApplicationJSON struct {
 	// The date when the secret was created.
@@ -68,6 +90,80 @@ type GetSecret200ApplicationJSON struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (g GetSecret200ApplicationJSON) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(g, "", false)
+}
+
+func (g *GetSecret200ApplicationJSON) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetSecret200ApplicationJSON) GetCreated() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Created
+}
+
+func (o *GetSecret200ApplicationJSON) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *GetSecret200ApplicationJSON) GetDecryptable() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Decryptable
+}
+
+func (o *GetSecret200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetSecret200ApplicationJSON) GetProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *GetSecret200ApplicationJSON) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetSecret200ApplicationJSON) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *GetSecret200ApplicationJSON) GetUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserID
+}
+
+func (o *GetSecret200ApplicationJSON) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type GetSecretResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -77,4 +173,32 @@ type GetSecretResponse struct {
 	RawResponse *http.Response
 	// Successful response retrieving a secret.
 	GetSecret200ApplicationJSONObject *GetSecret200ApplicationJSON
+}
+
+func (o *GetSecretResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetSecretResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetSecretResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetSecretResponse) GetGetSecret200ApplicationJSONObject() *GetSecret200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetSecret200ApplicationJSONObject
 }

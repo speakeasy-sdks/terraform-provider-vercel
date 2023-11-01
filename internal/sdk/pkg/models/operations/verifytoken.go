@@ -17,6 +17,34 @@ type VerifyTokenRequest struct {
 	TokenName *string `queryParam:"style=form,explode=true,name=tokenName"`
 }
 
+func (o *VerifyTokenRequest) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *VerifyTokenRequest) GetSsoUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SsoUserID
+}
+
+func (o *VerifyTokenRequest) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
+}
+
+func (o *VerifyTokenRequest) GetTokenName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TokenName
+}
+
 // VerifyToken200ApplicationJSON - The verification was successful.
 type VerifyToken200ApplicationJSON struct {
 	// Email address of the authenticated user.
@@ -25,6 +53,27 @@ type VerifyToken200ApplicationJSON struct {
 	TeamID *string `json:"teamId,omitempty"`
 	// The user authentication token that can be used to perform API requests.
 	Token string `json:"token"`
+}
+
+func (o *VerifyToken200ApplicationJSON) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *VerifyToken200ApplicationJSON) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *VerifyToken200ApplicationJSON) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }
 
 type VerifyTokenResponse struct {
@@ -36,4 +85,32 @@ type VerifyTokenResponse struct {
 	RawResponse *http.Response
 	// The verification was successful.
 	VerifyToken200ApplicationJSONObject *VerifyToken200ApplicationJSON
+}
+
+func (o *VerifyTokenResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *VerifyTokenResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *VerifyTokenResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *VerifyTokenResponse) GetVerifyToken200ApplicationJSONObject() *VerifyToken200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.VerifyToken200ApplicationJSONObject
 }

@@ -15,6 +15,20 @@ type DeleteAliasRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *DeleteAliasRequest) GetAliasID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AliasID
+}
+
+func (o *DeleteAliasRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type DeleteAlias200ApplicationJSONStatus string
 
 const (
@@ -44,6 +58,13 @@ type DeleteAlias200ApplicationJSON struct {
 	Status DeleteAlias200ApplicationJSONStatus `json:"status"`
 }
 
+func (o *DeleteAlias200ApplicationJSON) GetStatus() DeleteAlias200ApplicationJSONStatus {
+	if o == nil {
+		return DeleteAlias200ApplicationJSONStatus("")
+	}
+	return o.Status
+}
+
 type DeleteAliasResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -53,4 +74,32 @@ type DeleteAliasResponse struct {
 	RawResponse *http.Response
 	// The alias was successfully removed
 	DeleteAlias200ApplicationJSONObject *DeleteAlias200ApplicationJSON
+}
+
+func (o *DeleteAliasResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *DeleteAliasResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *DeleteAliasResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *DeleteAliasResponse) GetDeleteAlias200ApplicationJSONObject() *DeleteAlias200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.DeleteAlias200ApplicationJSONObject
 }

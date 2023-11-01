@@ -15,10 +15,45 @@ type BuyDomainRequestBody struct {
 	Renew *bool `json:"renew,omitempty"`
 }
 
+func (o *BuyDomainRequestBody) GetExpectedPrice() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ExpectedPrice
+}
+
+func (o *BuyDomainRequestBody) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *BuyDomainRequestBody) GetRenew() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Renew
+}
+
 type BuyDomainRequest struct {
 	RequestBody *BuyDomainRequestBody `request:"mediaType=application/json"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *BuyDomainRequest) GetRequestBody() *BuyDomainRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *BuyDomainRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 type BuyDomain202ApplicationJSONDomain struct {
@@ -29,9 +64,51 @@ type BuyDomain202ApplicationJSONDomain struct {
 	Verified bool     `json:"verified"`
 }
 
+func (o *BuyDomain202ApplicationJSONDomain) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *BuyDomain202ApplicationJSONDomain) GetNs() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Ns
+}
+
+func (o *BuyDomain202ApplicationJSONDomain) GetPending() bool {
+	if o == nil {
+		return false
+	}
+	return o.Pending
+}
+
+func (o *BuyDomain202ApplicationJSONDomain) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *BuyDomain202ApplicationJSONDomain) GetVerified() bool {
+	if o == nil {
+		return false
+	}
+	return o.Verified
+}
+
 // BuyDomain202ApplicationJSON - Domain purchase is being processed asynchronously.
 type BuyDomain202ApplicationJSON struct {
 	Domain BuyDomain202ApplicationJSONDomain `json:"domain"`
+}
+
+func (o *BuyDomain202ApplicationJSON) GetDomain() BuyDomain202ApplicationJSONDomain {
+	if o == nil {
+		return BuyDomain202ApplicationJSONDomain{}
+	}
+	return o.Domain
 }
 
 type BuyDomain201ApplicationJSONDomain struct {
@@ -42,9 +119,51 @@ type BuyDomain201ApplicationJSONDomain struct {
 	Verified bool     `json:"verified"`
 }
 
+func (o *BuyDomain201ApplicationJSONDomain) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *BuyDomain201ApplicationJSONDomain) GetNs() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Ns
+}
+
+func (o *BuyDomain201ApplicationJSONDomain) GetPending() bool {
+	if o == nil {
+		return false
+	}
+	return o.Pending
+}
+
+func (o *BuyDomain201ApplicationJSONDomain) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *BuyDomain201ApplicationJSONDomain) GetVerified() bool {
+	if o == nil {
+		return false
+	}
+	return o.Verified
+}
+
 // BuyDomain201ApplicationJSON - Successful response for purchasing a Domain.
 type BuyDomain201ApplicationJSON struct {
 	Domain BuyDomain201ApplicationJSONDomain `json:"domain"`
+}
+
+func (o *BuyDomain201ApplicationJSON) GetDomain() BuyDomain201ApplicationJSONDomain {
+	if o == nil {
+		return BuyDomain201ApplicationJSONDomain{}
+	}
+	return o.Domain
 }
 
 type BuyDomainResponse struct {
@@ -58,4 +177,39 @@ type BuyDomainResponse struct {
 	BuyDomain201ApplicationJSONObject *BuyDomain201ApplicationJSON
 	// Domain purchase is being processed asynchronously.
 	BuyDomain202ApplicationJSONObject *BuyDomain202ApplicationJSON
+}
+
+func (o *BuyDomainResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *BuyDomainResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *BuyDomainResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *BuyDomainResponse) GetBuyDomain201ApplicationJSONObject() *BuyDomain201ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.BuyDomain201ApplicationJSONObject
+}
+
+func (o *BuyDomainResponse) GetBuyDomain202ApplicationJSONObject() *BuyDomain202ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.BuyDomain202ApplicationJSONObject
 }

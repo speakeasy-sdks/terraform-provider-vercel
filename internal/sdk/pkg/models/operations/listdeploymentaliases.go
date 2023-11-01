@@ -3,12 +3,12 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
 	"time"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type ListDeploymentAliasesRequest struct {
@@ -16,6 +16,20 @@ type ListDeploymentAliasesRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *ListDeploymentAliasesRequest) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *ListDeploymentAliasesRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access string
@@ -78,6 +92,41 @@ type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 struct {
 	Scope         ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Scope  `json:"scope"`
 }
 
+func (o *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2) GetAccess() ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access {
+	if o == nil {
+		return ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Access("")
+	}
+	return o.Access
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2) GetLastUpdatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.LastUpdatedAt
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2) GetLastUpdatedBy() string {
+	if o == nil {
+		return ""
+	}
+	return o.LastUpdatedBy
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2) GetScope() ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Scope {
+	if o == nil {
+		return ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2Scope("")
+	}
+	return o.Scope
+}
+
 type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope string
 
 const (
@@ -110,6 +159,27 @@ type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 struct {
 	CreatedAt int64                                                                `json:"createdAt"`
 	CreatedBy string                                                               `json:"createdBy"`
 	Scope     ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope `json:"scope"`
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1) GetCreatedBy() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedBy
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1) GetScope() ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope {
+	if o == nil {
+		return ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1Scope("")
+	}
+	return o.Scope
 }
 
 type ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassType string
@@ -145,21 +215,16 @@ func CreateListDeploymentAliases200ApplicationJSONAliasesProtectionBypassListDep
 }
 
 func (u *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	listDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 := new(ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&listDeploymentAliases200ApplicationJSONAliasesProtectionBypass1); err == nil {
+	if err := utils.UnmarshalJSON(data, &listDeploymentAliases200ApplicationJSONAliasesProtectionBypass1, "", true, true); err == nil {
 		u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 = listDeploymentAliases200ApplicationJSONAliasesProtectionBypass1
 		u.Type = ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassTypeListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1
 		return nil
 	}
 
 	listDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 := new(ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&listDeploymentAliases200ApplicationJSONAliasesProtectionBypass2); err == nil {
+	if err := utils.UnmarshalJSON(data, &listDeploymentAliases200ApplicationJSONAliasesProtectionBypass2, "", true, true); err == nil {
 		u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 = listDeploymentAliases200ApplicationJSONAliasesProtectionBypass2
 		u.Type = ListDeploymentAliases200ApplicationJSONAliasesProtectionBypassTypeListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2
 		return nil
@@ -170,14 +235,14 @@ func (u *ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass) Unmarsh
 
 func (u ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass) MarshalJSON() ([]byte, error) {
 	if u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1 != nil {
-		return json.Marshal(u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1)
+		return utils.MarshalJSON(u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass1, "", true)
 	}
 
 	if u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2 != nil {
-		return json.Marshal(u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2)
+		return utils.MarshalJSON(u.ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // ListDeploymentAliases200ApplicationJSONAliases - A list of the aliases assigned to the deployment
@@ -194,10 +259,63 @@ type ListDeploymentAliases200ApplicationJSONAliases struct {
 	UID string `json:"uid"`
 }
 
+func (l ListDeploymentAliases200ApplicationJSONAliases) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(l, "", false)
+}
+
+func (l *ListDeploymentAliases200ApplicationJSONAliases) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &l, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliases) GetAlias() string {
+	if o == nil {
+		return ""
+	}
+	return o.Alias
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliases) GetCreated() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Created
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliases) GetProtectionBypass() map[string]ListDeploymentAliases200ApplicationJSONAliasesProtectionBypass {
+	if o == nil {
+		return nil
+	}
+	return o.ProtectionBypass
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliases) GetRedirect() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Redirect
+}
+
+func (o *ListDeploymentAliases200ApplicationJSONAliases) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
 // ListDeploymentAliases200ApplicationJSON - The list of aliases assigned to the deployment
 type ListDeploymentAliases200ApplicationJSON struct {
 	// A list of the aliases assigned to the deployment
 	Aliases []ListDeploymentAliases200ApplicationJSONAliases `json:"aliases"`
+}
+
+func (o *ListDeploymentAliases200ApplicationJSON) GetAliases() []ListDeploymentAliases200ApplicationJSONAliases {
+	if o == nil {
+		return []ListDeploymentAliases200ApplicationJSONAliases{}
+	}
+	return o.Aliases
 }
 
 type ListDeploymentAliasesResponse struct {
@@ -209,4 +327,32 @@ type ListDeploymentAliasesResponse struct {
 	RawResponse *http.Response
 	// The list of aliases assigned to the deployment
 	ListDeploymentAliases200ApplicationJSONObject *ListDeploymentAliases200ApplicationJSON
+}
+
+func (o *ListDeploymentAliasesResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *ListDeploymentAliasesResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *ListDeploymentAliasesResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *ListDeploymentAliasesResponse) GetListDeploymentAliases200ApplicationJSONObject() *ListDeploymentAliases200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.ListDeploymentAliases200ApplicationJSONObject
 }

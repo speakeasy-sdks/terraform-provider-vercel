@@ -3,10 +3,9 @@
 package operations
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type UploadFileRequest struct {
@@ -22,12 +21,54 @@ type UploadFileRequest struct {
 	XVercelDigest *string `header:"style=simple,explode=false,name=x-vercel-digest"`
 }
 
+func (o *UploadFileRequest) GetContentLength() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ContentLength
+}
+
+func (o *UploadFileRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *UploadFileRequest) GetXNowDigest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.XNowDigest
+}
+
+func (o *UploadFileRequest) GetXNowSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.XNowSize
+}
+
+func (o *UploadFileRequest) GetXVercelDigest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.XVercelDigest
+}
+
 type UploadFile200ApplicationJSON2 struct {
 }
 
 type UploadFile200ApplicationJSON1 struct {
 	// Array of URLs where the file was updated
 	Urls []string `json:"urls"`
+}
+
+func (o *UploadFile200ApplicationJSON1) GetUrls() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Urls
 }
 
 type UploadFile200ApplicationJSONType string
@@ -63,21 +104,16 @@ func CreateUploadFile200ApplicationJSONUploadFile200ApplicationJSON2(uploadFile2
 }
 
 func (u *UploadFile200ApplicationJSON) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	uploadFile200ApplicationJSON2 := new(UploadFile200ApplicationJSON2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&uploadFile200ApplicationJSON2); err == nil {
+	if err := utils.UnmarshalJSON(data, &uploadFile200ApplicationJSON2, "", true, true); err == nil {
 		u.UploadFile200ApplicationJSON2 = uploadFile200ApplicationJSON2
 		u.Type = UploadFile200ApplicationJSONTypeUploadFile200ApplicationJSON2
 		return nil
 	}
 
 	uploadFile200ApplicationJSON1 := new(UploadFile200ApplicationJSON1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&uploadFile200ApplicationJSON1); err == nil {
+	if err := utils.UnmarshalJSON(data, &uploadFile200ApplicationJSON1, "", true, true); err == nil {
 		u.UploadFile200ApplicationJSON1 = uploadFile200ApplicationJSON1
 		u.Type = UploadFile200ApplicationJSONTypeUploadFile200ApplicationJSON1
 		return nil
@@ -87,15 +123,15 @@ func (u *UploadFile200ApplicationJSON) UnmarshalJSON(data []byte) error {
 }
 
 func (u UploadFile200ApplicationJSON) MarshalJSON() ([]byte, error) {
-	if u.UploadFile200ApplicationJSON2 != nil {
-		return json.Marshal(u.UploadFile200ApplicationJSON2)
-	}
-
 	if u.UploadFile200ApplicationJSON1 != nil {
-		return json.Marshal(u.UploadFile200ApplicationJSON1)
+		return utils.MarshalJSON(u.UploadFile200ApplicationJSON1, "", true)
 	}
 
-	return nil, nil
+	if u.UploadFile200ApplicationJSON2 != nil {
+		return utils.MarshalJSON(u.UploadFile200ApplicationJSON2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type UploadFileResponse struct {
@@ -108,4 +144,32 @@ type UploadFileResponse struct {
 	// File already uploaded
 	// File successfully uploaded
 	UploadFile200ApplicationJSONOneOf *UploadFile200ApplicationJSON
+}
+
+func (o *UploadFileResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *UploadFileResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *UploadFileResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *UploadFileResponse) GetUploadFile200ApplicationJSONOneOf() *UploadFile200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.UploadFile200ApplicationJSONOneOf
 }

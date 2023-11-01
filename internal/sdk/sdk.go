@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 	"vercel/internal/sdk/pkg/models/operations"
+	"vercel/internal/sdk/pkg/models/sdkerrors"
 	"vercel/internal/sdk/pkg/models/shared"
 	"vercel/internal/sdk/pkg/utils"
 )
@@ -47,7 +48,7 @@ func Float64(f float64) *float64 { return &f }
 type sdkConfiguration struct {
 	DefaultClient     HTTPClient
 	SecurityClient    HTTPClient
-	Security          *shared.Security
+	Security          func(context.Context) (interface{}, error)
 	ServerURL         string
 	ServerIndex       int
 	Language          string
@@ -55,6 +56,7 @@ type sdkConfiguration struct {
 	SDKVersion        string
 	GenVersion        string
 	UserAgent         string
+	RetryConfig       *utils.RetryConfig
 }
 
 func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
@@ -65,7 +67,7 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 	return ServerList[c.ServerIndex], nil
 }
 
-// Vercel - Vercel API: Vercel combines the best developer experience with an obsessive focus on end-user performance. Our platform enables frontend teams to do their best work.
+// Vercel API: Vercel combines the best developer experience with an obsessive focus on end-user performance. Our platform enables frontend teams to do their best work.
 type Vercel struct {
 	Aliases        *aliases
 	Artifacts      *artifacts
@@ -125,10 +127,31 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
+func withSecurity(security interface{}) func(context.Context) (interface{}, error) {
+	return func(context.Context) (interface{}, error) {
+		return &security, nil
+	}
+}
+
 // WithSecurity configures the SDK to use the provided security details
 func WithSecurity(security shared.Security) SDKOption {
 	return func(sdk *Vercel) {
-		sdk.sdkConfiguration.Security = &security
+		sdk.sdkConfiguration.Security = withSecurity(security)
+	}
+}
+
+// WithSecuritySource configures the SDK to invoke the Security Source function on each method call to determine authentication
+func WithSecuritySource(security func(context.Context) (shared.Security, error)) SDKOption {
+	return func(sdk *Vercel) {
+		sdk.sdkConfiguration.Security = func(ctx context.Context) (interface{}, error) {
+			return security(ctx)
+		}
+	}
+}
+
+func WithRetryConfig(retryConfig utils.RetryConfig) SDKOption {
+	return func(sdk *Vercel) {
+		sdk.sdkConfiguration.RetryConfig = &retryConfig
 	}
 }
 
@@ -136,11 +159,11 @@ func WithSecurity(security shared.Security) SDKOption {
 func New(opts ...SDKOption) *Vercel {
 	sdk := &Vercel{
 		sdkConfiguration: sdkConfiguration{
-			Language:          "terraform",
+			Language:          "go",
 			OpenAPIDocVersion: "0.0.1",
-			SDKVersion:        "0.3.2",
-			GenVersion:        "2.152.1",
-			UserAgent:         "speakeasy-sdk/terraform 0.3.2 2.152.1 0.0.1 vercel",
+			SDKVersion:        "0.4.0",
+			GenVersion:        "2.173.0",
+			UserAgent:         "speakeasy-sdk/go 0.4.0 2.173.0 0.0.1 vercel",
 		},
 	}
 	for _, opt := range opts {
@@ -291,12 +314,14 @@ func (s *Vercel) GetDeploymentsDeploymentIDBuilds(ctx context.Context, request o
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *operations.GetDeploymentsDeploymentIDBuilds200ApplicationJSON
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return res, err
+			var out operations.GetDeploymentsDeploymentIDBuilds200ApplicationJSON
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
 			}
 
-			res.GetDeploymentsDeploymentIDBuilds200ApplicationJSONObject = out
+			res.GetDeploymentsDeploymentIDBuilds200ApplicationJSONObject = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough
@@ -310,15 +335,14 @@ func (s *Vercel) GetDeploymentsDeploymentIDBuilds(ctx context.Context, request o
 	return res, nil
 }
 
-func (s *Vercel) PatchDataCacheBillingSettings(ctx context.Context, request operations.PatchDataCacheBillingSettingsRequestBody) (*operations.PatchDataCacheBillingSettingsResponse, error) {
+func (s *Vercel) PatchDataCacheBillingSettings(ctx context.Context, request *operations.PatchDataCacheBillingSettingsRequestBody) (*operations.PatchDataCacheBillingSettingsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/data-cache/billing-settings"
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
-
 	debugBody := bytes.NewBuffer([]byte{})
 	debugReader := io.TeeReader(bodyReader, debugBody)
 
@@ -360,12 +384,14 @@ func (s *Vercel) PatchDataCacheBillingSettings(ctx context.Context, request oper
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *operations.PatchDataCacheBillingSettings200ApplicationJSON
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return res, err
+			var out operations.PatchDataCacheBillingSettings200ApplicationJSON
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
 			}
 
-			res.PatchDataCacheBillingSettings200ApplicationJSONObject = out
+			res.PatchDataCacheBillingSettings200ApplicationJSONObject = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough

@@ -15,6 +15,27 @@ type ListAuthTokens200ApplicationJSON struct {
 	Tokens       []shared.AuthToken `json:"tokens"`
 }
 
+func (o *ListAuthTokens200ApplicationJSON) GetPagination() shared.Pagination {
+	if o == nil {
+		return shared.Pagination{}
+	}
+	return o.Pagination
+}
+
+func (o *ListAuthTokens200ApplicationJSON) GetTestingToken() *shared.AuthToken {
+	if o == nil {
+		return nil
+	}
+	return o.TestingToken
+}
+
+func (o *ListAuthTokens200ApplicationJSON) GetTokens() []shared.AuthToken {
+	if o == nil {
+		return []shared.AuthToken{}
+	}
+	return o.Tokens
+}
+
 type ListAuthTokensResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -23,4 +44,32 @@ type ListAuthTokensResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                            *http.Response
 	ListAuthTokens200ApplicationJSONObject *ListAuthTokens200ApplicationJSON
+}
+
+func (o *ListAuthTokensResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *ListAuthTokensResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *ListAuthTokensResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *ListAuthTokensResponse) GetListAuthTokens200ApplicationJSONObject() *ListAuthTokens200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.ListAuthTokens200ApplicationJSONObject
 }

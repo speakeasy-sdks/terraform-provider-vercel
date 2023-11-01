@@ -13,6 +13,27 @@ type RemoveRecordRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *RemoveRecordRequest) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *RemoveRecordRequest) GetRecordID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RecordID
+}
+
+func (o *RemoveRecordRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 // RemoveRecord200ApplicationJSON - Successful response by removing the specified DNS record.
 type RemoveRecord200ApplicationJSON struct {
 }
@@ -26,4 +47,32 @@ type RemoveRecordResponse struct {
 	RawResponse *http.Response
 	// Successful response by removing the specified DNS record.
 	RemoveRecord200ApplicationJSONObject *RemoveRecord200ApplicationJSON
+}
+
+func (o *RemoveRecordResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *RemoveRecordResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *RemoveRecordResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *RemoveRecordResponse) GetRemoveRecord200ApplicationJSONObject() *RemoveRecord200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.RemoveRecord200ApplicationJSONObject
 }

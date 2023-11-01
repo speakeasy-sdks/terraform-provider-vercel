@@ -32,48 +32,69 @@ func (e *AuthUserLimitedVersion) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// AuthUser - Data for the currently authenticated User.
-type AuthUser struct {
-	// set of dashboard view preferences (cards or list) per scopeId
-	ActiveDashboardViews []AuthUserActiveDashboardViews `json:"activeDashboardViews,omitempty"`
+// AuthUserLimited - A limited form of data for the currently authenticated User, due to the authentication token missing privileges to read the full User data.
+type AuthUserLimited struct {
 	// SHA1 hash of the avatar for the User account. Can be used in conjuction with the ... endpoint to retrieve the avatar image.
 	Avatar *string `json:"avatar"`
-	// An object containing billing infomation associated with the User account.
-	Billing *AuthUserBilling `json:"billing"`
-	// UNIX timestamp (in milliseconds) when the User account was created.
-	CreatedAt int64 `json:"createdAt"`
-	// data cache settings
-	DataCache *AuthUserDataCache `json:"dataCache,omitempty"`
-	// The user's default team. Only applies if the user's `version` is `'northstar'`.
-	DefaultTeamID *string `json:"defaultTeamId"`
-	// A record of when, under a certain scopeId, a toast was dismissed
-	DismissedToasts []AuthUserDismissedToasts `json:"dismissedToasts,omitempty"`
 	// Email address associated with the User account.
 	Email string `json:"email"`
-	// A list of projects and spaces across teams that a user has marked as a favorite.
-	FavoriteProjectsAndSpaces []AuthUserFavoriteProjectsAndSpaces `json:"favoriteProjectsAndSpaces,omitempty"`
-	// Feature blocks for the user
-	FeatureBlocks *AuthUserFeatureBlocks `json:"featureBlocks,omitempty"`
-	// Whether the user has a trial available for a paid plan subscription.
-	HasTrialAvailable bool `json:"hasTrialAvailable"`
 	// The User's unique identifier.
-	ID                       string                            `json:"id"`
-	ImportFlowGitNamespace   *AuthUserImportFlowGitNamespace   `json:"importFlowGitNamespace,omitempty"`
-	ImportFlowGitNamespaceID *AuthUserImportFlowGitNamespaceID `json:"importFlowGitNamespaceId,omitempty"`
-	ImportFlowGitProvider    *AuthUserImportFlowGitProvider    `json:"importFlowGitProvider,omitempty"`
+	ID string `json:"id"`
+	// Property indicating that this User data contains only limited information, due to the authentication token missing privileges to read the full User data. Re-login with email, GitHub, GitLab or Bitbucket in order to upgrade the authentication token with the necessary privileges.
+	Limited bool `json:"limited"`
 	// Name associated with the User account, or `null` if none has been provided.
-	Name                            *string                                   `json:"name"`
-	PreferredScopesAndGitNamespaces []AuthUserPreferredScopesAndGitNamespaces `json:"preferredScopesAndGitNamespaces,omitempty"`
-	// remote caching settings
-	RemoteCaching *AuthUserRemoteCaching `json:"remoteCaching,omitempty"`
-	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
-	ResourceConfig AuthUserResourceConfig `json:"resourceConfig"`
-	// When the User account has been "soft blocked", this property will contain the date when the restriction was enacted, and the identifier for why.
-	SoftBlock *AuthUserSoftBlock `json:"softBlock"`
-	// Prefix that will be used in the URL of "Preview" deployments created by the User account.
-	StagingPrefix string `json:"stagingPrefix"`
+	Name *string `json:"name"`
 	// Unique username associated with the User account.
 	Username string `json:"username"`
 	// The user's version. Will either be unset or `northstar`.
-	Version *AuthUserVersion `json:"version"`
+	Version *AuthUserLimitedVersion `json:"version"`
+}
+
+func (o *AuthUserLimited) GetAvatar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Avatar
+}
+
+func (o *AuthUserLimited) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *AuthUserLimited) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *AuthUserLimited) GetLimited() bool {
+	if o == nil {
+		return false
+	}
+	return o.Limited
+}
+
+func (o *AuthUserLimited) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *AuthUserLimited) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+func (o *AuthUserLimited) GetVersion() *AuthUserLimitedVersion {
+	if o == nil {
+		return nil
+	}
+	return o.Version
 }

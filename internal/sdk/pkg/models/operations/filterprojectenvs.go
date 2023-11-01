@@ -3,17 +3,17 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
 	"vercel/internal/sdk/pkg/models/shared"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 // FilterProjectEnvsDecrypt - If true, the environment variable value will be decrypted
 //
-// @deprecated null: This will be removed in a future release, please migrate away from it as soon as possible.
+// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
 type FilterProjectEnvsDecrypt string
 
 const (
@@ -54,6 +54,41 @@ type FilterProjectEnvsRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *FilterProjectEnvsRequest) GetDecrypt() *FilterProjectEnvsDecrypt {
+	if o == nil {
+		return nil
+	}
+	return o.Decrypt
+}
+
+func (o *FilterProjectEnvsRequest) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *FilterProjectEnvsRequest) GetIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrName
+}
+
+func (o *FilterProjectEnvsRequest) GetSource() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Source
+}
+
+func (o *FilterProjectEnvsRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint12Type string
 
 const (
@@ -81,6 +116,20 @@ func (e *FilterProjectEnvs200ApplicationJSON3EnvsContentHint12Type) UnmarshalJSO
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint12 struct {
 	StoreID string                                                    `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint12Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint12) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint12) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint12Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint12Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint11Type string
@@ -112,6 +161,20 @@ type FilterProjectEnvs200ApplicationJSON3EnvsContentHint11 struct {
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint11Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint11) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint11) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint11Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint11Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint10Type string
 
 const (
@@ -139,6 +202,20 @@ func (e *FilterProjectEnvs200ApplicationJSON3EnvsContentHint10Type) UnmarshalJSO
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint10 struct {
 	StoreID string                                                    `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint10Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint10) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint10) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint10Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint10Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint9Type string
@@ -170,6 +247,20 @@ type FilterProjectEnvs200ApplicationJSON3EnvsContentHint9 struct {
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint9Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint9) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint9) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint9Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint9Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint8Type string
 
 const (
@@ -197,6 +288,20 @@ func (e *FilterProjectEnvs200ApplicationJSON3EnvsContentHint8Type) UnmarshalJSON
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint8 struct {
 	StoreID string                                                   `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint8Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint8) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint8) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint8Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint8Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint7Type string
@@ -228,6 +333,20 @@ type FilterProjectEnvs200ApplicationJSON3EnvsContentHint7 struct {
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint7Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint7) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint7) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint7Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint7Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint6Type string
 
 const (
@@ -255,6 +374,20 @@ func (e *FilterProjectEnvs200ApplicationJSON3EnvsContentHint6Type) UnmarshalJSON
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint6 struct {
 	StoreID string                                                   `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint6Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint6) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint6) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint6Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint6Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint5Type string
@@ -286,6 +419,20 @@ type FilterProjectEnvs200ApplicationJSON3EnvsContentHint5 struct {
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint5Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint5) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint5) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint5Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint5Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint4Type string
 
 const (
@@ -313,6 +460,20 @@ func (e *FilterProjectEnvs200ApplicationJSON3EnvsContentHint4Type) UnmarshalJSON
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint4 struct {
 	StoreID string                                                   `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint4Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint4) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint4) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint4Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint4Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint3Type string
@@ -344,6 +505,20 @@ type FilterProjectEnvs200ApplicationJSON3EnvsContentHint3 struct {
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint3Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint3) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint3) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint3Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint3Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint2Type string
 
 const (
@@ -373,6 +548,20 @@ type FilterProjectEnvs200ApplicationJSON3EnvsContentHint2 struct {
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint2Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint2) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint2) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint2Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint2Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint1Type string
 
 const (
@@ -400,6 +589,20 @@ func (e *FilterProjectEnvs200ApplicationJSON3EnvsContentHint1Type) UnmarshalJSON
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHint1 struct {
 	StoreID string                                                   `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON3EnvsContentHint1Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint1) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3EnvsContentHint1) GetType() FilterProjectEnvs200ApplicationJSON3EnvsContentHint1Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON3EnvsContentHint1Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON3EnvsContentHintType string
@@ -545,111 +748,86 @@ func CreateFilterProjectEnvs200ApplicationJSON3EnvsContentHintFilterProjectEnvs2
 }
 
 func (u *FilterProjectEnvs200ApplicationJSON3EnvsContentHint) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint1 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint1); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint1, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint1 = filterProjectEnvs200ApplicationJSON3EnvsContentHint1
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint1
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint2 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint2); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint2, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint2 = filterProjectEnvs200ApplicationJSON3EnvsContentHint2
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint2
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint3 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint3); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint3, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint3 = filterProjectEnvs200ApplicationJSON3EnvsContentHint3
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint3
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint4 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint4); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint4, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint4 = filterProjectEnvs200ApplicationJSON3EnvsContentHint4
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint4
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint5 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint5); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint5, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint5 = filterProjectEnvs200ApplicationJSON3EnvsContentHint5
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint5
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint6 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint6); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint6, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint6 = filterProjectEnvs200ApplicationJSON3EnvsContentHint6
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint6
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint7 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint7); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint7, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint7 = filterProjectEnvs200ApplicationJSON3EnvsContentHint7
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint7
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint8 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint8); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint8, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint8 = filterProjectEnvs200ApplicationJSON3EnvsContentHint8
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint8
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint9 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint9)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint9); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint9, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint9 = filterProjectEnvs200ApplicationJSON3EnvsContentHint9
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint9
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint10 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint10)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint10); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint10, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint10 = filterProjectEnvs200ApplicationJSON3EnvsContentHint10
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint10
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint11 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint11)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint11); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint11, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint11 = filterProjectEnvs200ApplicationJSON3EnvsContentHint11
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint11
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsContentHint12 := new(FilterProjectEnvs200ApplicationJSON3EnvsContentHint12)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsContentHint12); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsContentHint12, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint12 = filterProjectEnvs200ApplicationJSON3EnvsContentHint12
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON3EnvsContentHint12
 		return nil
@@ -660,54 +838,54 @@ func (u *FilterProjectEnvs200ApplicationJSON3EnvsContentHint) UnmarshalJSON(data
 
 func (u FilterProjectEnvs200ApplicationJSON3EnvsContentHint) MarshalJSON() ([]byte, error) {
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint1 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint1)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint1, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint2 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint2)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint2, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint3 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint3)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint3, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint4 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint4)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint4, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint5 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint5)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint5, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint6 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint6)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint6, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint7 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint7)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint7, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint8 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint8)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint8, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint9 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint9)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint9, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint10 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint10)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint10, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint11 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint11)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint11, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint12 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint12)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsContentHint12, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type FilterProjectEnvs200ApplicationJSON3EnvsTarget2 string
@@ -803,21 +981,16 @@ func CreateFilterProjectEnvs200ApplicationJSON3EnvsTargetFilterProjectEnvs200App
 }
 
 func (u *FilterProjectEnvs200ApplicationJSON3EnvsTarget) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	arrayOffilterProjectEnvs200ApplicationJSON3EnvsTarget1 := []FilterProjectEnvs200ApplicationJSON3EnvsTarget1{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOffilterProjectEnvs200ApplicationJSON3EnvsTarget1); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOffilterProjectEnvs200ApplicationJSON3EnvsTarget1, "", true, true); err == nil {
 		u.ArrayOffilterProjectEnvs200ApplicationJSON3EnvsTarget1 = arrayOffilterProjectEnvs200ApplicationJSON3EnvsTarget1
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsTargetTypeArrayOffilterProjectEnvs200ApplicationJSON3EnvsTarget1
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON3EnvsTarget2 := new(FilterProjectEnvs200ApplicationJSON3EnvsTarget2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3EnvsTarget2); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3EnvsTarget2, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3EnvsTarget2 = filterProjectEnvs200ApplicationJSON3EnvsTarget2
 		u.Type = FilterProjectEnvs200ApplicationJSON3EnvsTargetTypeFilterProjectEnvs200ApplicationJSON3EnvsTarget2
 		return nil
@@ -828,14 +1001,14 @@ func (u *FilterProjectEnvs200ApplicationJSON3EnvsTarget) UnmarshalJSON(data []by
 
 func (u FilterProjectEnvs200ApplicationJSON3EnvsTarget) MarshalJSON() ([]byte, error) {
 	if u.ArrayOffilterProjectEnvs200ApplicationJSON3EnvsTarget1 != nil {
-		return json.Marshal(u.ArrayOffilterProjectEnvs200ApplicationJSON3EnvsTarget1)
+		return utils.MarshalJSON(u.ArrayOffilterProjectEnvs200ApplicationJSON3EnvsTarget1, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3EnvsTarget2 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3EnvsTarget2)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3EnvsTarget2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type FilterProjectEnvs200ApplicationJSON3EnvsType string
@@ -894,9 +1067,128 @@ type FilterProjectEnvs200ApplicationJSON3Envs struct {
 	Value             *string                                         `json:"value,omitempty"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetContentHint() *FilterProjectEnvs200ApplicationJSON3EnvsContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.ContentHint
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetCreatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedBy
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetDecrypted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Decrypted
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetEdgeConfigID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetEdgeConfigTokenID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigTokenID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Key
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetSystem() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.System
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetTarget() *FilterProjectEnvs200ApplicationJSON3EnvsTarget {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetType() *FilterProjectEnvs200ApplicationJSON3EnvsType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetUpdatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetUpdatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedBy
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3Envs) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 // FilterProjectEnvs200ApplicationJSON3 - The list of environment variables for the given project
 type FilterProjectEnvs200ApplicationJSON3 struct {
 	Envs []FilterProjectEnvs200ApplicationJSON3Envs `json:"envs"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON3) GetEnvs() []FilterProjectEnvs200ApplicationJSON3Envs {
+	if o == nil {
+		return []FilterProjectEnvs200ApplicationJSON3Envs{}
+	}
+	return o.Envs
 }
 
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint12Type string
@@ -928,6 +1220,20 @@ type FilterProjectEnvs200ApplicationJSON2EnvsContentHint12 struct {
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint12Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint12) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint12) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint12Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint12Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint11Type string
 
 const (
@@ -955,6 +1261,20 @@ func (e *FilterProjectEnvs200ApplicationJSON2EnvsContentHint11Type) UnmarshalJSO
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint11 struct {
 	StoreID string                                                    `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint11Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint11) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint11) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint11Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint11Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint10Type string
@@ -986,6 +1306,20 @@ type FilterProjectEnvs200ApplicationJSON2EnvsContentHint10 struct {
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint10Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint10) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint10) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint10Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint10Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint9Type string
 
 const (
@@ -1013,6 +1347,20 @@ func (e *FilterProjectEnvs200ApplicationJSON2EnvsContentHint9Type) UnmarshalJSON
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint9 struct {
 	StoreID string                                                   `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint9Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint9) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint9) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint9Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint9Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint8Type string
@@ -1044,6 +1392,20 @@ type FilterProjectEnvs200ApplicationJSON2EnvsContentHint8 struct {
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint8Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint8) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint8) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint8Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint8Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint7Type string
 
 const (
@@ -1071,6 +1433,20 @@ func (e *FilterProjectEnvs200ApplicationJSON2EnvsContentHint7Type) UnmarshalJSON
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint7 struct {
 	StoreID string                                                   `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint7Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint7) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint7) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint7Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint7Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint6Type string
@@ -1102,6 +1478,20 @@ type FilterProjectEnvs200ApplicationJSON2EnvsContentHint6 struct {
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint6Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint6) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint6) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint6Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint6Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint5Type string
 
 const (
@@ -1129,6 +1519,20 @@ func (e *FilterProjectEnvs200ApplicationJSON2EnvsContentHint5Type) UnmarshalJSON
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint5 struct {
 	StoreID string                                                   `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint5Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint5) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint5) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint5Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint5Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint4Type string
@@ -1160,6 +1564,20 @@ type FilterProjectEnvs200ApplicationJSON2EnvsContentHint4 struct {
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint4Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint4) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint4) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint4Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint4Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint3Type string
 
 const (
@@ -1187,6 +1605,20 @@ func (e *FilterProjectEnvs200ApplicationJSON2EnvsContentHint3Type) UnmarshalJSON
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint3 struct {
 	StoreID string                                                   `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint3Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint3) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint3) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint3Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint3Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint2Type string
@@ -1218,6 +1650,20 @@ type FilterProjectEnvs200ApplicationJSON2EnvsContentHint2 struct {
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint2Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint2) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint2) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint2Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint2Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint1Type string
 
 const (
@@ -1245,6 +1691,20 @@ func (e *FilterProjectEnvs200ApplicationJSON2EnvsContentHint1Type) UnmarshalJSON
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHint1 struct {
 	StoreID string                                                   `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON2EnvsContentHint1Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint1) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2EnvsContentHint1) GetType() FilterProjectEnvs200ApplicationJSON2EnvsContentHint1Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON2EnvsContentHint1Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON2EnvsContentHintType string
@@ -1390,111 +1850,86 @@ func CreateFilterProjectEnvs200ApplicationJSON2EnvsContentHintFilterProjectEnvs2
 }
 
 func (u *FilterProjectEnvs200ApplicationJSON2EnvsContentHint) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint1 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint1); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint1, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint1 = filterProjectEnvs200ApplicationJSON2EnvsContentHint1
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint1
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint2 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint2); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint2, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint2 = filterProjectEnvs200ApplicationJSON2EnvsContentHint2
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint2
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint3 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint3); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint3, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint3 = filterProjectEnvs200ApplicationJSON2EnvsContentHint3
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint3
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint4 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint4); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint4, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint4 = filterProjectEnvs200ApplicationJSON2EnvsContentHint4
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint4
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint5 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint5); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint5, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint5 = filterProjectEnvs200ApplicationJSON2EnvsContentHint5
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint5
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint6 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint6); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint6, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint6 = filterProjectEnvs200ApplicationJSON2EnvsContentHint6
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint6
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint7 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint7); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint7, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint7 = filterProjectEnvs200ApplicationJSON2EnvsContentHint7
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint7
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint8 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint8); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint8, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint8 = filterProjectEnvs200ApplicationJSON2EnvsContentHint8
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint8
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint9 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint9)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint9); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint9, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint9 = filterProjectEnvs200ApplicationJSON2EnvsContentHint9
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint9
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint10 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint10)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint10); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint10, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint10 = filterProjectEnvs200ApplicationJSON2EnvsContentHint10
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint10
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint11 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint11)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint11); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint11, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint11 = filterProjectEnvs200ApplicationJSON2EnvsContentHint11
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint11
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsContentHint12 := new(FilterProjectEnvs200ApplicationJSON2EnvsContentHint12)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsContentHint12); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsContentHint12, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint12 = filterProjectEnvs200ApplicationJSON2EnvsContentHint12
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsContentHintTypeFilterProjectEnvs200ApplicationJSON2EnvsContentHint12
 		return nil
@@ -1505,54 +1940,54 @@ func (u *FilterProjectEnvs200ApplicationJSON2EnvsContentHint) UnmarshalJSON(data
 
 func (u FilterProjectEnvs200ApplicationJSON2EnvsContentHint) MarshalJSON() ([]byte, error) {
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint1 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint1)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint1, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint2 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint2)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint2, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint3 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint3)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint3, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint4 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint4)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint4, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint5 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint5)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint5, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint6 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint6)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint6, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint7 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint7)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint7, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint8 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint8)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint8, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint9 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint9)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint9, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint10 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint10)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint10, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint11 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint11)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint11, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint12 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint12)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsContentHint12, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type FilterProjectEnvs200ApplicationJSON2EnvsTarget2 string
@@ -1648,21 +2083,16 @@ func CreateFilterProjectEnvs200ApplicationJSON2EnvsTargetFilterProjectEnvs200App
 }
 
 func (u *FilterProjectEnvs200ApplicationJSON2EnvsTarget) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	arrayOffilterProjectEnvs200ApplicationJSON2EnvsTarget1 := []FilterProjectEnvs200ApplicationJSON2EnvsTarget1{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOffilterProjectEnvs200ApplicationJSON2EnvsTarget1); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOffilterProjectEnvs200ApplicationJSON2EnvsTarget1, "", true, true); err == nil {
 		u.ArrayOffilterProjectEnvs200ApplicationJSON2EnvsTarget1 = arrayOffilterProjectEnvs200ApplicationJSON2EnvsTarget1
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsTargetTypeArrayOffilterProjectEnvs200ApplicationJSON2EnvsTarget1
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON2EnvsTarget2 := new(FilterProjectEnvs200ApplicationJSON2EnvsTarget2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2EnvsTarget2); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2EnvsTarget2, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON2EnvsTarget2 = filterProjectEnvs200ApplicationJSON2EnvsTarget2
 		u.Type = FilterProjectEnvs200ApplicationJSON2EnvsTargetTypeFilterProjectEnvs200ApplicationJSON2EnvsTarget2
 		return nil
@@ -1673,14 +2103,14 @@ func (u *FilterProjectEnvs200ApplicationJSON2EnvsTarget) UnmarshalJSON(data []by
 
 func (u FilterProjectEnvs200ApplicationJSON2EnvsTarget) MarshalJSON() ([]byte, error) {
 	if u.ArrayOffilterProjectEnvs200ApplicationJSON2EnvsTarget1 != nil {
-		return json.Marshal(u.ArrayOffilterProjectEnvs200ApplicationJSON2EnvsTarget1)
+		return utils.MarshalJSON(u.ArrayOffilterProjectEnvs200ApplicationJSON2EnvsTarget1, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON2EnvsTarget2 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2EnvsTarget2)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2EnvsTarget2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type FilterProjectEnvs200ApplicationJSON2EnvsType string
@@ -1739,10 +2169,136 @@ type FilterProjectEnvs200ApplicationJSON2Envs struct {
 	Value             *string                                         `json:"value,omitempty"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetContentHint() *FilterProjectEnvs200ApplicationJSON2EnvsContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.ContentHint
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetCreatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedBy
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetDecrypted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Decrypted
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetEdgeConfigID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetEdgeConfigTokenID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigTokenID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Key
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetSystem() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.System
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetTarget() *FilterProjectEnvs200ApplicationJSON2EnvsTarget {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetType() *FilterProjectEnvs200ApplicationJSON2EnvsType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetUpdatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetUpdatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedBy
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2Envs) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type FilterProjectEnvs200ApplicationJSON2 struct {
 	Envs []FilterProjectEnvs200ApplicationJSON2Envs `json:"envs"`
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 	Pagination shared.Pagination `json:"pagination"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2) GetEnvs() []FilterProjectEnvs200ApplicationJSON2Envs {
+	if o == nil {
+		return []FilterProjectEnvs200ApplicationJSON2Envs{}
+	}
+	return o.Envs
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON2) GetPagination() shared.Pagination {
+	if o == nil {
+		return shared.Pagination{}
+	}
+	return o.Pagination
 }
 
 type FilterProjectEnvs200ApplicationJSON1ContentHint12Type string
@@ -1774,6 +2330,20 @@ type FilterProjectEnvs200ApplicationJSON1ContentHint12 struct {
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint12Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint12) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint12) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint12Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint12Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON1ContentHint11Type string
 
 const (
@@ -1801,6 +2371,20 @@ func (e *FilterProjectEnvs200ApplicationJSON1ContentHint11Type) UnmarshalJSON(da
 type FilterProjectEnvs200ApplicationJSON1ContentHint11 struct {
 	StoreID string                                                `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint11Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint11) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint11) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint11Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint11Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON1ContentHint10Type string
@@ -1832,6 +2416,20 @@ type FilterProjectEnvs200ApplicationJSON1ContentHint10 struct {
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint10Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint10) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint10) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint10Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint10Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON1ContentHint9Type string
 
 const (
@@ -1859,6 +2457,20 @@ func (e *FilterProjectEnvs200ApplicationJSON1ContentHint9Type) UnmarshalJSON(dat
 type FilterProjectEnvs200ApplicationJSON1ContentHint9 struct {
 	StoreID string                                               `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint9Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint9) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint9) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint9Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint9Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON1ContentHint8Type string
@@ -1890,6 +2502,20 @@ type FilterProjectEnvs200ApplicationJSON1ContentHint8 struct {
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint8Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint8) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint8) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint8Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint8Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON1ContentHint7Type string
 
 const (
@@ -1917,6 +2543,20 @@ func (e *FilterProjectEnvs200ApplicationJSON1ContentHint7Type) UnmarshalJSON(dat
 type FilterProjectEnvs200ApplicationJSON1ContentHint7 struct {
 	StoreID string                                               `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint7Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint7) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint7) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint7Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint7Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON1ContentHint6Type string
@@ -1948,6 +2588,20 @@ type FilterProjectEnvs200ApplicationJSON1ContentHint6 struct {
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint6Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint6) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint6) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint6Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint6Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON1ContentHint5Type string
 
 const (
@@ -1975,6 +2629,20 @@ func (e *FilterProjectEnvs200ApplicationJSON1ContentHint5Type) UnmarshalJSON(dat
 type FilterProjectEnvs200ApplicationJSON1ContentHint5 struct {
 	StoreID string                                               `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint5Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint5) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint5) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint5Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint5Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON1ContentHint4Type string
@@ -2006,6 +2674,20 @@ type FilterProjectEnvs200ApplicationJSON1ContentHint4 struct {
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint4Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint4) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint4) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint4Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint4Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON1ContentHint3Type string
 
 const (
@@ -2033,6 +2715,20 @@ func (e *FilterProjectEnvs200ApplicationJSON1ContentHint3Type) UnmarshalJSON(dat
 type FilterProjectEnvs200ApplicationJSON1ContentHint3 struct {
 	StoreID string                                               `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint3Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint3) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint3) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint3Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint3Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON1ContentHint2Type string
@@ -2064,6 +2760,20 @@ type FilterProjectEnvs200ApplicationJSON1ContentHint2 struct {
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint2Type `json:"type"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint2) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint2) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint2Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint2Type("")
+	}
+	return o.Type
+}
+
 type FilterProjectEnvs200ApplicationJSON1ContentHint1Type string
 
 const (
@@ -2091,6 +2801,20 @@ func (e *FilterProjectEnvs200ApplicationJSON1ContentHint1Type) UnmarshalJSON(dat
 type FilterProjectEnvs200ApplicationJSON1ContentHint1 struct {
 	StoreID string                                               `json:"storeId"`
 	Type    FilterProjectEnvs200ApplicationJSON1ContentHint1Type `json:"type"`
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint1) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1ContentHint1) GetType() FilterProjectEnvs200ApplicationJSON1ContentHint1Type {
+	if o == nil {
+		return FilterProjectEnvs200ApplicationJSON1ContentHint1Type("")
+	}
+	return o.Type
 }
 
 type FilterProjectEnvs200ApplicationJSON1ContentHintType string
@@ -2236,111 +2960,86 @@ func CreateFilterProjectEnvs200ApplicationJSON1ContentHintFilterProjectEnvs200Ap
 }
 
 func (u *FilterProjectEnvs200ApplicationJSON1ContentHint) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	filterProjectEnvs200ApplicationJSON1ContentHint1 := new(FilterProjectEnvs200ApplicationJSON1ContentHint1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint1); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint1, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint1 = filterProjectEnvs200ApplicationJSON1ContentHint1
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint1
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1ContentHint2 := new(FilterProjectEnvs200ApplicationJSON1ContentHint2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint2); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint2, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint2 = filterProjectEnvs200ApplicationJSON1ContentHint2
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint2
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1ContentHint3 := new(FilterProjectEnvs200ApplicationJSON1ContentHint3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint3); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint3, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint3 = filterProjectEnvs200ApplicationJSON1ContentHint3
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint3
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1ContentHint4 := new(FilterProjectEnvs200ApplicationJSON1ContentHint4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint4); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint4, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint4 = filterProjectEnvs200ApplicationJSON1ContentHint4
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint4
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1ContentHint5 := new(FilterProjectEnvs200ApplicationJSON1ContentHint5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint5); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint5, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint5 = filterProjectEnvs200ApplicationJSON1ContentHint5
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint5
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1ContentHint6 := new(FilterProjectEnvs200ApplicationJSON1ContentHint6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint6); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint6, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint6 = filterProjectEnvs200ApplicationJSON1ContentHint6
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint6
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1ContentHint7 := new(FilterProjectEnvs200ApplicationJSON1ContentHint7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint7); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint7, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint7 = filterProjectEnvs200ApplicationJSON1ContentHint7
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint7
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1ContentHint8 := new(FilterProjectEnvs200ApplicationJSON1ContentHint8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint8); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint8, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint8 = filterProjectEnvs200ApplicationJSON1ContentHint8
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint8
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1ContentHint9 := new(FilterProjectEnvs200ApplicationJSON1ContentHint9)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint9); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint9, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint9 = filterProjectEnvs200ApplicationJSON1ContentHint9
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint9
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1ContentHint10 := new(FilterProjectEnvs200ApplicationJSON1ContentHint10)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint10); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint10, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint10 = filterProjectEnvs200ApplicationJSON1ContentHint10
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint10
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1ContentHint11 := new(FilterProjectEnvs200ApplicationJSON1ContentHint11)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint11); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint11, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint11 = filterProjectEnvs200ApplicationJSON1ContentHint11
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint11
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1ContentHint12 := new(FilterProjectEnvs200ApplicationJSON1ContentHint12)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1ContentHint12); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1ContentHint12, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1ContentHint12 = filterProjectEnvs200ApplicationJSON1ContentHint12
 		u.Type = FilterProjectEnvs200ApplicationJSON1ContentHintTypeFilterProjectEnvs200ApplicationJSON1ContentHint12
 		return nil
@@ -2351,54 +3050,54 @@ func (u *FilterProjectEnvs200ApplicationJSON1ContentHint) UnmarshalJSON(data []b
 
 func (u FilterProjectEnvs200ApplicationJSON1ContentHint) MarshalJSON() ([]byte, error) {
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint1 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint1)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint1, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint2 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint2)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint2, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint3 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint3)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint3, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint4 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint4)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint4, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint5 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint5)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint5, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint6 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint6)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint6, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint7 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint7)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint7, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint8 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint8)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint8, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint9 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint9)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint9, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint10 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint10)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint10, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint11 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint11)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint11, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1ContentHint12 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1ContentHint12)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1ContentHint12, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type FilterProjectEnvs200ApplicationJSON1Target2 string
@@ -2494,21 +3193,16 @@ func CreateFilterProjectEnvs200ApplicationJSON1TargetFilterProjectEnvs200Applica
 }
 
 func (u *FilterProjectEnvs200ApplicationJSON1Target) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	arrayOffilterProjectEnvs200ApplicationJSON1Target1 := []FilterProjectEnvs200ApplicationJSON1Target1{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOffilterProjectEnvs200ApplicationJSON1Target1); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOffilterProjectEnvs200ApplicationJSON1Target1, "", true, true); err == nil {
 		u.ArrayOffilterProjectEnvs200ApplicationJSON1Target1 = arrayOffilterProjectEnvs200ApplicationJSON1Target1
 		u.Type = FilterProjectEnvs200ApplicationJSON1TargetTypeArrayOffilterProjectEnvs200ApplicationJSON1Target1
 		return nil
 	}
 
 	filterProjectEnvs200ApplicationJSON1Target2 := new(FilterProjectEnvs200ApplicationJSON1Target2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1Target2); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1Target2, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1Target2 = filterProjectEnvs200ApplicationJSON1Target2
 		u.Type = FilterProjectEnvs200ApplicationJSON1TargetTypeFilterProjectEnvs200ApplicationJSON1Target2
 		return nil
@@ -2519,14 +3213,14 @@ func (u *FilterProjectEnvs200ApplicationJSON1Target) UnmarshalJSON(data []byte) 
 
 func (u FilterProjectEnvs200ApplicationJSON1Target) MarshalJSON() ([]byte, error) {
 	if u.ArrayOffilterProjectEnvs200ApplicationJSON1Target1 != nil {
-		return json.Marshal(u.ArrayOffilterProjectEnvs200ApplicationJSON1Target1)
+		return utils.MarshalJSON(u.ArrayOffilterProjectEnvs200ApplicationJSON1Target1, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON1Target2 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1Target2)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1Target2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type FilterProjectEnvs200ApplicationJSON1Type string
@@ -2585,6 +3279,118 @@ type FilterProjectEnvs200ApplicationJSON1 struct {
 	Value             *string                                     `json:"value,omitempty"`
 }
 
+func (o *FilterProjectEnvs200ApplicationJSON1) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetContentHint() *FilterProjectEnvs200ApplicationJSON1ContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.ContentHint
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetCreatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedBy
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetDecrypted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Decrypted
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetEdgeConfigID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetEdgeConfigTokenID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigTokenID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Key
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetSystem() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.System
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetTarget() *FilterProjectEnvs200ApplicationJSON1Target {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetType() *FilterProjectEnvs200ApplicationJSON1Type {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetUpdatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetUpdatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedBy
+}
+
+func (o *FilterProjectEnvs200ApplicationJSON1) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type FilterProjectEnvs200ApplicationJSONType string
 
 const (
@@ -2629,30 +3435,23 @@ func CreateFilterProjectEnvs200ApplicationJSONFilterProjectEnvs200ApplicationJSO
 }
 
 func (u *FilterProjectEnvs200ApplicationJSON) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	filterProjectEnvs200ApplicationJSON2 := new(FilterProjectEnvs200ApplicationJSON2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON2); err == nil {
-		u.FilterProjectEnvs200ApplicationJSON2 = filterProjectEnvs200ApplicationJSON2
-		u.Type = FilterProjectEnvs200ApplicationJSONTypeFilterProjectEnvs200ApplicationJSON2
-		return nil
-	}
 
 	filterProjectEnvs200ApplicationJSON3 := new(FilterProjectEnvs200ApplicationJSON3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON3); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON3, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON3 = filterProjectEnvs200ApplicationJSON3
 		u.Type = FilterProjectEnvs200ApplicationJSONTypeFilterProjectEnvs200ApplicationJSON3
 		return nil
 	}
 
+	filterProjectEnvs200ApplicationJSON2 := new(FilterProjectEnvs200ApplicationJSON2)
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON2, "", true, true); err == nil {
+		u.FilterProjectEnvs200ApplicationJSON2 = filterProjectEnvs200ApplicationJSON2
+		u.Type = FilterProjectEnvs200ApplicationJSONTypeFilterProjectEnvs200ApplicationJSON2
+		return nil
+	}
+
 	filterProjectEnvs200ApplicationJSON1 := new(FilterProjectEnvs200ApplicationJSON1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&filterProjectEnvs200ApplicationJSON1); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterProjectEnvs200ApplicationJSON1, "", true, true); err == nil {
 		u.FilterProjectEnvs200ApplicationJSON1 = filterProjectEnvs200ApplicationJSON1
 		u.Type = FilterProjectEnvs200ApplicationJSONTypeFilterProjectEnvs200ApplicationJSON1
 		return nil
@@ -2662,19 +3461,19 @@ func (u *FilterProjectEnvs200ApplicationJSON) UnmarshalJSON(data []byte) error {
 }
 
 func (u FilterProjectEnvs200ApplicationJSON) MarshalJSON() ([]byte, error) {
+	if u.FilterProjectEnvs200ApplicationJSON1 != nil {
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON1, "", true)
+	}
+
 	if u.FilterProjectEnvs200ApplicationJSON2 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON2)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON2, "", true)
 	}
 
 	if u.FilterProjectEnvs200ApplicationJSON3 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON3)
+		return utils.MarshalJSON(u.FilterProjectEnvs200ApplicationJSON3, "", true)
 	}
 
-	if u.FilterProjectEnvs200ApplicationJSON1 != nil {
-		return json.Marshal(u.FilterProjectEnvs200ApplicationJSON1)
-	}
-
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type FilterProjectEnvsResponse struct {
@@ -2686,4 +3485,32 @@ type FilterProjectEnvsResponse struct {
 	RawResponse *http.Response
 	// The list of environment variables for the given project
 	FilterProjectEnvs200ApplicationJSONOneOf *FilterProjectEnvs200ApplicationJSON
+}
+
+func (o *FilterProjectEnvsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *FilterProjectEnvsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *FilterProjectEnvsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *FilterProjectEnvsResponse) GetFilterProjectEnvs200ApplicationJSONOneOf() *FilterProjectEnvs200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.FilterProjectEnvs200ApplicationJSONOneOf
 }

@@ -3,11 +3,11 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type CreateProjectEnvRequestBody2Target string
@@ -90,6 +90,41 @@ type CreateProjectEnvRequestBody2 struct {
 	Value string `json:"value"`
 }
 
+func (o *CreateProjectEnvRequestBody2) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *CreateProjectEnvRequestBody2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateProjectEnvRequestBody2) GetTarget() []CreateProjectEnvRequestBody2Target {
+	if o == nil {
+		return []CreateProjectEnvRequestBody2Target{}
+	}
+	return o.Target
+}
+
+func (o *CreateProjectEnvRequestBody2) GetType() CreateProjectEnvRequestBody2Type {
+	if o == nil {
+		return CreateProjectEnvRequestBody2Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateProjectEnvRequestBody2) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 type CreateProjectEnvRequestBody1Target string
 
 const (
@@ -170,6 +205,41 @@ type CreateProjectEnvRequestBody1 struct {
 	Value string `json:"value"`
 }
 
+func (o *CreateProjectEnvRequestBody1) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *CreateProjectEnvRequestBody1) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CreateProjectEnvRequestBody1) GetTarget() []CreateProjectEnvRequestBody1Target {
+	if o == nil {
+		return []CreateProjectEnvRequestBody1Target{}
+	}
+	return o.Target
+}
+
+func (o *CreateProjectEnvRequestBody1) GetType() CreateProjectEnvRequestBody1Type {
+	if o == nil {
+		return CreateProjectEnvRequestBody1Type("")
+	}
+	return o.Type
+}
+
+func (o *CreateProjectEnvRequestBody1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 type CreateProjectEnvRequestBodyType string
 
 const (
@@ -203,23 +273,18 @@ func CreateCreateProjectEnvRequestBodyArrayOfcreateProjectEnvRequestBody2(arrayO
 }
 
 func (u *CreateProjectEnvRequestBody) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	arrayOfcreateProjectEnvRequestBody2 := []CreateProjectEnvRequestBody2{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfcreateProjectEnvRequestBody2); err == nil {
-		u.ArrayOfcreateProjectEnvRequestBody2 = arrayOfcreateProjectEnvRequestBody2
-		u.Type = CreateProjectEnvRequestBodyTypeArrayOfcreateProjectEnvRequestBody2
+	createProjectEnvRequestBody1 := new(CreateProjectEnvRequestBody1)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvRequestBody1, "", true, true); err == nil {
+		u.CreateProjectEnvRequestBody1 = createProjectEnvRequestBody1
+		u.Type = CreateProjectEnvRequestBodyTypeCreateProjectEnvRequestBody1
 		return nil
 	}
 
-	createProjectEnvRequestBody1 := new(CreateProjectEnvRequestBody1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnvRequestBody1); err == nil {
-		u.CreateProjectEnvRequestBody1 = createProjectEnvRequestBody1
-		u.Type = CreateProjectEnvRequestBodyTypeCreateProjectEnvRequestBody1
+	arrayOfcreateProjectEnvRequestBody2 := []CreateProjectEnvRequestBody2{}
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvRequestBody2, "", true, true); err == nil {
+		u.ArrayOfcreateProjectEnvRequestBody2 = arrayOfcreateProjectEnvRequestBody2
+		u.Type = CreateProjectEnvRequestBodyTypeArrayOfcreateProjectEnvRequestBody2
 		return nil
 	}
 
@@ -227,15 +292,15 @@ func (u *CreateProjectEnvRequestBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateProjectEnvRequestBody) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfcreateProjectEnvRequestBody2 != nil {
-		return json.Marshal(u.ArrayOfcreateProjectEnvRequestBody2)
-	}
-
 	if u.CreateProjectEnvRequestBody1 != nil {
-		return json.Marshal(u.CreateProjectEnvRequestBody1)
+		return utils.MarshalJSON(u.CreateProjectEnvRequestBody1, "", true)
 	}
 
-	return nil, nil
+	if u.ArrayOfcreateProjectEnvRequestBody2 != nil {
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvRequestBody2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateProjectEnvRequest struct {
@@ -246,6 +311,34 @@ type CreateProjectEnvRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Allow override of environment variable if it already exists
 	Upsert *string `queryParam:"style=form,explode=true,name=upsert"`
+}
+
+func (o *CreateProjectEnvRequest) GetRequestBody() *CreateProjectEnvRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *CreateProjectEnvRequest) GetIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrName
+}
+
+func (o *CreateProjectEnvRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *CreateProjectEnvRequest) GetUpsert() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Upsert
 }
 
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type string
@@ -277,6 +370,20 @@ type CreateProjectEnv201ApplicationJSONCreated2ContentHint12 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint12) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint12) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type string
 
 const (
@@ -304,6 +411,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type) UnmarshalJ
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint11 struct {
 	StoreID string                                                      `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint11) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint11) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type string
@@ -335,6 +456,20 @@ type CreateProjectEnv201ApplicationJSONCreated2ContentHint10 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint10) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint10) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type string
 
 const (
@@ -362,6 +497,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type) UnmarshalJS
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint9 struct {
 	StoreID string                                                     `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint9) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint9) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type string
@@ -393,6 +542,20 @@ type CreateProjectEnv201ApplicationJSONCreated2ContentHint8 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint8) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint8) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type string
 
 const (
@@ -420,6 +583,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type) UnmarshalJS
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint7 struct {
 	StoreID string                                                     `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint7) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint7) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type string
@@ -451,6 +628,20 @@ type CreateProjectEnv201ApplicationJSONCreated2ContentHint6 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint6) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint6) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type string
 
 const (
@@ -478,6 +669,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type) UnmarshalJS
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint5 struct {
 	StoreID string                                                     `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint5) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint5) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type string
@@ -509,6 +714,20 @@ type CreateProjectEnv201ApplicationJSONCreated2ContentHint4 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint4) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint4) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type string
 
 const (
@@ -536,6 +755,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type) UnmarshalJS
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint3 struct {
 	StoreID string                                                     `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint3) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint3) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type string
@@ -567,6 +800,20 @@ type CreateProjectEnv201ApplicationJSONCreated2ContentHint2 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint2) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint2) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type string
 
 const (
@@ -594,6 +841,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type) UnmarshalJS
 type CreateProjectEnv201ApplicationJSONCreated2ContentHint1 struct {
 	StoreID string                                                     `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint1) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint1) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated2ContentHintType string
@@ -739,111 +1000,86 @@ func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv
 }
 
 func (u *CreateProjectEnv201ApplicationJSONCreated2ContentHint) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint1 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint1, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint1 = createProjectEnv201ApplicationJSONCreated2ContentHint1
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint1
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint2 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint2, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint2 = createProjectEnv201ApplicationJSONCreated2ContentHint2
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint2
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint3 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint3); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint3, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint3 = createProjectEnv201ApplicationJSONCreated2ContentHint3
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint3
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint4 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint4); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint4, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint4 = createProjectEnv201ApplicationJSONCreated2ContentHint4
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint4
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint5 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint5); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint5, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint5 = createProjectEnv201ApplicationJSONCreated2ContentHint5
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint5
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint6 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint6); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint6, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint6 = createProjectEnv201ApplicationJSONCreated2ContentHint6
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint6
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint7 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint7); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint7, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint7 = createProjectEnv201ApplicationJSONCreated2ContentHint7
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint7
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint8 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint8); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint8, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint8 = createProjectEnv201ApplicationJSONCreated2ContentHint8
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint8
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint9 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint9)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint9); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint9, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint9 = createProjectEnv201ApplicationJSONCreated2ContentHint9
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint9
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint10 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint10)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint10); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint10, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint10 = createProjectEnv201ApplicationJSONCreated2ContentHint10
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint10
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint11 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint11)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint11); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint11, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint11 = createProjectEnv201ApplicationJSONCreated2ContentHint11
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint11
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2ContentHint12 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint12)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2ContentHint12); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint12, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint12 = createProjectEnv201ApplicationJSONCreated2ContentHint12
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint12
 		return nil
@@ -854,54 +1090,54 @@ func (u *CreateProjectEnv201ApplicationJSONCreated2ContentHint) UnmarshalJSON(da
 
 func (u CreateProjectEnv201ApplicationJSONCreated2ContentHint) MarshalJSON() ([]byte, error) {
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint1 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint1)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint1, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint2 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint2)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint2, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint3 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint3)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint3, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint4 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint4)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint4, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint5 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint5)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint5, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint6 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint6)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint6, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint7 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint7)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint7, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint8 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint8)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint8, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint9 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint9)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint9, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint10 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint10)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint10, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint11 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint11)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint11, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint12 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint12)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint12, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateProjectEnv201ApplicationJSONCreated2Target2 string
@@ -997,21 +1233,16 @@ func CreateCreateProjectEnv201ApplicationJSONCreated2TargetCreateProjectEnv201Ap
 }
 
 func (u *CreateProjectEnv201ApplicationJSONCreated2Target) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	arrayOfcreateProjectEnv201ApplicationJSONCreated2Target1 := []CreateProjectEnv201ApplicationJSONCreated2Target1{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfcreateProjectEnv201ApplicationJSONCreated2Target1); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv201ApplicationJSONCreated2Target1, "", true, true); err == nil {
 		u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1 = arrayOfcreateProjectEnv201ApplicationJSONCreated2Target1
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2TargetTypeArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated2Target2 := new(CreateProjectEnv201ApplicationJSONCreated2Target2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated2Target2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2Target2, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated2Target2 = createProjectEnv201ApplicationJSONCreated2Target2
 		u.Type = CreateProjectEnv201ApplicationJSONCreated2TargetTypeCreateProjectEnv201ApplicationJSONCreated2Target2
 		return nil
@@ -1022,14 +1253,14 @@ func (u *CreateProjectEnv201ApplicationJSONCreated2Target) UnmarshalJSON(data []
 
 func (u CreateProjectEnv201ApplicationJSONCreated2Target) MarshalJSON() ([]byte, error) {
 	if u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1 != nil {
-		return json.Marshal(u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1)
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated2Target2 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated2Target2)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2Target2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateProjectEnv201ApplicationJSONCreated2Type string
@@ -1088,6 +1319,118 @@ type CreateProjectEnv201ApplicationJSONCreated2 struct {
 	Value             *string                                           `json:"value,omitempty"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetContentHint() *CreateProjectEnv201ApplicationJSONCreated2ContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.ContentHint
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetCreatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedBy
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetDecrypted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Decrypted
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetEdgeConfigID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetEdgeConfigTokenID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigTokenID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Key
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetSystem() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.System
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetTarget() *CreateProjectEnv201ApplicationJSONCreated2Target {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetType() *CreateProjectEnv201ApplicationJSONCreated2Type {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetUpdatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetUpdatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedBy
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type string
 
 const (
@@ -1115,6 +1458,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type) UnmarshalJ
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint12 struct {
 	StoreID string                                                      `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint12) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint12) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type string
@@ -1146,6 +1503,20 @@ type CreateProjectEnv201ApplicationJSONCreated1ContentHint11 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint11) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint11) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type string
 
 const (
@@ -1173,6 +1544,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type) UnmarshalJ
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint10 struct {
 	StoreID string                                                      `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint10) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint10) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type string
@@ -1204,6 +1589,20 @@ type CreateProjectEnv201ApplicationJSONCreated1ContentHint9 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint9) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint9) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type string
 
 const (
@@ -1231,6 +1630,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type) UnmarshalJS
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint8 struct {
 	StoreID string                                                     `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint8) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint8) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type string
@@ -1262,6 +1675,20 @@ type CreateProjectEnv201ApplicationJSONCreated1ContentHint7 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint7) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint7) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type string
 
 const (
@@ -1289,6 +1716,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type) UnmarshalJS
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint6 struct {
 	StoreID string                                                     `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint6) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint6) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type string
@@ -1320,6 +1761,20 @@ type CreateProjectEnv201ApplicationJSONCreated1ContentHint5 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint5) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint5) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type string
 
 const (
@@ -1347,6 +1802,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type) UnmarshalJS
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint4 struct {
 	StoreID string                                                     `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint4) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint4) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type string
@@ -1378,6 +1847,20 @@ type CreateProjectEnv201ApplicationJSONCreated1ContentHint3 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint3) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint3) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type string
 
 const (
@@ -1407,6 +1890,20 @@ type CreateProjectEnv201ApplicationJSONCreated1ContentHint2 struct {
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type `json:"type"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint2) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint2) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type("")
+	}
+	return o.Type
+}
+
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type string
 
 const (
@@ -1434,6 +1931,20 @@ func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type) UnmarshalJS
 type CreateProjectEnv201ApplicationJSONCreated1ContentHint1 struct {
 	StoreID string                                                     `json:"storeId"`
 	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type `json:"type"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint1) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint1) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type("")
+	}
+	return o.Type
 }
 
 type CreateProjectEnv201ApplicationJSONCreated1ContentHintType string
@@ -1579,111 +2090,86 @@ func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv
 }
 
 func (u *CreateProjectEnv201ApplicationJSONCreated1ContentHint) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint1 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint1, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint1 = createProjectEnv201ApplicationJSONCreated1ContentHint1
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint1
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint2 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint2, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint2 = createProjectEnv201ApplicationJSONCreated1ContentHint2
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint2
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint3 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint3); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint3, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint3 = createProjectEnv201ApplicationJSONCreated1ContentHint3
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint3
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint4 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint4); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint4, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint4 = createProjectEnv201ApplicationJSONCreated1ContentHint4
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint4
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint5 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint5); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint5, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint5 = createProjectEnv201ApplicationJSONCreated1ContentHint5
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint5
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint6 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint6); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint6, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint6 = createProjectEnv201ApplicationJSONCreated1ContentHint6
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint6
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint7 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint7); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint7, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint7 = createProjectEnv201ApplicationJSONCreated1ContentHint7
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint7
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint8 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint8); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint8, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint8 = createProjectEnv201ApplicationJSONCreated1ContentHint8
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint8
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint9 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint9)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint9); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint9, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint9 = createProjectEnv201ApplicationJSONCreated1ContentHint9
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint9
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint10 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint10)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint10); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint10, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint10 = createProjectEnv201ApplicationJSONCreated1ContentHint10
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint10
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint11 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint11)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint11); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint11, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint11 = createProjectEnv201ApplicationJSONCreated1ContentHint11
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint11
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1ContentHint12 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint12)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1ContentHint12); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint12, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint12 = createProjectEnv201ApplicationJSONCreated1ContentHint12
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint12
 		return nil
@@ -1694,54 +2180,54 @@ func (u *CreateProjectEnv201ApplicationJSONCreated1ContentHint) UnmarshalJSON(da
 
 func (u CreateProjectEnv201ApplicationJSONCreated1ContentHint) MarshalJSON() ([]byte, error) {
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint1 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint1)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint1, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint2 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint2)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint2, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint3 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint3)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint3, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint4 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint4)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint4, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint5 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint5)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint5, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint6 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint6)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint6, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint7 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint7)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint7, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint8 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint8)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint8, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint9 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint9)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint9, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint10 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint10)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint10, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint11 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint11)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint11, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint12 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint12)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint12, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateProjectEnv201ApplicationJSONCreated1Target2 string
@@ -1837,21 +2323,16 @@ func CreateCreateProjectEnv201ApplicationJSONCreated1TargetCreateProjectEnv201Ap
 }
 
 func (u *CreateProjectEnv201ApplicationJSONCreated1Target) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	arrayOfcreateProjectEnv201ApplicationJSONCreated1Target1 := []CreateProjectEnv201ApplicationJSONCreated1Target1{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfcreateProjectEnv201ApplicationJSONCreated1Target1); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv201ApplicationJSONCreated1Target1, "", true, true); err == nil {
 		u.ArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1 = arrayOfcreateProjectEnv201ApplicationJSONCreated1Target1
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1TargetTypeArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONCreated1Target2 := new(CreateProjectEnv201ApplicationJSONCreated1Target2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1Target2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1Target2, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONCreated1Target2 = createProjectEnv201ApplicationJSONCreated1Target2
 		u.Type = CreateProjectEnv201ApplicationJSONCreated1TargetTypeCreateProjectEnv201ApplicationJSONCreated1Target2
 		return nil
@@ -1862,14 +2343,14 @@ func (u *CreateProjectEnv201ApplicationJSONCreated1Target) UnmarshalJSON(data []
 
 func (u CreateProjectEnv201ApplicationJSONCreated1Target) MarshalJSON() ([]byte, error) {
 	if u.ArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1 != nil {
-		return json.Marshal(u.ArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1)
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONCreated1Target2 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1Target2)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1Target2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateProjectEnv201ApplicationJSONCreated1Type string
@@ -1928,6 +2409,118 @@ type CreateProjectEnv201ApplicationJSONCreated1 struct {
 	Value             *string                                           `json:"value,omitempty"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetContentHint() *CreateProjectEnv201ApplicationJSONCreated1ContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.ContentHint
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetCreatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedBy
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetDecrypted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Decrypted
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetEdgeConfigID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetEdgeConfigTokenID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigTokenID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Key
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetSystem() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.System
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetTarget() *CreateProjectEnv201ApplicationJSONCreated1Target {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetType() *CreateProjectEnv201ApplicationJSONCreated1Type {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetUpdatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetUpdatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedBy
+}
+
+func (o *CreateProjectEnv201ApplicationJSONCreated1) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type CreateProjectEnv201ApplicationJSONCreatedType string
 
 const (
@@ -1961,23 +2554,18 @@ func CreateCreateProjectEnv201ApplicationJSONCreatedArrayOfcreateProjectEnv201Ap
 }
 
 func (u *CreateProjectEnv201ApplicationJSONCreated) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
-	arrayOfcreateProjectEnv201ApplicationJSONCreated2 := []CreateProjectEnv201ApplicationJSONCreated2{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfcreateProjectEnv201ApplicationJSONCreated2); err == nil {
-		u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2 = arrayOfcreateProjectEnv201ApplicationJSONCreated2
-		u.Type = CreateProjectEnv201ApplicationJSONCreatedTypeArrayOfcreateProjectEnv201ApplicationJSONCreated2
+	createProjectEnv201ApplicationJSONCreated1 := new(CreateProjectEnv201ApplicationJSONCreated1)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1, "", true, true); err == nil {
+		u.CreateProjectEnv201ApplicationJSONCreated1 = createProjectEnv201ApplicationJSONCreated1
+		u.Type = CreateProjectEnv201ApplicationJSONCreatedTypeCreateProjectEnv201ApplicationJSONCreated1
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1 := new(CreateProjectEnv201ApplicationJSONCreated1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONCreated1); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1 = createProjectEnv201ApplicationJSONCreated1
-		u.Type = CreateProjectEnv201ApplicationJSONCreatedTypeCreateProjectEnv201ApplicationJSONCreated1
+	arrayOfcreateProjectEnv201ApplicationJSONCreated2 := []CreateProjectEnv201ApplicationJSONCreated2{}
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv201ApplicationJSONCreated2, "", true, true); err == nil {
+		u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2 = arrayOfcreateProjectEnv201ApplicationJSONCreated2
+		u.Type = CreateProjectEnv201ApplicationJSONCreatedTypeArrayOfcreateProjectEnv201ApplicationJSONCreated2
 		return nil
 	}
 
@@ -1985,15 +2573,15 @@ func (u *CreateProjectEnv201ApplicationJSONCreated) UnmarshalJSON(data []byte) e
 }
 
 func (u CreateProjectEnv201ApplicationJSONCreated) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2 != nil {
-		return json.Marshal(u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2)
-	}
-
 	if u.CreateProjectEnv201ApplicationJSONCreated1 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONCreated1)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1, "", true)
 	}
 
-	return nil, nil
+	if u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2 != nil {
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateProjectEnv201ApplicationJSONFailedErrorTarget2 string
@@ -2089,21 +2677,16 @@ func CreateCreateProjectEnv201ApplicationJSONFailedErrorTargetCreateProjectEnv20
 }
 
 func (u *CreateProjectEnv201ApplicationJSONFailedErrorTarget) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	arrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1 := []CreateProjectEnv201ApplicationJSONFailedErrorTarget1{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1, "", true, true); err == nil {
 		u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1 = arrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1
 		u.Type = CreateProjectEnv201ApplicationJSONFailedErrorTargetTypeArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1
 		return nil
 	}
 
 	createProjectEnv201ApplicationJSONFailedErrorTarget2 := new(CreateProjectEnv201ApplicationJSONFailedErrorTarget2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createProjectEnv201ApplicationJSONFailedErrorTarget2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONFailedErrorTarget2, "", true, true); err == nil {
 		u.CreateProjectEnv201ApplicationJSONFailedErrorTarget2 = createProjectEnv201ApplicationJSONFailedErrorTarget2
 		u.Type = CreateProjectEnv201ApplicationJSONFailedErrorTargetTypeCreateProjectEnv201ApplicationJSONFailedErrorTarget2
 		return nil
@@ -2114,14 +2697,14 @@ func (u *CreateProjectEnv201ApplicationJSONFailedErrorTarget) UnmarshalJSON(data
 
 func (u CreateProjectEnv201ApplicationJSONFailedErrorTarget) MarshalJSON() ([]byte, error) {
 	if u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1 != nil {
-		return json.Marshal(u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1)
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1, "", true)
 	}
 
 	if u.CreateProjectEnv201ApplicationJSONFailedErrorTarget2 != nil {
-		return json.Marshal(u.CreateProjectEnv201ApplicationJSONFailedErrorTarget2)
+		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONFailedErrorTarget2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateProjectEnv201ApplicationJSONFailedErrorValue2 string
@@ -2187,21 +2770,16 @@ func CreateCreateProjectEnv201ApplicationJSONFailedErrorValueArrayOfcreateProjec
 }
 
 func (u *CreateProjectEnv201ApplicationJSONFailedErrorValue) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = CreateProjectEnv201ApplicationJSONFailedErrorValueTypeStr
 		return nil
 	}
 
 	arrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2 := []CreateProjectEnv201ApplicationJSONFailedErrorValue2{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2, "", true, true); err == nil {
 		u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2 = arrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2
 		u.Type = CreateProjectEnv201ApplicationJSONFailedErrorValueTypeArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2
 		return nil
@@ -2212,14 +2790,14 @@ func (u *CreateProjectEnv201ApplicationJSONFailedErrorValue) UnmarshalJSON(data 
 
 func (u CreateProjectEnv201ApplicationJSONFailedErrorValue) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2 != nil {
-		return json.Marshal(u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2)
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateProjectEnv201ApplicationJSONFailedError struct {
@@ -2236,14 +2814,112 @@ type CreateProjectEnv201ApplicationJSONFailedError struct {
 	Value     *CreateProjectEnv201ApplicationJSONFailedErrorValue  `json:"value,omitempty"`
 }
 
+func (o *CreateProjectEnv201ApplicationJSONFailedError) GetAction() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Action
+}
+
+func (o *CreateProjectEnv201ApplicationJSONFailedError) GetCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.Code
+}
+
+func (o *CreateProjectEnv201ApplicationJSONFailedError) GetEnvVarID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EnvVarID
+}
+
+func (o *CreateProjectEnv201ApplicationJSONFailedError) GetEnvVarKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EnvVarKey
+}
+
+func (o *CreateProjectEnv201ApplicationJSONFailedError) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *CreateProjectEnv201ApplicationJSONFailedError) GetKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Key
+}
+
+func (o *CreateProjectEnv201ApplicationJSONFailedError) GetLink() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Link
+}
+
+func (o *CreateProjectEnv201ApplicationJSONFailedError) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
+}
+
+func (o *CreateProjectEnv201ApplicationJSONFailedError) GetProject() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Project
+}
+
+func (o *CreateProjectEnv201ApplicationJSONFailedError) GetTarget() *CreateProjectEnv201ApplicationJSONFailedErrorTarget {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *CreateProjectEnv201ApplicationJSONFailedError) GetValue() *CreateProjectEnv201ApplicationJSONFailedErrorValue {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type CreateProjectEnv201ApplicationJSONFailed struct {
 	Error CreateProjectEnv201ApplicationJSONFailedError `json:"error"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSONFailed) GetError() CreateProjectEnv201ApplicationJSONFailedError {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONFailedError{}
+	}
+	return o.Error
 }
 
 // CreateProjectEnv201ApplicationJSON - The environment variable was created successfully
 type CreateProjectEnv201ApplicationJSON struct {
 	Created CreateProjectEnv201ApplicationJSONCreated  `json:"created"`
 	Failed  []CreateProjectEnv201ApplicationJSONFailed `json:"failed"`
+}
+
+func (o *CreateProjectEnv201ApplicationJSON) GetCreated() CreateProjectEnv201ApplicationJSONCreated {
+	if o == nil {
+		return CreateProjectEnv201ApplicationJSONCreated{}
+	}
+	return o.Created
+}
+
+func (o *CreateProjectEnv201ApplicationJSON) GetFailed() []CreateProjectEnv201ApplicationJSONFailed {
+	if o == nil {
+		return []CreateProjectEnv201ApplicationJSONFailed{}
+	}
+	return o.Failed
 }
 
 type CreateProjectEnvResponse struct {
@@ -2255,4 +2931,32 @@ type CreateProjectEnvResponse struct {
 	RawResponse *http.Response
 	// The environment variable was created successfully
 	CreateProjectEnv201ApplicationJSONObject *CreateProjectEnv201ApplicationJSON
+}
+
+func (o *CreateProjectEnvResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CreateProjectEnvResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CreateProjectEnvResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *CreateProjectEnvResponse) GetCreateProjectEnv201ApplicationJSONObject() *CreateProjectEnv201ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.CreateProjectEnv201ApplicationJSONObject
 }

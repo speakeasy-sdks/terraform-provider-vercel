@@ -12,10 +12,24 @@ type GetAuthTokenRequest struct {
 	TokenID string `pathParam:"style=simple,explode=false,name=tokenId"`
 }
 
+func (o *GetAuthTokenRequest) GetTokenID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenID
+}
+
 // GetAuthToken200ApplicationJSON - Successful response.
 type GetAuthToken200ApplicationJSON struct {
 	// Authentication token metadata.
 	Token shared.AuthToken `json:"token"`
+}
+
+func (o *GetAuthToken200ApplicationJSON) GetToken() shared.AuthToken {
+	if o == nil {
+		return shared.AuthToken{}
+	}
+	return o.Token
 }
 
 type GetAuthTokenResponse struct {
@@ -27,4 +41,32 @@ type GetAuthTokenResponse struct {
 	RawResponse *http.Response
 	// Successful response.
 	GetAuthToken200ApplicationJSONObject *GetAuthToken200ApplicationJSON
+}
+
+func (o *GetAuthTokenResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetAuthTokenResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetAuthTokenResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetAuthTokenResponse) GetGetAuthToken200ApplicationJSONObject() *GetAuthToken200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetAuthToken200ApplicationJSONObject
 }

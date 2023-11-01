@@ -122,10 +122,87 @@ type CreateLogDrainRequestBody struct {
 	URL string `json:"url"`
 }
 
+func (o *CreateLogDrainRequestBody) GetBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Branch
+}
+
+func (o *CreateLogDrainRequestBody) GetDeliveryFormat() *CreateLogDrainRequestBodyDeliveryFormat {
+	if o == nil {
+		return nil
+	}
+	return o.DeliveryFormat
+}
+
+func (o *CreateLogDrainRequestBody) GetEnvironment() *CreateLogDrainRequestBodyEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.Environment
+}
+
+func (o *CreateLogDrainRequestBody) GetHeaders() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *CreateLogDrainRequestBody) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateLogDrainRequestBody) GetProjectIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectIds
+}
+
+func (o *CreateLogDrainRequestBody) GetSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Secret
+}
+
+func (o *CreateLogDrainRequestBody) GetSources() []CreateLogDrainRequestBodySources {
+	if o == nil {
+		return nil
+	}
+	return o.Sources
+}
+
+func (o *CreateLogDrainRequestBody) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 type CreateLogDrainRequest struct {
 	RequestBody *CreateLogDrainRequestBody `request:"mediaType=application/json"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *CreateLogDrainRequest) GetRequestBody() *CreateLogDrainRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *CreateLogDrainRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 // CreateLogDrain200ApplicationJSONCreatedFrom - Whether the log drain was created by an integration or by a user
@@ -288,6 +365,111 @@ type CreateLogDrain200ApplicationJSON struct {
 	URL string `json:"url"`
 }
 
+func (o *CreateLogDrain200ApplicationJSON) GetBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Branch
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetCreatedFrom() *CreateLogDrain200ApplicationJSONCreatedFrom {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedFrom
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetDeliveryFormat() *CreateLogDrain200ApplicationJSONDeliveryFormat {
+	if o == nil {
+		return nil
+	}
+	return o.DeliveryFormat
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetEnvironment() *CreateLogDrain200ApplicationJSONEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.Environment
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetHeaders() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerID
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetProjectIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectIds
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetSources() []CreateLogDrain200ApplicationJSONSources {
+	if o == nil {
+		return nil
+	}
+	return o.Sources
+}
+
+func (o *CreateLogDrain200ApplicationJSON) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 type CreateLogDrainResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -297,4 +479,32 @@ type CreateLogDrainResponse struct {
 	RawResponse *http.Response
 	// The log drain was successfully created
 	CreateLogDrain200ApplicationJSONObject *CreateLogDrain200ApplicationJSON
+}
+
+func (o *CreateLogDrainResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CreateLogDrainResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CreateLogDrainResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *CreateLogDrainResponse) GetCreateLogDrain200ApplicationJSONObject() *CreateLogDrain200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.CreateLogDrain200ApplicationJSONObject
 }

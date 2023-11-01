@@ -3,10 +3,10 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type AuthTokenScopes2Origin string
@@ -81,6 +81,41 @@ type AuthTokenScopes2 struct {
 	Type      AuthTokenScopes2Type   `json:"type"`
 }
 
+func (o *AuthTokenScopes2) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthTokenScopes2) GetExpiresAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresAt
+}
+
+func (o *AuthTokenScopes2) GetOrigin() AuthTokenScopes2Origin {
+	if o == nil {
+		return AuthTokenScopes2Origin("")
+	}
+	return o.Origin
+}
+
+func (o *AuthTokenScopes2) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
+}
+
+func (o *AuthTokenScopes2) GetType() AuthTokenScopes2Type {
+	if o == nil {
+		return AuthTokenScopes2Type("")
+	}
+	return o.Type
+}
+
 type AuthTokenScopes1Origin string
 
 const (
@@ -152,6 +187,34 @@ type AuthTokenScopes1 struct {
 	Type      AuthTokenScopes1Type   `json:"type"`
 }
 
+func (o *AuthTokenScopes1) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthTokenScopes1) GetExpiresAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresAt
+}
+
+func (o *AuthTokenScopes1) GetOrigin() AuthTokenScopes1Origin {
+	if o == nil {
+		return AuthTokenScopes1Origin("")
+	}
+	return o.Origin
+}
+
+func (o *AuthTokenScopes1) GetType() AuthTokenScopes1Type {
+	if o == nil {
+		return AuthTokenScopes1Type("")
+	}
+	return o.Type
+}
+
 type AuthTokenScopesType string
 
 const (
@@ -185,21 +248,16 @@ func CreateAuthTokenScopesAuthTokenScopes2(authTokenScopes2 AuthTokenScopes2) Au
 }
 
 func (u *AuthTokenScopes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	authTokenScopes1 := new(AuthTokenScopes1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&authTokenScopes1); err == nil {
+	if err := utils.UnmarshalJSON(data, &authTokenScopes1, "", true, true); err == nil {
 		u.AuthTokenScopes1 = authTokenScopes1
 		u.Type = AuthTokenScopesTypeAuthTokenScopes1
 		return nil
 	}
 
 	authTokenScopes2 := new(AuthTokenScopes2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&authTokenScopes2); err == nil {
+	if err := utils.UnmarshalJSON(data, &authTokenScopes2, "", true, true); err == nil {
 		u.AuthTokenScopes2 = authTokenScopes2
 		u.Type = AuthTokenScopesTypeAuthTokenScopes2
 		return nil
@@ -210,14 +268,14 @@ func (u *AuthTokenScopes) UnmarshalJSON(data []byte) error {
 
 func (u AuthTokenScopes) MarshalJSON() ([]byte, error) {
 	if u.AuthTokenScopes1 != nil {
-		return json.Marshal(u.AuthTokenScopes1)
+		return utils.MarshalJSON(u.AuthTokenScopes1, "", true)
 	}
 
 	if u.AuthTokenScopes2 != nil {
-		return json.Marshal(u.AuthTokenScopes2)
+		return utils.MarshalJSON(u.AuthTokenScopes2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // AuthToken - Authentication token metadata.
@@ -238,4 +296,60 @@ type AuthToken struct {
 	Scopes []AuthTokenScopes `json:"scopes,omitempty"`
 	// The type of the token.
 	Type string `json:"type"`
+}
+
+func (o *AuthToken) GetActiveAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ActiveAt
+}
+
+func (o *AuthToken) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *AuthToken) GetExpiresAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresAt
+}
+
+func (o *AuthToken) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *AuthToken) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *AuthToken) GetOrigin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Origin
+}
+
+func (o *AuthToken) GetScopes() []AuthTokenScopes {
+	if o == nil {
+		return nil
+	}
+	return o.Scopes
+}
+
+func (o *AuthToken) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
 }

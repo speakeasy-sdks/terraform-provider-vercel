@@ -14,9 +14,30 @@ type RequestDeleteRequestBodyReasons struct {
 	Slug string `json:"slug"`
 }
 
+func (o *RequestDeleteRequestBodyReasons) GetDescription() string {
+	if o == nil {
+		return ""
+	}
+	return o.Description
+}
+
+func (o *RequestDeleteRequestBodyReasons) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
 type RequestDeleteRequestBody struct {
 	// Optional array of objects that describe the reason why the User account is being deleted.
 	Reasons []RequestDeleteRequestBodyReasons `json:"reasons,omitempty"`
+}
+
+func (o *RequestDeleteRequestBody) GetReasons() []RequestDeleteRequestBodyReasons {
+	if o == nil {
+		return nil
+	}
+	return o.Reasons
 }
 
 // RequestDelete202ApplicationJSON - Response indicating that the User deletion process has been initiated, and a confirmation email has been sent.
@@ -29,6 +50,27 @@ type RequestDelete202ApplicationJSON struct {
 	Message string `json:"message"`
 }
 
+func (o *RequestDelete202ApplicationJSON) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *RequestDelete202ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *RequestDelete202ApplicationJSON) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
+}
+
 type RequestDeleteResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -38,4 +80,32 @@ type RequestDeleteResponse struct {
 	RawResponse *http.Response
 	// Response indicating that the User deletion process has been initiated, and a confirmation email has been sent.
 	RequestDelete202ApplicationJSONObject *RequestDelete202ApplicationJSON
+}
+
+func (o *RequestDeleteResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *RequestDeleteResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *RequestDeleteResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *RequestDeleteResponse) GetRequestDelete202ApplicationJSONObject() *RequestDelete202ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.RequestDelete202ApplicationJSONObject
 }

@@ -3,15 +3,21 @@
 package operations
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type ArtifactQueryRequestBody struct {
 	// artifact hashes
 	Hashes []string `json:"hashes"`
+}
+
+func (o *ArtifactQueryRequestBody) GetHashes() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Hashes
 }
 
 type ArtifactQueryRequest struct {
@@ -20,18 +26,67 @@ type ArtifactQueryRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *ArtifactQueryRequest) GetRequestBody() *ArtifactQueryRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *ArtifactQueryRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type ArtifactQuery200ApplicationJSON2Error struct {
 	Message string `json:"message"`
+}
+
+func (o *ArtifactQuery200ApplicationJSON2Error) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
 }
 
 type ArtifactQuery200ApplicationJSON2 struct {
 	Error ArtifactQuery200ApplicationJSON2Error `json:"error"`
 }
 
+func (o *ArtifactQuery200ApplicationJSON2) GetError() ArtifactQuery200ApplicationJSON2Error {
+	if o == nil {
+		return ArtifactQuery200ApplicationJSON2Error{}
+	}
+	return o.Error
+}
+
 type ArtifactQuery200ApplicationJSON1 struct {
 	Size           int64   `json:"size"`
 	Tag            *string `json:"tag,omitempty"`
 	TaskDurationMs int64   `json:"taskDurationMs"`
+}
+
+func (o *ArtifactQuery200ApplicationJSON1) GetSize() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Size
+}
+
+func (o *ArtifactQuery200ApplicationJSON1) GetTag() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Tag
+}
+
+func (o *ArtifactQuery200ApplicationJSON1) GetTaskDurationMs() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.TaskDurationMs
 }
 
 type ArtifactQuery200ApplicationJSONType string
@@ -67,21 +122,16 @@ func CreateArtifactQuery200ApplicationJSONArtifactQuery200ApplicationJSON2(artif
 }
 
 func (u *ArtifactQuery200ApplicationJSON) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	artifactQuery200ApplicationJSON2 := new(ArtifactQuery200ApplicationJSON2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&artifactQuery200ApplicationJSON2); err == nil {
+	if err := utils.UnmarshalJSON(data, &artifactQuery200ApplicationJSON2, "", true, true); err == nil {
 		u.ArtifactQuery200ApplicationJSON2 = artifactQuery200ApplicationJSON2
 		u.Type = ArtifactQuery200ApplicationJSONTypeArtifactQuery200ApplicationJSON2
 		return nil
 	}
 
 	artifactQuery200ApplicationJSON1 := new(ArtifactQuery200ApplicationJSON1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&artifactQuery200ApplicationJSON1); err == nil {
+	if err := utils.UnmarshalJSON(data, &artifactQuery200ApplicationJSON1, "", true, true); err == nil {
 		u.ArtifactQuery200ApplicationJSON1 = artifactQuery200ApplicationJSON1
 		u.Type = ArtifactQuery200ApplicationJSONTypeArtifactQuery200ApplicationJSON1
 		return nil
@@ -91,15 +141,15 @@ func (u *ArtifactQuery200ApplicationJSON) UnmarshalJSON(data []byte) error {
 }
 
 func (u ArtifactQuery200ApplicationJSON) MarshalJSON() ([]byte, error) {
-	if u.ArtifactQuery200ApplicationJSON2 != nil {
-		return json.Marshal(u.ArtifactQuery200ApplicationJSON2)
-	}
-
 	if u.ArtifactQuery200ApplicationJSON1 != nil {
-		return json.Marshal(u.ArtifactQuery200ApplicationJSON1)
+		return utils.MarshalJSON(u.ArtifactQuery200ApplicationJSON1, "", true)
 	}
 
-	return nil, nil
+	if u.ArtifactQuery200ApplicationJSON2 != nil {
+		return utils.MarshalJSON(u.ArtifactQuery200ApplicationJSON2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type ArtifactQueryResponse struct {
@@ -110,4 +160,32 @@ type ArtifactQueryResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                           *http.Response
 	ArtifactQuery200ApplicationJSONObject map[string]ArtifactQuery200ApplicationJSON
+}
+
+func (o *ArtifactQueryResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *ArtifactQueryResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *ArtifactQueryResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *ArtifactQueryResponse) GetArtifactQuery200ApplicationJSONObject() map[string]ArtifactQuery200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.ArtifactQuery200ApplicationJSONObject
 }

@@ -117,10 +117,80 @@ type CreateConfigurableLogDrainRequestBody struct {
 	URL string `json:"url"`
 }
 
+func (o *CreateConfigurableLogDrainRequestBody) GetBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Branch
+}
+
+func (o *CreateConfigurableLogDrainRequestBody) GetDeliveryFormat() CreateConfigurableLogDrainRequestBodyDeliveryFormat {
+	if o == nil {
+		return CreateConfigurableLogDrainRequestBodyDeliveryFormat("")
+	}
+	return o.DeliveryFormat
+}
+
+func (o *CreateConfigurableLogDrainRequestBody) GetEnvironment() *CreateConfigurableLogDrainRequestBodyEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.Environment
+}
+
+func (o *CreateConfigurableLogDrainRequestBody) GetHeaders() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *CreateConfigurableLogDrainRequestBody) GetProjectIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectIds
+}
+
+func (o *CreateConfigurableLogDrainRequestBody) GetSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Secret
+}
+
+func (o *CreateConfigurableLogDrainRequestBody) GetSources() []CreateConfigurableLogDrainRequestBodySources {
+	if o == nil {
+		return []CreateConfigurableLogDrainRequestBodySources{}
+	}
+	return o.Sources
+}
+
+func (o *CreateConfigurableLogDrainRequestBody) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 type CreateConfigurableLogDrainRequest struct {
 	RequestBody *CreateConfigurableLogDrainRequestBody `request:"mediaType=application/json"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *CreateConfigurableLogDrainRequest) GetRequestBody() *CreateConfigurableLogDrainRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *CreateConfigurableLogDrainRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 type CreateConfigurableLogDrain200ApplicationJSONCreatedFrom string
@@ -331,6 +401,153 @@ type CreateConfigurableLogDrain200ApplicationJSON struct {
 	URL     string                                                `json:"url"`
 }
 
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Branch
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetCreatedFrom() *CreateConfigurableLogDrain200ApplicationJSONCreatedFrom {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedFrom
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetDeliveryFormat() CreateConfigurableLogDrain200ApplicationJSONDeliveryFormat {
+	if o == nil {
+		return CreateConfigurableLogDrain200ApplicationJSONDeliveryFormat("")
+	}
+	return o.DeliveryFormat
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetDisabledBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledBy
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetDisabledReason() *CreateConfigurableLogDrain200ApplicationJSONDisabledReason {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledReason
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetEnvironment() *CreateConfigurableLogDrain200ApplicationJSONEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.Environment
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetFirstErrorTimestamp() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.FirstErrorTimestamp
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetHeaders() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerID
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetProjectIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectIds
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Secret
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetSources() []CreateConfigurableLogDrain200ApplicationJSONSources {
+	if o == nil {
+		return nil
+	}
+	return o.Sources
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetStatus() *CreateConfigurableLogDrain200ApplicationJSONStatus {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *CreateConfigurableLogDrain200ApplicationJSON) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 type CreateConfigurableLogDrainResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -339,4 +556,32 @@ type CreateConfigurableLogDrainResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                        *http.Response
 	CreateConfigurableLogDrain200ApplicationJSONObject *CreateConfigurableLogDrain200ApplicationJSON
+}
+
+func (o *CreateConfigurableLogDrainResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CreateConfigurableLogDrainResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CreateConfigurableLogDrainResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *CreateConfigurableLogDrainResponse) GetCreateConfigurableLogDrain200ApplicationJSONObject() *CreateConfigurableLogDrain200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.CreateConfigurableLogDrain200ApplicationJSONObject
 }

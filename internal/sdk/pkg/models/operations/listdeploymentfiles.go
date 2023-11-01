@@ -14,6 +14,20 @@ type ListDeploymentFilesRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *ListDeploymentFilesRequest) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *ListDeploymentFilesRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type ListDeploymentFilesResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -23,4 +37,32 @@ type ListDeploymentFilesResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *ListDeploymentFilesResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *ListDeploymentFilesResponse) GetFileTrees() []shared.FileTree {
+	if o == nil {
+		return nil
+	}
+	return o.FileTrees
+}
+
+func (o *ListDeploymentFilesResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *ListDeploymentFilesResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

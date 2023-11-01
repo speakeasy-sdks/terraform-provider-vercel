@@ -10,8 +10,22 @@ type PatchDataCacheBillingSettingsRequestBody struct {
 	ExcessBillingEnabled *bool `json:"excessBillingEnabled,omitempty"`
 }
 
+func (o *PatchDataCacheBillingSettingsRequestBody) GetExcessBillingEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ExcessBillingEnabled
+}
+
 type PatchDataCacheBillingSettings200ApplicationJSON struct {
 	ExcessBillingEnabled *bool `json:"excessBillingEnabled,omitempty"`
+}
+
+func (o *PatchDataCacheBillingSettings200ApplicationJSON) GetExcessBillingEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ExcessBillingEnabled
 }
 
 type PatchDataCacheBillingSettingsResponse struct {
@@ -22,4 +36,32 @@ type PatchDataCacheBillingSettingsResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                           *http.Response
 	PatchDataCacheBillingSettings200ApplicationJSONObject *PatchDataCacheBillingSettings200ApplicationJSON
+}
+
+func (o *PatchDataCacheBillingSettingsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PatchDataCacheBillingSettingsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PatchDataCacheBillingSettingsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *PatchDataCacheBillingSettingsResponse) GetPatchDataCacheBillingSettings200ApplicationJSONObject() *PatchDataCacheBillingSettings200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.PatchDataCacheBillingSettings200ApplicationJSONObject
 }

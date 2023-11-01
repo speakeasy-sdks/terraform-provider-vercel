@@ -3,12 +3,12 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
 	"vercel/internal/sdk/pkg/models/shared"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 // GetDeploymentsTarget - Filter deployments based on the environment.
@@ -66,6 +66,90 @@ type GetDeploymentsRequest struct {
 	Users *string `queryParam:"style=form,explode=true,name=users"`
 }
 
+func (o *GetDeploymentsRequest) GetApp() *string {
+	if o == nil {
+		return nil
+	}
+	return o.App
+}
+
+func (o *GetDeploymentsRequest) GetFrom() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.From
+}
+
+func (o *GetDeploymentsRequest) GetLimit() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
+func (o *GetDeploymentsRequest) GetProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *GetDeploymentsRequest) GetRollbackCandidate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RollbackCandidate
+}
+
+func (o *GetDeploymentsRequest) GetSince() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Since
+}
+
+func (o *GetDeploymentsRequest) GetState() *string {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}
+
+func (o *GetDeploymentsRequest) GetTarget() *GetDeploymentsTarget {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *GetDeploymentsRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetDeploymentsRequest) GetTo() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.To
+}
+
+func (o *GetDeploymentsRequest) GetUntil() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Until
+}
+
+func (o *GetDeploymentsRequest) GetUsers() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Users
+}
+
 type GetDeployments200ApplicationJSONDeploymentsAliasAssignedType string
 
 const (
@@ -99,21 +183,16 @@ func CreateGetDeployments200ApplicationJSONDeploymentsAliasAssignedBoolean(boole
 }
 
 func (u *GetDeployments200ApplicationJSONDeploymentsAliasAssigned) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = GetDeployments200ApplicationJSONDeploymentsAliasAssignedTypeInteger
 		return nil
 	}
 
 	boolean := new(bool)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&boolean); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
 		u.Type = GetDeployments200ApplicationJSONDeploymentsAliasAssignedTypeBoolean
 		return nil
@@ -124,20 +203,34 @@ func (u *GetDeployments200ApplicationJSONDeploymentsAliasAssigned) UnmarshalJSON
 
 func (u GetDeployments200ApplicationJSONDeploymentsAliasAssigned) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
 	if u.Boolean != nil {
-		return json.Marshal(u.Boolean)
+		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // GetDeployments200ApplicationJSONDeploymentsAliasError - An error object in case aliasing of the deployment failed.
 type GetDeployments200ApplicationJSONDeploymentsAliasError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsAliasError) GetCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.Code
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsAliasError) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
 }
 
 // GetDeployments200ApplicationJSONDeploymentsChecksConclusion - Conclusion for checks
@@ -217,6 +310,41 @@ type GetDeployments200ApplicationJSONDeploymentsCreator struct {
 	UID string `json:"uid"`
 	// The username of the user.
 	Username *string `json:"username,omitempty"`
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsCreator) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsCreator) GetGithubLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GithubLogin
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsCreator) GetGitlabLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitlabLogin
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsCreator) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsCreator) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
 }
 
 type GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework string
@@ -374,6 +502,20 @@ type GetDeployments200ApplicationJSONDeploymentsProjectSettingsGitComments struc
 	OnPullRequest bool `json:"onPullRequest"`
 }
 
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettingsGitComments) GetOnCommit() bool {
+	if o == nil {
+		return false
+	}
+	return o.OnCommit
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettingsGitComments) GetOnPullRequest() bool {
+	if o == nil {
+		return false
+	}
+	return o.OnPullRequest
+}
+
 type GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion string
 
 const (
@@ -430,6 +572,125 @@ type GetDeployments200ApplicationJSONDeploymentsProjectSettings struct {
 	ServerlessFunctionRegion        *string                                                                `json:"serverlessFunctionRegion,omitempty"`
 	SkipGitConnectDuringLink        *bool                                                                  `json:"skipGitConnectDuringLink,omitempty"`
 	SourceFilesOutsideRootDirectory *bool                                                                  `json:"sourceFilesOutsideRootDirectory,omitempty"`
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetBuildCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BuildCommand
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetCommandForIgnoringBuildStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommandForIgnoringBuildStep
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetCustomerSupportCodeVisibility() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerSupportCodeVisibility
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetDevCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DevCommand
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetFramework() *GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework {
+	if o == nil {
+		return nil
+	}
+	return o.Framework
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetGitComments() *GetDeployments200ApplicationJSONDeploymentsProjectSettingsGitComments {
+	if o == nil {
+		return nil
+	}
+	return o.GitComments
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetGitForkProtection() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.GitForkProtection
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetGitLFS() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.GitLFS
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetInstallCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InstallCommand
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetNodeVersion() *GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion {
+	if o == nil {
+		return nil
+	}
+	return o.NodeVersion
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetOutputDirectory() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OutputDirectory
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetPublicSource() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PublicSource
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetRootDirectory() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RootDirectory
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetServerlessFunctionRegion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ServerlessFunctionRegion
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetSkipGitConnectDuringLink() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SkipGitConnectDuringLink
+}
+
+func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetSourceFilesOutsideRootDirectory() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SourceFilesOutsideRootDirectory
 }
 
 // GetDeployments200ApplicationJSONDeploymentsReadySubstate - Since June 2023 Substate of deployment when readyState is 'READY' Tracks whether or not deployment has seen production traffic: - STAGED: never seen production traffic - PROMOTED: has seen production traffic
@@ -638,10 +899,185 @@ type GetDeployments200ApplicationJSONDeployments struct {
 	URL string `json:"url"`
 }
 
+func (o *GetDeployments200ApplicationJSONDeployments) GetAliasAssigned() *GetDeployments200ApplicationJSONDeploymentsAliasAssigned {
+	if o == nil {
+		return nil
+	}
+	return o.AliasAssigned
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetAliasError() *GetDeployments200ApplicationJSONDeploymentsAliasError {
+	if o == nil {
+		return nil
+	}
+	return o.AliasError
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetBuildingAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BuildingAt
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetChecksConclusion() *GetDeployments200ApplicationJSONDeploymentsChecksConclusion {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksConclusion
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetChecksState() *GetDeployments200ApplicationJSONDeploymentsChecksState {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksState
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetConnectBuildsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectBuildsEnabled
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetConnectConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectConfigurationID
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetCreator() GetDeployments200ApplicationJSONDeploymentsCreator {
+	if o == nil {
+		return GetDeployments200ApplicationJSONDeploymentsCreator{}
+	}
+	return o.Creator
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetInspectorURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InspectorURL
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetIsRollbackCandidate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsRollbackCandidate
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetMeta() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Meta
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetProjectSettings() *GetDeployments200ApplicationJSONDeploymentsProjectSettings {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectSettings
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetReady() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Ready
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetReadySubstate() *GetDeployments200ApplicationJSONDeploymentsReadySubstate {
+	if o == nil {
+		return nil
+	}
+	return o.ReadySubstate
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetSource() *GetDeployments200ApplicationJSONDeploymentsSource {
+	if o == nil {
+		return nil
+	}
+	return o.Source
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetState() *GetDeployments200ApplicationJSONDeploymentsState {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetTarget() *GetDeployments200ApplicationJSONDeploymentsTarget {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetType() GetDeployments200ApplicationJSONDeploymentsType {
+	if o == nil {
+		return GetDeployments200ApplicationJSONDeploymentsType("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *GetDeployments200ApplicationJSONDeployments) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 type GetDeployments200ApplicationJSON struct {
 	Deployments []GetDeployments200ApplicationJSONDeployments `json:"deployments"`
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 	Pagination shared.Pagination `json:"pagination"`
+}
+
+func (o *GetDeployments200ApplicationJSON) GetDeployments() []GetDeployments200ApplicationJSONDeployments {
+	if o == nil {
+		return []GetDeployments200ApplicationJSONDeployments{}
+	}
+	return o.Deployments
+}
+
+func (o *GetDeployments200ApplicationJSON) GetPagination() shared.Pagination {
+	if o == nil {
+		return shared.Pagination{}
+	}
+	return o.Pagination
 }
 
 type GetDeploymentsResponse struct {
@@ -652,4 +1088,32 @@ type GetDeploymentsResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                            *http.Response
 	GetDeployments200ApplicationJSONObject *GetDeployments200ApplicationJSON
+}
+
+func (o *GetDeploymentsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetDeploymentsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetDeploymentsResponse) GetGetDeployments200ApplicationJSONObject() *GetDeployments200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetDeployments200ApplicationJSONObject
 }

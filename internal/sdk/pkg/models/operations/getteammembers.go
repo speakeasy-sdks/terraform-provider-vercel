@@ -3,11 +3,11 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 // GetTeamMembersRole - Only return members with the specified team role.
@@ -66,6 +66,62 @@ type GetTeamMembersRequest struct {
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 	// Timestamp in milliseconds to only include members added until then.
 	Until *int64 `queryParam:"style=form,explode=true,name=until"`
+}
+
+func (o *GetTeamMembersRequest) GetEligibleMembersForProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EligibleMembersForProjectID
+}
+
+func (o *GetTeamMembersRequest) GetExcludeProject() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeProject
+}
+
+func (o *GetTeamMembersRequest) GetLimit() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
+func (o *GetTeamMembersRequest) GetRole() *GetTeamMembersRole {
+	if o == nil {
+		return nil
+	}
+	return o.Role
+}
+
+func (o *GetTeamMembersRequest) GetSearch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Search
+}
+
+func (o *GetTeamMembersRequest) GetSince() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Since
+}
+
+func (o *GetTeamMembersRequest) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
+}
+
+func (o *GetTeamMembersRequest) GetUntil() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Until
 }
 
 type GetTeamMembers200ApplicationJSONEmailInviteCodesProjects string
@@ -147,9 +203,65 @@ type GetTeamMembers200ApplicationJSONEmailInviteCodes struct {
 	Role        *GetTeamMembers200ApplicationJSONEmailInviteCodesRole               `json:"role,omitempty"`
 }
 
+func (o *GetTeamMembers200ApplicationJSONEmailInviteCodes) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *GetTeamMembers200ApplicationJSONEmailInviteCodes) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *GetTeamMembers200ApplicationJSONEmailInviteCodes) GetExpired() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Expired
+}
+
+func (o *GetTeamMembers200ApplicationJSONEmailInviteCodes) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetTeamMembers200ApplicationJSONEmailInviteCodes) GetIsDSyncUser() bool {
+	if o == nil {
+		return false
+	}
+	return o.IsDSyncUser
+}
+
+func (o *GetTeamMembers200ApplicationJSONEmailInviteCodes) GetProjects() map[string]GetTeamMembers200ApplicationJSONEmailInviteCodesProjects {
+	if o == nil {
+		return nil
+	}
+	return o.Projects
+}
+
+func (o *GetTeamMembers200ApplicationJSONEmailInviteCodes) GetRole() *GetTeamMembers200ApplicationJSONEmailInviteCodesRole {
+	if o == nil {
+		return nil
+	}
+	return o.Role
+}
+
 // GetTeamMembers200ApplicationJSONMembersBitbucket - Information about the Bitbucket account of this user.
 type GetTeamMembers200ApplicationJSONMembersBitbucket struct {
 	Login *string `json:"login,omitempty"`
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersBitbucket) GetLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Login
 }
 
 // GetTeamMembers200ApplicationJSONMembersGithub - Information about the GitHub account for this user.
@@ -157,9 +269,23 @@ type GetTeamMembers200ApplicationJSONMembersGithub struct {
 	Login *string `json:"login,omitempty"`
 }
 
+func (o *GetTeamMembers200ApplicationJSONMembersGithub) GetLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Login
+}
+
 // GetTeamMembers200ApplicationJSONMembersGitlab - Information about the GitLab account of this user.
 type GetTeamMembers200ApplicationJSONMembersGitlab struct {
 	Login *string `json:"login,omitempty"`
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersGitlab) GetLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Login
 }
 
 type GetTeamMembers200ApplicationJSONMembersJoinedFromGitUserIDType string
@@ -195,21 +321,16 @@ func CreateGetTeamMembers200ApplicationJSONMembersJoinedFromGitUserIDInteger(int
 }
 
 func (u *GetTeamMembers200ApplicationJSONMembersJoinedFromGitUserID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = GetTeamMembers200ApplicationJSONMembersJoinedFromGitUserIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = GetTeamMembers200ApplicationJSONMembersJoinedFromGitUserIDTypeInteger
 		return nil
@@ -220,14 +341,14 @@ func (u *GetTeamMembers200ApplicationJSONMembersJoinedFromGitUserID) UnmarshalJS
 
 func (u GetTeamMembers200ApplicationJSONMembersJoinedFromGitUserID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetTeamMembers200ApplicationJSONMembersJoinedFromOrigin string
@@ -299,6 +420,83 @@ type GetTeamMembers200ApplicationJSONMembersJoinedFrom struct {
 	SsoUserID        *string                                                     `json:"ssoUserId,omitempty"`
 }
 
+func (o *GetTeamMembers200ApplicationJSONMembersJoinedFrom) GetCommitID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommitID
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersJoinedFrom) GetDsyncConnectedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DsyncConnectedAt
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersJoinedFrom) GetDsyncUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DsyncUserID
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersJoinedFrom) GetGitUserID() *GetTeamMembers200ApplicationJSONMembersJoinedFromGitUserID {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserID
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersJoinedFrom) GetGitUserLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserLogin
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersJoinedFrom) GetIdpUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdpUserID
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersJoinedFrom) GetOrigin() GetTeamMembers200ApplicationJSONMembersJoinedFromOrigin {
+	if o == nil {
+		return GetTeamMembers200ApplicationJSONMembersJoinedFromOrigin("")
+	}
+	return o.Origin
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersJoinedFrom) GetRepoID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoID
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersJoinedFrom) GetRepoPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoPath
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersJoinedFrom) GetSsoConnectedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SsoConnectedAt
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersJoinedFrom) GetSsoUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SsoUserID
+}
+
 type GetTeamMembers200ApplicationJSONMembersProjectsRole string
 
 const (
@@ -334,6 +532,27 @@ type GetTeamMembers200ApplicationJSONMembersProjects struct {
 	ID   *string                                              `json:"id,omitempty"`
 	Name *string                                              `json:"name,omitempty"`
 	Role *GetTeamMembers200ApplicationJSONMembersProjectsRole `json:"role,omitempty"`
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersProjects) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersProjects) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembersProjects) GetRole() *GetTeamMembers200ApplicationJSONMembersProjectsRole {
+	if o == nil {
+		return nil
+	}
+	return o.Role
 }
 
 // GetTeamMembers200ApplicationJSONMembersRole - Role of this user in the team.
@@ -407,6 +626,104 @@ type GetTeamMembers200ApplicationJSONMembers struct {
 	Username string `json:"username"`
 }
 
+func (o *GetTeamMembers200ApplicationJSONMembers) GetAccessRequestedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AccessRequestedAt
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetAvatar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Avatar
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetBitbucket() *GetTeamMembers200ApplicationJSONMembersBitbucket {
+	if o == nil {
+		return nil
+	}
+	return o.Bitbucket
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetConfirmed() bool {
+	if o == nil {
+		return false
+	}
+	return o.Confirmed
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetGithub() *GetTeamMembers200ApplicationJSONMembersGithub {
+	if o == nil {
+		return nil
+	}
+	return o.Github
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetGitlab() *GetTeamMembers200ApplicationJSONMembersGitlab {
+	if o == nil {
+		return nil
+	}
+	return o.Gitlab
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetJoinedFrom() *GetTeamMembers200ApplicationJSONMembersJoinedFrom {
+	if o == nil {
+		return nil
+	}
+	return o.JoinedFrom
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetProjects() []GetTeamMembers200ApplicationJSONMembersProjects {
+	if o == nil {
+		return nil
+	}
+	return o.Projects
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetRole() GetTeamMembers200ApplicationJSONMembersRole {
+	if o == nil {
+		return GetTeamMembers200ApplicationJSONMembersRole("")
+	}
+	return o.Role
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *GetTeamMembers200ApplicationJSONMembers) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
 type GetTeamMembers200ApplicationJSONPagination struct {
 	// Amount of items in the current page.
 	Count   int64 `json:"count"`
@@ -417,10 +734,59 @@ type GetTeamMembers200ApplicationJSONPagination struct {
 	Prev *int64 `json:"prev"`
 }
 
+func (o *GetTeamMembers200ApplicationJSONPagination) GetCount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Count
+}
+
+func (o *GetTeamMembers200ApplicationJSONPagination) GetHasNext() bool {
+	if o == nil {
+		return false
+	}
+	return o.HasNext
+}
+
+func (o *GetTeamMembers200ApplicationJSONPagination) GetNext() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Next
+}
+
+func (o *GetTeamMembers200ApplicationJSONPagination) GetPrev() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Prev
+}
+
 type GetTeamMembers200ApplicationJSON struct {
 	EmailInviteCodes []GetTeamMembers200ApplicationJSONEmailInviteCodes `json:"emailInviteCodes,omitempty"`
 	Members          []GetTeamMembers200ApplicationJSONMembers          `json:"members"`
 	Pagination       GetTeamMembers200ApplicationJSONPagination         `json:"pagination"`
+}
+
+func (o *GetTeamMembers200ApplicationJSON) GetEmailInviteCodes() []GetTeamMembers200ApplicationJSONEmailInviteCodes {
+	if o == nil {
+		return nil
+	}
+	return o.EmailInviteCodes
+}
+
+func (o *GetTeamMembers200ApplicationJSON) GetMembers() []GetTeamMembers200ApplicationJSONMembers {
+	if o == nil {
+		return []GetTeamMembers200ApplicationJSONMembers{}
+	}
+	return o.Members
+}
+
+func (o *GetTeamMembers200ApplicationJSON) GetPagination() GetTeamMembers200ApplicationJSONPagination {
+	if o == nil {
+		return GetTeamMembers200ApplicationJSONPagination{}
+	}
+	return o.Pagination
 }
 
 type GetTeamMembersResponse struct {
@@ -431,4 +797,32 @@ type GetTeamMembersResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                            *http.Response
 	GetTeamMembers200ApplicationJSONObject *GetTeamMembers200ApplicationJSON
+}
+
+func (o *GetTeamMembersResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetTeamMembersResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetTeamMembersResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetTeamMembersResponse) GetGetTeamMembers200ApplicationJSONObject() *GetTeamMembers200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetTeamMembers200ApplicationJSONObject
 }

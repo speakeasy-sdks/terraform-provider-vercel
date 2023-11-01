@@ -14,6 +14,20 @@ type GetConfigurableLogDrainsRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *GetConfigurableLogDrainsRequest) GetProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *GetConfigurableLogDrainsRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type GetConfigurableLogDrains200ApplicationJSONCreatedFrom string
 
 const (
@@ -221,6 +235,153 @@ type GetConfigurableLogDrains200ApplicationJSON struct {
 	URL                 string                                                    `json:"url"`
 }
 
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Branch
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetCreatedFrom() *GetConfigurableLogDrains200ApplicationJSONCreatedFrom {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedFrom
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetDeliveryFormat() GetConfigurableLogDrains200ApplicationJSONDeliveryFormat {
+	if o == nil {
+		return GetConfigurableLogDrains200ApplicationJSONDeliveryFormat("")
+	}
+	return o.DeliveryFormat
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetDisabledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetDisabledBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledBy
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetDisabledReason() *GetConfigurableLogDrains200ApplicationJSONDisabledReason {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledReason
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetEnvironment() *GetConfigurableLogDrains200ApplicationJSONEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.Environment
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetFirstErrorTimestamp() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.FirstErrorTimestamp
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetHeaders() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerID
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetProjectIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectIds
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.Secret
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetSources() []GetConfigurableLogDrains200ApplicationJSONSources {
+	if o == nil {
+		return nil
+	}
+	return o.Sources
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetStatus() *GetConfigurableLogDrains200ApplicationJSONStatus {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetConfigurableLogDrains200ApplicationJSON) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 type GetConfigurableLogDrainsResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -229,4 +390,32 @@ type GetConfigurableLogDrainsResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                       *http.Response
 	GetConfigurableLogDrains200ApplicationJSONObjects []GetConfigurableLogDrains200ApplicationJSON
+}
+
+func (o *GetConfigurableLogDrainsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetConfigurableLogDrainsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetConfigurableLogDrainsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetConfigurableLogDrainsResponse) GetGetConfigurableLogDrains200ApplicationJSONObjects() []GetConfigurableLogDrains200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetConfigurableLogDrains200ApplicationJSONObjects
 }

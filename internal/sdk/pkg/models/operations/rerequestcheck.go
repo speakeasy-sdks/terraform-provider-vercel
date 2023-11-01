@@ -15,6 +15,27 @@ type RerequestCheckRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *RerequestCheckRequest) GetCheckID() string {
+	if o == nil {
+		return ""
+	}
+	return o.CheckID
+}
+
+func (o *RerequestCheckRequest) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *RerequestCheckRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type RerequestCheck200ApplicationJSON struct {
 }
 
@@ -26,4 +47,32 @@ type RerequestCheckResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                            *http.Response
 	RerequestCheck200ApplicationJSONObject *RerequestCheck200ApplicationJSON
+}
+
+func (o *RerequestCheckResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *RerequestCheckResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *RerequestCheckResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *RerequestCheckResponse) GetRerequestCheck200ApplicationJSONObject() *RerequestCheck200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.RerequestCheck200ApplicationJSONObject
 }

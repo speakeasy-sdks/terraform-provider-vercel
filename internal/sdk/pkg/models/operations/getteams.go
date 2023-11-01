@@ -3,11 +3,10 @@
 package operations
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
 	"net/http"
 	"vercel/internal/sdk/pkg/models/shared"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type GetTeamsRequest struct {
@@ -17,6 +16,27 @@ type GetTeamsRequest struct {
 	Since *int64 `queryParam:"style=form,explode=true,name=since"`
 	// Timestamp (in milliseconds) to only include Teams created until then.
 	Until *int64 `queryParam:"style=form,explode=true,name=until"`
+}
+
+func (o *GetTeamsRequest) GetLimit() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
+func (o *GetTeamsRequest) GetSince() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Since
+}
+
+func (o *GetTeamsRequest) GetUntil() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Until
 }
 
 type GetTeams200ApplicationJSONTeamsType string
@@ -52,21 +72,16 @@ func CreateGetTeams200ApplicationJSONTeamsTeamLimited(teamLimited shared.TeamLim
 }
 
 func (u *GetTeams200ApplicationJSONTeams) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	team := new(shared.Team)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&team); err == nil {
+	if err := utils.UnmarshalJSON(data, &team, "", true, true); err == nil {
 		u.Team = team
 		u.Type = GetTeams200ApplicationJSONTeamsTypeTeam
 		return nil
 	}
 
 	teamLimited := new(shared.TeamLimited)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&teamLimited); err == nil {
+	if err := utils.UnmarshalJSON(data, &teamLimited, "", true, true); err == nil {
 		u.TeamLimited = teamLimited
 		u.Type = GetTeams200ApplicationJSONTeamsTypeTeamLimited
 		return nil
@@ -77,14 +92,14 @@ func (u *GetTeams200ApplicationJSONTeams) UnmarshalJSON(data []byte) error {
 
 func (u GetTeams200ApplicationJSONTeams) MarshalJSON() ([]byte, error) {
 	if u.Team != nil {
-		return json.Marshal(u.Team)
+		return utils.MarshalJSON(u.Team, "", true)
 	}
 
 	if u.TeamLimited != nil {
-		return json.Marshal(u.TeamLimited)
+		return utils.MarshalJSON(u.TeamLimited, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // GetTeams200ApplicationJSON - A paginated list of teams.
@@ -92,6 +107,20 @@ type GetTeams200ApplicationJSON struct {
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 	Pagination shared.Pagination                 `json:"pagination"`
 	Teams      []GetTeams200ApplicationJSONTeams `json:"teams"`
+}
+
+func (o *GetTeams200ApplicationJSON) GetPagination() shared.Pagination {
+	if o == nil {
+		return shared.Pagination{}
+	}
+	return o.Pagination
+}
+
+func (o *GetTeams200ApplicationJSON) GetTeams() []GetTeams200ApplicationJSONTeams {
+	if o == nil {
+		return []GetTeams200ApplicationJSONTeams{}
+	}
+	return o.Teams
 }
 
 type GetTeamsResponse struct {
@@ -103,4 +132,32 @@ type GetTeamsResponse struct {
 	RawResponse *http.Response
 	// A paginated list of teams.
 	GetTeams200ApplicationJSONObject *GetTeams200ApplicationJSON
+}
+
+func (o *GetTeamsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetTeamsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetTeamsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetTeamsResponse) GetGetTeams200ApplicationJSONObject() *GetTeams200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetTeams200ApplicationJSONObject
 }

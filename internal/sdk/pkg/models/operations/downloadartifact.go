@@ -17,6 +17,34 @@ type DownloadArtifactRequest struct {
 	XArtifactClientInteractive *int64 `header:"style=simple,explode=false,name=x-artifact-client-interactive"`
 }
 
+func (o *DownloadArtifactRequest) GetHash() string {
+	if o == nil {
+		return ""
+	}
+	return o.Hash
+}
+
+func (o *DownloadArtifactRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *DownloadArtifactRequest) GetXArtifactClientCi() *string {
+	if o == nil {
+		return nil
+	}
+	return o.XArtifactClientCi
+}
+
+func (o *DownloadArtifactRequest) GetXArtifactClientInteractive() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.XArtifactClientInteractive
+}
+
 type DownloadArtifactResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -26,4 +54,32 @@ type DownloadArtifactResponse struct {
 	RawResponse *http.Response
 	// The artifact was found and is downloaded as a stream. Content-Length should be verified.
 	DownloadArtifact200ApplicationJSONBinaryString []byte
+}
+
+func (o *DownloadArtifactResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *DownloadArtifactResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *DownloadArtifactResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *DownloadArtifactResponse) GetDownloadArtifact200ApplicationJSONBinaryString() []byte {
+	if o == nil {
+		return nil
+	}
+	return o.DownloadArtifact200ApplicationJSONBinaryString
 }

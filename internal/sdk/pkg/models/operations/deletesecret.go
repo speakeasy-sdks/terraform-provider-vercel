@@ -13,6 +13,20 @@ type DeleteSecretRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *DeleteSecretRequest) GetIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrName
+}
+
+func (o *DeleteSecretRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type DeleteSecret200ApplicationJSON struct {
 	// The date when the secret was created.
 	Created int64 `json:"created"`
@@ -20,6 +34,27 @@ type DeleteSecret200ApplicationJSON struct {
 	Name string `json:"name"`
 	// The unique identifier of the deleted secret.
 	UID string `json:"uid"`
+}
+
+func (o *DeleteSecret200ApplicationJSON) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *DeleteSecret200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DeleteSecret200ApplicationJSON) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
 }
 
 type DeleteSecretResponse struct {
@@ -30,4 +65,32 @@ type DeleteSecretResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                          *http.Response
 	DeleteSecret200ApplicationJSONObject *DeleteSecret200ApplicationJSON
+}
+
+func (o *DeleteSecretResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *DeleteSecretResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *DeleteSecretResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *DeleteSecretResponse) GetDeleteSecret200ApplicationJSONObject() *DeleteSecret200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.DeleteSecret200ApplicationJSONObject
 }

@@ -3,10 +3,10 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type TeamLimitedMembership2JoinedFromGitUserIDType string
@@ -42,21 +42,16 @@ func CreateTeamLimitedMembership2JoinedFromGitUserIDInteger(integer int64) TeamL
 }
 
 func (u *TeamLimitedMembership2JoinedFromGitUserID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = TeamLimitedMembership2JoinedFromGitUserIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = TeamLimitedMembership2JoinedFromGitUserIDTypeInteger
 		return nil
@@ -67,14 +62,14 @@ func (u *TeamLimitedMembership2JoinedFromGitUserID) UnmarshalJSON(data []byte) e
 
 func (u TeamLimitedMembership2JoinedFromGitUserID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type TeamLimitedMembership2JoinedFromOrigin string
@@ -145,6 +140,83 @@ type TeamLimitedMembership2JoinedFrom struct {
 	SsoUserID        *string                                    `json:"ssoUserId,omitempty"`
 }
 
+func (o *TeamLimitedMembership2JoinedFrom) GetCommitID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommitID
+}
+
+func (o *TeamLimitedMembership2JoinedFrom) GetDsyncConnectedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DsyncConnectedAt
+}
+
+func (o *TeamLimitedMembership2JoinedFrom) GetDsyncUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DsyncUserID
+}
+
+func (o *TeamLimitedMembership2JoinedFrom) GetGitUserID() *TeamLimitedMembership2JoinedFromGitUserID {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserID
+}
+
+func (o *TeamLimitedMembership2JoinedFrom) GetGitUserLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserLogin
+}
+
+func (o *TeamLimitedMembership2JoinedFrom) GetIdpUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdpUserID
+}
+
+func (o *TeamLimitedMembership2JoinedFrom) GetOrigin() TeamLimitedMembership2JoinedFromOrigin {
+	if o == nil {
+		return TeamLimitedMembership2JoinedFromOrigin("")
+	}
+	return o.Origin
+}
+
+func (o *TeamLimitedMembership2JoinedFrom) GetRepoID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoID
+}
+
+func (o *TeamLimitedMembership2JoinedFrom) GetRepoPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoPath
+}
+
+func (o *TeamLimitedMembership2JoinedFrom) GetSsoConnectedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SsoConnectedAt
+}
+
+func (o *TeamLimitedMembership2JoinedFrom) GetSsoUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SsoUserID
+}
+
 type TeamLimitedMembership2Role string
 
 const (
@@ -197,6 +269,69 @@ type TeamLimitedMembership2 struct {
 	UID               string                            `json:"uid"`
 }
 
+func (o *TeamLimitedMembership2) GetAccessRequestedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.AccessRequestedAt
+}
+
+func (o *TeamLimitedMembership2) GetConfirmed() bool {
+	if o == nil {
+		return false
+	}
+	return o.Confirmed
+}
+
+func (o *TeamLimitedMembership2) GetConfirmedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ConfirmedAt
+}
+
+func (o *TeamLimitedMembership2) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *TeamLimitedMembership2) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *TeamLimitedMembership2) GetJoinedFrom() *TeamLimitedMembership2JoinedFrom {
+	if o == nil {
+		return nil
+	}
+	return o.JoinedFrom
+}
+
+func (o *TeamLimitedMembership2) GetRole() TeamLimitedMembership2Role {
+	if o == nil {
+		return TeamLimitedMembership2Role("")
+	}
+	return o.Role
+}
+
+func (o *TeamLimitedMembership2) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *TeamLimitedMembership2) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
 type TeamLimitedMembership1JoinedFromGitUserIDType string
 
 const (
@@ -230,21 +365,16 @@ func CreateTeamLimitedMembership1JoinedFromGitUserIDInteger(integer int64) TeamL
 }
 
 func (u *TeamLimitedMembership1JoinedFromGitUserID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = TeamLimitedMembership1JoinedFromGitUserIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = TeamLimitedMembership1JoinedFromGitUserIDTypeInteger
 		return nil
@@ -255,14 +385,14 @@ func (u *TeamLimitedMembership1JoinedFromGitUserID) UnmarshalJSON(data []byte) e
 
 func (u TeamLimitedMembership1JoinedFromGitUserID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type TeamLimitedMembership1JoinedFromOrigin string
@@ -333,6 +463,83 @@ type TeamLimitedMembership1JoinedFrom struct {
 	SsoUserID        *string                                    `json:"ssoUserId,omitempty"`
 }
 
+func (o *TeamLimitedMembership1JoinedFrom) GetCommitID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommitID
+}
+
+func (o *TeamLimitedMembership1JoinedFrom) GetDsyncConnectedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DsyncConnectedAt
+}
+
+func (o *TeamLimitedMembership1JoinedFrom) GetDsyncUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DsyncUserID
+}
+
+func (o *TeamLimitedMembership1JoinedFrom) GetGitUserID() *TeamLimitedMembership1JoinedFromGitUserID {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserID
+}
+
+func (o *TeamLimitedMembership1JoinedFrom) GetGitUserLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserLogin
+}
+
+func (o *TeamLimitedMembership1JoinedFrom) GetIdpUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdpUserID
+}
+
+func (o *TeamLimitedMembership1JoinedFrom) GetOrigin() TeamLimitedMembership1JoinedFromOrigin {
+	if o == nil {
+		return TeamLimitedMembership1JoinedFromOrigin("")
+	}
+	return o.Origin
+}
+
+func (o *TeamLimitedMembership1JoinedFrom) GetRepoID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoID
+}
+
+func (o *TeamLimitedMembership1JoinedFrom) GetRepoPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoPath
+}
+
+func (o *TeamLimitedMembership1JoinedFrom) GetSsoConnectedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SsoConnectedAt
+}
+
+func (o *TeamLimitedMembership1JoinedFrom) GetSsoUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SsoUserID
+}
+
 type TeamLimitedMembership1Role string
 
 const (
@@ -385,6 +592,69 @@ type TeamLimitedMembership1 struct {
 	UID               string                            `json:"uid"`
 }
 
+func (o *TeamLimitedMembership1) GetAccessRequestedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AccessRequestedAt
+}
+
+func (o *TeamLimitedMembership1) GetConfirmed() bool {
+	if o == nil {
+		return false
+	}
+	return o.Confirmed
+}
+
+func (o *TeamLimitedMembership1) GetConfirmedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ConfirmedAt
+}
+
+func (o *TeamLimitedMembership1) GetCreated() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Created
+}
+
+func (o *TeamLimitedMembership1) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *TeamLimitedMembership1) GetJoinedFrom() *TeamLimitedMembership1JoinedFrom {
+	if o == nil {
+		return nil
+	}
+	return o.JoinedFrom
+}
+
+func (o *TeamLimitedMembership1) GetRole() TeamLimitedMembership1Role {
+	if o == nil {
+		return TeamLimitedMembership1Role("")
+	}
+	return o.Role
+}
+
+func (o *TeamLimitedMembership1) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *TeamLimitedMembership1) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
 type TeamLimitedMembershipType string
 
 const (
@@ -418,21 +688,16 @@ func CreateTeamLimitedMembershipTeamLimitedMembership2(teamLimitedMembership2 Te
 }
 
 func (u *TeamLimitedMembership) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	teamLimitedMembership1 := new(TeamLimitedMembership1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&teamLimitedMembership1); err == nil {
+	if err := utils.UnmarshalJSON(data, &teamLimitedMembership1, "", true, true); err == nil {
 		u.TeamLimitedMembership1 = teamLimitedMembership1
 		u.Type = TeamLimitedMembershipTypeTeamLimitedMembership1
 		return nil
 	}
 
 	teamLimitedMembership2 := new(TeamLimitedMembership2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&teamLimitedMembership2); err == nil {
+	if err := utils.UnmarshalJSON(data, &teamLimitedMembership2, "", true, true); err == nil {
 		u.TeamLimitedMembership2 = teamLimitedMembership2
 		u.Type = TeamLimitedMembershipTypeTeamLimitedMembership2
 		return nil
@@ -443,14 +708,14 @@ func (u *TeamLimitedMembership) UnmarshalJSON(data []byte) error {
 
 func (u TeamLimitedMembership) MarshalJSON() ([]byte, error) {
 	if u.TeamLimitedMembership1 != nil {
-		return json.Marshal(u.TeamLimitedMembership1)
+		return utils.MarshalJSON(u.TeamLimitedMembership1, "", true)
 	}
 
 	if u.TeamLimitedMembership2 != nil {
-		return json.Marshal(u.TeamLimitedMembership2)
+		return utils.MarshalJSON(u.TeamLimitedMembership2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // TeamLimitedSamlConnection - Information for the SAML Single Sign-On configuration.
@@ -467,6 +732,41 @@ type TeamLimitedSamlConnection struct {
 	Type string `json:"type"`
 }
 
+func (o *TeamLimitedSamlConnection) GetConnectedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ConnectedAt
+}
+
+func (o *TeamLimitedSamlConnection) GetLastReceivedWebhookEvent() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LastReceivedWebhookEvent
+}
+
+func (o *TeamLimitedSamlConnection) GetState() string {
+	if o == nil {
+		return ""
+	}
+	return o.State
+}
+
+func (o *TeamLimitedSamlConnection) GetStatus() string {
+	if o == nil {
+		return ""
+	}
+	return o.Status
+}
+
+func (o *TeamLimitedSamlConnection) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
 // TeamLimitedSamlDirectory - Information for the SAML Single Sign-On configuration.
 type TeamLimitedSamlDirectory struct {
 	// Timestamp (in milliseconds) of when the configuration was connected.
@@ -481,6 +781,41 @@ type TeamLimitedSamlDirectory struct {
 	Type string `json:"type"`
 }
 
+func (o *TeamLimitedSamlDirectory) GetConnectedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ConnectedAt
+}
+
+func (o *TeamLimitedSamlDirectory) GetLastReceivedWebhookEvent() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LastReceivedWebhookEvent
+}
+
+func (o *TeamLimitedSamlDirectory) GetState() string {
+	if o == nil {
+		return ""
+	}
+	return o.State
+}
+
+func (o *TeamLimitedSamlDirectory) GetStatus() string {
+	if o == nil {
+		return ""
+	}
+	return o.Status
+}
+
+func (o *TeamLimitedSamlDirectory) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
 // TeamLimitedSaml - When "Single Sign-On (SAML)" is configured, this object contains information that allows the client-side to identify whether or not this Team has SAML enforced.
 type TeamLimitedSaml struct {
 	// Information for the SAML Single Sign-On configuration.
@@ -489,6 +824,27 @@ type TeamLimitedSaml struct {
 	Directory *TeamLimitedSamlDirectory `json:"directory,omitempty"`
 	// When `true`, interactions with the Team **must** be done with an authentication token that has been authenticated with the Team's SAML Single Sign-On provider.
 	Enforced bool `json:"enforced"`
+}
+
+func (o *TeamLimitedSaml) GetConnection() *TeamLimitedSamlConnection {
+	if o == nil {
+		return nil
+	}
+	return o.Connection
+}
+
+func (o *TeamLimitedSaml) GetDirectory() *TeamLimitedSamlDirectory {
+	if o == nil {
+		return nil
+	}
+	return o.Directory
+}
+
+func (o *TeamLimitedSaml) GetEnforced() bool {
+	if o == nil {
+		return false
+	}
+	return o.Enforced
 }
 
 // TeamLimited - A limited form of data representing a Team, due to the authentication token missing privileges to read the full Team data.
@@ -510,4 +866,67 @@ type TeamLimited struct {
 	Saml *TeamLimitedSaml `json:"saml,omitempty"`
 	// The Team's slug, which is unique across the Vercel platform.
 	Slug string `json:"slug"`
+}
+
+func (o *TeamLimited) GetAvatar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Avatar
+}
+
+func (o *TeamLimited) GetCreated() string {
+	if o == nil {
+		return ""
+	}
+	return o.Created
+}
+
+func (o *TeamLimited) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *TeamLimited) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *TeamLimited) GetLimited() bool {
+	if o == nil {
+		return false
+	}
+	return o.Limited
+}
+
+func (o *TeamLimited) GetMembership() TeamLimitedMembership {
+	if o == nil {
+		return TeamLimitedMembership{}
+	}
+	return o.Membership
+}
+
+func (o *TeamLimited) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *TeamLimited) GetSaml() *TeamLimitedSaml {
+	if o == nil {
+		return nil
+	}
+	return o.Saml
+}
+
+func (o *TeamLimited) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
 }

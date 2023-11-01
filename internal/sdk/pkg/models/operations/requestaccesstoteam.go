@@ -3,11 +3,11 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type RequestAccessToTeamRequestBodyJoinedFromGitUserIDType string
@@ -43,21 +43,16 @@ func CreateRequestAccessToTeamRequestBodyJoinedFromGitUserIDInteger(integer int6
 }
 
 func (u *RequestAccessToTeamRequestBodyJoinedFromGitUserID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = RequestAccessToTeamRequestBodyJoinedFromGitUserIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = RequestAccessToTeamRequestBodyJoinedFromGitUserIDTypeInteger
 		return nil
@@ -68,14 +63,14 @@ func (u *RequestAccessToTeamRequestBodyJoinedFromGitUserID) UnmarshalJSON(data [
 
 func (u RequestAccessToTeamRequestBodyJoinedFromGitUserID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // RequestAccessToTeamRequestBodyJoinedFromOrigin - The origin of the request.
@@ -137,8 +132,64 @@ type RequestAccessToTeamRequestBodyJoinedFrom struct {
 	UserID   *string `json:"userId,omitempty"`
 }
 
+func (o *RequestAccessToTeamRequestBodyJoinedFrom) GetCommitID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommitID
+}
+
+func (o *RequestAccessToTeamRequestBodyJoinedFrom) GetGitUserID() *RequestAccessToTeamRequestBodyJoinedFromGitUserID {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserID
+}
+
+func (o *RequestAccessToTeamRequestBodyJoinedFrom) GetGitUserLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserLogin
+}
+
+func (o *RequestAccessToTeamRequestBodyJoinedFrom) GetOrigin() RequestAccessToTeamRequestBodyJoinedFromOrigin {
+	if o == nil {
+		return RequestAccessToTeamRequestBodyJoinedFromOrigin("")
+	}
+	return o.Origin
+}
+
+func (o *RequestAccessToTeamRequestBodyJoinedFrom) GetRepoID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoID
+}
+
+func (o *RequestAccessToTeamRequestBodyJoinedFrom) GetRepoPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoPath
+}
+
+func (o *RequestAccessToTeamRequestBodyJoinedFrom) GetUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserID
+}
+
 type RequestAccessToTeamRequestBody struct {
 	JoinedFrom RequestAccessToTeamRequestBodyJoinedFrom `json:"joinedFrom"`
+}
+
+func (o *RequestAccessToTeamRequestBody) GetJoinedFrom() RequestAccessToTeamRequestBodyJoinedFrom {
+	if o == nil {
+		return RequestAccessToTeamRequestBodyJoinedFrom{}
+	}
+	return o.JoinedFrom
 }
 
 type RequestAccessToTeamRequest struct {
@@ -146,16 +197,51 @@ type RequestAccessToTeamRequest struct {
 	TeamID      string                          `pathParam:"style=simple,explode=false,name=teamId"`
 }
 
+func (o *RequestAccessToTeamRequest) GetRequestBody() *RequestAccessToTeamRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *RequestAccessToTeamRequest) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
+}
+
 type RequestAccessToTeam200ApplicationJSONBitbucket struct {
 	Login *string `json:"login,omitempty"`
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONBitbucket) GetLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Login
 }
 
 type RequestAccessToTeam200ApplicationJSONGithub struct {
 	Login *string `json:"login,omitempty"`
 }
 
+func (o *RequestAccessToTeam200ApplicationJSONGithub) GetLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Login
+}
+
 type RequestAccessToTeam200ApplicationJSONGitlab struct {
 	Login *string `json:"login,omitempty"`
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONGitlab) GetLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Login
 }
 
 type RequestAccessToTeam200ApplicationJSONJoinedFromGitUserIDType string
@@ -191,21 +277,16 @@ func CreateRequestAccessToTeam200ApplicationJSONJoinedFromGitUserIDInteger(integ
 }
 
 func (u *RequestAccessToTeam200ApplicationJSONJoinedFromGitUserID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = RequestAccessToTeam200ApplicationJSONJoinedFromGitUserIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = RequestAccessToTeam200ApplicationJSONJoinedFromGitUserIDTypeInteger
 		return nil
@@ -216,14 +297,14 @@ func (u *RequestAccessToTeam200ApplicationJSONJoinedFromGitUserID) UnmarshalJSON
 
 func (u RequestAccessToTeam200ApplicationJSONJoinedFromGitUserID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type RequestAccessToTeam200ApplicationJSONJoinedFromOrigin string
@@ -294,6 +375,83 @@ type RequestAccessToTeam200ApplicationJSONJoinedFrom struct {
 	SsoUserID        *string                                                   `json:"ssoUserId,omitempty"`
 }
 
+func (o *RequestAccessToTeam200ApplicationJSONJoinedFrom) GetCommitID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommitID
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONJoinedFrom) GetDsyncConnectedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DsyncConnectedAt
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONJoinedFrom) GetDsyncUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DsyncUserID
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONJoinedFrom) GetGitUserID() *RequestAccessToTeam200ApplicationJSONJoinedFromGitUserID {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserID
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONJoinedFrom) GetGitUserLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserLogin
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONJoinedFrom) GetIdpUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdpUserID
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONJoinedFrom) GetOrigin() RequestAccessToTeam200ApplicationJSONJoinedFromOrigin {
+	if o == nil {
+		return RequestAccessToTeam200ApplicationJSONJoinedFromOrigin("")
+	}
+	return o.Origin
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONJoinedFrom) GetRepoID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoID
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONJoinedFrom) GetRepoPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoPath
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONJoinedFrom) GetSsoConnectedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SsoConnectedAt
+}
+
+func (o *RequestAccessToTeam200ApplicationJSONJoinedFrom) GetSsoUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SsoUserID
+}
+
 // RequestAccessToTeam200ApplicationJSON - Successfuly requested access to the team.
 type RequestAccessToTeam200ApplicationJSON struct {
 	AccessRequestedAt *int64                                           `json:"accessRequestedAt,omitempty"`
@@ -306,6 +464,62 @@ type RequestAccessToTeam200ApplicationJSON struct {
 	TeamSlug          string                                           `json:"teamSlug"`
 }
 
+func (o *RequestAccessToTeam200ApplicationJSON) GetAccessRequestedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AccessRequestedAt
+}
+
+func (o *RequestAccessToTeam200ApplicationJSON) GetBitbucket() *RequestAccessToTeam200ApplicationJSONBitbucket {
+	if o == nil {
+		return nil
+	}
+	return o.Bitbucket
+}
+
+func (o *RequestAccessToTeam200ApplicationJSON) GetConfirmed() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Confirmed
+}
+
+func (o *RequestAccessToTeam200ApplicationJSON) GetGithub() *RequestAccessToTeam200ApplicationJSONGithub {
+	if o == nil {
+		return nil
+	}
+	return o.Github
+}
+
+func (o *RequestAccessToTeam200ApplicationJSON) GetGitlab() *RequestAccessToTeam200ApplicationJSONGitlab {
+	if o == nil {
+		return nil
+	}
+	return o.Gitlab
+}
+
+func (o *RequestAccessToTeam200ApplicationJSON) GetJoinedFrom() *RequestAccessToTeam200ApplicationJSONJoinedFrom {
+	if o == nil {
+		return nil
+	}
+	return o.JoinedFrom
+}
+
+func (o *RequestAccessToTeam200ApplicationJSON) GetTeamName() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamName
+}
+
+func (o *RequestAccessToTeam200ApplicationJSON) GetTeamSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamSlug
+}
+
 type RequestAccessToTeamResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -315,4 +529,32 @@ type RequestAccessToTeamResponse struct {
 	RawResponse *http.Response
 	// Successfuly requested access to the team.
 	RequestAccessToTeam200ApplicationJSONObject *RequestAccessToTeam200ApplicationJSON
+}
+
+func (o *RequestAccessToTeamResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *RequestAccessToTeamResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *RequestAccessToTeamResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *RequestAccessToTeamResponse) GetRequestAccessToTeam200ApplicationJSONObject() *RequestAccessToTeam200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.RequestAccessToTeam200ApplicationJSONObject
 }

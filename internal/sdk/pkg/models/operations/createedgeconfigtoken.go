@@ -10,6 +10,13 @@ type CreateEdgeConfigTokenRequestBody struct {
 	Label string `json:"label"`
 }
 
+func (o *CreateEdgeConfigTokenRequestBody) GetLabel() string {
+	if o == nil {
+		return ""
+	}
+	return o.Label
+}
+
 type CreateEdgeConfigTokenRequest struct {
 	RequestBody  *CreateEdgeConfigTokenRequestBody `request:"mediaType=application/json"`
 	EdgeConfigID string                            `pathParam:"style=simple,explode=false,name=edgeConfigId"`
@@ -17,9 +24,44 @@ type CreateEdgeConfigTokenRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *CreateEdgeConfigTokenRequest) GetRequestBody() *CreateEdgeConfigTokenRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *CreateEdgeConfigTokenRequest) GetEdgeConfigID() string {
+	if o == nil {
+		return ""
+	}
+	return o.EdgeConfigID
+}
+
+func (o *CreateEdgeConfigTokenRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type CreateEdgeConfigToken201ApplicationJSON struct {
 	ID    string `json:"id"`
 	Token string `json:"token"`
+}
+
+func (o *CreateEdgeConfigToken201ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateEdgeConfigToken201ApplicationJSON) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }
 
 type CreateEdgeConfigTokenResponse struct {
@@ -30,4 +72,32 @@ type CreateEdgeConfigTokenResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                   *http.Response
 	CreateEdgeConfigToken201ApplicationJSONObject *CreateEdgeConfigToken201ApplicationJSON
+}
+
+func (o *CreateEdgeConfigTokenResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CreateEdgeConfigTokenResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CreateEdgeConfigTokenResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *CreateEdgeConfigTokenResponse) GetCreateEdgeConfigToken201ApplicationJSONObject() *CreateEdgeConfigToken201ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.CreateEdgeConfigToken201ApplicationJSONObject
 }

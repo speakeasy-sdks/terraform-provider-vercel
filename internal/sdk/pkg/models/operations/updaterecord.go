@@ -15,6 +15,34 @@ type UpdateRecordRequestBodySrv struct {
 	Weight   *int64  `json:"weight"`
 }
 
+func (o *UpdateRecordRequestBodySrv) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *UpdateRecordRequestBodySrv) GetPriority() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Priority
+}
+
+func (o *UpdateRecordRequestBodySrv) GetTarget() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *UpdateRecordRequestBodySrv) GetWeight() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Weight
+}
+
 // UpdateRecordRequestBodyType - The type of the DNS record
 type UpdateRecordRequestBodyType string
 
@@ -80,12 +108,82 @@ type UpdateRecordRequestBody struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (o *UpdateRecordRequestBody) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *UpdateRecordRequestBody) GetMxPriority() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MxPriority
+}
+
+func (o *UpdateRecordRequestBody) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *UpdateRecordRequestBody) GetSrv() *UpdateRecordRequestBodySrv {
+	if o == nil {
+		return nil
+	}
+	return o.Srv
+}
+
+func (o *UpdateRecordRequestBody) GetTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TTL
+}
+
+func (o *UpdateRecordRequestBody) GetType() *UpdateRecordRequestBodyType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *UpdateRecordRequestBody) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type UpdateRecordRequest struct {
 	RequestBody *UpdateRecordRequestBody `request:"mediaType=application/json"`
 	// The id of the DNS record
 	RecordID string `pathParam:"style=simple,explode=false,name=recordId"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *UpdateRecordRequest) GetRequestBody() *UpdateRecordRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *UpdateRecordRequest) GetRecordID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RecordID
+}
+
+func (o *UpdateRecordRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 type UpdateRecord200ApplicationJSONRecordType string
@@ -176,6 +274,76 @@ type UpdateRecord200ApplicationJSON struct {
 	Value      string                                   `json:"value"`
 }
 
+func (o *UpdateRecord200ApplicationJSON) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *UpdateRecord200ApplicationJSON) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *UpdateRecord200ApplicationJSON) GetCreator() string {
+	if o == nil {
+		return ""
+	}
+	return o.Creator
+}
+
+func (o *UpdateRecord200ApplicationJSON) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *UpdateRecord200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *UpdateRecord200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *UpdateRecord200ApplicationJSON) GetRecordType() UpdateRecord200ApplicationJSONRecordType {
+	if o == nil {
+		return UpdateRecord200ApplicationJSONRecordType("")
+	}
+	return o.RecordType
+}
+
+func (o *UpdateRecord200ApplicationJSON) GetTTL() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TTL
+}
+
+func (o *UpdateRecord200ApplicationJSON) GetType() UpdateRecord200ApplicationJSONType {
+	if o == nil {
+		return UpdateRecord200ApplicationJSONType("")
+	}
+	return o.Type
+}
+
+func (o *UpdateRecord200ApplicationJSON) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 type UpdateRecordResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -184,4 +352,32 @@ type UpdateRecordResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                          *http.Response
 	UpdateRecord200ApplicationJSONObject *UpdateRecord200ApplicationJSON
+}
+
+func (o *UpdateRecordResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *UpdateRecordResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *UpdateRecordResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *UpdateRecordResponse) GetUpdateRecord200ApplicationJSONObject() *UpdateRecord200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateRecord200ApplicationJSONObject
 }

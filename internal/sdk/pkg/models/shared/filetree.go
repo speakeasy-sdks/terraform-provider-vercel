@@ -64,3 +64,52 @@ type FileTree struct {
 	// The unique identifier of the file (only valid for the `file` type)
 	UID *string `json:"uid,omitempty"`
 }
+
+func (o *FileTree) GetChildren() []FileTree {
+	if o == nil {
+		return nil
+	}
+	return o.Children
+}
+
+func (o *FileTree) GetContentType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ContentType
+}
+
+func (o *FileTree) GetMode() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Mode
+}
+
+func (o *FileTree) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *FileTree) GetSymlink() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Symlink
+}
+
+func (o *FileTree) GetType() FileTreeType {
+	if o == nil {
+		return FileTreeType("")
+	}
+	return o.Type
+}
+
+func (o *FileTree) GetUID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UID
+}

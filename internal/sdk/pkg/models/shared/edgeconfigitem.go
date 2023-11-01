@@ -10,3 +10,38 @@ type EdgeConfigItem struct {
 	UpdatedAt    int64                `json:"updatedAt"`
 	Value        *EdgeConfigItemValue `json:"value"`
 }
+
+func (o *EdgeConfigItem) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *EdgeConfigItem) GetEdgeConfigID() string {
+	if o == nil {
+		return ""
+	}
+	return o.EdgeConfigID
+}
+
+func (o *EdgeConfigItem) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *EdgeConfigItem) GetUpdatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.UpdatedAt
+}
+
+func (o *EdgeConfigItem) GetValue() *EdgeConfigItemValue {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}

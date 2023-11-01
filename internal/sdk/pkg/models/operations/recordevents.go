@@ -77,6 +77,41 @@ type RecordEventsRequestBody struct {
 	Source RecordEventsRequestBodySource `json:"source"`
 }
 
+func (o *RecordEventsRequestBody) GetDuration() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Duration
+}
+
+func (o *RecordEventsRequestBody) GetEvent() RecordEventsRequestBodyEvent {
+	if o == nil {
+		return RecordEventsRequestBodyEvent("")
+	}
+	return o.Event
+}
+
+func (o *RecordEventsRequestBody) GetHash() string {
+	if o == nil {
+		return ""
+	}
+	return o.Hash
+}
+
+func (o *RecordEventsRequestBody) GetSessionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SessionID
+}
+
+func (o *RecordEventsRequestBody) GetSource() RecordEventsRequestBodySource {
+	if o == nil {
+		return RecordEventsRequestBodySource("")
+	}
+	return o.Source
+}
+
 type RecordEventsRequest struct {
 	RequestBody []RecordEventsRequestBody `request:"mediaType=application/json"`
 	// The Team identifier or slug to perform the request on behalf of.
@@ -87,6 +122,34 @@ type RecordEventsRequest struct {
 	XArtifactClientInteractive *int64 `header:"style=simple,explode=false,name=x-artifact-client-interactive"`
 }
 
+func (o *RecordEventsRequest) GetRequestBody() []RecordEventsRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *RecordEventsRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *RecordEventsRequest) GetXArtifactClientCi() *string {
+	if o == nil {
+		return nil
+	}
+	return o.XArtifactClientCi
+}
+
+func (o *RecordEventsRequest) GetXArtifactClientInteractive() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.XArtifactClientInteractive
+}
+
 type RecordEventsResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -94,4 +157,25 @@ type RecordEventsResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *RecordEventsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *RecordEventsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *RecordEventsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

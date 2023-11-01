@@ -23,12 +23,75 @@ type CreateCheckRequestBody struct {
 	Rerequestable *bool `json:"rerequestable,omitempty"`
 }
 
+func (o *CreateCheckRequestBody) GetBlocking() bool {
+	if o == nil {
+		return false
+	}
+	return o.Blocking
+}
+
+func (o *CreateCheckRequestBody) GetDetailsURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DetailsURL
+}
+
+func (o *CreateCheckRequestBody) GetExternalID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalID
+}
+
+func (o *CreateCheckRequestBody) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateCheckRequestBody) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *CreateCheckRequestBody) GetRerequestable() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Rerequestable
+}
+
 type CreateCheckRequest struct {
 	RequestBody *CreateCheckRequestBody `request:"mediaType=application/json"`
 	// The deployment to create the check for.
 	DeploymentID string `pathParam:"style=simple,explode=false,name=deploymentId"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *CreateCheckRequest) GetRequestBody() *CreateCheckRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *CreateCheckRequest) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *CreateCheckRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 type CreateCheck200ApplicationJSONConclusion string
@@ -100,6 +163,27 @@ type CreateCheck200ApplicationJSONOutputMetricsCLS struct {
 	Value         *int64                                              `json:"value"`
 }
 
+func (o *CreateCheck200ApplicationJSONOutputMetricsCLS) GetPreviousValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PreviousValue
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsCLS) GetSource() CreateCheck200ApplicationJSONOutputMetricsCLSSource {
+	if o == nil {
+		return CreateCheck200ApplicationJSONOutputMetricsCLSSource("")
+	}
+	return o.Source
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsCLS) GetValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type CreateCheck200ApplicationJSONOutputMetricsFCPSource string
 
 const (
@@ -128,6 +212,27 @@ type CreateCheck200ApplicationJSONOutputMetricsFCP struct {
 	PreviousValue *int64                                              `json:"previousValue,omitempty"`
 	Source        CreateCheck200ApplicationJSONOutputMetricsFCPSource `json:"source"`
 	Value         *int64                                              `json:"value"`
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsFCP) GetPreviousValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PreviousValue
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsFCP) GetSource() CreateCheck200ApplicationJSONOutputMetricsFCPSource {
+	if o == nil {
+		return CreateCheck200ApplicationJSONOutputMetricsFCPSource("")
+	}
+	return o.Source
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsFCP) GetValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
 }
 
 type CreateCheck200ApplicationJSONOutputMetricsLCPSource string
@@ -160,6 +265,27 @@ type CreateCheck200ApplicationJSONOutputMetricsLCP struct {
 	Value         *int64                                              `json:"value"`
 }
 
+func (o *CreateCheck200ApplicationJSONOutputMetricsLCP) GetPreviousValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PreviousValue
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsLCP) GetSource() CreateCheck200ApplicationJSONOutputMetricsLCPSource {
+	if o == nil {
+		return CreateCheck200ApplicationJSONOutputMetricsLCPSource("")
+	}
+	return o.Source
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsLCP) GetValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type CreateCheck200ApplicationJSONOutputMetricsTBTSource string
 
 const (
@@ -188,6 +314,27 @@ type CreateCheck200ApplicationJSONOutputMetricsTBT struct {
 	PreviousValue *int64                                              `json:"previousValue,omitempty"`
 	Source        CreateCheck200ApplicationJSONOutputMetricsTBTSource `json:"source"`
 	Value         *int64                                              `json:"value"`
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsTBT) GetPreviousValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PreviousValue
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsTBT) GetSource() CreateCheck200ApplicationJSONOutputMetricsTBTSource {
+	if o == nil {
+		return CreateCheck200ApplicationJSONOutputMetricsTBTSource("")
+	}
+	return o.Source
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsTBT) GetValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
 }
 
 type CreateCheck200ApplicationJSONOutputMetricsVirtualExperienceScoreSource string
@@ -220,6 +367,27 @@ type CreateCheck200ApplicationJSONOutputMetricsVirtualExperienceScore struct {
 	Value         *int64                                                                 `json:"value"`
 }
 
+func (o *CreateCheck200ApplicationJSONOutputMetricsVirtualExperienceScore) GetPreviousValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PreviousValue
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsVirtualExperienceScore) GetSource() CreateCheck200ApplicationJSONOutputMetricsVirtualExperienceScoreSource {
+	if o == nil {
+		return CreateCheck200ApplicationJSONOutputMetricsVirtualExperienceScoreSource("")
+	}
+	return o.Source
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetricsVirtualExperienceScore) GetValue() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type CreateCheck200ApplicationJSONOutputMetrics struct {
 	Cls                    CreateCheck200ApplicationJSONOutputMetricsCLS                     `json:"CLS"`
 	Fcp                    CreateCheck200ApplicationJSONOutputMetricsFCP                     `json:"FCP"`
@@ -228,8 +396,50 @@ type CreateCheck200ApplicationJSONOutputMetrics struct {
 	VirtualExperienceScore *CreateCheck200ApplicationJSONOutputMetricsVirtualExperienceScore `json:"virtualExperienceScore,omitempty"`
 }
 
+func (o *CreateCheck200ApplicationJSONOutputMetrics) GetCls() CreateCheck200ApplicationJSONOutputMetricsCLS {
+	if o == nil {
+		return CreateCheck200ApplicationJSONOutputMetricsCLS{}
+	}
+	return o.Cls
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetrics) GetFcp() CreateCheck200ApplicationJSONOutputMetricsFCP {
+	if o == nil {
+		return CreateCheck200ApplicationJSONOutputMetricsFCP{}
+	}
+	return o.Fcp
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetrics) GetLcp() CreateCheck200ApplicationJSONOutputMetricsLCP {
+	if o == nil {
+		return CreateCheck200ApplicationJSONOutputMetricsLCP{}
+	}
+	return o.Lcp
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetrics) GetTbt() CreateCheck200ApplicationJSONOutputMetricsTBT {
+	if o == nil {
+		return CreateCheck200ApplicationJSONOutputMetricsTBT{}
+	}
+	return o.Tbt
+}
+
+func (o *CreateCheck200ApplicationJSONOutputMetrics) GetVirtualExperienceScore() *CreateCheck200ApplicationJSONOutputMetricsVirtualExperienceScore {
+	if o == nil {
+		return nil
+	}
+	return o.VirtualExperienceScore
+}
+
 type CreateCheck200ApplicationJSONOutput struct {
 	Metrics *CreateCheck200ApplicationJSONOutputMetrics `json:"metrics,omitempty"`
+}
+
+func (o *CreateCheck200ApplicationJSONOutput) GetMetrics() *CreateCheck200ApplicationJSONOutputMetrics {
+	if o == nil {
+		return nil
+	}
+	return o.Metrics
 }
 
 type CreateCheck200ApplicationJSONStatus string
@@ -281,6 +491,118 @@ type CreateCheck200ApplicationJSON struct {
 	UpdatedAt     int64                                    `json:"updatedAt"`
 }
 
+func (o *CreateCheck200ApplicationJSON) GetBlocking() bool {
+	if o == nil {
+		return false
+	}
+	return o.Blocking
+}
+
+func (o *CreateCheck200ApplicationJSON) GetCompletedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CompletedAt
+}
+
+func (o *CreateCheck200ApplicationJSON) GetConclusion() *CreateCheck200ApplicationJSONConclusion {
+	if o == nil {
+		return nil
+	}
+	return o.Conclusion
+}
+
+func (o *CreateCheck200ApplicationJSON) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *CreateCheck200ApplicationJSON) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *CreateCheck200ApplicationJSON) GetDetailsURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DetailsURL
+}
+
+func (o *CreateCheck200ApplicationJSON) GetExternalID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalID
+}
+
+func (o *CreateCheck200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CreateCheck200ApplicationJSON) GetIntegrationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.IntegrationID
+}
+
+func (o *CreateCheck200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateCheck200ApplicationJSON) GetOutput() *CreateCheck200ApplicationJSONOutput {
+	if o == nil {
+		return nil
+	}
+	return o.Output
+}
+
+func (o *CreateCheck200ApplicationJSON) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *CreateCheck200ApplicationJSON) GetRerequestable() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Rerequestable
+}
+
+func (o *CreateCheck200ApplicationJSON) GetStartedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.StartedAt
+}
+
+func (o *CreateCheck200ApplicationJSON) GetStatus() CreateCheck200ApplicationJSONStatus {
+	if o == nil {
+		return CreateCheck200ApplicationJSONStatus("")
+	}
+	return o.Status
+}
+
+func (o *CreateCheck200ApplicationJSON) GetUpdatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.UpdatedAt
+}
+
 type CreateCheckResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -289,4 +611,32 @@ type CreateCheckResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                         *http.Response
 	CreateCheck200ApplicationJSONObject *CreateCheck200ApplicationJSON
+}
+
+func (o *CreateCheckResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CreateCheckResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CreateCheckResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *CreateCheckResponse) GetCreateCheck200ApplicationJSONObject() *CreateCheck200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.CreateCheck200ApplicationJSONObject
 }

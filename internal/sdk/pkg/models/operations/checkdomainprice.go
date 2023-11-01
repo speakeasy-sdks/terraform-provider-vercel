@@ -45,12 +45,47 @@ type CheckDomainPriceRequest struct {
 	Type *CheckDomainPriceType `queryParam:"style=form,explode=true,name=type"`
 }
 
+func (o *CheckDomainPriceRequest) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CheckDomainPriceRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *CheckDomainPriceRequest) GetType() *CheckDomainPriceType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
 // CheckDomainPrice200ApplicationJSON - Successful response which returns the price of the domain and the period.
 type CheckDomainPrice200ApplicationJSON struct {
 	// The number of years the domain could be held before paying again.
 	Period int64 `json:"period"`
 	// The domain price in USD.
 	Price int64 `json:"price"`
+}
+
+func (o *CheckDomainPrice200ApplicationJSON) GetPeriod() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Period
+}
+
+func (o *CheckDomainPrice200ApplicationJSON) GetPrice() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Price
 }
 
 type CheckDomainPriceResponse struct {
@@ -62,4 +97,32 @@ type CheckDomainPriceResponse struct {
 	RawResponse *http.Response
 	// Successful response which returns the price of the domain and the period.
 	CheckDomainPrice200ApplicationJSONObject *CheckDomainPrice200ApplicationJSON
+}
+
+func (o *CheckDomainPriceResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CheckDomainPriceResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CheckDomainPriceResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *CheckDomainPriceResponse) GetCheckDomainPrice200ApplicationJSONObject() *CheckDomainPrice200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.CheckDomainPrice200ApplicationJSONObject
 }

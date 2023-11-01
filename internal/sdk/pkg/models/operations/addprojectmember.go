@@ -3,11 +3,11 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 // AddProjectMemberRequestBody3Role - The project role of the member that will be added.
@@ -52,6 +52,34 @@ type AddProjectMemberRequestBody3 struct {
 	Username *string `json:"username,omitempty"`
 }
 
+func (o *AddProjectMemberRequestBody3) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *AddProjectMemberRequestBody3) GetRole() AddProjectMemberRequestBody3Role {
+	if o == nil {
+		return AddProjectMemberRequestBody3Role("")
+	}
+	return o.Role
+}
+
+func (o *AddProjectMemberRequestBody3) GetUID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UID
+}
+
+func (o *AddProjectMemberRequestBody3) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
+}
+
 // AddProjectMemberRequestBody2Role - The project role of the member that will be added.
 type AddProjectMemberRequestBody2Role string
 
@@ -94,6 +122,34 @@ type AddProjectMemberRequestBody2 struct {
 	Username string `json:"username"`
 }
 
+func (o *AddProjectMemberRequestBody2) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *AddProjectMemberRequestBody2) GetRole() AddProjectMemberRequestBody2Role {
+	if o == nil {
+		return AddProjectMemberRequestBody2Role("")
+	}
+	return o.Role
+}
+
+func (o *AddProjectMemberRequestBody2) GetUID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UID
+}
+
+func (o *AddProjectMemberRequestBody2) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
 // AddProjectMemberRequestBody1Role - The project role of the member that will be added.
 type AddProjectMemberRequestBody1Role string
 
@@ -134,6 +190,34 @@ type AddProjectMemberRequestBody1 struct {
 	UID string `json:"uid"`
 	// The username of the team member that should be added to this project.
 	Username *string `json:"username,omitempty"`
+}
+
+func (o *AddProjectMemberRequestBody1) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *AddProjectMemberRequestBody1) GetRole() AddProjectMemberRequestBody1Role {
+	if o == nil {
+		return AddProjectMemberRequestBody1Role("")
+	}
+	return o.Role
+}
+
+func (o *AddProjectMemberRequestBody1) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *AddProjectMemberRequestBody1) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
 }
 
 type AddProjectMemberRequestBodyType string
@@ -180,30 +264,23 @@ func CreateAddProjectMemberRequestBodyAddProjectMemberRequestBody3(addProjectMem
 }
 
 func (u *AddProjectMemberRequestBody) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	addProjectMemberRequestBody1 := new(AddProjectMemberRequestBody1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&addProjectMemberRequestBody1); err == nil {
+	if err := utils.UnmarshalJSON(data, &addProjectMemberRequestBody1, "", true, true); err == nil {
 		u.AddProjectMemberRequestBody1 = addProjectMemberRequestBody1
 		u.Type = AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody1
 		return nil
 	}
 
 	addProjectMemberRequestBody2 := new(AddProjectMemberRequestBody2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&addProjectMemberRequestBody2); err == nil {
+	if err := utils.UnmarshalJSON(data, &addProjectMemberRequestBody2, "", true, true); err == nil {
 		u.AddProjectMemberRequestBody2 = addProjectMemberRequestBody2
 		u.Type = AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody2
 		return nil
 	}
 
 	addProjectMemberRequestBody3 := new(AddProjectMemberRequestBody3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&addProjectMemberRequestBody3); err == nil {
+	if err := utils.UnmarshalJSON(data, &addProjectMemberRequestBody3, "", true, true); err == nil {
 		u.AddProjectMemberRequestBody3 = addProjectMemberRequestBody3
 		u.Type = AddProjectMemberRequestBodyTypeAddProjectMemberRequestBody3
 		return nil
@@ -214,18 +291,18 @@ func (u *AddProjectMemberRequestBody) UnmarshalJSON(data []byte) error {
 
 func (u AddProjectMemberRequestBody) MarshalJSON() ([]byte, error) {
 	if u.AddProjectMemberRequestBody1 != nil {
-		return json.Marshal(u.AddProjectMemberRequestBody1)
+		return utils.MarshalJSON(u.AddProjectMemberRequestBody1, "", true)
 	}
 
 	if u.AddProjectMemberRequestBody2 != nil {
-		return json.Marshal(u.AddProjectMemberRequestBody2)
+		return utils.MarshalJSON(u.AddProjectMemberRequestBody2, "", true)
 	}
 
 	if u.AddProjectMemberRequestBody3 != nil {
-		return json.Marshal(u.AddProjectMemberRequestBody3)
+		return utils.MarshalJSON(u.AddProjectMemberRequestBody3, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type AddProjectMemberRequest struct {
@@ -236,9 +313,37 @@ type AddProjectMemberRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *AddProjectMemberRequest) GetRequestBody() *AddProjectMemberRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *AddProjectMemberRequest) GetIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrName
+}
+
+func (o *AddProjectMemberRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 // AddProjectMember200ApplicationJSON - Responds with the project ID on success.
 type AddProjectMember200ApplicationJSON struct {
 	ID string `json:"id"`
+}
+
+func (o *AddProjectMember200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 type AddProjectMemberResponse struct {
@@ -250,4 +355,32 @@ type AddProjectMemberResponse struct {
 	RawResponse *http.Response
 	// Responds with the project ID on success.
 	AddProjectMember200ApplicationJSONObject *AddProjectMember200ApplicationJSON
+}
+
+func (o *AddProjectMemberResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *AddProjectMemberResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *AddProjectMemberResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *AddProjectMemberResponse) GetAddProjectMember200ApplicationJSONObject() *AddProjectMember200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.AddProjectMember200ApplicationJSONObject
 }

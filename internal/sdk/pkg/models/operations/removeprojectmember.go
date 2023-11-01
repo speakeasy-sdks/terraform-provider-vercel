@@ -15,8 +15,36 @@ type RemoveProjectMemberRequest struct {
 	UID string `pathParam:"style=simple,explode=false,name=uid"`
 }
 
+func (o *RemoveProjectMemberRequest) GetIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrName
+}
+
+func (o *RemoveProjectMemberRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *RemoveProjectMemberRequest) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
 type RemoveProjectMember200ApplicationJSON struct {
 	ID string `json:"id"`
+}
+
+func (o *RemoveProjectMember200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 type RemoveProjectMemberResponse struct {
@@ -27,4 +55,32 @@ type RemoveProjectMemberResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                 *http.Response
 	RemoveProjectMember200ApplicationJSONObject *RemoveProjectMember200ApplicationJSON
+}
+
+func (o *RemoveProjectMemberResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *RemoveProjectMemberResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *RemoveProjectMemberResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *RemoveProjectMemberResponse) GetRemoveProjectMember200ApplicationJSONObject() *RemoveProjectMember200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.RemoveProjectMember200ApplicationJSONObject
 }

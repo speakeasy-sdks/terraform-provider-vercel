@@ -13,9 +13,37 @@ type JoinTeamRequestBody struct {
 	TeamID *string `json:"teamId,omitempty"`
 }
 
+func (o *JoinTeamRequestBody) GetInviteCode() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InviteCode
+}
+
+func (o *JoinTeamRequestBody) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type JoinTeamRequest struct {
 	RequestBody *JoinTeamRequestBody `request:"mediaType=application/json"`
 	TeamID      string               `pathParam:"style=simple,explode=false,name=teamId"`
+}
+
+func (o *JoinTeamRequest) GetRequestBody() *JoinTeamRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *JoinTeamRequest) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
 }
 
 // JoinTeam200ApplicationJSON - Successfully joined a team.
@@ -30,6 +58,34 @@ type JoinTeam200ApplicationJSON struct {
 	TeamID string `json:"teamId"`
 }
 
+func (o *JoinTeam200ApplicationJSON) GetFrom() string {
+	if o == nil {
+		return ""
+	}
+	return o.From
+}
+
+func (o *JoinTeam200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *JoinTeam200ApplicationJSON) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *JoinTeam200ApplicationJSON) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
+}
+
 type JoinTeamResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -39,4 +95,32 @@ type JoinTeamResponse struct {
 	RawResponse *http.Response
 	// Successfully joined a team.
 	JoinTeam200ApplicationJSONObject *JoinTeam200ApplicationJSON
+}
+
+func (o *JoinTeamResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *JoinTeamResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *JoinTeamResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *JoinTeamResponse) GetJoinTeam200ApplicationJSONObject() *JoinTeam200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.JoinTeam200ApplicationJSONObject
 }

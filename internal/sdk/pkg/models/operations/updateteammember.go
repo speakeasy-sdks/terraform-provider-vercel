@@ -6,10 +6,18 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type UpdateTeamMemberRequestBodyJoinedFrom struct {
 	SsoUserID *string `json:"ssoUserId,omitempty"`
+}
+
+func (o *UpdateTeamMemberRequestBodyJoinedFrom) GetSsoUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SsoUserID
 }
 
 // UpdateTeamMemberRequestBodyProjectsRole - The project role of the member that will be added. \"null\" will remove this project level role.
@@ -53,13 +61,66 @@ type UpdateTeamMemberRequestBodyProjects struct {
 	Role *UpdateTeamMemberRequestBodyProjectsRole `json:"role"`
 }
 
+func (o *UpdateTeamMemberRequestBodyProjects) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *UpdateTeamMemberRequestBodyProjects) GetRole() *UpdateTeamMemberRequestBodyProjectsRole {
+	if o == nil {
+		return nil
+	}
+	return o.Role
+}
+
 type UpdateTeamMemberRequestBody struct {
 	// Accept a user who requested access to the team.
 	Confirmed  *bool                                  `json:"confirmed,omitempty"`
 	JoinedFrom *UpdateTeamMemberRequestBodyJoinedFrom `json:"joinedFrom,omitempty"`
 	Projects   []UpdateTeamMemberRequestBodyProjects  `json:"projects,omitempty"`
 	// The role in the team of the member.
-	Role *string `json:"role,omitempty"`
+	Role *string `default:"[MEMBER VIEWER]" json:"role"`
+}
+
+func (u UpdateTeamMemberRequestBody) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(u, "", false)
+}
+
+func (u *UpdateTeamMemberRequestBody) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateTeamMemberRequestBody) GetConfirmed() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Confirmed
+}
+
+func (o *UpdateTeamMemberRequestBody) GetJoinedFrom() *UpdateTeamMemberRequestBodyJoinedFrom {
+	if o == nil {
+		return nil
+	}
+	return o.JoinedFrom
+}
+
+func (o *UpdateTeamMemberRequestBody) GetProjects() []UpdateTeamMemberRequestBodyProjects {
+	if o == nil {
+		return nil
+	}
+	return o.Projects
+}
+
+func (o *UpdateTeamMemberRequestBody) GetRole() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Role
 }
 
 type UpdateTeamMemberRequest struct {
@@ -69,10 +130,38 @@ type UpdateTeamMemberRequest struct {
 	UID string `pathParam:"style=simple,explode=false,name=uid"`
 }
 
+func (o *UpdateTeamMemberRequest) GetRequestBody() *UpdateTeamMemberRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *UpdateTeamMemberRequest) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
+}
+
+func (o *UpdateTeamMemberRequest) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
 // UpdateTeamMember200ApplicationJSON - Successfully updated the membership.
 type UpdateTeamMember200ApplicationJSON struct {
 	// ID of the team.
 	ID string `json:"id"`
+}
+
+func (o *UpdateTeamMember200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 type UpdateTeamMemberResponse struct {
@@ -84,4 +173,32 @@ type UpdateTeamMemberResponse struct {
 	RawResponse *http.Response
 	// Successfully updated the membership.
 	UpdateTeamMember200ApplicationJSONObject *UpdateTeamMember200ApplicationJSON
+}
+
+func (o *UpdateTeamMemberResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *UpdateTeamMemberResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *UpdateTeamMemberResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *UpdateTeamMemberResponse) GetUpdateTeamMember200ApplicationJSONObject() *UpdateTeamMember200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateTeamMember200ApplicationJSONObject
 }

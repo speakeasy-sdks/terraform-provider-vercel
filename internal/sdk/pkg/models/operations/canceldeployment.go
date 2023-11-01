@@ -3,11 +3,11 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type CancelDeploymentRequest struct {
@@ -15,6 +15,20 @@ type CancelDeploymentRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *CancelDeploymentRequest) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CancelDeploymentRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 type CancelDeployment200ApplicationJSONAliasAssignedAtType string
@@ -50,21 +64,16 @@ func CreateCancelDeployment200ApplicationJSONAliasAssignedAtBoolean(boolean bool
 }
 
 func (u *CancelDeployment200ApplicationJSONAliasAssignedAt) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = CancelDeployment200ApplicationJSONAliasAssignedAtTypeInteger
 		return nil
 	}
 
 	boolean := new(bool)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&boolean); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
 		u.Type = CancelDeployment200ApplicationJSONAliasAssignedAtTypeBoolean
 		return nil
@@ -75,20 +84,34 @@ func (u *CancelDeployment200ApplicationJSONAliasAssignedAt) UnmarshalJSON(data [
 
 func (u CancelDeployment200ApplicationJSONAliasAssignedAt) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
 	if u.Boolean != nil {
-		return json.Marshal(u.Boolean)
+		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // CancelDeployment200ApplicationJSONAliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
 type CancelDeployment200ApplicationJSONAliasError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
+}
+
+func (o *CancelDeployment200ApplicationJSONAliasError) GetCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.Code
+}
+
+func (o *CancelDeployment200ApplicationJSONAliasError) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
 }
 
 type CancelDeployment200ApplicationJSONAliasWarning struct {
@@ -98,9 +121,44 @@ type CancelDeployment200ApplicationJSONAliasWarning struct {
 	Message string  `json:"message"`
 }
 
+func (o *CancelDeployment200ApplicationJSONAliasWarning) GetAction() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Action
+}
+
+func (o *CancelDeployment200ApplicationJSONAliasWarning) GetCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.Code
+}
+
+func (o *CancelDeployment200ApplicationJSONAliasWarning) GetLink() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Link
+}
+
+func (o *CancelDeployment200ApplicationJSONAliasWarning) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
+}
+
 type CancelDeployment200ApplicationJSONBuild struct {
 	// The keys of the environment variables that were assigned during the build phase.
 	Env []string `json:"env"`
+}
+
+func (o *CancelDeployment200ApplicationJSONBuild) GetEnv() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Env
 }
 
 type CancelDeployment200ApplicationJSONBuilds struct {
@@ -177,6 +235,20 @@ type CancelDeployment200ApplicationJSONCreator struct {
 	Username *string `json:"username,omitempty"`
 }
 
+func (o *CancelDeployment200ApplicationJSONCreator) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *CancelDeployment200ApplicationJSONCreator) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
+}
+
 // CancelDeployment200ApplicationJSONFunctions - An object used to configure your Serverless Functions
 type CancelDeployment200ApplicationJSONFunctions struct {
 	ExcludeFiles *string `json:"excludeFiles,omitempty"`
@@ -184,6 +256,41 @@ type CancelDeployment200ApplicationJSONFunctions struct {
 	MaxDuration  *int64  `json:"maxDuration,omitempty"`
 	Memory       *int64  `json:"memory,omitempty"`
 	Runtime      *string `json:"runtime,omitempty"`
+}
+
+func (o *CancelDeployment200ApplicationJSONFunctions) GetExcludeFiles() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeFiles
+}
+
+func (o *CancelDeployment200ApplicationJSONFunctions) GetIncludeFiles() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeFiles
+}
+
+func (o *CancelDeployment200ApplicationJSONFunctions) GetMaxDuration() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxDuration
+}
+
+func (o *CancelDeployment200ApplicationJSONFunctions) GetMemory() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Memory
+}
+
+func (o *CancelDeployment200ApplicationJSONFunctions) GetRuntime() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Runtime
 }
 
 type CancelDeployment200ApplicationJSONGitRepo3OwnerType string
@@ -250,6 +357,76 @@ type CancelDeployment200ApplicationJSONGitRepo3 struct {
 	WorkspaceUUID string                                              `json:"workspaceUuid"`
 }
 
+func (o *CancelDeployment200ApplicationJSONGitRepo3) GetDefaultBranch() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultBranch
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo3) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo3) GetOwner() string {
+	if o == nil {
+		return ""
+	}
+	return o.Owner
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo3) GetOwnerType() CancelDeployment200ApplicationJSONGitRepo3OwnerType {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitRepo3OwnerType("")
+	}
+	return o.OwnerType
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo3) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo3) GetPrivate() bool {
+	if o == nil {
+		return false
+	}
+	return o.Private
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo3) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo3) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo3) GetType() CancelDeployment200ApplicationJSONGitRepo3Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitRepo3Type("")
+	}
+	return o.Type
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo3) GetWorkspaceUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceUUID
+}
+
 type CancelDeployment200ApplicationJSONGitRepo2OwnerType string
 
 const (
@@ -312,6 +489,76 @@ type CancelDeployment200ApplicationJSONGitRepo2 struct {
 	RepoID        int64                                               `json:"repoId"`
 	RepoOwnerID   string                                              `json:"repoOwnerId"`
 	Type          CancelDeployment200ApplicationJSONGitRepo2Type      `json:"type"`
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo2) GetDefaultBranch() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultBranch
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo2) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo2) GetOrg() string {
+	if o == nil {
+		return ""
+	}
+	return o.Org
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo2) GetOwnerType() CancelDeployment200ApplicationJSONGitRepo2OwnerType {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitRepo2OwnerType("")
+	}
+	return o.OwnerType
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo2) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo2) GetPrivate() bool {
+	if o == nil {
+		return false
+	}
+	return o.Private
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo2) GetRepo() string {
+	if o == nil {
+		return ""
+	}
+	return o.Repo
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo2) GetRepoID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RepoID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo2) GetRepoOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoOwnerID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo2) GetType() CancelDeployment200ApplicationJSONGitRepo2Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitRepo2Type("")
+	}
+	return o.Type
 }
 
 type CancelDeployment200ApplicationJSONGitRepo1OwnerType string
@@ -377,6 +624,69 @@ type CancelDeployment200ApplicationJSONGitRepo1 struct {
 	URL           string                                              `json:"url"`
 }
 
+func (o *CancelDeployment200ApplicationJSONGitRepo1) GetDefaultBranch() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultBranch
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo1) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo1) GetNamespace() string {
+	if o == nil {
+		return ""
+	}
+	return o.Namespace
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo1) GetOwnerType() CancelDeployment200ApplicationJSONGitRepo1OwnerType {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitRepo1OwnerType("")
+	}
+	return o.OwnerType
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo1) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo1) GetPrivate() bool {
+	if o == nil {
+		return false
+	}
+	return o.Private
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo1) GetProjectID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ProjectID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo1) GetType() CancelDeployment200ApplicationJSONGitRepo1Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitRepo1Type("")
+	}
+	return o.Type
+}
+
+func (o *CancelDeployment200ApplicationJSONGitRepo1) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 type CancelDeployment200ApplicationJSONGitRepoType string
 
 const (
@@ -421,30 +731,23 @@ func CreateCancelDeployment200ApplicationJSONGitRepoCancelDeployment200Applicati
 }
 
 func (u *CancelDeployment200ApplicationJSONGitRepo) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	cancelDeployment200ApplicationJSONGitRepo1 := new(CancelDeployment200ApplicationJSONGitRepo1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitRepo1); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitRepo1, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONGitRepo1 = cancelDeployment200ApplicationJSONGitRepo1
 		u.Type = CancelDeployment200ApplicationJSONGitRepoTypeCancelDeployment200ApplicationJSONGitRepo1
 		return nil
 	}
 
 	cancelDeployment200ApplicationJSONGitRepo2 := new(CancelDeployment200ApplicationJSONGitRepo2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitRepo2); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitRepo2, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONGitRepo2 = cancelDeployment200ApplicationJSONGitRepo2
 		u.Type = CancelDeployment200ApplicationJSONGitRepoTypeCancelDeployment200ApplicationJSONGitRepo2
 		return nil
 	}
 
 	cancelDeployment200ApplicationJSONGitRepo3 := new(CancelDeployment200ApplicationJSONGitRepo3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitRepo3); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitRepo3, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONGitRepo3 = cancelDeployment200ApplicationJSONGitRepo3
 		u.Type = CancelDeployment200ApplicationJSONGitRepoTypeCancelDeployment200ApplicationJSONGitRepo3
 		return nil
@@ -455,18 +758,18 @@ func (u *CancelDeployment200ApplicationJSONGitRepo) UnmarshalJSON(data []byte) e
 
 func (u CancelDeployment200ApplicationJSONGitRepo) MarshalJSON() ([]byte, error) {
 	if u.CancelDeployment200ApplicationJSONGitRepo1 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitRepo1)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitRepo1, "", true)
 	}
 
 	if u.CancelDeployment200ApplicationJSONGitRepo2 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitRepo2)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitRepo2, "", true)
 	}
 
 	if u.CancelDeployment200ApplicationJSONGitRepo3 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitRepo3)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitRepo3, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CancelDeployment200ApplicationJSONGitSource9Type string
@@ -503,6 +806,55 @@ type CancelDeployment200ApplicationJSONGitSource9 struct {
 	WorkspaceUUID string                                           `json:"workspaceUuid"`
 }
 
+func (o *CancelDeployment200ApplicationJSONGitSource9) GetOwner() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Owner
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource9) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource9) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource9) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource9) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource9) GetType() CancelDeployment200ApplicationJSONGitSource9Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitSource9Type("")
+	}
+	return o.Type
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource9) GetWorkspaceUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceUUID
+}
+
 type CancelDeployment200ApplicationJSONGitSource8Type string
 
 const (
@@ -532,6 +884,34 @@ type CancelDeployment200ApplicationJSONGitSource8 struct {
 	Ref       string                                           `json:"ref"`
 	Sha       string                                           `json:"sha"`
 	Type      CancelDeployment200ApplicationJSONGitSource8Type `json:"type"`
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource8) GetProjectID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ProjectID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource8) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource8) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource8) GetType() CancelDeployment200ApplicationJSONGitSource8Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitSource8Type("")
+	}
+	return o.Type
 }
 
 type CancelDeployment200ApplicationJSONGitSource7Type string
@@ -567,6 +947,48 @@ type CancelDeployment200ApplicationJSONGitSource7 struct {
 	Type   CancelDeployment200ApplicationJSONGitSource7Type `json:"type"`
 }
 
+func (o *CancelDeployment200ApplicationJSONGitSource7) GetOrg() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Org
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource7) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource7) GetRepo() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Repo
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource7) GetRepoID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RepoID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource7) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource7) GetType() CancelDeployment200ApplicationJSONGitSource7Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitSource7Type("")
+	}
+	return o.Type
+}
+
 type CancelDeployment200ApplicationJSONGitSource6Type string
 
 const (
@@ -596,6 +1018,34 @@ type CancelDeployment200ApplicationJSONGitSource6 struct {
 	Ref    string                                           `json:"ref"`
 	Sha    string                                           `json:"sha"`
 	Type   CancelDeployment200ApplicationJSONGitSource6Type `json:"type"`
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource6) GetGitURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.GitURL
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource6) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource6) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource6) GetType() CancelDeployment200ApplicationJSONGitSource6Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitSource6Type("")
+	}
+	return o.Type
 }
 
 type CancelDeployment200ApplicationJSONGitSource5Type string
@@ -631,6 +1081,48 @@ type CancelDeployment200ApplicationJSONGitSource5 struct {
 	Type  CancelDeployment200ApplicationJSONGitSource5Type `json:"type"`
 }
 
+func (o *CancelDeployment200ApplicationJSONGitSource5) GetOwner() string {
+	if o == nil {
+		return ""
+	}
+	return o.Owner
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource5) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource5) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource5) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource5) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource5) GetType() CancelDeployment200ApplicationJSONGitSource5Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitSource5Type("")
+	}
+	return o.Type
+}
+
 type CancelDeployment200ApplicationJSONGitSource4Type string
 
 const (
@@ -662,6 +1154,48 @@ type CancelDeployment200ApplicationJSONGitSource4 struct {
 	Sha           *string                                          `json:"sha,omitempty"`
 	Type          CancelDeployment200ApplicationJSONGitSource4Type `json:"type"`
 	WorkspaceUUID *string                                          `json:"workspaceUuid,omitempty"`
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource4) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource4) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource4) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource4) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource4) GetType() CancelDeployment200ApplicationJSONGitSource4Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitSource4Type("")
+	}
+	return o.Type
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource4) GetWorkspaceUUID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WorkspaceUUID
 }
 
 type CancelDeployment200ApplicationJSONGitSource3ProjectIDType string
@@ -697,21 +1231,16 @@ func CreateCancelDeployment200ApplicationJSONGitSource3ProjectIDInteger(integer 
 }
 
 func (u *CancelDeployment200ApplicationJSONGitSource3ProjectID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = CancelDeployment200ApplicationJSONGitSource3ProjectIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = CancelDeployment200ApplicationJSONGitSource3ProjectIDTypeInteger
 		return nil
@@ -722,14 +1251,14 @@ func (u *CancelDeployment200ApplicationJSONGitSource3ProjectID) UnmarshalJSON(da
 
 func (u CancelDeployment200ApplicationJSONGitSource3ProjectID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CancelDeployment200ApplicationJSONGitSource3Type string
@@ -762,6 +1291,41 @@ type CancelDeployment200ApplicationJSONGitSource3 struct {
 	Ref       *string                                               `json:"ref,omitempty"`
 	Sha       *string                                               `json:"sha,omitempty"`
 	Type      CancelDeployment200ApplicationJSONGitSource3Type      `json:"type"`
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource3) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource3) GetProjectID() CancelDeployment200ApplicationJSONGitSource3ProjectID {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitSource3ProjectID{}
+	}
+	return o.ProjectID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource3) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource3) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource3) GetType() CancelDeployment200ApplicationJSONGitSource3Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitSource3Type("")
+	}
+	return o.Type
 }
 
 type CancelDeployment200ApplicationJSONGitSource2Type string
@@ -797,6 +1361,48 @@ type CancelDeployment200ApplicationJSONGitSource2 struct {
 	Type CancelDeployment200ApplicationJSONGitSource2Type `json:"type"`
 }
 
+func (o *CancelDeployment200ApplicationJSONGitSource2) GetOrg() string {
+	if o == nil {
+		return ""
+	}
+	return o.Org
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource2) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource2) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource2) GetRepo() string {
+	if o == nil {
+		return ""
+	}
+	return o.Repo
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource2) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource2) GetType() CancelDeployment200ApplicationJSONGitSource2Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitSource2Type("")
+	}
+	return o.Type
+}
+
 type CancelDeployment200ApplicationJSONGitSource1RepoIDType string
 
 const (
@@ -830,21 +1436,16 @@ func CreateCancelDeployment200ApplicationJSONGitSource1RepoIDInteger(integer int
 }
 
 func (u *CancelDeployment200ApplicationJSONGitSource1RepoID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = CancelDeployment200ApplicationJSONGitSource1RepoIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = CancelDeployment200ApplicationJSONGitSource1RepoIDTypeInteger
 		return nil
@@ -855,14 +1456,14 @@ func (u *CancelDeployment200ApplicationJSONGitSource1RepoID) UnmarshalJSON(data 
 
 func (u CancelDeployment200ApplicationJSONGitSource1RepoID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CancelDeployment200ApplicationJSONGitSource1Type string
@@ -895,6 +1496,41 @@ type CancelDeployment200ApplicationJSONGitSource1 struct {
 	RepoID CancelDeployment200ApplicationJSONGitSource1RepoID `json:"repoId"`
 	Sha    *string                                            `json:"sha,omitempty"`
 	Type   CancelDeployment200ApplicationJSONGitSource1Type   `json:"type"`
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource1) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource1) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource1) GetRepoID() CancelDeployment200ApplicationJSONGitSource1RepoID {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitSource1RepoID{}
+	}
+	return o.RepoID
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource1) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *CancelDeployment200ApplicationJSONGitSource1) GetType() CancelDeployment200ApplicationJSONGitSource1Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONGitSource1Type("")
+	}
+	return o.Type
 }
 
 type CancelDeployment200ApplicationJSONGitSourceType string
@@ -1007,84 +1643,65 @@ func CreateCancelDeployment200ApplicationJSONGitSourceCancelDeployment200Applica
 }
 
 func (u *CancelDeployment200ApplicationJSONGitSource) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+
+	cancelDeployment200ApplicationJSONGitSource6 := new(CancelDeployment200ApplicationJSONGitSource6)
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitSource6, "", true, true); err == nil {
+		u.CancelDeployment200ApplicationJSONGitSource6 = cancelDeployment200ApplicationJSONGitSource6
+		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource6
+		return nil
+	}
+
+	cancelDeployment200ApplicationJSONGitSource8 := new(CancelDeployment200ApplicationJSONGitSource8)
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitSource8, "", true, true); err == nil {
+		u.CancelDeployment200ApplicationJSONGitSource8 = cancelDeployment200ApplicationJSONGitSource8
+		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource8
+		return nil
+	}
 
 	cancelDeployment200ApplicationJSONGitSource1 := new(CancelDeployment200ApplicationJSONGitSource1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource1); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitSource1, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONGitSource1 = cancelDeployment200ApplicationJSONGitSource1
 		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource1
 		return nil
 	}
 
 	cancelDeployment200ApplicationJSONGitSource3 := new(CancelDeployment200ApplicationJSONGitSource3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource3); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitSource3, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONGitSource3 = cancelDeployment200ApplicationJSONGitSource3
 		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource3
 		return nil
 	}
 
 	cancelDeployment200ApplicationJSONGitSource2 := new(CancelDeployment200ApplicationJSONGitSource2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource2); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitSource2, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONGitSource2 = cancelDeployment200ApplicationJSONGitSource2
 		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource2
 		return nil
 	}
 
 	cancelDeployment200ApplicationJSONGitSource4 := new(CancelDeployment200ApplicationJSONGitSource4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource4); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitSource4, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONGitSource4 = cancelDeployment200ApplicationJSONGitSource4
 		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource4
 		return nil
 	}
 
-	cancelDeployment200ApplicationJSONGitSource6 := new(CancelDeployment200ApplicationJSONGitSource6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource6); err == nil {
-		u.CancelDeployment200ApplicationJSONGitSource6 = cancelDeployment200ApplicationJSONGitSource6
-		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource6
-		return nil
-	}
-
 	cancelDeployment200ApplicationJSONGitSource5 := new(CancelDeployment200ApplicationJSONGitSource5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource5); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitSource5, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONGitSource5 = cancelDeployment200ApplicationJSONGitSource5
 		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource5
 		return nil
 	}
 
-	cancelDeployment200ApplicationJSONGitSource8 := new(CancelDeployment200ApplicationJSONGitSource8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource8); err == nil {
-		u.CancelDeployment200ApplicationJSONGitSource8 = cancelDeployment200ApplicationJSONGitSource8
-		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource8
-		return nil
-	}
-
 	cancelDeployment200ApplicationJSONGitSource7 := new(CancelDeployment200ApplicationJSONGitSource7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource7); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitSource7, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONGitSource7 = cancelDeployment200ApplicationJSONGitSource7
 		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource7
 		return nil
 	}
 
 	cancelDeployment200ApplicationJSONGitSource9 := new(CancelDeployment200ApplicationJSONGitSource9)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONGitSource9); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONGitSource9, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONGitSource9 = cancelDeployment200ApplicationJSONGitSource9
 		u.Type = CancelDeployment200ApplicationJSONGitSourceTypeCancelDeployment200ApplicationJSONGitSource9
 		return nil
@@ -1095,47 +1712,61 @@ func (u *CancelDeployment200ApplicationJSONGitSource) UnmarshalJSON(data []byte)
 
 func (u CancelDeployment200ApplicationJSONGitSource) MarshalJSON() ([]byte, error) {
 	if u.CancelDeployment200ApplicationJSONGitSource1 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource1)
-	}
-
-	if u.CancelDeployment200ApplicationJSONGitSource3 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource3)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitSource1, "", true)
 	}
 
 	if u.CancelDeployment200ApplicationJSONGitSource2 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource2)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitSource2, "", true)
+	}
+
+	if u.CancelDeployment200ApplicationJSONGitSource3 != nil {
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitSource3, "", true)
 	}
 
 	if u.CancelDeployment200ApplicationJSONGitSource4 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource4)
-	}
-
-	if u.CancelDeployment200ApplicationJSONGitSource6 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource6)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitSource4, "", true)
 	}
 
 	if u.CancelDeployment200ApplicationJSONGitSource5 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource5)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitSource5, "", true)
 	}
 
-	if u.CancelDeployment200ApplicationJSONGitSource8 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource8)
+	if u.CancelDeployment200ApplicationJSONGitSource6 != nil {
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitSource6, "", true)
 	}
 
 	if u.CancelDeployment200ApplicationJSONGitSource7 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource7)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitSource7, "", true)
+	}
+
+	if u.CancelDeployment200ApplicationJSONGitSource8 != nil {
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitSource8, "", true)
 	}
 
 	if u.CancelDeployment200ApplicationJSONGitSource9 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONGitSource9)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONGitSource9, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CancelDeployment200ApplicationJSONLambdasOutput struct {
 	FunctionName string `json:"functionName"`
 	Path         string `json:"path"`
+}
+
+func (o *CancelDeployment200ApplicationJSONLambdasOutput) GetFunctionName() string {
+	if o == nil {
+		return ""
+	}
+	return o.FunctionName
+}
+
+func (o *CancelDeployment200ApplicationJSONLambdasOutput) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
 }
 
 type CancelDeployment200ApplicationJSONLambdasReadyState string
@@ -1178,6 +1809,48 @@ type CancelDeployment200ApplicationJSONLambdas struct {
 	Output       []CancelDeployment200ApplicationJSONLambdasOutput    `json:"output"`
 	ReadyState   *CancelDeployment200ApplicationJSONLambdasReadyState `json:"readyState,omitempty"`
 	ReadyStateAt *int64                                               `json:"readyStateAt,omitempty"`
+}
+
+func (o *CancelDeployment200ApplicationJSONLambdas) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *CancelDeployment200ApplicationJSONLambdas) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *CancelDeployment200ApplicationJSONLambdas) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CancelDeployment200ApplicationJSONLambdas) GetOutput() []CancelDeployment200ApplicationJSONLambdasOutput {
+	if o == nil {
+		return []CancelDeployment200ApplicationJSONLambdasOutput{}
+	}
+	return o.Output
+}
+
+func (o *CancelDeployment200ApplicationJSONLambdas) GetReadyState() *CancelDeployment200ApplicationJSONLambdasReadyState {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyState
+}
+
+func (o *CancelDeployment200ApplicationJSONLambdas) GetReadyStateAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyStateAt
 }
 
 // CancelDeployment200ApplicationJSONPlan - The pricing plan the deployment was made under
@@ -1313,6 +1986,27 @@ type CancelDeployment200ApplicationJSONRoutes3 struct {
 	Src        string                                              `json:"src"`
 }
 
+func (o *CancelDeployment200ApplicationJSONRoutes3) GetContinue() bool {
+	if o == nil {
+		return false
+	}
+	return o.Continue
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes3) GetMiddleware() CancelDeployment200ApplicationJSONRoutes3Middleware {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONRoutes3Middleware(0)
+	}
+	return o.Middleware
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes3) GetSrc() string {
+	if o == nil {
+		return ""
+	}
+	return o.Src
+}
+
 type CancelDeployment200ApplicationJSONRoutes2Handle string
 
 const (
@@ -1360,6 +2054,34 @@ type CancelDeployment200ApplicationJSONRoutes2 struct {
 	Status *int64                                          `json:"status,omitempty"`
 }
 
+func (o *CancelDeployment200ApplicationJSONRoutes2) GetDest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Dest
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes2) GetHandle() CancelDeployment200ApplicationJSONRoutes2Handle {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONRoutes2Handle("")
+	}
+	return o.Handle
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes2) GetSrc() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Src
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes2) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type CancelDeployment200ApplicationJSONRoutes1Has2Type string
 
 const (
@@ -1396,6 +2118,27 @@ type CancelDeployment200ApplicationJSONRoutes1Has2 struct {
 	Value *string                                           `json:"value,omitempty"`
 }
 
+func (o *CancelDeployment200ApplicationJSONRoutes1Has2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1Has2) GetType() CancelDeployment200ApplicationJSONRoutes1Has2Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONRoutes1Has2Type("")
+	}
+	return o.Type
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1Has2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type CancelDeployment200ApplicationJSONRoutes1Has1Type string
 
 const (
@@ -1423,6 +2166,20 @@ func (e *CancelDeployment200ApplicationJSONRoutes1Has1Type) UnmarshalJSON(data [
 type CancelDeployment200ApplicationJSONRoutes1Has1 struct {
 	Type  CancelDeployment200ApplicationJSONRoutes1Has1Type `json:"type"`
 	Value string                                            `json:"value"`
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1Has1) GetType() CancelDeployment200ApplicationJSONRoutes1Has1Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONRoutes1Has1Type("")
+	}
+	return o.Type
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1Has1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CancelDeployment200ApplicationJSONRoutes1HasType string
@@ -1458,21 +2215,16 @@ func CreateCancelDeployment200ApplicationJSONRoutes1HasCancelDeployment200Applic
 }
 
 func (u *CancelDeployment200ApplicationJSONRoutes1Has) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	cancelDeployment200ApplicationJSONRoutes1Has1 := new(CancelDeployment200ApplicationJSONRoutes1Has1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONRoutes1Has1); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONRoutes1Has1, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONRoutes1Has1 = cancelDeployment200ApplicationJSONRoutes1Has1
 		u.Type = CancelDeployment200ApplicationJSONRoutes1HasTypeCancelDeployment200ApplicationJSONRoutes1Has1
 		return nil
 	}
 
 	cancelDeployment200ApplicationJSONRoutes1Has2 := new(CancelDeployment200ApplicationJSONRoutes1Has2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONRoutes1Has2); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONRoutes1Has2, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONRoutes1Has2 = cancelDeployment200ApplicationJSONRoutes1Has2
 		u.Type = CancelDeployment200ApplicationJSONRoutes1HasTypeCancelDeployment200ApplicationJSONRoutes1Has2
 		return nil
@@ -1483,19 +2235,33 @@ func (u *CancelDeployment200ApplicationJSONRoutes1Has) UnmarshalJSON(data []byte
 
 func (u CancelDeployment200ApplicationJSONRoutes1Has) MarshalJSON() ([]byte, error) {
 	if u.CancelDeployment200ApplicationJSONRoutes1Has1 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONRoutes1Has1)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONRoutes1Has1, "", true)
 	}
 
 	if u.CancelDeployment200ApplicationJSONRoutes1Has2 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONRoutes1Has2)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONRoutes1Has2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CancelDeployment200ApplicationJSONRoutes1Locale struct {
 	Cookie   *string           `json:"cookie,omitempty"`
 	Redirect map[string]string `json:"redirect,omitempty"`
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1Locale) GetCookie() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Cookie
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1Locale) GetRedirect() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Redirect
 }
 
 type CancelDeployment200ApplicationJSONRoutes1Missing2Type string
@@ -1534,6 +2300,27 @@ type CancelDeployment200ApplicationJSONRoutes1Missing2 struct {
 	Value *string                                               `json:"value,omitempty"`
 }
 
+func (o *CancelDeployment200ApplicationJSONRoutes1Missing2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1Missing2) GetType() CancelDeployment200ApplicationJSONRoutes1Missing2Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONRoutes1Missing2Type("")
+	}
+	return o.Type
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1Missing2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type CancelDeployment200ApplicationJSONRoutes1Missing1Type string
 
 const (
@@ -1561,6 +2348,20 @@ func (e *CancelDeployment200ApplicationJSONRoutes1Missing1Type) UnmarshalJSON(da
 type CancelDeployment200ApplicationJSONRoutes1Missing1 struct {
 	Type  CancelDeployment200ApplicationJSONRoutes1Missing1Type `json:"type"`
 	Value string                                                `json:"value"`
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1Missing1) GetType() CancelDeployment200ApplicationJSONRoutes1Missing1Type {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONRoutes1Missing1Type("")
+	}
+	return o.Type
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1Missing1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type CancelDeployment200ApplicationJSONRoutes1MissingType string
@@ -1596,21 +2397,16 @@ func CreateCancelDeployment200ApplicationJSONRoutes1MissingCancelDeployment200Ap
 }
 
 func (u *CancelDeployment200ApplicationJSONRoutes1Missing) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	cancelDeployment200ApplicationJSONRoutes1Missing1 := new(CancelDeployment200ApplicationJSONRoutes1Missing1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONRoutes1Missing1); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONRoutes1Missing1, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONRoutes1Missing1 = cancelDeployment200ApplicationJSONRoutes1Missing1
 		u.Type = CancelDeployment200ApplicationJSONRoutes1MissingTypeCancelDeployment200ApplicationJSONRoutes1Missing1
 		return nil
 	}
 
 	cancelDeployment200ApplicationJSONRoutes1Missing2 := new(CancelDeployment200ApplicationJSONRoutes1Missing2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONRoutes1Missing2); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONRoutes1Missing2, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONRoutes1Missing2 = cancelDeployment200ApplicationJSONRoutes1Missing2
 		u.Type = CancelDeployment200ApplicationJSONRoutes1MissingTypeCancelDeployment200ApplicationJSONRoutes1Missing2
 		return nil
@@ -1621,14 +2417,14 @@ func (u *CancelDeployment200ApplicationJSONRoutes1Missing) UnmarshalJSON(data []
 
 func (u CancelDeployment200ApplicationJSONRoutes1Missing) MarshalJSON() ([]byte, error) {
 	if u.CancelDeployment200ApplicationJSONRoutes1Missing1 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONRoutes1Missing1)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONRoutes1Missing1, "", true)
 	}
 
 	if u.CancelDeployment200ApplicationJSONRoutes1Missing2 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONRoutes1Missing2)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONRoutes1Missing2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // CancelDeployment200ApplicationJSONRoutes1 - A list of routes objects used to rewrite paths to point towards other internal or external paths
@@ -1652,6 +2448,118 @@ type CancelDeployment200ApplicationJSONRoutes1 struct {
 	Override         *bool                                              `json:"override,omitempty"`
 	Src              string                                             `json:"src"`
 	Status           *int64                                             `json:"status,omitempty"`
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetCaseSensitive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CaseSensitive
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetCheck() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Check
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetContinue() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Continue
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetDest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Dest
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetHas() []CancelDeployment200ApplicationJSONRoutes1Has {
+	if o == nil {
+		return nil
+	}
+	return o.Has
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetHeaders() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetImportant() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Important
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetLocale() *CancelDeployment200ApplicationJSONRoutes1Locale {
+	if o == nil {
+		return nil
+	}
+	return o.Locale
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetMethods() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Methods
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetMiddleware() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Middleware
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetMiddlewarePath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MiddlewarePath
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetMiddlewareRawSrc() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MiddlewareRawSrc
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetMissing() []CancelDeployment200ApplicationJSONRoutes1Missing {
+	if o == nil {
+		return nil
+	}
+	return o.Missing
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetOverride() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Override
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetSrc() string {
+	if o == nil {
+		return ""
+	}
+	return o.Src
+}
+
+func (o *CancelDeployment200ApplicationJSONRoutes1) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
 }
 
 type CancelDeployment200ApplicationJSONRoutesType string
@@ -1698,30 +2606,23 @@ func CreateCancelDeployment200ApplicationJSONRoutesCancelDeployment200Applicatio
 }
 
 func (u *CancelDeployment200ApplicationJSONRoutes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	cancelDeployment200ApplicationJSONRoutes2 := new(CancelDeployment200ApplicationJSONRoutes2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONRoutes2); err == nil {
-		u.CancelDeployment200ApplicationJSONRoutes2 = cancelDeployment200ApplicationJSONRoutes2
-		u.Type = CancelDeployment200ApplicationJSONRoutesTypeCancelDeployment200ApplicationJSONRoutes2
-		return nil
-	}
 
 	cancelDeployment200ApplicationJSONRoutes3 := new(CancelDeployment200ApplicationJSONRoutes3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONRoutes3); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONRoutes3, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONRoutes3 = cancelDeployment200ApplicationJSONRoutes3
 		u.Type = CancelDeployment200ApplicationJSONRoutesTypeCancelDeployment200ApplicationJSONRoutes3
 		return nil
 	}
 
+	cancelDeployment200ApplicationJSONRoutes2 := new(CancelDeployment200ApplicationJSONRoutes2)
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONRoutes2, "", true, true); err == nil {
+		u.CancelDeployment200ApplicationJSONRoutes2 = cancelDeployment200ApplicationJSONRoutes2
+		u.Type = CancelDeployment200ApplicationJSONRoutesTypeCancelDeployment200ApplicationJSONRoutes2
+		return nil
+	}
+
 	cancelDeployment200ApplicationJSONRoutes1 := new(CancelDeployment200ApplicationJSONRoutes1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&cancelDeployment200ApplicationJSONRoutes1); err == nil {
+	if err := utils.UnmarshalJSON(data, &cancelDeployment200ApplicationJSONRoutes1, "", true, true); err == nil {
 		u.CancelDeployment200ApplicationJSONRoutes1 = cancelDeployment200ApplicationJSONRoutes1
 		u.Type = CancelDeployment200ApplicationJSONRoutesTypeCancelDeployment200ApplicationJSONRoutes1
 		return nil
@@ -1731,19 +2632,19 @@ func (u *CancelDeployment200ApplicationJSONRoutes) UnmarshalJSON(data []byte) er
 }
 
 func (u CancelDeployment200ApplicationJSONRoutes) MarshalJSON() ([]byte, error) {
+	if u.CancelDeployment200ApplicationJSONRoutes1 != nil {
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONRoutes1, "", true)
+	}
+
 	if u.CancelDeployment200ApplicationJSONRoutes2 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONRoutes2)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONRoutes2, "", true)
 	}
 
 	if u.CancelDeployment200ApplicationJSONRoutes3 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONRoutes3)
+		return utils.MarshalJSON(u.CancelDeployment200ApplicationJSONRoutes3, "", true)
 	}
 
-	if u.CancelDeployment200ApplicationJSONRoutes1 != nil {
-		return json.Marshal(u.CancelDeployment200ApplicationJSONRoutes1)
-	}
-
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // CancelDeployment200ApplicationJSONSource - Where was the deployment created from
@@ -1819,6 +2720,27 @@ type CancelDeployment200ApplicationJSONTeam struct {
 	Name string `json:"name"`
 	// The slug of the team owner
 	Slug string `json:"slug"`
+}
+
+func (o *CancelDeployment200ApplicationJSONTeam) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CancelDeployment200ApplicationJSONTeam) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CancelDeployment200ApplicationJSONTeam) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
 }
 
 type CancelDeployment200ApplicationJSONType string
@@ -1956,6 +2878,370 @@ type CancelDeployment200ApplicationJSON struct {
 	Version CancelDeployment200ApplicationJSONVersion `json:"version"`
 }
 
+func (o *CancelDeployment200ApplicationJSON) GetAlias() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Alias
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetAliasAssigned() bool {
+	if o == nil {
+		return false
+	}
+	return o.AliasAssigned
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetAliasAssignedAt() *CancelDeployment200ApplicationJSONAliasAssignedAt {
+	if o == nil {
+		return nil
+	}
+	return o.AliasAssignedAt
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetAliasError() *CancelDeployment200ApplicationJSONAliasError {
+	if o == nil {
+		return nil
+	}
+	return o.AliasError
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetAliasFinal() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AliasFinal
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetAliasWarning() *CancelDeployment200ApplicationJSONAliasWarning {
+	if o == nil {
+		return nil
+	}
+	return o.AliasWarning
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetAutoAssignCustomDomains() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AutoAssignCustomDomains
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetAutomaticAliases() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AutomaticAliases
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetBootedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BootedAt
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetBuild() CancelDeployment200ApplicationJSONBuild {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONBuild{}
+	}
+	return o.Build
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetBuildErrorAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BuildErrorAt
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetBuildingAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BuildingAt
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetBuilds() []CancelDeployment200ApplicationJSONBuilds {
+	if o == nil {
+		return nil
+	}
+	return o.Builds
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetCanceledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CanceledAt
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetChecksConclusion() *CancelDeployment200ApplicationJSONChecksConclusion {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksConclusion
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetChecksState() *CancelDeployment200ApplicationJSONChecksState {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksState
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetConnectBuildsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectBuildsEnabled
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetConnectConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectConfigurationID
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetCreatedIn() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedIn
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetCreator() CancelDeployment200ApplicationJSONCreator {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONCreator{}
+	}
+	return o.Creator
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetEnv() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Env
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetErrorCode() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorCode
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetErrorLink() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorLink
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetErrorMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorMessage
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetErrorStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorStep
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetFunctions() map[string]CancelDeployment200ApplicationJSONFunctions {
+	if o == nil {
+		return nil
+	}
+	return o.Functions
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetGitRepo() *CancelDeployment200ApplicationJSONGitRepo {
+	if o == nil {
+		return nil
+	}
+	return o.GitRepo
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetGitSource() *CancelDeployment200ApplicationJSONGitSource {
+	if o == nil {
+		return nil
+	}
+	return o.GitSource
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetInspectorURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InspectorURL
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetIsInConcurrentBuildsQueue() bool {
+	if o == nil {
+		return false
+	}
+	return o.IsInConcurrentBuildsQueue
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetLambdas() []CancelDeployment200ApplicationJSONLambdas {
+	if o == nil {
+		return nil
+	}
+	return o.Lambdas
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetMeta() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.Meta
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetMonorepoManager() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MonorepoManager
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerID
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetPlan() CancelDeployment200ApplicationJSONPlan {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONPlan("")
+	}
+	return o.Plan
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetPreviewCommentsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PreviewCommentsEnabled
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetPublic() bool {
+	if o == nil {
+		return false
+	}
+	return o.Public
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetReadyState() CancelDeployment200ApplicationJSONReadyState {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONReadyState("")
+	}
+	return o.ReadyState
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetReadySubstate() *CancelDeployment200ApplicationJSONReadySubstate {
+	if o == nil {
+		return nil
+	}
+	return o.ReadySubstate
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetRegions() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Regions
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetRoutes() []CancelDeployment200ApplicationJSONRoutes {
+	if o == nil {
+		return nil
+	}
+	return o.Routes
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetSource() *CancelDeployment200ApplicationJSONSource {
+	if o == nil {
+		return nil
+	}
+	return o.Source
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetTarget() *CancelDeployment200ApplicationJSONTarget {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetTeam() *CancelDeployment200ApplicationJSONTeam {
+	if o == nil {
+		return nil
+	}
+	return o.Team
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetType() CancelDeployment200ApplicationJSONType {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONType("")
+	}
+	return o.Type
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetUserAliases() []string {
+	if o == nil {
+		return nil
+	}
+	return o.UserAliases
+}
+
+func (o *CancelDeployment200ApplicationJSON) GetVersion() CancelDeployment200ApplicationJSONVersion {
+	if o == nil {
+		return CancelDeployment200ApplicationJSONVersion(0)
+	}
+	return o.Version
+}
+
 type CancelDeploymentResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -1964,4 +3250,32 @@ type CancelDeploymentResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                              *http.Response
 	CancelDeployment200ApplicationJSONObject *CancelDeployment200ApplicationJSON
+}
+
+func (o *CancelDeploymentResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CancelDeploymentResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CancelDeploymentResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *CancelDeploymentResponse) GetCancelDeployment200ApplicationJSONObject() *CancelDeployment200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.CancelDeployment200ApplicationJSONObject
 }

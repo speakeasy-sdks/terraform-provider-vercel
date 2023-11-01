@@ -3,11 +3,11 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type GetDeploymentRequest struct {
@@ -19,10 +19,45 @@ type GetDeploymentRequest struct {
 	WithGitRepoInfo *string `queryParam:"style=form,explode=true,name=withGitRepoInfo"`
 }
 
+func (o *GetDeploymentRequest) GetIDOrURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrURL
+}
+
+func (o *GetDeploymentRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetDeploymentRequest) GetWithGitRepoInfo() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WithGitRepoInfo
+}
+
 // GetDeployment200ApplicationJSON2AliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
 type GetDeployment200ApplicationJSON2AliasError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
+}
+
+func (o *GetDeployment200ApplicationJSON2AliasError) GetCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.Code
+}
+
+func (o *GetDeployment200ApplicationJSON2AliasError) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
 }
 
 type GetDeployment200ApplicationJSON2AliasWarning struct {
@@ -30,6 +65,34 @@ type GetDeployment200ApplicationJSON2AliasWarning struct {
 	Code    string  `json:"code"`
 	Link    *string `json:"link,omitempty"`
 	Message string  `json:"message"`
+}
+
+func (o *GetDeployment200ApplicationJSON2AliasWarning) GetAction() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Action
+}
+
+func (o *GetDeployment200ApplicationJSON2AliasWarning) GetCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.Code
+}
+
+func (o *GetDeployment200ApplicationJSON2AliasWarning) GetLink() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Link
+}
+
+func (o *GetDeployment200ApplicationJSON2AliasWarning) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
 }
 
 type GetDeployment200ApplicationJSON2ChecksConclusion string
@@ -103,6 +166,20 @@ type GetDeployment200ApplicationJSON2Creator struct {
 	Username *string `json:"username,omitempty"`
 }
 
+func (o *GetDeployment200ApplicationJSON2Creator) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *GetDeployment200ApplicationJSON2Creator) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
+}
+
 type GetDeployment200ApplicationJSON2GitSource9Type string
 
 const (
@@ -137,6 +214,55 @@ type GetDeployment200ApplicationJSON2GitSource9 struct {
 	WorkspaceUUID string                                         `json:"workspaceUuid"`
 }
 
+func (o *GetDeployment200ApplicationJSON2GitSource9) GetOwner() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Owner
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource9) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource9) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource9) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource9) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource9) GetType() GetDeployment200ApplicationJSON2GitSource9Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2GitSource9Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource9) GetWorkspaceUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceUUID
+}
+
 type GetDeployment200ApplicationJSON2GitSource8Type string
 
 const (
@@ -166,6 +292,34 @@ type GetDeployment200ApplicationJSON2GitSource8 struct {
 	Ref       string                                         `json:"ref"`
 	Sha       string                                         `json:"sha"`
 	Type      GetDeployment200ApplicationJSON2GitSource8Type `json:"type"`
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource8) GetProjectID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ProjectID
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource8) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource8) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource8) GetType() GetDeployment200ApplicationJSON2GitSource8Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2GitSource8Type("")
+	}
+	return o.Type
 }
 
 type GetDeployment200ApplicationJSON2GitSource7Type string
@@ -201,6 +355,48 @@ type GetDeployment200ApplicationJSON2GitSource7 struct {
 	Type   GetDeployment200ApplicationJSON2GitSource7Type `json:"type"`
 }
 
+func (o *GetDeployment200ApplicationJSON2GitSource7) GetOrg() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Org
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource7) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource7) GetRepo() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Repo
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource7) GetRepoID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RepoID
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource7) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource7) GetType() GetDeployment200ApplicationJSON2GitSource7Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2GitSource7Type("")
+	}
+	return o.Type
+}
+
 type GetDeployment200ApplicationJSON2GitSource6Type string
 
 const (
@@ -230,6 +426,34 @@ type GetDeployment200ApplicationJSON2GitSource6 struct {
 	Ref    string                                         `json:"ref"`
 	Sha    string                                         `json:"sha"`
 	Type   GetDeployment200ApplicationJSON2GitSource6Type `json:"type"`
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource6) GetGitURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.GitURL
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource6) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource6) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource6) GetType() GetDeployment200ApplicationJSON2GitSource6Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2GitSource6Type("")
+	}
+	return o.Type
 }
 
 type GetDeployment200ApplicationJSON2GitSource5Type string
@@ -265,6 +489,48 @@ type GetDeployment200ApplicationJSON2GitSource5 struct {
 	Type  GetDeployment200ApplicationJSON2GitSource5Type `json:"type"`
 }
 
+func (o *GetDeployment200ApplicationJSON2GitSource5) GetOwner() string {
+	if o == nil {
+		return ""
+	}
+	return o.Owner
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource5) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource5) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource5) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource5) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource5) GetType() GetDeployment200ApplicationJSON2GitSource5Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2GitSource5Type("")
+	}
+	return o.Type
+}
+
 type GetDeployment200ApplicationJSON2GitSource4Type string
 
 const (
@@ -296,6 +562,48 @@ type GetDeployment200ApplicationJSON2GitSource4 struct {
 	Sha           *string                                        `json:"sha,omitempty"`
 	Type          GetDeployment200ApplicationJSON2GitSource4Type `json:"type"`
 	WorkspaceUUID *string                                        `json:"workspaceUuid,omitempty"`
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource4) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource4) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource4) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource4) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource4) GetType() GetDeployment200ApplicationJSON2GitSource4Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2GitSource4Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource4) GetWorkspaceUUID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WorkspaceUUID
 }
 
 type GetDeployment200ApplicationJSON2GitSource3ProjectIDType string
@@ -331,21 +639,16 @@ func CreateGetDeployment200ApplicationJSON2GitSource3ProjectIDInteger(integer in
 }
 
 func (u *GetDeployment200ApplicationJSON2GitSource3ProjectID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = GetDeployment200ApplicationJSON2GitSource3ProjectIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = GetDeployment200ApplicationJSON2GitSource3ProjectIDTypeInteger
 		return nil
@@ -356,14 +659,14 @@ func (u *GetDeployment200ApplicationJSON2GitSource3ProjectID) UnmarshalJSON(data
 
 func (u GetDeployment200ApplicationJSON2GitSource3ProjectID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeployment200ApplicationJSON2GitSource3Type string
@@ -396,6 +699,41 @@ type GetDeployment200ApplicationJSON2GitSource3 struct {
 	Ref       *string                                             `json:"ref,omitempty"`
 	Sha       *string                                             `json:"sha,omitempty"`
 	Type      GetDeployment200ApplicationJSON2GitSource3Type      `json:"type"`
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource3) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource3) GetProjectID() GetDeployment200ApplicationJSON2GitSource3ProjectID {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2GitSource3ProjectID{}
+	}
+	return o.ProjectID
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource3) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource3) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource3) GetType() GetDeployment200ApplicationJSON2GitSource3Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2GitSource3Type("")
+	}
+	return o.Type
 }
 
 type GetDeployment200ApplicationJSON2GitSource2Type string
@@ -431,6 +769,48 @@ type GetDeployment200ApplicationJSON2GitSource2 struct {
 	Type GetDeployment200ApplicationJSON2GitSource2Type `json:"type"`
 }
 
+func (o *GetDeployment200ApplicationJSON2GitSource2) GetOrg() string {
+	if o == nil {
+		return ""
+	}
+	return o.Org
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource2) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource2) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource2) GetRepo() string {
+	if o == nil {
+		return ""
+	}
+	return o.Repo
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource2) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource2) GetType() GetDeployment200ApplicationJSON2GitSource2Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2GitSource2Type("")
+	}
+	return o.Type
+}
+
 type GetDeployment200ApplicationJSON2GitSource1RepoIDType string
 
 const (
@@ -464,21 +844,16 @@ func CreateGetDeployment200ApplicationJSON2GitSource1RepoIDInteger(integer int64
 }
 
 func (u *GetDeployment200ApplicationJSON2GitSource1RepoID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = GetDeployment200ApplicationJSON2GitSource1RepoIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = GetDeployment200ApplicationJSON2GitSource1RepoIDTypeInteger
 		return nil
@@ -489,14 +864,14 @@ func (u *GetDeployment200ApplicationJSON2GitSource1RepoID) UnmarshalJSON(data []
 
 func (u GetDeployment200ApplicationJSON2GitSource1RepoID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeployment200ApplicationJSON2GitSource1Type string
@@ -529,6 +904,41 @@ type GetDeployment200ApplicationJSON2GitSource1 struct {
 	RepoID GetDeployment200ApplicationJSON2GitSource1RepoID `json:"repoId"`
 	Sha    *string                                          `json:"sha,omitempty"`
 	Type   GetDeployment200ApplicationJSON2GitSource1Type   `json:"type"`
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource1) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource1) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource1) GetRepoID() GetDeployment200ApplicationJSON2GitSource1RepoID {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2GitSource1RepoID{}
+	}
+	return o.RepoID
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource1) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON2GitSource1) GetType() GetDeployment200ApplicationJSON2GitSource1Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2GitSource1Type("")
+	}
+	return o.Type
 }
 
 type GetDeployment200ApplicationJSON2GitSourceType string
@@ -641,84 +1051,65 @@ func CreateGetDeployment200ApplicationJSON2GitSourceGetDeployment200ApplicationJ
 }
 
 func (u *GetDeployment200ApplicationJSON2GitSource) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+
+	getDeployment200ApplicationJSON2GitSource6 := new(GetDeployment200ApplicationJSON2GitSource6)
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource6, "", true, true); err == nil {
+		u.GetDeployment200ApplicationJSON2GitSource6 = getDeployment200ApplicationJSON2GitSource6
+		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource6
+		return nil
+	}
+
+	getDeployment200ApplicationJSON2GitSource8 := new(GetDeployment200ApplicationJSON2GitSource8)
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource8, "", true, true); err == nil {
+		u.GetDeployment200ApplicationJSON2GitSource8 = getDeployment200ApplicationJSON2GitSource8
+		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource8
+		return nil
+	}
 
 	getDeployment200ApplicationJSON2GitSource1 := new(GetDeployment200ApplicationJSON2GitSource1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource1, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON2GitSource1 = getDeployment200ApplicationJSON2GitSource1
 		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource1
 		return nil
 	}
 
 	getDeployment200ApplicationJSON2GitSource3 := new(GetDeployment200ApplicationJSON2GitSource3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource3); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource3, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON2GitSource3 = getDeployment200ApplicationJSON2GitSource3
 		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource3
 		return nil
 	}
 
 	getDeployment200ApplicationJSON2GitSource2 := new(GetDeployment200ApplicationJSON2GitSource2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource2); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource2, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON2GitSource2 = getDeployment200ApplicationJSON2GitSource2
 		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource2
 		return nil
 	}
 
 	getDeployment200ApplicationJSON2GitSource4 := new(GetDeployment200ApplicationJSON2GitSource4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource4); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource4, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON2GitSource4 = getDeployment200ApplicationJSON2GitSource4
 		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource4
 		return nil
 	}
 
-	getDeployment200ApplicationJSON2GitSource6 := new(GetDeployment200ApplicationJSON2GitSource6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource6); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource6 = getDeployment200ApplicationJSON2GitSource6
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource6
-		return nil
-	}
-
 	getDeployment200ApplicationJSON2GitSource5 := new(GetDeployment200ApplicationJSON2GitSource5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource5); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource5, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON2GitSource5 = getDeployment200ApplicationJSON2GitSource5
 		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource5
 		return nil
 	}
 
-	getDeployment200ApplicationJSON2GitSource8 := new(GetDeployment200ApplicationJSON2GitSource8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource8); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource8 = getDeployment200ApplicationJSON2GitSource8
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource8
-		return nil
-	}
-
 	getDeployment200ApplicationJSON2GitSource7 := new(GetDeployment200ApplicationJSON2GitSource7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource7); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource7, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON2GitSource7 = getDeployment200ApplicationJSON2GitSource7
 		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource7
 		return nil
 	}
 
 	getDeployment200ApplicationJSON2GitSource9 := new(GetDeployment200ApplicationJSON2GitSource9)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2GitSource9); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource9, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON2GitSource9 = getDeployment200ApplicationJSON2GitSource9
 		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource9
 		return nil
@@ -729,47 +1120,61 @@ func (u *GetDeployment200ApplicationJSON2GitSource) UnmarshalJSON(data []byte) e
 
 func (u GetDeployment200ApplicationJSON2GitSource) MarshalJSON() ([]byte, error) {
 	if u.GetDeployment200ApplicationJSON2GitSource1 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource1)
-	}
-
-	if u.GetDeployment200ApplicationJSON2GitSource3 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource3)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource1, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON2GitSource2 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource2)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource2, "", true)
+	}
+
+	if u.GetDeployment200ApplicationJSON2GitSource3 != nil {
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource3, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON2GitSource4 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource4)
-	}
-
-	if u.GetDeployment200ApplicationJSON2GitSource6 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource6)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource4, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON2GitSource5 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource5)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource5, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON2GitSource8 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource8)
+	if u.GetDeployment200ApplicationJSON2GitSource6 != nil {
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource6, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON2GitSource7 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource7)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource7, "", true)
+	}
+
+	if u.GetDeployment200ApplicationJSON2GitSource8 != nil {
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource8, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON2GitSource9 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2GitSource9)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource9, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeployment200ApplicationJSON2LambdasOutput struct {
 	FunctionName string `json:"functionName"`
 	Path         string `json:"path"`
+}
+
+func (o *GetDeployment200ApplicationJSON2LambdasOutput) GetFunctionName() string {
+	if o == nil {
+		return ""
+	}
+	return o.FunctionName
+}
+
+func (o *GetDeployment200ApplicationJSON2LambdasOutput) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
 }
 
 type GetDeployment200ApplicationJSON2LambdasReadyState string
@@ -812,6 +1217,48 @@ type GetDeployment200ApplicationJSON2Lambdas struct {
 	Output       []GetDeployment200ApplicationJSON2LambdasOutput    `json:"output"`
 	ReadyState   *GetDeployment200ApplicationJSON2LambdasReadyState `json:"readyState,omitempty"`
 	ReadyStateAt *int64                                             `json:"readyStateAt,omitempty"`
+}
+
+func (o *GetDeployment200ApplicationJSON2Lambdas) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *GetDeployment200ApplicationJSON2Lambdas) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeployment200ApplicationJSON2Lambdas) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeployment200ApplicationJSON2Lambdas) GetOutput() []GetDeployment200ApplicationJSON2LambdasOutput {
+	if o == nil {
+		return []GetDeployment200ApplicationJSON2LambdasOutput{}
+	}
+	return o.Output
+}
+
+func (o *GetDeployment200ApplicationJSON2Lambdas) GetReadyState() *GetDeployment200ApplicationJSON2LambdasReadyState {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyState
+}
+
+func (o *GetDeployment200ApplicationJSON2Lambdas) GetReadyStateAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyStateAt
 }
 
 // GetDeployment200ApplicationJSON2ReadyState - The state of the deployment depending on the process of deploying, or if it is ready or in an error state
@@ -957,6 +1404,27 @@ type GetDeployment200ApplicationJSON2Team struct {
 	Slug string `json:"slug"`
 }
 
+func (o *GetDeployment200ApplicationJSON2Team) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeployment200ApplicationJSON2Team) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeployment200ApplicationJSON2Team) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
 type GetDeployment200ApplicationJSON2Type string
 
 const (
@@ -1065,6 +1533,258 @@ type GetDeployment200ApplicationJSON2 struct {
 	Version GetDeployment200ApplicationJSON2Version `json:"version"`
 }
 
+func (o *GetDeployment200ApplicationJSON2) GetAlias() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Alias
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetAliasAssigned() bool {
+	if o == nil {
+		return false
+	}
+	return o.AliasAssigned
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetAliasError() *GetDeployment200ApplicationJSON2AliasError {
+	if o == nil {
+		return nil
+	}
+	return o.AliasError
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetAliasFinal() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AliasFinal
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetAliasWarning() *GetDeployment200ApplicationJSON2AliasWarning {
+	if o == nil {
+		return nil
+	}
+	return o.AliasWarning
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetAutoAssignCustomDomains() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AutoAssignCustomDomains
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetAutomaticAliases() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AutomaticAliases
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetBootedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BootedAt
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetBuildErrorAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BuildErrorAt
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetBuildingAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BuildingAt
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetCanceledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CanceledAt
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetChecksConclusion() *GetDeployment200ApplicationJSON2ChecksConclusion {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksConclusion
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetChecksState() *GetDeployment200ApplicationJSON2ChecksState {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksState
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetCreator() GetDeployment200ApplicationJSON2Creator {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2Creator{}
+	}
+	return o.Creator
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetErrorCode() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorCode
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetErrorLink() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorLink
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetErrorMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorMessage
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetErrorStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorStep
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetGitSource() *GetDeployment200ApplicationJSON2GitSource {
+	if o == nil {
+		return nil
+	}
+	return o.GitSource
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetLambdas() []GetDeployment200ApplicationJSON2Lambdas {
+	if o == nil {
+		return nil
+	}
+	return o.Lambdas
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetMeta() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.Meta
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetPreviewCommentsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PreviewCommentsEnabled
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetPublic() bool {
+	if o == nil {
+		return false
+	}
+	return o.Public
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetReadyState() GetDeployment200ApplicationJSON2ReadyState {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2ReadyState("")
+	}
+	return o.ReadyState
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetReadySubstate() *GetDeployment200ApplicationJSON2ReadySubstate {
+	if o == nil {
+		return nil
+	}
+	return o.ReadySubstate
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetRegions() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Regions
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetSource() *GetDeployment200ApplicationJSON2Source {
+	if o == nil {
+		return nil
+	}
+	return o.Source
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetTarget() *GetDeployment200ApplicationJSON2Target {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetTeam() *GetDeployment200ApplicationJSON2Team {
+	if o == nil {
+		return nil
+	}
+	return o.Team
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetType() GetDeployment200ApplicationJSON2Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetUserAliases() []string {
+	if o == nil {
+		return nil
+	}
+	return o.UserAliases
+}
+
+func (o *GetDeployment200ApplicationJSON2) GetVersion() GetDeployment200ApplicationJSON2Version {
+	if o == nil {
+		return GetDeployment200ApplicationJSON2Version(0)
+	}
+	return o.Version
+}
+
 type GetDeployment200ApplicationJSON1AliasAssignedAtType string
 
 const (
@@ -1098,21 +1818,16 @@ func CreateGetDeployment200ApplicationJSON1AliasAssignedAtBoolean(boolean bool) 
 }
 
 func (u *GetDeployment200ApplicationJSON1AliasAssignedAt) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = GetDeployment200ApplicationJSON1AliasAssignedAtTypeInteger
 		return nil
 	}
 
 	boolean := new(bool)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&boolean); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
 		u.Type = GetDeployment200ApplicationJSON1AliasAssignedAtTypeBoolean
 		return nil
@@ -1123,20 +1838,34 @@ func (u *GetDeployment200ApplicationJSON1AliasAssignedAt) UnmarshalJSON(data []b
 
 func (u GetDeployment200ApplicationJSON1AliasAssignedAt) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
 	if u.Boolean != nil {
-		return json.Marshal(u.Boolean)
+		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // GetDeployment200ApplicationJSON1AliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
 type GetDeployment200ApplicationJSON1AliasError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
+}
+
+func (o *GetDeployment200ApplicationJSON1AliasError) GetCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.Code
+}
+
+func (o *GetDeployment200ApplicationJSON1AliasError) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
 }
 
 type GetDeployment200ApplicationJSON1AliasWarning struct {
@@ -1146,9 +1875,44 @@ type GetDeployment200ApplicationJSON1AliasWarning struct {
 	Message string  `json:"message"`
 }
 
+func (o *GetDeployment200ApplicationJSON1AliasWarning) GetAction() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Action
+}
+
+func (o *GetDeployment200ApplicationJSON1AliasWarning) GetCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.Code
+}
+
+func (o *GetDeployment200ApplicationJSON1AliasWarning) GetLink() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Link
+}
+
+func (o *GetDeployment200ApplicationJSON1AliasWarning) GetMessage() string {
+	if o == nil {
+		return ""
+	}
+	return o.Message
+}
+
 type GetDeployment200ApplicationJSON1Build struct {
 	// The keys of the environment variables that were assigned during the build phase.
 	Env []string `json:"env"`
+}
+
+func (o *GetDeployment200ApplicationJSON1Build) GetEnv() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Env
 }
 
 type GetDeployment200ApplicationJSON1Builds struct {
@@ -1225,6 +1989,20 @@ type GetDeployment200ApplicationJSON1Creator struct {
 	Username *string `json:"username,omitempty"`
 }
 
+func (o *GetDeployment200ApplicationJSON1Creator) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *GetDeployment200ApplicationJSON1Creator) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
+}
+
 // GetDeployment200ApplicationJSON1Functions - An object used to configure your Serverless Functions
 type GetDeployment200ApplicationJSON1Functions struct {
 	ExcludeFiles *string `json:"excludeFiles,omitempty"`
@@ -1232,6 +2010,41 @@ type GetDeployment200ApplicationJSON1Functions struct {
 	MaxDuration  *int64  `json:"maxDuration,omitempty"`
 	Memory       *int64  `json:"memory,omitempty"`
 	Runtime      *string `json:"runtime,omitempty"`
+}
+
+func (o *GetDeployment200ApplicationJSON1Functions) GetExcludeFiles() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeFiles
+}
+
+func (o *GetDeployment200ApplicationJSON1Functions) GetIncludeFiles() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeFiles
+}
+
+func (o *GetDeployment200ApplicationJSON1Functions) GetMaxDuration() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxDuration
+}
+
+func (o *GetDeployment200ApplicationJSON1Functions) GetMemory() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Memory
+}
+
+func (o *GetDeployment200ApplicationJSON1Functions) GetRuntime() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Runtime
 }
 
 type GetDeployment200ApplicationJSON1GitRepo3OwnerType string
@@ -1298,6 +2111,76 @@ type GetDeployment200ApplicationJSON1GitRepo3 struct {
 	WorkspaceUUID string                                            `json:"workspaceUuid"`
 }
 
+func (o *GetDeployment200ApplicationJSON1GitRepo3) GetDefaultBranch() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultBranch
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo3) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo3) GetOwner() string {
+	if o == nil {
+		return ""
+	}
+	return o.Owner
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo3) GetOwnerType() GetDeployment200ApplicationJSON1GitRepo3OwnerType {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitRepo3OwnerType("")
+	}
+	return o.OwnerType
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo3) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo3) GetPrivate() bool {
+	if o == nil {
+		return false
+	}
+	return o.Private
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo3) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo3) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo3) GetType() GetDeployment200ApplicationJSON1GitRepo3Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitRepo3Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo3) GetWorkspaceUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceUUID
+}
+
 type GetDeployment200ApplicationJSON1GitRepo2OwnerType string
 
 const (
@@ -1360,6 +2243,76 @@ type GetDeployment200ApplicationJSON1GitRepo2 struct {
 	RepoID        int64                                             `json:"repoId"`
 	RepoOwnerID   string                                            `json:"repoOwnerId"`
 	Type          GetDeployment200ApplicationJSON1GitRepo2Type      `json:"type"`
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo2) GetDefaultBranch() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultBranch
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo2) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo2) GetOrg() string {
+	if o == nil {
+		return ""
+	}
+	return o.Org
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo2) GetOwnerType() GetDeployment200ApplicationJSON1GitRepo2OwnerType {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitRepo2OwnerType("")
+	}
+	return o.OwnerType
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo2) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo2) GetPrivate() bool {
+	if o == nil {
+		return false
+	}
+	return o.Private
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo2) GetRepo() string {
+	if o == nil {
+		return ""
+	}
+	return o.Repo
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo2) GetRepoID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RepoID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo2) GetRepoOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoOwnerID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo2) GetType() GetDeployment200ApplicationJSON1GitRepo2Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitRepo2Type("")
+	}
+	return o.Type
 }
 
 type GetDeployment200ApplicationJSON1GitRepo1OwnerType string
@@ -1425,6 +2378,69 @@ type GetDeployment200ApplicationJSON1GitRepo1 struct {
 	URL           string                                            `json:"url"`
 }
 
+func (o *GetDeployment200ApplicationJSON1GitRepo1) GetDefaultBranch() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultBranch
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo1) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo1) GetNamespace() string {
+	if o == nil {
+		return ""
+	}
+	return o.Namespace
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo1) GetOwnerType() GetDeployment200ApplicationJSON1GitRepo1OwnerType {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitRepo1OwnerType("")
+	}
+	return o.OwnerType
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo1) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo1) GetPrivate() bool {
+	if o == nil {
+		return false
+	}
+	return o.Private
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo1) GetProjectID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ProjectID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo1) GetType() GetDeployment200ApplicationJSON1GitRepo1Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitRepo1Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON1GitRepo1) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 type GetDeployment200ApplicationJSON1GitRepoType string
 
 const (
@@ -1469,30 +2485,23 @@ func CreateGetDeployment200ApplicationJSON1GitRepoGetDeployment200ApplicationJSO
 }
 
 func (u *GetDeployment200ApplicationJSON1GitRepo) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	getDeployment200ApplicationJSON1GitRepo1 := new(GetDeployment200ApplicationJSON1GitRepo1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitRepo1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitRepo1, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1GitRepo1 = getDeployment200ApplicationJSON1GitRepo1
 		u.Type = GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo1
 		return nil
 	}
 
 	getDeployment200ApplicationJSON1GitRepo2 := new(GetDeployment200ApplicationJSON1GitRepo2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitRepo2); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitRepo2, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1GitRepo2 = getDeployment200ApplicationJSON1GitRepo2
 		u.Type = GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo2
 		return nil
 	}
 
 	getDeployment200ApplicationJSON1GitRepo3 := new(GetDeployment200ApplicationJSON1GitRepo3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitRepo3); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitRepo3, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1GitRepo3 = getDeployment200ApplicationJSON1GitRepo3
 		u.Type = GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo3
 		return nil
@@ -1503,18 +2512,18 @@ func (u *GetDeployment200ApplicationJSON1GitRepo) UnmarshalJSON(data []byte) err
 
 func (u GetDeployment200ApplicationJSON1GitRepo) MarshalJSON() ([]byte, error) {
 	if u.GetDeployment200ApplicationJSON1GitRepo1 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitRepo1)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitRepo1, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON1GitRepo2 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitRepo2)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitRepo2, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON1GitRepo3 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitRepo3)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitRepo3, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeployment200ApplicationJSON1GitSource9Type string
@@ -1551,6 +2560,55 @@ type GetDeployment200ApplicationJSON1GitSource9 struct {
 	WorkspaceUUID string                                         `json:"workspaceUuid"`
 }
 
+func (o *GetDeployment200ApplicationJSON1GitSource9) GetOwner() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Owner
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource9) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource9) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource9) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource9) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource9) GetType() GetDeployment200ApplicationJSON1GitSource9Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitSource9Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource9) GetWorkspaceUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.WorkspaceUUID
+}
+
 type GetDeployment200ApplicationJSON1GitSource8Type string
 
 const (
@@ -1580,6 +2638,34 @@ type GetDeployment200ApplicationJSON1GitSource8 struct {
 	Ref       string                                         `json:"ref"`
 	Sha       string                                         `json:"sha"`
 	Type      GetDeployment200ApplicationJSON1GitSource8Type `json:"type"`
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource8) GetProjectID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ProjectID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource8) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource8) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource8) GetType() GetDeployment200ApplicationJSON1GitSource8Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitSource8Type("")
+	}
+	return o.Type
 }
 
 type GetDeployment200ApplicationJSON1GitSource7Type string
@@ -1615,6 +2701,48 @@ type GetDeployment200ApplicationJSON1GitSource7 struct {
 	Type   GetDeployment200ApplicationJSON1GitSource7Type `json:"type"`
 }
 
+func (o *GetDeployment200ApplicationJSON1GitSource7) GetOrg() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Org
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource7) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource7) GetRepo() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Repo
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource7) GetRepoID() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RepoID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource7) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource7) GetType() GetDeployment200ApplicationJSON1GitSource7Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitSource7Type("")
+	}
+	return o.Type
+}
+
 type GetDeployment200ApplicationJSON1GitSource6Type string
 
 const (
@@ -1644,6 +2772,34 @@ type GetDeployment200ApplicationJSON1GitSource6 struct {
 	Ref    string                                         `json:"ref"`
 	Sha    string                                         `json:"sha"`
 	Type   GetDeployment200ApplicationJSON1GitSource6Type `json:"type"`
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource6) GetGitURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.GitURL
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource6) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource6) GetSha() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource6) GetType() GetDeployment200ApplicationJSON1GitSource6Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitSource6Type("")
+	}
+	return o.Type
 }
 
 type GetDeployment200ApplicationJSON1GitSource5Type string
@@ -1679,6 +2835,48 @@ type GetDeployment200ApplicationJSON1GitSource5 struct {
 	Type  GetDeployment200ApplicationJSON1GitSource5Type `json:"type"`
 }
 
+func (o *GetDeployment200ApplicationJSON1GitSource5) GetOwner() string {
+	if o == nil {
+		return ""
+	}
+	return o.Owner
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource5) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource5) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource5) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource5) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource5) GetType() GetDeployment200ApplicationJSON1GitSource5Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitSource5Type("")
+	}
+	return o.Type
+}
+
 type GetDeployment200ApplicationJSON1GitSource4Type string
 
 const (
@@ -1710,6 +2908,48 @@ type GetDeployment200ApplicationJSON1GitSource4 struct {
 	Sha           *string                                        `json:"sha,omitempty"`
 	Type          GetDeployment200ApplicationJSON1GitSource4Type `json:"type"`
 	WorkspaceUUID *string                                        `json:"workspaceUuid,omitempty"`
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource4) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource4) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource4) GetRepoUUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RepoUUID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource4) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource4) GetType() GetDeployment200ApplicationJSON1GitSource4Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitSource4Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource4) GetWorkspaceUUID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WorkspaceUUID
 }
 
 type GetDeployment200ApplicationJSON1GitSource3ProjectIDType string
@@ -1745,21 +2985,16 @@ func CreateGetDeployment200ApplicationJSON1GitSource3ProjectIDInteger(integer in
 }
 
 func (u *GetDeployment200ApplicationJSON1GitSource3ProjectID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = GetDeployment200ApplicationJSON1GitSource3ProjectIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = GetDeployment200ApplicationJSON1GitSource3ProjectIDTypeInteger
 		return nil
@@ -1770,14 +3005,14 @@ func (u *GetDeployment200ApplicationJSON1GitSource3ProjectID) UnmarshalJSON(data
 
 func (u GetDeployment200ApplicationJSON1GitSource3ProjectID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeployment200ApplicationJSON1GitSource3Type string
@@ -1810,6 +3045,41 @@ type GetDeployment200ApplicationJSON1GitSource3 struct {
 	Ref       *string                                             `json:"ref,omitempty"`
 	Sha       *string                                             `json:"sha,omitempty"`
 	Type      GetDeployment200ApplicationJSON1GitSource3Type      `json:"type"`
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource3) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource3) GetProjectID() GetDeployment200ApplicationJSON1GitSource3ProjectID {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitSource3ProjectID{}
+	}
+	return o.ProjectID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource3) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource3) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource3) GetType() GetDeployment200ApplicationJSON1GitSource3Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitSource3Type("")
+	}
+	return o.Type
 }
 
 type GetDeployment200ApplicationJSON1GitSource2Type string
@@ -1845,6 +3115,48 @@ type GetDeployment200ApplicationJSON1GitSource2 struct {
 	Type GetDeployment200ApplicationJSON1GitSource2Type `json:"type"`
 }
 
+func (o *GetDeployment200ApplicationJSON1GitSource2) GetOrg() string {
+	if o == nil {
+		return ""
+	}
+	return o.Org
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource2) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource2) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource2) GetRepo() string {
+	if o == nil {
+		return ""
+	}
+	return o.Repo
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource2) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource2) GetType() GetDeployment200ApplicationJSON1GitSource2Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitSource2Type("")
+	}
+	return o.Type
+}
+
 type GetDeployment200ApplicationJSON1GitSource1RepoIDType string
 
 const (
@@ -1878,21 +3190,16 @@ func CreateGetDeployment200ApplicationJSON1GitSource1RepoIDInteger(integer int64
 }
 
 func (u *GetDeployment200ApplicationJSON1GitSource1RepoID) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	str := new(string)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&str); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
 		u.Type = GetDeployment200ApplicationJSON1GitSource1RepoIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&integer); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
 		u.Type = GetDeployment200ApplicationJSON1GitSource1RepoIDTypeInteger
 		return nil
@@ -1903,14 +3210,14 @@ func (u *GetDeployment200ApplicationJSON1GitSource1RepoID) UnmarshalJSON(data []
 
 func (u GetDeployment200ApplicationJSON1GitSource1RepoID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
-		return json.Marshal(u.Str)
+		return utils.MarshalJSON(u.Str, "", true)
 	}
 
 	if u.Integer != nil {
-		return json.Marshal(u.Integer)
+		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeployment200ApplicationJSON1GitSource1Type string
@@ -1943,6 +3250,41 @@ type GetDeployment200ApplicationJSON1GitSource1 struct {
 	RepoID GetDeployment200ApplicationJSON1GitSource1RepoID `json:"repoId"`
 	Sha    *string                                          `json:"sha,omitempty"`
 	Type   GetDeployment200ApplicationJSON1GitSource1Type   `json:"type"`
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource1) GetPrID() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PrID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource1) GetRef() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Ref
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource1) GetRepoID() GetDeployment200ApplicationJSON1GitSource1RepoID {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitSource1RepoID{}
+	}
+	return o.RepoID
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource1) GetSha() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sha
+}
+
+func (o *GetDeployment200ApplicationJSON1GitSource1) GetType() GetDeployment200ApplicationJSON1GitSource1Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1GitSource1Type("")
+	}
+	return o.Type
 }
 
 type GetDeployment200ApplicationJSON1GitSourceType string
@@ -2055,84 +3397,65 @@ func CreateGetDeployment200ApplicationJSON1GitSourceGetDeployment200ApplicationJ
 }
 
 func (u *GetDeployment200ApplicationJSON1GitSource) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
+
+	getDeployment200ApplicationJSON1GitSource6 := new(GetDeployment200ApplicationJSON1GitSource6)
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource6, "", true, true); err == nil {
+		u.GetDeployment200ApplicationJSON1GitSource6 = getDeployment200ApplicationJSON1GitSource6
+		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource6
+		return nil
+	}
+
+	getDeployment200ApplicationJSON1GitSource8 := new(GetDeployment200ApplicationJSON1GitSource8)
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource8, "", true, true); err == nil {
+		u.GetDeployment200ApplicationJSON1GitSource8 = getDeployment200ApplicationJSON1GitSource8
+		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource8
+		return nil
+	}
 
 	getDeployment200ApplicationJSON1GitSource1 := new(GetDeployment200ApplicationJSON1GitSource1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource1, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1GitSource1 = getDeployment200ApplicationJSON1GitSource1
 		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource1
 		return nil
 	}
 
 	getDeployment200ApplicationJSON1GitSource3 := new(GetDeployment200ApplicationJSON1GitSource3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource3); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource3, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1GitSource3 = getDeployment200ApplicationJSON1GitSource3
 		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource3
 		return nil
 	}
 
 	getDeployment200ApplicationJSON1GitSource2 := new(GetDeployment200ApplicationJSON1GitSource2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource2); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource2, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1GitSource2 = getDeployment200ApplicationJSON1GitSource2
 		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource2
 		return nil
 	}
 
 	getDeployment200ApplicationJSON1GitSource4 := new(GetDeployment200ApplicationJSON1GitSource4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource4); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource4, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1GitSource4 = getDeployment200ApplicationJSON1GitSource4
 		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource4
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitSource6 := new(GetDeployment200ApplicationJSON1GitSource6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource6); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource6 = getDeployment200ApplicationJSON1GitSource6
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource6
-		return nil
-	}
-
 	getDeployment200ApplicationJSON1GitSource5 := new(GetDeployment200ApplicationJSON1GitSource5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource5); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource5, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1GitSource5 = getDeployment200ApplicationJSON1GitSource5
 		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource5
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitSource8 := new(GetDeployment200ApplicationJSON1GitSource8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource8); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource8 = getDeployment200ApplicationJSON1GitSource8
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource8
-		return nil
-	}
-
 	getDeployment200ApplicationJSON1GitSource7 := new(GetDeployment200ApplicationJSON1GitSource7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource7); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource7, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1GitSource7 = getDeployment200ApplicationJSON1GitSource7
 		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource7
 		return nil
 	}
 
 	getDeployment200ApplicationJSON1GitSource9 := new(GetDeployment200ApplicationJSON1GitSource9)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1GitSource9); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource9, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1GitSource9 = getDeployment200ApplicationJSON1GitSource9
 		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource9
 		return nil
@@ -2143,47 +3466,61 @@ func (u *GetDeployment200ApplicationJSON1GitSource) UnmarshalJSON(data []byte) e
 
 func (u GetDeployment200ApplicationJSON1GitSource) MarshalJSON() ([]byte, error) {
 	if u.GetDeployment200ApplicationJSON1GitSource1 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource1)
-	}
-
-	if u.GetDeployment200ApplicationJSON1GitSource3 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource3)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource1, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON1GitSource2 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource2)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource2, "", true)
+	}
+
+	if u.GetDeployment200ApplicationJSON1GitSource3 != nil {
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource3, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON1GitSource4 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource4)
-	}
-
-	if u.GetDeployment200ApplicationJSON1GitSource6 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource6)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource4, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON1GitSource5 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource5)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource5, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1GitSource8 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource8)
+	if u.GetDeployment200ApplicationJSON1GitSource6 != nil {
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource6, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON1GitSource7 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource7)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource7, "", true)
+	}
+
+	if u.GetDeployment200ApplicationJSON1GitSource8 != nil {
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource8, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON1GitSource9 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1GitSource9)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource9, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeployment200ApplicationJSON1LambdasOutput struct {
 	FunctionName string `json:"functionName"`
 	Path         string `json:"path"`
+}
+
+func (o *GetDeployment200ApplicationJSON1LambdasOutput) GetFunctionName() string {
+	if o == nil {
+		return ""
+	}
+	return o.FunctionName
+}
+
+func (o *GetDeployment200ApplicationJSON1LambdasOutput) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
 }
 
 type GetDeployment200ApplicationJSON1LambdasReadyState string
@@ -2226,6 +3563,48 @@ type GetDeployment200ApplicationJSON1Lambdas struct {
 	Output       []GetDeployment200ApplicationJSON1LambdasOutput    `json:"output"`
 	ReadyState   *GetDeployment200ApplicationJSON1LambdasReadyState `json:"readyState,omitempty"`
 	ReadyStateAt *int64                                             `json:"readyStateAt,omitempty"`
+}
+
+func (o *GetDeployment200ApplicationJSON1Lambdas) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *GetDeployment200ApplicationJSON1Lambdas) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeployment200ApplicationJSON1Lambdas) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeployment200ApplicationJSON1Lambdas) GetOutput() []GetDeployment200ApplicationJSON1LambdasOutput {
+	if o == nil {
+		return []GetDeployment200ApplicationJSON1LambdasOutput{}
+	}
+	return o.Output
+}
+
+func (o *GetDeployment200ApplicationJSON1Lambdas) GetReadyState() *GetDeployment200ApplicationJSON1LambdasReadyState {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyState
+}
+
+func (o *GetDeployment200ApplicationJSON1Lambdas) GetReadyStateAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyStateAt
 }
 
 // GetDeployment200ApplicationJSON1Plan - The pricing plan the deployment was made under
@@ -2361,6 +3740,27 @@ type GetDeployment200ApplicationJSON1Routes3 struct {
 	Src        string                                            `json:"src"`
 }
 
+func (o *GetDeployment200ApplicationJSON1Routes3) GetContinue() bool {
+	if o == nil {
+		return false
+	}
+	return o.Continue
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes3) GetMiddleware() GetDeployment200ApplicationJSON1Routes3Middleware {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1Routes3Middleware(0)
+	}
+	return o.Middleware
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes3) GetSrc() string {
+	if o == nil {
+		return ""
+	}
+	return o.Src
+}
+
 type GetDeployment200ApplicationJSON1Routes2Handle string
 
 const (
@@ -2408,6 +3808,34 @@ type GetDeployment200ApplicationJSON1Routes2 struct {
 	Status *int64                                        `json:"status,omitempty"`
 }
 
+func (o *GetDeployment200ApplicationJSON1Routes2) GetDest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Dest
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes2) GetHandle() GetDeployment200ApplicationJSON1Routes2Handle {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1Routes2Handle("")
+	}
+	return o.Handle
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes2) GetSrc() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Src
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes2) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
 type GetDeployment200ApplicationJSON1Routes1Has2Type string
 
 const (
@@ -2444,6 +3872,27 @@ type GetDeployment200ApplicationJSON1Routes1Has2 struct {
 	Value *string                                         `json:"value,omitempty"`
 }
 
+func (o *GetDeployment200ApplicationJSON1Routes1Has2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1Has2) GetType() GetDeployment200ApplicationJSON1Routes1Has2Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1Routes1Has2Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1Has2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type GetDeployment200ApplicationJSON1Routes1Has1Type string
 
 const (
@@ -2471,6 +3920,20 @@ func (e *GetDeployment200ApplicationJSON1Routes1Has1Type) UnmarshalJSON(data []b
 type GetDeployment200ApplicationJSON1Routes1Has1 struct {
 	Type  GetDeployment200ApplicationJSON1Routes1Has1Type `json:"type"`
 	Value string                                          `json:"value"`
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1Has1) GetType() GetDeployment200ApplicationJSON1Routes1Has1Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1Routes1Has1Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1Has1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type GetDeployment200ApplicationJSON1Routes1HasType string
@@ -2506,21 +3969,16 @@ func CreateGetDeployment200ApplicationJSON1Routes1HasGetDeployment200Application
 }
 
 func (u *GetDeployment200ApplicationJSON1Routes1Has) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	getDeployment200ApplicationJSON1Routes1Has1 := new(GetDeployment200ApplicationJSON1Routes1Has1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1Routes1Has1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes1Has1, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1Routes1Has1 = getDeployment200ApplicationJSON1Routes1Has1
 		u.Type = GetDeployment200ApplicationJSON1Routes1HasTypeGetDeployment200ApplicationJSON1Routes1Has1
 		return nil
 	}
 
 	getDeployment200ApplicationJSON1Routes1Has2 := new(GetDeployment200ApplicationJSON1Routes1Has2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1Routes1Has2); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes1Has2, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1Routes1Has2 = getDeployment200ApplicationJSON1Routes1Has2
 		u.Type = GetDeployment200ApplicationJSON1Routes1HasTypeGetDeployment200ApplicationJSON1Routes1Has2
 		return nil
@@ -2531,19 +3989,33 @@ func (u *GetDeployment200ApplicationJSON1Routes1Has) UnmarshalJSON(data []byte) 
 
 func (u GetDeployment200ApplicationJSON1Routes1Has) MarshalJSON() ([]byte, error) {
 	if u.GetDeployment200ApplicationJSON1Routes1Has1 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1Routes1Has1)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes1Has1, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON1Routes1Has2 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1Routes1Has2)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes1Has2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeployment200ApplicationJSON1Routes1Locale struct {
 	Cookie   *string           `json:"cookie,omitempty"`
 	Redirect map[string]string `json:"redirect,omitempty"`
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1Locale) GetCookie() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Cookie
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1Locale) GetRedirect() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Redirect
 }
 
 type GetDeployment200ApplicationJSON1Routes1Missing2Type string
@@ -2582,6 +4054,27 @@ type GetDeployment200ApplicationJSON1Routes1Missing2 struct {
 	Value *string                                             `json:"value,omitempty"`
 }
 
+func (o *GetDeployment200ApplicationJSON1Routes1Missing2) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1Missing2) GetType() GetDeployment200ApplicationJSON1Routes1Missing2Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1Routes1Missing2Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1Missing2) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type GetDeployment200ApplicationJSON1Routes1Missing1Type string
 
 const (
@@ -2609,6 +4102,20 @@ func (e *GetDeployment200ApplicationJSON1Routes1Missing1Type) UnmarshalJSON(data
 type GetDeployment200ApplicationJSON1Routes1Missing1 struct {
 	Type  GetDeployment200ApplicationJSON1Routes1Missing1Type `json:"type"`
 	Value string                                              `json:"value"`
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1Missing1) GetType() GetDeployment200ApplicationJSON1Routes1Missing1Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1Routes1Missing1Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1Missing1) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 type GetDeployment200ApplicationJSON1Routes1MissingType string
@@ -2644,21 +4151,16 @@ func CreateGetDeployment200ApplicationJSON1Routes1MissingGetDeployment200Applica
 }
 
 func (u *GetDeployment200ApplicationJSON1Routes1Missing) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	getDeployment200ApplicationJSON1Routes1Missing1 := new(GetDeployment200ApplicationJSON1Routes1Missing1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1Routes1Missing1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes1Missing1, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1Routes1Missing1 = getDeployment200ApplicationJSON1Routes1Missing1
 		u.Type = GetDeployment200ApplicationJSON1Routes1MissingTypeGetDeployment200ApplicationJSON1Routes1Missing1
 		return nil
 	}
 
 	getDeployment200ApplicationJSON1Routes1Missing2 := new(GetDeployment200ApplicationJSON1Routes1Missing2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1Routes1Missing2); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes1Missing2, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1Routes1Missing2 = getDeployment200ApplicationJSON1Routes1Missing2
 		u.Type = GetDeployment200ApplicationJSON1Routes1MissingTypeGetDeployment200ApplicationJSON1Routes1Missing2
 		return nil
@@ -2669,14 +4171,14 @@ func (u *GetDeployment200ApplicationJSON1Routes1Missing) UnmarshalJSON(data []by
 
 func (u GetDeployment200ApplicationJSON1Routes1Missing) MarshalJSON() ([]byte, error) {
 	if u.GetDeployment200ApplicationJSON1Routes1Missing1 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1Routes1Missing1)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes1Missing1, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON1Routes1Missing2 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1Routes1Missing2)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes1Missing2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // GetDeployment200ApplicationJSON1Routes1 - A list of routes objects used to rewrite paths to point towards other internal or external paths
@@ -2700,6 +4202,118 @@ type GetDeployment200ApplicationJSON1Routes1 struct {
 	Override         *bool                                            `json:"override,omitempty"`
 	Src              string                                           `json:"src"`
 	Status           *int64                                           `json:"status,omitempty"`
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetCaseSensitive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CaseSensitive
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetCheck() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Check
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetContinue() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Continue
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetDest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Dest
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetHas() []GetDeployment200ApplicationJSON1Routes1Has {
+	if o == nil {
+		return nil
+	}
+	return o.Has
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetHeaders() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetImportant() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Important
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetLocale() *GetDeployment200ApplicationJSON1Routes1Locale {
+	if o == nil {
+		return nil
+	}
+	return o.Locale
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetMethods() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Methods
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetMiddleware() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Middleware
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetMiddlewarePath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MiddlewarePath
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetMiddlewareRawSrc() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MiddlewareRawSrc
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetMissing() []GetDeployment200ApplicationJSON1Routes1Missing {
+	if o == nil {
+		return nil
+	}
+	return o.Missing
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetOverride() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Override
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetSrc() string {
+	if o == nil {
+		return ""
+	}
+	return o.Src
+}
+
+func (o *GetDeployment200ApplicationJSON1Routes1) GetStatus() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
 }
 
 type GetDeployment200ApplicationJSON1RoutesType string
@@ -2746,30 +4360,23 @@ func CreateGetDeployment200ApplicationJSON1RoutesGetDeployment200ApplicationJSON
 }
 
 func (u *GetDeployment200ApplicationJSON1Routes) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
-
-	getDeployment200ApplicationJSON1Routes2 := new(GetDeployment200ApplicationJSON1Routes2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1Routes2); err == nil {
-		u.GetDeployment200ApplicationJSON1Routes2 = getDeployment200ApplicationJSON1Routes2
-		u.Type = GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes2
-		return nil
-	}
 
 	getDeployment200ApplicationJSON1Routes3 := new(GetDeployment200ApplicationJSON1Routes3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1Routes3); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes3, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1Routes3 = getDeployment200ApplicationJSON1Routes3
 		u.Type = GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes3
 		return nil
 	}
 
+	getDeployment200ApplicationJSON1Routes2 := new(GetDeployment200ApplicationJSON1Routes2)
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes2, "", true, true); err == nil {
+		u.GetDeployment200ApplicationJSON1Routes2 = getDeployment200ApplicationJSON1Routes2
+		u.Type = GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes2
+		return nil
+	}
+
 	getDeployment200ApplicationJSON1Routes1 := new(GetDeployment200ApplicationJSON1Routes1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1Routes1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes1, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1Routes1 = getDeployment200ApplicationJSON1Routes1
 		u.Type = GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes1
 		return nil
@@ -2779,19 +4386,19 @@ func (u *GetDeployment200ApplicationJSON1Routes) UnmarshalJSON(data []byte) erro
 }
 
 func (u GetDeployment200ApplicationJSON1Routes) MarshalJSON() ([]byte, error) {
+	if u.GetDeployment200ApplicationJSON1Routes1 != nil {
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes1, "", true)
+	}
+
 	if u.GetDeployment200ApplicationJSON1Routes2 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1Routes2)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes2, "", true)
 	}
 
 	if u.GetDeployment200ApplicationJSON1Routes3 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1Routes3)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes3, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1Routes1 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1Routes1)
-	}
-
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // GetDeployment200ApplicationJSON1Source - Where was the deployment created from
@@ -2867,6 +4474,27 @@ type GetDeployment200ApplicationJSON1Team struct {
 	Name string `json:"name"`
 	// The slug of the team owner
 	Slug string `json:"slug"`
+}
+
+func (o *GetDeployment200ApplicationJSON1Team) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeployment200ApplicationJSON1Team) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeployment200ApplicationJSON1Team) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
 }
 
 type GetDeployment200ApplicationJSON1Type string
@@ -3005,6 +4633,370 @@ type GetDeployment200ApplicationJSON1 struct {
 	Version GetDeployment200ApplicationJSON1Version `json:"version"`
 }
 
+func (o *GetDeployment200ApplicationJSON1) GetAlias() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Alias
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetAliasAssigned() bool {
+	if o == nil {
+		return false
+	}
+	return o.AliasAssigned
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetAliasAssignedAt() *GetDeployment200ApplicationJSON1AliasAssignedAt {
+	if o == nil {
+		return nil
+	}
+	return o.AliasAssignedAt
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetAliasError() *GetDeployment200ApplicationJSON1AliasError {
+	if o == nil {
+		return nil
+	}
+	return o.AliasError
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetAliasFinal() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AliasFinal
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetAliasWarning() *GetDeployment200ApplicationJSON1AliasWarning {
+	if o == nil {
+		return nil
+	}
+	return o.AliasWarning
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetAutoAssignCustomDomains() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AutoAssignCustomDomains
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetAutomaticAliases() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AutomaticAliases
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetBootedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BootedAt
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetBuild() GetDeployment200ApplicationJSON1Build {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1Build{}
+	}
+	return o.Build
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetBuildErrorAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BuildErrorAt
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetBuildingAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BuildingAt
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetBuilds() []GetDeployment200ApplicationJSON1Builds {
+	if o == nil {
+		return nil
+	}
+	return o.Builds
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetCanceledAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CanceledAt
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetChecksConclusion() *GetDeployment200ApplicationJSON1ChecksConclusion {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksConclusion
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetChecksState() *GetDeployment200ApplicationJSON1ChecksState {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksState
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetConnectBuildsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectBuildsEnabled
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetConnectConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectConfigurationID
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetCreatedIn() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedIn
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetCreator() GetDeployment200ApplicationJSON1Creator {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1Creator{}
+	}
+	return o.Creator
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetEnv() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Env
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetErrorCode() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorCode
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetErrorLink() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorLink
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetErrorMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorMessage
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetErrorStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorStep
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetFunctions() map[string]GetDeployment200ApplicationJSON1Functions {
+	if o == nil {
+		return nil
+	}
+	return o.Functions
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetGitRepo() *GetDeployment200ApplicationJSON1GitRepo {
+	if o == nil {
+		return nil
+	}
+	return o.GitRepo
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetGitSource() *GetDeployment200ApplicationJSON1GitSource {
+	if o == nil {
+		return nil
+	}
+	return o.GitSource
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetInspectorURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InspectorURL
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetIsInConcurrentBuildsQueue() bool {
+	if o == nil {
+		return false
+	}
+	return o.IsInConcurrentBuildsQueue
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetLambdas() []GetDeployment200ApplicationJSON1Lambdas {
+	if o == nil {
+		return nil
+	}
+	return o.Lambdas
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetMeta() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.Meta
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetMonorepoManager() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MonorepoManager
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerID
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetPlan() GetDeployment200ApplicationJSON1Plan {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1Plan("")
+	}
+	return o.Plan
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetPreviewCommentsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PreviewCommentsEnabled
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetPublic() bool {
+	if o == nil {
+		return false
+	}
+	return o.Public
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetReadyState() GetDeployment200ApplicationJSON1ReadyState {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1ReadyState("")
+	}
+	return o.ReadyState
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetReadySubstate() *GetDeployment200ApplicationJSON1ReadySubstate {
+	if o == nil {
+		return nil
+	}
+	return o.ReadySubstate
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetRegions() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Regions
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetRoutes() []GetDeployment200ApplicationJSON1Routes {
+	if o == nil {
+		return nil
+	}
+	return o.Routes
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetSource() *GetDeployment200ApplicationJSON1Source {
+	if o == nil {
+		return nil
+	}
+	return o.Source
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetTarget() *GetDeployment200ApplicationJSON1Target {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetTeam() *GetDeployment200ApplicationJSON1Team {
+	if o == nil {
+		return nil
+	}
+	return o.Team
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetType() GetDeployment200ApplicationJSON1Type {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1Type("")
+	}
+	return o.Type
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetUserAliases() []string {
+	if o == nil {
+		return nil
+	}
+	return o.UserAliases
+}
+
+func (o *GetDeployment200ApplicationJSON1) GetVersion() GetDeployment200ApplicationJSON1Version {
+	if o == nil {
+		return GetDeployment200ApplicationJSON1Version(0)
+	}
+	return o.Version
+}
+
 type GetDeployment200ApplicationJSONType string
 
 const (
@@ -3038,21 +5030,16 @@ func CreateGetDeployment200ApplicationJSONGetDeployment200ApplicationJSON2(getDe
 }
 
 func (u *GetDeployment200ApplicationJSON) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	getDeployment200ApplicationJSON2 := new(GetDeployment200ApplicationJSON2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON2); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON2 = getDeployment200ApplicationJSON2
 		u.Type = GetDeployment200ApplicationJSONTypeGetDeployment200ApplicationJSON2
 		return nil
 	}
 
 	getDeployment200ApplicationJSON1 := new(GetDeployment200ApplicationJSON1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getDeployment200ApplicationJSON1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1, "", true, true); err == nil {
 		u.GetDeployment200ApplicationJSON1 = getDeployment200ApplicationJSON1
 		u.Type = GetDeployment200ApplicationJSONTypeGetDeployment200ApplicationJSON1
 		return nil
@@ -3062,15 +5049,15 @@ func (u *GetDeployment200ApplicationJSON) UnmarshalJSON(data []byte) error {
 }
 
 func (u GetDeployment200ApplicationJSON) MarshalJSON() ([]byte, error) {
-	if u.GetDeployment200ApplicationJSON2 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON2)
-	}
-
 	if u.GetDeployment200ApplicationJSON1 != nil {
-		return json.Marshal(u.GetDeployment200ApplicationJSON1)
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1, "", true)
 	}
 
-	return nil, nil
+	if u.GetDeployment200ApplicationJSON2 != nil {
+		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type GetDeploymentResponse struct {
@@ -3083,4 +5070,32 @@ type GetDeploymentResponse struct {
 	// The deployment including only public information
 	// The deployment including both public and private information
 	GetDeployment200ApplicationJSONOneOf *GetDeployment200ApplicationJSON
+}
+
+func (o *GetDeploymentResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetDeploymentResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetDeploymentResponse) GetGetDeployment200ApplicationJSONOneOf() *GetDeployment200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetDeployment200ApplicationJSONOneOf
 }

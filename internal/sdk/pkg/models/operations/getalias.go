@@ -3,12 +3,12 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
 	"time"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type GetAliasRequest struct {
@@ -26,6 +26,48 @@ type GetAliasRequest struct {
 	Until *int64 `queryParam:"style=form,explode=true,name=until"`
 }
 
+func (o *GetAliasRequest) GetFrom() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.From
+}
+
+func (o *GetAliasRequest) GetIDOrAlias() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrAlias
+}
+
+func (o *GetAliasRequest) GetProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *GetAliasRequest) GetSince() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Since
+}
+
+func (o *GetAliasRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetAliasRequest) GetUntil() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Until
+}
+
 // GetAlias200ApplicationJSONCreator - Information of the user who created the alias
 type GetAlias200ApplicationJSONCreator struct {
 	// Email of the user who created the alias
@@ -36,6 +78,27 @@ type GetAlias200ApplicationJSONCreator struct {
 	Username string `json:"username"`
 }
 
+func (o *GetAlias200ApplicationJSONCreator) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *GetAlias200ApplicationJSONCreator) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *GetAlias200ApplicationJSONCreator) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
 // GetAlias200ApplicationJSONDeployment - A map with the deployment ID, URL and metadata
 type GetAlias200ApplicationJSONDeployment struct {
 	// The deployment unique identifier
@@ -44,6 +107,27 @@ type GetAlias200ApplicationJSONDeployment struct {
 	Meta *string `json:"meta,omitempty"`
 	// The deployment unique URL
 	URL string `json:"url"`
+}
+
+func (o *GetAlias200ApplicationJSONDeployment) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetAlias200ApplicationJSONDeployment) GetMeta() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Meta
+}
+
+func (o *GetAlias200ApplicationJSONDeployment) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }
 
 type GetAlias200ApplicationJSONProtectionBypass2Access string
@@ -106,6 +190,41 @@ type GetAlias200ApplicationJSONProtectionBypass2 struct {
 	Scope         GetAlias200ApplicationJSONProtectionBypass2Scope  `json:"scope"`
 }
 
+func (o *GetAlias200ApplicationJSONProtectionBypass2) GetAccess() GetAlias200ApplicationJSONProtectionBypass2Access {
+	if o == nil {
+		return GetAlias200ApplicationJSONProtectionBypass2Access("")
+	}
+	return o.Access
+}
+
+func (o *GetAlias200ApplicationJSONProtectionBypass2) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetAlias200ApplicationJSONProtectionBypass2) GetLastUpdatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.LastUpdatedAt
+}
+
+func (o *GetAlias200ApplicationJSONProtectionBypass2) GetLastUpdatedBy() string {
+	if o == nil {
+		return ""
+	}
+	return o.LastUpdatedBy
+}
+
+func (o *GetAlias200ApplicationJSONProtectionBypass2) GetScope() GetAlias200ApplicationJSONProtectionBypass2Scope {
+	if o == nil {
+		return GetAlias200ApplicationJSONProtectionBypass2Scope("")
+	}
+	return o.Scope
+}
+
 type GetAlias200ApplicationJSONProtectionBypass1Scope string
 
 const (
@@ -138,6 +257,27 @@ type GetAlias200ApplicationJSONProtectionBypass1 struct {
 	CreatedAt int64                                            `json:"createdAt"`
 	CreatedBy string                                           `json:"createdBy"`
 	Scope     GetAlias200ApplicationJSONProtectionBypass1Scope `json:"scope"`
+}
+
+func (o *GetAlias200ApplicationJSONProtectionBypass1) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetAlias200ApplicationJSONProtectionBypass1) GetCreatedBy() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedBy
+}
+
+func (o *GetAlias200ApplicationJSONProtectionBypass1) GetScope() GetAlias200ApplicationJSONProtectionBypass1Scope {
+	if o == nil {
+		return GetAlias200ApplicationJSONProtectionBypass1Scope("")
+	}
+	return o.Scope
 }
 
 type GetAlias200ApplicationJSONProtectionBypassType string
@@ -173,21 +313,16 @@ func CreateGetAlias200ApplicationJSONProtectionBypassGetAlias200ApplicationJSONP
 }
 
 func (u *GetAlias200ApplicationJSONProtectionBypass) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	getAlias200ApplicationJSONProtectionBypass1 := new(GetAlias200ApplicationJSONProtectionBypass1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getAlias200ApplicationJSONProtectionBypass1); err == nil {
+	if err := utils.UnmarshalJSON(data, &getAlias200ApplicationJSONProtectionBypass1, "", true, true); err == nil {
 		u.GetAlias200ApplicationJSONProtectionBypass1 = getAlias200ApplicationJSONProtectionBypass1
 		u.Type = GetAlias200ApplicationJSONProtectionBypassTypeGetAlias200ApplicationJSONProtectionBypass1
 		return nil
 	}
 
 	getAlias200ApplicationJSONProtectionBypass2 := new(GetAlias200ApplicationJSONProtectionBypass2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&getAlias200ApplicationJSONProtectionBypass2); err == nil {
+	if err := utils.UnmarshalJSON(data, &getAlias200ApplicationJSONProtectionBypass2, "", true, true); err == nil {
 		u.GetAlias200ApplicationJSONProtectionBypass2 = getAlias200ApplicationJSONProtectionBypass2
 		u.Type = GetAlias200ApplicationJSONProtectionBypassTypeGetAlias200ApplicationJSONProtectionBypass2
 		return nil
@@ -198,14 +333,14 @@ func (u *GetAlias200ApplicationJSONProtectionBypass) UnmarshalJSON(data []byte) 
 
 func (u GetAlias200ApplicationJSONProtectionBypass) MarshalJSON() ([]byte, error) {
 	if u.GetAlias200ApplicationJSONProtectionBypass1 != nil {
-		return json.Marshal(u.GetAlias200ApplicationJSONProtectionBypass1)
+		return utils.MarshalJSON(u.GetAlias200ApplicationJSONProtectionBypass1, "", true)
 	}
 
 	if u.GetAlias200ApplicationJSONProtectionBypass2 != nil {
-		return json.Marshal(u.GetAlias200ApplicationJSONProtectionBypass2)
+		return utils.MarshalJSON(u.GetAlias200ApplicationJSONProtectionBypass2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // GetAlias200ApplicationJSONRedirectStatusCode - Status code to be used on redirect
@@ -272,6 +407,108 @@ type GetAlias200ApplicationJSON struct {
 	UpdatedAt *int64 `json:"updatedAt,omitempty"`
 }
 
+func (g GetAlias200ApplicationJSON) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(g, "", false)
+}
+
+func (g *GetAlias200ApplicationJSON) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetAlias200ApplicationJSON) GetAlias() string {
+	if o == nil {
+		return ""
+	}
+	return o.Alias
+}
+
+func (o *GetAlias200ApplicationJSON) GetCreated() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Created
+}
+
+func (o *GetAlias200ApplicationJSON) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *GetAlias200ApplicationJSON) GetCreator() *GetAlias200ApplicationJSONCreator {
+	if o == nil {
+		return nil
+	}
+	return o.Creator
+}
+
+func (o *GetAlias200ApplicationJSON) GetDeletedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *GetAlias200ApplicationJSON) GetDeployment() *GetAlias200ApplicationJSONDeployment {
+	if o == nil {
+		return nil
+	}
+	return o.Deployment
+}
+
+func (o *GetAlias200ApplicationJSON) GetDeploymentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentID
+}
+
+func (o *GetAlias200ApplicationJSON) GetProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *GetAlias200ApplicationJSON) GetProtectionBypass() map[string]GetAlias200ApplicationJSONProtectionBypass {
+	if o == nil {
+		return nil
+	}
+	return o.ProtectionBypass
+}
+
+func (o *GetAlias200ApplicationJSON) GetRedirect() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Redirect
+}
+
+func (o *GetAlias200ApplicationJSON) GetRedirectStatusCode() *GetAlias200ApplicationJSONRedirectStatusCode {
+	if o == nil {
+		return nil
+	}
+	return o.RedirectStatusCode
+}
+
+func (o *GetAlias200ApplicationJSON) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *GetAlias200ApplicationJSON) GetUpdatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
 type GetAliasResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -281,4 +518,32 @@ type GetAliasResponse struct {
 	RawResponse *http.Response
 	// The alias information
 	GetAlias200ApplicationJSONObject *GetAlias200ApplicationJSON
+}
+
+func (o *GetAliasResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetAliasResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetAliasResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetAliasResponse) GetGetAlias200ApplicationJSONObject() *GetAlias200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetAlias200ApplicationJSONObject
 }

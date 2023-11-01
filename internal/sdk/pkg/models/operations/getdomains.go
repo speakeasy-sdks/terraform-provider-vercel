@@ -20,6 +20,34 @@ type GetDomainsRequest struct {
 	Until *int64 `queryParam:"style=form,explode=true,name=until"`
 }
 
+func (o *GetDomainsRequest) GetLimit() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
+func (o *GetDomainsRequest) GetSince() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Since
+}
+
+func (o *GetDomainsRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetDomainsRequest) GetUntil() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Until
+}
+
 // GetDomains200ApplicationJSONDomainsCreator - An object containing information of the domain creator, including the user's id, username, and email.
 type GetDomains200ApplicationJSONDomainsCreator struct {
 	CustomerID       *string `json:"customerId,omitempty"`
@@ -27,6 +55,41 @@ type GetDomains200ApplicationJSONDomainsCreator struct {
 	ID               string  `json:"id"`
 	IsDomainReseller *bool   `json:"isDomainReseller,omitempty"`
 	Username         string  `json:"username"`
+}
+
+func (o *GetDomains200ApplicationJSONDomainsCreator) GetCustomerID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerID
+}
+
+func (o *GetDomains200ApplicationJSONDomainsCreator) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *GetDomains200ApplicationJSONDomainsCreator) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDomains200ApplicationJSONDomainsCreator) GetIsDomainReseller() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsDomainReseller
+}
+
+func (o *GetDomains200ApplicationJSONDomainsCreator) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 // GetDomains200ApplicationJSONDomainsServiceType - The type of service the domain is handled by. `external` if the DNS is externally handled, `zeit.world` if handled with Vercel, or `na` if the service is not available.
@@ -93,11 +156,130 @@ type GetDomains200ApplicationJSONDomains struct {
 	Verified bool `json:"verified"`
 }
 
+func (o *GetDomains200ApplicationJSONDomains) GetBoughtAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BoughtAt
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetCreatedAt() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetCreator() GetDomains200ApplicationJSONDomainsCreator {
+	if o == nil {
+		return GetDomains200ApplicationJSONDomainsCreator{}
+	}
+	return o.Creator
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetCustomNameservers() []string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomNameservers
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetExpiresAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresAt
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetIntendedNameservers() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.IntendedNameservers
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetNameservers() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Nameservers
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetOrderedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.OrderedAt
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetRenew() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Renew
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetServiceType() GetDomains200ApplicationJSONDomainsServiceType {
+	if o == nil {
+		return GetDomains200ApplicationJSONDomainsServiceType("")
+	}
+	return o.ServiceType
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetTransferStartedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TransferStartedAt
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetTransferredAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TransferredAt
+}
+
+func (o *GetDomains200ApplicationJSONDomains) GetVerified() bool {
+	if o == nil {
+		return false
+	}
+	return o.Verified
+}
+
 // GetDomains200ApplicationJSON - Successful response retrieving a list of domains.
 type GetDomains200ApplicationJSON struct {
 	Domains []GetDomains200ApplicationJSONDomains `json:"domains"`
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 	Pagination shared.Pagination `json:"pagination"`
+}
+
+func (o *GetDomains200ApplicationJSON) GetDomains() []GetDomains200ApplicationJSONDomains {
+	if o == nil {
+		return []GetDomains200ApplicationJSONDomains{}
+	}
+	return o.Domains
+}
+
+func (o *GetDomains200ApplicationJSON) GetPagination() shared.Pagination {
+	if o == nil {
+		return shared.Pagination{}
+	}
+	return o.Pagination
 }
 
 type GetDomainsResponse struct {
@@ -109,4 +291,32 @@ type GetDomainsResponse struct {
 	RawResponse *http.Response
 	// Successful response retrieving a list of domains.
 	GetDomains200ApplicationJSONObject *GetDomains200ApplicationJSON
+}
+
+func (o *GetDomainsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *GetDomainsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *GetDomainsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *GetDomainsResponse) GetGetDomains200ApplicationJSONObject() *GetDomains200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.GetDomains200ApplicationJSONObject
 }

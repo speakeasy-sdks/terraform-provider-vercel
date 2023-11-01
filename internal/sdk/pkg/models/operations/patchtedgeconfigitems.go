@@ -12,8 +12,29 @@ type PatchtEdgeConfigItemsRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *PatchtEdgeConfigItemsRequest) GetEdgeConfigID() string {
+	if o == nil {
+		return ""
+	}
+	return o.EdgeConfigID
+}
+
+func (o *PatchtEdgeConfigItemsRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 type PatchtEdgeConfigItems200ApplicationJSON struct {
 	Status string `json:"status"`
+}
+
+func (o *PatchtEdgeConfigItems200ApplicationJSON) GetStatus() string {
+	if o == nil {
+		return ""
+	}
+	return o.Status
 }
 
 type PatchtEdgeConfigItemsResponse struct {
@@ -24,4 +45,32 @@ type PatchtEdgeConfigItemsResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse                                   *http.Response
 	PatchtEdgeConfigItems200ApplicationJSONObject *PatchtEdgeConfigItems200ApplicationJSON
+}
+
+func (o *PatchtEdgeConfigItemsResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *PatchtEdgeConfigItemsResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *PatchtEdgeConfigItemsResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *PatchtEdgeConfigItemsResponse) GetPatchtEdgeConfigItems200ApplicationJSONObject() *PatchtEdgeConfigItems200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.PatchtEdgeConfigItems200ApplicationJSONObject
 }

@@ -14,9 +14,30 @@ type DeleteTeamRequestBodyReasons struct {
 	Slug string `json:"slug"`
 }
 
+func (o *DeleteTeamRequestBodyReasons) GetDescription() string {
+	if o == nil {
+		return ""
+	}
+	return o.Description
+}
+
+func (o *DeleteTeamRequestBodyReasons) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
 type DeleteTeamRequestBody struct {
 	// Optional array of objects that describe the reason why the team is being deleted.
 	Reasons []DeleteTeamRequestBodyReasons `json:"reasons,omitempty"`
+}
+
+func (o *DeleteTeamRequestBody) GetReasons() []DeleteTeamRequestBodyReasons {
+	if o == nil {
+		return nil
+	}
+	return o.Reasons
 }
 
 type DeleteTeamRequest struct {
@@ -25,10 +46,31 @@ type DeleteTeamRequest struct {
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 }
 
+func (o *DeleteTeamRequest) GetRequestBody() *DeleteTeamRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *DeleteTeamRequest) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
+}
+
 // DeleteTeam200ApplicationJSON - The Team was successfuly deleted
 type DeleteTeam200ApplicationJSON struct {
 	// The ID of the deleted Team
 	ID string `json:"id"`
+}
+
+func (o *DeleteTeam200ApplicationJSON) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 type DeleteTeamResponse struct {
@@ -40,4 +82,32 @@ type DeleteTeamResponse struct {
 	RawResponse *http.Response
 	// The Team was successfuly deleted
 	DeleteTeam200ApplicationJSONObject *DeleteTeam200ApplicationJSON
+}
+
+func (o *DeleteTeamResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *DeleteTeamResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *DeleteTeamResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *DeleteTeamResponse) GetDeleteTeam200ApplicationJSONObject() *DeleteTeam200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.DeleteTeam200ApplicationJSONObject
 }

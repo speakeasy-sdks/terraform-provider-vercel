@@ -3,11 +3,11 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type EditProjectEnvRequestBodyTarget string
@@ -90,6 +90,41 @@ type EditProjectEnvRequestBody struct {
 	Value *string `json:"value,omitempty"`
 }
 
+func (o *EditProjectEnvRequestBody) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *EditProjectEnvRequestBody) GetKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Key
+}
+
+func (o *EditProjectEnvRequestBody) GetTarget() []EditProjectEnvRequestBodyTarget {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *EditProjectEnvRequestBody) GetType() *EditProjectEnvRequestBodyType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *EditProjectEnvRequestBody) GetValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
 type EditProjectEnvRequest struct {
 	RequestBody *EditProjectEnvRequestBody `request:"mediaType=application/json"`
 	// The unique environment variable identifier
@@ -98,6 +133,34 @@ type EditProjectEnvRequest struct {
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *EditProjectEnvRequest) GetRequestBody() *EditProjectEnvRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *EditProjectEnvRequest) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *EditProjectEnvRequest) GetIDOrName() string {
+	if o == nil {
+		return ""
+	}
+	return o.IDOrName
+}
+
+func (o *EditProjectEnvRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 type EditProjectEnv200ApplicationJSONContentHint12Type string
@@ -129,6 +192,20 @@ type EditProjectEnv200ApplicationJSONContentHint12 struct {
 	Type    EditProjectEnv200ApplicationJSONContentHint12Type `json:"type"`
 }
 
+func (o *EditProjectEnv200ApplicationJSONContentHint12) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint12) GetType() EditProjectEnv200ApplicationJSONContentHint12Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint12Type("")
+	}
+	return o.Type
+}
+
 type EditProjectEnv200ApplicationJSONContentHint11Type string
 
 const (
@@ -156,6 +233,20 @@ func (e *EditProjectEnv200ApplicationJSONContentHint11Type) UnmarshalJSON(data [
 type EditProjectEnv200ApplicationJSONContentHint11 struct {
 	StoreID string                                            `json:"storeId"`
 	Type    EditProjectEnv200ApplicationJSONContentHint11Type `json:"type"`
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint11) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint11) GetType() EditProjectEnv200ApplicationJSONContentHint11Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint11Type("")
+	}
+	return o.Type
 }
 
 type EditProjectEnv200ApplicationJSONContentHint10Type string
@@ -187,6 +278,20 @@ type EditProjectEnv200ApplicationJSONContentHint10 struct {
 	Type    EditProjectEnv200ApplicationJSONContentHint10Type `json:"type"`
 }
 
+func (o *EditProjectEnv200ApplicationJSONContentHint10) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint10) GetType() EditProjectEnv200ApplicationJSONContentHint10Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint10Type("")
+	}
+	return o.Type
+}
+
 type EditProjectEnv200ApplicationJSONContentHint9Type string
 
 const (
@@ -214,6 +319,20 @@ func (e *EditProjectEnv200ApplicationJSONContentHint9Type) UnmarshalJSON(data []
 type EditProjectEnv200ApplicationJSONContentHint9 struct {
 	StoreID string                                           `json:"storeId"`
 	Type    EditProjectEnv200ApplicationJSONContentHint9Type `json:"type"`
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint9) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint9) GetType() EditProjectEnv200ApplicationJSONContentHint9Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint9Type("")
+	}
+	return o.Type
 }
 
 type EditProjectEnv200ApplicationJSONContentHint8Type string
@@ -245,6 +364,20 @@ type EditProjectEnv200ApplicationJSONContentHint8 struct {
 	Type    EditProjectEnv200ApplicationJSONContentHint8Type `json:"type"`
 }
 
+func (o *EditProjectEnv200ApplicationJSONContentHint8) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint8) GetType() EditProjectEnv200ApplicationJSONContentHint8Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint8Type("")
+	}
+	return o.Type
+}
+
 type EditProjectEnv200ApplicationJSONContentHint7Type string
 
 const (
@@ -272,6 +405,20 @@ func (e *EditProjectEnv200ApplicationJSONContentHint7Type) UnmarshalJSON(data []
 type EditProjectEnv200ApplicationJSONContentHint7 struct {
 	StoreID string                                           `json:"storeId"`
 	Type    EditProjectEnv200ApplicationJSONContentHint7Type `json:"type"`
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint7) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint7) GetType() EditProjectEnv200ApplicationJSONContentHint7Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint7Type("")
+	}
+	return o.Type
 }
 
 type EditProjectEnv200ApplicationJSONContentHint6Type string
@@ -303,6 +450,20 @@ type EditProjectEnv200ApplicationJSONContentHint6 struct {
 	Type    EditProjectEnv200ApplicationJSONContentHint6Type `json:"type"`
 }
 
+func (o *EditProjectEnv200ApplicationJSONContentHint6) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint6) GetType() EditProjectEnv200ApplicationJSONContentHint6Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint6Type("")
+	}
+	return o.Type
+}
+
 type EditProjectEnv200ApplicationJSONContentHint5Type string
 
 const (
@@ -330,6 +491,20 @@ func (e *EditProjectEnv200ApplicationJSONContentHint5Type) UnmarshalJSON(data []
 type EditProjectEnv200ApplicationJSONContentHint5 struct {
 	StoreID string                                           `json:"storeId"`
 	Type    EditProjectEnv200ApplicationJSONContentHint5Type `json:"type"`
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint5) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint5) GetType() EditProjectEnv200ApplicationJSONContentHint5Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint5Type("")
+	}
+	return o.Type
 }
 
 type EditProjectEnv200ApplicationJSONContentHint4Type string
@@ -361,6 +536,20 @@ type EditProjectEnv200ApplicationJSONContentHint4 struct {
 	Type    EditProjectEnv200ApplicationJSONContentHint4Type `json:"type"`
 }
 
+func (o *EditProjectEnv200ApplicationJSONContentHint4) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint4) GetType() EditProjectEnv200ApplicationJSONContentHint4Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint4Type("")
+	}
+	return o.Type
+}
+
 type EditProjectEnv200ApplicationJSONContentHint3Type string
 
 const (
@@ -388,6 +577,20 @@ func (e *EditProjectEnv200ApplicationJSONContentHint3Type) UnmarshalJSON(data []
 type EditProjectEnv200ApplicationJSONContentHint3 struct {
 	StoreID string                                           `json:"storeId"`
 	Type    EditProjectEnv200ApplicationJSONContentHint3Type `json:"type"`
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint3) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint3) GetType() EditProjectEnv200ApplicationJSONContentHint3Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint3Type("")
+	}
+	return o.Type
 }
 
 type EditProjectEnv200ApplicationJSONContentHint2Type string
@@ -419,6 +622,20 @@ type EditProjectEnv200ApplicationJSONContentHint2 struct {
 	Type    EditProjectEnv200ApplicationJSONContentHint2Type `json:"type"`
 }
 
+func (o *EditProjectEnv200ApplicationJSONContentHint2) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint2) GetType() EditProjectEnv200ApplicationJSONContentHint2Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint2Type("")
+	}
+	return o.Type
+}
+
 type EditProjectEnv200ApplicationJSONContentHint1Type string
 
 const (
@@ -446,6 +663,20 @@ func (e *EditProjectEnv200ApplicationJSONContentHint1Type) UnmarshalJSON(data []
 type EditProjectEnv200ApplicationJSONContentHint1 struct {
 	StoreID string                                           `json:"storeId"`
 	Type    EditProjectEnv200ApplicationJSONContentHint1Type `json:"type"`
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint1) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *EditProjectEnv200ApplicationJSONContentHint1) GetType() EditProjectEnv200ApplicationJSONContentHint1Type {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONContentHint1Type("")
+	}
+	return o.Type
 }
 
 type EditProjectEnv200ApplicationJSONContentHintType string
@@ -591,111 +822,86 @@ func CreateEditProjectEnv200ApplicationJSONContentHintEditProjectEnv200Applicati
 }
 
 func (u *EditProjectEnv200ApplicationJSONContentHint) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	editProjectEnv200ApplicationJSONContentHint1 := new(EditProjectEnv200ApplicationJSONContentHint1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint1); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint1, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint1 = editProjectEnv200ApplicationJSONContentHint1
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint1
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONContentHint2 := new(EditProjectEnv200ApplicationJSONContentHint2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint2); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint2, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint2 = editProjectEnv200ApplicationJSONContentHint2
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint2
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONContentHint3 := new(EditProjectEnv200ApplicationJSONContentHint3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint3); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint3, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint3 = editProjectEnv200ApplicationJSONContentHint3
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint3
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONContentHint4 := new(EditProjectEnv200ApplicationJSONContentHint4)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint4); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint4, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint4 = editProjectEnv200ApplicationJSONContentHint4
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint4
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONContentHint5 := new(EditProjectEnv200ApplicationJSONContentHint5)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint5); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint5, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint5 = editProjectEnv200ApplicationJSONContentHint5
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint5
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONContentHint6 := new(EditProjectEnv200ApplicationJSONContentHint6)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint6); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint6, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint6 = editProjectEnv200ApplicationJSONContentHint6
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint6
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONContentHint7 := new(EditProjectEnv200ApplicationJSONContentHint7)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint7); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint7, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint7 = editProjectEnv200ApplicationJSONContentHint7
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint7
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONContentHint8 := new(EditProjectEnv200ApplicationJSONContentHint8)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint8); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint8, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint8 = editProjectEnv200ApplicationJSONContentHint8
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint8
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONContentHint9 := new(EditProjectEnv200ApplicationJSONContentHint9)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint9); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint9, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint9 = editProjectEnv200ApplicationJSONContentHint9
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint9
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONContentHint10 := new(EditProjectEnv200ApplicationJSONContentHint10)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint10); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint10, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint10 = editProjectEnv200ApplicationJSONContentHint10
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint10
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONContentHint11 := new(EditProjectEnv200ApplicationJSONContentHint11)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint11); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint11, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint11 = editProjectEnv200ApplicationJSONContentHint11
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint11
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONContentHint12 := new(EditProjectEnv200ApplicationJSONContentHint12)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONContentHint12); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONContentHint12, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONContentHint12 = editProjectEnv200ApplicationJSONContentHint12
 		u.Type = EditProjectEnv200ApplicationJSONContentHintTypeEditProjectEnv200ApplicationJSONContentHint12
 		return nil
@@ -706,54 +912,54 @@ func (u *EditProjectEnv200ApplicationJSONContentHint) UnmarshalJSON(data []byte)
 
 func (u EditProjectEnv200ApplicationJSONContentHint) MarshalJSON() ([]byte, error) {
 	if u.EditProjectEnv200ApplicationJSONContentHint1 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint1)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint1, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONContentHint2 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint2)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint2, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONContentHint3 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint3)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint3, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONContentHint4 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint4)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint4, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONContentHint5 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint5)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint5, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONContentHint6 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint6)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint6, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONContentHint7 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint7)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint7, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONContentHint8 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint8)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint8, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONContentHint9 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint9)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint9, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONContentHint10 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint10)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint10, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONContentHint11 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint11)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint11, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONContentHint12 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONContentHint12)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONContentHint12, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type EditProjectEnv200ApplicationJSONTarget2 string
@@ -849,21 +1055,16 @@ func CreateEditProjectEnv200ApplicationJSONTargetEditProjectEnv200ApplicationJSO
 }
 
 func (u *EditProjectEnv200ApplicationJSONTarget) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	arrayOfeditProjectEnv200ApplicationJSONTarget1 := []EditProjectEnv200ApplicationJSONTarget1{}
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&arrayOfeditProjectEnv200ApplicationJSONTarget1); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfeditProjectEnv200ApplicationJSONTarget1, "", true, true); err == nil {
 		u.ArrayOfeditProjectEnv200ApplicationJSONTarget1 = arrayOfeditProjectEnv200ApplicationJSONTarget1
 		u.Type = EditProjectEnv200ApplicationJSONTargetTypeArrayOfeditProjectEnv200ApplicationJSONTarget1
 		return nil
 	}
 
 	editProjectEnv200ApplicationJSONTarget2 := new(EditProjectEnv200ApplicationJSONTarget2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&editProjectEnv200ApplicationJSONTarget2); err == nil {
+	if err := utils.UnmarshalJSON(data, &editProjectEnv200ApplicationJSONTarget2, "", true, true); err == nil {
 		u.EditProjectEnv200ApplicationJSONTarget2 = editProjectEnv200ApplicationJSONTarget2
 		u.Type = EditProjectEnv200ApplicationJSONTargetTypeEditProjectEnv200ApplicationJSONTarget2
 		return nil
@@ -874,14 +1075,14 @@ func (u *EditProjectEnv200ApplicationJSONTarget) UnmarshalJSON(data []byte) erro
 
 func (u EditProjectEnv200ApplicationJSONTarget) MarshalJSON() ([]byte, error) {
 	if u.ArrayOfeditProjectEnv200ApplicationJSONTarget1 != nil {
-		return json.Marshal(u.ArrayOfeditProjectEnv200ApplicationJSONTarget1)
+		return utils.MarshalJSON(u.ArrayOfeditProjectEnv200ApplicationJSONTarget1, "", true)
 	}
 
 	if u.EditProjectEnv200ApplicationJSONTarget2 != nil {
-		return json.Marshal(u.EditProjectEnv200ApplicationJSONTarget2)
+		return utils.MarshalJSON(u.EditProjectEnv200ApplicationJSONTarget2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type EditProjectEnv200ApplicationJSONType string
@@ -940,6 +1141,111 @@ type EditProjectEnv200ApplicationJSON struct {
 	Value             string                                  `json:"value"`
 }
 
+func (o *EditProjectEnv200ApplicationJSON) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetContentHint() *EditProjectEnv200ApplicationJSONContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.ContentHint
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetCreatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetCreatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedBy
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetDecrypted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Decrypted
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetEdgeConfigID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigID
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetEdgeConfigTokenID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigTokenID
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetTarget() *EditProjectEnv200ApplicationJSONTarget {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetType() EditProjectEnv200ApplicationJSONType {
+	if o == nil {
+		return EditProjectEnv200ApplicationJSONType("")
+	}
+	return o.Type
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetUpdatedAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetUpdatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedBy
+}
+
+func (o *EditProjectEnv200ApplicationJSON) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 type EditProjectEnvResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -949,4 +1255,32 @@ type EditProjectEnvResponse struct {
 	RawResponse *http.Response
 	// The environment variable was successfully edited
 	EditProjectEnv200ApplicationJSONObject *EditProjectEnv200ApplicationJSON
+}
+
+func (o *EditProjectEnvResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *EditProjectEnvResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *EditProjectEnvResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *EditProjectEnvResponse) GetEditProjectEnv200ApplicationJSONObject() *EditProjectEnv200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.EditProjectEnv200ApplicationJSONObject
 }

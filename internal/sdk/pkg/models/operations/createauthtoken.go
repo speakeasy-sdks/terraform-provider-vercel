@@ -3,12 +3,12 @@
 package operations
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
 	"vercel/internal/sdk/pkg/models/shared"
+	"vercel/internal/sdk/pkg/utils"
 )
 
 type CreateAuthTokenRequestBody2Type string
@@ -43,9 +43,58 @@ type CreateAuthTokenRequestBody2 struct {
 	Type           CreateAuthTokenRequestBody2Type `json:"type"`
 }
 
+func (o *CreateAuthTokenRequestBody2) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *CreateAuthTokenRequestBody2) GetExpiresAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresAt
+}
+
+func (o *CreateAuthTokenRequestBody2) GetInstallationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InstallationID
+}
+
+func (o *CreateAuthTokenRequestBody2) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateAuthTokenRequestBody2) GetType() CreateAuthTokenRequestBody2Type {
+	if o == nil {
+		return CreateAuthTokenRequestBody2Type("")
+	}
+	return o.Type
+}
+
 type CreateAuthTokenRequestBody1 struct {
 	ExpiresAt *int64 `json:"expiresAt,omitempty"`
 	Name      string `json:"name"`
+}
+
+func (o *CreateAuthTokenRequestBody1) GetExpiresAt() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresAt
+}
+
+func (o *CreateAuthTokenRequestBody1) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 type CreateAuthTokenRequestBodyType string
@@ -81,21 +130,16 @@ func CreateCreateAuthTokenRequestBodyCreateAuthTokenRequestBody2(createAuthToken
 }
 
 func (u *CreateAuthTokenRequestBody) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	createAuthTokenRequestBody1 := new(CreateAuthTokenRequestBody1)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createAuthTokenRequestBody1); err == nil {
+	if err := utils.UnmarshalJSON(data, &createAuthTokenRequestBody1, "", true, true); err == nil {
 		u.CreateAuthTokenRequestBody1 = createAuthTokenRequestBody1
 		u.Type = CreateAuthTokenRequestBodyTypeCreateAuthTokenRequestBody1
 		return nil
 	}
 
 	createAuthTokenRequestBody2 := new(CreateAuthTokenRequestBody2)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&createAuthTokenRequestBody2); err == nil {
+	if err := utils.UnmarshalJSON(data, &createAuthTokenRequestBody2, "", true, true); err == nil {
 		u.CreateAuthTokenRequestBody2 = createAuthTokenRequestBody2
 		u.Type = CreateAuthTokenRequestBodyTypeCreateAuthTokenRequestBody2
 		return nil
@@ -106,14 +150,14 @@ func (u *CreateAuthTokenRequestBody) UnmarshalJSON(data []byte) error {
 
 func (u CreateAuthTokenRequestBody) MarshalJSON() ([]byte, error) {
 	if u.CreateAuthTokenRequestBody1 != nil {
-		return json.Marshal(u.CreateAuthTokenRequestBody1)
+		return utils.MarshalJSON(u.CreateAuthTokenRequestBody1, "", true)
 	}
 
 	if u.CreateAuthTokenRequestBody2 != nil {
-		return json.Marshal(u.CreateAuthTokenRequestBody2)
+		return utils.MarshalJSON(u.CreateAuthTokenRequestBody2, "", true)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 type CreateAuthTokenRequest struct {
@@ -122,12 +166,40 @@ type CreateAuthTokenRequest struct {
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
+func (o *CreateAuthTokenRequest) GetRequestBody() *CreateAuthTokenRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *CreateAuthTokenRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 // CreateAuthToken200ApplicationJSON - Successful response.
 type CreateAuthToken200ApplicationJSON struct {
 	// The authentication token's actual value. This token is only provided in this response, and can never be retrieved again in the future. Be sure to save it somewhere safe!
 	BearerToken string `json:"bearerToken"`
 	// Authentication token metadata.
 	Token shared.AuthToken `json:"token"`
+}
+
+func (o *CreateAuthToken200ApplicationJSON) GetBearerToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.BearerToken
+}
+
+func (o *CreateAuthToken200ApplicationJSON) GetToken() shared.AuthToken {
+	if o == nil {
+		return shared.AuthToken{}
+	}
+	return o.Token
 }
 
 type CreateAuthTokenResponse struct {
@@ -139,4 +211,32 @@ type CreateAuthTokenResponse struct {
 	RawResponse *http.Response
 	// Successful response.
 	CreateAuthToken200ApplicationJSONObject *CreateAuthToken200ApplicationJSON
+}
+
+func (o *CreateAuthTokenResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *CreateAuthTokenResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *CreateAuthTokenResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *CreateAuthTokenResponse) GetCreateAuthToken200ApplicationJSONObject() *CreateAuthToken200ApplicationJSON {
+	if o == nil {
+		return nil
+	}
+	return o.CreateAuthToken200ApplicationJSONObject
 }

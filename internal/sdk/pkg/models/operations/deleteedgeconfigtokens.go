@@ -10,11 +10,39 @@ type DeleteEdgeConfigTokensRequestBody struct {
 	Tokens []string `json:"tokens"`
 }
 
+func (o *DeleteEdgeConfigTokensRequestBody) GetTokens() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Tokens
+}
+
 type DeleteEdgeConfigTokensRequest struct {
 	RequestBody  *DeleteEdgeConfigTokensRequestBody `request:"mediaType=application/json"`
 	EdgeConfigID string                             `pathParam:"style=simple,explode=false,name=edgeConfigId"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *DeleteEdgeConfigTokensRequest) GetRequestBody() *DeleteEdgeConfigTokensRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *DeleteEdgeConfigTokensRequest) GetEdgeConfigID() string {
+	if o == nil {
+		return ""
+	}
+	return o.EdgeConfigID
+}
+
+func (o *DeleteEdgeConfigTokensRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 type DeleteEdgeConfigTokensResponse struct {
@@ -24,4 +52,25 @@ type DeleteEdgeConfigTokensResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (o *DeleteEdgeConfigTokensResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *DeleteEdgeConfigTokensResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *DeleteEdgeConfigTokensResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }
