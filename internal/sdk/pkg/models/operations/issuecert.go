@@ -38,7 +38,7 @@ func (o *IssueCertRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type IssueCert200ApplicationJSON struct {
+type IssueCertResponseBody struct {
 	AutoRenew bool     `json:"autoRenew"`
 	Cns       []string `json:"cns"`
 	CreatedAt int64    `json:"createdAt"`
@@ -46,35 +46,35 @@ type IssueCert200ApplicationJSON struct {
 	ID        string   `json:"id"`
 }
 
-func (o *IssueCert200ApplicationJSON) GetAutoRenew() bool {
+func (o *IssueCertResponseBody) GetAutoRenew() bool {
 	if o == nil {
 		return false
 	}
 	return o.AutoRenew
 }
 
-func (o *IssueCert200ApplicationJSON) GetCns() []string {
+func (o *IssueCertResponseBody) GetCns() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Cns
 }
 
-func (o *IssueCert200ApplicationJSON) GetCreatedAt() int64 {
+func (o *IssueCertResponseBody) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *IssueCert200ApplicationJSON) GetExpiresAt() int64 {
+func (o *IssueCertResponseBody) GetExpiresAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ExpiresAt
 }
 
-func (o *IssueCert200ApplicationJSON) GetID() string {
+func (o *IssueCertResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
@@ -87,8 +87,8 @@ type IssueCertResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                       *http.Response
-	IssueCert200ApplicationJSONObject *IssueCert200ApplicationJSON
+	RawResponse *http.Response
+	Object      *IssueCertResponseBody
 }
 
 func (o *IssueCertResponse) GetContentType() string {
@@ -112,9 +112,9 @@ func (o *IssueCertResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *IssueCertResponse) GetIssueCert200ApplicationJSONObject() *IssueCert200ApplicationJSON {
+func (o *IssueCertResponse) GetObject() *IssueCertResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.IssueCert200ApplicationJSONObject
+	return o.Object
 }

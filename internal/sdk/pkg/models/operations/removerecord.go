@@ -34,8 +34,8 @@ func (o *RemoveRecordRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// RemoveRecord200ApplicationJSON - Successful response by removing the specified DNS record.
-type RemoveRecord200ApplicationJSON struct {
+// RemoveRecordResponseBody - Successful response by removing the specified DNS record.
+type RemoveRecordResponseBody struct {
 }
 
 type RemoveRecordResponse struct {
@@ -46,7 +46,7 @@ type RemoveRecordResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response by removing the specified DNS record.
-	RemoveRecord200ApplicationJSONObject *RemoveRecord200ApplicationJSON
+	Object *RemoveRecordResponseBody
 }
 
 func (o *RemoveRecordResponse) GetContentType() string {
@@ -70,9 +70,9 @@ func (o *RemoveRecordResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *RemoveRecordResponse) GetRemoveRecord200ApplicationJSONObject() *RemoveRecord200ApplicationJSON {
+func (o *RemoveRecordResponse) GetObject() *RemoveRecordResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.RemoveRecord200ApplicationJSONObject
+	return o.Object
 }

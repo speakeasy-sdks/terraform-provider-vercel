@@ -13,19 +13,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type projectMembers struct {
+type ProjectMembers struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newProjectMembers(sdkConfig sdkConfiguration) *projectMembers {
-	return &projectMembers{
+func newProjectMembers(sdkConfig sdkConfiguration) *ProjectMembers {
+	return &ProjectMembers{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // AddProjectMember - Adds a new member to a project.
 // Adds a new member to the project.
-func (s *projectMembers) AddProjectMember(ctx context.Context, request operations.AddProjectMemberRequest) (*operations.AddProjectMemberResponse, error) {
+func (s *ProjectMembers) AddProjectMember(ctx context.Context, request operations.AddProjectMemberRequest) (*operations.AddProjectMemberResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{idOrName}/members", request, nil)
 	if err != nil {
@@ -81,12 +81,12 @@ func (s *projectMembers) AddProjectMember(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.AddProjectMember200ApplicationJSON
+			var out operations.AddProjectMemberResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.AddProjectMember200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -106,7 +106,7 @@ func (s *projectMembers) AddProjectMember(ctx context.Context, request operation
 
 // GetProjectMembers - List project members
 // Lists all members of a project.
-func (s *projectMembers) GetProjectMembers(ctx context.Context, request operations.GetProjectMembersRequest) (*operations.GetProjectMembersResponse, error) {
+func (s *ProjectMembers) GetProjectMembers(ctx context.Context, request operations.GetProjectMembersRequest) (*operations.GetProjectMembersResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{idOrName}/members", request, nil)
 	if err != nil {
@@ -152,12 +152,12 @@ func (s *projectMembers) GetProjectMembers(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetProjectMembers200ApplicationJSON
+			var out operations.GetProjectMembersResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetProjectMembers200ApplicationJSONOneOf = &out
+			res.OneOf = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -175,7 +175,7 @@ func (s *projectMembers) GetProjectMembers(ctx context.Context, request operatio
 
 // RemoveProjectMember - Remove a Project Member
 // Remove a member from a specific project
-func (s *projectMembers) RemoveProjectMember(ctx context.Context, request operations.RemoveProjectMemberRequest) (*operations.RemoveProjectMemberResponse, error) {
+func (s *ProjectMembers) RemoveProjectMember(ctx context.Context, request operations.RemoveProjectMemberRequest) (*operations.RemoveProjectMemberResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{idOrName}/members/{uid}", request, nil)
 	if err != nil {
@@ -221,12 +221,12 @@ func (s *projectMembers) RemoveProjectMember(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.RemoveProjectMember200ApplicationJSON
+			var out operations.RemoveProjectMemberResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.RemoveProjectMember200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

@@ -13,19 +13,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type checks struct {
+type Checks struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newChecks(sdkConfig sdkConfiguration) *checks {
-	return &checks{
+func newChecks(sdkConfig sdkConfiguration) *Checks {
+	return &Checks{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // CreateCheck - Creates a new Check
 // Creates a new check. This endpoint must be called with an OAuth2 or it will produce a 400 error.
-func (s *checks) CreateCheck(ctx context.Context, request operations.CreateCheckRequest) (*operations.CreateCheckResponse, error) {
+func (s *Checks) CreateCheck(ctx context.Context, request operations.CreateCheckRequest) (*operations.CreateCheckResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/deployments/{deploymentId}/checks", request, nil)
 	if err != nil {
@@ -81,12 +81,12 @@ func (s *checks) CreateCheck(ctx context.Context, request operations.CreateCheck
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.CreateCheck200ApplicationJSON
+			var out operations.CreateCheckResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CreateCheck200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -104,7 +104,7 @@ func (s *checks) CreateCheck(ctx context.Context, request operations.CreateCheck
 
 // GetAllChecks - Retrieve a list of all checks
 // List all of the checks created for a deployment.
-func (s *checks) GetAllChecks(ctx context.Context, request operations.GetAllChecksRequest) (*operations.GetAllChecksResponse, error) {
+func (s *Checks) GetAllChecks(ctx context.Context, request operations.GetAllChecksRequest) (*operations.GetAllChecksResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/deployments/{deploymentId}/checks", request, nil)
 	if err != nil {
@@ -150,12 +150,12 @@ func (s *checks) GetAllChecks(ctx context.Context, request operations.GetAllChec
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetAllChecks200ApplicationJSON
+			var out operations.GetAllChecksResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetAllChecks200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -173,7 +173,7 @@ func (s *checks) GetAllChecks(ctx context.Context, request operations.GetAllChec
 
 // GetCheck - Get a single check
 // Return a detailed response for a single check.
-func (s *checks) GetCheck(ctx context.Context, request operations.GetCheckRequest) (*operations.GetCheckResponse, error) {
+func (s *Checks) GetCheck(ctx context.Context, request operations.GetCheckRequest) (*operations.GetCheckResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/deployments/{deploymentId}/checks/{checkId}", request, nil)
 	if err != nil {
@@ -219,12 +219,12 @@ func (s *checks) GetCheck(ctx context.Context, request operations.GetCheckReques
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetCheck200ApplicationJSON
+			var out operations.GetCheckResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetCheck200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -242,7 +242,7 @@ func (s *checks) GetCheck(ctx context.Context, request operations.GetCheckReques
 
 // RerequestCheck - Rerequest a check
 // Rerequest a selected check that has failed.
-func (s *checks) RerequestCheck(ctx context.Context, request operations.RerequestCheckRequest) (*operations.RerequestCheckResponse, error) {
+func (s *Checks) RerequestCheck(ctx context.Context, request operations.RerequestCheckRequest) (*operations.RerequestCheckResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/deployments/{deploymentId}/checks/{checkId}/rerequest", request, nil)
 	if err != nil {
@@ -288,12 +288,12 @@ func (s *checks) RerequestCheck(ctx context.Context, request operations.Rereques
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.RerequestCheck200ApplicationJSON
+			var out operations.RerequestCheckResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.RerequestCheck200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -311,7 +311,7 @@ func (s *checks) RerequestCheck(ctx context.Context, request operations.Rereques
 
 // UpdateCheck - Update a check
 // Update an existing check. This endpoint must be called with an OAuth2 or it will produce a 400 error.
-func (s *checks) UpdateCheck(ctx context.Context, request operations.UpdateCheckRequest) (*operations.UpdateCheckResponse, error) {
+func (s *Checks) UpdateCheck(ctx context.Context, request operations.UpdateCheckRequest) (*operations.UpdateCheckResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/deployments/{deploymentId}/checks/{checkId}", request, nil)
 	if err != nil {
@@ -367,12 +367,12 @@ func (s *checks) UpdateCheck(ctx context.Context, request operations.UpdateCheck
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.UpdateCheck200ApplicationJSON
+			var out operations.UpdateCheckResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.UpdateCheck200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

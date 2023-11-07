@@ -10,20 +10,20 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-// InviteUserToTeamRequestBodyProjectsRole - Sets the project roles for the invited user
-type InviteUserToTeamRequestBodyProjectsRole string
+// InviteUserToTeamRole - Sets the project roles for the invited user
+type InviteUserToTeamRole string
 
 const (
-	InviteUserToTeamRequestBodyProjectsRoleAdmin            InviteUserToTeamRequestBodyProjectsRole = "ADMIN"
-	InviteUserToTeamRequestBodyProjectsRoleProjectViewer    InviteUserToTeamRequestBodyProjectsRole = "PROJECT_VIEWER"
-	InviteUserToTeamRequestBodyProjectsRoleProjectDeveloper InviteUserToTeamRequestBodyProjectsRole = "PROJECT_DEVELOPER"
+	InviteUserToTeamRoleAdmin            InviteUserToTeamRole = "ADMIN"
+	InviteUserToTeamRoleProjectViewer    InviteUserToTeamRole = "PROJECT_VIEWER"
+	InviteUserToTeamRoleProjectDeveloper InviteUserToTeamRole = "PROJECT_DEVELOPER"
 )
 
-func (e InviteUserToTeamRequestBodyProjectsRole) ToPointer() *InviteUserToTeamRequestBodyProjectsRole {
+func (e InviteUserToTeamRole) ToPointer() *InviteUserToTeamRole {
 	return &e
 }
 
-func (e *InviteUserToTeamRequestBodyProjectsRole) UnmarshalJSON(data []byte) error {
+func (e *InviteUserToTeamRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -34,51 +34,51 @@ func (e *InviteUserToTeamRequestBodyProjectsRole) UnmarshalJSON(data []byte) err
 	case "PROJECT_VIEWER":
 		fallthrough
 	case "PROJECT_DEVELOPER":
-		*e = InviteUserToTeamRequestBodyProjectsRole(v)
+		*e = InviteUserToTeamRole(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for InviteUserToTeamRequestBodyProjectsRole: %v", v)
+		return fmt.Errorf("invalid value for InviteUserToTeamRole: %v", v)
 	}
 }
 
-type InviteUserToTeamRequestBodyProjects struct {
+type InviteUserToTeamProjects struct {
 	// The ID of the project.
 	ProjectID string `json:"projectId"`
 	// Sets the project roles for the invited user
-	Role InviteUserToTeamRequestBodyProjectsRole `json:"role"`
+	Role InviteUserToTeamRole `json:"role"`
 }
 
-func (o *InviteUserToTeamRequestBodyProjects) GetProjectID() string {
+func (o *InviteUserToTeamProjects) GetProjectID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ProjectID
 }
 
-func (o *InviteUserToTeamRequestBodyProjects) GetRole() InviteUserToTeamRequestBodyProjectsRole {
+func (o *InviteUserToTeamProjects) GetRole() InviteUserToTeamRole {
 	if o == nil {
-		return InviteUserToTeamRequestBodyProjectsRole("")
+		return InviteUserToTeamRole("")
 	}
 	return o.Role
 }
 
-// InviteUserToTeamRequestBodyRole - The role of the user to invite
-type InviteUserToTeamRequestBodyRole string
+// InviteUserToTeamTeamsRole - The role of the user to invite
+type InviteUserToTeamTeamsRole string
 
 const (
-	InviteUserToTeamRequestBodyRoleOwner       InviteUserToTeamRequestBodyRole = "OWNER"
-	InviteUserToTeamRequestBodyRoleMember      InviteUserToTeamRequestBodyRole = "MEMBER"
-	InviteUserToTeamRequestBodyRoleViewer      InviteUserToTeamRequestBodyRole = "VIEWER"
-	InviteUserToTeamRequestBodyRoleDeveloper   InviteUserToTeamRequestBodyRole = "DEVELOPER"
-	InviteUserToTeamRequestBodyRoleBilling     InviteUserToTeamRequestBodyRole = "BILLING"
-	InviteUserToTeamRequestBodyRoleContributor InviteUserToTeamRequestBodyRole = "CONTRIBUTOR"
+	InviteUserToTeamTeamsRoleOwner       InviteUserToTeamTeamsRole = "OWNER"
+	InviteUserToTeamTeamsRoleMember      InviteUserToTeamTeamsRole = "MEMBER"
+	InviteUserToTeamTeamsRoleViewer      InviteUserToTeamTeamsRole = "VIEWER"
+	InviteUserToTeamTeamsRoleDeveloper   InviteUserToTeamTeamsRole = "DEVELOPER"
+	InviteUserToTeamTeamsRoleBilling     InviteUserToTeamTeamsRole = "BILLING"
+	InviteUserToTeamTeamsRoleContributor InviteUserToTeamTeamsRole = "CONTRIBUTOR"
 )
 
-func (e InviteUserToTeamRequestBodyRole) ToPointer() *InviteUserToTeamRequestBodyRole {
+func (e InviteUserToTeamTeamsRole) ToPointer() *InviteUserToTeamTeamsRole {
 	return &e
 }
 
-func (e *InviteUserToTeamRequestBodyRole) UnmarshalJSON(data []byte) error {
+func (e *InviteUserToTeamTeamsRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -95,19 +95,19 @@ func (e *InviteUserToTeamRequestBodyRole) UnmarshalJSON(data []byte) error {
 	case "BILLING":
 		fallthrough
 	case "CONTRIBUTOR":
-		*e = InviteUserToTeamRequestBodyRole(v)
+		*e = InviteUserToTeamTeamsRole(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for InviteUserToTeamRequestBodyRole: %v", v)
+		return fmt.Errorf("invalid value for InviteUserToTeamTeamsRole: %v", v)
 	}
 }
 
 type InviteUserToTeamRequestBody struct {
 	// The email address of the user to invite
-	Email    *string                               `json:"email,omitempty"`
-	Projects []InviteUserToTeamRequestBodyProjects `json:"projects,omitempty"`
+	Email    *string                    `json:"email,omitempty"`
+	Projects []InviteUserToTeamProjects `json:"projects,omitempty"`
 	// The role of the user to invite
-	Role *InviteUserToTeamRequestBodyRole `default:"[MEMBER VIEWER]" json:"role"`
+	Role *InviteUserToTeamTeamsRole `default:"[MEMBER VIEWER]" json:"role"`
 	// The id of the user to invite
 	UID *string `json:"uid,omitempty"`
 }
@@ -130,14 +130,14 @@ func (o *InviteUserToTeamRequestBody) GetEmail() *string {
 	return o.Email
 }
 
-func (o *InviteUserToTeamRequestBody) GetProjects() []InviteUserToTeamRequestBodyProjects {
+func (o *InviteUserToTeamRequestBody) GetProjects() []InviteUserToTeamProjects {
 	if o == nil {
 		return nil
 	}
 	return o.Projects
 }
 
-func (o *InviteUserToTeamRequestBody) GetRole() *InviteUserToTeamRequestBodyRole {
+func (o *InviteUserToTeamRequestBody) GetRole() *InviteUserToTeamTeamsRole {
 	if o == nil {
 		return nil
 	}
@@ -170,22 +170,22 @@ func (o *InviteUserToTeamRequest) GetTeamID() string {
 	return o.TeamID
 }
 
-type InviteUserToTeam200ApplicationJSON2Role string
+type InviteUserToTeamTeamsResponse200Role string
 
 const (
-	InviteUserToTeam200ApplicationJSON2RoleOwner       InviteUserToTeam200ApplicationJSON2Role = "OWNER"
-	InviteUserToTeam200ApplicationJSON2RoleMember      InviteUserToTeam200ApplicationJSON2Role = "MEMBER"
-	InviteUserToTeam200ApplicationJSON2RoleViewer      InviteUserToTeam200ApplicationJSON2Role = "VIEWER"
-	InviteUserToTeam200ApplicationJSON2RoleDeveloper   InviteUserToTeam200ApplicationJSON2Role = "DEVELOPER"
-	InviteUserToTeam200ApplicationJSON2RoleBilling     InviteUserToTeam200ApplicationJSON2Role = "BILLING"
-	InviteUserToTeam200ApplicationJSON2RoleContributor InviteUserToTeam200ApplicationJSON2Role = "CONTRIBUTOR"
+	InviteUserToTeamTeamsResponse200RoleOwner       InviteUserToTeamTeamsResponse200Role = "OWNER"
+	InviteUserToTeamTeamsResponse200RoleMember      InviteUserToTeamTeamsResponse200Role = "MEMBER"
+	InviteUserToTeamTeamsResponse200RoleViewer      InviteUserToTeamTeamsResponse200Role = "VIEWER"
+	InviteUserToTeamTeamsResponse200RoleDeveloper   InviteUserToTeamTeamsResponse200Role = "DEVELOPER"
+	InviteUserToTeamTeamsResponse200RoleBilling     InviteUserToTeamTeamsResponse200Role = "BILLING"
+	InviteUserToTeamTeamsResponse200RoleContributor InviteUserToTeamTeamsResponse200Role = "CONTRIBUTOR"
 )
 
-func (e InviteUserToTeam200ApplicationJSON2Role) ToPointer() *InviteUserToTeam200ApplicationJSON2Role {
+func (e InviteUserToTeamTeamsResponse200Role) ToPointer() *InviteUserToTeamTeamsResponse200Role {
 	return &e
 }
 
-func (e *InviteUserToTeam200ApplicationJSON2Role) UnmarshalJSON(data []byte) error {
+func (e *InviteUserToTeamTeamsResponse200Role) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -202,57 +202,57 @@ func (e *InviteUserToTeam200ApplicationJSON2Role) UnmarshalJSON(data []byte) err
 	case "BILLING":
 		fallthrough
 	case "CONTRIBUTOR":
-		*e = InviteUserToTeam200ApplicationJSON2Role(v)
+		*e = InviteUserToTeamTeamsResponse200Role(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for InviteUserToTeam200ApplicationJSON2Role: %v", v)
+		return fmt.Errorf("invalid value for InviteUserToTeamTeamsResponse200Role: %v", v)
 	}
 }
 
-type InviteUserToTeam200ApplicationJSON2 struct {
-	Role     InviteUserToTeam200ApplicationJSON2Role `json:"role"`
-	UID      string                                  `json:"uid"`
-	Username string                                  `json:"username"`
+type InviteUserToTeam2 struct {
+	Role     InviteUserToTeamTeamsResponse200Role `json:"role"`
+	UID      string                               `json:"uid"`
+	Username string                               `json:"username"`
 }
 
-func (o *InviteUserToTeam200ApplicationJSON2) GetRole() InviteUserToTeam200ApplicationJSON2Role {
+func (o *InviteUserToTeam2) GetRole() InviteUserToTeamTeamsResponse200Role {
 	if o == nil {
-		return InviteUserToTeam200ApplicationJSON2Role("")
+		return InviteUserToTeamTeamsResponse200Role("")
 	}
 	return o.Role
 }
 
-func (o *InviteUserToTeam200ApplicationJSON2) GetUID() string {
+func (o *InviteUserToTeam2) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *InviteUserToTeam200ApplicationJSON2) GetUsername() string {
+func (o *InviteUserToTeam2) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
 }
 
-// InviteUserToTeam200ApplicationJSON1Role - The role used for the invitation
-type InviteUserToTeam200ApplicationJSON1Role string
+// InviteUserToTeamTeamsResponseRole - The role used for the invitation
+type InviteUserToTeamTeamsResponseRole string
 
 const (
-	InviteUserToTeam200ApplicationJSON1RoleOwner       InviteUserToTeam200ApplicationJSON1Role = "OWNER"
-	InviteUserToTeam200ApplicationJSON1RoleMember      InviteUserToTeam200ApplicationJSON1Role = "MEMBER"
-	InviteUserToTeam200ApplicationJSON1RoleViewer      InviteUserToTeam200ApplicationJSON1Role = "VIEWER"
-	InviteUserToTeam200ApplicationJSON1RoleDeveloper   InviteUserToTeam200ApplicationJSON1Role = "DEVELOPER"
-	InviteUserToTeam200ApplicationJSON1RoleBilling     InviteUserToTeam200ApplicationJSON1Role = "BILLING"
-	InviteUserToTeam200ApplicationJSON1RoleContributor InviteUserToTeam200ApplicationJSON1Role = "CONTRIBUTOR"
+	InviteUserToTeamTeamsResponseRoleOwner       InviteUserToTeamTeamsResponseRole = "OWNER"
+	InviteUserToTeamTeamsResponseRoleMember      InviteUserToTeamTeamsResponseRole = "MEMBER"
+	InviteUserToTeamTeamsResponseRoleViewer      InviteUserToTeamTeamsResponseRole = "VIEWER"
+	InviteUserToTeamTeamsResponseRoleDeveloper   InviteUserToTeamTeamsResponseRole = "DEVELOPER"
+	InviteUserToTeamTeamsResponseRoleBilling     InviteUserToTeamTeamsResponseRole = "BILLING"
+	InviteUserToTeamTeamsResponseRoleContributor InviteUserToTeamTeamsResponseRole = "CONTRIBUTOR"
 )
 
-func (e InviteUserToTeam200ApplicationJSON1Role) ToPointer() *InviteUserToTeam200ApplicationJSON1Role {
+func (e InviteUserToTeamTeamsResponseRole) ToPointer() *InviteUserToTeamTeamsResponseRole {
 	return &e
 }
 
-func (e *InviteUserToTeam200ApplicationJSON1Role) UnmarshalJSON(data []byte) error {
+func (e *InviteUserToTeamTeamsResponseRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -269,111 +269,111 @@ func (e *InviteUserToTeam200ApplicationJSON1Role) UnmarshalJSON(data []byte) err
 	case "BILLING":
 		fallthrough
 	case "CONTRIBUTOR":
-		*e = InviteUserToTeam200ApplicationJSON1Role(v)
+		*e = InviteUserToTeamTeamsResponseRole(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for InviteUserToTeam200ApplicationJSON1Role: %v", v)
+		return fmt.Errorf("invalid value for InviteUserToTeamTeamsResponseRole: %v", v)
 	}
 }
 
-// InviteUserToTeam200ApplicationJSON1 - The member was successfully added to the team
-type InviteUserToTeam200ApplicationJSON1 struct {
+// InviteUserToTeam1 - The member was successfully added to the team
+type InviteUserToTeam1 struct {
 	// The email of the invited user. Not included if the user was invited via their UID.
 	Email string `json:"email"`
 	// The role used for the invitation
-	Role InviteUserToTeam200ApplicationJSON1Role `json:"role"`
+	Role InviteUserToTeamTeamsResponseRole `json:"role"`
 	// The ID of the invited user
 	UID string `json:"uid"`
 	// The username of the invited user
 	Username string `json:"username"`
 }
 
-func (o *InviteUserToTeam200ApplicationJSON1) GetEmail() string {
+func (o *InviteUserToTeam1) GetEmail() string {
 	if o == nil {
 		return ""
 	}
 	return o.Email
 }
 
-func (o *InviteUserToTeam200ApplicationJSON1) GetRole() InviteUserToTeam200ApplicationJSON1Role {
+func (o *InviteUserToTeam1) GetRole() InviteUserToTeamTeamsResponseRole {
 	if o == nil {
-		return InviteUserToTeam200ApplicationJSON1Role("")
+		return InviteUserToTeamTeamsResponseRole("")
 	}
 	return o.Role
 }
 
-func (o *InviteUserToTeam200ApplicationJSON1) GetUID() string {
+func (o *InviteUserToTeam1) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *InviteUserToTeam200ApplicationJSON1) GetUsername() string {
+func (o *InviteUserToTeam1) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
 }
 
-type InviteUserToTeam200ApplicationJSONType string
+type InviteUserToTeamResponseBodyType string
 
 const (
-	InviteUserToTeam200ApplicationJSONTypeInviteUserToTeam200ApplicationJSON1 InviteUserToTeam200ApplicationJSONType = "inviteUserToTeam_200ApplicationJSON_1"
-	InviteUserToTeam200ApplicationJSONTypeInviteUserToTeam200ApplicationJSON2 InviteUserToTeam200ApplicationJSONType = "inviteUserToTeam_200ApplicationJSON_2"
+	InviteUserToTeamResponseBodyTypeInviteUserToTeam1 InviteUserToTeamResponseBodyType = "inviteUserToTeam_1"
+	InviteUserToTeamResponseBodyTypeInviteUserToTeam2 InviteUserToTeamResponseBodyType = "inviteUserToTeam_2"
 )
 
-type InviteUserToTeam200ApplicationJSON struct {
-	InviteUserToTeam200ApplicationJSON1 *InviteUserToTeam200ApplicationJSON1
-	InviteUserToTeam200ApplicationJSON2 *InviteUserToTeam200ApplicationJSON2
+type InviteUserToTeamResponseBody struct {
+	InviteUserToTeam1 *InviteUserToTeam1
+	InviteUserToTeam2 *InviteUserToTeam2
 
-	Type InviteUserToTeam200ApplicationJSONType
+	Type InviteUserToTeamResponseBodyType
 }
 
-func CreateInviteUserToTeam200ApplicationJSONInviteUserToTeam200ApplicationJSON1(inviteUserToTeam200ApplicationJSON1 InviteUserToTeam200ApplicationJSON1) InviteUserToTeam200ApplicationJSON {
-	typ := InviteUserToTeam200ApplicationJSONTypeInviteUserToTeam200ApplicationJSON1
+func CreateInviteUserToTeamResponseBodyInviteUserToTeam1(inviteUserToTeam1 InviteUserToTeam1) InviteUserToTeamResponseBody {
+	typ := InviteUserToTeamResponseBodyTypeInviteUserToTeam1
 
-	return InviteUserToTeam200ApplicationJSON{
-		InviteUserToTeam200ApplicationJSON1: &inviteUserToTeam200ApplicationJSON1,
-		Type:                                typ,
+	return InviteUserToTeamResponseBody{
+		InviteUserToTeam1: &inviteUserToTeam1,
+		Type:              typ,
 	}
 }
 
-func CreateInviteUserToTeam200ApplicationJSONInviteUserToTeam200ApplicationJSON2(inviteUserToTeam200ApplicationJSON2 InviteUserToTeam200ApplicationJSON2) InviteUserToTeam200ApplicationJSON {
-	typ := InviteUserToTeam200ApplicationJSONTypeInviteUserToTeam200ApplicationJSON2
+func CreateInviteUserToTeamResponseBodyInviteUserToTeam2(inviteUserToTeam2 InviteUserToTeam2) InviteUserToTeamResponseBody {
+	typ := InviteUserToTeamResponseBodyTypeInviteUserToTeam2
 
-	return InviteUserToTeam200ApplicationJSON{
-		InviteUserToTeam200ApplicationJSON2: &inviteUserToTeam200ApplicationJSON2,
-		Type:                                typ,
+	return InviteUserToTeamResponseBody{
+		InviteUserToTeam2: &inviteUserToTeam2,
+		Type:              typ,
 	}
 }
 
-func (u *InviteUserToTeam200ApplicationJSON) UnmarshalJSON(data []byte) error {
+func (u *InviteUserToTeamResponseBody) UnmarshalJSON(data []byte) error {
 
-	inviteUserToTeam200ApplicationJSON2 := new(InviteUserToTeam200ApplicationJSON2)
-	if err := utils.UnmarshalJSON(data, &inviteUserToTeam200ApplicationJSON2, "", true, true); err == nil {
-		u.InviteUserToTeam200ApplicationJSON2 = inviteUserToTeam200ApplicationJSON2
-		u.Type = InviteUserToTeam200ApplicationJSONTypeInviteUserToTeam200ApplicationJSON2
+	inviteUserToTeam2 := new(InviteUserToTeam2)
+	if err := utils.UnmarshalJSON(data, &inviteUserToTeam2, "", true, true); err == nil {
+		u.InviteUserToTeam2 = inviteUserToTeam2
+		u.Type = InviteUserToTeamResponseBodyTypeInviteUserToTeam2
 		return nil
 	}
 
-	inviteUserToTeam200ApplicationJSON1 := new(InviteUserToTeam200ApplicationJSON1)
-	if err := utils.UnmarshalJSON(data, &inviteUserToTeam200ApplicationJSON1, "", true, true); err == nil {
-		u.InviteUserToTeam200ApplicationJSON1 = inviteUserToTeam200ApplicationJSON1
-		u.Type = InviteUserToTeam200ApplicationJSONTypeInviteUserToTeam200ApplicationJSON1
+	inviteUserToTeam1 := new(InviteUserToTeam1)
+	if err := utils.UnmarshalJSON(data, &inviteUserToTeam1, "", true, true); err == nil {
+		u.InviteUserToTeam1 = inviteUserToTeam1
+		u.Type = InviteUserToTeamResponseBodyTypeInviteUserToTeam1
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u InviteUserToTeam200ApplicationJSON) MarshalJSON() ([]byte, error) {
-	if u.InviteUserToTeam200ApplicationJSON1 != nil {
-		return utils.MarshalJSON(u.InviteUserToTeam200ApplicationJSON1, "", true)
+func (u InviteUserToTeamResponseBody) MarshalJSON() ([]byte, error) {
+	if u.InviteUserToTeam1 != nil {
+		return utils.MarshalJSON(u.InviteUserToTeam1, "", true)
 	}
 
-	if u.InviteUserToTeam200ApplicationJSON2 != nil {
-		return utils.MarshalJSON(u.InviteUserToTeam200ApplicationJSON2, "", true)
+	if u.InviteUserToTeam2 != nil {
+		return utils.MarshalJSON(u.InviteUserToTeam2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -387,7 +387,7 @@ type InviteUserToTeamResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The member was successfully added to the team
-	InviteUserToTeam200ApplicationJSONOneOf *InviteUserToTeam200ApplicationJSON
+	OneOf *InviteUserToTeamResponseBody
 }
 
 func (o *InviteUserToTeamResponse) GetContentType() string {
@@ -411,9 +411,9 @@ func (o *InviteUserToTeamResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *InviteUserToTeamResponse) GetInviteUserToTeam200ApplicationJSONOneOf() *InviteUserToTeam200ApplicationJSON {
+func (o *InviteUserToTeamResponse) GetOneOf() *InviteUserToTeamResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.InviteUserToTeam200ApplicationJSONOneOf
+	return o.OneOf
 }

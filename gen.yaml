@@ -2,28 +2,31 @@ configVersion: 1.0.0
 management:
   docChecksum: 8ecc10127cd4d51cceddbc01756b40f4
   docVersion: 0.0.1
-  speakeasyVersion: 1.109.2
-  generationVersion: 2.173.0
+  speakeasyVersion: 1.114.1
+  generationVersion: 2.181.1
 generation:
-  comments:
-    disableComments: false
-    omitDescriptionIfSummaryPresent: false
-  baseServerURL: ""
-  repoURL: https://github.com/speakeasy-sdks/terraform-provider-vercel.git
+  comments: {}
   sdkClassName: vercel
-  singleTagPerOp: false
-  tagNamespacingDisabled: false
+  repoURL: https://github.com/speakeasy-sdks/terraform-provider-vercel.git
 features:
   terraform:
     constsAndDefaults: 0.1.1
-    core: 2.93.3
+    core: 3.2.1
     deprecations: 2.81.1
     globalSecurity: 2.81.1
     globalServerURLs: 2.82.0
     unions: 2.81.5
 terraform:
-  version: 0.4.0
+  version: 0.5.0
   author: zchee
+  imports:
+    option: openapi
+    paths:
+      callbacks: callbacks
+      errors: sdkerrors
+      operations: operations
+      shared: shared
+      webhooks: webhooks
   packageName: vercel
   published: true
   repoSubDirectory: .

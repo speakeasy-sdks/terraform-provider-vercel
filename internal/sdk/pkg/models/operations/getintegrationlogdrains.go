@@ -20,19 +20,19 @@ func (o *GetIntegrationLogDrainsRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// GetIntegrationLogDrains200ApplicationJSONCreatedFrom - Whether the log drain was created by an integration or by a user
-type GetIntegrationLogDrains200ApplicationJSONCreatedFrom string
+// GetIntegrationLogDrainsCreatedFrom - Whether the log drain was created by an integration or by a user
+type GetIntegrationLogDrainsCreatedFrom string
 
 const (
-	GetIntegrationLogDrains200ApplicationJSONCreatedFromSelfServed  GetIntegrationLogDrains200ApplicationJSONCreatedFrom = "self-served"
-	GetIntegrationLogDrains200ApplicationJSONCreatedFromIntegration GetIntegrationLogDrains200ApplicationJSONCreatedFrom = "integration"
+	GetIntegrationLogDrainsCreatedFromSelfServed  GetIntegrationLogDrainsCreatedFrom = "self-served"
+	GetIntegrationLogDrainsCreatedFromIntegration GetIntegrationLogDrainsCreatedFrom = "integration"
 )
 
-func (e GetIntegrationLogDrains200ApplicationJSONCreatedFrom) ToPointer() *GetIntegrationLogDrains200ApplicationJSONCreatedFrom {
+func (e GetIntegrationLogDrainsCreatedFrom) ToPointer() *GetIntegrationLogDrainsCreatedFrom {
 	return &e
 }
 
-func (e *GetIntegrationLogDrains200ApplicationJSONCreatedFrom) UnmarshalJSON(data []byte) error {
+func (e *GetIntegrationLogDrainsCreatedFrom) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -41,27 +41,27 @@ func (e *GetIntegrationLogDrains200ApplicationJSONCreatedFrom) UnmarshalJSON(dat
 	case "self-served":
 		fallthrough
 	case "integration":
-		*e = GetIntegrationLogDrains200ApplicationJSONCreatedFrom(v)
+		*e = GetIntegrationLogDrainsCreatedFrom(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetIntegrationLogDrains200ApplicationJSONCreatedFrom: %v", v)
+		return fmt.Errorf("invalid value for GetIntegrationLogDrainsCreatedFrom: %v", v)
 	}
 }
 
-// GetIntegrationLogDrains200ApplicationJSONDeliveryFormat - The delivery log format
-type GetIntegrationLogDrains200ApplicationJSONDeliveryFormat string
+// GetIntegrationLogDrainsDeliveryFormat - The delivery log format
+type GetIntegrationLogDrainsDeliveryFormat string
 
 const (
-	GetIntegrationLogDrains200ApplicationJSONDeliveryFormatJSON   GetIntegrationLogDrains200ApplicationJSONDeliveryFormat = "json"
-	GetIntegrationLogDrains200ApplicationJSONDeliveryFormatNdjson GetIntegrationLogDrains200ApplicationJSONDeliveryFormat = "ndjson"
-	GetIntegrationLogDrains200ApplicationJSONDeliveryFormatSyslog GetIntegrationLogDrains200ApplicationJSONDeliveryFormat = "syslog"
+	GetIntegrationLogDrainsDeliveryFormatJSON   GetIntegrationLogDrainsDeliveryFormat = "json"
+	GetIntegrationLogDrainsDeliveryFormatNdjson GetIntegrationLogDrainsDeliveryFormat = "ndjson"
+	GetIntegrationLogDrainsDeliveryFormatSyslog GetIntegrationLogDrainsDeliveryFormat = "syslog"
 )
 
-func (e GetIntegrationLogDrains200ApplicationJSONDeliveryFormat) ToPointer() *GetIntegrationLogDrains200ApplicationJSONDeliveryFormat {
+func (e GetIntegrationLogDrainsDeliveryFormat) ToPointer() *GetIntegrationLogDrainsDeliveryFormat {
 	return &e
 }
 
-func (e *GetIntegrationLogDrains200ApplicationJSONDeliveryFormat) UnmarshalJSON(data []byte) error {
+func (e *GetIntegrationLogDrainsDeliveryFormat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -72,26 +72,26 @@ func (e *GetIntegrationLogDrains200ApplicationJSONDeliveryFormat) UnmarshalJSON(
 	case "ndjson":
 		fallthrough
 	case "syslog":
-		*e = GetIntegrationLogDrains200ApplicationJSONDeliveryFormat(v)
+		*e = GetIntegrationLogDrainsDeliveryFormat(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetIntegrationLogDrains200ApplicationJSONDeliveryFormat: %v", v)
+		return fmt.Errorf("invalid value for GetIntegrationLogDrainsDeliveryFormat: %v", v)
 	}
 }
 
-// GetIntegrationLogDrains200ApplicationJSONEnvironment - The environment of log drain
-type GetIntegrationLogDrains200ApplicationJSONEnvironment string
+// GetIntegrationLogDrainsEnvironment - The environment of log drain
+type GetIntegrationLogDrainsEnvironment string
 
 const (
-	GetIntegrationLogDrains200ApplicationJSONEnvironmentPreview    GetIntegrationLogDrains200ApplicationJSONEnvironment = "preview"
-	GetIntegrationLogDrains200ApplicationJSONEnvironmentProduction GetIntegrationLogDrains200ApplicationJSONEnvironment = "production"
+	GetIntegrationLogDrainsEnvironmentPreview    GetIntegrationLogDrainsEnvironment = "preview"
+	GetIntegrationLogDrainsEnvironmentProduction GetIntegrationLogDrainsEnvironment = "production"
 )
 
-func (e GetIntegrationLogDrains200ApplicationJSONEnvironment) ToPointer() *GetIntegrationLogDrains200ApplicationJSONEnvironment {
+func (e GetIntegrationLogDrainsEnvironment) ToPointer() *GetIntegrationLogDrainsEnvironment {
 	return &e
 }
 
-func (e *GetIntegrationLogDrains200ApplicationJSONEnvironment) UnmarshalJSON(data []byte) error {
+func (e *GetIntegrationLogDrainsEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -100,30 +100,30 @@ func (e *GetIntegrationLogDrains200ApplicationJSONEnvironment) UnmarshalJSON(dat
 	case "preview":
 		fallthrough
 	case "production":
-		*e = GetIntegrationLogDrains200ApplicationJSONEnvironment(v)
+		*e = GetIntegrationLogDrainsEnvironment(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetIntegrationLogDrains200ApplicationJSONEnvironment: %v", v)
+		return fmt.Errorf("invalid value for GetIntegrationLogDrainsEnvironment: %v", v)
 	}
 }
 
-// GetIntegrationLogDrains200ApplicationJSONSources - The sources from which logs are currently being delivered to this log drain.
-type GetIntegrationLogDrains200ApplicationJSONSources string
+// GetIntegrationLogDrainsSources - The sources from which logs are currently being delivered to this log drain.
+type GetIntegrationLogDrainsSources string
 
 const (
-	GetIntegrationLogDrains200ApplicationJSONSourcesStatic     GetIntegrationLogDrains200ApplicationJSONSources = "static"
-	GetIntegrationLogDrains200ApplicationJSONSourcesLambda     GetIntegrationLogDrains200ApplicationJSONSources = "lambda"
-	GetIntegrationLogDrains200ApplicationJSONSourcesBuild      GetIntegrationLogDrains200ApplicationJSONSources = "build"
-	GetIntegrationLogDrains200ApplicationJSONSourcesEdge       GetIntegrationLogDrains200ApplicationJSONSources = "edge"
-	GetIntegrationLogDrains200ApplicationJSONSourcesExternal   GetIntegrationLogDrains200ApplicationJSONSources = "external"
-	GetIntegrationLogDrains200ApplicationJSONSourcesDeployment GetIntegrationLogDrains200ApplicationJSONSources = "deployment"
+	GetIntegrationLogDrainsSourcesStatic     GetIntegrationLogDrainsSources = "static"
+	GetIntegrationLogDrainsSourcesLambda     GetIntegrationLogDrainsSources = "lambda"
+	GetIntegrationLogDrainsSourcesBuild      GetIntegrationLogDrainsSources = "build"
+	GetIntegrationLogDrainsSourcesEdge       GetIntegrationLogDrainsSources = "edge"
+	GetIntegrationLogDrainsSourcesExternal   GetIntegrationLogDrainsSources = "external"
+	GetIntegrationLogDrainsSourcesDeployment GetIntegrationLogDrainsSources = "deployment"
 )
 
-func (e GetIntegrationLogDrains200ApplicationJSONSources) ToPointer() *GetIntegrationLogDrains200ApplicationJSONSources {
+func (e GetIntegrationLogDrainsSources) ToPointer() *GetIntegrationLogDrainsSources {
 	return &e
 }
 
-func (e *GetIntegrationLogDrains200ApplicationJSONSources) UnmarshalJSON(data []byte) error {
+func (e *GetIntegrationLogDrainsSources) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -140,14 +140,14 @@ func (e *GetIntegrationLogDrains200ApplicationJSONSources) UnmarshalJSON(data []
 	case "external":
 		fallthrough
 	case "deployment":
-		*e = GetIntegrationLogDrains200ApplicationJSONSources(v)
+		*e = GetIntegrationLogDrainsSources(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetIntegrationLogDrains200ApplicationJSONSources: %v", v)
+		return fmt.Errorf("invalid value for GetIntegrationLogDrainsSources: %v", v)
 	}
 }
 
-type GetIntegrationLogDrains200ApplicationJSON struct {
+type GetIntegrationLogDrainsResponseBody struct {
 	// The branch regexp of log drain
 	Branch *string `json:"branch,omitempty"`
 	// The oauth2 client application id that created this log drain
@@ -157,11 +157,11 @@ type GetIntegrationLogDrains200ApplicationJSON struct {
 	// A timestamp that tells you when the log drain was created
 	CreatedAt int64 `json:"createdAt"`
 	// Whether the log drain was created by an integration or by a user
-	CreatedFrom *GetIntegrationLogDrains200ApplicationJSONCreatedFrom `json:"createdFrom,omitempty"`
+	CreatedFrom *GetIntegrationLogDrainsCreatedFrom `json:"createdFrom,omitempty"`
 	// The delivery log format
-	DeliveryFormat *GetIntegrationLogDrains200ApplicationJSONDeliveryFormat `json:"deliveryFormat,omitempty"`
+	DeliveryFormat *GetIntegrationLogDrainsDeliveryFormat `json:"deliveryFormat,omitempty"`
 	// The environment of log drain
-	Environment *GetIntegrationLogDrains200ApplicationJSONEnvironment `json:"environment,omitempty"`
+	Environment *GetIntegrationLogDrainsEnvironment `json:"environment,omitempty"`
 	// The headers to send with the request
 	Headers map[string]string `json:"headers,omitempty"`
 	// The unique identifier of the log drain. Always prefixed with `ld_`
@@ -174,110 +174,110 @@ type GetIntegrationLogDrains200ApplicationJSON struct {
 	// The identifier of the projects this log drain is associated with
 	ProjectIds []string `json:"projectIds,omitempty"`
 	// The sources from which logs are currently being delivered to this log drain.
-	Sources []GetIntegrationLogDrains200ApplicationJSONSources `json:"sources,omitempty"`
+	Sources []GetIntegrationLogDrainsSources `json:"sources,omitempty"`
 	// The URL to call when logs are generated
 	URL string `json:"url"`
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetBranch() *string {
+func (o *GetIntegrationLogDrainsResponseBody) GetBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Branch
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetClientID() *string {
+func (o *GetIntegrationLogDrainsResponseBody) GetClientID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ClientID
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetConfigurationID() *string {
+func (o *GetIntegrationLogDrainsResponseBody) GetConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConfigurationID
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetCreatedAt() int64 {
+func (o *GetIntegrationLogDrainsResponseBody) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetCreatedFrom() *GetIntegrationLogDrains200ApplicationJSONCreatedFrom {
+func (o *GetIntegrationLogDrainsResponseBody) GetCreatedFrom() *GetIntegrationLogDrainsCreatedFrom {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedFrom
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetDeliveryFormat() *GetIntegrationLogDrains200ApplicationJSONDeliveryFormat {
+func (o *GetIntegrationLogDrainsResponseBody) GetDeliveryFormat() *GetIntegrationLogDrainsDeliveryFormat {
 	if o == nil {
 		return nil
 	}
 	return o.DeliveryFormat
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetEnvironment() *GetIntegrationLogDrains200ApplicationJSONEnvironment {
+func (o *GetIntegrationLogDrainsResponseBody) GetEnvironment() *GetIntegrationLogDrainsEnvironment {
 	if o == nil {
 		return nil
 	}
 	return o.Environment
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetHeaders() map[string]string {
+func (o *GetIntegrationLogDrainsResponseBody) GetHeaders() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Headers
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetID() string {
+func (o *GetIntegrationLogDrainsResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetName() string {
+func (o *GetIntegrationLogDrainsResponseBody) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetOwnerID() string {
+func (o *GetIntegrationLogDrainsResponseBody) GetOwnerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.OwnerID
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetProjectID() *string {
+func (o *GetIntegrationLogDrainsResponseBody) GetProjectID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectID
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetProjectIds() []string {
+func (o *GetIntegrationLogDrainsResponseBody) GetProjectIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectIds
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetSources() []GetIntegrationLogDrains200ApplicationJSONSources {
+func (o *GetIntegrationLogDrainsResponseBody) GetSources() []GetIntegrationLogDrainsSources {
 	if o == nil {
 		return nil
 	}
 	return o.Sources
 }
 
-func (o *GetIntegrationLogDrains200ApplicationJSON) GetURL() string {
+func (o *GetIntegrationLogDrainsResponseBody) GetURL() string {
 	if o == nil {
 		return ""
 	}
@@ -292,7 +292,7 @@ type GetIntegrationLogDrainsResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// A list of log drains
-	GetIntegrationLogDrains200ApplicationJSONObjects []GetIntegrationLogDrains200ApplicationJSON
+	Classes []GetIntegrationLogDrainsResponseBody
 }
 
 func (o *GetIntegrationLogDrainsResponse) GetContentType() string {
@@ -316,9 +316,9 @@ func (o *GetIntegrationLogDrainsResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetIntegrationLogDrainsResponse) GetGetIntegrationLogDrains200ApplicationJSONObjects() []GetIntegrationLogDrains200ApplicationJSON {
+func (o *GetIntegrationLogDrainsResponse) GetClasses() []GetIntegrationLogDrainsResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetIntegrationLogDrains200ApplicationJSONObjects
+	return o.Classes
 }

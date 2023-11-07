@@ -53,7 +53,7 @@ type DownloadArtifactResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The artifact was found and is downloaded as a stream. Content-Length should be verified.
-	DownloadArtifact200ApplicationJSONBinaryString []byte
+	Bytes []byte
 }
 
 func (o *DownloadArtifactResponse) GetContentType() string {
@@ -77,9 +77,9 @@ func (o *DownloadArtifactResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *DownloadArtifactResponse) GetDownloadArtifact200ApplicationJSONBinaryString() []byte {
+func (o *DownloadArtifactResponse) GetBytes() []byte {
 	if o == nil {
 		return nil
 	}
-	return o.DownloadArtifact200ApplicationJSONBinaryString
+	return o.Bytes
 }

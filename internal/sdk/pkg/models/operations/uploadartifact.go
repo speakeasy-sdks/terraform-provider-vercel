@@ -80,13 +80,13 @@ func (o *UploadArtifactRequest) GetXArtifactTag() *string {
 	return o.XArtifactTag
 }
 
-// UploadArtifact202ApplicationJSON - File successfully uploaded
-type UploadArtifact202ApplicationJSON struct {
+// UploadArtifactResponseBody - File successfully uploaded
+type UploadArtifactResponseBody struct {
 	// Array of URLs where the artifact was updated
 	Urls []string `json:"urls"`
 }
 
-func (o *UploadArtifact202ApplicationJSON) GetUrls() []string {
+func (o *UploadArtifactResponseBody) GetUrls() []string {
 	if o == nil {
 		return []string{}
 	}
@@ -101,7 +101,7 @@ type UploadArtifactResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// File successfully uploaded
-	UploadArtifact202ApplicationJSONObject *UploadArtifact202ApplicationJSON
+	Object *UploadArtifactResponseBody
 }
 
 func (o *UploadArtifactResponse) GetContentType() string {
@@ -125,9 +125,9 @@ func (o *UploadArtifactResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UploadArtifactResponse) GetUploadArtifact202ApplicationJSONObject() *UploadArtifact202ApplicationJSON {
+func (o *UploadArtifactResponse) GetObject() *UploadArtifactResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.UploadArtifact202ApplicationJSONObject
+	return o.Object
 }

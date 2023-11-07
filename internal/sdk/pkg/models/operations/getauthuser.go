@@ -9,58 +9,58 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type GetAuthUser200ApplicationJSONUserType string
+type UserType string
 
 const (
-	GetAuthUser200ApplicationJSONUserTypeAuthUser        GetAuthUser200ApplicationJSONUserType = "AuthUser"
-	GetAuthUser200ApplicationJSONUserTypeAuthUserLimited GetAuthUser200ApplicationJSONUserType = "AuthUserLimited"
+	UserTypeAuthUser        UserType = "AuthUser"
+	UserTypeAuthUserLimited UserType = "AuthUserLimited"
 )
 
-type GetAuthUser200ApplicationJSONUser struct {
+type User struct {
 	AuthUser        *shared.AuthUser
 	AuthUserLimited *shared.AuthUserLimited
 
-	Type GetAuthUser200ApplicationJSONUserType
+	Type UserType
 }
 
-func CreateGetAuthUser200ApplicationJSONUserAuthUser(authUser shared.AuthUser) GetAuthUser200ApplicationJSONUser {
-	typ := GetAuthUser200ApplicationJSONUserTypeAuthUser
+func CreateUserAuthUser(authUser shared.AuthUser) User {
+	typ := UserTypeAuthUser
 
-	return GetAuthUser200ApplicationJSONUser{
+	return User{
 		AuthUser: &authUser,
 		Type:     typ,
 	}
 }
 
-func CreateGetAuthUser200ApplicationJSONUserAuthUserLimited(authUserLimited shared.AuthUserLimited) GetAuthUser200ApplicationJSONUser {
-	typ := GetAuthUser200ApplicationJSONUserTypeAuthUserLimited
+func CreateUserAuthUserLimited(authUserLimited shared.AuthUserLimited) User {
+	typ := UserTypeAuthUserLimited
 
-	return GetAuthUser200ApplicationJSONUser{
+	return User{
 		AuthUserLimited: &authUserLimited,
 		Type:            typ,
 	}
 }
 
-func (u *GetAuthUser200ApplicationJSONUser) UnmarshalJSON(data []byte) error {
+func (u *User) UnmarshalJSON(data []byte) error {
 
 	authUserLimited := new(shared.AuthUserLimited)
 	if err := utils.UnmarshalJSON(data, &authUserLimited, "", true, true); err == nil {
 		u.AuthUserLimited = authUserLimited
-		u.Type = GetAuthUser200ApplicationJSONUserTypeAuthUserLimited
+		u.Type = UserTypeAuthUserLimited
 		return nil
 	}
 
 	authUser := new(shared.AuthUser)
 	if err := utils.UnmarshalJSON(data, &authUser, "", true, true); err == nil {
 		u.AuthUser = authUser
-		u.Type = GetAuthUser200ApplicationJSONUserTypeAuthUser
+		u.Type = UserTypeAuthUser
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetAuthUser200ApplicationJSONUser) MarshalJSON() ([]byte, error) {
+func (u User) MarshalJSON() ([]byte, error) {
 	if u.AuthUser != nil {
 		return utils.MarshalJSON(u.AuthUser, "", true)
 	}
@@ -72,14 +72,14 @@ func (u GetAuthUser200ApplicationJSONUser) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// GetAuthUser200ApplicationJSON - Successful response.
-type GetAuthUser200ApplicationJSON struct {
-	User GetAuthUser200ApplicationJSONUser `json:"user"`
+// GetAuthUserResponseBody - Successful response.
+type GetAuthUserResponseBody struct {
+	User User `json:"user"`
 }
 
-func (o *GetAuthUser200ApplicationJSON) GetUser() GetAuthUser200ApplicationJSONUser {
+func (o *GetAuthUserResponseBody) GetUser() User {
 	if o == nil {
-		return GetAuthUser200ApplicationJSONUser{}
+		return User{}
 	}
 	return o.User
 }
@@ -92,7 +92,7 @@ type GetAuthUserResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response.
-	GetAuthUser200ApplicationJSONObject *GetAuthUser200ApplicationJSON
+	Object *GetAuthUserResponseBody
 }
 
 func (o *GetAuthUserResponse) GetContentType() string {
@@ -116,9 +116,9 @@ func (o *GetAuthUserResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetAuthUserResponse) GetGetAuthUser200ApplicationJSONObject() *GetAuthUser200ApplicationJSON {
+func (o *GetAuthUserResponse) GetObject() *GetAuthUserResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetAuthUser200ApplicationJSONObject
+	return o.Object
 }

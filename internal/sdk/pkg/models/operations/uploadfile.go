@@ -56,79 +56,79 @@ func (o *UploadFileRequest) GetXVercelDigest() *string {
 	return o.XVercelDigest
 }
 
-type UploadFile200ApplicationJSON2 struct {
+type UploadFile2 struct {
 }
 
-type UploadFile200ApplicationJSON1 struct {
+type UploadFile1 struct {
 	// Array of URLs where the file was updated
 	Urls []string `json:"urls"`
 }
 
-func (o *UploadFile200ApplicationJSON1) GetUrls() []string {
+func (o *UploadFile1) GetUrls() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Urls
 }
 
-type UploadFile200ApplicationJSONType string
+type UploadFileResponseBodyType string
 
 const (
-	UploadFile200ApplicationJSONTypeUploadFile200ApplicationJSON1 UploadFile200ApplicationJSONType = "uploadFile_200ApplicationJSON_1"
-	UploadFile200ApplicationJSONTypeUploadFile200ApplicationJSON2 UploadFile200ApplicationJSONType = "uploadFile_200ApplicationJSON_2"
+	UploadFileResponseBodyTypeUploadFile1 UploadFileResponseBodyType = "uploadFile_1"
+	UploadFileResponseBodyTypeUploadFile2 UploadFileResponseBodyType = "uploadFile_2"
 )
 
-type UploadFile200ApplicationJSON struct {
-	UploadFile200ApplicationJSON1 *UploadFile200ApplicationJSON1
-	UploadFile200ApplicationJSON2 *UploadFile200ApplicationJSON2
+type UploadFileResponseBody struct {
+	UploadFile1 *UploadFile1
+	UploadFile2 *UploadFile2
 
-	Type UploadFile200ApplicationJSONType
+	Type UploadFileResponseBodyType
 }
 
-func CreateUploadFile200ApplicationJSONUploadFile200ApplicationJSON1(uploadFile200ApplicationJSON1 UploadFile200ApplicationJSON1) UploadFile200ApplicationJSON {
-	typ := UploadFile200ApplicationJSONTypeUploadFile200ApplicationJSON1
+func CreateUploadFileResponseBodyUploadFile1(uploadFile1 UploadFile1) UploadFileResponseBody {
+	typ := UploadFileResponseBodyTypeUploadFile1
 
-	return UploadFile200ApplicationJSON{
-		UploadFile200ApplicationJSON1: &uploadFile200ApplicationJSON1,
-		Type:                          typ,
+	return UploadFileResponseBody{
+		UploadFile1: &uploadFile1,
+		Type:        typ,
 	}
 }
 
-func CreateUploadFile200ApplicationJSONUploadFile200ApplicationJSON2(uploadFile200ApplicationJSON2 UploadFile200ApplicationJSON2) UploadFile200ApplicationJSON {
-	typ := UploadFile200ApplicationJSONTypeUploadFile200ApplicationJSON2
+func CreateUploadFileResponseBodyUploadFile2(uploadFile2 UploadFile2) UploadFileResponseBody {
+	typ := UploadFileResponseBodyTypeUploadFile2
 
-	return UploadFile200ApplicationJSON{
-		UploadFile200ApplicationJSON2: &uploadFile200ApplicationJSON2,
-		Type:                          typ,
+	return UploadFileResponseBody{
+		UploadFile2: &uploadFile2,
+		Type:        typ,
 	}
 }
 
-func (u *UploadFile200ApplicationJSON) UnmarshalJSON(data []byte) error {
+func (u *UploadFileResponseBody) UnmarshalJSON(data []byte) error {
 
-	uploadFile200ApplicationJSON2 := new(UploadFile200ApplicationJSON2)
-	if err := utils.UnmarshalJSON(data, &uploadFile200ApplicationJSON2, "", true, true); err == nil {
-		u.UploadFile200ApplicationJSON2 = uploadFile200ApplicationJSON2
-		u.Type = UploadFile200ApplicationJSONTypeUploadFile200ApplicationJSON2
+	uploadFile2 := new(UploadFile2)
+	if err := utils.UnmarshalJSON(data, &uploadFile2, "", true, true); err == nil {
+		u.UploadFile2 = uploadFile2
+		u.Type = UploadFileResponseBodyTypeUploadFile2
 		return nil
 	}
 
-	uploadFile200ApplicationJSON1 := new(UploadFile200ApplicationJSON1)
-	if err := utils.UnmarshalJSON(data, &uploadFile200ApplicationJSON1, "", true, true); err == nil {
-		u.UploadFile200ApplicationJSON1 = uploadFile200ApplicationJSON1
-		u.Type = UploadFile200ApplicationJSONTypeUploadFile200ApplicationJSON1
+	uploadFile1 := new(UploadFile1)
+	if err := utils.UnmarshalJSON(data, &uploadFile1, "", true, true); err == nil {
+		u.UploadFile1 = uploadFile1
+		u.Type = UploadFileResponseBodyTypeUploadFile1
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u UploadFile200ApplicationJSON) MarshalJSON() ([]byte, error) {
-	if u.UploadFile200ApplicationJSON1 != nil {
-		return utils.MarshalJSON(u.UploadFile200ApplicationJSON1, "", true)
+func (u UploadFileResponseBody) MarshalJSON() ([]byte, error) {
+	if u.UploadFile1 != nil {
+		return utils.MarshalJSON(u.UploadFile1, "", true)
 	}
 
-	if u.UploadFile200ApplicationJSON2 != nil {
-		return utils.MarshalJSON(u.UploadFile200ApplicationJSON2, "", true)
+	if u.UploadFile2 != nil {
+		return utils.MarshalJSON(u.UploadFile2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -143,7 +143,7 @@ type UploadFileResponse struct {
 	RawResponse *http.Response
 	// File already uploaded
 	// File successfully uploaded
-	UploadFile200ApplicationJSONOneOf *UploadFile200ApplicationJSON
+	OneOf *UploadFileResponseBody
 }
 
 func (o *UploadFileResponse) GetContentType() string {
@@ -167,9 +167,9 @@ func (o *UploadFileResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UploadFileResponse) GetUploadFile200ApplicationJSONOneOf() *UploadFile200ApplicationJSON {
+func (o *UploadFileResponse) GetOneOf() *UploadFileResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.UploadFile200ApplicationJSONOneOf
+	return o.OneOf
 }

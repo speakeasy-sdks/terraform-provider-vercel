@@ -11,19 +11,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type CreateProjectRequestBodyEnvironmentVariablesTarget2 string
+type CreateProject2 string
 
 const (
-	CreateProjectRequestBodyEnvironmentVariablesTarget2Production  CreateProjectRequestBodyEnvironmentVariablesTarget2 = "production"
-	CreateProjectRequestBodyEnvironmentVariablesTarget2Preview     CreateProjectRequestBodyEnvironmentVariablesTarget2 = "preview"
-	CreateProjectRequestBodyEnvironmentVariablesTarget2Development CreateProjectRequestBodyEnvironmentVariablesTarget2 = "development"
+	CreateProject2Production  CreateProject2 = "production"
+	CreateProject2Preview     CreateProject2 = "preview"
+	CreateProject2Development CreateProject2 = "development"
 )
 
-func (e CreateProjectRequestBodyEnvironmentVariablesTarget2) ToPointer() *CreateProjectRequestBodyEnvironmentVariablesTarget2 {
+func (e CreateProject2) ToPointer() *CreateProject2 {
 	return &e
 }
 
-func (e *CreateProjectRequestBodyEnvironmentVariablesTarget2) UnmarshalJSON(data []byte) error {
+func (e *CreateProject2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -34,27 +34,27 @@ func (e *CreateProjectRequestBodyEnvironmentVariablesTarget2) UnmarshalJSON(data
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectRequestBodyEnvironmentVariablesTarget2(v)
+		*e = CreateProject2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectRequestBodyEnvironmentVariablesTarget2: %v", v)
+		return fmt.Errorf("invalid value for CreateProject2: %v", v)
 	}
 }
 
-// CreateProjectRequestBodyEnvironmentVariablesTarget1 - Deployment Target or Targets in which the ENV variable will be used
-type CreateProjectRequestBodyEnvironmentVariablesTarget1 string
+// CreateProject1 - Deployment Target or Targets in which the ENV variable will be used
+type CreateProject1 string
 
 const (
-	CreateProjectRequestBodyEnvironmentVariablesTarget1Production  CreateProjectRequestBodyEnvironmentVariablesTarget1 = "production"
-	CreateProjectRequestBodyEnvironmentVariablesTarget1Preview     CreateProjectRequestBodyEnvironmentVariablesTarget1 = "preview"
-	CreateProjectRequestBodyEnvironmentVariablesTarget1Development CreateProjectRequestBodyEnvironmentVariablesTarget1 = "development"
+	CreateProject1Production  CreateProject1 = "production"
+	CreateProject1Preview     CreateProject1 = "preview"
+	CreateProject1Development CreateProject1 = "development"
 )
 
-func (e CreateProjectRequestBodyEnvironmentVariablesTarget1) ToPointer() *CreateProjectRequestBodyEnvironmentVariablesTarget1 {
+func (e CreateProject1) ToPointer() *CreateProject1 {
 	return &e
 }
 
-func (e *CreateProjectRequestBodyEnvironmentVariablesTarget1) UnmarshalJSON(data []byte) error {
+func (e *CreateProject1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -65,91 +65,91 @@ func (e *CreateProjectRequestBodyEnvironmentVariablesTarget1) UnmarshalJSON(data
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectRequestBodyEnvironmentVariablesTarget1(v)
+		*e = CreateProject1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectRequestBodyEnvironmentVariablesTarget1: %v", v)
+		return fmt.Errorf("invalid value for CreateProject1: %v", v)
 	}
 }
 
-type CreateProjectRequestBodyEnvironmentVariablesTargetType string
+type CreateProjectTargetType string
 
 const (
-	CreateProjectRequestBodyEnvironmentVariablesTargetTypeCreateProjectRequestBodyEnvironmentVariablesTarget1        CreateProjectRequestBodyEnvironmentVariablesTargetType = "createProject_requestBody_environmentVariables_target_1"
-	CreateProjectRequestBodyEnvironmentVariablesTargetTypeArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 CreateProjectRequestBodyEnvironmentVariablesTargetType = "arrayOfcreateProject_requestBody_environmentVariables_target_2"
+	CreateProjectTargetTypeCreateProject1        CreateProjectTargetType = "createProject_1"
+	CreateProjectTargetTypeArrayOfcreateProject2 CreateProjectTargetType = "arrayOfcreateProject_2"
 )
 
-type CreateProjectRequestBodyEnvironmentVariablesTarget struct {
-	CreateProjectRequestBodyEnvironmentVariablesTarget1        *CreateProjectRequestBodyEnvironmentVariablesTarget1
-	ArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 []CreateProjectRequestBodyEnvironmentVariablesTarget2
+type CreateProjectTarget struct {
+	CreateProject1        *CreateProject1
+	ArrayOfcreateProject2 []CreateProject2
 
-	Type CreateProjectRequestBodyEnvironmentVariablesTargetType
+	Type CreateProjectTargetType
 }
 
-func CreateCreateProjectRequestBodyEnvironmentVariablesTargetCreateProjectRequestBodyEnvironmentVariablesTarget1(createProjectRequestBodyEnvironmentVariablesTarget1 CreateProjectRequestBodyEnvironmentVariablesTarget1) CreateProjectRequestBodyEnvironmentVariablesTarget {
-	typ := CreateProjectRequestBodyEnvironmentVariablesTargetTypeCreateProjectRequestBodyEnvironmentVariablesTarget1
+func CreateCreateProjectTargetCreateProject1(createProject1 CreateProject1) CreateProjectTarget {
+	typ := CreateProjectTargetTypeCreateProject1
 
-	return CreateProjectRequestBodyEnvironmentVariablesTarget{
-		CreateProjectRequestBodyEnvironmentVariablesTarget1: &createProjectRequestBodyEnvironmentVariablesTarget1,
-		Type: typ,
+	return CreateProjectTarget{
+		CreateProject1: &createProject1,
+		Type:           typ,
 	}
 }
 
-func CreateCreateProjectRequestBodyEnvironmentVariablesTargetArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2(arrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 []CreateProjectRequestBodyEnvironmentVariablesTarget2) CreateProjectRequestBodyEnvironmentVariablesTarget {
-	typ := CreateProjectRequestBodyEnvironmentVariablesTargetTypeArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2
+func CreateCreateProjectTargetArrayOfcreateProject2(arrayOfcreateProject2 []CreateProject2) CreateProjectTarget {
+	typ := CreateProjectTargetTypeArrayOfcreateProject2
 
-	return CreateProjectRequestBodyEnvironmentVariablesTarget{
-		ArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2: arrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2,
-		Type: typ,
+	return CreateProjectTarget{
+		ArrayOfcreateProject2: arrayOfcreateProject2,
+		Type:                  typ,
 	}
 }
 
-func (u *CreateProjectRequestBodyEnvironmentVariablesTarget) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectTarget) UnmarshalJSON(data []byte) error {
 
-	createProjectRequestBodyEnvironmentVariablesTarget1 := new(CreateProjectRequestBodyEnvironmentVariablesTarget1)
-	if err := utils.UnmarshalJSON(data, &createProjectRequestBodyEnvironmentVariablesTarget1, "", true, true); err == nil {
-		u.CreateProjectRequestBodyEnvironmentVariablesTarget1 = createProjectRequestBodyEnvironmentVariablesTarget1
-		u.Type = CreateProjectRequestBodyEnvironmentVariablesTargetTypeCreateProjectRequestBodyEnvironmentVariablesTarget1
+	createProject1 := new(CreateProject1)
+	if err := utils.UnmarshalJSON(data, &createProject1, "", true, true); err == nil {
+		u.CreateProject1 = createProject1
+		u.Type = CreateProjectTargetTypeCreateProject1
 		return nil
 	}
 
-	arrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 := []CreateProjectRequestBodyEnvironmentVariablesTarget2{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2, "", true, true); err == nil {
-		u.ArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 = arrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2
-		u.Type = CreateProjectRequestBodyEnvironmentVariablesTargetTypeArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2
+	arrayOfcreateProject2 := []CreateProject2{}
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProject2, "", true, true); err == nil {
+		u.ArrayOfcreateProject2 = arrayOfcreateProject2
+		u.Type = CreateProjectTargetTypeArrayOfcreateProject2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProjectRequestBodyEnvironmentVariablesTarget) MarshalJSON() ([]byte, error) {
-	if u.CreateProjectRequestBodyEnvironmentVariablesTarget1 != nil {
-		return utils.MarshalJSON(u.CreateProjectRequestBodyEnvironmentVariablesTarget1, "", true)
+func (u CreateProjectTarget) MarshalJSON() ([]byte, error) {
+	if u.CreateProject1 != nil {
+		return utils.MarshalJSON(u.CreateProject1, "", true)
 	}
 
-	if u.ArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectRequestBodyEnvironmentVariablesTarget2, "", true)
+	if u.ArrayOfcreateProject2 != nil {
+		return utils.MarshalJSON(u.ArrayOfcreateProject2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// CreateProjectRequestBodyEnvironmentVariablesType - Type of the ENV variable
-type CreateProjectRequestBodyEnvironmentVariablesType string
+// CreateProjectType - Type of the ENV variable
+type CreateProjectType string
 
 const (
-	CreateProjectRequestBodyEnvironmentVariablesTypeSystem    CreateProjectRequestBodyEnvironmentVariablesType = "system"
-	CreateProjectRequestBodyEnvironmentVariablesTypeSecret    CreateProjectRequestBodyEnvironmentVariablesType = "secret"
-	CreateProjectRequestBodyEnvironmentVariablesTypeEncrypted CreateProjectRequestBodyEnvironmentVariablesType = "encrypted"
-	CreateProjectRequestBodyEnvironmentVariablesTypePlain     CreateProjectRequestBodyEnvironmentVariablesType = "plain"
+	CreateProjectTypeSystem    CreateProjectType = "system"
+	CreateProjectTypeSecret    CreateProjectType = "secret"
+	CreateProjectTypeEncrypted CreateProjectType = "encrypted"
+	CreateProjectTypePlain     CreateProjectType = "plain"
 )
 
-func (e CreateProjectRequestBodyEnvironmentVariablesType) ToPointer() *CreateProjectRequestBodyEnvironmentVariablesType {
+func (e CreateProjectType) ToPointer() *CreateProjectType {
 	return &e
 }
 
-func (e *CreateProjectRequestBodyEnvironmentVariablesType) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -162,115 +162,115 @@ func (e *CreateProjectRequestBodyEnvironmentVariablesType) UnmarshalJSON(data []
 	case "encrypted":
 		fallthrough
 	case "plain":
-		*e = CreateProjectRequestBodyEnvironmentVariablesType(v)
+		*e = CreateProjectType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectRequestBodyEnvironmentVariablesType: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectType: %v", v)
 	}
 }
 
-type CreateProjectRequestBodyEnvironmentVariables struct {
+type EnvironmentVariables struct {
 	// The git branch of the environment variable
 	GitBranch *string `json:"gitBranch,omitempty"`
 	// Name of the ENV variable
 	Key string `json:"key"`
 	// Deployment Target or Targets in which the ENV variable will be used
-	Target CreateProjectRequestBodyEnvironmentVariablesTarget `json:"target"`
+	Target CreateProjectTarget `json:"target"`
 	// Type of the ENV variable
-	Type *CreateProjectRequestBodyEnvironmentVariablesType `json:"type,omitempty"`
+	Type *CreateProjectType `json:"type,omitempty"`
 	// Value for the ENV variable
 	Value string `json:"value"`
 }
 
-func (o *CreateProjectRequestBodyEnvironmentVariables) GetGitBranch() *string {
+func (o *EnvironmentVariables) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *CreateProjectRequestBodyEnvironmentVariables) GetKey() string {
+func (o *EnvironmentVariables) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateProjectRequestBodyEnvironmentVariables) GetTarget() CreateProjectRequestBodyEnvironmentVariablesTarget {
+func (o *EnvironmentVariables) GetTarget() CreateProjectTarget {
 	if o == nil {
-		return CreateProjectRequestBodyEnvironmentVariablesTarget{}
+		return CreateProjectTarget{}
 	}
 	return o.Target
 }
 
-func (o *CreateProjectRequestBodyEnvironmentVariables) GetType() *CreateProjectRequestBodyEnvironmentVariablesType {
+func (o *EnvironmentVariables) GetType() *CreateProjectType {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *CreateProjectRequestBodyEnvironmentVariables) GetValue() string {
+func (o *EnvironmentVariables) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-// CreateProjectRequestBodyFramework - The framework that is being used for this project. When `null` is used no framework is selected
-type CreateProjectRequestBodyFramework string
+// CreateProjectFramework - The framework that is being used for this project. When `null` is used no framework is selected
+type CreateProjectFramework string
 
 const (
-	CreateProjectRequestBodyFrameworkLessThanNilGreaterThan CreateProjectRequestBodyFramework = "<nil>"
-	CreateProjectRequestBodyFrameworkBlitzjs                CreateProjectRequestBodyFramework = "blitzjs"
-	CreateProjectRequestBodyFrameworkNextjs                 CreateProjectRequestBodyFramework = "nextjs"
-	CreateProjectRequestBodyFrameworkGatsby                 CreateProjectRequestBodyFramework = "gatsby"
-	CreateProjectRequestBodyFrameworkRemix                  CreateProjectRequestBodyFramework = "remix"
-	CreateProjectRequestBodyFrameworkAstro                  CreateProjectRequestBodyFramework = "astro"
-	CreateProjectRequestBodyFrameworkHexo                   CreateProjectRequestBodyFramework = "hexo"
-	CreateProjectRequestBodyFrameworkEleventy               CreateProjectRequestBodyFramework = "eleventy"
-	CreateProjectRequestBodyFrameworkDocusaurus2            CreateProjectRequestBodyFramework = "docusaurus-2"
-	CreateProjectRequestBodyFrameworkDocusaurus             CreateProjectRequestBodyFramework = "docusaurus"
-	CreateProjectRequestBodyFrameworkPreact                 CreateProjectRequestBodyFramework = "preact"
-	CreateProjectRequestBodyFrameworkSolidstart             CreateProjectRequestBodyFramework = "solidstart"
-	CreateProjectRequestBodyFrameworkDojo                   CreateProjectRequestBodyFramework = "dojo"
-	CreateProjectRequestBodyFrameworkEmber                  CreateProjectRequestBodyFramework = "ember"
-	CreateProjectRequestBodyFrameworkVue                    CreateProjectRequestBodyFramework = "vue"
-	CreateProjectRequestBodyFrameworkScully                 CreateProjectRequestBodyFramework = "scully"
-	CreateProjectRequestBodyFrameworkIonicAngular           CreateProjectRequestBodyFramework = "ionic-angular"
-	CreateProjectRequestBodyFrameworkAngular                CreateProjectRequestBodyFramework = "angular"
-	CreateProjectRequestBodyFrameworkPolymer                CreateProjectRequestBodyFramework = "polymer"
-	CreateProjectRequestBodyFrameworkSvelte                 CreateProjectRequestBodyFramework = "svelte"
-	CreateProjectRequestBodyFrameworkSveltekit              CreateProjectRequestBodyFramework = "sveltekit"
-	CreateProjectRequestBodyFrameworkSveltekit1             CreateProjectRequestBodyFramework = "sveltekit-1"
-	CreateProjectRequestBodyFrameworkIonicReact             CreateProjectRequestBodyFramework = "ionic-react"
-	CreateProjectRequestBodyFrameworkCreateReactApp         CreateProjectRequestBodyFramework = "create-react-app"
-	CreateProjectRequestBodyFrameworkGridsome               CreateProjectRequestBodyFramework = "gridsome"
-	CreateProjectRequestBodyFrameworkUmijs                  CreateProjectRequestBodyFramework = "umijs"
-	CreateProjectRequestBodyFrameworkSapper                 CreateProjectRequestBodyFramework = "sapper"
-	CreateProjectRequestBodyFrameworkSaber                  CreateProjectRequestBodyFramework = "saber"
-	CreateProjectRequestBodyFrameworkStencil                CreateProjectRequestBodyFramework = "stencil"
-	CreateProjectRequestBodyFrameworkNuxtjs                 CreateProjectRequestBodyFramework = "nuxtjs"
-	CreateProjectRequestBodyFrameworkRedwoodjs              CreateProjectRequestBodyFramework = "redwoodjs"
-	CreateProjectRequestBodyFrameworkHugo                   CreateProjectRequestBodyFramework = "hugo"
-	CreateProjectRequestBodyFrameworkJekyll                 CreateProjectRequestBodyFramework = "jekyll"
-	CreateProjectRequestBodyFrameworkBrunch                 CreateProjectRequestBodyFramework = "brunch"
-	CreateProjectRequestBodyFrameworkMiddleman              CreateProjectRequestBodyFramework = "middleman"
-	CreateProjectRequestBodyFrameworkZola                   CreateProjectRequestBodyFramework = "zola"
-	CreateProjectRequestBodyFrameworkHydrogen               CreateProjectRequestBodyFramework = "hydrogen"
-	CreateProjectRequestBodyFrameworkVite                   CreateProjectRequestBodyFramework = "vite"
-	CreateProjectRequestBodyFrameworkVitepress              CreateProjectRequestBodyFramework = "vitepress"
-	CreateProjectRequestBodyFrameworkVuepress               CreateProjectRequestBodyFramework = "vuepress"
-	CreateProjectRequestBodyFrameworkParcel                 CreateProjectRequestBodyFramework = "parcel"
-	CreateProjectRequestBodyFrameworkSanity                 CreateProjectRequestBodyFramework = "sanity"
-	CreateProjectRequestBodyFrameworkStorybook              CreateProjectRequestBodyFramework = "storybook"
+	CreateProjectFrameworkLessThanNilGreaterThan CreateProjectFramework = "<nil>"
+	CreateProjectFrameworkBlitzjs                CreateProjectFramework = "blitzjs"
+	CreateProjectFrameworkNextjs                 CreateProjectFramework = "nextjs"
+	CreateProjectFrameworkGatsby                 CreateProjectFramework = "gatsby"
+	CreateProjectFrameworkRemix                  CreateProjectFramework = "remix"
+	CreateProjectFrameworkAstro                  CreateProjectFramework = "astro"
+	CreateProjectFrameworkHexo                   CreateProjectFramework = "hexo"
+	CreateProjectFrameworkEleventy               CreateProjectFramework = "eleventy"
+	CreateProjectFrameworkDocusaurus2            CreateProjectFramework = "docusaurus-2"
+	CreateProjectFrameworkDocusaurus             CreateProjectFramework = "docusaurus"
+	CreateProjectFrameworkPreact                 CreateProjectFramework = "preact"
+	CreateProjectFrameworkSolidstart             CreateProjectFramework = "solidstart"
+	CreateProjectFrameworkDojo                   CreateProjectFramework = "dojo"
+	CreateProjectFrameworkEmber                  CreateProjectFramework = "ember"
+	CreateProjectFrameworkVue                    CreateProjectFramework = "vue"
+	CreateProjectFrameworkScully                 CreateProjectFramework = "scully"
+	CreateProjectFrameworkIonicAngular           CreateProjectFramework = "ionic-angular"
+	CreateProjectFrameworkAngular                CreateProjectFramework = "angular"
+	CreateProjectFrameworkPolymer                CreateProjectFramework = "polymer"
+	CreateProjectFrameworkSvelte                 CreateProjectFramework = "svelte"
+	CreateProjectFrameworkSveltekit              CreateProjectFramework = "sveltekit"
+	CreateProjectFrameworkSveltekit1             CreateProjectFramework = "sveltekit-1"
+	CreateProjectFrameworkIonicReact             CreateProjectFramework = "ionic-react"
+	CreateProjectFrameworkCreateReactApp         CreateProjectFramework = "create-react-app"
+	CreateProjectFrameworkGridsome               CreateProjectFramework = "gridsome"
+	CreateProjectFrameworkUmijs                  CreateProjectFramework = "umijs"
+	CreateProjectFrameworkSapper                 CreateProjectFramework = "sapper"
+	CreateProjectFrameworkSaber                  CreateProjectFramework = "saber"
+	CreateProjectFrameworkStencil                CreateProjectFramework = "stencil"
+	CreateProjectFrameworkNuxtjs                 CreateProjectFramework = "nuxtjs"
+	CreateProjectFrameworkRedwoodjs              CreateProjectFramework = "redwoodjs"
+	CreateProjectFrameworkHugo                   CreateProjectFramework = "hugo"
+	CreateProjectFrameworkJekyll                 CreateProjectFramework = "jekyll"
+	CreateProjectFrameworkBrunch                 CreateProjectFramework = "brunch"
+	CreateProjectFrameworkMiddleman              CreateProjectFramework = "middleman"
+	CreateProjectFrameworkZola                   CreateProjectFramework = "zola"
+	CreateProjectFrameworkHydrogen               CreateProjectFramework = "hydrogen"
+	CreateProjectFrameworkVite                   CreateProjectFramework = "vite"
+	CreateProjectFrameworkVitepress              CreateProjectFramework = "vitepress"
+	CreateProjectFrameworkVuepress               CreateProjectFramework = "vuepress"
+	CreateProjectFrameworkParcel                 CreateProjectFramework = "parcel"
+	CreateProjectFrameworkSanity                 CreateProjectFramework = "sanity"
+	CreateProjectFrameworkStorybook              CreateProjectFramework = "storybook"
 )
 
-func (e CreateProjectRequestBodyFramework) ToPointer() *CreateProjectRequestBodyFramework {
+func (e CreateProjectFramework) ToPointer() *CreateProjectFramework {
 	return &e
 }
 
-func (e *CreateProjectRequestBodyFramework) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectFramework) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -361,27 +361,27 @@ func (e *CreateProjectRequestBodyFramework) UnmarshalJSON(data []byte) error {
 	case "sanity":
 		fallthrough
 	case "storybook":
-		*e = CreateProjectRequestBodyFramework(v)
+		*e = CreateProjectFramework(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectRequestBodyFramework: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectFramework: %v", v)
 	}
 }
 
-// CreateProjectRequestBodyGitRepositoryType - The Git Provider of the repository
-type CreateProjectRequestBodyGitRepositoryType string
+// CreateProjectProjectsType - The Git Provider of the repository
+type CreateProjectProjectsType string
 
 const (
-	CreateProjectRequestBodyGitRepositoryTypeGithub    CreateProjectRequestBodyGitRepositoryType = "github"
-	CreateProjectRequestBodyGitRepositoryTypeGitlab    CreateProjectRequestBodyGitRepositoryType = "gitlab"
-	CreateProjectRequestBodyGitRepositoryTypeBitbucket CreateProjectRequestBodyGitRepositoryType = "bitbucket"
+	CreateProjectProjectsTypeGithub    CreateProjectProjectsType = "github"
+	CreateProjectProjectsTypeGitlab    CreateProjectProjectsType = "gitlab"
+	CreateProjectProjectsTypeBitbucket CreateProjectProjectsType = "bitbucket"
 )
 
-func (e CreateProjectRequestBodyGitRepositoryType) ToPointer() *CreateProjectRequestBodyGitRepositoryType {
+func (e CreateProjectProjectsType) ToPointer() *CreateProjectProjectsType {
 	return &e
 }
 
-func (e *CreateProjectRequestBodyGitRepositoryType) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -392,31 +392,31 @@ func (e *CreateProjectRequestBodyGitRepositoryType) UnmarshalJSON(data []byte) e
 	case "gitlab":
 		fallthrough
 	case "bitbucket":
-		*e = CreateProjectRequestBodyGitRepositoryType(v)
+		*e = CreateProjectProjectsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectRequestBodyGitRepositoryType: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsType: %v", v)
 	}
 }
 
-// CreateProjectRequestBodyGitRepository - The Git Repository that will be connected to the project. When this is defined, any pushes to the specified connected Git Repository will be automatically deployed
-type CreateProjectRequestBodyGitRepository struct {
+// GitRepository - The Git Repository that will be connected to the project. When this is defined, any pushes to the specified connected Git Repository will be automatically deployed
+type GitRepository struct {
 	// The name of the git repository. For example: \"vercel/next.js\"
 	Repo string `json:"repo"`
 	// The Git Provider of the repository
-	Type CreateProjectRequestBodyGitRepositoryType `json:"type"`
+	Type CreateProjectProjectsType `json:"type"`
 }
 
-func (o *CreateProjectRequestBodyGitRepository) GetRepo() string {
+func (o *GitRepository) GetRepo() string {
 	if o == nil {
 		return ""
 	}
 	return o.Repo
 }
 
-func (o *CreateProjectRequestBodyGitRepository) GetType() CreateProjectRequestBodyGitRepositoryType {
+func (o *GitRepository) GetType() CreateProjectProjectsType {
 	if o == nil {
-		return CreateProjectRequestBodyGitRepositoryType("")
+		return CreateProjectProjectsType("")
 	}
 	return o.Type
 }
@@ -428,11 +428,11 @@ type CreateProjectRequestBody struct {
 	// The dev command for this project. When `null` is used this value will be automatically detected
 	DevCommand *string `json:"devCommand,omitempty"`
 	// Collection of ENV Variables the Project will use
-	EnvironmentVariables []CreateProjectRequestBodyEnvironmentVariables `json:"environmentVariables,omitempty"`
+	EnvironmentVariables []EnvironmentVariables `json:"environmentVariables,omitempty"`
 	// The framework that is being used for this project. When `null` is used no framework is selected
-	Framework *CreateProjectRequestBodyFramework `json:"framework,omitempty"`
+	Framework *CreateProjectFramework `json:"framework,omitempty"`
 	// The Git Repository that will be connected to the project. When this is defined, any pushes to the specified connected Git Repository will be automatically deployed
-	GitRepository *CreateProjectRequestBodyGitRepository `json:"gitRepository,omitempty"`
+	GitRepository *GitRepository `json:"gitRepository,omitempty"`
 	// The install command for this project. When `null` is used this value will be automatically detected
 	InstallCommand *string `json:"installCommand,omitempty"`
 	// The desired name for the project
@@ -472,21 +472,21 @@ func (o *CreateProjectRequestBody) GetDevCommand() *string {
 	return o.DevCommand
 }
 
-func (o *CreateProjectRequestBody) GetEnvironmentVariables() []CreateProjectRequestBodyEnvironmentVariables {
+func (o *CreateProjectRequestBody) GetEnvironmentVariables() []EnvironmentVariables {
 	if o == nil {
 		return nil
 	}
 	return o.EnvironmentVariables
 }
 
-func (o *CreateProjectRequestBody) GetFramework() *CreateProjectRequestBodyFramework {
+func (o *CreateProjectRequestBody) GetFramework() *CreateProjectFramework {
 	if o == nil {
 		return nil
 	}
 	return o.Framework
 }
 
-func (o *CreateProjectRequestBody) GetGitRepository() *CreateProjectRequestBodyGitRepository {
+func (o *CreateProjectRequestBody) GetGitRepository() *GitRepository {
 	if o == nil {
 		return nil
 	}
@@ -562,7 +562,7 @@ func (o *CreateProjectRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type CreateProject200ApplicationJSONAnalytics struct {
+type Analytics struct {
 	CanceledAt          *int64 `json:"canceledAt"`
 	DisabledAt          int64  `json:"disabledAt"`
 	EnabledAt           int64  `json:"enabledAt"`
@@ -572,56 +572,56 @@ type CreateProject200ApplicationJSONAnalytics struct {
 	SpendLimitInDollars *int64 `json:"spendLimitInDollars,omitempty"`
 }
 
-func (o *CreateProject200ApplicationJSONAnalytics) GetCanceledAt() *int64 {
+func (o *Analytics) GetCanceledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CanceledAt
 }
 
-func (o *CreateProject200ApplicationJSONAnalytics) GetDisabledAt() int64 {
+func (o *Analytics) GetDisabledAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateProject200ApplicationJSONAnalytics) GetEnabledAt() int64 {
+func (o *Analytics) GetEnabledAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateProject200ApplicationJSONAnalytics) GetID() string {
+func (o *Analytics) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateProject200ApplicationJSONAnalytics) GetPaidAt() *int64 {
+func (o *Analytics) GetPaidAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PaidAt
 }
 
-func (o *CreateProject200ApplicationJSONAnalytics) GetSampleRatePercent() *int64 {
+func (o *Analytics) GetSampleRatePercent() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.SampleRatePercent
 }
 
-func (o *CreateProject200ApplicationJSONAnalytics) GetSpendLimitInDollars() *int64 {
+func (o *Analytics) GetSpendLimitInDollars() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.SpendLimitInDollars
 }
 
-type CreateProject200ApplicationJSONCronsDefinitions struct {
+type Definitions struct {
 	// The hostname that should be used.
 	Host string `json:"host"`
 	// The path that should be called for the cronjob.
@@ -630,29 +630,29 @@ type CreateProject200ApplicationJSONCronsDefinitions struct {
 	Schedule string `json:"schedule"`
 }
 
-func (o *CreateProject200ApplicationJSONCronsDefinitions) GetHost() string {
+func (o *Definitions) GetHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.Host
 }
 
-func (o *CreateProject200ApplicationJSONCronsDefinitions) GetPath() string {
+func (o *Definitions) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *CreateProject200ApplicationJSONCronsDefinitions) GetSchedule() string {
+func (o *Definitions) GetSchedule() string {
 	if o == nil {
 		return ""
 	}
 	return o.Schedule
 }
 
-type CreateProject200ApplicationJSONCrons struct {
-	Definitions []CreateProject200ApplicationJSONCronsDefinitions `json:"definitions"`
+type CreateProjectCrons struct {
+	Definitions []Definitions `json:"definitions"`
 	// The ID of the Deployment from which the definitions originated.
 	DeploymentID *string `json:"deploymentId"`
 	// The time the feature was disabled for this project.
@@ -662,880 +662,880 @@ type CreateProject200ApplicationJSONCrons struct {
 	UpdatedAt int64 `json:"updatedAt"`
 }
 
-func (o *CreateProject200ApplicationJSONCrons) GetDefinitions() []CreateProject200ApplicationJSONCronsDefinitions {
+func (o *CreateProjectCrons) GetDefinitions() []Definitions {
 	if o == nil {
-		return []CreateProject200ApplicationJSONCronsDefinitions{}
+		return []Definitions{}
 	}
 	return o.Definitions
 }
 
-func (o *CreateProject200ApplicationJSONCrons) GetDeploymentID() *string {
+func (o *CreateProjectCrons) GetDeploymentID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DeploymentID
 }
 
-func (o *CreateProject200ApplicationJSONCrons) GetDisabledAt() *int64 {
+func (o *CreateProjectCrons) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateProject200ApplicationJSONCrons) GetEnabledAt() int64 {
+func (o *CreateProjectCrons) GetEnabledAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateProject200ApplicationJSONCrons) GetUpdatedAt() int64 {
+func (o *CreateProjectCrons) GetUpdatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.UpdatedAt
 }
 
-type CreateProject200ApplicationJSONDataCache struct {
+type DataCache struct {
 	StorageSizeBytes *int64 `json:"storageSizeBytes,omitempty"`
 	Unlimited        *bool  `json:"unlimited,omitempty"`
 	UserDisabled     bool   `json:"userDisabled"`
 }
 
-func (o *CreateProject200ApplicationJSONDataCache) GetStorageSizeBytes() *int64 {
+func (o *DataCache) GetStorageSizeBytes() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.StorageSizeBytes
 }
 
-func (o *CreateProject200ApplicationJSONDataCache) GetUnlimited() *bool {
+func (o *DataCache) GetUnlimited() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Unlimited
 }
 
-func (o *CreateProject200ApplicationJSONDataCache) GetUserDisabled() bool {
+func (o *DataCache) GetUserDisabled() bool {
 	if o == nil {
 		return false
 	}
 	return o.UserDisabled
 }
 
-type CreateProject200ApplicationJSONEnvContentHint12Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint12TypePostgresDatabase CreateProject200ApplicationJSONEnvContentHint12Type = "postgres-database"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHintTypePostgresDatabase CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType = "postgres-database"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint12Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint12Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint12Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-database":
-		*e = CreateProject200ApplicationJSONEnvContentHint12Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint12Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint12 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint12Type `json:"type"`
+type CreateProject12 struct {
+	StoreID string                                                                        `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint12) GetStoreID() string {
+func (o *CreateProject12) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint12) GetType() CreateProject200ApplicationJSONEnvContentHint12Type {
+func (o *CreateProject12) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint12Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHint11Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvType string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint11TypePostgresPassword CreateProject200ApplicationJSONEnvContentHint11Type = "postgres-password"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvTypePostgresPassword CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvType = "postgres-password"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint11Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint11Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvType) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvType {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint11Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-password":
-		*e = CreateProject200ApplicationJSONEnvContentHint11Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint11Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvType: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint11 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint11Type `json:"type"`
+type CreateProject11 struct {
+	StoreID string                                                             `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvType `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint11) GetStoreID() string {
+func (o *CreateProject11) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint11) GetType() CreateProject200ApplicationJSONEnvContentHint11Type {
+func (o *CreateProject11) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvType {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint11Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvType("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHint10Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint10TypePostgresHost CreateProject200ApplicationJSONEnvContentHint10Type = "postgres-host"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10TypePostgresHost CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type = "postgres-host"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint10Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint10Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint10Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-host":
-		*e = CreateProject200ApplicationJSONEnvContentHint10Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint10Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint10 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint10Type `json:"type"`
+type CreateProject10 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint10) GetStoreID() string {
+func (o *CreateProject10) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint10) GetType() CreateProject200ApplicationJSONEnvContentHint10Type {
+func (o *CreateProject10) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint10Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHint9Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint9TypePostgresUser CreateProject200ApplicationJSONEnvContentHint9Type = "postgres-user"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9TypePostgresUser CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type = "postgres-user"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint9Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint9Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint9Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-user":
-		*e = CreateProject200ApplicationJSONEnvContentHint9Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint9Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint9 struct {
-	StoreID string                                             `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint9Type `json:"type"`
+type CreateProject9 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint9) GetStoreID() string {
+func (o *CreateProject9) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint9) GetType() CreateProject200ApplicationJSONEnvContentHint9Type {
+func (o *CreateProject9) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint9Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHint8Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint8TypePostgresPrismaURL CreateProject200ApplicationJSONEnvContentHint8Type = "postgres-prisma-url"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8TypePostgresPrismaURL CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type = "postgres-prisma-url"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint8Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint8Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint8Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-prisma-url":
-		*e = CreateProject200ApplicationJSONEnvContentHint8Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint8Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint8 struct {
-	StoreID string                                             `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint8Type `json:"type"`
+type CreateProject8 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint8) GetStoreID() string {
+func (o *CreateProject8) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint8) GetType() CreateProject200ApplicationJSONEnvContentHint8Type {
+func (o *CreateProject8) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint8Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHint7Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint7TypePostgresURLNonPooling CreateProject200ApplicationJSONEnvContentHint7Type = "postgres-url-non-pooling"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7TypePostgresURLNonPooling CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type = "postgres-url-non-pooling"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint7Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint7Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint7Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url-non-pooling":
-		*e = CreateProject200ApplicationJSONEnvContentHint7Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint7Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint7 struct {
-	StoreID string                                             `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint7Type `json:"type"`
+type CreateProject7 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint7) GetStoreID() string {
+func (o *CreateProject7) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint7) GetType() CreateProject200ApplicationJSONEnvContentHint7Type {
+func (o *CreateProject7) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint7Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHint6Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint6TypePostgresURL CreateProject200ApplicationJSONEnvContentHint6Type = "postgres-url"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6TypePostgresURL CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type = "postgres-url"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint6Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint6Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint6Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url":
-		*e = CreateProject200ApplicationJSONEnvContentHint6Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint6Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint6 struct {
-	StoreID string                                             `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint6Type `json:"type"`
+type CreateProject6 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint6) GetStoreID() string {
+func (o *CreateProject6) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint6) GetType() CreateProject200ApplicationJSONEnvContentHint6Type {
+func (o *CreateProject6) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint6Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHint5Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint5TypeBlobReadWriteToken CreateProject200ApplicationJSONEnvContentHint5Type = "blob-read-write-token"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5TypeBlobReadWriteToken CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type = "blob-read-write-token"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint5Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint5Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint5Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "blob-read-write-token":
-		*e = CreateProject200ApplicationJSONEnvContentHint5Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint5Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint5 struct {
-	StoreID string                                             `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint5Type `json:"type"`
+type CreateProject5 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint5) GetStoreID() string {
+func (o *CreateProject5) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint5) GetType() CreateProject200ApplicationJSONEnvContentHint5Type {
+func (o *CreateProject5) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint5Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHint4Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint4TypeRedisRestAPIReadOnlyToken CreateProject200ApplicationJSONEnvContentHint4Type = "redis-rest-api-read-only-token"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4TypeRedisRestAPIReadOnlyToken CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type = "redis-rest-api-read-only-token"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint4Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint4Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint4Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-read-only-token":
-		*e = CreateProject200ApplicationJSONEnvContentHint4Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint4Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint4 struct {
-	StoreID string                                             `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint4Type `json:"type"`
+type CreateProject4 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint4) GetStoreID() string {
+func (o *CreateProject4) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint4) GetType() CreateProject200ApplicationJSONEnvContentHint4Type {
+func (o *CreateProject4) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint4Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHint3Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint3TypeRedisRestAPIToken CreateProject200ApplicationJSONEnvContentHint3Type = "redis-rest-api-token"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3TypeRedisRestAPIToken CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type = "redis-rest-api-token"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint3Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint3Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint3Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-token":
-		*e = CreateProject200ApplicationJSONEnvContentHint3Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint3Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint3 struct {
-	StoreID string                                             `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint3Type `json:"type"`
+type CreateProjectProjects3 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint3) GetStoreID() string {
+func (o *CreateProjectProjects3) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint3) GetType() CreateProject200ApplicationJSONEnvContentHint3Type {
+func (o *CreateProjectProjects3) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint3Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHint2Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint2TypeRedisRestAPIURL CreateProject200ApplicationJSONEnvContentHint2Type = "redis-rest-api-url"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2TypeRedisRestAPIURL CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type = "redis-rest-api-url"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint2Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint2Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-url":
-		*e = CreateProject200ApplicationJSONEnvContentHint2Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint2 struct {
-	StoreID string                                             `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint2Type `json:"type"`
+type CreateProjectProjectsResponse200ApplicationJSON2 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint2) GetStoreID() string {
+func (o *CreateProjectProjectsResponse200ApplicationJSON2) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint2) GetType() CreateProject200ApplicationJSONEnvContentHint2Type {
+func (o *CreateProjectProjectsResponse200ApplicationJSON2) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint2Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHint1Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHint1TypeRedisURL CreateProject200ApplicationJSONEnvContentHint1Type = "redis-url"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1TypeRedisURL CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type = "redis-url"
 )
 
-func (e CreateProject200ApplicationJSONEnvContentHint1Type) ToPointer() *CreateProject200ApplicationJSONEnvContentHint1Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvContentHint1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-url":
-		*e = CreateProject200ApplicationJSONEnvContentHint1Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvContentHint1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvContentHint1 struct {
-	StoreID string                                             `json:"storeId"`
-	Type    CreateProject200ApplicationJSONEnvContentHint1Type `json:"type"`
+type CreateProjectProjectsResponse200ApplicationJSON1 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint1) GetStoreID() string {
+func (o *CreateProjectProjectsResponse200ApplicationJSON1) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProject200ApplicationJSONEnvContentHint1) GetType() CreateProject200ApplicationJSONEnvContentHint1Type {
+func (o *CreateProjectProjectsResponse200ApplicationJSON1) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvContentHint1Type("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONEnvContentHintType string
+type CreateProjectContentHintType string
 
 const (
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint1  CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_1"
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint2  CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_2"
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint3  CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_3"
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint4  CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_4"
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint5  CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_5"
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint6  CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_6"
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint7  CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_7"
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint8  CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_8"
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint9  CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_9"
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint10 CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_10"
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint11 CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_11"
-	CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint12 CreateProject200ApplicationJSONEnvContentHintType = "createProject_200ApplicationJSON_env_contentHint_12"
+	CreateProjectContentHintTypeCreateProjectProjectsResponse200ApplicationJSON1 CreateProjectContentHintType = "createProject_projects_response_200_ApplicationJSON_1"
+	CreateProjectContentHintTypeCreateProjectProjectsResponse200ApplicationJSON2 CreateProjectContentHintType = "createProject_projects_response_200_ApplicationJSON_2"
+	CreateProjectContentHintTypeCreateProjectProjects3                           CreateProjectContentHintType = "createProject_projects_3"
+	CreateProjectContentHintTypeCreateProject4                                   CreateProjectContentHintType = "createProject_4"
+	CreateProjectContentHintTypeCreateProject5                                   CreateProjectContentHintType = "createProject_5"
+	CreateProjectContentHintTypeCreateProject6                                   CreateProjectContentHintType = "createProject_6"
+	CreateProjectContentHintTypeCreateProject7                                   CreateProjectContentHintType = "createProject_7"
+	CreateProjectContentHintTypeCreateProject8                                   CreateProjectContentHintType = "createProject_8"
+	CreateProjectContentHintTypeCreateProject9                                   CreateProjectContentHintType = "createProject_9"
+	CreateProjectContentHintTypeCreateProject10                                  CreateProjectContentHintType = "createProject_10"
+	CreateProjectContentHintTypeCreateProject11                                  CreateProjectContentHintType = "createProject_11"
+	CreateProjectContentHintTypeCreateProject12                                  CreateProjectContentHintType = "createProject_12"
 )
 
-type CreateProject200ApplicationJSONEnvContentHint struct {
-	CreateProject200ApplicationJSONEnvContentHint1  *CreateProject200ApplicationJSONEnvContentHint1
-	CreateProject200ApplicationJSONEnvContentHint2  *CreateProject200ApplicationJSONEnvContentHint2
-	CreateProject200ApplicationJSONEnvContentHint3  *CreateProject200ApplicationJSONEnvContentHint3
-	CreateProject200ApplicationJSONEnvContentHint4  *CreateProject200ApplicationJSONEnvContentHint4
-	CreateProject200ApplicationJSONEnvContentHint5  *CreateProject200ApplicationJSONEnvContentHint5
-	CreateProject200ApplicationJSONEnvContentHint6  *CreateProject200ApplicationJSONEnvContentHint6
-	CreateProject200ApplicationJSONEnvContentHint7  *CreateProject200ApplicationJSONEnvContentHint7
-	CreateProject200ApplicationJSONEnvContentHint8  *CreateProject200ApplicationJSONEnvContentHint8
-	CreateProject200ApplicationJSONEnvContentHint9  *CreateProject200ApplicationJSONEnvContentHint9
-	CreateProject200ApplicationJSONEnvContentHint10 *CreateProject200ApplicationJSONEnvContentHint10
-	CreateProject200ApplicationJSONEnvContentHint11 *CreateProject200ApplicationJSONEnvContentHint11
-	CreateProject200ApplicationJSONEnvContentHint12 *CreateProject200ApplicationJSONEnvContentHint12
+type CreateProjectContentHint struct {
+	CreateProjectProjectsResponse200ApplicationJSON1 *CreateProjectProjectsResponse200ApplicationJSON1
+	CreateProjectProjectsResponse200ApplicationJSON2 *CreateProjectProjectsResponse200ApplicationJSON2
+	CreateProjectProjects3                           *CreateProjectProjects3
+	CreateProject4                                   *CreateProject4
+	CreateProject5                                   *CreateProject5
+	CreateProject6                                   *CreateProject6
+	CreateProject7                                   *CreateProject7
+	CreateProject8                                   *CreateProject8
+	CreateProject9                                   *CreateProject9
+	CreateProject10                                  *CreateProject10
+	CreateProject11                                  *CreateProject11
+	CreateProject12                                  *CreateProject12
 
-	Type CreateProject200ApplicationJSONEnvContentHintType
+	Type CreateProjectContentHintType
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint1(createProject200ApplicationJSONEnvContentHint1 CreateProject200ApplicationJSONEnvContentHint1) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint1
+func CreateCreateProjectContentHintCreateProjectProjectsResponse200ApplicationJSON1(createProjectProjectsResponse200ApplicationJSON1 CreateProjectProjectsResponse200ApplicationJSON1) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProjectProjectsResponse200ApplicationJSON1
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint1: &createProject200ApplicationJSONEnvContentHint1,
+	return CreateProjectContentHint{
+		CreateProjectProjectsResponse200ApplicationJSON1: &createProjectProjectsResponse200ApplicationJSON1,
 		Type: typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint2(createProject200ApplicationJSONEnvContentHint2 CreateProject200ApplicationJSONEnvContentHint2) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint2
+func CreateCreateProjectContentHintCreateProjectProjectsResponse200ApplicationJSON2(createProjectProjectsResponse200ApplicationJSON2 CreateProjectProjectsResponse200ApplicationJSON2) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProjectProjectsResponse200ApplicationJSON2
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint2: &createProject200ApplicationJSONEnvContentHint2,
+	return CreateProjectContentHint{
+		CreateProjectProjectsResponse200ApplicationJSON2: &createProjectProjectsResponse200ApplicationJSON2,
 		Type: typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint3(createProject200ApplicationJSONEnvContentHint3 CreateProject200ApplicationJSONEnvContentHint3) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint3
+func CreateCreateProjectContentHintCreateProjectProjects3(createProjectProjects3 CreateProjectProjects3) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProjectProjects3
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint3: &createProject200ApplicationJSONEnvContentHint3,
-		Type: typ,
+	return CreateProjectContentHint{
+		CreateProjectProjects3: &createProjectProjects3,
+		Type:                   typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint4(createProject200ApplicationJSONEnvContentHint4 CreateProject200ApplicationJSONEnvContentHint4) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint4
+func CreateCreateProjectContentHintCreateProject4(createProject4 CreateProject4) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProject4
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint4: &createProject200ApplicationJSONEnvContentHint4,
-		Type: typ,
+	return CreateProjectContentHint{
+		CreateProject4: &createProject4,
+		Type:           typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint5(createProject200ApplicationJSONEnvContentHint5 CreateProject200ApplicationJSONEnvContentHint5) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint5
+func CreateCreateProjectContentHintCreateProject5(createProject5 CreateProject5) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProject5
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint5: &createProject200ApplicationJSONEnvContentHint5,
-		Type: typ,
+	return CreateProjectContentHint{
+		CreateProject5: &createProject5,
+		Type:           typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint6(createProject200ApplicationJSONEnvContentHint6 CreateProject200ApplicationJSONEnvContentHint6) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint6
+func CreateCreateProjectContentHintCreateProject6(createProject6 CreateProject6) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProject6
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint6: &createProject200ApplicationJSONEnvContentHint6,
-		Type: typ,
+	return CreateProjectContentHint{
+		CreateProject6: &createProject6,
+		Type:           typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint7(createProject200ApplicationJSONEnvContentHint7 CreateProject200ApplicationJSONEnvContentHint7) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint7
+func CreateCreateProjectContentHintCreateProject7(createProject7 CreateProject7) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProject7
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint7: &createProject200ApplicationJSONEnvContentHint7,
-		Type: typ,
+	return CreateProjectContentHint{
+		CreateProject7: &createProject7,
+		Type:           typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint8(createProject200ApplicationJSONEnvContentHint8 CreateProject200ApplicationJSONEnvContentHint8) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint8
+func CreateCreateProjectContentHintCreateProject8(createProject8 CreateProject8) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProject8
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint8: &createProject200ApplicationJSONEnvContentHint8,
-		Type: typ,
+	return CreateProjectContentHint{
+		CreateProject8: &createProject8,
+		Type:           typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint9(createProject200ApplicationJSONEnvContentHint9 CreateProject200ApplicationJSONEnvContentHint9) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint9
+func CreateCreateProjectContentHintCreateProject9(createProject9 CreateProject9) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProject9
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint9: &createProject200ApplicationJSONEnvContentHint9,
-		Type: typ,
+	return CreateProjectContentHint{
+		CreateProject9: &createProject9,
+		Type:           typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint10(createProject200ApplicationJSONEnvContentHint10 CreateProject200ApplicationJSONEnvContentHint10) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint10
+func CreateCreateProjectContentHintCreateProject10(createProject10 CreateProject10) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProject10
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint10: &createProject200ApplicationJSONEnvContentHint10,
-		Type: typ,
+	return CreateProjectContentHint{
+		CreateProject10: &createProject10,
+		Type:            typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint11(createProject200ApplicationJSONEnvContentHint11 CreateProject200ApplicationJSONEnvContentHint11) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint11
+func CreateCreateProjectContentHintCreateProject11(createProject11 CreateProject11) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProject11
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint11: &createProject200ApplicationJSONEnvContentHint11,
-		Type: typ,
+	return CreateProjectContentHint{
+		CreateProject11: &createProject11,
+		Type:            typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvContentHintCreateProject200ApplicationJSONEnvContentHint12(createProject200ApplicationJSONEnvContentHint12 CreateProject200ApplicationJSONEnvContentHint12) CreateProject200ApplicationJSONEnvContentHint {
-	typ := CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint12
+func CreateCreateProjectContentHintCreateProject12(createProject12 CreateProject12) CreateProjectContentHint {
+	typ := CreateProjectContentHintTypeCreateProject12
 
-	return CreateProject200ApplicationJSONEnvContentHint{
-		CreateProject200ApplicationJSONEnvContentHint12: &createProject200ApplicationJSONEnvContentHint12,
-		Type: typ,
+	return CreateProjectContentHint{
+		CreateProject12: &createProject12,
+		Type:            typ,
 	}
 }
 
-func (u *CreateProject200ApplicationJSONEnvContentHint) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectContentHint) UnmarshalJSON(data []byte) error {
 
-	createProject200ApplicationJSONEnvContentHint1 := new(CreateProject200ApplicationJSONEnvContentHint1)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint1, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint1 = createProject200ApplicationJSONEnvContentHint1
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint1
+	createProjectProjectsResponse200ApplicationJSON1 := new(CreateProjectProjectsResponse200ApplicationJSON1)
+	if err := utils.UnmarshalJSON(data, &createProjectProjectsResponse200ApplicationJSON1, "", true, true); err == nil {
+		u.CreateProjectProjectsResponse200ApplicationJSON1 = createProjectProjectsResponse200ApplicationJSON1
+		u.Type = CreateProjectContentHintTypeCreateProjectProjectsResponse200ApplicationJSON1
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvContentHint2 := new(CreateProject200ApplicationJSONEnvContentHint2)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint2, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint2 = createProject200ApplicationJSONEnvContentHint2
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint2
+	createProjectProjectsResponse200ApplicationJSON2 := new(CreateProjectProjectsResponse200ApplicationJSON2)
+	if err := utils.UnmarshalJSON(data, &createProjectProjectsResponse200ApplicationJSON2, "", true, true); err == nil {
+		u.CreateProjectProjectsResponse200ApplicationJSON2 = createProjectProjectsResponse200ApplicationJSON2
+		u.Type = CreateProjectContentHintTypeCreateProjectProjectsResponse200ApplicationJSON2
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvContentHint3 := new(CreateProject200ApplicationJSONEnvContentHint3)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint3, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint3 = createProject200ApplicationJSONEnvContentHint3
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint3
+	createProjectProjects3 := new(CreateProjectProjects3)
+	if err := utils.UnmarshalJSON(data, &createProjectProjects3, "", true, true); err == nil {
+		u.CreateProjectProjects3 = createProjectProjects3
+		u.Type = CreateProjectContentHintTypeCreateProjectProjects3
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvContentHint4 := new(CreateProject200ApplicationJSONEnvContentHint4)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint4, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint4 = createProject200ApplicationJSONEnvContentHint4
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint4
+	createProject4 := new(CreateProject4)
+	if err := utils.UnmarshalJSON(data, &createProject4, "", true, true); err == nil {
+		u.CreateProject4 = createProject4
+		u.Type = CreateProjectContentHintTypeCreateProject4
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvContentHint5 := new(CreateProject200ApplicationJSONEnvContentHint5)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint5, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint5 = createProject200ApplicationJSONEnvContentHint5
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint5
+	createProject5 := new(CreateProject5)
+	if err := utils.UnmarshalJSON(data, &createProject5, "", true, true); err == nil {
+		u.CreateProject5 = createProject5
+		u.Type = CreateProjectContentHintTypeCreateProject5
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvContentHint6 := new(CreateProject200ApplicationJSONEnvContentHint6)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint6, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint6 = createProject200ApplicationJSONEnvContentHint6
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint6
+	createProject6 := new(CreateProject6)
+	if err := utils.UnmarshalJSON(data, &createProject6, "", true, true); err == nil {
+		u.CreateProject6 = createProject6
+		u.Type = CreateProjectContentHintTypeCreateProject6
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvContentHint7 := new(CreateProject200ApplicationJSONEnvContentHint7)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint7, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint7 = createProject200ApplicationJSONEnvContentHint7
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint7
+	createProject7 := new(CreateProject7)
+	if err := utils.UnmarshalJSON(data, &createProject7, "", true, true); err == nil {
+		u.CreateProject7 = createProject7
+		u.Type = CreateProjectContentHintTypeCreateProject7
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvContentHint8 := new(CreateProject200ApplicationJSONEnvContentHint8)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint8, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint8 = createProject200ApplicationJSONEnvContentHint8
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint8
+	createProject8 := new(CreateProject8)
+	if err := utils.UnmarshalJSON(data, &createProject8, "", true, true); err == nil {
+		u.CreateProject8 = createProject8
+		u.Type = CreateProjectContentHintTypeCreateProject8
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvContentHint9 := new(CreateProject200ApplicationJSONEnvContentHint9)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint9, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint9 = createProject200ApplicationJSONEnvContentHint9
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint9
+	createProject9 := new(CreateProject9)
+	if err := utils.UnmarshalJSON(data, &createProject9, "", true, true); err == nil {
+		u.CreateProject9 = createProject9
+		u.Type = CreateProjectContentHintTypeCreateProject9
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvContentHint10 := new(CreateProject200ApplicationJSONEnvContentHint10)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint10, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint10 = createProject200ApplicationJSONEnvContentHint10
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint10
+	createProject10 := new(CreateProject10)
+	if err := utils.UnmarshalJSON(data, &createProject10, "", true, true); err == nil {
+		u.CreateProject10 = createProject10
+		u.Type = CreateProjectContentHintTypeCreateProject10
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvContentHint11 := new(CreateProject200ApplicationJSONEnvContentHint11)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint11, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint11 = createProject200ApplicationJSONEnvContentHint11
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint11
+	createProject11 := new(CreateProject11)
+	if err := utils.UnmarshalJSON(data, &createProject11, "", true, true); err == nil {
+		u.CreateProject11 = createProject11
+		u.Type = CreateProjectContentHintTypeCreateProject11
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvContentHint12 := new(CreateProject200ApplicationJSONEnvContentHint12)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvContentHint12, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvContentHint12 = createProject200ApplicationJSONEnvContentHint12
-		u.Type = CreateProject200ApplicationJSONEnvContentHintTypeCreateProject200ApplicationJSONEnvContentHint12
+	createProject12 := new(CreateProject12)
+	if err := utils.UnmarshalJSON(data, &createProject12, "", true, true); err == nil {
+		u.CreateProject12 = createProject12
+		u.Type = CreateProjectContentHintTypeCreateProject12
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProject200ApplicationJSONEnvContentHint) MarshalJSON() ([]byte, error) {
-	if u.CreateProject200ApplicationJSONEnvContentHint1 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint1, "", true)
+func (u CreateProjectContentHint) MarshalJSON() ([]byte, error) {
+	if u.CreateProjectProjectsResponse200ApplicationJSON1 != nil {
+		return utils.MarshalJSON(u.CreateProjectProjectsResponse200ApplicationJSON1, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvContentHint2 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint2, "", true)
+	if u.CreateProjectProjectsResponse200ApplicationJSON2 != nil {
+		return utils.MarshalJSON(u.CreateProjectProjectsResponse200ApplicationJSON2, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvContentHint3 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint3, "", true)
+	if u.CreateProjectProjects3 != nil {
+		return utils.MarshalJSON(u.CreateProjectProjects3, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvContentHint4 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint4, "", true)
+	if u.CreateProject4 != nil {
+		return utils.MarshalJSON(u.CreateProject4, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvContentHint5 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint5, "", true)
+	if u.CreateProject5 != nil {
+		return utils.MarshalJSON(u.CreateProject5, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvContentHint6 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint6, "", true)
+	if u.CreateProject6 != nil {
+		return utils.MarshalJSON(u.CreateProject6, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvContentHint7 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint7, "", true)
+	if u.CreateProject7 != nil {
+		return utils.MarshalJSON(u.CreateProject7, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvContentHint8 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint8, "", true)
+	if u.CreateProject8 != nil {
+		return utils.MarshalJSON(u.CreateProject8, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvContentHint9 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint9, "", true)
+	if u.CreateProject9 != nil {
+		return utils.MarshalJSON(u.CreateProject9, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvContentHint10 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint10, "", true)
+	if u.CreateProject10 != nil {
+		return utils.MarshalJSON(u.CreateProject10, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvContentHint11 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint11, "", true)
+	if u.CreateProject11 != nil {
+		return utils.MarshalJSON(u.CreateProject11, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvContentHint12 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvContentHint12, "", true)
+	if u.CreateProject12 != nil {
+		return utils.MarshalJSON(u.CreateProject12, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProject200ApplicationJSONEnvTarget2 string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBody2 string
 
 const (
-	CreateProject200ApplicationJSONEnvTarget2Production  CreateProject200ApplicationJSONEnvTarget2 = "production"
-	CreateProject200ApplicationJSONEnvTarget2Preview     CreateProject200ApplicationJSONEnvTarget2 = "preview"
-	CreateProject200ApplicationJSONEnvTarget2Development CreateProject200ApplicationJSONEnvTarget2 = "development"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBody2Production  CreateProjectProjectsResponse200ApplicationJSONResponseBody2 = "production"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBody2Preview     CreateProjectProjectsResponse200ApplicationJSONResponseBody2 = "preview"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBody2Development CreateProjectProjectsResponse200ApplicationJSONResponseBody2 = "development"
 )
 
-func (e CreateProject200ApplicationJSONEnvTarget2) ToPointer() *CreateProject200ApplicationJSONEnvTarget2 {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBody2) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBody2 {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvTarget2) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBody2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1546,26 +1546,26 @@ func (e *CreateProject200ApplicationJSONEnvTarget2) UnmarshalJSON(data []byte) e
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProject200ApplicationJSONEnvTarget2(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBody2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvTarget2: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBody2: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvTarget1 string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBody1 string
 
 const (
-	CreateProject200ApplicationJSONEnvTarget1Production  CreateProject200ApplicationJSONEnvTarget1 = "production"
-	CreateProject200ApplicationJSONEnvTarget1Preview     CreateProject200ApplicationJSONEnvTarget1 = "preview"
-	CreateProject200ApplicationJSONEnvTarget1Development CreateProject200ApplicationJSONEnvTarget1 = "development"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBody1Production  CreateProjectProjectsResponse200ApplicationJSONResponseBody1 = "production"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBody1Preview     CreateProjectProjectsResponse200ApplicationJSONResponseBody1 = "preview"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBody1Development CreateProjectProjectsResponse200ApplicationJSONResponseBody1 = "development"
 )
 
-func (e CreateProject200ApplicationJSONEnvTarget1) ToPointer() *CreateProject200ApplicationJSONEnvTarget1 {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBody1) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBody1 {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvTarget1) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBody1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1576,91 +1576,91 @@ func (e *CreateProject200ApplicationJSONEnvTarget1) UnmarshalJSON(data []byte) e
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProject200ApplicationJSONEnvTarget1(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBody1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvTarget1: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBody1: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnvTargetType string
+type CreateProjectProjectsTargetType string
 
 const (
-	CreateProject200ApplicationJSONEnvTargetTypeArrayOfcreateProject200ApplicationJSONEnvTarget1 CreateProject200ApplicationJSONEnvTargetType = "arrayOfcreateProject_200ApplicationJSON_env_target_1"
-	CreateProject200ApplicationJSONEnvTargetTypeCreateProject200ApplicationJSONEnvTarget2        CreateProject200ApplicationJSONEnvTargetType = "createProject_200ApplicationJSON_env_target_2"
+	CreateProjectProjectsTargetTypeArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 CreateProjectProjectsTargetType = "arrayOfcreateProject_projects_response_200_ApplicationJSON_responseBody_1"
+	CreateProjectProjectsTargetTypeCreateProjectProjectsResponse200ApplicationJSONResponseBody2        CreateProjectProjectsTargetType = "createProject_projects_response_200_ApplicationJSON_responseBody_2"
 )
 
-type CreateProject200ApplicationJSONEnvTarget struct {
-	ArrayOfcreateProject200ApplicationJSONEnvTarget1 []CreateProject200ApplicationJSONEnvTarget1
-	CreateProject200ApplicationJSONEnvTarget2        *CreateProject200ApplicationJSONEnvTarget2
+type CreateProjectProjectsTarget struct {
+	ArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 []CreateProjectProjectsResponse200ApplicationJSONResponseBody1
+	CreateProjectProjectsResponse200ApplicationJSONResponseBody2        *CreateProjectProjectsResponse200ApplicationJSONResponseBody2
 
-	Type CreateProject200ApplicationJSONEnvTargetType
+	Type CreateProjectProjectsTargetType
 }
 
-func CreateCreateProject200ApplicationJSONEnvTargetArrayOfcreateProject200ApplicationJSONEnvTarget1(arrayOfcreateProject200ApplicationJSONEnvTarget1 []CreateProject200ApplicationJSONEnvTarget1) CreateProject200ApplicationJSONEnvTarget {
-	typ := CreateProject200ApplicationJSONEnvTargetTypeArrayOfcreateProject200ApplicationJSONEnvTarget1
+func CreateCreateProjectProjectsTargetArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1(arrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 []CreateProjectProjectsResponse200ApplicationJSONResponseBody1) CreateProjectProjectsTarget {
+	typ := CreateProjectProjectsTargetTypeArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1
 
-	return CreateProject200ApplicationJSONEnvTarget{
-		ArrayOfcreateProject200ApplicationJSONEnvTarget1: arrayOfcreateProject200ApplicationJSONEnvTarget1,
+	return CreateProjectProjectsTarget{
+		ArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1: arrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1,
 		Type: typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONEnvTargetCreateProject200ApplicationJSONEnvTarget2(createProject200ApplicationJSONEnvTarget2 CreateProject200ApplicationJSONEnvTarget2) CreateProject200ApplicationJSONEnvTarget {
-	typ := CreateProject200ApplicationJSONEnvTargetTypeCreateProject200ApplicationJSONEnvTarget2
+func CreateCreateProjectProjectsTargetCreateProjectProjectsResponse200ApplicationJSONResponseBody2(createProjectProjectsResponse200ApplicationJSONResponseBody2 CreateProjectProjectsResponse200ApplicationJSONResponseBody2) CreateProjectProjectsTarget {
+	typ := CreateProjectProjectsTargetTypeCreateProjectProjectsResponse200ApplicationJSONResponseBody2
 
-	return CreateProject200ApplicationJSONEnvTarget{
-		CreateProject200ApplicationJSONEnvTarget2: &createProject200ApplicationJSONEnvTarget2,
+	return CreateProjectProjectsTarget{
+		CreateProjectProjectsResponse200ApplicationJSONResponseBody2: &createProjectProjectsResponse200ApplicationJSONResponseBody2,
 		Type: typ,
 	}
 }
 
-func (u *CreateProject200ApplicationJSONEnvTarget) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectProjectsTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfcreateProject200ApplicationJSONEnvTarget1 := []CreateProject200ApplicationJSONEnvTarget1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProject200ApplicationJSONEnvTarget1, "", true, true); err == nil {
-		u.ArrayOfcreateProject200ApplicationJSONEnvTarget1 = arrayOfcreateProject200ApplicationJSONEnvTarget1
-		u.Type = CreateProject200ApplicationJSONEnvTargetTypeArrayOfcreateProject200ApplicationJSONEnvTarget1
+	arrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 := []CreateProjectProjectsResponse200ApplicationJSONResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1, "", true, true); err == nil {
+		u.ArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 = arrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1
+		u.Type = CreateProjectProjectsTargetTypeArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1
 		return nil
 	}
 
-	createProject200ApplicationJSONEnvTarget2 := new(CreateProject200ApplicationJSONEnvTarget2)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONEnvTarget2, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONEnvTarget2 = createProject200ApplicationJSONEnvTarget2
-		u.Type = CreateProject200ApplicationJSONEnvTargetTypeCreateProject200ApplicationJSONEnvTarget2
+	createProjectProjectsResponse200ApplicationJSONResponseBody2 := new(CreateProjectProjectsResponse200ApplicationJSONResponseBody2)
+	if err := utils.UnmarshalJSON(data, &createProjectProjectsResponse200ApplicationJSONResponseBody2, "", true, true); err == nil {
+		u.CreateProjectProjectsResponse200ApplicationJSONResponseBody2 = createProjectProjectsResponse200ApplicationJSONResponseBody2
+		u.Type = CreateProjectProjectsTargetTypeCreateProjectProjectsResponse200ApplicationJSONResponseBody2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProject200ApplicationJSONEnvTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfcreateProject200ApplicationJSONEnvTarget1 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProject200ApplicationJSONEnvTarget1, "", true)
+func (u CreateProjectProjectsTarget) MarshalJSON() ([]byte, error) {
+	if u.ArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 != nil {
+		return utils.MarshalJSON(u.ArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONEnvTarget2 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONEnvTarget2, "", true)
+	if u.CreateProjectProjectsResponse200ApplicationJSONResponseBody2 != nil {
+		return utils.MarshalJSON(u.CreateProjectProjectsResponse200ApplicationJSONResponseBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProject200ApplicationJSONEnvType string
+type CreateProjectProjectsResponseType string
 
 const (
-	CreateProject200ApplicationJSONEnvTypeSystem    CreateProject200ApplicationJSONEnvType = "system"
-	CreateProject200ApplicationJSONEnvTypeSecret    CreateProject200ApplicationJSONEnvType = "secret"
-	CreateProject200ApplicationJSONEnvTypeEncrypted CreateProject200ApplicationJSONEnvType = "encrypted"
-	CreateProject200ApplicationJSONEnvTypePlain     CreateProject200ApplicationJSONEnvType = "plain"
-	CreateProject200ApplicationJSONEnvTypeSensitive CreateProject200ApplicationJSONEnvType = "sensitive"
+	CreateProjectProjectsResponseTypeSystem    CreateProjectProjectsResponseType = "system"
+	CreateProjectProjectsResponseTypeSecret    CreateProjectProjectsResponseType = "secret"
+	CreateProjectProjectsResponseTypeEncrypted CreateProjectProjectsResponseType = "encrypted"
+	CreateProjectProjectsResponseTypePlain     CreateProjectProjectsResponseType = "plain"
+	CreateProjectProjectsResponseTypeSensitive CreateProjectProjectsResponseType = "sensitive"
 )
 
-func (e CreateProject200ApplicationJSONEnvType) ToPointer() *CreateProject200ApplicationJSONEnvType {
+func (e CreateProjectProjectsResponseType) ToPointer() *CreateProjectProjectsResponseType {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONEnvType) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponseType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1675,189 +1675,189 @@ func (e *CreateProject200ApplicationJSONEnvType) UnmarshalJSON(data []byte) erro
 	case "plain":
 		fallthrough
 	case "sensitive":
-		*e = CreateProject200ApplicationJSONEnvType(v)
+		*e = CreateProjectProjectsResponseType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONEnvType: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponseType: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONEnv struct {
-	ConfigurationID *string                                        `json:"configurationId,omitempty"`
-	ContentHint     *CreateProject200ApplicationJSONEnvContentHint `json:"contentHint,omitempty"`
-	CreatedAt       *int64                                         `json:"createdAt,omitempty"`
-	CreatedBy       *string                                        `json:"createdBy,omitempty"`
+type Env struct {
+	ConfigurationID *string                   `json:"configurationId,omitempty"`
+	ContentHint     *CreateProjectContentHint `json:"contentHint,omitempty"`
+	CreatedAt       *int64                    `json:"createdAt,omitempty"`
+	CreatedBy       *string                   `json:"createdBy,omitempty"`
 	// Whether `value` is decrypted.
-	Decrypted         *bool                                     `json:"decrypted,omitempty"`
-	EdgeConfigID      *string                                   `json:"edgeConfigId,omitempty"`
-	EdgeConfigTokenID *string                                   `json:"edgeConfigTokenId,omitempty"`
-	GitBranch         *string                                   `json:"gitBranch,omitempty"`
-	ID                *string                                   `json:"id,omitempty"`
-	Key               string                                    `json:"key"`
-	Target            *CreateProject200ApplicationJSONEnvTarget `json:"target,omitempty"`
-	Type              CreateProject200ApplicationJSONEnvType    `json:"type"`
-	UpdatedAt         *int64                                    `json:"updatedAt,omitempty"`
-	UpdatedBy         *string                                   `json:"updatedBy,omitempty"`
-	Value             string                                    `json:"value"`
+	Decrypted         *bool                             `json:"decrypted,omitempty"`
+	EdgeConfigID      *string                           `json:"edgeConfigId,omitempty"`
+	EdgeConfigTokenID *string                           `json:"edgeConfigTokenId,omitempty"`
+	GitBranch         *string                           `json:"gitBranch,omitempty"`
+	ID                *string                           `json:"id,omitempty"`
+	Key               string                            `json:"key"`
+	Target            *CreateProjectProjectsTarget      `json:"target,omitempty"`
+	Type              CreateProjectProjectsResponseType `json:"type"`
+	UpdatedAt         *int64                            `json:"updatedAt,omitempty"`
+	UpdatedBy         *string                           `json:"updatedBy,omitempty"`
+	Value             string                            `json:"value"`
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetConfigurationID() *string {
+func (o *Env) GetConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConfigurationID
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetContentHint() *CreateProject200ApplicationJSONEnvContentHint {
+func (o *Env) GetContentHint() *CreateProjectContentHint {
 	if o == nil {
 		return nil
 	}
 	return o.ContentHint
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetCreatedAt() *int64 {
+func (o *Env) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetCreatedBy() *string {
+func (o *Env) GetCreatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedBy
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetDecrypted() *bool {
+func (o *Env) GetDecrypted() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Decrypted
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetEdgeConfigID() *string {
+func (o *Env) GetEdgeConfigID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigID
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetEdgeConfigTokenID() *string {
+func (o *Env) GetEdgeConfigTokenID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigTokenID
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetGitBranch() *string {
+func (o *Env) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetID() *string {
+func (o *Env) GetID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ID
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetKey() string {
+func (o *Env) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetTarget() *CreateProject200ApplicationJSONEnvTarget {
+func (o *Env) GetTarget() *CreateProjectProjectsTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetType() CreateProject200ApplicationJSONEnvType {
+func (o *Env) GetType() CreateProjectProjectsResponseType {
 	if o == nil {
-		return CreateProject200ApplicationJSONEnvType("")
+		return CreateProjectProjectsResponseType("")
 	}
 	return o.Type
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetUpdatedAt() *int64 {
+func (o *Env) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetUpdatedBy() *string {
+func (o *Env) GetUpdatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedBy
 }
 
-func (o *CreateProject200ApplicationJSONEnv) GetValue() string {
+func (o *Env) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateProject200ApplicationJSONFramework string
+type CreateProjectProjectsFramework string
 
 const (
-	CreateProject200ApplicationJSONFrameworkBlitzjs        CreateProject200ApplicationJSONFramework = "blitzjs"
-	CreateProject200ApplicationJSONFrameworkNextjs         CreateProject200ApplicationJSONFramework = "nextjs"
-	CreateProject200ApplicationJSONFrameworkGatsby         CreateProject200ApplicationJSONFramework = "gatsby"
-	CreateProject200ApplicationJSONFrameworkRemix          CreateProject200ApplicationJSONFramework = "remix"
-	CreateProject200ApplicationJSONFrameworkAstro          CreateProject200ApplicationJSONFramework = "astro"
-	CreateProject200ApplicationJSONFrameworkHexo           CreateProject200ApplicationJSONFramework = "hexo"
-	CreateProject200ApplicationJSONFrameworkEleventy       CreateProject200ApplicationJSONFramework = "eleventy"
-	CreateProject200ApplicationJSONFrameworkDocusaurus2    CreateProject200ApplicationJSONFramework = "docusaurus-2"
-	CreateProject200ApplicationJSONFrameworkDocusaurus     CreateProject200ApplicationJSONFramework = "docusaurus"
-	CreateProject200ApplicationJSONFrameworkPreact         CreateProject200ApplicationJSONFramework = "preact"
-	CreateProject200ApplicationJSONFrameworkSolidstart     CreateProject200ApplicationJSONFramework = "solidstart"
-	CreateProject200ApplicationJSONFrameworkDojo           CreateProject200ApplicationJSONFramework = "dojo"
-	CreateProject200ApplicationJSONFrameworkEmber          CreateProject200ApplicationJSONFramework = "ember"
-	CreateProject200ApplicationJSONFrameworkVue            CreateProject200ApplicationJSONFramework = "vue"
-	CreateProject200ApplicationJSONFrameworkScully         CreateProject200ApplicationJSONFramework = "scully"
-	CreateProject200ApplicationJSONFrameworkIonicAngular   CreateProject200ApplicationJSONFramework = "ionic-angular"
-	CreateProject200ApplicationJSONFrameworkAngular        CreateProject200ApplicationJSONFramework = "angular"
-	CreateProject200ApplicationJSONFrameworkPolymer        CreateProject200ApplicationJSONFramework = "polymer"
-	CreateProject200ApplicationJSONFrameworkSvelte         CreateProject200ApplicationJSONFramework = "svelte"
-	CreateProject200ApplicationJSONFrameworkSveltekit      CreateProject200ApplicationJSONFramework = "sveltekit"
-	CreateProject200ApplicationJSONFrameworkSveltekit1     CreateProject200ApplicationJSONFramework = "sveltekit-1"
-	CreateProject200ApplicationJSONFrameworkIonicReact     CreateProject200ApplicationJSONFramework = "ionic-react"
-	CreateProject200ApplicationJSONFrameworkCreateReactApp CreateProject200ApplicationJSONFramework = "create-react-app"
-	CreateProject200ApplicationJSONFrameworkGridsome       CreateProject200ApplicationJSONFramework = "gridsome"
-	CreateProject200ApplicationJSONFrameworkUmijs          CreateProject200ApplicationJSONFramework = "umijs"
-	CreateProject200ApplicationJSONFrameworkSapper         CreateProject200ApplicationJSONFramework = "sapper"
-	CreateProject200ApplicationJSONFrameworkSaber          CreateProject200ApplicationJSONFramework = "saber"
-	CreateProject200ApplicationJSONFrameworkStencil        CreateProject200ApplicationJSONFramework = "stencil"
-	CreateProject200ApplicationJSONFrameworkNuxtjs         CreateProject200ApplicationJSONFramework = "nuxtjs"
-	CreateProject200ApplicationJSONFrameworkRedwoodjs      CreateProject200ApplicationJSONFramework = "redwoodjs"
-	CreateProject200ApplicationJSONFrameworkHugo           CreateProject200ApplicationJSONFramework = "hugo"
-	CreateProject200ApplicationJSONFrameworkJekyll         CreateProject200ApplicationJSONFramework = "jekyll"
-	CreateProject200ApplicationJSONFrameworkBrunch         CreateProject200ApplicationJSONFramework = "brunch"
-	CreateProject200ApplicationJSONFrameworkMiddleman      CreateProject200ApplicationJSONFramework = "middleman"
-	CreateProject200ApplicationJSONFrameworkZola           CreateProject200ApplicationJSONFramework = "zola"
-	CreateProject200ApplicationJSONFrameworkHydrogen       CreateProject200ApplicationJSONFramework = "hydrogen"
-	CreateProject200ApplicationJSONFrameworkVite           CreateProject200ApplicationJSONFramework = "vite"
-	CreateProject200ApplicationJSONFrameworkVitepress      CreateProject200ApplicationJSONFramework = "vitepress"
-	CreateProject200ApplicationJSONFrameworkVuepress       CreateProject200ApplicationJSONFramework = "vuepress"
-	CreateProject200ApplicationJSONFrameworkParcel         CreateProject200ApplicationJSONFramework = "parcel"
-	CreateProject200ApplicationJSONFrameworkSanity         CreateProject200ApplicationJSONFramework = "sanity"
-	CreateProject200ApplicationJSONFrameworkStorybook      CreateProject200ApplicationJSONFramework = "storybook"
+	CreateProjectProjectsFrameworkBlitzjs        CreateProjectProjectsFramework = "blitzjs"
+	CreateProjectProjectsFrameworkNextjs         CreateProjectProjectsFramework = "nextjs"
+	CreateProjectProjectsFrameworkGatsby         CreateProjectProjectsFramework = "gatsby"
+	CreateProjectProjectsFrameworkRemix          CreateProjectProjectsFramework = "remix"
+	CreateProjectProjectsFrameworkAstro          CreateProjectProjectsFramework = "astro"
+	CreateProjectProjectsFrameworkHexo           CreateProjectProjectsFramework = "hexo"
+	CreateProjectProjectsFrameworkEleventy       CreateProjectProjectsFramework = "eleventy"
+	CreateProjectProjectsFrameworkDocusaurus2    CreateProjectProjectsFramework = "docusaurus-2"
+	CreateProjectProjectsFrameworkDocusaurus     CreateProjectProjectsFramework = "docusaurus"
+	CreateProjectProjectsFrameworkPreact         CreateProjectProjectsFramework = "preact"
+	CreateProjectProjectsFrameworkSolidstart     CreateProjectProjectsFramework = "solidstart"
+	CreateProjectProjectsFrameworkDojo           CreateProjectProjectsFramework = "dojo"
+	CreateProjectProjectsFrameworkEmber          CreateProjectProjectsFramework = "ember"
+	CreateProjectProjectsFrameworkVue            CreateProjectProjectsFramework = "vue"
+	CreateProjectProjectsFrameworkScully         CreateProjectProjectsFramework = "scully"
+	CreateProjectProjectsFrameworkIonicAngular   CreateProjectProjectsFramework = "ionic-angular"
+	CreateProjectProjectsFrameworkAngular        CreateProjectProjectsFramework = "angular"
+	CreateProjectProjectsFrameworkPolymer        CreateProjectProjectsFramework = "polymer"
+	CreateProjectProjectsFrameworkSvelte         CreateProjectProjectsFramework = "svelte"
+	CreateProjectProjectsFrameworkSveltekit      CreateProjectProjectsFramework = "sveltekit"
+	CreateProjectProjectsFrameworkSveltekit1     CreateProjectProjectsFramework = "sveltekit-1"
+	CreateProjectProjectsFrameworkIonicReact     CreateProjectProjectsFramework = "ionic-react"
+	CreateProjectProjectsFrameworkCreateReactApp CreateProjectProjectsFramework = "create-react-app"
+	CreateProjectProjectsFrameworkGridsome       CreateProjectProjectsFramework = "gridsome"
+	CreateProjectProjectsFrameworkUmijs          CreateProjectProjectsFramework = "umijs"
+	CreateProjectProjectsFrameworkSapper         CreateProjectProjectsFramework = "sapper"
+	CreateProjectProjectsFrameworkSaber          CreateProjectProjectsFramework = "saber"
+	CreateProjectProjectsFrameworkStencil        CreateProjectProjectsFramework = "stencil"
+	CreateProjectProjectsFrameworkNuxtjs         CreateProjectProjectsFramework = "nuxtjs"
+	CreateProjectProjectsFrameworkRedwoodjs      CreateProjectProjectsFramework = "redwoodjs"
+	CreateProjectProjectsFrameworkHugo           CreateProjectProjectsFramework = "hugo"
+	CreateProjectProjectsFrameworkJekyll         CreateProjectProjectsFramework = "jekyll"
+	CreateProjectProjectsFrameworkBrunch         CreateProjectProjectsFramework = "brunch"
+	CreateProjectProjectsFrameworkMiddleman      CreateProjectProjectsFramework = "middleman"
+	CreateProjectProjectsFrameworkZola           CreateProjectProjectsFramework = "zola"
+	CreateProjectProjectsFrameworkHydrogen       CreateProjectProjectsFramework = "hydrogen"
+	CreateProjectProjectsFrameworkVite           CreateProjectProjectsFramework = "vite"
+	CreateProjectProjectsFrameworkVitepress      CreateProjectProjectsFramework = "vitepress"
+	CreateProjectProjectsFrameworkVuepress       CreateProjectProjectsFramework = "vuepress"
+	CreateProjectProjectsFrameworkParcel         CreateProjectProjectsFramework = "parcel"
+	CreateProjectProjectsFrameworkSanity         CreateProjectProjectsFramework = "sanity"
+	CreateProjectProjectsFrameworkStorybook      CreateProjectProjectsFramework = "storybook"
 )
 
-func (e CreateProject200ApplicationJSONFramework) ToPointer() *CreateProject200ApplicationJSONFramework {
+func (e CreateProjectProjectsFramework) ToPointer() *CreateProjectProjectsFramework {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONFramework) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsFramework) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1946,49 +1946,49 @@ func (e *CreateProject200ApplicationJSONFramework) UnmarshalJSON(data []byte) er
 	case "sanity":
 		fallthrough
 	case "storybook":
-		*e = CreateProject200ApplicationJSONFramework(v)
+		*e = CreateProjectProjectsFramework(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONFramework: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsFramework: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONGitComments struct {
+type GitComments struct {
 	// Whether the Vercel bot should comment on commits
 	OnCommit bool `json:"onCommit"`
 	// Whether the Vercel bot should comment on PRs
 	OnPullRequest bool `json:"onPullRequest"`
 }
 
-func (o *CreateProject200ApplicationJSONGitComments) GetOnCommit() bool {
+func (o *GitComments) GetOnCommit() bool {
 	if o == nil {
 		return false
 	}
 	return o.OnCommit
 }
 
-func (o *CreateProject200ApplicationJSONGitComments) GetOnPullRequest() bool {
+func (o *GitComments) GetOnPullRequest() bool {
 	if o == nil {
 		return false
 	}
 	return o.OnPullRequest
 }
 
-type CreateProject200ApplicationJSONLastAliasRequestJobStatus string
+type JobStatus string
 
 const (
-	CreateProject200ApplicationJSONLastAliasRequestJobStatusSucceeded  CreateProject200ApplicationJSONLastAliasRequestJobStatus = "succeeded"
-	CreateProject200ApplicationJSONLastAliasRequestJobStatusFailed     CreateProject200ApplicationJSONLastAliasRequestJobStatus = "failed"
-	CreateProject200ApplicationJSONLastAliasRequestJobStatusSkipped    CreateProject200ApplicationJSONLastAliasRequestJobStatus = "skipped"
-	CreateProject200ApplicationJSONLastAliasRequestJobStatusPending    CreateProject200ApplicationJSONLastAliasRequestJobStatus = "pending"
-	CreateProject200ApplicationJSONLastAliasRequestJobStatusInProgress CreateProject200ApplicationJSONLastAliasRequestJobStatus = "in-progress"
+	JobStatusSucceeded  JobStatus = "succeeded"
+	JobStatusFailed     JobStatus = "failed"
+	JobStatusSkipped    JobStatus = "skipped"
+	JobStatusPending    JobStatus = "pending"
+	JobStatusInProgress JobStatus = "in-progress"
 )
 
-func (e CreateProject200ApplicationJSONLastAliasRequestJobStatus) ToPointer() *CreateProject200ApplicationJSONLastAliasRequestJobStatus {
+func (e JobStatus) ToPointer() *JobStatus {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONLastAliasRequestJobStatus) UnmarshalJSON(data []byte) error {
+func (e *JobStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2003,25 +2003,25 @@ func (e *CreateProject200ApplicationJSONLastAliasRequestJobStatus) UnmarshalJSON
 	case "pending":
 		fallthrough
 	case "in-progress":
-		*e = CreateProject200ApplicationJSONLastAliasRequestJobStatus(v)
+		*e = JobStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONLastAliasRequestJobStatus: %v", v)
+		return fmt.Errorf("invalid value for JobStatus: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONLastAliasRequestType string
+type CreateProjectProjectsResponse200Type string
 
 const (
-	CreateProject200ApplicationJSONLastAliasRequestTypePromote  CreateProject200ApplicationJSONLastAliasRequestType = "promote"
-	CreateProject200ApplicationJSONLastAliasRequestTypeRollback CreateProject200ApplicationJSONLastAliasRequestType = "rollback"
+	CreateProjectProjectsResponse200TypePromote  CreateProjectProjectsResponse200Type = "promote"
+	CreateProjectProjectsResponse200TypeRollback CreateProjectProjectsResponse200Type = "rollback"
 )
 
-func (e CreateProject200ApplicationJSONLastAliasRequestType) ToPointer() *CreateProject200ApplicationJSONLastAliasRequestType {
+func (e CreateProjectProjectsResponse200Type) ToPointer() *CreateProjectProjectsResponse200Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONLastAliasRequestType) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2030,111 +2030,111 @@ func (e *CreateProject200ApplicationJSONLastAliasRequestType) UnmarshalJSON(data
 	case "promote":
 		fallthrough
 	case "rollback":
-		*e = CreateProject200ApplicationJSONLastAliasRequestType(v)
+		*e = CreateProjectProjectsResponse200Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONLastAliasRequestType: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONLastAliasRequest struct {
-	FromDeploymentID string                                                   `json:"fromDeploymentId"`
-	JobStatus        CreateProject200ApplicationJSONLastAliasRequestJobStatus `json:"jobStatus"`
-	RequestedAt      int64                                                    `json:"requestedAt"`
-	ToDeploymentID   string                                                   `json:"toDeploymentId"`
-	Type             CreateProject200ApplicationJSONLastAliasRequestType      `json:"type"`
+type LastAliasRequest struct {
+	FromDeploymentID string                               `json:"fromDeploymentId"`
+	JobStatus        JobStatus                            `json:"jobStatus"`
+	RequestedAt      int64                                `json:"requestedAt"`
+	ToDeploymentID   string                               `json:"toDeploymentId"`
+	Type             CreateProjectProjectsResponse200Type `json:"type"`
 }
 
-func (o *CreateProject200ApplicationJSONLastAliasRequest) GetFromDeploymentID() string {
+func (o *LastAliasRequest) GetFromDeploymentID() string {
 	if o == nil {
 		return ""
 	}
 	return o.FromDeploymentID
 }
 
-func (o *CreateProject200ApplicationJSONLastAliasRequest) GetJobStatus() CreateProject200ApplicationJSONLastAliasRequestJobStatus {
+func (o *LastAliasRequest) GetJobStatus() JobStatus {
 	if o == nil {
-		return CreateProject200ApplicationJSONLastAliasRequestJobStatus("")
+		return JobStatus("")
 	}
 	return o.JobStatus
 }
 
-func (o *CreateProject200ApplicationJSONLastAliasRequest) GetRequestedAt() int64 {
+func (o *LastAliasRequest) GetRequestedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.RequestedAt
 }
 
-func (o *CreateProject200ApplicationJSONLastAliasRequest) GetToDeploymentID() string {
+func (o *LastAliasRequest) GetToDeploymentID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ToDeploymentID
 }
 
-func (o *CreateProject200ApplicationJSONLastAliasRequest) GetType() CreateProject200ApplicationJSONLastAliasRequestType {
+func (o *LastAliasRequest) GetType() CreateProjectProjectsResponse200Type {
 	if o == nil {
-		return CreateProject200ApplicationJSONLastAliasRequestType("")
+		return CreateProjectProjectsResponse200Type("")
 	}
 	return o.Type
 }
 
-type CreateProject200ApplicationJSONLastRollbackTarget struct {
+type LastRollbackTarget struct {
 }
 
-type CreateProject200ApplicationJSONLatestDeploymentsAliasAssignedType string
+type CreateProjectAliasAssignedType string
 
 const (
-	CreateProject200ApplicationJSONLatestDeploymentsAliasAssignedTypeInteger CreateProject200ApplicationJSONLatestDeploymentsAliasAssignedType = "integer"
-	CreateProject200ApplicationJSONLatestDeploymentsAliasAssignedTypeBoolean CreateProject200ApplicationJSONLatestDeploymentsAliasAssignedType = "boolean"
+	CreateProjectAliasAssignedTypeInteger CreateProjectAliasAssignedType = "integer"
+	CreateProjectAliasAssignedTypeBoolean CreateProjectAliasAssignedType = "boolean"
 )
 
-type CreateProject200ApplicationJSONLatestDeploymentsAliasAssigned struct {
+type CreateProjectAliasAssigned struct {
 	Integer *int64
 	Boolean *bool
 
-	Type CreateProject200ApplicationJSONLatestDeploymentsAliasAssignedType
+	Type CreateProjectAliasAssignedType
 }
 
-func CreateCreateProject200ApplicationJSONLatestDeploymentsAliasAssignedInteger(integer int64) CreateProject200ApplicationJSONLatestDeploymentsAliasAssigned {
-	typ := CreateProject200ApplicationJSONLatestDeploymentsAliasAssignedTypeInteger
+func CreateCreateProjectAliasAssignedInteger(integer int64) CreateProjectAliasAssigned {
+	typ := CreateProjectAliasAssignedTypeInteger
 
-	return CreateProject200ApplicationJSONLatestDeploymentsAliasAssigned{
+	return CreateProjectAliasAssigned{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONLatestDeploymentsAliasAssignedBoolean(boolean bool) CreateProject200ApplicationJSONLatestDeploymentsAliasAssigned {
-	typ := CreateProject200ApplicationJSONLatestDeploymentsAliasAssignedTypeBoolean
+func CreateCreateProjectAliasAssignedBoolean(boolean bool) CreateProjectAliasAssigned {
+	typ := CreateProjectAliasAssignedTypeBoolean
 
-	return CreateProject200ApplicationJSONLatestDeploymentsAliasAssigned{
+	return CreateProjectAliasAssigned{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func (u *CreateProject200ApplicationJSONLatestDeploymentsAliasAssigned) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectAliasAssigned) UnmarshalJSON(data []byte) error {
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = CreateProject200ApplicationJSONLatestDeploymentsAliasAssignedTypeInteger
+		u.Type = CreateProjectAliasAssignedTypeInteger
 		return nil
 	}
 
 	boolean := new(bool)
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
-		u.Type = CreateProject200ApplicationJSONLatestDeploymentsAliasAssignedTypeBoolean
+		u.Type = CreateProjectAliasAssignedTypeBoolean
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProject200ApplicationJSONLatestDeploymentsAliasAssigned) MarshalJSON() ([]byte, error) {
+func (u CreateProjectAliasAssigned) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
@@ -2146,66 +2146,66 @@ func (u CreateProject200ApplicationJSONLatestDeploymentsAliasAssigned) MarshalJS
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProject200ApplicationJSONLatestDeploymentsAliasError struct {
+type CreateProjectAliasError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeploymentsAliasError) GetCode() string {
+func (o *CreateProjectAliasError) GetCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.Code
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeploymentsAliasError) GetMessage() string {
+func (o *CreateProjectAliasError) GetMessage() string {
 	if o == nil {
 		return ""
 	}
 	return o.Message
 }
 
-type CreateProject200ApplicationJSONLatestDeploymentsBuilds struct {
+type CreateProjectBuilds struct {
 	Dest *string `json:"dest,omitempty"`
 	Src  *string `json:"src,omitempty"`
 	Use  string  `json:"use"`
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeploymentsBuilds) GetDest() *string {
+func (o *CreateProjectBuilds) GetDest() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dest
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeploymentsBuilds) GetSrc() *string {
+func (o *CreateProjectBuilds) GetSrc() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Src
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeploymentsBuilds) GetUse() string {
+func (o *CreateProjectBuilds) GetUse() string {
 	if o == nil {
 		return ""
 	}
 	return o.Use
 }
 
-type CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion string
+type CreateProjectChecksConclusion string
 
 const (
-	CreateProject200ApplicationJSONLatestDeploymentsChecksConclusionSucceeded CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion = "succeeded"
-	CreateProject200ApplicationJSONLatestDeploymentsChecksConclusionFailed    CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion = "failed"
-	CreateProject200ApplicationJSONLatestDeploymentsChecksConclusionSkipped   CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion = "skipped"
-	CreateProject200ApplicationJSONLatestDeploymentsChecksConclusionCanceled  CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion = "canceled"
+	CreateProjectChecksConclusionSucceeded CreateProjectChecksConclusion = "succeeded"
+	CreateProjectChecksConclusionFailed    CreateProjectChecksConclusion = "failed"
+	CreateProjectChecksConclusionSkipped   CreateProjectChecksConclusion = "skipped"
+	CreateProjectChecksConclusionCanceled  CreateProjectChecksConclusion = "canceled"
 )
 
-func (e CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion) ToPointer() *CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion {
+func (e CreateProjectChecksConclusion) ToPointer() *CreateProjectChecksConclusion {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectChecksConclusion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2218,26 +2218,26 @@ func (e *CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion) Unmar
 	case "skipped":
 		fallthrough
 	case "canceled":
-		*e = CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion(v)
+		*e = CreateProjectChecksConclusion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectChecksConclusion: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONLatestDeploymentsChecksState string
+type CreateProjectChecksState string
 
 const (
-	CreateProject200ApplicationJSONLatestDeploymentsChecksStateRegistered CreateProject200ApplicationJSONLatestDeploymentsChecksState = "registered"
-	CreateProject200ApplicationJSONLatestDeploymentsChecksStateRunning    CreateProject200ApplicationJSONLatestDeploymentsChecksState = "running"
-	CreateProject200ApplicationJSONLatestDeploymentsChecksStateCompleted  CreateProject200ApplicationJSONLatestDeploymentsChecksState = "completed"
+	CreateProjectChecksStateRegistered CreateProjectChecksState = "registered"
+	CreateProjectChecksStateRunning    CreateProjectChecksState = "running"
+	CreateProjectChecksStateCompleted  CreateProjectChecksState = "completed"
 )
 
-func (e CreateProject200ApplicationJSONLatestDeploymentsChecksState) ToPointer() *CreateProject200ApplicationJSONLatestDeploymentsChecksState {
+func (e CreateProjectChecksState) ToPointer() *CreateProjectChecksState {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONLatestDeploymentsChecksState) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectChecksState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2248,14 +2248,14 @@ func (e *CreateProject200ApplicationJSONLatestDeploymentsChecksState) UnmarshalJ
 	case "running":
 		fallthrough
 	case "completed":
-		*e = CreateProject200ApplicationJSONLatestDeploymentsChecksState(v)
+		*e = CreateProjectChecksState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONLatestDeploymentsChecksState: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectChecksState: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONLatestDeploymentsCreator struct {
+type CreateProjectCreator struct {
 	Email       string  `json:"email"`
 	GithubLogin *string `json:"githubLogin,omitempty"`
 	GitlabLogin *string `json:"gitlabLogin,omitempty"`
@@ -2263,55 +2263,55 @@ type CreateProject200ApplicationJSONLatestDeploymentsCreator struct {
 	Username    string  `json:"username"`
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeploymentsCreator) GetEmail() string {
+func (o *CreateProjectCreator) GetEmail() string {
 	if o == nil {
 		return ""
 	}
 	return o.Email
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeploymentsCreator) GetGithubLogin() *string {
+func (o *CreateProjectCreator) GetGithubLogin() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GithubLogin
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeploymentsCreator) GetGitlabLogin() *string {
+func (o *CreateProjectCreator) GetGitlabLogin() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitlabLogin
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeploymentsCreator) GetUID() string {
+func (o *CreateProjectCreator) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeploymentsCreator) GetUsername() string {
+func (o *CreateProjectCreator) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
 }
 
-type CreateProject200ApplicationJSONLatestDeploymentsPlan string
+type CreateProjectPlan string
 
 const (
-	CreateProject200ApplicationJSONLatestDeploymentsPlanPro        CreateProject200ApplicationJSONLatestDeploymentsPlan = "pro"
-	CreateProject200ApplicationJSONLatestDeploymentsPlanEnterprise CreateProject200ApplicationJSONLatestDeploymentsPlan = "enterprise"
-	CreateProject200ApplicationJSONLatestDeploymentsPlanHobby      CreateProject200ApplicationJSONLatestDeploymentsPlan = "hobby"
-	CreateProject200ApplicationJSONLatestDeploymentsPlanOss        CreateProject200ApplicationJSONLatestDeploymentsPlan = "oss"
+	CreateProjectPlanPro        CreateProjectPlan = "pro"
+	CreateProjectPlanEnterprise CreateProjectPlan = "enterprise"
+	CreateProjectPlanHobby      CreateProjectPlan = "hobby"
+	CreateProjectPlanOss        CreateProjectPlan = "oss"
 )
 
-func (e CreateProject200ApplicationJSONLatestDeploymentsPlan) ToPointer() *CreateProject200ApplicationJSONLatestDeploymentsPlan {
+func (e CreateProjectPlan) ToPointer() *CreateProjectPlan {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONLatestDeploymentsPlan) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectPlan) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2324,29 +2324,29 @@ func (e *CreateProject200ApplicationJSONLatestDeploymentsPlan) UnmarshalJSON(dat
 	case "hobby":
 		fallthrough
 	case "oss":
-		*e = CreateProject200ApplicationJSONLatestDeploymentsPlan(v)
+		*e = CreateProjectPlan(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONLatestDeploymentsPlan: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectPlan: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONLatestDeploymentsReadyState string
+type CreateProjectReadyState string
 
 const (
-	CreateProject200ApplicationJSONLatestDeploymentsReadyStateBuilding     CreateProject200ApplicationJSONLatestDeploymentsReadyState = "BUILDING"
-	CreateProject200ApplicationJSONLatestDeploymentsReadyStateError        CreateProject200ApplicationJSONLatestDeploymentsReadyState = "ERROR"
-	CreateProject200ApplicationJSONLatestDeploymentsReadyStateInitializing CreateProject200ApplicationJSONLatestDeploymentsReadyState = "INITIALIZING"
-	CreateProject200ApplicationJSONLatestDeploymentsReadyStateQueued       CreateProject200ApplicationJSONLatestDeploymentsReadyState = "QUEUED"
-	CreateProject200ApplicationJSONLatestDeploymentsReadyStateReady        CreateProject200ApplicationJSONLatestDeploymentsReadyState = "READY"
-	CreateProject200ApplicationJSONLatestDeploymentsReadyStateCanceled     CreateProject200ApplicationJSONLatestDeploymentsReadyState = "CANCELED"
+	CreateProjectReadyStateBuilding     CreateProjectReadyState = "BUILDING"
+	CreateProjectReadyStateError        CreateProjectReadyState = "ERROR"
+	CreateProjectReadyStateInitializing CreateProjectReadyState = "INITIALIZING"
+	CreateProjectReadyStateQueued       CreateProjectReadyState = "QUEUED"
+	CreateProjectReadyStateReady        CreateProjectReadyState = "READY"
+	CreateProjectReadyStateCanceled     CreateProjectReadyState = "CANCELED"
 )
 
-func (e CreateProject200ApplicationJSONLatestDeploymentsReadyState) ToPointer() *CreateProject200ApplicationJSONLatestDeploymentsReadyState {
+func (e CreateProjectReadyState) ToPointer() *CreateProjectReadyState {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONLatestDeploymentsReadyState) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2363,25 +2363,25 @@ func (e *CreateProject200ApplicationJSONLatestDeploymentsReadyState) UnmarshalJS
 	case "READY":
 		fallthrough
 	case "CANCELED":
-		*e = CreateProject200ApplicationJSONLatestDeploymentsReadyState(v)
+		*e = CreateProjectReadyState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONLatestDeploymentsReadyState: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectReadyState: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONLatestDeploymentsReadySubstate string
+type CreateProjectReadySubstate string
 
 const (
-	CreateProject200ApplicationJSONLatestDeploymentsReadySubstateStaged   CreateProject200ApplicationJSONLatestDeploymentsReadySubstate = "STAGED"
-	CreateProject200ApplicationJSONLatestDeploymentsReadySubstatePromoted CreateProject200ApplicationJSONLatestDeploymentsReadySubstate = "PROMOTED"
+	CreateProjectReadySubstateStaged   CreateProjectReadySubstate = "STAGED"
+	CreateProjectReadySubstatePromoted CreateProjectReadySubstate = "PROMOTED"
 )
 
-func (e CreateProject200ApplicationJSONLatestDeploymentsReadySubstate) ToPointer() *CreateProject200ApplicationJSONLatestDeploymentsReadySubstate {
+func (e CreateProjectReadySubstate) ToPointer() *CreateProjectReadySubstate {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONLatestDeploymentsReadySubstate) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectReadySubstate) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2390,306 +2390,306 @@ func (e *CreateProject200ApplicationJSONLatestDeploymentsReadySubstate) Unmarsha
 	case "STAGED":
 		fallthrough
 	case "PROMOTED":
-		*e = CreateProject200ApplicationJSONLatestDeploymentsReadySubstate(v)
+		*e = CreateProjectReadySubstate(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONLatestDeploymentsReadySubstate: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectReadySubstate: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONLatestDeploymentsType string
+type CreateProjectProjectsResponse200ApplicationJSONType string
 
 const (
-	CreateProject200ApplicationJSONLatestDeploymentsTypeLambdas CreateProject200ApplicationJSONLatestDeploymentsType = "LAMBDAS"
+	CreateProjectProjectsResponse200ApplicationJSONTypeLambdas CreateProjectProjectsResponse200ApplicationJSONType = "LAMBDAS"
 )
 
-func (e CreateProject200ApplicationJSONLatestDeploymentsType) ToPointer() *CreateProject200ApplicationJSONLatestDeploymentsType {
+func (e CreateProjectProjectsResponse200ApplicationJSONType) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONType {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONLatestDeploymentsType) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "LAMBDAS":
-		*e = CreateProject200ApplicationJSONLatestDeploymentsType(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONLatestDeploymentsType: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONType: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONLatestDeployments struct {
-	Alias                  []string                                                          `json:"alias,omitempty"`
-	AliasAssigned          *CreateProject200ApplicationJSONLatestDeploymentsAliasAssigned    `json:"aliasAssigned,omitempty"`
-	AliasError             *CreateProject200ApplicationJSONLatestDeploymentsAliasError       `json:"aliasError,omitempty"`
-	AliasFinal             *string                                                           `json:"aliasFinal,omitempty"`
-	AutomaticAliases       []string                                                          `json:"automaticAliases,omitempty"`
-	BuildingAt             *int64                                                            `json:"buildingAt,omitempty"`
-	Builds                 []CreateProject200ApplicationJSONLatestDeploymentsBuilds          `json:"builds,omitempty"`
-	ChecksConclusion       *CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion `json:"checksConclusion,omitempty"`
-	ChecksState            *CreateProject200ApplicationJSONLatestDeploymentsChecksState      `json:"checksState,omitempty"`
-	ConnectBuildsEnabled   *bool                                                             `json:"connectBuildsEnabled,omitempty"`
-	ConnectConfigurationID *string                                                           `json:"connectConfigurationId,omitempty"`
-	CreatedAt              int64                                                             `json:"createdAt"`
-	CreatedIn              string                                                            `json:"createdIn"`
-	Creator                *CreateProject200ApplicationJSONLatestDeploymentsCreator          `json:"creator"`
-	DeploymentHostname     string                                                            `json:"deploymentHostname"`
-	Forced                 *bool                                                             `json:"forced,omitempty"`
-	ID                     string                                                            `json:"id"`
-	Meta                   map[string]string                                                 `json:"meta,omitempty"`
-	MonorepoManager        *string                                                           `json:"monorepoManager,omitempty"`
-	Name                   string                                                            `json:"name"`
-	Plan                   CreateProject200ApplicationJSONLatestDeploymentsPlan              `json:"plan"`
+type LatestDeployments struct {
+	Alias                  []string                       `json:"alias,omitempty"`
+	AliasAssigned          *CreateProjectAliasAssigned    `json:"aliasAssigned,omitempty"`
+	AliasError             *CreateProjectAliasError       `json:"aliasError,omitempty"`
+	AliasFinal             *string                        `json:"aliasFinal,omitempty"`
+	AutomaticAliases       []string                       `json:"automaticAliases,omitempty"`
+	BuildingAt             *int64                         `json:"buildingAt,omitempty"`
+	Builds                 []CreateProjectBuilds          `json:"builds,omitempty"`
+	ChecksConclusion       *CreateProjectChecksConclusion `json:"checksConclusion,omitempty"`
+	ChecksState            *CreateProjectChecksState      `json:"checksState,omitempty"`
+	ConnectBuildsEnabled   *bool                          `json:"connectBuildsEnabled,omitempty"`
+	ConnectConfigurationID *string                        `json:"connectConfigurationId,omitempty"`
+	CreatedAt              int64                          `json:"createdAt"`
+	CreatedIn              string                         `json:"createdIn"`
+	Creator                *CreateProjectCreator          `json:"creator"`
+	DeploymentHostname     string                         `json:"deploymentHostname"`
+	Forced                 *bool                          `json:"forced,omitempty"`
+	ID                     string                         `json:"id"`
+	Meta                   map[string]string              `json:"meta,omitempty"`
+	MonorepoManager        *string                        `json:"monorepoManager,omitempty"`
+	Name                   string                         `json:"name"`
+	Plan                   CreateProjectPlan              `json:"plan"`
 	// Whether or not preview comments are enabled for the deployment
-	PreviewCommentsEnabled *bool                                                          `json:"previewCommentsEnabled,omitempty"`
-	Private                bool                                                           `json:"private"`
-	ReadyAt                *int64                                                         `json:"readyAt,omitempty"`
-	ReadyState             CreateProject200ApplicationJSONLatestDeploymentsReadyState     `json:"readyState"`
-	ReadySubstate          *CreateProject200ApplicationJSONLatestDeploymentsReadySubstate `json:"readySubstate,omitempty"`
-	RequestedAt            *int64                                                         `json:"requestedAt,omitempty"`
-	Target                 *string                                                        `json:"target,omitempty"`
-	TeamID                 *string                                                        `json:"teamId,omitempty"`
-	Type                   CreateProject200ApplicationJSONLatestDeploymentsType           `json:"type"`
-	URL                    string                                                         `json:"url"`
-	UserID                 string                                                         `json:"userId"`
-	WithCache              *bool                                                          `json:"withCache,omitempty"`
+	PreviewCommentsEnabled *bool                                               `json:"previewCommentsEnabled,omitempty"`
+	Private                bool                                                `json:"private"`
+	ReadyAt                *int64                                              `json:"readyAt,omitempty"`
+	ReadyState             CreateProjectReadyState                             `json:"readyState"`
+	ReadySubstate          *CreateProjectReadySubstate                         `json:"readySubstate,omitempty"`
+	RequestedAt            *int64                                              `json:"requestedAt,omitempty"`
+	Target                 *string                                             `json:"target,omitempty"`
+	TeamID                 *string                                             `json:"teamId,omitempty"`
+	Type                   CreateProjectProjectsResponse200ApplicationJSONType `json:"type"`
+	URL                    string                                              `json:"url"`
+	UserID                 string                                              `json:"userId"`
+	WithCache              *bool                                               `json:"withCache,omitempty"`
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetAlias() []string {
+func (o *LatestDeployments) GetAlias() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Alias
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetAliasAssigned() *CreateProject200ApplicationJSONLatestDeploymentsAliasAssigned {
+func (o *LatestDeployments) GetAliasAssigned() *CreateProjectAliasAssigned {
 	if o == nil {
 		return nil
 	}
 	return o.AliasAssigned
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetAliasError() *CreateProject200ApplicationJSONLatestDeploymentsAliasError {
+func (o *LatestDeployments) GetAliasError() *CreateProjectAliasError {
 	if o == nil {
 		return nil
 	}
 	return o.AliasError
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetAliasFinal() *string {
+func (o *LatestDeployments) GetAliasFinal() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AliasFinal
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetAutomaticAliases() []string {
+func (o *LatestDeployments) GetAutomaticAliases() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AutomaticAliases
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetBuildingAt() *int64 {
+func (o *LatestDeployments) GetBuildingAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.BuildingAt
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetBuilds() []CreateProject200ApplicationJSONLatestDeploymentsBuilds {
+func (o *LatestDeployments) GetBuilds() []CreateProjectBuilds {
 	if o == nil {
 		return nil
 	}
 	return o.Builds
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetChecksConclusion() *CreateProject200ApplicationJSONLatestDeploymentsChecksConclusion {
+func (o *LatestDeployments) GetChecksConclusion() *CreateProjectChecksConclusion {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksConclusion
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetChecksState() *CreateProject200ApplicationJSONLatestDeploymentsChecksState {
+func (o *LatestDeployments) GetChecksState() *CreateProjectChecksState {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksState
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetConnectBuildsEnabled() *bool {
+func (o *LatestDeployments) GetConnectBuildsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectBuildsEnabled
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetConnectConfigurationID() *string {
+func (o *LatestDeployments) GetConnectConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectConfigurationID
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetCreatedAt() int64 {
+func (o *LatestDeployments) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetCreatedIn() string {
+func (o *LatestDeployments) GetCreatedIn() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedIn
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetCreator() *CreateProject200ApplicationJSONLatestDeploymentsCreator {
+func (o *LatestDeployments) GetCreator() *CreateProjectCreator {
 	if o == nil {
 		return nil
 	}
 	return o.Creator
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetDeploymentHostname() string {
+func (o *LatestDeployments) GetDeploymentHostname() string {
 	if o == nil {
 		return ""
 	}
 	return o.DeploymentHostname
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetForced() *bool {
+func (o *LatestDeployments) GetForced() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Forced
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetID() string {
+func (o *LatestDeployments) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetMeta() map[string]string {
+func (o *LatestDeployments) GetMeta() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Meta
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetMonorepoManager() *string {
+func (o *LatestDeployments) GetMonorepoManager() *string {
 	if o == nil {
 		return nil
 	}
 	return o.MonorepoManager
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetName() string {
+func (o *LatestDeployments) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetPlan() CreateProject200ApplicationJSONLatestDeploymentsPlan {
+func (o *LatestDeployments) GetPlan() CreateProjectPlan {
 	if o == nil {
-		return CreateProject200ApplicationJSONLatestDeploymentsPlan("")
+		return CreateProjectPlan("")
 	}
 	return o.Plan
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetPreviewCommentsEnabled() *bool {
+func (o *LatestDeployments) GetPreviewCommentsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.PreviewCommentsEnabled
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetPrivate() bool {
+func (o *LatestDeployments) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetReadyAt() *int64 {
+func (o *LatestDeployments) GetReadyAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ReadyAt
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetReadyState() CreateProject200ApplicationJSONLatestDeploymentsReadyState {
+func (o *LatestDeployments) GetReadyState() CreateProjectReadyState {
 	if o == nil {
-		return CreateProject200ApplicationJSONLatestDeploymentsReadyState("")
+		return CreateProjectReadyState("")
 	}
 	return o.ReadyState
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetReadySubstate() *CreateProject200ApplicationJSONLatestDeploymentsReadySubstate {
+func (o *LatestDeployments) GetReadySubstate() *CreateProjectReadySubstate {
 	if o == nil {
 		return nil
 	}
 	return o.ReadySubstate
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetRequestedAt() *int64 {
+func (o *LatestDeployments) GetRequestedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.RequestedAt
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetTarget() *string {
+func (o *LatestDeployments) GetTarget() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetTeamID() *string {
+func (o *LatestDeployments) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetType() CreateProject200ApplicationJSONLatestDeploymentsType {
+func (o *LatestDeployments) GetType() CreateProjectProjectsResponse200ApplicationJSONType {
 	if o == nil {
-		return CreateProject200ApplicationJSONLatestDeploymentsType("")
+		return CreateProjectProjectsResponse200ApplicationJSONType("")
 	}
 	return o.Type
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetURL() string {
+func (o *LatestDeployments) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetUserID() string {
+func (o *LatestDeployments) GetUserID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UserID
 }
 
-func (o *CreateProject200ApplicationJSONLatestDeployments) GetWithCache() *bool {
+func (o *LatestDeployments) GetWithCache() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.WithCache
 }
 
-type CreateProject200ApplicationJSONLink3DeployHooks struct {
+type CreateProjectProjectsDeployHooks struct {
 	CreatedAt *int64 `json:"createdAt,omitempty"`
 	ID        string `json:"id"`
 	Name      string `json:"name"`
@@ -2697,165 +2697,165 @@ type CreateProject200ApplicationJSONLink3DeployHooks struct {
 	URL       string `json:"url"`
 }
 
-func (o *CreateProject200ApplicationJSONLink3DeployHooks) GetCreatedAt() *int64 {
+func (o *CreateProjectProjectsDeployHooks) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSONLink3DeployHooks) GetID() string {
+func (o *CreateProjectProjectsDeployHooks) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateProject200ApplicationJSONLink3DeployHooks) GetName() string {
+func (o *CreateProjectProjectsDeployHooks) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateProject200ApplicationJSONLink3DeployHooks) GetRef() string {
+func (o *CreateProjectProjectsDeployHooks) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateProject200ApplicationJSONLink3DeployHooks) GetURL() string {
+func (o *CreateProjectProjectsDeployHooks) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-type CreateProject200ApplicationJSONLink3Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink3Type string
 
 const (
-	CreateProject200ApplicationJSONLink3TypeBitbucket CreateProject200ApplicationJSONLink3Type = "bitbucket"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink3TypeBitbucket CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink3Type = "bitbucket"
 )
 
-func (e CreateProject200ApplicationJSONLink3Type) ToPointer() *CreateProject200ApplicationJSONLink3Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink3Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink3Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONLink3Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = CreateProject200ApplicationJSONLink3Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink3Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONLink3Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink3Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONLink3 struct {
-	CreatedAt        *int64                                            `json:"createdAt,omitempty"`
-	DeployHooks      []CreateProject200ApplicationJSONLink3DeployHooks `json:"deployHooks"`
-	GitCredentialID  *string                                           `json:"gitCredentialId,omitempty"`
-	Name             *string                                           `json:"name,omitempty"`
-	Owner            *string                                           `json:"owner,omitempty"`
-	ProductionBranch *string                                           `json:"productionBranch,omitempty"`
-	Slug             *string                                           `json:"slug,omitempty"`
-	Sourceless       *bool                                             `json:"sourceless,omitempty"`
-	Type             *CreateProject200ApplicationJSONLink3Type         `json:"type,omitempty"`
-	UpdatedAt        *int64                                            `json:"updatedAt,omitempty"`
-	UUID             *string                                           `json:"uuid,omitempty"`
-	WorkspaceUUID    *string                                           `json:"workspaceUuid,omitempty"`
+type CreateProject3 struct {
+	CreatedAt        *int64                                                                `json:"createdAt,omitempty"`
+	DeployHooks      []CreateProjectProjectsDeployHooks                                    `json:"deployHooks"`
+	GitCredentialID  *string                                                               `json:"gitCredentialId,omitempty"`
+	Name             *string                                                               `json:"name,omitempty"`
+	Owner            *string                                                               `json:"owner,omitempty"`
+	ProductionBranch *string                                                               `json:"productionBranch,omitempty"`
+	Slug             *string                                                               `json:"slug,omitempty"`
+	Sourceless       *bool                                                                 `json:"sourceless,omitempty"`
+	Type             *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink3Type `json:"type,omitempty"`
+	UpdatedAt        *int64                                                                `json:"updatedAt,omitempty"`
+	UUID             *string                                                               `json:"uuid,omitempty"`
+	WorkspaceUUID    *string                                                               `json:"workspaceUuid,omitempty"`
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetCreatedAt() *int64 {
+func (o *CreateProject3) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetDeployHooks() []CreateProject200ApplicationJSONLink3DeployHooks {
+func (o *CreateProject3) GetDeployHooks() []CreateProjectProjectsDeployHooks {
 	if o == nil {
-		return []CreateProject200ApplicationJSONLink3DeployHooks{}
+		return []CreateProjectProjectsDeployHooks{}
 	}
 	return o.DeployHooks
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetGitCredentialID() *string {
+func (o *CreateProject3) GetGitCredentialID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitCredentialID
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetName() *string {
+func (o *CreateProject3) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetOwner() *string {
+func (o *CreateProject3) GetOwner() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Owner
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetProductionBranch() *string {
+func (o *CreateProject3) GetProductionBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProductionBranch
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetSlug() *string {
+func (o *CreateProject3) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Slug
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetSourceless() *bool {
+func (o *CreateProject3) GetSourceless() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Sourceless
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetType() *CreateProject200ApplicationJSONLink3Type {
+func (o *CreateProject3) GetType() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink3Type {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetUpdatedAt() *int64 {
+func (o *CreateProject3) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetUUID() *string {
+func (o *CreateProject3) GetUUID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.UUID
 }
 
-func (o *CreateProject200ApplicationJSONLink3) GetWorkspaceUUID() *string {
+func (o *CreateProject3) GetWorkspaceUUID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.WorkspaceUUID
 }
 
-type CreateProject200ApplicationJSONLink2DeployHooks struct {
+type CreateProjectDeployHooks struct {
 	CreatedAt *int64 `json:"createdAt,omitempty"`
 	ID        string `json:"id"`
 	Name      string `json:"name"`
@@ -2863,165 +2863,165 @@ type CreateProject200ApplicationJSONLink2DeployHooks struct {
 	URL       string `json:"url"`
 }
 
-func (o *CreateProject200ApplicationJSONLink2DeployHooks) GetCreatedAt() *int64 {
+func (o *CreateProjectDeployHooks) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSONLink2DeployHooks) GetID() string {
+func (o *CreateProjectDeployHooks) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateProject200ApplicationJSONLink2DeployHooks) GetName() string {
+func (o *CreateProjectDeployHooks) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateProject200ApplicationJSONLink2DeployHooks) GetRef() string {
+func (o *CreateProjectDeployHooks) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateProject200ApplicationJSONLink2DeployHooks) GetURL() string {
+func (o *CreateProjectDeployHooks) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-type CreateProject200ApplicationJSONLink2Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyLinkType string
 
 const (
-	CreateProject200ApplicationJSONLink2TypeGitlab CreateProject200ApplicationJSONLink2Type = "gitlab"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyLinkTypeGitlab CreateProjectProjectsResponse200ApplicationJSONResponseBodyLinkType = "gitlab"
 )
 
-func (e CreateProject200ApplicationJSONLink2Type) ToPointer() *CreateProject200ApplicationJSONLink2Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyLinkType) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLinkType {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONLink2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLinkType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = CreateProject200ApplicationJSONLink2Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyLinkType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONLink2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyLinkType: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONLink2 struct {
-	CreatedAt                *int64                                            `json:"createdAt,omitempty"`
-	DeployHooks              []CreateProject200ApplicationJSONLink2DeployHooks `json:"deployHooks"`
-	GitCredentialID          *string                                           `json:"gitCredentialId,omitempty"`
-	ProductionBranch         *string                                           `json:"productionBranch,omitempty"`
-	ProjectID                *string                                           `json:"projectId,omitempty"`
-	ProjectName              *string                                           `json:"projectName,omitempty"`
-	ProjectNameWithNamespace *string                                           `json:"projectNameWithNamespace,omitempty"`
-	ProjectNamespace         *string                                           `json:"projectNamespace,omitempty"`
-	ProjectURL               *string                                           `json:"projectUrl,omitempty"`
-	Sourceless               *bool                                             `json:"sourceless,omitempty"`
-	Type                     *CreateProject200ApplicationJSONLink2Type         `json:"type,omitempty"`
-	UpdatedAt                *int64                                            `json:"updatedAt,omitempty"`
+type CreateProjectProjects2 struct {
+	CreatedAt                *int64                                                               `json:"createdAt,omitempty"`
+	DeployHooks              []CreateProjectDeployHooks                                           `json:"deployHooks"`
+	GitCredentialID          *string                                                              `json:"gitCredentialId,omitempty"`
+	ProductionBranch         *string                                                              `json:"productionBranch,omitempty"`
+	ProjectID                *string                                                              `json:"projectId,omitempty"`
+	ProjectName              *string                                                              `json:"projectName,omitempty"`
+	ProjectNameWithNamespace *string                                                              `json:"projectNameWithNamespace,omitempty"`
+	ProjectNamespace         *string                                                              `json:"projectNamespace,omitempty"`
+	ProjectURL               *string                                                              `json:"projectUrl,omitempty"`
+	Sourceless               *bool                                                                `json:"sourceless,omitempty"`
+	Type                     *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLinkType `json:"type,omitempty"`
+	UpdatedAt                *int64                                                               `json:"updatedAt,omitempty"`
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetCreatedAt() *int64 {
+func (o *CreateProjectProjects2) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetDeployHooks() []CreateProject200ApplicationJSONLink2DeployHooks {
+func (o *CreateProjectProjects2) GetDeployHooks() []CreateProjectDeployHooks {
 	if o == nil {
-		return []CreateProject200ApplicationJSONLink2DeployHooks{}
+		return []CreateProjectDeployHooks{}
 	}
 	return o.DeployHooks
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetGitCredentialID() *string {
+func (o *CreateProjectProjects2) GetGitCredentialID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitCredentialID
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetProductionBranch() *string {
+func (o *CreateProjectProjects2) GetProductionBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProductionBranch
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetProjectID() *string {
+func (o *CreateProjectProjects2) GetProjectID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectID
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetProjectName() *string {
+func (o *CreateProjectProjects2) GetProjectName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectName
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetProjectNameWithNamespace() *string {
+func (o *CreateProjectProjects2) GetProjectNameWithNamespace() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectNameWithNamespace
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetProjectNamespace() *string {
+func (o *CreateProjectProjects2) GetProjectNamespace() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectNamespace
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetProjectURL() *string {
+func (o *CreateProjectProjects2) GetProjectURL() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectURL
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetSourceless() *bool {
+func (o *CreateProjectProjects2) GetSourceless() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Sourceless
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetType() *CreateProject200ApplicationJSONLink2Type {
+func (o *CreateProjectProjects2) GetType() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLinkType {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *CreateProject200ApplicationJSONLink2) GetUpdatedAt() *int64 {
+func (o *CreateProjectProjects2) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-type CreateProject200ApplicationJSONLink1DeployHooks struct {
+type DeployHooks struct {
 	CreatedAt *int64 `json:"createdAt,omitempty"`
 	ID        string `json:"id"`
 	Name      string `json:"name"`
@@ -3029,248 +3029,248 @@ type CreateProject200ApplicationJSONLink1DeployHooks struct {
 	URL       string `json:"url"`
 }
 
-func (o *CreateProject200ApplicationJSONLink1DeployHooks) GetCreatedAt() *int64 {
+func (o *DeployHooks) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSONLink1DeployHooks) GetID() string {
+func (o *DeployHooks) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateProject200ApplicationJSONLink1DeployHooks) GetName() string {
+func (o *DeployHooks) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateProject200ApplicationJSONLink1DeployHooks) GetRef() string {
+func (o *DeployHooks) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateProject200ApplicationJSONLink1DeployHooks) GetURL() string {
+func (o *DeployHooks) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-type CreateProject200ApplicationJSONLink1Type string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink1Type string
 
 const (
-	CreateProject200ApplicationJSONLink1TypeGithub CreateProject200ApplicationJSONLink1Type = "github"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink1TypeGithub CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink1Type = "github"
 )
 
-func (e CreateProject200ApplicationJSONLink1Type) ToPointer() *CreateProject200ApplicationJSONLink1Type {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink1Type) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink1Type {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONLink1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = CreateProject200ApplicationJSONLink1Type(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONLink1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink1Type: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONLink1 struct {
-	CreatedAt        *int64                                            `json:"createdAt,omitempty"`
-	DeployHooks      []CreateProject200ApplicationJSONLink1DeployHooks `json:"deployHooks"`
-	GitCredentialID  *string                                           `json:"gitCredentialId,omitempty"`
-	Org              *string                                           `json:"org,omitempty"`
-	ProductionBranch *string                                           `json:"productionBranch,omitempty"`
-	Repo             *string                                           `json:"repo,omitempty"`
-	RepoID           *int64                                            `json:"repoId,omitempty"`
-	Sourceless       *bool                                             `json:"sourceless,omitempty"`
-	Type             *CreateProject200ApplicationJSONLink1Type         `json:"type,omitempty"`
-	UpdatedAt        *int64                                            `json:"updatedAt,omitempty"`
+type CreateProjectProjects1 struct {
+	CreatedAt        *int64                                                                `json:"createdAt,omitempty"`
+	DeployHooks      []DeployHooks                                                         `json:"deployHooks"`
+	GitCredentialID  *string                                                               `json:"gitCredentialId,omitempty"`
+	Org              *string                                                               `json:"org,omitempty"`
+	ProductionBranch *string                                                               `json:"productionBranch,omitempty"`
+	Repo             *string                                                               `json:"repo,omitempty"`
+	RepoID           *int64                                                                `json:"repoId,omitempty"`
+	Sourceless       *bool                                                                 `json:"sourceless,omitempty"`
+	Type             *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink1Type `json:"type,omitempty"`
+	UpdatedAt        *int64                                                                `json:"updatedAt,omitempty"`
 }
 
-func (o *CreateProject200ApplicationJSONLink1) GetCreatedAt() *int64 {
+func (o *CreateProjectProjects1) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSONLink1) GetDeployHooks() []CreateProject200ApplicationJSONLink1DeployHooks {
+func (o *CreateProjectProjects1) GetDeployHooks() []DeployHooks {
 	if o == nil {
-		return []CreateProject200ApplicationJSONLink1DeployHooks{}
+		return []DeployHooks{}
 	}
 	return o.DeployHooks
 }
 
-func (o *CreateProject200ApplicationJSONLink1) GetGitCredentialID() *string {
+func (o *CreateProjectProjects1) GetGitCredentialID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitCredentialID
 }
 
-func (o *CreateProject200ApplicationJSONLink1) GetOrg() *string {
+func (o *CreateProjectProjects1) GetOrg() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Org
 }
 
-func (o *CreateProject200ApplicationJSONLink1) GetProductionBranch() *string {
+func (o *CreateProjectProjects1) GetProductionBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProductionBranch
 }
 
-func (o *CreateProject200ApplicationJSONLink1) GetRepo() *string {
+func (o *CreateProjectProjects1) GetRepo() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Repo
 }
 
-func (o *CreateProject200ApplicationJSONLink1) GetRepoID() *int64 {
+func (o *CreateProjectProjects1) GetRepoID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.RepoID
 }
 
-func (o *CreateProject200ApplicationJSONLink1) GetSourceless() *bool {
+func (o *CreateProjectProjects1) GetSourceless() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Sourceless
 }
 
-func (o *CreateProject200ApplicationJSONLink1) GetType() *CreateProject200ApplicationJSONLink1Type {
+func (o *CreateProjectProjects1) GetType() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyLink1Type {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *CreateProject200ApplicationJSONLink1) GetUpdatedAt() *int64 {
+func (o *CreateProjectProjects1) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-type CreateProject200ApplicationJSONLinkType string
+type LinkType string
 
 const (
-	CreateProject200ApplicationJSONLinkTypeCreateProject200ApplicationJSONLink1 CreateProject200ApplicationJSONLinkType = "createProject_200ApplicationJSON_link_1"
-	CreateProject200ApplicationJSONLinkTypeCreateProject200ApplicationJSONLink2 CreateProject200ApplicationJSONLinkType = "createProject_200ApplicationJSON_link_2"
-	CreateProject200ApplicationJSONLinkTypeCreateProject200ApplicationJSONLink3 CreateProject200ApplicationJSONLinkType = "createProject_200ApplicationJSON_link_3"
+	LinkTypeCreateProjectProjects1 LinkType = "createProject_projects_1"
+	LinkTypeCreateProjectProjects2 LinkType = "createProject_projects_2"
+	LinkTypeCreateProject3         LinkType = "createProject_3"
 )
 
-type CreateProject200ApplicationJSONLink struct {
-	CreateProject200ApplicationJSONLink1 *CreateProject200ApplicationJSONLink1
-	CreateProject200ApplicationJSONLink2 *CreateProject200ApplicationJSONLink2
-	CreateProject200ApplicationJSONLink3 *CreateProject200ApplicationJSONLink3
+type Link struct {
+	CreateProjectProjects1 *CreateProjectProjects1
+	CreateProjectProjects2 *CreateProjectProjects2
+	CreateProject3         *CreateProject3
 
-	Type CreateProject200ApplicationJSONLinkType
+	Type LinkType
 }
 
-func CreateCreateProject200ApplicationJSONLinkCreateProject200ApplicationJSONLink1(createProject200ApplicationJSONLink1 CreateProject200ApplicationJSONLink1) CreateProject200ApplicationJSONLink {
-	typ := CreateProject200ApplicationJSONLinkTypeCreateProject200ApplicationJSONLink1
+func CreateLinkCreateProjectProjects1(createProjectProjects1 CreateProjectProjects1) Link {
+	typ := LinkTypeCreateProjectProjects1
 
-	return CreateProject200ApplicationJSONLink{
-		CreateProject200ApplicationJSONLink1: &createProject200ApplicationJSONLink1,
-		Type:                                 typ,
+	return Link{
+		CreateProjectProjects1: &createProjectProjects1,
+		Type:                   typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONLinkCreateProject200ApplicationJSONLink2(createProject200ApplicationJSONLink2 CreateProject200ApplicationJSONLink2) CreateProject200ApplicationJSONLink {
-	typ := CreateProject200ApplicationJSONLinkTypeCreateProject200ApplicationJSONLink2
+func CreateLinkCreateProjectProjects2(createProjectProjects2 CreateProjectProjects2) Link {
+	typ := LinkTypeCreateProjectProjects2
 
-	return CreateProject200ApplicationJSONLink{
-		CreateProject200ApplicationJSONLink2: &createProject200ApplicationJSONLink2,
-		Type:                                 typ,
+	return Link{
+		CreateProjectProjects2: &createProjectProjects2,
+		Type:                   typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONLinkCreateProject200ApplicationJSONLink3(createProject200ApplicationJSONLink3 CreateProject200ApplicationJSONLink3) CreateProject200ApplicationJSONLink {
-	typ := CreateProject200ApplicationJSONLinkTypeCreateProject200ApplicationJSONLink3
+func CreateLinkCreateProject3(createProject3 CreateProject3) Link {
+	typ := LinkTypeCreateProject3
 
-	return CreateProject200ApplicationJSONLink{
-		CreateProject200ApplicationJSONLink3: &createProject200ApplicationJSONLink3,
-		Type:                                 typ,
+	return Link{
+		CreateProject3: &createProject3,
+		Type:           typ,
 	}
 }
 
-func (u *CreateProject200ApplicationJSONLink) UnmarshalJSON(data []byte) error {
+func (u *Link) UnmarshalJSON(data []byte) error {
 
-	createProject200ApplicationJSONLink1 := new(CreateProject200ApplicationJSONLink1)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONLink1, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONLink1 = createProject200ApplicationJSONLink1
-		u.Type = CreateProject200ApplicationJSONLinkTypeCreateProject200ApplicationJSONLink1
+	createProjectProjects1 := new(CreateProjectProjects1)
+	if err := utils.UnmarshalJSON(data, &createProjectProjects1, "", true, true); err == nil {
+		u.CreateProjectProjects1 = createProjectProjects1
+		u.Type = LinkTypeCreateProjectProjects1
 		return nil
 	}
 
-	createProject200ApplicationJSONLink2 := new(CreateProject200ApplicationJSONLink2)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONLink2, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONLink2 = createProject200ApplicationJSONLink2
-		u.Type = CreateProject200ApplicationJSONLinkTypeCreateProject200ApplicationJSONLink2
+	createProjectProjects2 := new(CreateProjectProjects2)
+	if err := utils.UnmarshalJSON(data, &createProjectProjects2, "", true, true); err == nil {
+		u.CreateProjectProjects2 = createProjectProjects2
+		u.Type = LinkTypeCreateProjectProjects2
 		return nil
 	}
 
-	createProject200ApplicationJSONLink3 := new(CreateProject200ApplicationJSONLink3)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONLink3, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONLink3 = createProject200ApplicationJSONLink3
-		u.Type = CreateProject200ApplicationJSONLinkTypeCreateProject200ApplicationJSONLink3
+	createProject3 := new(CreateProject3)
+	if err := utils.UnmarshalJSON(data, &createProject3, "", true, true); err == nil {
+		u.CreateProject3 = createProject3
+		u.Type = LinkTypeCreateProject3
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProject200ApplicationJSONLink) MarshalJSON() ([]byte, error) {
-	if u.CreateProject200ApplicationJSONLink1 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONLink1, "", true)
+func (u Link) MarshalJSON() ([]byte, error) {
+	if u.CreateProjectProjects1 != nil {
+		return utils.MarshalJSON(u.CreateProjectProjects1, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONLink2 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONLink2, "", true)
+	if u.CreateProjectProjects2 != nil {
+		return utils.MarshalJSON(u.CreateProjectProjects2, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONLink3 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONLink3, "", true)
+	if u.CreateProject3 != nil {
+		return utils.MarshalJSON(u.CreateProject3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProject200ApplicationJSONNodeVersion string
+type CreateProjectNodeVersion string
 
 const (
-	CreateProject200ApplicationJSONNodeVersionEighteenX CreateProject200ApplicationJSONNodeVersion = "18.x"
-	CreateProject200ApplicationJSONNodeVersionSixteenX  CreateProject200ApplicationJSONNodeVersion = "16.x"
-	CreateProject200ApplicationJSONNodeVersionFourteenX CreateProject200ApplicationJSONNodeVersion = "14.x"
-	CreateProject200ApplicationJSONNodeVersionTwelveX   CreateProject200ApplicationJSONNodeVersion = "12.x"
-	CreateProject200ApplicationJSONNodeVersionTenX      CreateProject200ApplicationJSONNodeVersion = "10.x"
+	CreateProjectNodeVersionEighteenX CreateProjectNodeVersion = "18.x"
+	CreateProjectNodeVersionSixteenX  CreateProjectNodeVersion = "16.x"
+	CreateProjectNodeVersionFourteenX CreateProjectNodeVersion = "14.x"
+	CreateProjectNodeVersionTwelveX   CreateProjectNodeVersion = "12.x"
+	CreateProjectNodeVersionTenX      CreateProjectNodeVersion = "10.x"
 )
 
-func (e CreateProject200ApplicationJSONNodeVersion) ToPointer() *CreateProject200ApplicationJSONNodeVersion {
+func (e CreateProjectNodeVersion) ToPointer() *CreateProjectNodeVersion {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONNodeVersion) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectNodeVersion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3285,17 +3285,17 @@ func (e *CreateProject200ApplicationJSONNodeVersion) UnmarshalJSON(data []byte) 
 	case "12.x":
 		fallthrough
 	case "10.x":
-		*e = CreateProject200ApplicationJSONNodeVersion(v)
+		*e = CreateProjectNodeVersion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONNodeVersion: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectNodeVersion: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONPasswordProtection struct {
+type CreateProjectPasswordProtection struct {
 }
 
-type CreateProject200ApplicationJSONPermissions struct {
+type Permissions struct {
 	Monitoring                               []shared.ACLAction `json:"Monitoring,omitempty"`
 	NotificationMonitoringAlert              []shared.ACLAction `json:"NotificationMonitoringAlert,omitempty"`
 	AliasGlobal                              []shared.ACLAction `json:"aliasGlobal,omitempty"`
@@ -3434,970 +3434,970 @@ type CreateProject200ApplicationJSONPermissions struct {
 	WebhookEvent                             []shared.ACLAction `json:"webhook-event,omitempty"`
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetMonitoring() []shared.ACLAction {
+func (o *Permissions) GetMonitoring() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Monitoring
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationMonitoringAlert() []shared.ACLAction {
+func (o *Permissions) GetNotificationMonitoringAlert() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationMonitoringAlert
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetAliasGlobal() []shared.ACLAction {
+func (o *Permissions) GetAliasGlobal() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.AliasGlobal
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetAliasProject() []shared.ACLAction {
+func (o *Permissions) GetAliasProject() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.AliasProject
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetAliasProtectionBypass() []shared.ACLAction {
+func (o *Permissions) GetAliasProtectionBypass() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.AliasProtectionBypass
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetAnalytics() []shared.ACLAction {
+func (o *Permissions) GetAnalytics() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Analytics
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetAnalyticsSampling() []shared.ACLAction {
+func (o *Permissions) GetAnalyticsSampling() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.AnalyticsSampling
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetAnalyticsUsage() []shared.ACLAction {
+func (o *Permissions) GetAnalyticsUsage() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.AnalyticsUsage
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetAuditLog() []shared.ACLAction {
+func (o *Permissions) GetAuditLog() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.AuditLog
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetBillingAddress() []shared.ACLAction {
+func (o *Permissions) GetBillingAddress() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.BillingAddress
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetBillingInformation() []shared.ACLAction {
+func (o *Permissions) GetBillingInformation() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.BillingInformation
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetBillingInvoice() []shared.ACLAction {
+func (o *Permissions) GetBillingInvoice() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.BillingInvoice
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetBillingInvoiceEmailRecipient() []shared.ACLAction {
+func (o *Permissions) GetBillingInvoiceEmailRecipient() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.BillingInvoiceEmailRecipient
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetBillingInvoiceLanguage() []shared.ACLAction {
+func (o *Permissions) GetBillingInvoiceLanguage() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.BillingInvoiceLanguage
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetBillingPlan() []shared.ACLAction {
+func (o *Permissions) GetBillingPlan() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.BillingPlan
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetBillingPurchaseOrder() []shared.ACLAction {
+func (o *Permissions) GetBillingPurchaseOrder() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.BillingPurchaseOrder
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetBillingTaxID() []shared.ACLAction {
+func (o *Permissions) GetBillingTaxID() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.BillingTaxID
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetBlob() []shared.ACLAction {
+func (o *Permissions) GetBlob() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Blob
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetBudget() []shared.ACLAction {
+func (o *Permissions) GetBudget() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Budget
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetCacheArtifact() []shared.ACLAction {
+func (o *Permissions) GetCacheArtifact() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.CacheArtifact
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetCacheArtifactUsageEvent() []shared.ACLAction {
+func (o *Permissions) GetCacheArtifactUsageEvent() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.CacheArtifactUsageEvent
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetConcurrentBuilds() []shared.ACLAction {
+func (o *Permissions) GetConcurrentBuilds() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ConcurrentBuilds
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetConnect() []shared.ACLAction {
+func (o *Permissions) GetConnect() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Connect
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetConnectConfiguration() []shared.ACLAction {
+func (o *Permissions) GetConnectConfiguration() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectConfiguration
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetConnectConfigurationLink() []shared.ACLAction {
+func (o *Permissions) GetConnectConfigurationLink() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectConfigurationLink
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDataCacheBillingSettings() []shared.ACLAction {
+func (o *Permissions) GetDataCacheBillingSettings() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DataCacheBillingSettings
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDataCacheNamespace() []shared.ACLAction {
+func (o *Permissions) GetDataCacheNamespace() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DataCacheNamespace
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDeployment() []shared.ACLAction {
+func (o *Permissions) GetDeployment() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Deployment
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDeploymentCheck() []shared.ACLAction {
+func (o *Permissions) GetDeploymentCheck() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DeploymentCheck
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDeploymentCheckPreview() []shared.ACLAction {
+func (o *Permissions) GetDeploymentCheckPreview() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DeploymentCheckPreview
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDeploymentCheckReRunFromProductionBranch() []shared.ACLAction {
+func (o *Permissions) GetDeploymentCheckReRunFromProductionBranch() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DeploymentCheckReRunFromProductionBranch
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDeploymentPreview() []shared.ACLAction {
+func (o *Permissions) GetDeploymentPreview() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DeploymentPreview
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDeploymentPrivate() []shared.ACLAction {
+func (o *Permissions) GetDeploymentPrivate() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DeploymentPrivate
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDeploymentProductionGit() []shared.ACLAction {
+func (o *Permissions) GetDeploymentProductionGit() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DeploymentProductionGit
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDeploymentPromote() []shared.ACLAction {
+func (o *Permissions) GetDeploymentPromote() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DeploymentPromote
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDeploymentRollback() []shared.ACLAction {
+func (o *Permissions) GetDeploymentRollback() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DeploymentRollback
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDomain() []shared.ACLAction {
+func (o *Permissions) GetDomain() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Domain
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDomainAcceptDelegation() []shared.ACLAction {
+func (o *Permissions) GetDomainAcceptDelegation() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DomainAcceptDelegation
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDomainAuthCodes() []shared.ACLAction {
+func (o *Permissions) GetDomainAuthCodes() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DomainAuthCodes
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDomainCertificate() []shared.ACLAction {
+func (o *Permissions) GetDomainCertificate() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DomainCertificate
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDomainCheckConfig() []shared.ACLAction {
+func (o *Permissions) GetDomainCheckConfig() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DomainCheckConfig
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDomainMove() []shared.ACLAction {
+func (o *Permissions) GetDomainMove() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DomainMove
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDomainPurchase() []shared.ACLAction {
+func (o *Permissions) GetDomainPurchase() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DomainPurchase
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDomainRecord() []shared.ACLAction {
+func (o *Permissions) GetDomainRecord() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DomainRecord
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetDomainTransferIn() []shared.ACLAction {
+func (o *Permissions) GetDomainTransferIn() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.DomainTransferIn
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetEdgeConfig() []shared.ACLAction {
+func (o *Permissions) GetEdgeConfig() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfig
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetEdgeConfigItem() []shared.ACLAction {
+func (o *Permissions) GetEdgeConfigItem() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigItem
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetEdgeConfigToken() []shared.ACLAction {
+func (o *Permissions) GetEdgeConfigToken() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigToken
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetEndpointVerification() []shared.ACLAction {
+func (o *Permissions) GetEndpointVerification() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.EndpointVerification
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetEvent() []shared.ACLAction {
+func (o *Permissions) GetEvent() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Event
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetFileUpload() []shared.ACLAction {
+func (o *Permissions) GetFileUpload() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.FileUpload
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetGitRepository() []shared.ACLAction {
+func (o *Permissions) GetGitRepository() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.GitRepository
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetIntegration() []shared.ACLAction {
+func (o *Permissions) GetIntegration() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Integration
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetIntegrationConfiguration() []shared.ACLAction {
+func (o *Permissions) GetIntegrationConfiguration() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.IntegrationConfiguration
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetIntegrationConfigurationProjects() []shared.ACLAction {
+func (o *Permissions) GetIntegrationConfigurationProjects() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.IntegrationConfigurationProjects
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetIntegrationConfigurationTransfer() []shared.ACLAction {
+func (o *Permissions) GetIntegrationConfigurationTransfer() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.IntegrationConfigurationTransfer
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetIntegrationVercelConfigurationOverride() []shared.ACLAction {
+func (o *Permissions) GetIntegrationVercelConfigurationOverride() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.IntegrationVercelConfigurationOverride
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetIPBlocking() []shared.ACLAction {
+func (o *Permissions) GetIPBlocking() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.IPBlocking
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetJob() []shared.ACLAction {
+func (o *Permissions) GetJob() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Job
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetJobGlobal() []shared.ACLAction {
+func (o *Permissions) GetJobGlobal() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.JobGlobal
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetLogDrain() []shared.ACLAction {
+func (o *Permissions) GetLogDrain() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.LogDrain
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetLogs() []shared.ACLAction {
+func (o *Permissions) GetLogs() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Logs
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetLogsPreset() []shared.ACLAction {
+func (o *Permissions) GetLogsPreset() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.LogsPreset
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetMonitoringAlert() []shared.ACLAction {
+func (o *Permissions) GetMonitoringAlert() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.MonitoringAlert
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetMonitoringChart() []shared.ACLAction {
+func (o *Permissions) GetMonitoringChart() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.MonitoringChart
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetMonitoringQuery() []shared.ACLAction {
+func (o *Permissions) GetMonitoringQuery() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.MonitoringQuery
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationCustomerBudget() []shared.ACLAction {
+func (o *Permissions) GetNotificationCustomerBudget() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationCustomerBudget
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationDeploymentFailed() []shared.ACLAction {
+func (o *Permissions) GetNotificationDeploymentFailed() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationDeploymentFailed
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationDomainConfiguration() []shared.ACLAction {
+func (o *Permissions) GetNotificationDomainConfiguration() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationDomainConfiguration
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationDomainExpire() []shared.ACLAction {
+func (o *Permissions) GetNotificationDomainExpire() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationDomainExpire
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationDomainMoved() []shared.ACLAction {
+func (o *Permissions) GetNotificationDomainMoved() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationDomainMoved
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationDomainPurchase() []shared.ACLAction {
+func (o *Permissions) GetNotificationDomainPurchase() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationDomainPurchase
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationDomainRenewal() []shared.ACLAction {
+func (o *Permissions) GetNotificationDomainRenewal() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationDomainRenewal
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationDomainTransfer() []shared.ACLAction {
+func (o *Permissions) GetNotificationDomainTransfer() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationDomainTransfer
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationDomainUnverified() []shared.ACLAction {
+func (o *Permissions) GetNotificationDomainUnverified() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationDomainUnverified
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationPaymentFailed() []shared.ACLAction {
+func (o *Permissions) GetNotificationPaymentFailed() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationPaymentFailed
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetNotificationUsageAlert() []shared.ACLAction {
+func (o *Permissions) GetNotificationUsageAlert() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.NotificationUsageAlert
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetOpenTelemetryEndpoint() []shared.ACLAction {
+func (o *Permissions) GetOpenTelemetryEndpoint() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.OpenTelemetryEndpoint
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetOwnEvent() []shared.ACLAction {
+func (o *Permissions) GetOwnEvent() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.OwnEvent
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetPasswordProtection() []shared.ACLAction {
+func (o *Permissions) GetPasswordProtection() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.PasswordProtection
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetPasswordProtectionInvoiceItem() []shared.ACLAction {
+func (o *Permissions) GetPasswordProtectionInvoiceItem() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.PasswordProtectionInvoiceItem
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetPaymentMethod() []shared.ACLAction {
+func (o *Permissions) GetPaymentMethod() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.PaymentMethod
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetPermissions() []shared.ACLAction {
+func (o *Permissions) GetPermissions() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Permissions
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetPostgres() []shared.ACLAction {
+func (o *Permissions) GetPostgres() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Postgres
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetPreviewDeploymentSuffix() []shared.ACLAction {
+func (o *Permissions) GetPreviewDeploymentSuffix() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.PreviewDeploymentSuffix
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProTrialOnboarding() []shared.ACLAction {
+func (o *Permissions) GetProTrialOnboarding() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProTrialOnboarding
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProject() []shared.ACLAction {
+func (o *Permissions) GetProject() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Project
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectAnalyticsSampling() []shared.ACLAction {
+func (o *Permissions) GetProjectAnalyticsSampling() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectAnalyticsSampling
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectAnalyticsUsage() []shared.ACLAction {
+func (o *Permissions) GetProjectAnalyticsUsage() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectAnalyticsUsage
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectDeploymentHook() []shared.ACLAction {
+func (o *Permissions) GetProjectDeploymentHook() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectDeploymentHook
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectDomain() []shared.ACLAction {
+func (o *Permissions) GetProjectDomain() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectDomain
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectDomainMove() []shared.ACLAction {
+func (o *Permissions) GetProjectDomainMove() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectDomainMove
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectEnvVars() []shared.ACLAction {
+func (o *Permissions) GetProjectEnvVars() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectEnvVars
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectEnvVarsProduction() []shared.ACLAction {
+func (o *Permissions) GetProjectEnvVarsProduction() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectEnvVarsProduction
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectEnvVarsUnownedByIntegration() []shared.ACLAction {
+func (o *Permissions) GetProjectEnvVarsUnownedByIntegration() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectEnvVarsUnownedByIntegration
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectIntegrationConfiguration() []shared.ACLAction {
+func (o *Permissions) GetProjectIntegrationConfiguration() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectIntegrationConfiguration
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectLink() []shared.ACLAction {
+func (o *Permissions) GetProjectLink() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectLink
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectMember() []shared.ACLAction {
+func (o *Permissions) GetProjectMember() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectMember
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectPermissions() []shared.ACLAction {
+func (o *Permissions) GetProjectPermissions() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectPermissions
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectProductionBranch() []shared.ACLAction {
+func (o *Permissions) GetProjectProductionBranch() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectProductionBranch
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectProtectionBypass() []shared.ACLAction {
+func (o *Permissions) GetProjectProtectionBypass() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectProtectionBypass
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectTransfer() []shared.ACLAction {
+func (o *Permissions) GetProjectTransfer() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectTransfer
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectTransferIn() []shared.ACLAction {
+func (o *Permissions) GetProjectTransferIn() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectTransferIn
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectTransferOut() []shared.ACLAction {
+func (o *Permissions) GetProjectTransferOut() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectTransferOut
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetProjectUsage() []shared.ACLAction {
+func (o *Permissions) GetProjectUsage() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectUsage
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetRateLimit() []shared.ACLAction {
+func (o *Permissions) GetRateLimit() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.RateLimit
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetRedis() []shared.ACLAction {
+func (o *Permissions) GetRedis() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Redis
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetRemoteCaching() []shared.ACLAction {
+func (o *Permissions) GetRemoteCaching() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.RemoteCaching
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetSamlConfig() []shared.ACLAction {
+func (o *Permissions) GetSamlConfig() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.SamlConfig
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetSeawallConfig() []shared.ACLAction {
+func (o *Permissions) GetSeawallConfig() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.SeawallConfig
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetSecret() []shared.ACLAction {
+func (o *Permissions) GetSecret() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Secret
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetSensitiveEnvironmentVariablePolicy() []shared.ACLAction {
+func (o *Permissions) GetSensitiveEnvironmentVariablePolicy() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.SensitiveEnvironmentVariablePolicy
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetSharedEnvVars() []shared.ACLAction {
+func (o *Permissions) GetSharedEnvVars() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.SharedEnvVars
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetSharedEnvVarsProduction() []shared.ACLAction {
+func (o *Permissions) GetSharedEnvVarsProduction() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.SharedEnvVarsProduction
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetSpace() []shared.ACLAction {
+func (o *Permissions) GetSpace() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Space
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetSpaceRun() []shared.ACLAction {
+func (o *Permissions) GetSpaceRun() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.SpaceRun
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetSupportCase() []shared.ACLAction {
+func (o *Permissions) GetSupportCase() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.SupportCase
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetSupportCaseComment() []shared.ACLAction {
+func (o *Permissions) GetSupportCaseComment() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.SupportCaseComment
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetTeam() []shared.ACLAction {
+func (o *Permissions) GetTeam() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Team
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetTeamAccessRequest() []shared.ACLAction {
+func (o *Permissions) GetTeamAccessRequest() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.TeamAccessRequest
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetTeamFellowMembership() []shared.ACLAction {
+func (o *Permissions) GetTeamFellowMembership() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.TeamFellowMembership
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetTeamInvite() []shared.ACLAction {
+func (o *Permissions) GetTeamInvite() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.TeamInvite
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetTeamInviteCode() []shared.ACLAction {
+func (o *Permissions) GetTeamInviteCode() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.TeamInviteCode
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetTeamJoin() []shared.ACLAction {
+func (o *Permissions) GetTeamJoin() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.TeamJoin
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetTeamOwnMembership() []shared.ACLAction {
+func (o *Permissions) GetTeamOwnMembership() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.TeamOwnMembership
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetTeamOwnMembershipDisconnectSAML() []shared.ACLAction {
+func (o *Permissions) GetTeamOwnMembershipDisconnectSAML() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.TeamOwnMembershipDisconnectSAML
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetToken() []shared.ACLAction {
+func (o *Permissions) GetToken() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Token
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetTrustedIps() []shared.ACLAction {
+func (o *Permissions) GetTrustedIps() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.TrustedIps
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetUsage() []shared.ACLAction {
+func (o *Permissions) GetUsage() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Usage
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetUsageCycle() []shared.ACLAction {
+func (o *Permissions) GetUsageCycle() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.UsageCycle
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetUser() []shared.ACLAction {
+func (o *Permissions) GetUser() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.User
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetUserConnection() []shared.ACLAction {
+func (o *Permissions) GetUserConnection() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.UserConnection
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetWebAnalytics() []shared.ACLAction {
+func (o *Permissions) GetWebAnalytics() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.WebAnalytics
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetWebAnalyticsPlan() []shared.ACLAction {
+func (o *Permissions) GetWebAnalyticsPlan() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.WebAnalyticsPlan
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetWebhook() []shared.ACLAction {
+func (o *Permissions) GetWebhook() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.Webhook
 }
 
-func (o *CreateProject200ApplicationJSONPermissions) GetWebhookEvent() []shared.ACLAction {
+func (o *Permissions) GetWebhookEvent() []shared.ACLAction {
 	if o == nil {
 		return nil
 	}
 	return o.WebhookEvent
 }
 
-type CreateProject200ApplicationJSONProtectionBypass2Access string
+type CreateProjectAccess string
 
 const (
-	CreateProject200ApplicationJSONProtectionBypass2AccessRequested CreateProject200ApplicationJSONProtectionBypass2Access = "requested"
-	CreateProject200ApplicationJSONProtectionBypass2AccessGranted   CreateProject200ApplicationJSONProtectionBypass2Access = "granted"
+	CreateProjectAccessRequested CreateProjectAccess = "requested"
+	CreateProjectAccessGranted   CreateProjectAccess = "granted"
 )
 
-func (e CreateProject200ApplicationJSONProtectionBypass2Access) ToPointer() *CreateProject200ApplicationJSONProtectionBypass2Access {
+func (e CreateProjectAccess) ToPointer() *CreateProjectAccess {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONProtectionBypass2Access) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectAccess) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4406,92 +4406,92 @@ func (e *CreateProject200ApplicationJSONProtectionBypass2Access) UnmarshalJSON(d
 	case "requested":
 		fallthrough
 	case "granted":
-		*e = CreateProject200ApplicationJSONProtectionBypass2Access(v)
+		*e = CreateProjectAccess(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONProtectionBypass2Access: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectAccess: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONProtectionBypass2Scope string
+type CreateProjectProjectsScope string
 
 const (
-	CreateProject200ApplicationJSONProtectionBypass2ScopeUser CreateProject200ApplicationJSONProtectionBypass2Scope = "user"
+	CreateProjectProjectsScopeUser CreateProjectProjectsScope = "user"
 )
 
-func (e CreateProject200ApplicationJSONProtectionBypass2Scope) ToPointer() *CreateProject200ApplicationJSONProtectionBypass2Scope {
+func (e CreateProjectProjectsScope) ToPointer() *CreateProjectProjectsScope {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONProtectionBypass2Scope) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsScope) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "user":
-		*e = CreateProject200ApplicationJSONProtectionBypass2Scope(v)
+		*e = CreateProjectProjectsScope(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONProtectionBypass2Scope: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsScope: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONProtectionBypass2 struct {
-	Access        CreateProject200ApplicationJSONProtectionBypass2Access `json:"access"`
-	CreatedAt     int64                                                  `json:"createdAt"`
-	LastUpdatedAt int64                                                  `json:"lastUpdatedAt"`
-	LastUpdatedBy string                                                 `json:"lastUpdatedBy"`
-	Scope         CreateProject200ApplicationJSONProtectionBypass2Scope  `json:"scope"`
+type CreateProjectProjectsResponse2 struct {
+	Access        CreateProjectAccess        `json:"access"`
+	CreatedAt     int64                      `json:"createdAt"`
+	LastUpdatedAt int64                      `json:"lastUpdatedAt"`
+	LastUpdatedBy string                     `json:"lastUpdatedBy"`
+	Scope         CreateProjectProjectsScope `json:"scope"`
 }
 
-func (o *CreateProject200ApplicationJSONProtectionBypass2) GetAccess() CreateProject200ApplicationJSONProtectionBypass2Access {
+func (o *CreateProjectProjectsResponse2) GetAccess() CreateProjectAccess {
 	if o == nil {
-		return CreateProject200ApplicationJSONProtectionBypass2Access("")
+		return CreateProjectAccess("")
 	}
 	return o.Access
 }
 
-func (o *CreateProject200ApplicationJSONProtectionBypass2) GetCreatedAt() int64 {
+func (o *CreateProjectProjectsResponse2) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSONProtectionBypass2) GetLastUpdatedAt() int64 {
+func (o *CreateProjectProjectsResponse2) GetLastUpdatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.LastUpdatedAt
 }
 
-func (o *CreateProject200ApplicationJSONProtectionBypass2) GetLastUpdatedBy() string {
+func (o *CreateProjectProjectsResponse2) GetLastUpdatedBy() string {
 	if o == nil {
 		return ""
 	}
 	return o.LastUpdatedBy
 }
 
-func (o *CreateProject200ApplicationJSONProtectionBypass2) GetScope() CreateProject200ApplicationJSONProtectionBypass2Scope {
+func (o *CreateProjectProjectsResponse2) GetScope() CreateProjectProjectsScope {
 	if o == nil {
-		return CreateProject200ApplicationJSONProtectionBypass2Scope("")
+		return CreateProjectProjectsScope("")
 	}
 	return o.Scope
 }
 
-type CreateProject200ApplicationJSONProtectionBypass1Scope string
+type CreateProjectScope string
 
 const (
-	CreateProject200ApplicationJSONProtectionBypass1ScopeShareableLink    CreateProject200ApplicationJSONProtectionBypass1Scope = "shareable-link"
-	CreateProject200ApplicationJSONProtectionBypass1ScopeAutomationBypass CreateProject200ApplicationJSONProtectionBypass1Scope = "automation-bypass"
+	CreateProjectScopeShareableLink    CreateProjectScope = "shareable-link"
+	CreateProjectScopeAutomationBypass CreateProjectScope = "automation-bypass"
 )
 
-func (e CreateProject200ApplicationJSONProtectionBypass1Scope) ToPointer() *CreateProject200ApplicationJSONProtectionBypass1Scope {
+func (e CreateProjectScope) ToPointer() *CreateProjectScope {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONProtectionBypass1Scope) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectScope) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4500,116 +4500,116 @@ func (e *CreateProject200ApplicationJSONProtectionBypass1Scope) UnmarshalJSON(da
 	case "shareable-link":
 		fallthrough
 	case "automation-bypass":
-		*e = CreateProject200ApplicationJSONProtectionBypass1Scope(v)
+		*e = CreateProjectScope(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONProtectionBypass1Scope: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectScope: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONProtectionBypass1 struct {
-	CreatedAt int64                                                 `json:"createdAt"`
-	CreatedBy string                                                `json:"createdBy"`
-	Scope     CreateProject200ApplicationJSONProtectionBypass1Scope `json:"scope"`
+type CreateProjectProjectsResponse1 struct {
+	CreatedAt int64              `json:"createdAt"`
+	CreatedBy string             `json:"createdBy"`
+	Scope     CreateProjectScope `json:"scope"`
 }
 
-func (o *CreateProject200ApplicationJSONProtectionBypass1) GetCreatedAt() int64 {
+func (o *CreateProjectProjectsResponse1) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSONProtectionBypass1) GetCreatedBy() string {
+func (o *CreateProjectProjectsResponse1) GetCreatedBy() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedBy
 }
 
-func (o *CreateProject200ApplicationJSONProtectionBypass1) GetScope() CreateProject200ApplicationJSONProtectionBypass1Scope {
+func (o *CreateProjectProjectsResponse1) GetScope() CreateProjectScope {
 	if o == nil {
-		return CreateProject200ApplicationJSONProtectionBypass1Scope("")
+		return CreateProjectScope("")
 	}
 	return o.Scope
 }
 
-type CreateProject200ApplicationJSONProtectionBypassType string
+type CreateProjectProtectionBypassType string
 
 const (
-	CreateProject200ApplicationJSONProtectionBypassTypeCreateProject200ApplicationJSONProtectionBypass1 CreateProject200ApplicationJSONProtectionBypassType = "createProject_200ApplicationJSON_protectionBypass_1"
-	CreateProject200ApplicationJSONProtectionBypassTypeCreateProject200ApplicationJSONProtectionBypass2 CreateProject200ApplicationJSONProtectionBypassType = "createProject_200ApplicationJSON_protectionBypass_2"
+	CreateProjectProtectionBypassTypeCreateProjectProjectsResponse1 CreateProjectProtectionBypassType = "createProject_projects_response_1"
+	CreateProjectProtectionBypassTypeCreateProjectProjectsResponse2 CreateProjectProtectionBypassType = "createProject_projects_response_2"
 )
 
-type CreateProject200ApplicationJSONProtectionBypass struct {
-	CreateProject200ApplicationJSONProtectionBypass1 *CreateProject200ApplicationJSONProtectionBypass1
-	CreateProject200ApplicationJSONProtectionBypass2 *CreateProject200ApplicationJSONProtectionBypass2
+type CreateProjectProtectionBypass struct {
+	CreateProjectProjectsResponse1 *CreateProjectProjectsResponse1
+	CreateProjectProjectsResponse2 *CreateProjectProjectsResponse2
 
-	Type CreateProject200ApplicationJSONProtectionBypassType
+	Type CreateProjectProtectionBypassType
 }
 
-func CreateCreateProject200ApplicationJSONProtectionBypassCreateProject200ApplicationJSONProtectionBypass1(createProject200ApplicationJSONProtectionBypass1 CreateProject200ApplicationJSONProtectionBypass1) CreateProject200ApplicationJSONProtectionBypass {
-	typ := CreateProject200ApplicationJSONProtectionBypassTypeCreateProject200ApplicationJSONProtectionBypass1
+func CreateCreateProjectProtectionBypassCreateProjectProjectsResponse1(createProjectProjectsResponse1 CreateProjectProjectsResponse1) CreateProjectProtectionBypass {
+	typ := CreateProjectProtectionBypassTypeCreateProjectProjectsResponse1
 
-	return CreateProject200ApplicationJSONProtectionBypass{
-		CreateProject200ApplicationJSONProtectionBypass1: &createProject200ApplicationJSONProtectionBypass1,
-		Type: typ,
+	return CreateProjectProtectionBypass{
+		CreateProjectProjectsResponse1: &createProjectProjectsResponse1,
+		Type:                           typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONProtectionBypassCreateProject200ApplicationJSONProtectionBypass2(createProject200ApplicationJSONProtectionBypass2 CreateProject200ApplicationJSONProtectionBypass2) CreateProject200ApplicationJSONProtectionBypass {
-	typ := CreateProject200ApplicationJSONProtectionBypassTypeCreateProject200ApplicationJSONProtectionBypass2
+func CreateCreateProjectProtectionBypassCreateProjectProjectsResponse2(createProjectProjectsResponse2 CreateProjectProjectsResponse2) CreateProjectProtectionBypass {
+	typ := CreateProjectProtectionBypassTypeCreateProjectProjectsResponse2
 
-	return CreateProject200ApplicationJSONProtectionBypass{
-		CreateProject200ApplicationJSONProtectionBypass2: &createProject200ApplicationJSONProtectionBypass2,
-		Type: typ,
+	return CreateProjectProtectionBypass{
+		CreateProjectProjectsResponse2: &createProjectProjectsResponse2,
+		Type:                           typ,
 	}
 }
 
-func (u *CreateProject200ApplicationJSONProtectionBypass) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectProtectionBypass) UnmarshalJSON(data []byte) error {
 
-	createProject200ApplicationJSONProtectionBypass1 := new(CreateProject200ApplicationJSONProtectionBypass1)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONProtectionBypass1, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONProtectionBypass1 = createProject200ApplicationJSONProtectionBypass1
-		u.Type = CreateProject200ApplicationJSONProtectionBypassTypeCreateProject200ApplicationJSONProtectionBypass1
+	createProjectProjectsResponse1 := new(CreateProjectProjectsResponse1)
+	if err := utils.UnmarshalJSON(data, &createProjectProjectsResponse1, "", true, true); err == nil {
+		u.CreateProjectProjectsResponse1 = createProjectProjectsResponse1
+		u.Type = CreateProjectProtectionBypassTypeCreateProjectProjectsResponse1
 		return nil
 	}
 
-	createProject200ApplicationJSONProtectionBypass2 := new(CreateProject200ApplicationJSONProtectionBypass2)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONProtectionBypass2, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONProtectionBypass2 = createProject200ApplicationJSONProtectionBypass2
-		u.Type = CreateProject200ApplicationJSONProtectionBypassTypeCreateProject200ApplicationJSONProtectionBypass2
+	createProjectProjectsResponse2 := new(CreateProjectProjectsResponse2)
+	if err := utils.UnmarshalJSON(data, &createProjectProjectsResponse2, "", true, true); err == nil {
+		u.CreateProjectProjectsResponse2 = createProjectProjectsResponse2
+		u.Type = CreateProjectProtectionBypassTypeCreateProjectProjectsResponse2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProject200ApplicationJSONProtectionBypass) MarshalJSON() ([]byte, error) {
-	if u.CreateProject200ApplicationJSONProtectionBypass1 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONProtectionBypass1, "", true)
+func (u CreateProjectProtectionBypass) MarshalJSON() ([]byte, error) {
+	if u.CreateProjectProjectsResponse1 != nil {
+		return utils.MarshalJSON(u.CreateProjectProjectsResponse1, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONProtectionBypass2 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONProtectionBypass2, "", true)
+	if u.CreateProjectProjectsResponse2 != nil {
+		return utils.MarshalJSON(u.CreateProjectProjectsResponse2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProject200ApplicationJSONSsoProtectionDeploymentType string
+type CreateProjectDeploymentType string
 
 const (
-	CreateProject200ApplicationJSONSsoProtectionDeploymentTypeAll                              CreateProject200ApplicationJSONSsoProtectionDeploymentType = "all"
-	CreateProject200ApplicationJSONSsoProtectionDeploymentTypePreview                          CreateProject200ApplicationJSONSsoProtectionDeploymentType = "preview"
-	CreateProject200ApplicationJSONSsoProtectionDeploymentTypeProdDeploymentUrlsAndAllPreviews CreateProject200ApplicationJSONSsoProtectionDeploymentType = "prod_deployment_urls_and_all_previews"
+	CreateProjectDeploymentTypeAll                              CreateProjectDeploymentType = "all"
+	CreateProjectDeploymentTypePreview                          CreateProjectDeploymentType = "preview"
+	CreateProjectDeploymentTypeProdDeploymentUrlsAndAllPreviews CreateProjectDeploymentType = "prod_deployment_urls_and_all_previews"
 )
 
-func (e CreateProject200ApplicationJSONSsoProtectionDeploymentType) ToPointer() *CreateProject200ApplicationJSONSsoProtectionDeploymentType {
+func (e CreateProjectDeploymentType) ToPointer() *CreateProjectDeploymentType {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONSsoProtectionDeploymentType) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectDeploymentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4620,76 +4620,76 @@ func (e *CreateProject200ApplicationJSONSsoProtectionDeploymentType) UnmarshalJS
 	case "preview":
 		fallthrough
 	case "prod_deployment_urls_and_all_previews":
-		*e = CreateProject200ApplicationJSONSsoProtectionDeploymentType(v)
+		*e = CreateProjectDeploymentType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONSsoProtectionDeploymentType: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectDeploymentType: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONSsoProtection struct {
-	DeploymentType CreateProject200ApplicationJSONSsoProtectionDeploymentType `json:"deploymentType"`
+type CreateProjectSsoProtection struct {
+	DeploymentType CreateProjectDeploymentType `json:"deploymentType"`
 }
 
-func (o *CreateProject200ApplicationJSONSsoProtection) GetDeploymentType() CreateProject200ApplicationJSONSsoProtectionDeploymentType {
+func (o *CreateProjectSsoProtection) GetDeploymentType() CreateProjectDeploymentType {
 	if o == nil {
-		return CreateProject200ApplicationJSONSsoProtectionDeploymentType("")
+		return CreateProjectDeploymentType("")
 	}
 	return o.DeploymentType
 }
 
-type CreateProject200ApplicationJSONTargetsAliasAssignedType string
+type CreateProjectProjectsAliasAssignedType string
 
 const (
-	CreateProject200ApplicationJSONTargetsAliasAssignedTypeInteger CreateProject200ApplicationJSONTargetsAliasAssignedType = "integer"
-	CreateProject200ApplicationJSONTargetsAliasAssignedTypeBoolean CreateProject200ApplicationJSONTargetsAliasAssignedType = "boolean"
+	CreateProjectProjectsAliasAssignedTypeInteger CreateProjectProjectsAliasAssignedType = "integer"
+	CreateProjectProjectsAliasAssignedTypeBoolean CreateProjectProjectsAliasAssignedType = "boolean"
 )
 
-type CreateProject200ApplicationJSONTargetsAliasAssigned struct {
+type CreateProjectProjectsAliasAssigned struct {
 	Integer *int64
 	Boolean *bool
 
-	Type CreateProject200ApplicationJSONTargetsAliasAssignedType
+	Type CreateProjectProjectsAliasAssignedType
 }
 
-func CreateCreateProject200ApplicationJSONTargetsAliasAssignedInteger(integer int64) CreateProject200ApplicationJSONTargetsAliasAssigned {
-	typ := CreateProject200ApplicationJSONTargetsAliasAssignedTypeInteger
+func CreateCreateProjectProjectsAliasAssignedInteger(integer int64) CreateProjectProjectsAliasAssigned {
+	typ := CreateProjectProjectsAliasAssignedTypeInteger
 
-	return CreateProject200ApplicationJSONTargetsAliasAssigned{
+	return CreateProjectProjectsAliasAssigned{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONTargetsAliasAssignedBoolean(boolean bool) CreateProject200ApplicationJSONTargetsAliasAssigned {
-	typ := CreateProject200ApplicationJSONTargetsAliasAssignedTypeBoolean
+func CreateCreateProjectProjectsAliasAssignedBoolean(boolean bool) CreateProjectProjectsAliasAssigned {
+	typ := CreateProjectProjectsAliasAssignedTypeBoolean
 
-	return CreateProject200ApplicationJSONTargetsAliasAssigned{
+	return CreateProjectProjectsAliasAssigned{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func (u *CreateProject200ApplicationJSONTargetsAliasAssigned) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectProjectsAliasAssigned) UnmarshalJSON(data []byte) error {
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = CreateProject200ApplicationJSONTargetsAliasAssignedTypeInteger
+		u.Type = CreateProjectProjectsAliasAssignedTypeInteger
 		return nil
 	}
 
 	boolean := new(bool)
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
-		u.Type = CreateProject200ApplicationJSONTargetsAliasAssignedTypeBoolean
+		u.Type = CreateProjectProjectsAliasAssignedTypeBoolean
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProject200ApplicationJSONTargetsAliasAssigned) MarshalJSON() ([]byte, error) {
+func (u CreateProjectProjectsAliasAssigned) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
@@ -4701,66 +4701,66 @@ func (u CreateProject200ApplicationJSONTargetsAliasAssigned) MarshalJSON() ([]by
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProject200ApplicationJSONTargetsAliasError struct {
+type CreateProjectProjectsAliasError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (o *CreateProject200ApplicationJSONTargetsAliasError) GetCode() string {
+func (o *CreateProjectProjectsAliasError) GetCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.Code
 }
 
-func (o *CreateProject200ApplicationJSONTargetsAliasError) GetMessage() string {
+func (o *CreateProjectProjectsAliasError) GetMessage() string {
 	if o == nil {
 		return ""
 	}
 	return o.Message
 }
 
-type CreateProject200ApplicationJSONTargetsBuilds struct {
+type CreateProjectProjectsBuilds struct {
 	Dest *string `json:"dest,omitempty"`
 	Src  *string `json:"src,omitempty"`
 	Use  string  `json:"use"`
 }
 
-func (o *CreateProject200ApplicationJSONTargetsBuilds) GetDest() *string {
+func (o *CreateProjectProjectsBuilds) GetDest() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dest
 }
 
-func (o *CreateProject200ApplicationJSONTargetsBuilds) GetSrc() *string {
+func (o *CreateProjectProjectsBuilds) GetSrc() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Src
 }
 
-func (o *CreateProject200ApplicationJSONTargetsBuilds) GetUse() string {
+func (o *CreateProjectProjectsBuilds) GetUse() string {
 	if o == nil {
 		return ""
 	}
 	return o.Use
 }
 
-type CreateProject200ApplicationJSONTargetsChecksConclusion string
+type CreateProjectProjectsChecksConclusion string
 
 const (
-	CreateProject200ApplicationJSONTargetsChecksConclusionSucceeded CreateProject200ApplicationJSONTargetsChecksConclusion = "succeeded"
-	CreateProject200ApplicationJSONTargetsChecksConclusionFailed    CreateProject200ApplicationJSONTargetsChecksConclusion = "failed"
-	CreateProject200ApplicationJSONTargetsChecksConclusionSkipped   CreateProject200ApplicationJSONTargetsChecksConclusion = "skipped"
-	CreateProject200ApplicationJSONTargetsChecksConclusionCanceled  CreateProject200ApplicationJSONTargetsChecksConclusion = "canceled"
+	CreateProjectProjectsChecksConclusionSucceeded CreateProjectProjectsChecksConclusion = "succeeded"
+	CreateProjectProjectsChecksConclusionFailed    CreateProjectProjectsChecksConclusion = "failed"
+	CreateProjectProjectsChecksConclusionSkipped   CreateProjectProjectsChecksConclusion = "skipped"
+	CreateProjectProjectsChecksConclusionCanceled  CreateProjectProjectsChecksConclusion = "canceled"
 )
 
-func (e CreateProject200ApplicationJSONTargetsChecksConclusion) ToPointer() *CreateProject200ApplicationJSONTargetsChecksConclusion {
+func (e CreateProjectProjectsChecksConclusion) ToPointer() *CreateProjectProjectsChecksConclusion {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONTargetsChecksConclusion) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsChecksConclusion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4773,26 +4773,26 @@ func (e *CreateProject200ApplicationJSONTargetsChecksConclusion) UnmarshalJSON(d
 	case "skipped":
 		fallthrough
 	case "canceled":
-		*e = CreateProject200ApplicationJSONTargetsChecksConclusion(v)
+		*e = CreateProjectProjectsChecksConclusion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONTargetsChecksConclusion: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsChecksConclusion: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONTargetsChecksState string
+type CreateProjectProjectsChecksState string
 
 const (
-	CreateProject200ApplicationJSONTargetsChecksStateRegistered CreateProject200ApplicationJSONTargetsChecksState = "registered"
-	CreateProject200ApplicationJSONTargetsChecksStateRunning    CreateProject200ApplicationJSONTargetsChecksState = "running"
-	CreateProject200ApplicationJSONTargetsChecksStateCompleted  CreateProject200ApplicationJSONTargetsChecksState = "completed"
+	CreateProjectProjectsChecksStateRegistered CreateProjectProjectsChecksState = "registered"
+	CreateProjectProjectsChecksStateRunning    CreateProjectProjectsChecksState = "running"
+	CreateProjectProjectsChecksStateCompleted  CreateProjectProjectsChecksState = "completed"
 )
 
-func (e CreateProject200ApplicationJSONTargetsChecksState) ToPointer() *CreateProject200ApplicationJSONTargetsChecksState {
+func (e CreateProjectProjectsChecksState) ToPointer() *CreateProjectProjectsChecksState {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONTargetsChecksState) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsChecksState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4803,14 +4803,14 @@ func (e *CreateProject200ApplicationJSONTargetsChecksState) UnmarshalJSON(data [
 	case "running":
 		fallthrough
 	case "completed":
-		*e = CreateProject200ApplicationJSONTargetsChecksState(v)
+		*e = CreateProjectProjectsChecksState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONTargetsChecksState: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsChecksState: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONTargetsCreator struct {
+type CreateProjectProjectsCreator struct {
 	Email       string  `json:"email"`
 	GithubLogin *string `json:"githubLogin,omitempty"`
 	GitlabLogin *string `json:"gitlabLogin,omitempty"`
@@ -4818,55 +4818,55 @@ type CreateProject200ApplicationJSONTargetsCreator struct {
 	Username    string  `json:"username"`
 }
 
-func (o *CreateProject200ApplicationJSONTargetsCreator) GetEmail() string {
+func (o *CreateProjectProjectsCreator) GetEmail() string {
 	if o == nil {
 		return ""
 	}
 	return o.Email
 }
 
-func (o *CreateProject200ApplicationJSONTargetsCreator) GetGithubLogin() *string {
+func (o *CreateProjectProjectsCreator) GetGithubLogin() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GithubLogin
 }
 
-func (o *CreateProject200ApplicationJSONTargetsCreator) GetGitlabLogin() *string {
+func (o *CreateProjectProjectsCreator) GetGitlabLogin() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitlabLogin
 }
 
-func (o *CreateProject200ApplicationJSONTargetsCreator) GetUID() string {
+func (o *CreateProjectProjectsCreator) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *CreateProject200ApplicationJSONTargetsCreator) GetUsername() string {
+func (o *CreateProjectProjectsCreator) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
 }
 
-type CreateProject200ApplicationJSONTargetsPlan string
+type CreateProjectProjectsPlan string
 
 const (
-	CreateProject200ApplicationJSONTargetsPlanPro        CreateProject200ApplicationJSONTargetsPlan = "pro"
-	CreateProject200ApplicationJSONTargetsPlanEnterprise CreateProject200ApplicationJSONTargetsPlan = "enterprise"
-	CreateProject200ApplicationJSONTargetsPlanHobby      CreateProject200ApplicationJSONTargetsPlan = "hobby"
-	CreateProject200ApplicationJSONTargetsPlanOss        CreateProject200ApplicationJSONTargetsPlan = "oss"
+	CreateProjectProjectsPlanPro        CreateProjectProjectsPlan = "pro"
+	CreateProjectProjectsPlanEnterprise CreateProjectProjectsPlan = "enterprise"
+	CreateProjectProjectsPlanHobby      CreateProjectProjectsPlan = "hobby"
+	CreateProjectProjectsPlanOss        CreateProjectProjectsPlan = "oss"
 )
 
-func (e CreateProject200ApplicationJSONTargetsPlan) ToPointer() *CreateProject200ApplicationJSONTargetsPlan {
+func (e CreateProjectProjectsPlan) ToPointer() *CreateProjectProjectsPlan {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONTargetsPlan) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsPlan) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4879,29 +4879,29 @@ func (e *CreateProject200ApplicationJSONTargetsPlan) UnmarshalJSON(data []byte) 
 	case "hobby":
 		fallthrough
 	case "oss":
-		*e = CreateProject200ApplicationJSONTargetsPlan(v)
+		*e = CreateProjectProjectsPlan(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONTargetsPlan: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsPlan: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONTargetsReadyState string
+type CreateProjectProjectsReadyState string
 
 const (
-	CreateProject200ApplicationJSONTargetsReadyStateBuilding     CreateProject200ApplicationJSONTargetsReadyState = "BUILDING"
-	CreateProject200ApplicationJSONTargetsReadyStateError        CreateProject200ApplicationJSONTargetsReadyState = "ERROR"
-	CreateProject200ApplicationJSONTargetsReadyStateInitializing CreateProject200ApplicationJSONTargetsReadyState = "INITIALIZING"
-	CreateProject200ApplicationJSONTargetsReadyStateQueued       CreateProject200ApplicationJSONTargetsReadyState = "QUEUED"
-	CreateProject200ApplicationJSONTargetsReadyStateReady        CreateProject200ApplicationJSONTargetsReadyState = "READY"
-	CreateProject200ApplicationJSONTargetsReadyStateCanceled     CreateProject200ApplicationJSONTargetsReadyState = "CANCELED"
+	CreateProjectProjectsReadyStateBuilding     CreateProjectProjectsReadyState = "BUILDING"
+	CreateProjectProjectsReadyStateError        CreateProjectProjectsReadyState = "ERROR"
+	CreateProjectProjectsReadyStateInitializing CreateProjectProjectsReadyState = "INITIALIZING"
+	CreateProjectProjectsReadyStateQueued       CreateProjectProjectsReadyState = "QUEUED"
+	CreateProjectProjectsReadyStateReady        CreateProjectProjectsReadyState = "READY"
+	CreateProjectProjectsReadyStateCanceled     CreateProjectProjectsReadyState = "CANCELED"
 )
 
-func (e CreateProject200ApplicationJSONTargetsReadyState) ToPointer() *CreateProject200ApplicationJSONTargetsReadyState {
+func (e CreateProjectProjectsReadyState) ToPointer() *CreateProjectProjectsReadyState {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONTargetsReadyState) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4918,25 +4918,25 @@ func (e *CreateProject200ApplicationJSONTargetsReadyState) UnmarshalJSON(data []
 	case "READY":
 		fallthrough
 	case "CANCELED":
-		*e = CreateProject200ApplicationJSONTargetsReadyState(v)
+		*e = CreateProjectProjectsReadyState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONTargetsReadyState: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsReadyState: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONTargetsReadySubstate string
+type CreateProjectProjectsReadySubstate string
 
 const (
-	CreateProject200ApplicationJSONTargetsReadySubstateStaged   CreateProject200ApplicationJSONTargetsReadySubstate = "STAGED"
-	CreateProject200ApplicationJSONTargetsReadySubstatePromoted CreateProject200ApplicationJSONTargetsReadySubstate = "PROMOTED"
+	CreateProjectProjectsReadySubstateStaged   CreateProjectProjectsReadySubstate = "STAGED"
+	CreateProjectProjectsReadySubstatePromoted CreateProjectProjectsReadySubstate = "PROMOTED"
 )
 
-func (e CreateProject200ApplicationJSONTargetsReadySubstate) ToPointer() *CreateProject200ApplicationJSONTargetsReadySubstate {
+func (e CreateProjectProjectsReadySubstate) ToPointer() *CreateProjectProjectsReadySubstate {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONTargetsReadySubstate) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsReadySubstate) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4945,319 +4945,319 @@ func (e *CreateProject200ApplicationJSONTargetsReadySubstate) UnmarshalJSON(data
 	case "STAGED":
 		fallthrough
 	case "PROMOTED":
-		*e = CreateProject200ApplicationJSONTargetsReadySubstate(v)
+		*e = CreateProjectProjectsReadySubstate(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONTargetsReadySubstate: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsReadySubstate: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONTargetsType string
+type CreateProjectProjectsResponse200ApplicationJSONResponseBodyType string
 
 const (
-	CreateProject200ApplicationJSONTargetsTypeLambdas CreateProject200ApplicationJSONTargetsType = "LAMBDAS"
+	CreateProjectProjectsResponse200ApplicationJSONResponseBodyTypeLambdas CreateProjectProjectsResponse200ApplicationJSONResponseBodyType = "LAMBDAS"
 )
 
-func (e CreateProject200ApplicationJSONTargetsType) ToPointer() *CreateProject200ApplicationJSONTargetsType {
+func (e CreateProjectProjectsResponse200ApplicationJSONResponseBodyType) ToPointer() *CreateProjectProjectsResponse200ApplicationJSONResponseBodyType {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONTargetsType) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "LAMBDAS":
-		*e = CreateProject200ApplicationJSONTargetsType(v)
+		*e = CreateProjectProjectsResponse200ApplicationJSONResponseBodyType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONTargetsType: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponse200ApplicationJSONResponseBodyType: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONTargets struct {
-	Alias                  []string                                                `json:"alias,omitempty"`
-	AliasAssigned          *CreateProject200ApplicationJSONTargetsAliasAssigned    `json:"aliasAssigned,omitempty"`
-	AliasError             *CreateProject200ApplicationJSONTargetsAliasError       `json:"aliasError,omitempty"`
-	AliasFinal             *string                                                 `json:"aliasFinal,omitempty"`
-	AutomaticAliases       []string                                                `json:"automaticAliases,omitempty"`
-	BuildingAt             *int64                                                  `json:"buildingAt,omitempty"`
-	Builds                 []CreateProject200ApplicationJSONTargetsBuilds          `json:"builds,omitempty"`
-	ChecksConclusion       *CreateProject200ApplicationJSONTargetsChecksConclusion `json:"checksConclusion,omitempty"`
-	ChecksState            *CreateProject200ApplicationJSONTargetsChecksState      `json:"checksState,omitempty"`
-	ConnectBuildsEnabled   *bool                                                   `json:"connectBuildsEnabled,omitempty"`
-	ConnectConfigurationID *string                                                 `json:"connectConfigurationId,omitempty"`
-	CreatedAt              int64                                                   `json:"createdAt"`
-	CreatedIn              string                                                  `json:"createdIn"`
-	Creator                *CreateProject200ApplicationJSONTargetsCreator          `json:"creator"`
-	DeploymentHostname     string                                                  `json:"deploymentHostname"`
-	Forced                 *bool                                                   `json:"forced,omitempty"`
-	ID                     string                                                  `json:"id"`
-	Meta                   map[string]string                                       `json:"meta,omitempty"`
-	MonorepoManager        *string                                                 `json:"monorepoManager,omitempty"`
-	Name                   string                                                  `json:"name"`
-	Plan                   CreateProject200ApplicationJSONTargetsPlan              `json:"plan"`
+type Targets struct {
+	Alias                  []string                               `json:"alias,omitempty"`
+	AliasAssigned          *CreateProjectProjectsAliasAssigned    `json:"aliasAssigned,omitempty"`
+	AliasError             *CreateProjectProjectsAliasError       `json:"aliasError,omitempty"`
+	AliasFinal             *string                                `json:"aliasFinal,omitempty"`
+	AutomaticAliases       []string                               `json:"automaticAliases,omitempty"`
+	BuildingAt             *int64                                 `json:"buildingAt,omitempty"`
+	Builds                 []CreateProjectProjectsBuilds          `json:"builds,omitempty"`
+	ChecksConclusion       *CreateProjectProjectsChecksConclusion `json:"checksConclusion,omitempty"`
+	ChecksState            *CreateProjectProjectsChecksState      `json:"checksState,omitempty"`
+	ConnectBuildsEnabled   *bool                                  `json:"connectBuildsEnabled,omitempty"`
+	ConnectConfigurationID *string                                `json:"connectConfigurationId,omitempty"`
+	CreatedAt              int64                                  `json:"createdAt"`
+	CreatedIn              string                                 `json:"createdIn"`
+	Creator                *CreateProjectProjectsCreator          `json:"creator"`
+	DeploymentHostname     string                                 `json:"deploymentHostname"`
+	Forced                 *bool                                  `json:"forced,omitempty"`
+	ID                     string                                 `json:"id"`
+	Meta                   map[string]string                      `json:"meta,omitempty"`
+	MonorepoManager        *string                                `json:"monorepoManager,omitempty"`
+	Name                   string                                 `json:"name"`
+	Plan                   CreateProjectProjectsPlan              `json:"plan"`
 	// Whether or not preview comments are enabled for the deployment
-	PreviewCommentsEnabled *bool                                                `json:"previewCommentsEnabled,omitempty"`
-	Private                bool                                                 `json:"private"`
-	ReadyAt                *int64                                               `json:"readyAt,omitempty"`
-	ReadyState             CreateProject200ApplicationJSONTargetsReadyState     `json:"readyState"`
-	ReadySubstate          *CreateProject200ApplicationJSONTargetsReadySubstate `json:"readySubstate,omitempty"`
-	RequestedAt            *int64                                               `json:"requestedAt,omitempty"`
-	Target                 *string                                              `json:"target,omitempty"`
-	TeamID                 *string                                              `json:"teamId,omitempty"`
-	Type                   CreateProject200ApplicationJSONTargetsType           `json:"type"`
-	URL                    string                                               `json:"url"`
-	UserID                 string                                               `json:"userId"`
-	WithCache              *bool                                                `json:"withCache,omitempty"`
+	PreviewCommentsEnabled *bool                                                           `json:"previewCommentsEnabled,omitempty"`
+	Private                bool                                                            `json:"private"`
+	ReadyAt                *int64                                                          `json:"readyAt,omitempty"`
+	ReadyState             CreateProjectProjectsReadyState                                 `json:"readyState"`
+	ReadySubstate          *CreateProjectProjectsReadySubstate                             `json:"readySubstate,omitempty"`
+	RequestedAt            *int64                                                          `json:"requestedAt,omitempty"`
+	Target                 *string                                                         `json:"target,omitempty"`
+	TeamID                 *string                                                         `json:"teamId,omitempty"`
+	Type                   CreateProjectProjectsResponse200ApplicationJSONResponseBodyType `json:"type"`
+	URL                    string                                                          `json:"url"`
+	UserID                 string                                                          `json:"userId"`
+	WithCache              *bool                                                           `json:"withCache,omitempty"`
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetAlias() []string {
+func (o *Targets) GetAlias() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Alias
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetAliasAssigned() *CreateProject200ApplicationJSONTargetsAliasAssigned {
+func (o *Targets) GetAliasAssigned() *CreateProjectProjectsAliasAssigned {
 	if o == nil {
 		return nil
 	}
 	return o.AliasAssigned
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetAliasError() *CreateProject200ApplicationJSONTargetsAliasError {
+func (o *Targets) GetAliasError() *CreateProjectProjectsAliasError {
 	if o == nil {
 		return nil
 	}
 	return o.AliasError
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetAliasFinal() *string {
+func (o *Targets) GetAliasFinal() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AliasFinal
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetAutomaticAliases() []string {
+func (o *Targets) GetAutomaticAliases() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AutomaticAliases
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetBuildingAt() *int64 {
+func (o *Targets) GetBuildingAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.BuildingAt
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetBuilds() []CreateProject200ApplicationJSONTargetsBuilds {
+func (o *Targets) GetBuilds() []CreateProjectProjectsBuilds {
 	if o == nil {
 		return nil
 	}
 	return o.Builds
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetChecksConclusion() *CreateProject200ApplicationJSONTargetsChecksConclusion {
+func (o *Targets) GetChecksConclusion() *CreateProjectProjectsChecksConclusion {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksConclusion
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetChecksState() *CreateProject200ApplicationJSONTargetsChecksState {
+func (o *Targets) GetChecksState() *CreateProjectProjectsChecksState {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksState
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetConnectBuildsEnabled() *bool {
+func (o *Targets) GetConnectBuildsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectBuildsEnabled
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetConnectConfigurationID() *string {
+func (o *Targets) GetConnectConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectConfigurationID
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetCreatedAt() int64 {
+func (o *Targets) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetCreatedIn() string {
+func (o *Targets) GetCreatedIn() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedIn
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetCreator() *CreateProject200ApplicationJSONTargetsCreator {
+func (o *Targets) GetCreator() *CreateProjectProjectsCreator {
 	if o == nil {
 		return nil
 	}
 	return o.Creator
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetDeploymentHostname() string {
+func (o *Targets) GetDeploymentHostname() string {
 	if o == nil {
 		return ""
 	}
 	return o.DeploymentHostname
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetForced() *bool {
+func (o *Targets) GetForced() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Forced
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetID() string {
+func (o *Targets) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetMeta() map[string]string {
+func (o *Targets) GetMeta() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Meta
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetMonorepoManager() *string {
+func (o *Targets) GetMonorepoManager() *string {
 	if o == nil {
 		return nil
 	}
 	return o.MonorepoManager
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetName() string {
+func (o *Targets) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetPlan() CreateProject200ApplicationJSONTargetsPlan {
+func (o *Targets) GetPlan() CreateProjectProjectsPlan {
 	if o == nil {
-		return CreateProject200ApplicationJSONTargetsPlan("")
+		return CreateProjectProjectsPlan("")
 	}
 	return o.Plan
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetPreviewCommentsEnabled() *bool {
+func (o *Targets) GetPreviewCommentsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.PreviewCommentsEnabled
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetPrivate() bool {
+func (o *Targets) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetReadyAt() *int64 {
+func (o *Targets) GetReadyAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ReadyAt
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetReadyState() CreateProject200ApplicationJSONTargetsReadyState {
+func (o *Targets) GetReadyState() CreateProjectProjectsReadyState {
 	if o == nil {
-		return CreateProject200ApplicationJSONTargetsReadyState("")
+		return CreateProjectProjectsReadyState("")
 	}
 	return o.ReadyState
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetReadySubstate() *CreateProject200ApplicationJSONTargetsReadySubstate {
+func (o *Targets) GetReadySubstate() *CreateProjectProjectsReadySubstate {
 	if o == nil {
 		return nil
 	}
 	return o.ReadySubstate
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetRequestedAt() *int64 {
+func (o *Targets) GetRequestedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.RequestedAt
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetTarget() *string {
+func (o *Targets) GetTarget() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetTeamID() *string {
+func (o *Targets) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetType() CreateProject200ApplicationJSONTargetsType {
+func (o *Targets) GetType() CreateProjectProjectsResponse200ApplicationJSONResponseBodyType {
 	if o == nil {
-		return CreateProject200ApplicationJSONTargetsType("")
+		return CreateProjectProjectsResponse200ApplicationJSONResponseBodyType("")
 	}
 	return o.Type
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetURL() string {
+func (o *Targets) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetUserID() string {
+func (o *Targets) GetUserID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UserID
 }
 
-func (o *CreateProject200ApplicationJSONTargets) GetWithCache() *bool {
+func (o *Targets) GetWithCache() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.WithCache
 }
 
-type CreateProject200ApplicationJSONTrustedIps2DeploymentType string
+type CreateProjectProjectsResponseDeploymentType string
 
 const (
-	CreateProject200ApplicationJSONTrustedIps2DeploymentTypeAll                              CreateProject200ApplicationJSONTrustedIps2DeploymentType = "all"
-	CreateProject200ApplicationJSONTrustedIps2DeploymentTypePreview                          CreateProject200ApplicationJSONTrustedIps2DeploymentType = "preview"
-	CreateProject200ApplicationJSONTrustedIps2DeploymentTypeProdDeploymentUrlsAndAllPreviews CreateProject200ApplicationJSONTrustedIps2DeploymentType = "prod_deployment_urls_and_all_previews"
-	CreateProject200ApplicationJSONTrustedIps2DeploymentTypeProduction                       CreateProject200ApplicationJSONTrustedIps2DeploymentType = "production"
+	CreateProjectProjectsResponseDeploymentTypeAll                              CreateProjectProjectsResponseDeploymentType = "all"
+	CreateProjectProjectsResponseDeploymentTypePreview                          CreateProjectProjectsResponseDeploymentType = "preview"
+	CreateProjectProjectsResponseDeploymentTypeProdDeploymentUrlsAndAllPreviews CreateProjectProjectsResponseDeploymentType = "prod_deployment_urls_and_all_previews"
+	CreateProjectProjectsResponseDeploymentTypeProduction                       CreateProjectProjectsResponseDeploymentType = "production"
 )
 
-func (e CreateProject200ApplicationJSONTrustedIps2DeploymentType) ToPointer() *CreateProject200ApplicationJSONTrustedIps2DeploymentType {
+func (e CreateProjectProjectsResponseDeploymentType) ToPointer() *CreateProjectProjectsResponseDeploymentType {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONTrustedIps2DeploymentType) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsResponseDeploymentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -5270,57 +5270,57 @@ func (e *CreateProject200ApplicationJSONTrustedIps2DeploymentType) UnmarshalJSON
 	case "prod_deployment_urls_and_all_previews":
 		fallthrough
 	case "production":
-		*e = CreateProject200ApplicationJSONTrustedIps2DeploymentType(v)
+		*e = CreateProjectProjectsResponseDeploymentType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONTrustedIps2DeploymentType: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsResponseDeploymentType: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONTrustedIps2 struct {
-	DeploymentType CreateProject200ApplicationJSONTrustedIps2DeploymentType `json:"deploymentType"`
+type CreateProjectProjectsResponse2002 struct {
+	DeploymentType CreateProjectProjectsResponseDeploymentType `json:"deploymentType"`
 }
 
-func (o *CreateProject200ApplicationJSONTrustedIps2) GetDeploymentType() CreateProject200ApplicationJSONTrustedIps2DeploymentType {
+func (o *CreateProjectProjectsResponse2002) GetDeploymentType() CreateProjectProjectsResponseDeploymentType {
 	if o == nil {
-		return CreateProject200ApplicationJSONTrustedIps2DeploymentType("")
+		return CreateProjectProjectsResponseDeploymentType("")
 	}
 	return o.DeploymentType
 }
 
-type CreateProject200ApplicationJSONTrustedIps1Addresses struct {
+type CreateProjectAddresses struct {
 	Note  *string `json:"note,omitempty"`
 	Value string  `json:"value"`
 }
 
-func (o *CreateProject200ApplicationJSONTrustedIps1Addresses) GetNote() *string {
+func (o *CreateProjectAddresses) GetNote() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Note
 }
 
-func (o *CreateProject200ApplicationJSONTrustedIps1Addresses) GetValue() string {
+func (o *CreateProjectAddresses) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateProject200ApplicationJSONTrustedIps1DeploymentType string
+type CreateProjectProjectsDeploymentType string
 
 const (
-	CreateProject200ApplicationJSONTrustedIps1DeploymentTypeAll                              CreateProject200ApplicationJSONTrustedIps1DeploymentType = "all"
-	CreateProject200ApplicationJSONTrustedIps1DeploymentTypePreview                          CreateProject200ApplicationJSONTrustedIps1DeploymentType = "preview"
-	CreateProject200ApplicationJSONTrustedIps1DeploymentTypeProdDeploymentUrlsAndAllPreviews CreateProject200ApplicationJSONTrustedIps1DeploymentType = "prod_deployment_urls_and_all_previews"
-	CreateProject200ApplicationJSONTrustedIps1DeploymentTypeProduction                       CreateProject200ApplicationJSONTrustedIps1DeploymentType = "production"
+	CreateProjectProjectsDeploymentTypeAll                              CreateProjectProjectsDeploymentType = "all"
+	CreateProjectProjectsDeploymentTypePreview                          CreateProjectProjectsDeploymentType = "preview"
+	CreateProjectProjectsDeploymentTypeProdDeploymentUrlsAndAllPreviews CreateProjectProjectsDeploymentType = "prod_deployment_urls_and_all_previews"
+	CreateProjectProjectsDeploymentTypeProduction                       CreateProjectProjectsDeploymentType = "production"
 )
 
-func (e CreateProject200ApplicationJSONTrustedIps1DeploymentType) ToPointer() *CreateProject200ApplicationJSONTrustedIps1DeploymentType {
+func (e CreateProjectProjectsDeploymentType) ToPointer() *CreateProjectProjectsDeploymentType {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONTrustedIps1DeploymentType) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProjectsDeploymentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -5333,25 +5333,25 @@ func (e *CreateProject200ApplicationJSONTrustedIps1DeploymentType) UnmarshalJSON
 	case "prod_deployment_urls_and_all_previews":
 		fallthrough
 	case "production":
-		*e = CreateProject200ApplicationJSONTrustedIps1DeploymentType(v)
+		*e = CreateProjectProjectsDeploymentType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONTrustedIps1DeploymentType: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProjectsDeploymentType: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONTrustedIps1ProtectionMode string
+type CreateProjectProtectionMode string
 
 const (
-	CreateProject200ApplicationJSONTrustedIps1ProtectionModeAdditional CreateProject200ApplicationJSONTrustedIps1ProtectionMode = "additional"
-	CreateProject200ApplicationJSONTrustedIps1ProtectionModeExclusive  CreateProject200ApplicationJSONTrustedIps1ProtectionMode = "exclusive"
+	CreateProjectProtectionModeAdditional CreateProjectProtectionMode = "additional"
+	CreateProjectProtectionModeExclusive  CreateProjectProtectionMode = "exclusive"
 )
 
-func (e CreateProject200ApplicationJSONTrustedIps1ProtectionMode) ToPointer() *CreateProject200ApplicationJSONTrustedIps1ProtectionMode {
+func (e CreateProjectProtectionMode) ToPointer() *CreateProjectProtectionMode {
 	return &e
 }
 
-func (e *CreateProject200ApplicationJSONTrustedIps1ProtectionMode) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectProtectionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -5360,501 +5360,501 @@ func (e *CreateProject200ApplicationJSONTrustedIps1ProtectionMode) UnmarshalJSON
 	case "additional":
 		fallthrough
 	case "exclusive":
-		*e = CreateProject200ApplicationJSONTrustedIps1ProtectionMode(v)
+		*e = CreateProjectProtectionMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProject200ApplicationJSONTrustedIps1ProtectionMode: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectProtectionMode: %v", v)
 	}
 }
 
-type CreateProject200ApplicationJSONTrustedIps1 struct {
-	Addresses      []CreateProject200ApplicationJSONTrustedIps1Addresses    `json:"addresses"`
-	DeploymentType CreateProject200ApplicationJSONTrustedIps1DeploymentType `json:"deploymentType"`
-	ProtectionMode CreateProject200ApplicationJSONTrustedIps1ProtectionMode `json:"protectionMode"`
+type CreateProjectProjectsResponse2001 struct {
+	Addresses      []CreateProjectAddresses            `json:"addresses"`
+	DeploymentType CreateProjectProjectsDeploymentType `json:"deploymentType"`
+	ProtectionMode CreateProjectProtectionMode         `json:"protectionMode"`
 }
 
-func (o *CreateProject200ApplicationJSONTrustedIps1) GetAddresses() []CreateProject200ApplicationJSONTrustedIps1Addresses {
+func (o *CreateProjectProjectsResponse2001) GetAddresses() []CreateProjectAddresses {
 	if o == nil {
-		return []CreateProject200ApplicationJSONTrustedIps1Addresses{}
+		return []CreateProjectAddresses{}
 	}
 	return o.Addresses
 }
 
-func (o *CreateProject200ApplicationJSONTrustedIps1) GetDeploymentType() CreateProject200ApplicationJSONTrustedIps1DeploymentType {
+func (o *CreateProjectProjectsResponse2001) GetDeploymentType() CreateProjectProjectsDeploymentType {
 	if o == nil {
-		return CreateProject200ApplicationJSONTrustedIps1DeploymentType("")
+		return CreateProjectProjectsDeploymentType("")
 	}
 	return o.DeploymentType
 }
 
-func (o *CreateProject200ApplicationJSONTrustedIps1) GetProtectionMode() CreateProject200ApplicationJSONTrustedIps1ProtectionMode {
+func (o *CreateProjectProjectsResponse2001) GetProtectionMode() CreateProjectProtectionMode {
 	if o == nil {
-		return CreateProject200ApplicationJSONTrustedIps1ProtectionMode("")
+		return CreateProjectProtectionMode("")
 	}
 	return o.ProtectionMode
 }
 
-type CreateProject200ApplicationJSONTrustedIpsType string
+type CreateProjectTrustedIpsType string
 
 const (
-	CreateProject200ApplicationJSONTrustedIpsTypeCreateProject200ApplicationJSONTrustedIps1 CreateProject200ApplicationJSONTrustedIpsType = "createProject_200ApplicationJSON_trustedIps_1"
-	CreateProject200ApplicationJSONTrustedIpsTypeCreateProject200ApplicationJSONTrustedIps2 CreateProject200ApplicationJSONTrustedIpsType = "createProject_200ApplicationJSON_trustedIps_2"
+	CreateProjectTrustedIpsTypeCreateProjectProjectsResponse2001 CreateProjectTrustedIpsType = "createProject_projects_response_200_1"
+	CreateProjectTrustedIpsTypeCreateProjectProjectsResponse2002 CreateProjectTrustedIpsType = "createProject_projects_response_200_2"
 )
 
-type CreateProject200ApplicationJSONTrustedIps struct {
-	CreateProject200ApplicationJSONTrustedIps1 *CreateProject200ApplicationJSONTrustedIps1
-	CreateProject200ApplicationJSONTrustedIps2 *CreateProject200ApplicationJSONTrustedIps2
+type CreateProjectTrustedIps struct {
+	CreateProjectProjectsResponse2001 *CreateProjectProjectsResponse2001
+	CreateProjectProjectsResponse2002 *CreateProjectProjectsResponse2002
 
-	Type CreateProject200ApplicationJSONTrustedIpsType
+	Type CreateProjectTrustedIpsType
 }
 
-func CreateCreateProject200ApplicationJSONTrustedIpsCreateProject200ApplicationJSONTrustedIps1(createProject200ApplicationJSONTrustedIps1 CreateProject200ApplicationJSONTrustedIps1) CreateProject200ApplicationJSONTrustedIps {
-	typ := CreateProject200ApplicationJSONTrustedIpsTypeCreateProject200ApplicationJSONTrustedIps1
+func CreateCreateProjectTrustedIpsCreateProjectProjectsResponse2001(createProjectProjectsResponse2001 CreateProjectProjectsResponse2001) CreateProjectTrustedIps {
+	typ := CreateProjectTrustedIpsTypeCreateProjectProjectsResponse2001
 
-	return CreateProject200ApplicationJSONTrustedIps{
-		CreateProject200ApplicationJSONTrustedIps1: &createProject200ApplicationJSONTrustedIps1,
-		Type: typ,
+	return CreateProjectTrustedIps{
+		CreateProjectProjectsResponse2001: &createProjectProjectsResponse2001,
+		Type:                              typ,
 	}
 }
 
-func CreateCreateProject200ApplicationJSONTrustedIpsCreateProject200ApplicationJSONTrustedIps2(createProject200ApplicationJSONTrustedIps2 CreateProject200ApplicationJSONTrustedIps2) CreateProject200ApplicationJSONTrustedIps {
-	typ := CreateProject200ApplicationJSONTrustedIpsTypeCreateProject200ApplicationJSONTrustedIps2
+func CreateCreateProjectTrustedIpsCreateProjectProjectsResponse2002(createProjectProjectsResponse2002 CreateProjectProjectsResponse2002) CreateProjectTrustedIps {
+	typ := CreateProjectTrustedIpsTypeCreateProjectProjectsResponse2002
 
-	return CreateProject200ApplicationJSONTrustedIps{
-		CreateProject200ApplicationJSONTrustedIps2: &createProject200ApplicationJSONTrustedIps2,
-		Type: typ,
+	return CreateProjectTrustedIps{
+		CreateProjectProjectsResponse2002: &createProjectProjectsResponse2002,
+		Type:                              typ,
 	}
 }
 
-func (u *CreateProject200ApplicationJSONTrustedIps) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectTrustedIps) UnmarshalJSON(data []byte) error {
 
-	createProject200ApplicationJSONTrustedIps2 := new(CreateProject200ApplicationJSONTrustedIps2)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONTrustedIps2, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONTrustedIps2 = createProject200ApplicationJSONTrustedIps2
-		u.Type = CreateProject200ApplicationJSONTrustedIpsTypeCreateProject200ApplicationJSONTrustedIps2
+	createProjectProjectsResponse2002 := new(CreateProjectProjectsResponse2002)
+	if err := utils.UnmarshalJSON(data, &createProjectProjectsResponse2002, "", true, true); err == nil {
+		u.CreateProjectProjectsResponse2002 = createProjectProjectsResponse2002
+		u.Type = CreateProjectTrustedIpsTypeCreateProjectProjectsResponse2002
 		return nil
 	}
 
-	createProject200ApplicationJSONTrustedIps1 := new(CreateProject200ApplicationJSONTrustedIps1)
-	if err := utils.UnmarshalJSON(data, &createProject200ApplicationJSONTrustedIps1, "", true, true); err == nil {
-		u.CreateProject200ApplicationJSONTrustedIps1 = createProject200ApplicationJSONTrustedIps1
-		u.Type = CreateProject200ApplicationJSONTrustedIpsTypeCreateProject200ApplicationJSONTrustedIps1
+	createProjectProjectsResponse2001 := new(CreateProjectProjectsResponse2001)
+	if err := utils.UnmarshalJSON(data, &createProjectProjectsResponse2001, "", true, true); err == nil {
+		u.CreateProjectProjectsResponse2001 = createProjectProjectsResponse2001
+		u.Type = CreateProjectTrustedIpsTypeCreateProjectProjectsResponse2001
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProject200ApplicationJSONTrustedIps) MarshalJSON() ([]byte, error) {
-	if u.CreateProject200ApplicationJSONTrustedIps1 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONTrustedIps1, "", true)
+func (u CreateProjectTrustedIps) MarshalJSON() ([]byte, error) {
+	if u.CreateProjectProjectsResponse2001 != nil {
+		return utils.MarshalJSON(u.CreateProjectProjectsResponse2001, "", true)
 	}
 
-	if u.CreateProject200ApplicationJSONTrustedIps2 != nil {
-		return utils.MarshalJSON(u.CreateProject200ApplicationJSONTrustedIps2, "", true)
+	if u.CreateProjectProjectsResponse2002 != nil {
+		return utils.MarshalJSON(u.CreateProjectProjectsResponse2002, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// CreateProject200ApplicationJSON - The project was successfuly created
-type CreateProject200ApplicationJSON struct {
-	AccountID                        string                                                     `json:"accountId"`
-	Analytics                        *CreateProject200ApplicationJSONAnalytics                  `json:"analytics,omitempty"`
-	AutoAssignCustomDomains          *bool                                                      `json:"autoAssignCustomDomains,omitempty"`
-	AutoAssignCustomDomainsUpdatedBy *string                                                    `json:"autoAssignCustomDomainsUpdatedBy,omitempty"`
-	AutoExposeSystemEnvs             *bool                                                      `json:"autoExposeSystemEnvs,omitempty"`
-	BuildCommand                     *string                                                    `json:"buildCommand,omitempty"`
-	CommandForIgnoringBuildStep      *string                                                    `json:"commandForIgnoringBuildStep,omitempty"`
-	ConnectBuildsEnabled             *bool                                                      `json:"connectBuildsEnabled,omitempty"`
-	ConnectConfigurationID           *string                                                    `json:"connectConfigurationId,omitempty"`
-	CreatedAt                        *int64                                                     `json:"createdAt,omitempty"`
-	Crons                            *CreateProject200ApplicationJSONCrons                      `json:"crons,omitempty"`
-	CustomerSupportCodeVisibility    *bool                                                      `json:"customerSupportCodeVisibility,omitempty"`
-	DataCache                        *CreateProject200ApplicationJSONDataCache                  `json:"dataCache,omitempty"`
-	DevCommand                       *string                                                    `json:"devCommand,omitempty"`
-	DirectoryListing                 bool                                                       `json:"directoryListing"`
-	EnablePreviewFeedback            *bool                                                      `json:"enablePreviewFeedback,omitempty"`
-	Env                              []CreateProject200ApplicationJSONEnv                       `json:"env,omitempty"`
-	Framework                        *CreateProject200ApplicationJSONFramework                  `json:"framework,omitempty"`
-	GitComments                      *CreateProject200ApplicationJSONGitComments                `json:"gitComments,omitempty"`
-	GitForkProtection                *bool                                                      `json:"gitForkProtection,omitempty"`
-	GitLFS                           *bool                                                      `json:"gitLFS,omitempty"`
-	HasActiveBranches                *bool                                                      `json:"hasActiveBranches,omitempty"`
-	HasFloatingAliases               *bool                                                      `json:"hasFloatingAliases,omitempty"`
-	ID                               string                                                     `json:"id"`
-	InstallCommand                   *string                                                    `json:"installCommand,omitempty"`
-	LastAliasRequest                 *CreateProject200ApplicationJSONLastAliasRequest           `json:"lastAliasRequest,omitempty"`
-	LastRollbackTarget               *CreateProject200ApplicationJSONLastRollbackTarget         `json:"lastRollbackTarget,omitempty"`
-	LatestDeployments                []CreateProject200ApplicationJSONLatestDeployments         `json:"latestDeployments,omitempty"`
-	Link                             *CreateProject200ApplicationJSONLink                       `json:"link,omitempty"`
-	Live                             *bool                                                      `json:"live,omitempty"`
-	Name                             string                                                     `json:"name"`
-	NodeVersion                      CreateProject200ApplicationJSONNodeVersion                 `json:"nodeVersion"`
-	OutputDirectory                  *string                                                    `json:"outputDirectory,omitempty"`
-	PasswordProtection               *CreateProject200ApplicationJSONPasswordProtection         `json:"passwordProtection,omitempty"`
-	Permissions                      *CreateProject200ApplicationJSONPermissions                `json:"permissions,omitempty"`
-	ProductionDeploymentsFastLane    *bool                                                      `json:"productionDeploymentsFastLane,omitempty"`
-	ProtectionBypass                 map[string]CreateProject200ApplicationJSONProtectionBypass `json:"protectionBypass,omitempty"`
-	PublicSource                     *bool                                                      `json:"publicSource,omitempty"`
-	RootDirectory                    *string                                                    `json:"rootDirectory,omitempty"`
-	ServerlessFunctionRegion         *string                                                    `json:"serverlessFunctionRegion,omitempty"`
-	SkipGitConnectDuringLink         *bool                                                      `json:"skipGitConnectDuringLink,omitempty"`
-	SourceFilesOutsideRootDirectory  *bool                                                      `json:"sourceFilesOutsideRootDirectory,omitempty"`
-	SsoProtection                    *CreateProject200ApplicationJSONSsoProtection              `json:"ssoProtection,omitempty"`
-	Targets                          map[string]CreateProject200ApplicationJSONTargets          `json:"targets,omitempty"`
-	TransferCompletedAt              *int64                                                     `json:"transferCompletedAt,omitempty"`
-	TransferStartedAt                *int64                                                     `json:"transferStartedAt,omitempty"`
-	TransferToAccountID              *string                                                    `json:"transferToAccountId,omitempty"`
-	TransferredFromAccountID         *string                                                    `json:"transferredFromAccountId,omitempty"`
-	TrustedIps                       *CreateProject200ApplicationJSONTrustedIps                 `json:"trustedIps,omitempty"`
-	UpdatedAt                        *int64                                                     `json:"updatedAt,omitempty"`
+// CreateProjectResponseBody - The project was successfuly created
+type CreateProjectResponseBody struct {
+	AccountID                        string                                   `json:"accountId"`
+	Analytics                        *Analytics                               `json:"analytics,omitempty"`
+	AutoAssignCustomDomains          *bool                                    `json:"autoAssignCustomDomains,omitempty"`
+	AutoAssignCustomDomainsUpdatedBy *string                                  `json:"autoAssignCustomDomainsUpdatedBy,omitempty"`
+	AutoExposeSystemEnvs             *bool                                    `json:"autoExposeSystemEnvs,omitempty"`
+	BuildCommand                     *string                                  `json:"buildCommand,omitempty"`
+	CommandForIgnoringBuildStep      *string                                  `json:"commandForIgnoringBuildStep,omitempty"`
+	ConnectBuildsEnabled             *bool                                    `json:"connectBuildsEnabled,omitempty"`
+	ConnectConfigurationID           *string                                  `json:"connectConfigurationId,omitempty"`
+	CreatedAt                        *int64                                   `json:"createdAt,omitempty"`
+	Crons                            *CreateProjectCrons                      `json:"crons,omitempty"`
+	CustomerSupportCodeVisibility    *bool                                    `json:"customerSupportCodeVisibility,omitempty"`
+	DataCache                        *DataCache                               `json:"dataCache,omitempty"`
+	DevCommand                       *string                                  `json:"devCommand,omitempty"`
+	DirectoryListing                 bool                                     `json:"directoryListing"`
+	EnablePreviewFeedback            *bool                                    `json:"enablePreviewFeedback,omitempty"`
+	Env                              []Env                                    `json:"env,omitempty"`
+	Framework                        *CreateProjectProjectsFramework          `json:"framework,omitempty"`
+	GitComments                      *GitComments                             `json:"gitComments,omitempty"`
+	GitForkProtection                *bool                                    `json:"gitForkProtection,omitempty"`
+	GitLFS                           *bool                                    `json:"gitLFS,omitempty"`
+	HasActiveBranches                *bool                                    `json:"hasActiveBranches,omitempty"`
+	HasFloatingAliases               *bool                                    `json:"hasFloatingAliases,omitempty"`
+	ID                               string                                   `json:"id"`
+	InstallCommand                   *string                                  `json:"installCommand,omitempty"`
+	LastAliasRequest                 *LastAliasRequest                        `json:"lastAliasRequest,omitempty"`
+	LastRollbackTarget               *LastRollbackTarget                      `json:"lastRollbackTarget,omitempty"`
+	LatestDeployments                []LatestDeployments                      `json:"latestDeployments,omitempty"`
+	Link                             *Link                                    `json:"link,omitempty"`
+	Live                             *bool                                    `json:"live,omitempty"`
+	Name                             string                                   `json:"name"`
+	NodeVersion                      CreateProjectNodeVersion                 `json:"nodeVersion"`
+	OutputDirectory                  *string                                  `json:"outputDirectory,omitempty"`
+	PasswordProtection               *CreateProjectPasswordProtection         `json:"passwordProtection,omitempty"`
+	Permissions                      *Permissions                             `json:"permissions,omitempty"`
+	ProductionDeploymentsFastLane    *bool                                    `json:"productionDeploymentsFastLane,omitempty"`
+	ProtectionBypass                 map[string]CreateProjectProtectionBypass `json:"protectionBypass,omitempty"`
+	PublicSource                     *bool                                    `json:"publicSource,omitempty"`
+	RootDirectory                    *string                                  `json:"rootDirectory,omitempty"`
+	ServerlessFunctionRegion         *string                                  `json:"serverlessFunctionRegion,omitempty"`
+	SkipGitConnectDuringLink         *bool                                    `json:"skipGitConnectDuringLink,omitempty"`
+	SourceFilesOutsideRootDirectory  *bool                                    `json:"sourceFilesOutsideRootDirectory,omitempty"`
+	SsoProtection                    *CreateProjectSsoProtection              `json:"ssoProtection,omitempty"`
+	Targets                          map[string]Targets                       `json:"targets,omitempty"`
+	TransferCompletedAt              *int64                                   `json:"transferCompletedAt,omitempty"`
+	TransferStartedAt                *int64                                   `json:"transferStartedAt,omitempty"`
+	TransferToAccountID              *string                                  `json:"transferToAccountId,omitempty"`
+	TransferredFromAccountID         *string                                  `json:"transferredFromAccountId,omitempty"`
+	TrustedIps                       *CreateProjectTrustedIps                 `json:"trustedIps,omitempty"`
+	UpdatedAt                        *int64                                   `json:"updatedAt,omitempty"`
 }
 
-func (o *CreateProject200ApplicationJSON) GetAccountID() string {
+func (o *CreateProjectResponseBody) GetAccountID() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccountID
 }
 
-func (o *CreateProject200ApplicationJSON) GetAnalytics() *CreateProject200ApplicationJSONAnalytics {
+func (o *CreateProjectResponseBody) GetAnalytics() *Analytics {
 	if o == nil {
 		return nil
 	}
 	return o.Analytics
 }
 
-func (o *CreateProject200ApplicationJSON) GetAutoAssignCustomDomains() *bool {
+func (o *CreateProjectResponseBody) GetAutoAssignCustomDomains() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.AutoAssignCustomDomains
 }
 
-func (o *CreateProject200ApplicationJSON) GetAutoAssignCustomDomainsUpdatedBy() *string {
+func (o *CreateProjectResponseBody) GetAutoAssignCustomDomainsUpdatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AutoAssignCustomDomainsUpdatedBy
 }
 
-func (o *CreateProject200ApplicationJSON) GetAutoExposeSystemEnvs() *bool {
+func (o *CreateProjectResponseBody) GetAutoExposeSystemEnvs() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.AutoExposeSystemEnvs
 }
 
-func (o *CreateProject200ApplicationJSON) GetBuildCommand() *string {
+func (o *CreateProjectResponseBody) GetBuildCommand() *string {
 	if o == nil {
 		return nil
 	}
 	return o.BuildCommand
 }
 
-func (o *CreateProject200ApplicationJSON) GetCommandForIgnoringBuildStep() *string {
+func (o *CreateProjectResponseBody) GetCommandForIgnoringBuildStep() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CommandForIgnoringBuildStep
 }
 
-func (o *CreateProject200ApplicationJSON) GetConnectBuildsEnabled() *bool {
+func (o *CreateProjectResponseBody) GetConnectBuildsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectBuildsEnabled
 }
 
-func (o *CreateProject200ApplicationJSON) GetConnectConfigurationID() *string {
+func (o *CreateProjectResponseBody) GetConnectConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectConfigurationID
 }
 
-func (o *CreateProject200ApplicationJSON) GetCreatedAt() *int64 {
+func (o *CreateProjectResponseBody) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProject200ApplicationJSON) GetCrons() *CreateProject200ApplicationJSONCrons {
+func (o *CreateProjectResponseBody) GetCrons() *CreateProjectCrons {
 	if o == nil {
 		return nil
 	}
 	return o.Crons
 }
 
-func (o *CreateProject200ApplicationJSON) GetCustomerSupportCodeVisibility() *bool {
+func (o *CreateProjectResponseBody) GetCustomerSupportCodeVisibility() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.CustomerSupportCodeVisibility
 }
 
-func (o *CreateProject200ApplicationJSON) GetDataCache() *CreateProject200ApplicationJSONDataCache {
+func (o *CreateProjectResponseBody) GetDataCache() *DataCache {
 	if o == nil {
 		return nil
 	}
 	return o.DataCache
 }
 
-func (o *CreateProject200ApplicationJSON) GetDevCommand() *string {
+func (o *CreateProjectResponseBody) GetDevCommand() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DevCommand
 }
 
-func (o *CreateProject200ApplicationJSON) GetDirectoryListing() bool {
+func (o *CreateProjectResponseBody) GetDirectoryListing() bool {
 	if o == nil {
 		return false
 	}
 	return o.DirectoryListing
 }
 
-func (o *CreateProject200ApplicationJSON) GetEnablePreviewFeedback() *bool {
+func (o *CreateProjectResponseBody) GetEnablePreviewFeedback() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.EnablePreviewFeedback
 }
 
-func (o *CreateProject200ApplicationJSON) GetEnv() []CreateProject200ApplicationJSONEnv {
+func (o *CreateProjectResponseBody) GetEnv() []Env {
 	if o == nil {
 		return nil
 	}
 	return o.Env
 }
 
-func (o *CreateProject200ApplicationJSON) GetFramework() *CreateProject200ApplicationJSONFramework {
+func (o *CreateProjectResponseBody) GetFramework() *CreateProjectProjectsFramework {
 	if o == nil {
 		return nil
 	}
 	return o.Framework
 }
 
-func (o *CreateProject200ApplicationJSON) GetGitComments() *CreateProject200ApplicationJSONGitComments {
+func (o *CreateProjectResponseBody) GetGitComments() *GitComments {
 	if o == nil {
 		return nil
 	}
 	return o.GitComments
 }
 
-func (o *CreateProject200ApplicationJSON) GetGitForkProtection() *bool {
+func (o *CreateProjectResponseBody) GetGitForkProtection() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.GitForkProtection
 }
 
-func (o *CreateProject200ApplicationJSON) GetGitLFS() *bool {
+func (o *CreateProjectResponseBody) GetGitLFS() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.GitLFS
 }
 
-func (o *CreateProject200ApplicationJSON) GetHasActiveBranches() *bool {
+func (o *CreateProjectResponseBody) GetHasActiveBranches() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.HasActiveBranches
 }
 
-func (o *CreateProject200ApplicationJSON) GetHasFloatingAliases() *bool {
+func (o *CreateProjectResponseBody) GetHasFloatingAliases() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.HasFloatingAliases
 }
 
-func (o *CreateProject200ApplicationJSON) GetID() string {
+func (o *CreateProjectResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateProject200ApplicationJSON) GetInstallCommand() *string {
+func (o *CreateProjectResponseBody) GetInstallCommand() *string {
 	if o == nil {
 		return nil
 	}
 	return o.InstallCommand
 }
 
-func (o *CreateProject200ApplicationJSON) GetLastAliasRequest() *CreateProject200ApplicationJSONLastAliasRequest {
+func (o *CreateProjectResponseBody) GetLastAliasRequest() *LastAliasRequest {
 	if o == nil {
 		return nil
 	}
 	return o.LastAliasRequest
 }
 
-func (o *CreateProject200ApplicationJSON) GetLastRollbackTarget() *CreateProject200ApplicationJSONLastRollbackTarget {
+func (o *CreateProjectResponseBody) GetLastRollbackTarget() *LastRollbackTarget {
 	if o == nil {
 		return nil
 	}
 	return o.LastRollbackTarget
 }
 
-func (o *CreateProject200ApplicationJSON) GetLatestDeployments() []CreateProject200ApplicationJSONLatestDeployments {
+func (o *CreateProjectResponseBody) GetLatestDeployments() []LatestDeployments {
 	if o == nil {
 		return nil
 	}
 	return o.LatestDeployments
 }
 
-func (o *CreateProject200ApplicationJSON) GetLink() *CreateProject200ApplicationJSONLink {
+func (o *CreateProjectResponseBody) GetLink() *Link {
 	if o == nil {
 		return nil
 	}
 	return o.Link
 }
 
-func (o *CreateProject200ApplicationJSON) GetLive() *bool {
+func (o *CreateProjectResponseBody) GetLive() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Live
 }
 
-func (o *CreateProject200ApplicationJSON) GetName() string {
+func (o *CreateProjectResponseBody) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateProject200ApplicationJSON) GetNodeVersion() CreateProject200ApplicationJSONNodeVersion {
+func (o *CreateProjectResponseBody) GetNodeVersion() CreateProjectNodeVersion {
 	if o == nil {
-		return CreateProject200ApplicationJSONNodeVersion("")
+		return CreateProjectNodeVersion("")
 	}
 	return o.NodeVersion
 }
 
-func (o *CreateProject200ApplicationJSON) GetOutputDirectory() *string {
+func (o *CreateProjectResponseBody) GetOutputDirectory() *string {
 	if o == nil {
 		return nil
 	}
 	return o.OutputDirectory
 }
 
-func (o *CreateProject200ApplicationJSON) GetPasswordProtection() *CreateProject200ApplicationJSONPasswordProtection {
+func (o *CreateProjectResponseBody) GetPasswordProtection() *CreateProjectPasswordProtection {
 	if o == nil {
 		return nil
 	}
 	return o.PasswordProtection
 }
 
-func (o *CreateProject200ApplicationJSON) GetPermissions() *CreateProject200ApplicationJSONPermissions {
+func (o *CreateProjectResponseBody) GetPermissions() *Permissions {
 	if o == nil {
 		return nil
 	}
 	return o.Permissions
 }
 
-func (o *CreateProject200ApplicationJSON) GetProductionDeploymentsFastLane() *bool {
+func (o *CreateProjectResponseBody) GetProductionDeploymentsFastLane() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.ProductionDeploymentsFastLane
 }
 
-func (o *CreateProject200ApplicationJSON) GetProtectionBypass() map[string]CreateProject200ApplicationJSONProtectionBypass {
+func (o *CreateProjectResponseBody) GetProtectionBypass() map[string]CreateProjectProtectionBypass {
 	if o == nil {
 		return nil
 	}
 	return o.ProtectionBypass
 }
 
-func (o *CreateProject200ApplicationJSON) GetPublicSource() *bool {
+func (o *CreateProjectResponseBody) GetPublicSource() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.PublicSource
 }
 
-func (o *CreateProject200ApplicationJSON) GetRootDirectory() *string {
+func (o *CreateProjectResponseBody) GetRootDirectory() *string {
 	if o == nil {
 		return nil
 	}
 	return o.RootDirectory
 }
 
-func (o *CreateProject200ApplicationJSON) GetServerlessFunctionRegion() *string {
+func (o *CreateProjectResponseBody) GetServerlessFunctionRegion() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ServerlessFunctionRegion
 }
 
-func (o *CreateProject200ApplicationJSON) GetSkipGitConnectDuringLink() *bool {
+func (o *CreateProjectResponseBody) GetSkipGitConnectDuringLink() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SkipGitConnectDuringLink
 }
 
-func (o *CreateProject200ApplicationJSON) GetSourceFilesOutsideRootDirectory() *bool {
+func (o *CreateProjectResponseBody) GetSourceFilesOutsideRootDirectory() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SourceFilesOutsideRootDirectory
 }
 
-func (o *CreateProject200ApplicationJSON) GetSsoProtection() *CreateProject200ApplicationJSONSsoProtection {
+func (o *CreateProjectResponseBody) GetSsoProtection() *CreateProjectSsoProtection {
 	if o == nil {
 		return nil
 	}
 	return o.SsoProtection
 }
 
-func (o *CreateProject200ApplicationJSON) GetTargets() map[string]CreateProject200ApplicationJSONTargets {
+func (o *CreateProjectResponseBody) GetTargets() map[string]Targets {
 	if o == nil {
 		return nil
 	}
 	return o.Targets
 }
 
-func (o *CreateProject200ApplicationJSON) GetTransferCompletedAt() *int64 {
+func (o *CreateProjectResponseBody) GetTransferCompletedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.TransferCompletedAt
 }
 
-func (o *CreateProject200ApplicationJSON) GetTransferStartedAt() *int64 {
+func (o *CreateProjectResponseBody) GetTransferStartedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.TransferStartedAt
 }
 
-func (o *CreateProject200ApplicationJSON) GetTransferToAccountID() *string {
+func (o *CreateProjectResponseBody) GetTransferToAccountID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TransferToAccountID
 }
 
-func (o *CreateProject200ApplicationJSON) GetTransferredFromAccountID() *string {
+func (o *CreateProjectResponseBody) GetTransferredFromAccountID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TransferredFromAccountID
 }
 
-func (o *CreateProject200ApplicationJSON) GetTrustedIps() *CreateProject200ApplicationJSONTrustedIps {
+func (o *CreateProjectResponseBody) GetTrustedIps() *CreateProjectTrustedIps {
 	if o == nil {
 		return nil
 	}
 	return o.TrustedIps
 }
 
-func (o *CreateProject200ApplicationJSON) GetUpdatedAt() *int64 {
+func (o *CreateProjectResponseBody) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
@@ -5869,7 +5869,7 @@ type CreateProjectResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The project was successfuly created
-	CreateProject200ApplicationJSONObject *CreateProject200ApplicationJSON
+	Object *CreateProjectResponseBody
 }
 
 func (o *CreateProjectResponse) GetContentType() string {
@@ -5893,9 +5893,9 @@ func (o *CreateProjectResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateProjectResponse) GetCreateProject200ApplicationJSONObject() *CreateProject200ApplicationJSON {
+func (o *CreateProjectResponse) GetObject() *CreateProjectResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.CreateProject200ApplicationJSONObject
+	return o.Object
 }

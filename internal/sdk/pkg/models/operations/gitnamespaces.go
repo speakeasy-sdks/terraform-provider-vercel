@@ -10,19 +10,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type GitNamespacesProvider string
+type Provider string
 
 const (
-	GitNamespacesProviderGithub    GitNamespacesProvider = "github"
-	GitNamespacesProviderGitlab    GitNamespacesProvider = "gitlab"
-	GitNamespacesProviderBitbucket GitNamespacesProvider = "bitbucket"
+	ProviderGithub    Provider = "github"
+	ProviderGitlab    Provider = "gitlab"
+	ProviderBitbucket Provider = "bitbucket"
 )
 
-func (e GitNamespacesProvider) ToPointer() *GitNamespacesProvider {
+func (e Provider) ToPointer() *Provider {
 	return &e
 }
 
-func (e *GitNamespacesProvider) UnmarshalJSON(data []byte) error {
+func (e *Provider) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -33,20 +33,20 @@ func (e *GitNamespacesProvider) UnmarshalJSON(data []byte) error {
 	case "gitlab":
 		fallthrough
 	case "bitbucket":
-		*e = GitNamespacesProvider(v)
+		*e = Provider(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GitNamespacesProvider: %v", v)
+		return fmt.Errorf("invalid value for Provider: %v", v)
 	}
 }
 
 type GitNamespacesRequest struct {
-	Provider *GitNamespacesProvider `queryParam:"style=form,explode=true,name=provider"`
+	Provider *Provider `queryParam:"style=form,explode=true,name=provider"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
-func (o *GitNamespacesRequest) GetProvider() *GitNamespacesProvider {
+func (o *GitNamespacesRequest) GetProvider() *Provider {
 	if o == nil {
 		return nil
 	}
@@ -60,58 +60,58 @@ func (o *GitNamespacesRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type GitNamespaces200ApplicationJSONIDType string
+type IDType string
 
 const (
-	GitNamespaces200ApplicationJSONIDTypeStr     GitNamespaces200ApplicationJSONIDType = "str"
-	GitNamespaces200ApplicationJSONIDTypeInteger GitNamespaces200ApplicationJSONIDType = "integer"
+	IDTypeStr     IDType = "str"
+	IDTypeInteger IDType = "integer"
 )
 
-type GitNamespaces200ApplicationJSONID struct {
+type ID struct {
 	Str     *string
 	Integer *int64
 
-	Type GitNamespaces200ApplicationJSONIDType
+	Type IDType
 }
 
-func CreateGitNamespaces200ApplicationJSONIDStr(str string) GitNamespaces200ApplicationJSONID {
-	typ := GitNamespaces200ApplicationJSONIDTypeStr
+func CreateIDStr(str string) ID {
+	typ := IDTypeStr
 
-	return GitNamespaces200ApplicationJSONID{
+	return ID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateGitNamespaces200ApplicationJSONIDInteger(integer int64) GitNamespaces200ApplicationJSONID {
-	typ := GitNamespaces200ApplicationJSONIDTypeInteger
+func CreateIDInteger(integer int64) ID {
+	typ := IDTypeInteger
 
-	return GitNamespaces200ApplicationJSONID{
+	return ID{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func (u *GitNamespaces200ApplicationJSONID) UnmarshalJSON(data []byte) error {
+func (u *ID) UnmarshalJSON(data []byte) error {
 
 	str := new(string)
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = GitNamespaces200ApplicationJSONIDTypeStr
+		u.Type = IDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = GitNamespaces200ApplicationJSONIDTypeInteger
+		u.Type = IDTypeInteger
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GitNamespaces200ApplicationJSONID) MarshalJSON() ([]byte, error) {
+func (u ID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -123,67 +123,67 @@ func (u GitNamespaces200ApplicationJSONID) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type GitNamespaces200ApplicationJSON struct {
-	ID                 GitNamespaces200ApplicationJSONID `json:"id"`
-	InstallationID     *int64                            `json:"installationId,omitempty"`
-	IsAccessRestricted *bool                             `json:"isAccessRestricted,omitempty"`
-	Name               *string                           `json:"name,omitempty"`
-	OwnerType          string                            `json:"ownerType"`
-	Provider           string                            `json:"provider"`
-	RequireReauth      *bool                             `json:"requireReauth,omitempty"`
-	Slug               string                            `json:"slug"`
+type GitNamespacesResponseBody struct {
+	ID                 ID      `json:"id"`
+	InstallationID     *int64  `json:"installationId,omitempty"`
+	IsAccessRestricted *bool   `json:"isAccessRestricted,omitempty"`
+	Name               *string `json:"name,omitempty"`
+	OwnerType          string  `json:"ownerType"`
+	Provider           string  `json:"provider"`
+	RequireReauth      *bool   `json:"requireReauth,omitempty"`
+	Slug               string  `json:"slug"`
 }
 
-func (o *GitNamespaces200ApplicationJSON) GetID() GitNamespaces200ApplicationJSONID {
+func (o *GitNamespacesResponseBody) GetID() ID {
 	if o == nil {
-		return GitNamespaces200ApplicationJSONID{}
+		return ID{}
 	}
 	return o.ID
 }
 
-func (o *GitNamespaces200ApplicationJSON) GetInstallationID() *int64 {
+func (o *GitNamespacesResponseBody) GetInstallationID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.InstallationID
 }
 
-func (o *GitNamespaces200ApplicationJSON) GetIsAccessRestricted() *bool {
+func (o *GitNamespacesResponseBody) GetIsAccessRestricted() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IsAccessRestricted
 }
 
-func (o *GitNamespaces200ApplicationJSON) GetName() *string {
+func (o *GitNamespacesResponseBody) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *GitNamespaces200ApplicationJSON) GetOwnerType() string {
+func (o *GitNamespacesResponseBody) GetOwnerType() string {
 	if o == nil {
 		return ""
 	}
 	return o.OwnerType
 }
 
-func (o *GitNamespaces200ApplicationJSON) GetProvider() string {
+func (o *GitNamespacesResponseBody) GetProvider() string {
 	if o == nil {
 		return ""
 	}
 	return o.Provider
 }
 
-func (o *GitNamespaces200ApplicationJSON) GetRequireReauth() *bool {
+func (o *GitNamespacesResponseBody) GetRequireReauth() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.RequireReauth
 }
 
-func (o *GitNamespaces200ApplicationJSON) GetSlug() string {
+func (o *GitNamespacesResponseBody) GetSlug() string {
 	if o == nil {
 		return ""
 	}
@@ -196,8 +196,8 @@ type GitNamespacesResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                            *http.Response
-	GitNamespaces200ApplicationJSONObjects []GitNamespaces200ApplicationJSON
+	RawResponse *http.Response
+	Classes     []GitNamespacesResponseBody
 }
 
 func (o *GitNamespacesResponse) GetContentType() string {
@@ -221,9 +221,9 @@ func (o *GitNamespacesResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GitNamespacesResponse) GetGitNamespaces200ApplicationJSONObjects() []GitNamespaces200ApplicationJSON {
+func (o *GitNamespacesResponse) GetClasses() []GitNamespacesResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GitNamespaces200ApplicationJSONObjects
+	return o.Classes
 }

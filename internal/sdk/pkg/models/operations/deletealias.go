@@ -29,38 +29,38 @@ func (o *DeleteAliasRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type DeleteAlias200ApplicationJSONStatus string
+type DeleteAliasStatus string
 
 const (
-	DeleteAlias200ApplicationJSONStatusSuccess DeleteAlias200ApplicationJSONStatus = "SUCCESS"
+	DeleteAliasStatusSuccess DeleteAliasStatus = "SUCCESS"
 )
 
-func (e DeleteAlias200ApplicationJSONStatus) ToPointer() *DeleteAlias200ApplicationJSONStatus {
+func (e DeleteAliasStatus) ToPointer() *DeleteAliasStatus {
 	return &e
 }
 
-func (e *DeleteAlias200ApplicationJSONStatus) UnmarshalJSON(data []byte) error {
+func (e *DeleteAliasStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SUCCESS":
-		*e = DeleteAlias200ApplicationJSONStatus(v)
+		*e = DeleteAliasStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DeleteAlias200ApplicationJSONStatus: %v", v)
+		return fmt.Errorf("invalid value for DeleteAliasStatus: %v", v)
 	}
 }
 
-// DeleteAlias200ApplicationJSON - The alias was successfully removed
-type DeleteAlias200ApplicationJSON struct {
-	Status DeleteAlias200ApplicationJSONStatus `json:"status"`
+// DeleteAliasResponseBody - The alias was successfully removed
+type DeleteAliasResponseBody struct {
+	Status DeleteAliasStatus `json:"status"`
 }
 
-func (o *DeleteAlias200ApplicationJSON) GetStatus() DeleteAlias200ApplicationJSONStatus {
+func (o *DeleteAliasResponseBody) GetStatus() DeleteAliasStatus {
 	if o == nil {
-		return DeleteAlias200ApplicationJSONStatus("")
+		return DeleteAliasStatus("")
 	}
 	return o.Status
 }
@@ -73,7 +73,7 @@ type DeleteAliasResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The alias was successfully removed
-	DeleteAlias200ApplicationJSONObject *DeleteAlias200ApplicationJSON
+	Object *DeleteAliasResponseBody
 }
 
 func (o *DeleteAliasResponse) GetContentType() string {
@@ -97,9 +97,9 @@ func (o *DeleteAliasResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *DeleteAliasResponse) GetDeleteAlias200ApplicationJSONObject() *DeleteAlias200ApplicationJSON {
+func (o *DeleteAliasResponse) GetObject() *DeleteAliasResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.DeleteAlias200ApplicationJSONObject
+	return o.Object
 }

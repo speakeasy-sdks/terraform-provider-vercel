@@ -39,58 +39,58 @@ func (o *GetTeamsRequest) GetUntil() *int64 {
 	return o.Until
 }
 
-type GetTeams200ApplicationJSONTeamsType string
+type TeamsType string
 
 const (
-	GetTeams200ApplicationJSONTeamsTypeTeam        GetTeams200ApplicationJSONTeamsType = "Team"
-	GetTeams200ApplicationJSONTeamsTypeTeamLimited GetTeams200ApplicationJSONTeamsType = "TeamLimited"
+	TeamsTypeTeam        TeamsType = "Team"
+	TeamsTypeTeamLimited TeamsType = "TeamLimited"
 )
 
-type GetTeams200ApplicationJSONTeams struct {
+type Teams struct {
 	Team        *shared.Team
 	TeamLimited *shared.TeamLimited
 
-	Type GetTeams200ApplicationJSONTeamsType
+	Type TeamsType
 }
 
-func CreateGetTeams200ApplicationJSONTeamsTeam(team shared.Team) GetTeams200ApplicationJSONTeams {
-	typ := GetTeams200ApplicationJSONTeamsTypeTeam
+func CreateTeamsTeam(team shared.Team) Teams {
+	typ := TeamsTypeTeam
 
-	return GetTeams200ApplicationJSONTeams{
+	return Teams{
 		Team: &team,
 		Type: typ,
 	}
 }
 
-func CreateGetTeams200ApplicationJSONTeamsTeamLimited(teamLimited shared.TeamLimited) GetTeams200ApplicationJSONTeams {
-	typ := GetTeams200ApplicationJSONTeamsTypeTeamLimited
+func CreateTeamsTeamLimited(teamLimited shared.TeamLimited) Teams {
+	typ := TeamsTypeTeamLimited
 
-	return GetTeams200ApplicationJSONTeams{
+	return Teams{
 		TeamLimited: &teamLimited,
 		Type:        typ,
 	}
 }
 
-func (u *GetTeams200ApplicationJSONTeams) UnmarshalJSON(data []byte) error {
+func (u *Teams) UnmarshalJSON(data []byte) error {
 
 	team := new(shared.Team)
 	if err := utils.UnmarshalJSON(data, &team, "", true, true); err == nil {
 		u.Team = team
-		u.Type = GetTeams200ApplicationJSONTeamsTypeTeam
+		u.Type = TeamsTypeTeam
 		return nil
 	}
 
 	teamLimited := new(shared.TeamLimited)
 	if err := utils.UnmarshalJSON(data, &teamLimited, "", true, true); err == nil {
 		u.TeamLimited = teamLimited
-		u.Type = GetTeams200ApplicationJSONTeamsTypeTeamLimited
+		u.Type = TeamsTypeTeamLimited
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetTeams200ApplicationJSONTeams) MarshalJSON() ([]byte, error) {
+func (u Teams) MarshalJSON() ([]byte, error) {
 	if u.Team != nil {
 		return utils.MarshalJSON(u.Team, "", true)
 	}
@@ -102,23 +102,23 @@ func (u GetTeams200ApplicationJSONTeams) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// GetTeams200ApplicationJSON - A paginated list of teams.
-type GetTeams200ApplicationJSON struct {
+// GetTeamsResponseBody - A paginated list of teams.
+type GetTeamsResponseBody struct {
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
-	Pagination shared.Pagination                 `json:"pagination"`
-	Teams      []GetTeams200ApplicationJSONTeams `json:"teams"`
+	Pagination shared.Pagination `json:"pagination"`
+	Teams      []Teams           `json:"teams"`
 }
 
-func (o *GetTeams200ApplicationJSON) GetPagination() shared.Pagination {
+func (o *GetTeamsResponseBody) GetPagination() shared.Pagination {
 	if o == nil {
 		return shared.Pagination{}
 	}
 	return o.Pagination
 }
 
-func (o *GetTeams200ApplicationJSON) GetTeams() []GetTeams200ApplicationJSONTeams {
+func (o *GetTeamsResponseBody) GetTeams() []Teams {
 	if o == nil {
-		return []GetTeams200ApplicationJSONTeams{}
+		return []Teams{}
 	}
 	return o.Teams
 }
@@ -131,7 +131,7 @@ type GetTeamsResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// A paginated list of teams.
-	GetTeams200ApplicationJSONObject *GetTeams200ApplicationJSON
+	Object *GetTeamsResponseBody
 }
 
 func (o *GetTeamsResponse) GetContentType() string {
@@ -155,9 +155,9 @@ func (o *GetTeamsResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetTeamsResponse) GetGetTeams200ApplicationJSONObject() *GetTeams200ApplicationJSON {
+func (o *GetTeamsResponse) GetObject() *GetTeamsResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetTeams200ApplicationJSONObject
+	return o.Object
 }

@@ -36,11 +36,11 @@ func (o *RemoveProjectMemberRequest) GetUID() string {
 	return o.UID
 }
 
-type RemoveProjectMember200ApplicationJSON struct {
+type RemoveProjectMemberResponseBody struct {
 	ID string `json:"id"`
 }
 
-func (o *RemoveProjectMember200ApplicationJSON) GetID() string {
+func (o *RemoveProjectMemberResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
@@ -53,8 +53,8 @@ type RemoveProjectMemberResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                                 *http.Response
-	RemoveProjectMember200ApplicationJSONObject *RemoveProjectMember200ApplicationJSON
+	RawResponse *http.Response
+	Object      *RemoveProjectMemberResponseBody
 }
 
 func (o *RemoveProjectMemberResponse) GetContentType() string {
@@ -78,9 +78,9 @@ func (o *RemoveProjectMemberResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *RemoveProjectMemberResponse) GetRemoveProjectMember200ApplicationJSONObject() *RemoveProjectMember200ApplicationJSON {
+func (o *RemoveProjectMemberResponse) GetObject() *RemoveProjectMemberResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.RemoveProjectMember200ApplicationJSONObject
+	return o.Object
 }

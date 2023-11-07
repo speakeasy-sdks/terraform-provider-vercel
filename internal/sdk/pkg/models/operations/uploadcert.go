@@ -65,7 +65,7 @@ func (o *UploadCertRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type UploadCert200ApplicationJSON struct {
+type UploadCertResponseBody struct {
 	AutoRenew bool     `json:"autoRenew"`
 	Cns       []string `json:"cns"`
 	CreatedAt int64    `json:"createdAt"`
@@ -73,35 +73,35 @@ type UploadCert200ApplicationJSON struct {
 	ID        string   `json:"id"`
 }
 
-func (o *UploadCert200ApplicationJSON) GetAutoRenew() bool {
+func (o *UploadCertResponseBody) GetAutoRenew() bool {
 	if o == nil {
 		return false
 	}
 	return o.AutoRenew
 }
 
-func (o *UploadCert200ApplicationJSON) GetCns() []string {
+func (o *UploadCertResponseBody) GetCns() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Cns
 }
 
-func (o *UploadCert200ApplicationJSON) GetCreatedAt() int64 {
+func (o *UploadCertResponseBody) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *UploadCert200ApplicationJSON) GetExpiresAt() int64 {
+func (o *UploadCertResponseBody) GetExpiresAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ExpiresAt
 }
 
-func (o *UploadCert200ApplicationJSON) GetID() string {
+func (o *UploadCertResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
@@ -114,8 +114,8 @@ type UploadCertResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                        *http.Response
-	UploadCert200ApplicationJSONObject *UploadCert200ApplicationJSON
+	RawResponse *http.Response
+	Object      *UploadCertResponseBody
 }
 
 func (o *UploadCertResponse) GetContentType() string {
@@ -139,9 +139,9 @@ func (o *UploadCertResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UploadCertResponse) GetUploadCert200ApplicationJSONObject() *UploadCert200ApplicationJSON {
+func (o *UploadCertResponse) GetObject() *UploadCertResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.UploadCert200ApplicationJSONObject
+	return o.Object
 }

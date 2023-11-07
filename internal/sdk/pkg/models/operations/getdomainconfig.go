@@ -29,19 +29,19 @@ func (o *GetDomainConfigRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// GetDomainConfig200ApplicationJSONAcceptedChallenges - Which challenge types the domain can use for issuing certs.
-type GetDomainConfig200ApplicationJSONAcceptedChallenges string
+// AcceptedChallenges - Which challenge types the domain can use for issuing certs.
+type AcceptedChallenges string
 
 const (
-	GetDomainConfig200ApplicationJSONAcceptedChallengesDns01  GetDomainConfig200ApplicationJSONAcceptedChallenges = "dns-01"
-	GetDomainConfig200ApplicationJSONAcceptedChallengesHttp01 GetDomainConfig200ApplicationJSONAcceptedChallenges = "http-01"
+	AcceptedChallengesDns01  AcceptedChallenges = "dns-01"
+	AcceptedChallengesHttp01 AcceptedChallenges = "http-01"
 )
 
-func (e GetDomainConfig200ApplicationJSONAcceptedChallenges) ToPointer() *GetDomainConfig200ApplicationJSONAcceptedChallenges {
+func (e AcceptedChallenges) ToPointer() *AcceptedChallenges {
 	return &e
 }
 
-func (e *GetDomainConfig200ApplicationJSONAcceptedChallenges) UnmarshalJSON(data []byte) error {
+func (e *AcceptedChallenges) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -50,27 +50,27 @@ func (e *GetDomainConfig200ApplicationJSONAcceptedChallenges) UnmarshalJSON(data
 	case "dns-01":
 		fallthrough
 	case "http-01":
-		*e = GetDomainConfig200ApplicationJSONAcceptedChallenges(v)
+		*e = AcceptedChallenges(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDomainConfig200ApplicationJSONAcceptedChallenges: %v", v)
+		return fmt.Errorf("invalid value for AcceptedChallenges: %v", v)
 	}
 }
 
-// GetDomainConfig200ApplicationJSONConfiguredBy - How we see the domain's configuration. - `CNAME`: Domain has a CNAME pointing to Vercel. - `A`: Domain's A record is resolving to Vercel. - `http`: Domain is resolving to Vercel but may be behind a Proxy. - `null`: Domain is not resolving to Vercel.
-type GetDomainConfig200ApplicationJSONConfiguredBy string
+// ConfiguredBy - How we see the domain's configuration. - `CNAME`: Domain has a CNAME pointing to Vercel. - `A`: Domain's A record is resolving to Vercel. - `http`: Domain is resolving to Vercel but may be behind a Proxy. - `null`: Domain is not resolving to Vercel.
+type ConfiguredBy string
 
 const (
-	GetDomainConfig200ApplicationJSONConfiguredByCname GetDomainConfig200ApplicationJSONConfiguredBy = "CNAME"
-	GetDomainConfig200ApplicationJSONConfiguredByA     GetDomainConfig200ApplicationJSONConfiguredBy = "A"
-	GetDomainConfig200ApplicationJSONConfiguredByHTTP  GetDomainConfig200ApplicationJSONConfiguredBy = "http"
+	ConfiguredByCname ConfiguredBy = "CNAME"
+	ConfiguredByA     ConfiguredBy = "A"
+	ConfiguredByHTTP  ConfiguredBy = "http"
 )
 
-func (e GetDomainConfig200ApplicationJSONConfiguredBy) ToPointer() *GetDomainConfig200ApplicationJSONConfiguredBy {
+func (e ConfiguredBy) ToPointer() *ConfiguredBy {
 	return &e
 }
 
-func (e *GetDomainConfig200ApplicationJSONConfiguredBy) UnmarshalJSON(data []byte) error {
+func (e *ConfiguredBy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -81,37 +81,37 @@ func (e *GetDomainConfig200ApplicationJSONConfiguredBy) UnmarshalJSON(data []byt
 	case "A":
 		fallthrough
 	case "http":
-		*e = GetDomainConfig200ApplicationJSONConfiguredBy(v)
+		*e = ConfiguredBy(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDomainConfig200ApplicationJSONConfiguredBy: %v", v)
+		return fmt.Errorf("invalid value for ConfiguredBy: %v", v)
 	}
 }
 
-type GetDomainConfig200ApplicationJSON struct {
+type GetDomainConfigResponseBody struct {
 	// Which challenge types the domain can use for issuing certs.
-	AcceptedChallenges []GetDomainConfig200ApplicationJSONAcceptedChallenges `json:"acceptedChallenges,omitempty"`
+	AcceptedChallenges []AcceptedChallenges `json:"acceptedChallenges,omitempty"`
 	// How we see the domain's configuration. - `CNAME`: Domain has a CNAME pointing to Vercel. - `A`: Domain's A record is resolving to Vercel. - `http`: Domain is resolving to Vercel but may be behind a Proxy. - `null`: Domain is not resolving to Vercel.
-	ConfiguredBy *GetDomainConfig200ApplicationJSONConfiguredBy `json:"configuredBy,omitempty"`
+	ConfiguredBy *ConfiguredBy `json:"configuredBy,omitempty"`
 	// Whether or not the domain is configured AND we can automatically generate a TLS certificate.
 	Misconfigured bool `json:"misconfigured"`
 }
 
-func (o *GetDomainConfig200ApplicationJSON) GetAcceptedChallenges() []GetDomainConfig200ApplicationJSONAcceptedChallenges {
+func (o *GetDomainConfigResponseBody) GetAcceptedChallenges() []AcceptedChallenges {
 	if o == nil {
 		return nil
 	}
 	return o.AcceptedChallenges
 }
 
-func (o *GetDomainConfig200ApplicationJSON) GetConfiguredBy() *GetDomainConfig200ApplicationJSONConfiguredBy {
+func (o *GetDomainConfigResponseBody) GetConfiguredBy() *ConfiguredBy {
 	if o == nil {
 		return nil
 	}
 	return o.ConfiguredBy
 }
 
-func (o *GetDomainConfig200ApplicationJSON) GetMisconfigured() bool {
+func (o *GetDomainConfigResponseBody) GetMisconfigured() bool {
 	if o == nil {
 		return false
 	}
@@ -124,8 +124,8 @@ type GetDomainConfigResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                             *http.Response
-	GetDomainConfig200ApplicationJSONObject *GetDomainConfig200ApplicationJSON
+	RawResponse *http.Response
+	Object      *GetDomainConfigResponseBody
 }
 
 func (o *GetDomainConfigResponse) GetContentType() string {
@@ -149,9 +149,9 @@ func (o *GetDomainConfigResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetDomainConfigResponse) GetGetDomainConfig200ApplicationJSONObject() *GetDomainConfig200ApplicationJSON {
+func (o *GetDomainConfigResponse) GetObject() *GetDomainConfigResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetDomainConfig200ApplicationJSONObject
+	return o.Object
 }

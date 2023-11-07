@@ -14,19 +14,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type integrations struct {
+type Integrations struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newIntegrations(sdkConfig sdkConfiguration) *integrations {
-	return &integrations{
+func newIntegrations(sdkConfig sdkConfiguration) *Integrations {
+	return &Integrations{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // DeleteConfiguration - Delete an integration configuration
 // Allows to remove the configuration with the `id` provided in the parameters. The configuration and all of its resources will be removed. This includes Webhooks, LogDrains and Project Env variables.
-func (s *integrations) DeleteConfiguration(ctx context.Context, request operations.DeleteConfigurationRequest) (*operations.DeleteConfigurationResponse, error) {
+func (s *Integrations) DeleteConfiguration(ctx context.Context, request operations.DeleteConfigurationRequest) (*operations.DeleteConfigurationResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/integrations/configuration/{id}", request, nil)
 	if err != nil {
@@ -85,7 +85,7 @@ func (s *integrations) DeleteConfiguration(ctx context.Context, request operatio
 
 // GetConfiguration - Retrieve an integration configuration
 // Allows to retrieve a the configuration with the provided id in case it exists. The authenticated user or team must be the owner of the config in order to access it.
-func (s *integrations) GetConfiguration(ctx context.Context, request operations.GetConfigurationRequest) (*operations.GetConfigurationResponse, error) {
+func (s *Integrations) GetConfiguration(ctx context.Context, request operations.GetConfigurationRequest) (*operations.GetConfigurationResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/integrations/configuration/{id}", request, nil)
 	if err != nil {
@@ -131,12 +131,12 @@ func (s *integrations) GetConfiguration(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetConfiguration200ApplicationJSON
+			var out operations.GetConfigurationResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetConfiguration200ApplicationJSONOneOf = &out
+			res.OneOf = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -154,7 +154,7 @@ func (s *integrations) GetConfiguration(ctx context.Context, request operations.
 
 // GetConfigurations - Get configurations for the authenticated user or team
 // Allows to retrieve all configurations for an authenticated integration. When the `project` view is used, configurations generated for the authorization flow will be filtered out of the results.
-func (s *integrations) GetConfigurations(ctx context.Context, request operations.GetConfigurationsRequest) (*operations.GetConfigurationsResponse, error) {
+func (s *Integrations) GetConfigurations(ctx context.Context, request operations.GetConfigurationsRequest) (*operations.GetConfigurationsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/integrations/configurations"
 
@@ -197,12 +197,12 @@ func (s *integrations) GetConfigurations(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out []operations.GetConfigurations200ApplicationJSON
+			var out []operations.GetConfigurationsResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetConfigurations200ApplicationJSONObjects = out
+			res.Classes = out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -218,7 +218,7 @@ func (s *integrations) GetConfigurations(ctx context.Context, request operations
 
 // GitNamespaces - List git namespaces by provider
 // Lists git namespaces for a supported provider. Supported providers are `github`, `gitlab` and `bitbucket`. If the provider is not provided, it will try to obtain it from the user that authenticated the request.
-func (s *integrations) GitNamespaces(ctx context.Context, request operations.GitNamespacesRequest) (*operations.GitNamespacesResponse, error) {
+func (s *Integrations) GitNamespaces(ctx context.Context, request operations.GitNamespacesRequest) (*operations.GitNamespacesResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/integrations/git-namespaces"
 
@@ -261,12 +261,12 @@ func (s *integrations) GitNamespaces(ctx context.Context, request operations.Git
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out []operations.GitNamespaces200ApplicationJSON
+			var out []operations.GitNamespacesResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GitNamespaces200ApplicationJSONObjects = out
+			res.Classes = out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

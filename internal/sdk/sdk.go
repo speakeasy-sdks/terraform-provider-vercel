@@ -69,22 +69,22 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // Vercel API: Vercel combines the best developer experience with an obsessive focus on end-user performance. Our platform enables frontend teams to do their best work.
 type Vercel struct {
-	Aliases        *aliases
-	Artifacts      *artifacts
-	Authentication *authentication
-	Certs          *certs
-	Checks         *checks
-	Deployments    *deployments
-	DNS            *dns
-	Domains        *domains
-	EdgeConfig     *edgeConfig
-	Integrations   *integrations
-	LogDrains      *logDrains
-	ProjectMembers *projectMembers
-	Projects       *projects
-	Secrets        *secrets
-	Teams          *teams
-	User           *user
+	Authentication *Authentication
+	Projects       *Projects
+	Checks         *Checks
+	DNS            *DNS
+	EdgeConfig     *EdgeConfig
+	Integrations   *Integrations
+	LogDrains      *LogDrains
+	ProjectMembers *ProjectMembers
+	Teams          *Teams
+	User           *User
+	Deployments    *Deployments
+	Aliases        *Aliases
+	Secrets        *Secrets
+	Domains        *Domains
+	Certs          *Certs
+	Artifacts      *Artifacts
 
 	sdkConfiguration sdkConfiguration
 }
@@ -161,9 +161,9 @@ func New(opts ...SDKOption) *Vercel {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.0.1",
-			SDKVersion:        "0.4.0",
-			GenVersion:        "2.173.0",
-			UserAgent:         "speakeasy-sdk/go 0.4.0 2.173.0 0.0.1 vercel",
+			SDKVersion:        "0.5.0",
+			GenVersion:        "2.181.1",
+			UserAgent:         "speakeasy-sdk/go 0.5.0 2.181.1 0.0.1 vercel",
 		},
 	}
 	for _, opt := range opts {
@@ -182,21 +182,13 @@ func New(opts ...SDKOption) *Vercel {
 		}
 	}
 
-	sdk.Aliases = newAliases(sdk.sdkConfiguration)
-
-	sdk.Artifacts = newArtifacts(sdk.sdkConfiguration)
-
 	sdk.Authentication = newAuthentication(sdk.sdkConfiguration)
 
-	sdk.Certs = newCerts(sdk.sdkConfiguration)
+	sdk.Projects = newProjects(sdk.sdkConfiguration)
 
 	sdk.Checks = newChecks(sdk.sdkConfiguration)
 
-	sdk.Deployments = newDeployments(sdk.sdkConfiguration)
-
 	sdk.DNS = newDNS(sdk.sdkConfiguration)
-
-	sdk.Domains = newDomains(sdk.sdkConfiguration)
 
 	sdk.EdgeConfig = newEdgeConfig(sdk.sdkConfiguration)
 
@@ -206,13 +198,21 @@ func New(opts ...SDKOption) *Vercel {
 
 	sdk.ProjectMembers = newProjectMembers(sdk.sdkConfiguration)
 
-	sdk.Projects = newProjects(sdk.sdkConfiguration)
-
-	sdk.Secrets = newSecrets(sdk.sdkConfiguration)
-
 	sdk.Teams = newTeams(sdk.sdkConfiguration)
 
 	sdk.User = newUser(sdk.sdkConfiguration)
+
+	sdk.Deployments = newDeployments(sdk.sdkConfiguration)
+
+	sdk.Aliases = newAliases(sdk.sdkConfiguration)
+
+	sdk.Secrets = newSecrets(sdk.sdkConfiguration)
+
+	sdk.Domains = newDomains(sdk.sdkConfiguration)
+
+	sdk.Certs = newCerts(sdk.sdkConfiguration)
+
+	sdk.Artifacts = newArtifacts(sdk.sdkConfiguration)
 
 	return sdk
 }
@@ -314,12 +314,12 @@ func (s *Vercel) GetDeploymentsDeploymentIDBuilds(ctx context.Context, request o
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetDeploymentsDeploymentIDBuilds200ApplicationJSON
+			var out operations.GetDeploymentsDeploymentIDBuildsResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetDeploymentsDeploymentIDBuilds200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -384,12 +384,12 @@ func (s *Vercel) PatchDataCacheBillingSettings(ctx context.Context, request *ope
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.PatchDataCacheBillingSettings200ApplicationJSON
+			var out operations.PatchDataCacheBillingSettingsResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.PatchDataCacheBillingSettings200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

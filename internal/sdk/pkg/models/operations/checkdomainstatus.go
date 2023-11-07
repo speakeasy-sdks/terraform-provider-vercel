@@ -27,12 +27,12 @@ func (o *CheckDomainStatusRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// CheckDomainStatus200ApplicationJSON - Successful response checking if a Domain's name is available.
-type CheckDomainStatus200ApplicationJSON struct {
+// CheckDomainStatusResponseBody - Successful response checking if a Domain's name is available.
+type CheckDomainStatusResponseBody struct {
 	Available bool `json:"available"`
 }
 
-func (o *CheckDomainStatus200ApplicationJSON) GetAvailable() bool {
+func (o *CheckDomainStatusResponseBody) GetAvailable() bool {
 	if o == nil {
 		return false
 	}
@@ -47,7 +47,7 @@ type CheckDomainStatusResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response checking if a Domain's name is available.
-	CheckDomainStatus200ApplicationJSONObject *CheckDomainStatus200ApplicationJSON
+	Object *CheckDomainStatusResponseBody
 }
 
 func (o *CheckDomainStatusResponse) GetContentType() string {
@@ -71,9 +71,9 @@ func (o *CheckDomainStatusResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CheckDomainStatusResponse) GetCheckDomainStatus200ApplicationJSONObject() *CheckDomainStatus200ApplicationJSON {
+func (o *CheckDomainStatusResponse) GetObject() *CheckDomainStatusResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.CheckDomainStatus200ApplicationJSONObject
+	return o.Object
 }

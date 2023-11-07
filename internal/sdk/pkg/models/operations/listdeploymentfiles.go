@@ -31,12 +31,12 @@ func (o *ListDeploymentFilesRequest) GetTeamID() *string {
 type ListDeploymentFilesResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Retrieved the file tree successfully
-	FileTrees []shared.FileTree
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// Retrieved the file tree successfully
+	Classes []shared.FileTree
 }
 
 func (o *ListDeploymentFilesResponse) GetContentType() string {
@@ -44,13 +44,6 @@ func (o *ListDeploymentFilesResponse) GetContentType() string {
 		return ""
 	}
 	return o.ContentType
-}
-
-func (o *ListDeploymentFilesResponse) GetFileTrees() []shared.FileTree {
-	if o == nil {
-		return nil
-	}
-	return o.FileTrees
 }
 
 func (o *ListDeploymentFilesResponse) GetStatusCode() int {
@@ -65,4 +58,11 @@ func (o *ListDeploymentFilesResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *ListDeploymentFilesResponse) GetClasses() []shared.FileTree {
+	if o == nil {
+		return nil
+	}
+	return o.Classes
 }

@@ -9,22 +9,22 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type AuthTokenScopes2Origin string
+type AuthTokenOrigin string
 
 const (
-	AuthTokenScopes2OriginSaml      AuthTokenScopes2Origin = "saml"
-	AuthTokenScopes2OriginGithub    AuthTokenScopes2Origin = "github"
-	AuthTokenScopes2OriginGitlab    AuthTokenScopes2Origin = "gitlab"
-	AuthTokenScopes2OriginBitbucket AuthTokenScopes2Origin = "bitbucket"
-	AuthTokenScopes2OriginEmail     AuthTokenScopes2Origin = "email"
-	AuthTokenScopes2OriginManual    AuthTokenScopes2Origin = "manual"
+	AuthTokenOriginSaml      AuthTokenOrigin = "saml"
+	AuthTokenOriginGithub    AuthTokenOrigin = "github"
+	AuthTokenOriginGitlab    AuthTokenOrigin = "gitlab"
+	AuthTokenOriginBitbucket AuthTokenOrigin = "bitbucket"
+	AuthTokenOriginEmail     AuthTokenOrigin = "email"
+	AuthTokenOriginManual    AuthTokenOrigin = "manual"
 )
 
-func (e AuthTokenScopes2Origin) ToPointer() *AuthTokenScopes2Origin {
+func (e AuthTokenOrigin) ToPointer() *AuthTokenOrigin {
 	return &e
 }
 
-func (e *AuthTokenScopes2Origin) UnmarshalJSON(data []byte) error {
+func (e *AuthTokenOrigin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -41,97 +41,97 @@ func (e *AuthTokenScopes2Origin) UnmarshalJSON(data []byte) error {
 	case "email":
 		fallthrough
 	case "manual":
-		*e = AuthTokenScopes2Origin(v)
+		*e = AuthTokenOrigin(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AuthTokenScopes2Origin: %v", v)
+		return fmt.Errorf("invalid value for AuthTokenOrigin: %v", v)
 	}
 }
 
-type AuthTokenScopes2Type string
+type AuthTokenType string
 
 const (
-	AuthTokenScopes2TypeTeam AuthTokenScopes2Type = "team"
+	AuthTokenTypeTeam AuthTokenType = "team"
 )
 
-func (e AuthTokenScopes2Type) ToPointer() *AuthTokenScopes2Type {
+func (e AuthTokenType) ToPointer() *AuthTokenType {
 	return &e
 }
 
-func (e *AuthTokenScopes2Type) UnmarshalJSON(data []byte) error {
+func (e *AuthTokenType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "team":
-		*e = AuthTokenScopes2Type(v)
+		*e = AuthTokenType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AuthTokenScopes2Type: %v", v)
+		return fmt.Errorf("invalid value for AuthTokenType: %v", v)
 	}
 }
 
-// AuthTokenScopes2 - The access scopes granted to the token.
-type AuthTokenScopes2 struct {
-	CreatedAt int64                  `json:"createdAt"`
-	ExpiresAt *int64                 `json:"expiresAt,omitempty"`
-	Origin    AuthTokenScopes2Origin `json:"origin"`
-	TeamID    string                 `json:"teamId"`
-	Type      AuthTokenScopes2Type   `json:"type"`
+// Two - The access scopes granted to the token.
+type Two struct {
+	CreatedAt int64           `json:"createdAt"`
+	ExpiresAt *int64          `json:"expiresAt,omitempty"`
+	Origin    AuthTokenOrigin `json:"origin"`
+	TeamID    string          `json:"teamId"`
+	Type      AuthTokenType   `json:"type"`
 }
 
-func (o *AuthTokenScopes2) GetCreatedAt() int64 {
+func (o *Two) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *AuthTokenScopes2) GetExpiresAt() *int64 {
+func (o *Two) GetExpiresAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ExpiresAt
 }
 
-func (o *AuthTokenScopes2) GetOrigin() AuthTokenScopes2Origin {
+func (o *Two) GetOrigin() AuthTokenOrigin {
 	if o == nil {
-		return AuthTokenScopes2Origin("")
+		return AuthTokenOrigin("")
 	}
 	return o.Origin
 }
 
-func (o *AuthTokenScopes2) GetTeamID() string {
+func (o *Two) GetTeamID() string {
 	if o == nil {
 		return ""
 	}
 	return o.TeamID
 }
 
-func (o *AuthTokenScopes2) GetType() AuthTokenScopes2Type {
+func (o *Two) GetType() AuthTokenType {
 	if o == nil {
-		return AuthTokenScopes2Type("")
+		return AuthTokenType("")
 	}
 	return o.Type
 }
 
-type AuthTokenScopes1Origin string
+type Origin string
 
 const (
-	AuthTokenScopes1OriginSaml      AuthTokenScopes1Origin = "saml"
-	AuthTokenScopes1OriginGithub    AuthTokenScopes1Origin = "github"
-	AuthTokenScopes1OriginGitlab    AuthTokenScopes1Origin = "gitlab"
-	AuthTokenScopes1OriginBitbucket AuthTokenScopes1Origin = "bitbucket"
-	AuthTokenScopes1OriginEmail     AuthTokenScopes1Origin = "email"
-	AuthTokenScopes1OriginManual    AuthTokenScopes1Origin = "manual"
+	OriginSaml      Origin = "saml"
+	OriginGithub    Origin = "github"
+	OriginGitlab    Origin = "gitlab"
+	OriginBitbucket Origin = "bitbucket"
+	OriginEmail     Origin = "email"
+	OriginManual    Origin = "manual"
 )
 
-func (e AuthTokenScopes1Origin) ToPointer() *AuthTokenScopes1Origin {
+func (e Origin) ToPointer() *Origin {
 	return &e
 }
 
-func (e *AuthTokenScopes1Origin) UnmarshalJSON(data []byte) error {
+func (e *Origin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -148,131 +148,131 @@ func (e *AuthTokenScopes1Origin) UnmarshalJSON(data []byte) error {
 	case "email":
 		fallthrough
 	case "manual":
-		*e = AuthTokenScopes1Origin(v)
+		*e = Origin(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AuthTokenScopes1Origin: %v", v)
+		return fmt.Errorf("invalid value for Origin: %v", v)
 	}
 }
 
-type AuthTokenScopes1Type string
+type AuthTokenSchemasType string
 
 const (
-	AuthTokenScopes1TypeUser AuthTokenScopes1Type = "user"
+	AuthTokenSchemasTypeUser AuthTokenSchemasType = "user"
 )
 
-func (e AuthTokenScopes1Type) ToPointer() *AuthTokenScopes1Type {
+func (e AuthTokenSchemasType) ToPointer() *AuthTokenSchemasType {
 	return &e
 }
 
-func (e *AuthTokenScopes1Type) UnmarshalJSON(data []byte) error {
+func (e *AuthTokenSchemasType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "user":
-		*e = AuthTokenScopes1Type(v)
+		*e = AuthTokenSchemasType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AuthTokenScopes1Type: %v", v)
+		return fmt.Errorf("invalid value for AuthTokenSchemasType: %v", v)
 	}
 }
 
-// AuthTokenScopes1 - The access scopes granted to the token.
-type AuthTokenScopes1 struct {
-	CreatedAt int64                  `json:"createdAt"`
-	ExpiresAt *int64                 `json:"expiresAt,omitempty"`
-	Origin    AuthTokenScopes1Origin `json:"origin"`
-	Type      AuthTokenScopes1Type   `json:"type"`
+// One - The access scopes granted to the token.
+type One struct {
+	CreatedAt int64                `json:"createdAt"`
+	ExpiresAt *int64               `json:"expiresAt,omitempty"`
+	Origin    Origin               `json:"origin"`
+	Type      AuthTokenSchemasType `json:"type"`
 }
 
-func (o *AuthTokenScopes1) GetCreatedAt() int64 {
+func (o *One) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *AuthTokenScopes1) GetExpiresAt() *int64 {
+func (o *One) GetExpiresAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ExpiresAt
 }
 
-func (o *AuthTokenScopes1) GetOrigin() AuthTokenScopes1Origin {
+func (o *One) GetOrigin() Origin {
 	if o == nil {
-		return AuthTokenScopes1Origin("")
+		return Origin("")
 	}
 	return o.Origin
 }
 
-func (o *AuthTokenScopes1) GetType() AuthTokenScopes1Type {
+func (o *One) GetType() AuthTokenSchemasType {
 	if o == nil {
-		return AuthTokenScopes1Type("")
+		return AuthTokenSchemasType("")
 	}
 	return o.Type
 }
 
-type AuthTokenScopesType string
+type ScopesType string
 
 const (
-	AuthTokenScopesTypeAuthTokenScopes1 AuthTokenScopesType = "AuthToken_scopes_1"
-	AuthTokenScopesTypeAuthTokenScopes2 AuthTokenScopesType = "AuthToken_scopes_2"
+	ScopesTypeOne ScopesType = "1"
+	ScopesTypeTwo ScopesType = "2"
 )
 
-type AuthTokenScopes struct {
-	AuthTokenScopes1 *AuthTokenScopes1
-	AuthTokenScopes2 *AuthTokenScopes2
+type Scopes struct {
+	One *One
+	Two *Two
 
-	Type AuthTokenScopesType
+	Type ScopesType
 }
 
-func CreateAuthTokenScopesAuthTokenScopes1(authTokenScopes1 AuthTokenScopes1) AuthTokenScopes {
-	typ := AuthTokenScopesTypeAuthTokenScopes1
+func CreateScopesOne(one One) Scopes {
+	typ := ScopesTypeOne
 
-	return AuthTokenScopes{
-		AuthTokenScopes1: &authTokenScopes1,
-		Type:             typ,
+	return Scopes{
+		One:  &one,
+		Type: typ,
 	}
 }
 
-func CreateAuthTokenScopesAuthTokenScopes2(authTokenScopes2 AuthTokenScopes2) AuthTokenScopes {
-	typ := AuthTokenScopesTypeAuthTokenScopes2
+func CreateScopesTwo(two Two) Scopes {
+	typ := ScopesTypeTwo
 
-	return AuthTokenScopes{
-		AuthTokenScopes2: &authTokenScopes2,
-		Type:             typ,
+	return Scopes{
+		Two:  &two,
+		Type: typ,
 	}
 }
 
-func (u *AuthTokenScopes) UnmarshalJSON(data []byte) error {
+func (u *Scopes) UnmarshalJSON(data []byte) error {
 
-	authTokenScopes1 := new(AuthTokenScopes1)
-	if err := utils.UnmarshalJSON(data, &authTokenScopes1, "", true, true); err == nil {
-		u.AuthTokenScopes1 = authTokenScopes1
-		u.Type = AuthTokenScopesTypeAuthTokenScopes1
+	one := new(One)
+	if err := utils.UnmarshalJSON(data, &one, "", true, true); err == nil {
+		u.One = one
+		u.Type = ScopesTypeOne
 		return nil
 	}
 
-	authTokenScopes2 := new(AuthTokenScopes2)
-	if err := utils.UnmarshalJSON(data, &authTokenScopes2, "", true, true); err == nil {
-		u.AuthTokenScopes2 = authTokenScopes2
-		u.Type = AuthTokenScopesTypeAuthTokenScopes2
+	two := new(Two)
+	if err := utils.UnmarshalJSON(data, &two, "", true, true); err == nil {
+		u.Two = two
+		u.Type = ScopesTypeTwo
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u AuthTokenScopes) MarshalJSON() ([]byte, error) {
-	if u.AuthTokenScopes1 != nil {
-		return utils.MarshalJSON(u.AuthTokenScopes1, "", true)
+func (u Scopes) MarshalJSON() ([]byte, error) {
+	if u.One != nil {
+		return utils.MarshalJSON(u.One, "", true)
 	}
 
-	if u.AuthTokenScopes2 != nil {
-		return utils.MarshalJSON(u.AuthTokenScopes2, "", true)
+	if u.Two != nil {
+		return utils.MarshalJSON(u.Two, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -293,7 +293,7 @@ type AuthToken struct {
 	// The origin of how the token was created.
 	Origin *string `json:"origin,omitempty"`
 	// The access scopes granted to the token.
-	Scopes []AuthTokenScopes `json:"scopes,omitempty"`
+	Scopes []Scopes `json:"scopes,omitempty"`
 	// The type of the token.
 	Type string `json:"type"`
 }
@@ -340,7 +340,7 @@ func (o *AuthToken) GetOrigin() *string {
 	return o.Origin
 }
 
-func (o *AuthToken) GetScopes() []AuthTokenScopes {
+func (o *AuthToken) GetScopes() []Scopes {
 	if o == nil {
 		return nil
 	}

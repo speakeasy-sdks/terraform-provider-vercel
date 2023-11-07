@@ -27,7 +27,7 @@ func (o *GetCertByIDRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type GetCertByID200ApplicationJSON struct {
+type GetCertByIDResponseBody struct {
 	AutoRenew bool     `json:"autoRenew"`
 	Cns       []string `json:"cns"`
 	CreatedAt int64    `json:"createdAt"`
@@ -35,35 +35,35 @@ type GetCertByID200ApplicationJSON struct {
 	ID        string   `json:"id"`
 }
 
-func (o *GetCertByID200ApplicationJSON) GetAutoRenew() bool {
+func (o *GetCertByIDResponseBody) GetAutoRenew() bool {
 	if o == nil {
 		return false
 	}
 	return o.AutoRenew
 }
 
-func (o *GetCertByID200ApplicationJSON) GetCns() []string {
+func (o *GetCertByIDResponseBody) GetCns() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Cns
 }
 
-func (o *GetCertByID200ApplicationJSON) GetCreatedAt() int64 {
+func (o *GetCertByIDResponseBody) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetCertByID200ApplicationJSON) GetExpiresAt() int64 {
+func (o *GetCertByIDResponseBody) GetExpiresAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ExpiresAt
 }
 
-func (o *GetCertByID200ApplicationJSON) GetID() string {
+func (o *GetCertByIDResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
@@ -76,8 +76,8 @@ type GetCertByIDResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                         *http.Response
-	GetCertByID200ApplicationJSONObject *GetCertByID200ApplicationJSON
+	RawResponse *http.Response
+	Object      *GetCertByIDResponseBody
 }
 
 func (o *GetCertByIDResponse) GetContentType() string {
@@ -101,9 +101,9 @@ func (o *GetCertByIDResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetCertByIDResponse) GetGetCertByID200ApplicationJSONObject() *GetCertByID200ApplicationJSON {
+func (o *GetCertByIDResponse) GetObject() *GetCertByIDResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetCertByID200ApplicationJSONObject
+	return o.Object
 }

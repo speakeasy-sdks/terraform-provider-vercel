@@ -8,20 +8,20 @@ import (
 	"net/http"
 )
 
-// CreateLogDrainRequestBodyDeliveryFormat - The delivery log format
-type CreateLogDrainRequestBodyDeliveryFormat string
+// CreateLogDrainDeliveryFormat - The delivery log format
+type CreateLogDrainDeliveryFormat string
 
 const (
-	CreateLogDrainRequestBodyDeliveryFormatJSON   CreateLogDrainRequestBodyDeliveryFormat = "json"
-	CreateLogDrainRequestBodyDeliveryFormatNdjson CreateLogDrainRequestBodyDeliveryFormat = "ndjson"
-	CreateLogDrainRequestBodyDeliveryFormatSyslog CreateLogDrainRequestBodyDeliveryFormat = "syslog"
+	CreateLogDrainDeliveryFormatJSON   CreateLogDrainDeliveryFormat = "json"
+	CreateLogDrainDeliveryFormatNdjson CreateLogDrainDeliveryFormat = "ndjson"
+	CreateLogDrainDeliveryFormatSyslog CreateLogDrainDeliveryFormat = "syslog"
 )
 
-func (e CreateLogDrainRequestBodyDeliveryFormat) ToPointer() *CreateLogDrainRequestBodyDeliveryFormat {
+func (e CreateLogDrainDeliveryFormat) ToPointer() *CreateLogDrainDeliveryFormat {
 	return &e
 }
 
-func (e *CreateLogDrainRequestBodyDeliveryFormat) UnmarshalJSON(data []byte) error {
+func (e *CreateLogDrainDeliveryFormat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -32,26 +32,26 @@ func (e *CreateLogDrainRequestBodyDeliveryFormat) UnmarshalJSON(data []byte) err
 	case "ndjson":
 		fallthrough
 	case "syslog":
-		*e = CreateLogDrainRequestBodyDeliveryFormat(v)
+		*e = CreateLogDrainDeliveryFormat(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateLogDrainRequestBodyDeliveryFormat: %v", v)
+		return fmt.Errorf("invalid value for CreateLogDrainDeliveryFormat: %v", v)
 	}
 }
 
-// CreateLogDrainRequestBodyEnvironment - The environment of log drain
-type CreateLogDrainRequestBodyEnvironment string
+// CreateLogDrainEnvironment - The environment of log drain
+type CreateLogDrainEnvironment string
 
 const (
-	CreateLogDrainRequestBodyEnvironmentPreview    CreateLogDrainRequestBodyEnvironment = "preview"
-	CreateLogDrainRequestBodyEnvironmentProduction CreateLogDrainRequestBodyEnvironment = "production"
+	CreateLogDrainEnvironmentPreview    CreateLogDrainEnvironment = "preview"
+	CreateLogDrainEnvironmentProduction CreateLogDrainEnvironment = "production"
 )
 
-func (e CreateLogDrainRequestBodyEnvironment) ToPointer() *CreateLogDrainRequestBodyEnvironment {
+func (e CreateLogDrainEnvironment) ToPointer() *CreateLogDrainEnvironment {
 	return &e
 }
 
-func (e *CreateLogDrainRequestBodyEnvironment) UnmarshalJSON(data []byte) error {
+func (e *CreateLogDrainEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -60,28 +60,28 @@ func (e *CreateLogDrainRequestBodyEnvironment) UnmarshalJSON(data []byte) error 
 	case "preview":
 		fallthrough
 	case "production":
-		*e = CreateLogDrainRequestBodyEnvironment(v)
+		*e = CreateLogDrainEnvironment(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateLogDrainRequestBodyEnvironment: %v", v)
+		return fmt.Errorf("invalid value for CreateLogDrainEnvironment: %v", v)
 	}
 }
 
-type CreateLogDrainRequestBodySources string
+type CreateLogDrainSources string
 
 const (
-	CreateLogDrainRequestBodySourcesStatic   CreateLogDrainRequestBodySources = "static"
-	CreateLogDrainRequestBodySourcesLambda   CreateLogDrainRequestBodySources = "lambda"
-	CreateLogDrainRequestBodySourcesBuild    CreateLogDrainRequestBodySources = "build"
-	CreateLogDrainRequestBodySourcesEdge     CreateLogDrainRequestBodySources = "edge"
-	CreateLogDrainRequestBodySourcesExternal CreateLogDrainRequestBodySources = "external"
+	CreateLogDrainSourcesStatic   CreateLogDrainSources = "static"
+	CreateLogDrainSourcesLambda   CreateLogDrainSources = "lambda"
+	CreateLogDrainSourcesBuild    CreateLogDrainSources = "build"
+	CreateLogDrainSourcesEdge     CreateLogDrainSources = "edge"
+	CreateLogDrainSourcesExternal CreateLogDrainSources = "external"
 )
 
-func (e CreateLogDrainRequestBodySources) ToPointer() *CreateLogDrainRequestBodySources {
+func (e CreateLogDrainSources) ToPointer() *CreateLogDrainSources {
 	return &e
 }
 
-func (e *CreateLogDrainRequestBodySources) UnmarshalJSON(data []byte) error {
+func (e *CreateLogDrainSources) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -96,10 +96,10 @@ func (e *CreateLogDrainRequestBodySources) UnmarshalJSON(data []byte) error {
 	case "edge":
 		fallthrough
 	case "external":
-		*e = CreateLogDrainRequestBodySources(v)
+		*e = CreateLogDrainSources(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateLogDrainRequestBodySources: %v", v)
+		return fmt.Errorf("invalid value for CreateLogDrainSources: %v", v)
 	}
 }
 
@@ -107,17 +107,17 @@ type CreateLogDrainRequestBody struct {
 	// The branch regexp of log drain
 	Branch *string `json:"branch,omitempty"`
 	// The delivery log format
-	DeliveryFormat *CreateLogDrainRequestBodyDeliveryFormat `json:"deliveryFormat,omitempty"`
+	DeliveryFormat *CreateLogDrainDeliveryFormat `json:"deliveryFormat,omitempty"`
 	// The environment of log drain
-	Environment *CreateLogDrainRequestBodyEnvironment `json:"environment,omitempty"`
+	Environment *CreateLogDrainEnvironment `json:"environment,omitempty"`
 	// Headers to be sent together with the request
 	Headers map[string]string `json:"headers,omitempty"`
 	// The name of the log drain
 	Name       string   `json:"name"`
 	ProjectIds []string `json:"projectIds,omitempty"`
 	// A secret to sign log drain notification headers so a consumer can verify their authenticity
-	Secret  *string                            `json:"secret,omitempty"`
-	Sources []CreateLogDrainRequestBodySources `json:"sources,omitempty"`
+	Secret  *string                 `json:"secret,omitempty"`
+	Sources []CreateLogDrainSources `json:"sources,omitempty"`
 	// The url where you will receive logs. The protocol must be `https://` or `http://` when type is `json` and `ndjson`, and `syslog+tls:` or `syslog:` when the type is `syslog`.
 	URL string `json:"url"`
 }
@@ -129,14 +129,14 @@ func (o *CreateLogDrainRequestBody) GetBranch() *string {
 	return o.Branch
 }
 
-func (o *CreateLogDrainRequestBody) GetDeliveryFormat() *CreateLogDrainRequestBodyDeliveryFormat {
+func (o *CreateLogDrainRequestBody) GetDeliveryFormat() *CreateLogDrainDeliveryFormat {
 	if o == nil {
 		return nil
 	}
 	return o.DeliveryFormat
 }
 
-func (o *CreateLogDrainRequestBody) GetEnvironment() *CreateLogDrainRequestBodyEnvironment {
+func (o *CreateLogDrainRequestBody) GetEnvironment() *CreateLogDrainEnvironment {
 	if o == nil {
 		return nil
 	}
@@ -171,7 +171,7 @@ func (o *CreateLogDrainRequestBody) GetSecret() *string {
 	return o.Secret
 }
 
-func (o *CreateLogDrainRequestBody) GetSources() []CreateLogDrainRequestBodySources {
+func (o *CreateLogDrainRequestBody) GetSources() []CreateLogDrainSources {
 	if o == nil {
 		return nil
 	}
@@ -205,19 +205,19 @@ func (o *CreateLogDrainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// CreateLogDrain200ApplicationJSONCreatedFrom - Whether the log drain was created by an integration or by a user
-type CreateLogDrain200ApplicationJSONCreatedFrom string
+// CreateLogDrainCreatedFrom - Whether the log drain was created by an integration or by a user
+type CreateLogDrainCreatedFrom string
 
 const (
-	CreateLogDrain200ApplicationJSONCreatedFromSelfServed  CreateLogDrain200ApplicationJSONCreatedFrom = "self-served"
-	CreateLogDrain200ApplicationJSONCreatedFromIntegration CreateLogDrain200ApplicationJSONCreatedFrom = "integration"
+	CreateLogDrainCreatedFromSelfServed  CreateLogDrainCreatedFrom = "self-served"
+	CreateLogDrainCreatedFromIntegration CreateLogDrainCreatedFrom = "integration"
 )
 
-func (e CreateLogDrain200ApplicationJSONCreatedFrom) ToPointer() *CreateLogDrain200ApplicationJSONCreatedFrom {
+func (e CreateLogDrainCreatedFrom) ToPointer() *CreateLogDrainCreatedFrom {
 	return &e
 }
 
-func (e *CreateLogDrain200ApplicationJSONCreatedFrom) UnmarshalJSON(data []byte) error {
+func (e *CreateLogDrainCreatedFrom) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -226,27 +226,27 @@ func (e *CreateLogDrain200ApplicationJSONCreatedFrom) UnmarshalJSON(data []byte)
 	case "self-served":
 		fallthrough
 	case "integration":
-		*e = CreateLogDrain200ApplicationJSONCreatedFrom(v)
+		*e = CreateLogDrainCreatedFrom(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateLogDrain200ApplicationJSONCreatedFrom: %v", v)
+		return fmt.Errorf("invalid value for CreateLogDrainCreatedFrom: %v", v)
 	}
 }
 
-// CreateLogDrain200ApplicationJSONDeliveryFormat - The delivery log format
-type CreateLogDrain200ApplicationJSONDeliveryFormat string
+// CreateLogDrainLogDrainsDeliveryFormat - The delivery log format
+type CreateLogDrainLogDrainsDeliveryFormat string
 
 const (
-	CreateLogDrain200ApplicationJSONDeliveryFormatJSON   CreateLogDrain200ApplicationJSONDeliveryFormat = "json"
-	CreateLogDrain200ApplicationJSONDeliveryFormatNdjson CreateLogDrain200ApplicationJSONDeliveryFormat = "ndjson"
-	CreateLogDrain200ApplicationJSONDeliveryFormatSyslog CreateLogDrain200ApplicationJSONDeliveryFormat = "syslog"
+	CreateLogDrainLogDrainsDeliveryFormatJSON   CreateLogDrainLogDrainsDeliveryFormat = "json"
+	CreateLogDrainLogDrainsDeliveryFormatNdjson CreateLogDrainLogDrainsDeliveryFormat = "ndjson"
+	CreateLogDrainLogDrainsDeliveryFormatSyslog CreateLogDrainLogDrainsDeliveryFormat = "syslog"
 )
 
-func (e CreateLogDrain200ApplicationJSONDeliveryFormat) ToPointer() *CreateLogDrain200ApplicationJSONDeliveryFormat {
+func (e CreateLogDrainLogDrainsDeliveryFormat) ToPointer() *CreateLogDrainLogDrainsDeliveryFormat {
 	return &e
 }
 
-func (e *CreateLogDrain200ApplicationJSONDeliveryFormat) UnmarshalJSON(data []byte) error {
+func (e *CreateLogDrainLogDrainsDeliveryFormat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -257,26 +257,26 @@ func (e *CreateLogDrain200ApplicationJSONDeliveryFormat) UnmarshalJSON(data []by
 	case "ndjson":
 		fallthrough
 	case "syslog":
-		*e = CreateLogDrain200ApplicationJSONDeliveryFormat(v)
+		*e = CreateLogDrainLogDrainsDeliveryFormat(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateLogDrain200ApplicationJSONDeliveryFormat: %v", v)
+		return fmt.Errorf("invalid value for CreateLogDrainLogDrainsDeliveryFormat: %v", v)
 	}
 }
 
-// CreateLogDrain200ApplicationJSONEnvironment - The environment of log drain
-type CreateLogDrain200ApplicationJSONEnvironment string
+// CreateLogDrainLogDrainsEnvironment - The environment of log drain
+type CreateLogDrainLogDrainsEnvironment string
 
 const (
-	CreateLogDrain200ApplicationJSONEnvironmentPreview    CreateLogDrain200ApplicationJSONEnvironment = "preview"
-	CreateLogDrain200ApplicationJSONEnvironmentProduction CreateLogDrain200ApplicationJSONEnvironment = "production"
+	CreateLogDrainLogDrainsEnvironmentPreview    CreateLogDrainLogDrainsEnvironment = "preview"
+	CreateLogDrainLogDrainsEnvironmentProduction CreateLogDrainLogDrainsEnvironment = "production"
 )
 
-func (e CreateLogDrain200ApplicationJSONEnvironment) ToPointer() *CreateLogDrain200ApplicationJSONEnvironment {
+func (e CreateLogDrainLogDrainsEnvironment) ToPointer() *CreateLogDrainLogDrainsEnvironment {
 	return &e
 }
 
-func (e *CreateLogDrain200ApplicationJSONEnvironment) UnmarshalJSON(data []byte) error {
+func (e *CreateLogDrainLogDrainsEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -285,30 +285,30 @@ func (e *CreateLogDrain200ApplicationJSONEnvironment) UnmarshalJSON(data []byte)
 	case "preview":
 		fallthrough
 	case "production":
-		*e = CreateLogDrain200ApplicationJSONEnvironment(v)
+		*e = CreateLogDrainLogDrainsEnvironment(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateLogDrain200ApplicationJSONEnvironment: %v", v)
+		return fmt.Errorf("invalid value for CreateLogDrainLogDrainsEnvironment: %v", v)
 	}
 }
 
-// CreateLogDrain200ApplicationJSONSources - The sources from which logs are currently being delivered to this log drain.
-type CreateLogDrain200ApplicationJSONSources string
+// CreateLogDrainLogDrainsSources - The sources from which logs are currently being delivered to this log drain.
+type CreateLogDrainLogDrainsSources string
 
 const (
-	CreateLogDrain200ApplicationJSONSourcesStatic     CreateLogDrain200ApplicationJSONSources = "static"
-	CreateLogDrain200ApplicationJSONSourcesLambda     CreateLogDrain200ApplicationJSONSources = "lambda"
-	CreateLogDrain200ApplicationJSONSourcesBuild      CreateLogDrain200ApplicationJSONSources = "build"
-	CreateLogDrain200ApplicationJSONSourcesEdge       CreateLogDrain200ApplicationJSONSources = "edge"
-	CreateLogDrain200ApplicationJSONSourcesExternal   CreateLogDrain200ApplicationJSONSources = "external"
-	CreateLogDrain200ApplicationJSONSourcesDeployment CreateLogDrain200ApplicationJSONSources = "deployment"
+	CreateLogDrainLogDrainsSourcesStatic     CreateLogDrainLogDrainsSources = "static"
+	CreateLogDrainLogDrainsSourcesLambda     CreateLogDrainLogDrainsSources = "lambda"
+	CreateLogDrainLogDrainsSourcesBuild      CreateLogDrainLogDrainsSources = "build"
+	CreateLogDrainLogDrainsSourcesEdge       CreateLogDrainLogDrainsSources = "edge"
+	CreateLogDrainLogDrainsSourcesExternal   CreateLogDrainLogDrainsSources = "external"
+	CreateLogDrainLogDrainsSourcesDeployment CreateLogDrainLogDrainsSources = "deployment"
 )
 
-func (e CreateLogDrain200ApplicationJSONSources) ToPointer() *CreateLogDrain200ApplicationJSONSources {
+func (e CreateLogDrainLogDrainsSources) ToPointer() *CreateLogDrainLogDrainsSources {
 	return &e
 }
 
-func (e *CreateLogDrain200ApplicationJSONSources) UnmarshalJSON(data []byte) error {
+func (e *CreateLogDrainLogDrainsSources) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -325,15 +325,15 @@ func (e *CreateLogDrain200ApplicationJSONSources) UnmarshalJSON(data []byte) err
 	case "external":
 		fallthrough
 	case "deployment":
-		*e = CreateLogDrain200ApplicationJSONSources(v)
+		*e = CreateLogDrainLogDrainsSources(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateLogDrain200ApplicationJSONSources: %v", v)
+		return fmt.Errorf("invalid value for CreateLogDrainLogDrainsSources: %v", v)
 	}
 }
 
-// CreateLogDrain200ApplicationJSON - The log drain was successfully created
-type CreateLogDrain200ApplicationJSON struct {
+// CreateLogDrainResponseBody - The log drain was successfully created
+type CreateLogDrainResponseBody struct {
 	// The branch regexp of log drain
 	Branch *string `json:"branch,omitempty"`
 	// The oauth2 client application id that created this log drain
@@ -343,11 +343,11 @@ type CreateLogDrain200ApplicationJSON struct {
 	// A timestamp that tells you when the log drain was created
 	CreatedAt int64 `json:"createdAt"`
 	// Whether the log drain was created by an integration or by a user
-	CreatedFrom *CreateLogDrain200ApplicationJSONCreatedFrom `json:"createdFrom,omitempty"`
+	CreatedFrom *CreateLogDrainCreatedFrom `json:"createdFrom,omitempty"`
 	// The delivery log format
-	DeliveryFormat *CreateLogDrain200ApplicationJSONDeliveryFormat `json:"deliveryFormat,omitempty"`
+	DeliveryFormat *CreateLogDrainLogDrainsDeliveryFormat `json:"deliveryFormat,omitempty"`
 	// The environment of log drain
-	Environment *CreateLogDrain200ApplicationJSONEnvironment `json:"environment,omitempty"`
+	Environment *CreateLogDrainLogDrainsEnvironment `json:"environment,omitempty"`
 	// The headers to send with the request
 	Headers map[string]string `json:"headers,omitempty"`
 	// The unique identifier of the log drain. Always prefixed with `ld_`
@@ -360,110 +360,110 @@ type CreateLogDrain200ApplicationJSON struct {
 	// The identifier of the projects this log drain is associated with
 	ProjectIds []string `json:"projectIds,omitempty"`
 	// The sources from which logs are currently being delivered to this log drain.
-	Sources []CreateLogDrain200ApplicationJSONSources `json:"sources,omitempty"`
+	Sources []CreateLogDrainLogDrainsSources `json:"sources,omitempty"`
 	// The URL to call when logs are generated
 	URL string `json:"url"`
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetBranch() *string {
+func (o *CreateLogDrainResponseBody) GetBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Branch
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetClientID() *string {
+func (o *CreateLogDrainResponseBody) GetClientID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ClientID
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetConfigurationID() *string {
+func (o *CreateLogDrainResponseBody) GetConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConfigurationID
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetCreatedAt() int64 {
+func (o *CreateLogDrainResponseBody) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetCreatedFrom() *CreateLogDrain200ApplicationJSONCreatedFrom {
+func (o *CreateLogDrainResponseBody) GetCreatedFrom() *CreateLogDrainCreatedFrom {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedFrom
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetDeliveryFormat() *CreateLogDrain200ApplicationJSONDeliveryFormat {
+func (o *CreateLogDrainResponseBody) GetDeliveryFormat() *CreateLogDrainLogDrainsDeliveryFormat {
 	if o == nil {
 		return nil
 	}
 	return o.DeliveryFormat
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetEnvironment() *CreateLogDrain200ApplicationJSONEnvironment {
+func (o *CreateLogDrainResponseBody) GetEnvironment() *CreateLogDrainLogDrainsEnvironment {
 	if o == nil {
 		return nil
 	}
 	return o.Environment
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetHeaders() map[string]string {
+func (o *CreateLogDrainResponseBody) GetHeaders() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Headers
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetID() string {
+func (o *CreateLogDrainResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetName() string {
+func (o *CreateLogDrainResponseBody) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetOwnerID() string {
+func (o *CreateLogDrainResponseBody) GetOwnerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.OwnerID
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetProjectID() *string {
+func (o *CreateLogDrainResponseBody) GetProjectID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectID
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetProjectIds() []string {
+func (o *CreateLogDrainResponseBody) GetProjectIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectIds
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetSources() []CreateLogDrain200ApplicationJSONSources {
+func (o *CreateLogDrainResponseBody) GetSources() []CreateLogDrainLogDrainsSources {
 	if o == nil {
 		return nil
 	}
 	return o.Sources
 }
 
-func (o *CreateLogDrain200ApplicationJSON) GetURL() string {
+func (o *CreateLogDrainResponseBody) GetURL() string {
 	if o == nil {
 		return ""
 	}
@@ -478,7 +478,7 @@ type CreateLogDrainResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The log drain was successfully created
-	CreateLogDrain200ApplicationJSONObject *CreateLogDrain200ApplicationJSON
+	Object *CreateLogDrainResponseBody
 }
 
 func (o *CreateLogDrainResponse) GetContentType() string {
@@ -502,9 +502,9 @@ func (o *CreateLogDrainResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateLogDrainResponse) GetCreateLogDrain200ApplicationJSONObject() *CreateLogDrain200ApplicationJSON {
+func (o *CreateLogDrainResponse) GetObject() *CreateLogDrainResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.CreateLogDrain200ApplicationJSONObject
+	return o.Object
 }

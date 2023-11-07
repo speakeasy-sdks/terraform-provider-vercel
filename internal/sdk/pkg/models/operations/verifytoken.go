@@ -45,8 +45,8 @@ func (o *VerifyTokenRequest) GetTokenName() *string {
 	return o.TokenName
 }
 
-// VerifyToken200ApplicationJSON - The verification was successful.
-type VerifyToken200ApplicationJSON struct {
+// VerifyTokenResponseBody - The verification was successful.
+type VerifyTokenResponseBody struct {
 	// Email address of the authenticated user.
 	Email string `json:"email"`
 	// When completing SAML Single Sign-On authentication, this will be the ID of the Team that was authenticated for.
@@ -55,21 +55,21 @@ type VerifyToken200ApplicationJSON struct {
 	Token string `json:"token"`
 }
 
-func (o *VerifyToken200ApplicationJSON) GetEmail() string {
+func (o *VerifyTokenResponseBody) GetEmail() string {
 	if o == nil {
 		return ""
 	}
 	return o.Email
 }
 
-func (o *VerifyToken200ApplicationJSON) GetTeamID() *string {
+func (o *VerifyTokenResponseBody) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
 }
 
-func (o *VerifyToken200ApplicationJSON) GetToken() string {
+func (o *VerifyTokenResponseBody) GetToken() string {
 	if o == nil {
 		return ""
 	}
@@ -84,7 +84,7 @@ type VerifyTokenResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The verification was successful.
-	VerifyToken200ApplicationJSONObject *VerifyToken200ApplicationJSON
+	Object *VerifyTokenResponseBody
 }
 
 func (o *VerifyTokenResponse) GetContentType() string {
@@ -108,9 +108,9 @@ func (o *VerifyTokenResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *VerifyTokenResponse) GetVerifyToken200ApplicationJSONObject() *VerifyToken200ApplicationJSON {
+func (o *VerifyTokenResponse) GetObject() *VerifyTokenResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.VerifyToken200ApplicationJSONObject
+	return o.Object
 }

@@ -29,8 +29,8 @@ func (o *GetDomainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// GetDomain200ApplicationJSONDomainCreator - An object containing information of the domain creator, including the user's id, username, and email.
-type GetDomain200ApplicationJSONDomainCreator struct {
+// GetDomainCreator - An object containing information of the domain creator, including the user's id, username, and email.
+type GetDomainCreator struct {
 	CustomerID       *string `json:"customerId,omitempty"`
 	Email            string  `json:"email"`
 	ID               string  `json:"id"`
@@ -38,55 +38,55 @@ type GetDomain200ApplicationJSONDomainCreator struct {
 	Username         string  `json:"username"`
 }
 
-func (o *GetDomain200ApplicationJSONDomainCreator) GetCustomerID() *string {
+func (o *GetDomainCreator) GetCustomerID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CustomerID
 }
 
-func (o *GetDomain200ApplicationJSONDomainCreator) GetEmail() string {
+func (o *GetDomainCreator) GetEmail() string {
 	if o == nil {
 		return ""
 	}
 	return o.Email
 }
 
-func (o *GetDomain200ApplicationJSONDomainCreator) GetID() string {
+func (o *GetDomainCreator) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetDomain200ApplicationJSONDomainCreator) GetIsDomainReseller() *bool {
+func (o *GetDomainCreator) GetIsDomainReseller() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IsDomainReseller
 }
 
-func (o *GetDomain200ApplicationJSONDomainCreator) GetUsername() string {
+func (o *GetDomainCreator) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
 }
 
-// GetDomain200ApplicationJSONDomainServiceType - The type of service the domain is handled by. `external` if the DNS is externally handled, `zeit.world` if handled with Vercel, or `na` if the service is not available.
-type GetDomain200ApplicationJSONDomainServiceType string
+// GetDomainServiceType - The type of service the domain is handled by. `external` if the DNS is externally handled, `zeit.world` if handled with Vercel, or `na` if the service is not available.
+type GetDomainServiceType string
 
 const (
-	GetDomain200ApplicationJSONDomainServiceTypeZeitWorld GetDomain200ApplicationJSONDomainServiceType = "zeit.world"
-	GetDomain200ApplicationJSONDomainServiceTypeExternal  GetDomain200ApplicationJSONDomainServiceType = "external"
-	GetDomain200ApplicationJSONDomainServiceTypeNa        GetDomain200ApplicationJSONDomainServiceType = "na"
+	GetDomainServiceTypeZeitWorld GetDomainServiceType = "zeit.world"
+	GetDomainServiceTypeExternal  GetDomainServiceType = "external"
+	GetDomainServiceTypeNa        GetDomainServiceType = "na"
 )
 
-func (e GetDomain200ApplicationJSONDomainServiceType) ToPointer() *GetDomain200ApplicationJSONDomainServiceType {
+func (e GetDomainServiceType) ToPointer() *GetDomainServiceType {
 	return &e
 }
 
-func (e *GetDomain200ApplicationJSONDomainServiceType) UnmarshalJSON(data []byte) error {
+func (e *GetDomainServiceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -97,20 +97,20 @@ func (e *GetDomain200ApplicationJSONDomainServiceType) UnmarshalJSON(data []byte
 	case "external":
 		fallthrough
 	case "na":
-		*e = GetDomain200ApplicationJSONDomainServiceType(v)
+		*e = GetDomainServiceType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDomain200ApplicationJSONDomainServiceType: %v", v)
+		return fmt.Errorf("invalid value for GetDomainServiceType: %v", v)
 	}
 }
 
-type GetDomain200ApplicationJSONDomain struct {
+type GetDomainDomain struct {
 	// If it was purchased through Vercel, the timestamp in milliseconds when it was purchased.
 	BoughtAt *int64 `json:"boughtAt"`
 	// Timestamp in milliseconds when the domain was created in the registry.
 	CreatedAt int64 `json:"createdAt"`
 	// An object containing information of the domain creator, including the user's id, username, and email.
-	Creator GetDomain200ApplicationJSONDomainCreator `json:"creator"`
+	Creator GetDomainCreator `json:"creator"`
 	// A list of custom nameservers for the domain to point to. Only applies to domains purchased with Vercel.
 	CustomNameservers []string `json:"customNameservers,omitempty"`
 	// Timestamp in milliseconds at which the domain is set to expire. `null` if not bought with Vercel.
@@ -128,8 +128,8 @@ type GetDomain200ApplicationJSONDomain struct {
 	// Indicates whether the domain is set to automatically renew.
 	Renew *bool `json:"renew,omitempty"`
 	// The type of service the domain is handled by. `external` if the DNS is externally handled, `zeit.world` if handled with Vercel, or `na` if the service is not available.
-	ServiceType GetDomain200ApplicationJSONDomainServiceType `json:"serviceType"`
-	Suffix      bool                                         `json:"suffix"`
+	ServiceType GetDomainServiceType `json:"serviceType"`
+	Suffix      bool                 `json:"suffix"`
 	// If transferred into Vercel, timestamp in milliseconds when the domain transfer was initiated.
 	TransferStartedAt *int64 `json:"transferStartedAt,omitempty"`
 	// Timestamp in milliseconds at which the domain was successfully transferred into Vercel. `null` if the transfer is still processing or was never transferred in.
@@ -138,126 +138,126 @@ type GetDomain200ApplicationJSONDomain struct {
 	Verified bool `json:"verified"`
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetBoughtAt() *int64 {
+func (o *GetDomainDomain) GetBoughtAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.BoughtAt
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetCreatedAt() int64 {
+func (o *GetDomainDomain) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetCreator() GetDomain200ApplicationJSONDomainCreator {
+func (o *GetDomainDomain) GetCreator() GetDomainCreator {
 	if o == nil {
-		return GetDomain200ApplicationJSONDomainCreator{}
+		return GetDomainCreator{}
 	}
 	return o.Creator
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetCustomNameservers() []string {
+func (o *GetDomainDomain) GetCustomNameservers() []string {
 	if o == nil {
 		return nil
 	}
 	return o.CustomNameservers
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetExpiresAt() *int64 {
+func (o *GetDomainDomain) GetExpiresAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ExpiresAt
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetID() string {
+func (o *GetDomainDomain) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetIntendedNameservers() []string {
+func (o *GetDomainDomain) GetIntendedNameservers() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.IntendedNameservers
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetName() string {
+func (o *GetDomainDomain) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetNameservers() []string {
+func (o *GetDomainDomain) GetNameservers() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Nameservers
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetOrderedAt() *int64 {
+func (o *GetDomainDomain) GetOrderedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.OrderedAt
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetRenew() *bool {
+func (o *GetDomainDomain) GetRenew() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Renew
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetServiceType() GetDomain200ApplicationJSONDomainServiceType {
+func (o *GetDomainDomain) GetServiceType() GetDomainServiceType {
 	if o == nil {
-		return GetDomain200ApplicationJSONDomainServiceType("")
+		return GetDomainServiceType("")
 	}
 	return o.ServiceType
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetSuffix() bool {
+func (o *GetDomainDomain) GetSuffix() bool {
 	if o == nil {
 		return false
 	}
 	return o.Suffix
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetTransferStartedAt() *int64 {
+func (o *GetDomainDomain) GetTransferStartedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.TransferStartedAt
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetTransferredAt() *int64 {
+func (o *GetDomainDomain) GetTransferredAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.TransferredAt
 }
 
-func (o *GetDomain200ApplicationJSONDomain) GetVerified() bool {
+func (o *GetDomainDomain) GetVerified() bool {
 	if o == nil {
 		return false
 	}
 	return o.Verified
 }
 
-// GetDomain200ApplicationJSON - Successful response retrieving an information for a specific domains.
-type GetDomain200ApplicationJSON struct {
-	Domain GetDomain200ApplicationJSONDomain `json:"domain"`
+// GetDomainResponseBody - Successful response retrieving an information for a specific domains.
+type GetDomainResponseBody struct {
+	Domain GetDomainDomain `json:"domain"`
 }
 
-func (o *GetDomain200ApplicationJSON) GetDomain() GetDomain200ApplicationJSONDomain {
+func (o *GetDomainResponseBody) GetDomain() GetDomainDomain {
 	if o == nil {
-		return GetDomain200ApplicationJSONDomain{}
+		return GetDomainDomain{}
 	}
 	return o.Domain
 }
@@ -270,7 +270,7 @@ type GetDomainResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response retrieving an information for a specific domains.
-	GetDomain200ApplicationJSONObject *GetDomain200ApplicationJSON
+	Object *GetDomainResponseBody
 }
 
 func (o *GetDomainResponse) GetContentType() string {
@@ -294,9 +294,9 @@ func (o *GetDomainResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetDomainResponse) GetGetDomain200ApplicationJSONObject() *GetDomain200ApplicationJSON {
+func (o *GetDomainResponse) GetObject() *GetDomainResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetDomain200ApplicationJSONObject
+	return o.Object
 }

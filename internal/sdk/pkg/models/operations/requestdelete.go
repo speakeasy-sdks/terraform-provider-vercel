@@ -6,22 +6,22 @@ import (
 	"net/http"
 )
 
-// RequestDeleteRequestBodyReasons - An object describing the reason why the User account is being deleted.
-type RequestDeleteRequestBodyReasons struct {
+// RequestDeleteReasons - An object describing the reason why the User account is being deleted.
+type RequestDeleteReasons struct {
 	// Description of the reason why the User account is being deleted.
 	Description string `json:"description"`
 	// Idenitifier slug of the reason why the User account is being deleted.
 	Slug string `json:"slug"`
 }
 
-func (o *RequestDeleteRequestBodyReasons) GetDescription() string {
+func (o *RequestDeleteReasons) GetDescription() string {
 	if o == nil {
 		return ""
 	}
 	return o.Description
 }
 
-func (o *RequestDeleteRequestBodyReasons) GetSlug() string {
+func (o *RequestDeleteReasons) GetSlug() string {
 	if o == nil {
 		return ""
 	}
@@ -30,18 +30,18 @@ func (o *RequestDeleteRequestBodyReasons) GetSlug() string {
 
 type RequestDeleteRequestBody struct {
 	// Optional array of objects that describe the reason why the User account is being deleted.
-	Reasons []RequestDeleteRequestBodyReasons `json:"reasons,omitempty"`
+	Reasons []RequestDeleteReasons `json:"reasons,omitempty"`
 }
 
-func (o *RequestDeleteRequestBody) GetReasons() []RequestDeleteRequestBodyReasons {
+func (o *RequestDeleteRequestBody) GetReasons() []RequestDeleteReasons {
 	if o == nil {
 		return nil
 	}
 	return o.Reasons
 }
 
-// RequestDelete202ApplicationJSON - Response indicating that the User deletion process has been initiated, and a confirmation email has been sent.
-type RequestDelete202ApplicationJSON struct {
+// RequestDeleteResponseBody - Response indicating that the User deletion process has been initiated, and a confirmation email has been sent.
+type RequestDeleteResponseBody struct {
 	// Email address of the User who has initiated deletion.
 	Email string `json:"email"`
 	// Unique identifier of the User who has initiated deletion.
@@ -50,21 +50,21 @@ type RequestDelete202ApplicationJSON struct {
 	Message string `json:"message"`
 }
 
-func (o *RequestDelete202ApplicationJSON) GetEmail() string {
+func (o *RequestDeleteResponseBody) GetEmail() string {
 	if o == nil {
 		return ""
 	}
 	return o.Email
 }
 
-func (o *RequestDelete202ApplicationJSON) GetID() string {
+func (o *RequestDeleteResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *RequestDelete202ApplicationJSON) GetMessage() string {
+func (o *RequestDeleteResponseBody) GetMessage() string {
 	if o == nil {
 		return ""
 	}
@@ -79,7 +79,7 @@ type RequestDeleteResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Response indicating that the User deletion process has been initiated, and a confirmation email has been sent.
-	RequestDelete202ApplicationJSONObject *RequestDelete202ApplicationJSON
+	Object *RequestDeleteResponseBody
 }
 
 func (o *RequestDeleteResponse) GetContentType() string {
@@ -103,9 +103,9 @@ func (o *RequestDeleteResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *RequestDeleteResponse) GetRequestDelete202ApplicationJSONObject() *RequestDelete202ApplicationJSON {
+func (o *RequestDeleteResponse) GetObject() *RequestDeleteResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.RequestDelete202ApplicationJSONObject
+	return o.Object
 }

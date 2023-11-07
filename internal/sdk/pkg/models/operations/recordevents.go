@@ -8,19 +8,19 @@ import (
 	"net/http"
 )
 
-// RecordEventsRequestBodyEvent - One of `HIT` or `MISS`. `HIT` specifies that a cached artifact for `hash` was found in the cache. `MISS` specifies that a cached artifact with `hash` was not found.
-type RecordEventsRequestBodyEvent string
+// Event - One of `HIT` or `MISS`. `HIT` specifies that a cached artifact for `hash` was found in the cache. `MISS` specifies that a cached artifact with `hash` was not found.
+type Event string
 
 const (
-	RecordEventsRequestBodyEventHit  RecordEventsRequestBodyEvent = "HIT"
-	RecordEventsRequestBodyEventMiss RecordEventsRequestBodyEvent = "MISS"
+	EventHit  Event = "HIT"
+	EventMiss Event = "MISS"
 )
 
-func (e RecordEventsRequestBodyEvent) ToPointer() *RecordEventsRequestBodyEvent {
+func (e Event) ToPointer() *Event {
 	return &e
 }
 
-func (e *RecordEventsRequestBodyEvent) UnmarshalJSON(data []byte) error {
+func (e *Event) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -29,26 +29,26 @@ func (e *RecordEventsRequestBodyEvent) UnmarshalJSON(data []byte) error {
 	case "HIT":
 		fallthrough
 	case "MISS":
-		*e = RecordEventsRequestBodyEvent(v)
+		*e = Event(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RecordEventsRequestBodyEvent: %v", v)
+		return fmt.Errorf("invalid value for Event: %v", v)
 	}
 }
 
-// RecordEventsRequestBodySource - One of `LOCAL` or `REMOTE`. `LOCAL` specifies that the cache event was from the user's filesystem cache. `REMOTE` specifies that the cache event is from a remote cache.
-type RecordEventsRequestBodySource string
+// Source - One of `LOCAL` or `REMOTE`. `LOCAL` specifies that the cache event was from the user's filesystem cache. `REMOTE` specifies that the cache event is from a remote cache.
+type Source string
 
 const (
-	RecordEventsRequestBodySourceLocal  RecordEventsRequestBodySource = "LOCAL"
-	RecordEventsRequestBodySourceRemote RecordEventsRequestBodySource = "REMOTE"
+	SourceLocal  Source = "LOCAL"
+	SourceRemote Source = "REMOTE"
 )
 
-func (e RecordEventsRequestBodySource) ToPointer() *RecordEventsRequestBodySource {
+func (e Source) ToPointer() *Source {
 	return &e
 }
 
-func (e *RecordEventsRequestBodySource) UnmarshalJSON(data []byte) error {
+func (e *Source) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -57,63 +57,63 @@ func (e *RecordEventsRequestBodySource) UnmarshalJSON(data []byte) error {
 	case "LOCAL":
 		fallthrough
 	case "REMOTE":
-		*e = RecordEventsRequestBodySource(v)
+		*e = Source(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RecordEventsRequestBodySource: %v", v)
+		return fmt.Errorf("invalid value for Source: %v", v)
 	}
 }
 
-type RecordEventsRequestBody struct {
+type RequestBody struct {
 	// The time taken to generate the artifact. This should be sent as a body parameter on `HIT` events.
 	Duration *int64 `json:"duration,omitempty"`
 	// One of `HIT` or `MISS`. `HIT` specifies that a cached artifact for `hash` was found in the cache. `MISS` specifies that a cached artifact with `hash` was not found.
-	Event RecordEventsRequestBodyEvent `json:"event"`
+	Event Event `json:"event"`
 	// The artifact hash
 	Hash string `json:"hash"`
 	// A UUID (universally unique identifer) for the session that generated this event.
 	SessionID string `json:"sessionId"`
 	// One of `LOCAL` or `REMOTE`. `LOCAL` specifies that the cache event was from the user's filesystem cache. `REMOTE` specifies that the cache event is from a remote cache.
-	Source RecordEventsRequestBodySource `json:"source"`
+	Source Source `json:"source"`
 }
 
-func (o *RecordEventsRequestBody) GetDuration() *int64 {
+func (o *RequestBody) GetDuration() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Duration
 }
 
-func (o *RecordEventsRequestBody) GetEvent() RecordEventsRequestBodyEvent {
+func (o *RequestBody) GetEvent() Event {
 	if o == nil {
-		return RecordEventsRequestBodyEvent("")
+		return Event("")
 	}
 	return o.Event
 }
 
-func (o *RecordEventsRequestBody) GetHash() string {
+func (o *RequestBody) GetHash() string {
 	if o == nil {
 		return ""
 	}
 	return o.Hash
 }
 
-func (o *RecordEventsRequestBody) GetSessionID() string {
+func (o *RequestBody) GetSessionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.SessionID
 }
 
-func (o *RecordEventsRequestBody) GetSource() RecordEventsRequestBodySource {
+func (o *RequestBody) GetSource() Source {
 	if o == nil {
-		return RecordEventsRequestBodySource("")
+		return Source("")
 	}
 	return o.Source
 }
 
 type RecordEventsRequest struct {
-	RequestBody []RecordEventsRequestBody `request:"mediaType=application/json"`
+	RequestBody []RequestBody `request:"mediaType=application/json"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// The continuous integration or delivery environment where this artifact is downloaded.
@@ -122,7 +122,7 @@ type RecordEventsRequest struct {
 	XArtifactClientInteractive *int64 `header:"style=simple,explode=false,name=x-artifact-client-interactive"`
 }
 
-func (o *RecordEventsRequest) GetRequestBody() []RecordEventsRequestBody {
+func (o *RecordEventsRequest) GetRequestBody() []RequestBody {
 	if o == nil {
 		return nil
 	}

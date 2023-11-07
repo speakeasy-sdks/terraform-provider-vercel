@@ -11,19 +11,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-// GetDeploymentsTarget - Filter deployments based on the environment.
-type GetDeploymentsTarget string
+// QueryParamTarget - Filter deployments based on the environment.
+type QueryParamTarget string
 
 const (
-	GetDeploymentsTargetProduction GetDeploymentsTarget = "production"
-	GetDeploymentsTargetPreview    GetDeploymentsTarget = "preview"
+	QueryParamTargetProduction QueryParamTarget = "production"
+	QueryParamTargetPreview    QueryParamTarget = "preview"
 )
 
-func (e GetDeploymentsTarget) ToPointer() *GetDeploymentsTarget {
+func (e QueryParamTarget) ToPointer() *QueryParamTarget {
 	return &e
 }
 
-func (e *GetDeploymentsTarget) UnmarshalJSON(data []byte) error {
+func (e *QueryParamTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -32,10 +32,10 @@ func (e *GetDeploymentsTarget) UnmarshalJSON(data []byte) error {
 	case "production":
 		fallthrough
 	case "preview":
-		*e = GetDeploymentsTarget(v)
+		*e = QueryParamTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeploymentsTarget: %v", v)
+		return fmt.Errorf("invalid value for QueryParamTarget: %v", v)
 	}
 }
 
@@ -55,7 +55,7 @@ type GetDeploymentsRequest struct {
 	// Filter deployments based on their state (`BUILDING`, `ERROR`, `INITIALIZING`, `QUEUED`, `READY`, `CANCELED`)
 	State *string `queryParam:"style=form,explode=true,name=state"`
 	// Filter deployments based on the environment.
-	Target *GetDeploymentsTarget `queryParam:"style=form,explode=true,name=target"`
+	Target *QueryParamTarget `queryParam:"style=form,explode=true,name=target"`
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Gets the deployment created before this Date timestamp. (default: current time)
@@ -115,7 +115,7 @@ func (o *GetDeploymentsRequest) GetState() *string {
 	return o.State
 }
 
-func (o *GetDeploymentsRequest) GetTarget() *GetDeploymentsTarget {
+func (o *GetDeploymentsRequest) GetTarget() *QueryParamTarget {
 	if o == nil {
 		return nil
 	}
@@ -150,58 +150,58 @@ func (o *GetDeploymentsRequest) GetUsers() *string {
 	return o.Users
 }
 
-type GetDeployments200ApplicationJSONDeploymentsAliasAssignedType string
+type AliasAssignedType string
 
 const (
-	GetDeployments200ApplicationJSONDeploymentsAliasAssignedTypeInteger GetDeployments200ApplicationJSONDeploymentsAliasAssignedType = "integer"
-	GetDeployments200ApplicationJSONDeploymentsAliasAssignedTypeBoolean GetDeployments200ApplicationJSONDeploymentsAliasAssignedType = "boolean"
+	AliasAssignedTypeInteger AliasAssignedType = "integer"
+	AliasAssignedTypeBoolean AliasAssignedType = "boolean"
 )
 
-type GetDeployments200ApplicationJSONDeploymentsAliasAssigned struct {
+type AliasAssigned struct {
 	Integer *int64
 	Boolean *bool
 
-	Type GetDeployments200ApplicationJSONDeploymentsAliasAssignedType
+	Type AliasAssignedType
 }
 
-func CreateGetDeployments200ApplicationJSONDeploymentsAliasAssignedInteger(integer int64) GetDeployments200ApplicationJSONDeploymentsAliasAssigned {
-	typ := GetDeployments200ApplicationJSONDeploymentsAliasAssignedTypeInteger
+func CreateAliasAssignedInteger(integer int64) AliasAssigned {
+	typ := AliasAssignedTypeInteger
 
-	return GetDeployments200ApplicationJSONDeploymentsAliasAssigned{
+	return AliasAssigned{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateGetDeployments200ApplicationJSONDeploymentsAliasAssignedBoolean(boolean bool) GetDeployments200ApplicationJSONDeploymentsAliasAssigned {
-	typ := GetDeployments200ApplicationJSONDeploymentsAliasAssignedTypeBoolean
+func CreateAliasAssignedBoolean(boolean bool) AliasAssigned {
+	typ := AliasAssignedTypeBoolean
 
-	return GetDeployments200ApplicationJSONDeploymentsAliasAssigned{
+	return AliasAssigned{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func (u *GetDeployments200ApplicationJSONDeploymentsAliasAssigned) UnmarshalJSON(data []byte) error {
+func (u *AliasAssigned) UnmarshalJSON(data []byte) error {
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = GetDeployments200ApplicationJSONDeploymentsAliasAssignedTypeInteger
+		u.Type = AliasAssignedTypeInteger
 		return nil
 	}
 
 	boolean := new(bool)
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
-		u.Type = GetDeployments200ApplicationJSONDeploymentsAliasAssignedTypeBoolean
+		u.Type = AliasAssignedTypeBoolean
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployments200ApplicationJSONDeploymentsAliasAssigned) MarshalJSON() ([]byte, error) {
+func (u AliasAssigned) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
@@ -213,41 +213,41 @@ func (u GetDeployments200ApplicationJSONDeploymentsAliasAssigned) MarshalJSON() 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// GetDeployments200ApplicationJSONDeploymentsAliasError - An error object in case aliasing of the deployment failed.
-type GetDeployments200ApplicationJSONDeploymentsAliasError struct {
+// GetDeploymentsAliasError - An error object in case aliasing of the deployment failed.
+type GetDeploymentsAliasError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsAliasError) GetCode() string {
+func (o *GetDeploymentsAliasError) GetCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.Code
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsAliasError) GetMessage() string {
+func (o *GetDeploymentsAliasError) GetMessage() string {
 	if o == nil {
 		return ""
 	}
 	return o.Message
 }
 
-// GetDeployments200ApplicationJSONDeploymentsChecksConclusion - Conclusion for checks
-type GetDeployments200ApplicationJSONDeploymentsChecksConclusion string
+// GetDeploymentsChecksConclusion - Conclusion for checks
+type GetDeploymentsChecksConclusion string
 
 const (
-	GetDeployments200ApplicationJSONDeploymentsChecksConclusionSucceeded GetDeployments200ApplicationJSONDeploymentsChecksConclusion = "succeeded"
-	GetDeployments200ApplicationJSONDeploymentsChecksConclusionFailed    GetDeployments200ApplicationJSONDeploymentsChecksConclusion = "failed"
-	GetDeployments200ApplicationJSONDeploymentsChecksConclusionSkipped   GetDeployments200ApplicationJSONDeploymentsChecksConclusion = "skipped"
-	GetDeployments200ApplicationJSONDeploymentsChecksConclusionCanceled  GetDeployments200ApplicationJSONDeploymentsChecksConclusion = "canceled"
+	GetDeploymentsChecksConclusionSucceeded GetDeploymentsChecksConclusion = "succeeded"
+	GetDeploymentsChecksConclusionFailed    GetDeploymentsChecksConclusion = "failed"
+	GetDeploymentsChecksConclusionSkipped   GetDeploymentsChecksConclusion = "skipped"
+	GetDeploymentsChecksConclusionCanceled  GetDeploymentsChecksConclusion = "canceled"
 )
 
-func (e GetDeployments200ApplicationJSONDeploymentsChecksConclusion) ToPointer() *GetDeployments200ApplicationJSONDeploymentsChecksConclusion {
+func (e GetDeploymentsChecksConclusion) ToPointer() *GetDeploymentsChecksConclusion {
 	return &e
 }
 
-func (e *GetDeployments200ApplicationJSONDeploymentsChecksConclusion) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentsChecksConclusion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -260,27 +260,27 @@ func (e *GetDeployments200ApplicationJSONDeploymentsChecksConclusion) UnmarshalJ
 	case "skipped":
 		fallthrough
 	case "canceled":
-		*e = GetDeployments200ApplicationJSONDeploymentsChecksConclusion(v)
+		*e = GetDeploymentsChecksConclusion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployments200ApplicationJSONDeploymentsChecksConclusion: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentsChecksConclusion: %v", v)
 	}
 }
 
-// GetDeployments200ApplicationJSONDeploymentsChecksState - State of all registered checks
-type GetDeployments200ApplicationJSONDeploymentsChecksState string
+// GetDeploymentsChecksState - State of all registered checks
+type GetDeploymentsChecksState string
 
 const (
-	GetDeployments200ApplicationJSONDeploymentsChecksStateRegistered GetDeployments200ApplicationJSONDeploymentsChecksState = "registered"
-	GetDeployments200ApplicationJSONDeploymentsChecksStateRunning    GetDeployments200ApplicationJSONDeploymentsChecksState = "running"
-	GetDeployments200ApplicationJSONDeploymentsChecksStateCompleted  GetDeployments200ApplicationJSONDeploymentsChecksState = "completed"
+	GetDeploymentsChecksStateRegistered GetDeploymentsChecksState = "registered"
+	GetDeploymentsChecksStateRunning    GetDeploymentsChecksState = "running"
+	GetDeploymentsChecksStateCompleted  GetDeploymentsChecksState = "completed"
 )
 
-func (e GetDeployments200ApplicationJSONDeploymentsChecksState) ToPointer() *GetDeployments200ApplicationJSONDeploymentsChecksState {
+func (e GetDeploymentsChecksState) ToPointer() *GetDeploymentsChecksState {
 	return &e
 }
 
-func (e *GetDeployments200ApplicationJSONDeploymentsChecksState) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentsChecksState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -291,15 +291,15 @@ func (e *GetDeployments200ApplicationJSONDeploymentsChecksState) UnmarshalJSON(d
 	case "running":
 		fallthrough
 	case "completed":
-		*e = GetDeployments200ApplicationJSONDeploymentsChecksState(v)
+		*e = GetDeploymentsChecksState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployments200ApplicationJSONDeploymentsChecksState: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentsChecksState: %v", v)
 	}
 }
 
-// GetDeployments200ApplicationJSONDeploymentsCreator - Metadata information of the user who created the deployment.
-type GetDeployments200ApplicationJSONDeploymentsCreator struct {
+// GetDeploymentsCreator - Metadata information of the user who created the deployment.
+type GetDeploymentsCreator struct {
 	// The email address of the user.
 	Email *string `json:"email,omitempty"`
 	// The GitHub login of the user.
@@ -312,93 +312,93 @@ type GetDeployments200ApplicationJSONDeploymentsCreator struct {
 	Username *string `json:"username,omitempty"`
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsCreator) GetEmail() *string {
+func (o *GetDeploymentsCreator) GetEmail() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Email
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsCreator) GetGithubLogin() *string {
+func (o *GetDeploymentsCreator) GetGithubLogin() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GithubLogin
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsCreator) GetGitlabLogin() *string {
+func (o *GetDeploymentsCreator) GetGitlabLogin() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitlabLogin
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsCreator) GetUID() string {
+func (o *GetDeploymentsCreator) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsCreator) GetUsername() *string {
+func (o *GetDeploymentsCreator) GetUsername() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Username
 }
 
-type GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework string
+type GetDeploymentsFramework string
 
 const (
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkBlitzjs        GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "blitzjs"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkNextjs         GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "nextjs"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkGatsby         GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "gatsby"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkRemix          GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "remix"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkAstro          GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "astro"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkHexo           GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "hexo"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkEleventy       GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "eleventy"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkDocusaurus2    GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "docusaurus-2"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkDocusaurus     GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "docusaurus"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkPreact         GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "preact"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkSolidstart     GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "solidstart"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkDojo           GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "dojo"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkEmber          GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "ember"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkVue            GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "vue"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkScully         GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "scully"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkIonicAngular   GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "ionic-angular"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkAngular        GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "angular"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkPolymer        GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "polymer"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkSvelte         GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "svelte"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkSveltekit      GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "sveltekit"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkSveltekit1     GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "sveltekit-1"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkIonicReact     GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "ionic-react"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkCreateReactApp GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "create-react-app"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkGridsome       GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "gridsome"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkUmijs          GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "umijs"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkSapper         GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "sapper"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkSaber          GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "saber"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkStencil        GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "stencil"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkNuxtjs         GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "nuxtjs"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkRedwoodjs      GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "redwoodjs"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkHugo           GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "hugo"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkJekyll         GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "jekyll"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkBrunch         GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "brunch"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkMiddleman      GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "middleman"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkZola           GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "zola"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkHydrogen       GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "hydrogen"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkVite           GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "vite"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkVitepress      GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "vitepress"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkVuepress       GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "vuepress"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkParcel         GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "parcel"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkSanity         GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "sanity"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsFrameworkStorybook      GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework = "storybook"
+	GetDeploymentsFrameworkBlitzjs        GetDeploymentsFramework = "blitzjs"
+	GetDeploymentsFrameworkNextjs         GetDeploymentsFramework = "nextjs"
+	GetDeploymentsFrameworkGatsby         GetDeploymentsFramework = "gatsby"
+	GetDeploymentsFrameworkRemix          GetDeploymentsFramework = "remix"
+	GetDeploymentsFrameworkAstro          GetDeploymentsFramework = "astro"
+	GetDeploymentsFrameworkHexo           GetDeploymentsFramework = "hexo"
+	GetDeploymentsFrameworkEleventy       GetDeploymentsFramework = "eleventy"
+	GetDeploymentsFrameworkDocusaurus2    GetDeploymentsFramework = "docusaurus-2"
+	GetDeploymentsFrameworkDocusaurus     GetDeploymentsFramework = "docusaurus"
+	GetDeploymentsFrameworkPreact         GetDeploymentsFramework = "preact"
+	GetDeploymentsFrameworkSolidstart     GetDeploymentsFramework = "solidstart"
+	GetDeploymentsFrameworkDojo           GetDeploymentsFramework = "dojo"
+	GetDeploymentsFrameworkEmber          GetDeploymentsFramework = "ember"
+	GetDeploymentsFrameworkVue            GetDeploymentsFramework = "vue"
+	GetDeploymentsFrameworkScully         GetDeploymentsFramework = "scully"
+	GetDeploymentsFrameworkIonicAngular   GetDeploymentsFramework = "ionic-angular"
+	GetDeploymentsFrameworkAngular        GetDeploymentsFramework = "angular"
+	GetDeploymentsFrameworkPolymer        GetDeploymentsFramework = "polymer"
+	GetDeploymentsFrameworkSvelte         GetDeploymentsFramework = "svelte"
+	GetDeploymentsFrameworkSveltekit      GetDeploymentsFramework = "sveltekit"
+	GetDeploymentsFrameworkSveltekit1     GetDeploymentsFramework = "sveltekit-1"
+	GetDeploymentsFrameworkIonicReact     GetDeploymentsFramework = "ionic-react"
+	GetDeploymentsFrameworkCreateReactApp GetDeploymentsFramework = "create-react-app"
+	GetDeploymentsFrameworkGridsome       GetDeploymentsFramework = "gridsome"
+	GetDeploymentsFrameworkUmijs          GetDeploymentsFramework = "umijs"
+	GetDeploymentsFrameworkSapper         GetDeploymentsFramework = "sapper"
+	GetDeploymentsFrameworkSaber          GetDeploymentsFramework = "saber"
+	GetDeploymentsFrameworkStencil        GetDeploymentsFramework = "stencil"
+	GetDeploymentsFrameworkNuxtjs         GetDeploymentsFramework = "nuxtjs"
+	GetDeploymentsFrameworkRedwoodjs      GetDeploymentsFramework = "redwoodjs"
+	GetDeploymentsFrameworkHugo           GetDeploymentsFramework = "hugo"
+	GetDeploymentsFrameworkJekyll         GetDeploymentsFramework = "jekyll"
+	GetDeploymentsFrameworkBrunch         GetDeploymentsFramework = "brunch"
+	GetDeploymentsFrameworkMiddleman      GetDeploymentsFramework = "middleman"
+	GetDeploymentsFrameworkZola           GetDeploymentsFramework = "zola"
+	GetDeploymentsFrameworkHydrogen       GetDeploymentsFramework = "hydrogen"
+	GetDeploymentsFrameworkVite           GetDeploymentsFramework = "vite"
+	GetDeploymentsFrameworkVitepress      GetDeploymentsFramework = "vitepress"
+	GetDeploymentsFrameworkVuepress       GetDeploymentsFramework = "vuepress"
+	GetDeploymentsFrameworkParcel         GetDeploymentsFramework = "parcel"
+	GetDeploymentsFrameworkSanity         GetDeploymentsFramework = "sanity"
+	GetDeploymentsFrameworkStorybook      GetDeploymentsFramework = "storybook"
 )
 
-func (e GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework) ToPointer() *GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework {
+func (e GetDeploymentsFramework) ToPointer() *GetDeploymentsFramework {
 	return &e
 }
 
-func (e *GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentsFramework) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -487,50 +487,50 @@ func (e *GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework) Un
 	case "sanity":
 		fallthrough
 	case "storybook":
-		*e = GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework(v)
+		*e = GetDeploymentsFramework(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentsFramework: %v", v)
 	}
 }
 
-// GetDeployments200ApplicationJSONDeploymentsProjectSettingsGitComments - Since June '23
-type GetDeployments200ApplicationJSONDeploymentsProjectSettingsGitComments struct {
+// GetDeploymentsGitComments - Since June '23
+type GetDeploymentsGitComments struct {
 	// Whether the Vercel bot should comment on commits
 	OnCommit bool `json:"onCommit"`
 	// Whether the Vercel bot should comment on PRs
 	OnPullRequest bool `json:"onPullRequest"`
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettingsGitComments) GetOnCommit() bool {
+func (o *GetDeploymentsGitComments) GetOnCommit() bool {
 	if o == nil {
 		return false
 	}
 	return o.OnCommit
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettingsGitComments) GetOnPullRequest() bool {
+func (o *GetDeploymentsGitComments) GetOnPullRequest() bool {
 	if o == nil {
 		return false
 	}
 	return o.OnPullRequest
 }
 
-type GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion string
+type GetDeploymentsNodeVersion string
 
 const (
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersionEighteenX GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion = "18.x"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersionSixteenX  GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion = "16.x"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersionFourteenX GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion = "14.x"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersionTwelveX   GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion = "12.x"
-	GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersionTenX      GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion = "10.x"
+	GetDeploymentsNodeVersionEighteenX GetDeploymentsNodeVersion = "18.x"
+	GetDeploymentsNodeVersionSixteenX  GetDeploymentsNodeVersion = "16.x"
+	GetDeploymentsNodeVersionFourteenX GetDeploymentsNodeVersion = "14.x"
+	GetDeploymentsNodeVersionTwelveX   GetDeploymentsNodeVersion = "12.x"
+	GetDeploymentsNodeVersionTenX      GetDeploymentsNodeVersion = "10.x"
 )
 
-func (e GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion) ToPointer() *GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion {
+func (e GetDeploymentsNodeVersion) ToPointer() *GetDeploymentsNodeVersion {
 	return &e
 }
 
-func (e *GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentsNodeVersion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -545,167 +545,167 @@ func (e *GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion) 
 	case "12.x":
 		fallthrough
 	case "10.x":
-		*e = GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion(v)
+		*e = GetDeploymentsNodeVersion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentsNodeVersion: %v", v)
 	}
 }
 
-// GetDeployments200ApplicationJSONDeploymentsProjectSettings - The project settings which was used for this deployment
-type GetDeployments200ApplicationJSONDeploymentsProjectSettings struct {
-	BuildCommand                  *string                                                              `json:"buildCommand,omitempty"`
-	CommandForIgnoringBuildStep   *string                                                              `json:"commandForIgnoringBuildStep,omitempty"`
-	CreatedAt                     *int64                                                               `json:"createdAt,omitempty"`
-	CustomerSupportCodeVisibility *bool                                                                `json:"customerSupportCodeVisibility,omitempty"`
-	DevCommand                    *string                                                              `json:"devCommand,omitempty"`
-	Framework                     *GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework `json:"framework,omitempty"`
+// GetDeploymentsProjectSettings - The project settings which was used for this deployment
+type GetDeploymentsProjectSettings struct {
+	BuildCommand                  *string                  `json:"buildCommand,omitempty"`
+	CommandForIgnoringBuildStep   *string                  `json:"commandForIgnoringBuildStep,omitempty"`
+	CreatedAt                     *int64                   `json:"createdAt,omitempty"`
+	CustomerSupportCodeVisibility *bool                    `json:"customerSupportCodeVisibility,omitempty"`
+	DevCommand                    *string                  `json:"devCommand,omitempty"`
+	Framework                     *GetDeploymentsFramework `json:"framework,omitempty"`
 	// Since June '23
-	GitComments                     *GetDeployments200ApplicationJSONDeploymentsProjectSettingsGitComments `json:"gitComments,omitempty"`
-	GitForkProtection               *bool                                                                  `json:"gitForkProtection,omitempty"`
-	GitLFS                          *bool                                                                  `json:"gitLFS,omitempty"`
-	InstallCommand                  *string                                                                `json:"installCommand,omitempty"`
-	NodeVersion                     *GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion `json:"nodeVersion,omitempty"`
-	OutputDirectory                 *string                                                                `json:"outputDirectory,omitempty"`
-	PublicSource                    *bool                                                                  `json:"publicSource,omitempty"`
-	RootDirectory                   *string                                                                `json:"rootDirectory,omitempty"`
-	ServerlessFunctionRegion        *string                                                                `json:"serverlessFunctionRegion,omitempty"`
-	SkipGitConnectDuringLink        *bool                                                                  `json:"skipGitConnectDuringLink,omitempty"`
-	SourceFilesOutsideRootDirectory *bool                                                                  `json:"sourceFilesOutsideRootDirectory,omitempty"`
+	GitComments                     *GetDeploymentsGitComments `json:"gitComments,omitempty"`
+	GitForkProtection               *bool                      `json:"gitForkProtection,omitempty"`
+	GitLFS                          *bool                      `json:"gitLFS,omitempty"`
+	InstallCommand                  *string                    `json:"installCommand,omitempty"`
+	NodeVersion                     *GetDeploymentsNodeVersion `json:"nodeVersion,omitempty"`
+	OutputDirectory                 *string                    `json:"outputDirectory,omitempty"`
+	PublicSource                    *bool                      `json:"publicSource,omitempty"`
+	RootDirectory                   *string                    `json:"rootDirectory,omitempty"`
+	ServerlessFunctionRegion        *string                    `json:"serverlessFunctionRegion,omitempty"`
+	SkipGitConnectDuringLink        *bool                      `json:"skipGitConnectDuringLink,omitempty"`
+	SourceFilesOutsideRootDirectory *bool                      `json:"sourceFilesOutsideRootDirectory,omitempty"`
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetBuildCommand() *string {
+func (o *GetDeploymentsProjectSettings) GetBuildCommand() *string {
 	if o == nil {
 		return nil
 	}
 	return o.BuildCommand
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetCommandForIgnoringBuildStep() *string {
+func (o *GetDeploymentsProjectSettings) GetCommandForIgnoringBuildStep() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CommandForIgnoringBuildStep
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetCreatedAt() *int64 {
+func (o *GetDeploymentsProjectSettings) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetCustomerSupportCodeVisibility() *bool {
+func (o *GetDeploymentsProjectSettings) GetCustomerSupportCodeVisibility() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.CustomerSupportCodeVisibility
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetDevCommand() *string {
+func (o *GetDeploymentsProjectSettings) GetDevCommand() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DevCommand
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetFramework() *GetDeployments200ApplicationJSONDeploymentsProjectSettingsFramework {
+func (o *GetDeploymentsProjectSettings) GetFramework() *GetDeploymentsFramework {
 	if o == nil {
 		return nil
 	}
 	return o.Framework
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetGitComments() *GetDeployments200ApplicationJSONDeploymentsProjectSettingsGitComments {
+func (o *GetDeploymentsProjectSettings) GetGitComments() *GetDeploymentsGitComments {
 	if o == nil {
 		return nil
 	}
 	return o.GitComments
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetGitForkProtection() *bool {
+func (o *GetDeploymentsProjectSettings) GetGitForkProtection() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.GitForkProtection
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetGitLFS() *bool {
+func (o *GetDeploymentsProjectSettings) GetGitLFS() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.GitLFS
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetInstallCommand() *string {
+func (o *GetDeploymentsProjectSettings) GetInstallCommand() *string {
 	if o == nil {
 		return nil
 	}
 	return o.InstallCommand
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetNodeVersion() *GetDeployments200ApplicationJSONDeploymentsProjectSettingsNodeVersion {
+func (o *GetDeploymentsProjectSettings) GetNodeVersion() *GetDeploymentsNodeVersion {
 	if o == nil {
 		return nil
 	}
 	return o.NodeVersion
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetOutputDirectory() *string {
+func (o *GetDeploymentsProjectSettings) GetOutputDirectory() *string {
 	if o == nil {
 		return nil
 	}
 	return o.OutputDirectory
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetPublicSource() *bool {
+func (o *GetDeploymentsProjectSettings) GetPublicSource() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.PublicSource
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetRootDirectory() *string {
+func (o *GetDeploymentsProjectSettings) GetRootDirectory() *string {
 	if o == nil {
 		return nil
 	}
 	return o.RootDirectory
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetServerlessFunctionRegion() *string {
+func (o *GetDeploymentsProjectSettings) GetServerlessFunctionRegion() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ServerlessFunctionRegion
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetSkipGitConnectDuringLink() *bool {
+func (o *GetDeploymentsProjectSettings) GetSkipGitConnectDuringLink() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SkipGitConnectDuringLink
 }
 
-func (o *GetDeployments200ApplicationJSONDeploymentsProjectSettings) GetSourceFilesOutsideRootDirectory() *bool {
+func (o *GetDeploymentsProjectSettings) GetSourceFilesOutsideRootDirectory() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SourceFilesOutsideRootDirectory
 }
 
-// GetDeployments200ApplicationJSONDeploymentsReadySubstate - Since June 2023 Substate of deployment when readyState is 'READY' Tracks whether or not deployment has seen production traffic: - STAGED: never seen production traffic - PROMOTED: has seen production traffic
-type GetDeployments200ApplicationJSONDeploymentsReadySubstate string
+// GetDeploymentsReadySubstate - Since June 2023 Substate of deployment when readyState is 'READY' Tracks whether or not deployment has seen production traffic: - STAGED: never seen production traffic - PROMOTED: has seen production traffic
+type GetDeploymentsReadySubstate string
 
 const (
-	GetDeployments200ApplicationJSONDeploymentsReadySubstateStaged   GetDeployments200ApplicationJSONDeploymentsReadySubstate = "STAGED"
-	GetDeployments200ApplicationJSONDeploymentsReadySubstatePromoted GetDeployments200ApplicationJSONDeploymentsReadySubstate = "PROMOTED"
+	GetDeploymentsReadySubstateStaged   GetDeploymentsReadySubstate = "STAGED"
+	GetDeploymentsReadySubstatePromoted GetDeploymentsReadySubstate = "PROMOTED"
 )
 
-func (e GetDeployments200ApplicationJSONDeploymentsReadySubstate) ToPointer() *GetDeployments200ApplicationJSONDeploymentsReadySubstate {
+func (e GetDeploymentsReadySubstate) ToPointer() *GetDeploymentsReadySubstate {
 	return &e
 }
 
-func (e *GetDeployments200ApplicationJSONDeploymentsReadySubstate) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentsReadySubstate) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -714,29 +714,29 @@ func (e *GetDeployments200ApplicationJSONDeploymentsReadySubstate) UnmarshalJSON
 	case "STAGED":
 		fallthrough
 	case "PROMOTED":
-		*e = GetDeployments200ApplicationJSONDeploymentsReadySubstate(v)
+		*e = GetDeploymentsReadySubstate(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployments200ApplicationJSONDeploymentsReadySubstate: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentsReadySubstate: %v", v)
 	}
 }
 
-// GetDeployments200ApplicationJSONDeploymentsSource - The source of the deployment.
-type GetDeployments200ApplicationJSONDeploymentsSource string
+// GetDeploymentsSource - The source of the deployment.
+type GetDeploymentsSource string
 
 const (
-	GetDeployments200ApplicationJSONDeploymentsSourceCli        GetDeployments200ApplicationJSONDeploymentsSource = "cli"
-	GetDeployments200ApplicationJSONDeploymentsSourceGit        GetDeployments200ApplicationJSONDeploymentsSource = "git"
-	GetDeployments200ApplicationJSONDeploymentsSourceImport     GetDeployments200ApplicationJSONDeploymentsSource = "import"
-	GetDeployments200ApplicationJSONDeploymentsSourceImportRepo GetDeployments200ApplicationJSONDeploymentsSource = "import/repo"
-	GetDeployments200ApplicationJSONDeploymentsSourceCloneRepo  GetDeployments200ApplicationJSONDeploymentsSource = "clone/repo"
+	GetDeploymentsSourceCli        GetDeploymentsSource = "cli"
+	GetDeploymentsSourceGit        GetDeploymentsSource = "git"
+	GetDeploymentsSourceImport     GetDeploymentsSource = "import"
+	GetDeploymentsSourceImportRepo GetDeploymentsSource = "import/repo"
+	GetDeploymentsSourceCloneRepo  GetDeploymentsSource = "clone/repo"
 )
 
-func (e GetDeployments200ApplicationJSONDeploymentsSource) ToPointer() *GetDeployments200ApplicationJSONDeploymentsSource {
+func (e GetDeploymentsSource) ToPointer() *GetDeploymentsSource {
 	return &e
 }
 
-func (e *GetDeployments200ApplicationJSONDeploymentsSource) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentsSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -751,30 +751,30 @@ func (e *GetDeployments200ApplicationJSONDeploymentsSource) UnmarshalJSON(data [
 	case "import/repo":
 		fallthrough
 	case "clone/repo":
-		*e = GetDeployments200ApplicationJSONDeploymentsSource(v)
+		*e = GetDeploymentsSource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployments200ApplicationJSONDeploymentsSource: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentsSource: %v", v)
 	}
 }
 
-// GetDeployments200ApplicationJSONDeploymentsState - In which state is the deployment.
-type GetDeployments200ApplicationJSONDeploymentsState string
+// State - In which state is the deployment.
+type State string
 
 const (
-	GetDeployments200ApplicationJSONDeploymentsStateBuilding     GetDeployments200ApplicationJSONDeploymentsState = "BUILDING"
-	GetDeployments200ApplicationJSONDeploymentsStateError        GetDeployments200ApplicationJSONDeploymentsState = "ERROR"
-	GetDeployments200ApplicationJSONDeploymentsStateInitializing GetDeployments200ApplicationJSONDeploymentsState = "INITIALIZING"
-	GetDeployments200ApplicationJSONDeploymentsStateQueued       GetDeployments200ApplicationJSONDeploymentsState = "QUEUED"
-	GetDeployments200ApplicationJSONDeploymentsStateReady        GetDeployments200ApplicationJSONDeploymentsState = "READY"
-	GetDeployments200ApplicationJSONDeploymentsStateCanceled     GetDeployments200ApplicationJSONDeploymentsState = "CANCELED"
+	StateBuilding     State = "BUILDING"
+	StateError        State = "ERROR"
+	StateInitializing State = "INITIALIZING"
+	StateQueued       State = "QUEUED"
+	StateReady        State = "READY"
+	StateCanceled     State = "CANCELED"
 )
 
-func (e GetDeployments200ApplicationJSONDeploymentsState) ToPointer() *GetDeployments200ApplicationJSONDeploymentsState {
+func (e State) ToPointer() *State {
 	return &e
 }
 
-func (e *GetDeployments200ApplicationJSONDeploymentsState) UnmarshalJSON(data []byte) error {
+func (e *State) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -791,26 +791,26 @@ func (e *GetDeployments200ApplicationJSONDeploymentsState) UnmarshalJSON(data []
 	case "READY":
 		fallthrough
 	case "CANCELED":
-		*e = GetDeployments200ApplicationJSONDeploymentsState(v)
+		*e = State(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployments200ApplicationJSONDeploymentsState: %v", v)
+		return fmt.Errorf("invalid value for State: %v", v)
 	}
 }
 
-// GetDeployments200ApplicationJSONDeploymentsTarget - On which environment has the deployment been deployed to.
-type GetDeployments200ApplicationJSONDeploymentsTarget string
+// GetDeploymentsTarget - On which environment has the deployment been deployed to.
+type GetDeploymentsTarget string
 
 const (
-	GetDeployments200ApplicationJSONDeploymentsTargetProduction GetDeployments200ApplicationJSONDeploymentsTarget = "production"
-	GetDeployments200ApplicationJSONDeploymentsTargetStaging    GetDeployments200ApplicationJSONDeploymentsTarget = "staging"
+	GetDeploymentsTargetProduction GetDeploymentsTarget = "production"
+	GetDeploymentsTargetStaging    GetDeploymentsTarget = "staging"
 )
 
-func (e GetDeployments200ApplicationJSONDeploymentsTarget) ToPointer() *GetDeployments200ApplicationJSONDeploymentsTarget {
+func (e GetDeploymentsTarget) ToPointer() *GetDeploymentsTarget {
 	return &e
 }
 
-func (e *GetDeployments200ApplicationJSONDeploymentsTarget) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentsTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -819,48 +819,48 @@ func (e *GetDeployments200ApplicationJSONDeploymentsTarget) UnmarshalJSON(data [
 	case "production":
 		fallthrough
 	case "staging":
-		*e = GetDeployments200ApplicationJSONDeploymentsTarget(v)
+		*e = GetDeploymentsTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployments200ApplicationJSONDeploymentsTarget: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentsTarget: %v", v)
 	}
 }
 
-// GetDeployments200ApplicationJSONDeploymentsType - The type of the deployment.
-type GetDeployments200ApplicationJSONDeploymentsType string
+// GetDeploymentsType - The type of the deployment.
+type GetDeploymentsType string
 
 const (
-	GetDeployments200ApplicationJSONDeploymentsTypeLambdas GetDeployments200ApplicationJSONDeploymentsType = "LAMBDAS"
+	GetDeploymentsTypeLambdas GetDeploymentsType = "LAMBDAS"
 )
 
-func (e GetDeployments200ApplicationJSONDeploymentsType) ToPointer() *GetDeployments200ApplicationJSONDeploymentsType {
+func (e GetDeploymentsType) ToPointer() *GetDeploymentsType {
 	return &e
 }
 
-func (e *GetDeployments200ApplicationJSONDeploymentsType) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "LAMBDAS":
-		*e = GetDeployments200ApplicationJSONDeploymentsType(v)
+		*e = GetDeploymentsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployments200ApplicationJSONDeploymentsType: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentsType: %v", v)
 	}
 }
 
-type GetDeployments200ApplicationJSONDeployments struct {
-	AliasAssigned *GetDeployments200ApplicationJSONDeploymentsAliasAssigned `json:"aliasAssigned,omitempty"`
+type Deployments struct {
+	AliasAssigned *AliasAssigned `json:"aliasAssigned,omitempty"`
 	// An error object in case aliasing of the deployment failed.
-	AliasError *GetDeployments200ApplicationJSONDeploymentsAliasError `json:"aliasError,omitempty"`
+	AliasError *GetDeploymentsAliasError `json:"aliasError,omitempty"`
 	// Timestamp of when the deployment started building at.
 	BuildingAt *int64 `json:"buildingAt,omitempty"`
 	// Conclusion for checks
-	ChecksConclusion *GetDeployments200ApplicationJSONDeploymentsChecksConclusion `json:"checksConclusion,omitempty"`
+	ChecksConclusion *GetDeploymentsChecksConclusion `json:"checksConclusion,omitempty"`
 	// State of all registered checks
-	ChecksState *GetDeployments200ApplicationJSONDeploymentsChecksState `json:"checksState,omitempty"`
+	ChecksState *GetDeploymentsChecksState `json:"checksState,omitempty"`
 	// The flag saying if Vercel Connect configuration is used for builds
 	ConnectBuildsEnabled *bool `json:"connectBuildsEnabled,omitempty"`
 	// The ID of Vercel Connect configuration used for this deployment
@@ -870,7 +870,7 @@ type GetDeployments200ApplicationJSONDeployments struct {
 	// Timestamp of when the deployment got created.
 	CreatedAt *int64 `json:"createdAt,omitempty"`
 	// Metadata information of the user who created the deployment.
-	Creator GetDeployments200ApplicationJSONDeploymentsCreator `json:"creator"`
+	Creator GetDeploymentsCreator `json:"creator"`
 	// Vercel URL to inspect the deployment.
 	InspectorURL *string `json:"inspectorUrl"`
 	// Deployment can be used for instant rollback
@@ -880,200 +880,200 @@ type GetDeployments200ApplicationJSONDeployments struct {
 	// The name of the deployment.
 	Name string `json:"name"`
 	// The project settings which was used for this deployment
-	ProjectSettings *GetDeployments200ApplicationJSONDeploymentsProjectSettings `json:"projectSettings,omitempty"`
+	ProjectSettings *GetDeploymentsProjectSettings `json:"projectSettings,omitempty"`
 	// Timestamp of when the deployment got ready.
 	Ready *int64 `json:"ready,omitempty"`
 	// Since June 2023 Substate of deployment when readyState is 'READY' Tracks whether or not deployment has seen production traffic: - STAGED: never seen production traffic - PROMOTED: has seen production traffic
-	ReadySubstate *GetDeployments200ApplicationJSONDeploymentsReadySubstate `json:"readySubstate,omitempty"`
+	ReadySubstate *GetDeploymentsReadySubstate `json:"readySubstate,omitempty"`
 	// The source of the deployment.
-	Source *GetDeployments200ApplicationJSONDeploymentsSource `json:"source,omitempty"`
+	Source *GetDeploymentsSource `json:"source,omitempty"`
 	// In which state is the deployment.
-	State *GetDeployments200ApplicationJSONDeploymentsState `json:"state,omitempty"`
+	State *State `json:"state,omitempty"`
 	// On which environment has the deployment been deployed to.
-	Target *GetDeployments200ApplicationJSONDeploymentsTarget `json:"target,omitempty"`
+	Target *GetDeploymentsTarget `json:"target,omitempty"`
 	// The type of the deployment.
-	Type GetDeployments200ApplicationJSONDeploymentsType `json:"type"`
+	Type GetDeploymentsType `json:"type"`
 	// The unique identifier of the deployment.
 	UID string `json:"uid"`
 	// The URL of the deployment.
 	URL string `json:"url"`
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetAliasAssigned() *GetDeployments200ApplicationJSONDeploymentsAliasAssigned {
+func (o *Deployments) GetAliasAssigned() *AliasAssigned {
 	if o == nil {
 		return nil
 	}
 	return o.AliasAssigned
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetAliasError() *GetDeployments200ApplicationJSONDeploymentsAliasError {
+func (o *Deployments) GetAliasError() *GetDeploymentsAliasError {
 	if o == nil {
 		return nil
 	}
 	return o.AliasError
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetBuildingAt() *int64 {
+func (o *Deployments) GetBuildingAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.BuildingAt
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetChecksConclusion() *GetDeployments200ApplicationJSONDeploymentsChecksConclusion {
+func (o *Deployments) GetChecksConclusion() *GetDeploymentsChecksConclusion {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksConclusion
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetChecksState() *GetDeployments200ApplicationJSONDeploymentsChecksState {
+func (o *Deployments) GetChecksState() *GetDeploymentsChecksState {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksState
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetConnectBuildsEnabled() *bool {
+func (o *Deployments) GetConnectBuildsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectBuildsEnabled
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetConnectConfigurationID() *string {
+func (o *Deployments) GetConnectConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectConfigurationID
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetCreated() int64 {
+func (o *Deployments) GetCreated() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Created
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetCreatedAt() *int64 {
+func (o *Deployments) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetCreator() GetDeployments200ApplicationJSONDeploymentsCreator {
+func (o *Deployments) GetCreator() GetDeploymentsCreator {
 	if o == nil {
-		return GetDeployments200ApplicationJSONDeploymentsCreator{}
+		return GetDeploymentsCreator{}
 	}
 	return o.Creator
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetInspectorURL() *string {
+func (o *Deployments) GetInspectorURL() *string {
 	if o == nil {
 		return nil
 	}
 	return o.InspectorURL
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetIsRollbackCandidate() *bool {
+func (o *Deployments) GetIsRollbackCandidate() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IsRollbackCandidate
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetMeta() map[string]string {
+func (o *Deployments) GetMeta() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Meta
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetName() string {
+func (o *Deployments) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetProjectSettings() *GetDeployments200ApplicationJSONDeploymentsProjectSettings {
+func (o *Deployments) GetProjectSettings() *GetDeploymentsProjectSettings {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectSettings
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetReady() *int64 {
+func (o *Deployments) GetReady() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Ready
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetReadySubstate() *GetDeployments200ApplicationJSONDeploymentsReadySubstate {
+func (o *Deployments) GetReadySubstate() *GetDeploymentsReadySubstate {
 	if o == nil {
 		return nil
 	}
 	return o.ReadySubstate
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetSource() *GetDeployments200ApplicationJSONDeploymentsSource {
+func (o *Deployments) GetSource() *GetDeploymentsSource {
 	if o == nil {
 		return nil
 	}
 	return o.Source
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetState() *GetDeployments200ApplicationJSONDeploymentsState {
+func (o *Deployments) GetState() *State {
 	if o == nil {
 		return nil
 	}
 	return o.State
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetTarget() *GetDeployments200ApplicationJSONDeploymentsTarget {
+func (o *Deployments) GetTarget() *GetDeploymentsTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetType() GetDeployments200ApplicationJSONDeploymentsType {
+func (o *Deployments) GetType() GetDeploymentsType {
 	if o == nil {
-		return GetDeployments200ApplicationJSONDeploymentsType("")
+		return GetDeploymentsType("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetUID() string {
+func (o *Deployments) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *GetDeployments200ApplicationJSONDeployments) GetURL() string {
+func (o *Deployments) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-type GetDeployments200ApplicationJSON struct {
-	Deployments []GetDeployments200ApplicationJSONDeployments `json:"deployments"`
+type GetDeploymentsResponseBody struct {
+	Deployments []Deployments `json:"deployments"`
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 	Pagination shared.Pagination `json:"pagination"`
 }
 
-func (o *GetDeployments200ApplicationJSON) GetDeployments() []GetDeployments200ApplicationJSONDeployments {
+func (o *GetDeploymentsResponseBody) GetDeployments() []Deployments {
 	if o == nil {
-		return []GetDeployments200ApplicationJSONDeployments{}
+		return []Deployments{}
 	}
 	return o.Deployments
 }
 
-func (o *GetDeployments200ApplicationJSON) GetPagination() shared.Pagination {
+func (o *GetDeploymentsResponseBody) GetPagination() shared.Pagination {
 	if o == nil {
 		return shared.Pagination{}
 	}
@@ -1086,8 +1086,8 @@ type GetDeploymentsResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                            *http.Response
-	GetDeployments200ApplicationJSONObject *GetDeployments200ApplicationJSON
+	RawResponse *http.Response
+	Object      *GetDeploymentsResponseBody
 }
 
 func (o *GetDeploymentsResponse) GetContentType() string {
@@ -1111,9 +1111,9 @@ func (o *GetDeploymentsResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetDeploymentsResponse) GetGetDeployments200ApplicationJSONObject() *GetDeployments200ApplicationJSON {
+func (o *GetDeploymentsResponse) GetObject() *GetDeploymentsResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetDeployments200ApplicationJSONObject
+	return o.Object
 }

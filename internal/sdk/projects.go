@@ -14,19 +14,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type projects struct {
+type Projects struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newProjects(sdkConfig sdkConfiguration) *projects {
-	return &projects{
+func newProjects(sdkConfig sdkConfiguration) *Projects {
+	return &Projects{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // AddProjectDomain - Add a domain to a project
 // Add a domain to the project by passing its domain name and by specifying the project by either passing the project `id` or `name` in the URL. If the domain is not yet verified to be used on this project, the request will return `verified = false`, and the domain will need to be verified according to the `verification` challenge via `POST /projects/:idOrName/domains/:domain/verify`. If the domain already exists on the project, the request will fail with a `400` status code.
-func (s *projects) AddProjectDomain(ctx context.Context, request operations.AddProjectDomainRequest) (*operations.AddProjectDomainResponse, error) {
+func (s *Projects) AddProjectDomain(ctx context.Context, request operations.AddProjectDomainRequest) (*operations.AddProjectDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v10/projects/{idOrName}/domains", request, nil)
 	if err != nil {
@@ -82,12 +82,12 @@ func (s *projects) AddProjectDomain(ctx context.Context, request operations.AddP
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.AddProjectDomain200ApplicationJSON
+			var out operations.AddProjectDomainResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.AddProjectDomain200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -109,7 +109,7 @@ func (s *projects) AddProjectDomain(ctx context.Context, request operations.AddP
 
 // CreateProject - Create a new project
 // Allows to create a new project with the provided configuration. It only requires the project `name` but more configuration can be provided to override the defaults.
-func (s *projects) CreateProject(ctx context.Context, request operations.CreateProjectRequest) (*operations.CreateProjectResponse, error) {
+func (s *Projects) CreateProject(ctx context.Context, request operations.CreateProjectRequest) (*operations.CreateProjectResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v9/projects"
 
@@ -162,12 +162,12 @@ func (s *projects) CreateProject(ctx context.Context, request operations.CreateP
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.CreateProject200ApplicationJSON
+			var out operations.CreateProjectResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CreateProject200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -187,7 +187,7 @@ func (s *projects) CreateProject(ctx context.Context, request operations.CreateP
 
 // CreateProjectEnv - Create one or more environment variables
 // Create one ore more environment variables for a project by passing its `key`, `value`, `type` and `target` and by specifying the project by either passing the project `id` or `name` in the URL.
-func (s *projects) CreateProjectEnv(ctx context.Context, request operations.CreateProjectEnvRequest) (*operations.CreateProjectEnvResponse, error) {
+func (s *Projects) CreateProjectEnv(ctx context.Context, request operations.CreateProjectEnvRequest) (*operations.CreateProjectEnvResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v10/projects/{idOrName}/env", request, nil)
 	if err != nil {
@@ -243,12 +243,12 @@ func (s *projects) CreateProjectEnv(ctx context.Context, request operations.Crea
 	case httpRes.StatusCode == 201:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.CreateProjectEnv201ApplicationJSON
+			var out operations.CreateProjectEnvResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CreateProjectEnv201ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -270,7 +270,7 @@ func (s *projects) CreateProjectEnv(ctx context.Context, request operations.Crea
 
 // DeleteProject - Delete a Project
 // Delete a specific project by passing either the project `id` or `name` in the URL.
-func (s *projects) DeleteProject(ctx context.Context, request operations.DeleteProjectRequest) (*operations.DeleteProjectResponse, error) {
+func (s *Projects) DeleteProject(ctx context.Context, request operations.DeleteProjectRequest) (*operations.DeleteProjectResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}", request, nil)
 	if err != nil {
@@ -331,7 +331,7 @@ func (s *projects) DeleteProject(ctx context.Context, request operations.DeleteP
 
 // EditProjectEnv - Edit an environment variable
 // Edit a specific environment variable for a given project by passing the environment variable identifier and either passing the project `id` or `name` in the URL.
-func (s *projects) EditProjectEnv(ctx context.Context, request operations.EditProjectEnvRequest) (*operations.EditProjectEnvResponse, error) {
+func (s *Projects) EditProjectEnv(ctx context.Context, request operations.EditProjectEnvRequest) (*operations.EditProjectEnvResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/env/{id}", request, nil)
 	if err != nil {
@@ -387,12 +387,12 @@ func (s *projects) EditProjectEnv(ctx context.Context, request operations.EditPr
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.EditProjectEnv200ApplicationJSON
+			var out operations.EditProjectEnvResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.EditProjectEnv200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -412,7 +412,7 @@ func (s *projects) EditProjectEnv(ctx context.Context, request operations.EditPr
 
 // FilterProjectEnvs - Retrieve the environment variables of a project by id or name
 // Retrieve the environment variables for a given project by passing either the project `id` or `name` in the URL.
-func (s *projects) FilterProjectEnvs(ctx context.Context, request operations.FilterProjectEnvsRequest) (*operations.FilterProjectEnvsResponse, error) {
+func (s *Projects) FilterProjectEnvs(ctx context.Context, request operations.FilterProjectEnvsRequest) (*operations.FilterProjectEnvsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/env", request, nil)
 	if err != nil {
@@ -458,12 +458,12 @@ func (s *projects) FilterProjectEnvs(ctx context.Context, request operations.Fil
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.FilterProjectEnvs200ApplicationJSON
+			var out operations.FilterProjectEnvsResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.FilterProjectEnvs200ApplicationJSONOneOf = &out
+			res.OneOf = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -481,7 +481,7 @@ func (s *projects) FilterProjectEnvs(ctx context.Context, request operations.Fil
 
 // GetProjectDomain - Get a project domain
 // Get project domain by project id/name and domain name.
-func (s *projects) GetProjectDomain(ctx context.Context, request operations.GetProjectDomainRequest) (*operations.GetProjectDomainResponse, error) {
+func (s *Projects) GetProjectDomain(ctx context.Context, request operations.GetProjectDomainRequest) (*operations.GetProjectDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/domains/{domain}", request, nil)
 	if err != nil {
@@ -527,12 +527,12 @@ func (s *projects) GetProjectDomain(ctx context.Context, request operations.GetP
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetProjectDomain200ApplicationJSON
+			var out operations.GetProjectDomainResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetProjectDomain200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -550,7 +550,7 @@ func (s *projects) GetProjectDomain(ctx context.Context, request operations.GetP
 
 // GetProjectEnv - Retrieve the decrypted value of an environment variable of a project by id
 // Retrieve the environment variable for a given project.
-func (s *projects) GetProjectEnv(ctx context.Context, request operations.GetProjectEnvRequest) (*operations.GetProjectEnvResponse, error) {
+func (s *Projects) GetProjectEnv(ctx context.Context, request operations.GetProjectEnvRequest) (*operations.GetProjectEnvResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/projects/{idOrName}/env/{id}", request, nil)
 	if err != nil {
@@ -596,12 +596,12 @@ func (s *projects) GetProjectEnv(ctx context.Context, request operations.GetProj
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetProjectEnv200ApplicationJSON
+			var out operations.GetProjectEnvResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetProjectEnv200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -619,7 +619,7 @@ func (s *projects) GetProjectEnv(ctx context.Context, request operations.GetProj
 
 // GetProjects - Retrieve a list of projects
 // Allows to retrieve the list of projects of the authenticated user. The list will be paginated and the provided query parameters allow filtering the returned projects.
-func (s *projects) GetProjects(ctx context.Context, request operations.GetProjectsRequest) (*operations.GetProjectsResponse, error) {
+func (s *Projects) GetProjects(ctx context.Context, request operations.GetProjectsRequest) (*operations.GetProjectsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v9/projects"
 
@@ -662,12 +662,12 @@ func (s *projects) GetProjects(ctx context.Context, request operations.GetProjec
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetProjects200ApplicationJSON
+			var out operations.GetProjectsResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetProjects200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -683,7 +683,7 @@ func (s *projects) GetProjects(ctx context.Context, request operations.GetProjec
 
 // RemoveProjectDomain - Remove a domain from a project
 // Remove a domain from a project by passing the domain name and by specifying the project by either passing the project `id` or `name` in the URL.
-func (s *projects) RemoveProjectDomain(ctx context.Context, request operations.RemoveProjectDomainRequest) (*operations.RemoveProjectDomainResponse, error) {
+func (s *Projects) RemoveProjectDomain(ctx context.Context, request operations.RemoveProjectDomainRequest) (*operations.RemoveProjectDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/domains/{domain}", request, nil)
 	if err != nil {
@@ -729,12 +729,12 @@ func (s *projects) RemoveProjectDomain(ctx context.Context, request operations.R
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.RemoveProjectDomain200ApplicationJSON
+			var out operations.RemoveProjectDomainResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.RemoveProjectDomain200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -754,7 +754,7 @@ func (s *projects) RemoveProjectDomain(ctx context.Context, request operations.R
 
 // RemoveProjectEnv - Remove an environment variable
 // Delete a specific environment variable for a given project by passing the environment variable identifier and either passing the project `id` or `name` in the URL.
-func (s *projects) RemoveProjectEnv(ctx context.Context, request operations.RemoveProjectEnvRequest) (*operations.RemoveProjectEnvResponse, error) {
+func (s *Projects) RemoveProjectEnv(ctx context.Context, request operations.RemoveProjectEnvRequest) (*operations.RemoveProjectEnvResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/env/{id}", request, nil)
 	if err != nil {
@@ -800,12 +800,12 @@ func (s *projects) RemoveProjectEnv(ctx context.Context, request operations.Remo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.RemoveProjectEnv200ApplicationJSON
+			var out operations.RemoveProjectEnvResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.RemoveProjectEnv200ApplicationJSONOneOf = &out
+			res.OneOf = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -825,7 +825,7 @@ func (s *projects) RemoveProjectEnv(ctx context.Context, request operations.Remo
 
 // UpdateProject - Update an existing project
 // Update the fields of a project using either its `name` or `id`.
-func (s *projects) UpdateProject(ctx context.Context, request operations.UpdateProjectRequest) (*operations.UpdateProjectResponse, error) {
+func (s *Projects) UpdateProject(ctx context.Context, request operations.UpdateProjectRequest) (*operations.UpdateProjectResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}", request, nil)
 	if err != nil {
@@ -881,12 +881,12 @@ func (s *projects) UpdateProject(ctx context.Context, request operations.UpdateP
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.UpdateProject200ApplicationJSON
+			var out operations.UpdateProjectResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.UpdateProject200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -906,7 +906,7 @@ func (s *projects) UpdateProject(ctx context.Context, request operations.UpdateP
 
 // UpdateProjectDataCache - Update the data cache feature
 // Update the data cache feature on a project.
-func (s *projects) UpdateProjectDataCache(ctx context.Context, request operations.UpdateProjectDataCacheRequest) (*operations.UpdateProjectDataCacheResponse, error) {
+func (s *Projects) UpdateProjectDataCache(ctx context.Context, request operations.UpdateProjectDataCacheRequest) (*operations.UpdateProjectDataCacheResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/data-cache/projects/{projectId}", request, nil)
 	if err != nil {
@@ -962,12 +962,12 @@ func (s *projects) UpdateProjectDataCache(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.UpdateProjectDataCache200ApplicationJSON
+			var out operations.UpdateProjectDataCacheResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.UpdateProjectDataCache200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -985,7 +985,7 @@ func (s *projects) UpdateProjectDataCache(ctx context.Context, request operation
 
 // UpdateProjectDomain - Update a project domain
 // Update a project domain's configuration, including the name, git branch and redirect of the domain.
-func (s *projects) UpdateProjectDomain(ctx context.Context, request operations.UpdateProjectDomainRequest) (*operations.UpdateProjectDomainResponse, error) {
+func (s *Projects) UpdateProjectDomain(ctx context.Context, request operations.UpdateProjectDomainRequest) (*operations.UpdateProjectDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/domains/{domain}", request, nil)
 	if err != nil {
@@ -1041,12 +1041,12 @@ func (s *projects) UpdateProjectDomain(ctx context.Context, request operations.U
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.UpdateProjectDomain200ApplicationJSON
+			var out operations.UpdateProjectDomainResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.UpdateProjectDomain200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -1066,7 +1066,7 @@ func (s *projects) UpdateProjectDomain(ctx context.Context, request operations.U
 
 // VerifyProjectDomain - Verify project domain
 // Attempts to verify a project domain with `verified = false` by checking the correctness of the project domain's `verification` challenge.
-func (s *projects) VerifyProjectDomain(ctx context.Context, request operations.VerifyProjectDomainRequest) (*operations.VerifyProjectDomainResponse, error) {
+func (s *Projects) VerifyProjectDomain(ctx context.Context, request operations.VerifyProjectDomainRequest) (*operations.VerifyProjectDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v9/projects/{idOrName}/domains/{domain}/verify", request, nil)
 	if err != nil {
@@ -1112,12 +1112,12 @@ func (s *projects) VerifyProjectDomain(ctx context.Context, request operations.V
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.VerifyProjectDomain200ApplicationJSON
+			var out operations.VerifyProjectDomainResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.VerifyProjectDomain200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

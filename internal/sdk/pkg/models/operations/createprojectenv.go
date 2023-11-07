@@ -10,19 +10,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type CreateProjectEnvRequestBody2Target string
+type CreateProjectEnvProjectsTarget string
 
 const (
-	CreateProjectEnvRequestBody2TargetProduction  CreateProjectEnvRequestBody2Target = "production"
-	CreateProjectEnvRequestBody2TargetPreview     CreateProjectEnvRequestBody2Target = "preview"
-	CreateProjectEnvRequestBody2TargetDevelopment CreateProjectEnvRequestBody2Target = "development"
+	CreateProjectEnvProjectsTargetProduction  CreateProjectEnvProjectsTarget = "production"
+	CreateProjectEnvProjectsTargetPreview     CreateProjectEnvProjectsTarget = "preview"
+	CreateProjectEnvProjectsTargetDevelopment CreateProjectEnvProjectsTarget = "development"
 )
 
-func (e CreateProjectEnvRequestBody2Target) ToPointer() *CreateProjectEnvRequestBody2Target {
+func (e CreateProjectEnvProjectsTarget) ToPointer() *CreateProjectEnvProjectsTarget {
 	return &e
 }
 
-func (e *CreateProjectEnvRequestBody2Target) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -33,29 +33,29 @@ func (e *CreateProjectEnvRequestBody2Target) UnmarshalJSON(data []byte) error {
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnvRequestBody2Target(v)
+		*e = CreateProjectEnvProjectsTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnvRequestBody2Target: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsTarget: %v", v)
 	}
 }
 
-// CreateProjectEnvRequestBody2Type - The type of environment variable
-type CreateProjectEnvRequestBody2Type string
+// CreateProjectEnvProjectsType - The type of environment variable
+type CreateProjectEnvProjectsType string
 
 const (
-	CreateProjectEnvRequestBody2TypeSystem    CreateProjectEnvRequestBody2Type = "system"
-	CreateProjectEnvRequestBody2TypeSecret    CreateProjectEnvRequestBody2Type = "secret"
-	CreateProjectEnvRequestBody2TypeEncrypted CreateProjectEnvRequestBody2Type = "encrypted"
-	CreateProjectEnvRequestBody2TypePlain     CreateProjectEnvRequestBody2Type = "plain"
-	CreateProjectEnvRequestBody2TypeSensitive CreateProjectEnvRequestBody2Type = "sensitive"
+	CreateProjectEnvProjectsTypeSystem    CreateProjectEnvProjectsType = "system"
+	CreateProjectEnvProjectsTypeSecret    CreateProjectEnvProjectsType = "secret"
+	CreateProjectEnvProjectsTypeEncrypted CreateProjectEnvProjectsType = "encrypted"
+	CreateProjectEnvProjectsTypePlain     CreateProjectEnvProjectsType = "plain"
+	CreateProjectEnvProjectsTypeSensitive CreateProjectEnvProjectsType = "sensitive"
 )
 
-func (e CreateProjectEnvRequestBody2Type) ToPointer() *CreateProjectEnvRequestBody2Type {
+func (e CreateProjectEnvProjectsType) ToPointer() *CreateProjectEnvProjectsType {
 	return &e
 }
 
-func (e *CreateProjectEnvRequestBody2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -70,74 +70,74 @@ func (e *CreateProjectEnvRequestBody2Type) UnmarshalJSON(data []byte) error {
 	case "plain":
 		fallthrough
 	case "sensitive":
-		*e = CreateProjectEnvRequestBody2Type(v)
+		*e = CreateProjectEnvProjectsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnvRequestBody2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsType: %v", v)
 	}
 }
 
-type CreateProjectEnvRequestBody2 struct {
+type CreateProjectEnv2 struct {
 	// The git branch of the environment variable
 	GitBranch *string `json:"gitBranch,omitempty"`
 	// The name of the environment variable
 	Key string `json:"key"`
 	// The target environment of the environment variable
-	Target []CreateProjectEnvRequestBody2Target `json:"target"`
+	Target []CreateProjectEnvProjectsTarget `json:"target"`
 	// The type of environment variable
-	Type CreateProjectEnvRequestBody2Type `json:"type"`
+	Type CreateProjectEnvProjectsType `json:"type"`
 	// The value of the environment variable
 	Value string `json:"value"`
 }
 
-func (o *CreateProjectEnvRequestBody2) GetGitBranch() *string {
+func (o *CreateProjectEnv2) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *CreateProjectEnvRequestBody2) GetKey() string {
+func (o *CreateProjectEnv2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateProjectEnvRequestBody2) GetTarget() []CreateProjectEnvRequestBody2Target {
+func (o *CreateProjectEnv2) GetTarget() []CreateProjectEnvProjectsTarget {
 	if o == nil {
-		return []CreateProjectEnvRequestBody2Target{}
+		return []CreateProjectEnvProjectsTarget{}
 	}
 	return o.Target
 }
 
-func (o *CreateProjectEnvRequestBody2) GetType() CreateProjectEnvRequestBody2Type {
+func (o *CreateProjectEnv2) GetType() CreateProjectEnvProjectsType {
 	if o == nil {
-		return CreateProjectEnvRequestBody2Type("")
+		return CreateProjectEnvProjectsType("")
 	}
 	return o.Type
 }
 
-func (o *CreateProjectEnvRequestBody2) GetValue() string {
+func (o *CreateProjectEnv2) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateProjectEnvRequestBody1Target string
+type CreateProjectEnvTarget string
 
 const (
-	CreateProjectEnvRequestBody1TargetProduction  CreateProjectEnvRequestBody1Target = "production"
-	CreateProjectEnvRequestBody1TargetPreview     CreateProjectEnvRequestBody1Target = "preview"
-	CreateProjectEnvRequestBody1TargetDevelopment CreateProjectEnvRequestBody1Target = "development"
+	CreateProjectEnvTargetProduction  CreateProjectEnvTarget = "production"
+	CreateProjectEnvTargetPreview     CreateProjectEnvTarget = "preview"
+	CreateProjectEnvTargetDevelopment CreateProjectEnvTarget = "development"
 )
 
-func (e CreateProjectEnvRequestBody1Target) ToPointer() *CreateProjectEnvRequestBody1Target {
+func (e CreateProjectEnvTarget) ToPointer() *CreateProjectEnvTarget {
 	return &e
 }
 
-func (e *CreateProjectEnvRequestBody1Target) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -148,29 +148,29 @@ func (e *CreateProjectEnvRequestBody1Target) UnmarshalJSON(data []byte) error {
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnvRequestBody1Target(v)
+		*e = CreateProjectEnvTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnvRequestBody1Target: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvTarget: %v", v)
 	}
 }
 
-// CreateProjectEnvRequestBody1Type - The type of environment variable
-type CreateProjectEnvRequestBody1Type string
+// CreateProjectEnvType - The type of environment variable
+type CreateProjectEnvType string
 
 const (
-	CreateProjectEnvRequestBody1TypeSystem    CreateProjectEnvRequestBody1Type = "system"
-	CreateProjectEnvRequestBody1TypeSecret    CreateProjectEnvRequestBody1Type = "secret"
-	CreateProjectEnvRequestBody1TypeEncrypted CreateProjectEnvRequestBody1Type = "encrypted"
-	CreateProjectEnvRequestBody1TypePlain     CreateProjectEnvRequestBody1Type = "plain"
-	CreateProjectEnvRequestBody1TypeSensitive CreateProjectEnvRequestBody1Type = "sensitive"
+	CreateProjectEnvTypeSystem    CreateProjectEnvType = "system"
+	CreateProjectEnvTypeSecret    CreateProjectEnvType = "secret"
+	CreateProjectEnvTypeEncrypted CreateProjectEnvType = "encrypted"
+	CreateProjectEnvTypePlain     CreateProjectEnvType = "plain"
+	CreateProjectEnvTypeSensitive CreateProjectEnvType = "sensitive"
 )
 
-func (e CreateProjectEnvRequestBody1Type) ToPointer() *CreateProjectEnvRequestBody1Type {
+func (e CreateProjectEnvType) ToPointer() *CreateProjectEnvType {
 	return &e
 }
 
-func (e *CreateProjectEnvRequestBody1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -185,55 +185,55 @@ func (e *CreateProjectEnvRequestBody1Type) UnmarshalJSON(data []byte) error {
 	case "plain":
 		fallthrough
 	case "sensitive":
-		*e = CreateProjectEnvRequestBody1Type(v)
+		*e = CreateProjectEnvType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnvRequestBody1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvType: %v", v)
 	}
 }
 
-type CreateProjectEnvRequestBody1 struct {
+type CreateProjectEnv1 struct {
 	// The git branch of the environment variable
 	GitBranch *string `json:"gitBranch,omitempty"`
 	// The name of the environment variable
 	Key string `json:"key"`
 	// The target environment of the environment variable
-	Target []CreateProjectEnvRequestBody1Target `json:"target"`
+	Target []CreateProjectEnvTarget `json:"target"`
 	// The type of environment variable
-	Type CreateProjectEnvRequestBody1Type `json:"type"`
+	Type CreateProjectEnvType `json:"type"`
 	// The value of the environment variable
 	Value string `json:"value"`
 }
 
-func (o *CreateProjectEnvRequestBody1) GetGitBranch() *string {
+func (o *CreateProjectEnv1) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *CreateProjectEnvRequestBody1) GetKey() string {
+func (o *CreateProjectEnv1) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateProjectEnvRequestBody1) GetTarget() []CreateProjectEnvRequestBody1Target {
+func (o *CreateProjectEnv1) GetTarget() []CreateProjectEnvTarget {
 	if o == nil {
-		return []CreateProjectEnvRequestBody1Target{}
+		return []CreateProjectEnvTarget{}
 	}
 	return o.Target
 }
 
-func (o *CreateProjectEnvRequestBody1) GetType() CreateProjectEnvRequestBody1Type {
+func (o *CreateProjectEnv1) GetType() CreateProjectEnvType {
 	if o == nil {
-		return CreateProjectEnvRequestBody1Type("")
+		return CreateProjectEnvType("")
 	}
 	return o.Type
 }
 
-func (o *CreateProjectEnvRequestBody1) GetValue() string {
+func (o *CreateProjectEnv1) GetValue() string {
 	if o == nil {
 		return ""
 	}
@@ -243,48 +243,48 @@ func (o *CreateProjectEnvRequestBody1) GetValue() string {
 type CreateProjectEnvRequestBodyType string
 
 const (
-	CreateProjectEnvRequestBodyTypeCreateProjectEnvRequestBody1        CreateProjectEnvRequestBodyType = "createProjectEnv_requestBody_1"
-	CreateProjectEnvRequestBodyTypeArrayOfcreateProjectEnvRequestBody2 CreateProjectEnvRequestBodyType = "arrayOfcreateProjectEnv_requestBody_2"
+	CreateProjectEnvRequestBodyTypeCreateProjectEnv1        CreateProjectEnvRequestBodyType = "createProjectEnv_1"
+	CreateProjectEnvRequestBodyTypeArrayOfcreateProjectEnv2 CreateProjectEnvRequestBodyType = "arrayOfcreateProjectEnv_2"
 )
 
 type CreateProjectEnvRequestBody struct {
-	CreateProjectEnvRequestBody1        *CreateProjectEnvRequestBody1
-	ArrayOfcreateProjectEnvRequestBody2 []CreateProjectEnvRequestBody2
+	CreateProjectEnv1        *CreateProjectEnv1
+	ArrayOfcreateProjectEnv2 []CreateProjectEnv2
 
 	Type CreateProjectEnvRequestBodyType
 }
 
-func CreateCreateProjectEnvRequestBodyCreateProjectEnvRequestBody1(createProjectEnvRequestBody1 CreateProjectEnvRequestBody1) CreateProjectEnvRequestBody {
-	typ := CreateProjectEnvRequestBodyTypeCreateProjectEnvRequestBody1
+func CreateCreateProjectEnvRequestBodyCreateProjectEnv1(createProjectEnv1 CreateProjectEnv1) CreateProjectEnvRequestBody {
+	typ := CreateProjectEnvRequestBodyTypeCreateProjectEnv1
 
 	return CreateProjectEnvRequestBody{
-		CreateProjectEnvRequestBody1: &createProjectEnvRequestBody1,
-		Type:                         typ,
+		CreateProjectEnv1: &createProjectEnv1,
+		Type:              typ,
 	}
 }
 
-func CreateCreateProjectEnvRequestBodyArrayOfcreateProjectEnvRequestBody2(arrayOfcreateProjectEnvRequestBody2 []CreateProjectEnvRequestBody2) CreateProjectEnvRequestBody {
-	typ := CreateProjectEnvRequestBodyTypeArrayOfcreateProjectEnvRequestBody2
+func CreateCreateProjectEnvRequestBodyArrayOfcreateProjectEnv2(arrayOfcreateProjectEnv2 []CreateProjectEnv2) CreateProjectEnvRequestBody {
+	typ := CreateProjectEnvRequestBodyTypeArrayOfcreateProjectEnv2
 
 	return CreateProjectEnvRequestBody{
-		ArrayOfcreateProjectEnvRequestBody2: arrayOfcreateProjectEnvRequestBody2,
-		Type:                                typ,
+		ArrayOfcreateProjectEnv2: arrayOfcreateProjectEnv2,
+		Type:                     typ,
 	}
 }
 
 func (u *CreateProjectEnvRequestBody) UnmarshalJSON(data []byte) error {
 
-	createProjectEnvRequestBody1 := new(CreateProjectEnvRequestBody1)
-	if err := utils.UnmarshalJSON(data, &createProjectEnvRequestBody1, "", true, true); err == nil {
-		u.CreateProjectEnvRequestBody1 = createProjectEnvRequestBody1
-		u.Type = CreateProjectEnvRequestBodyTypeCreateProjectEnvRequestBody1
+	createProjectEnv1 := new(CreateProjectEnv1)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv1, "", true, true); err == nil {
+		u.CreateProjectEnv1 = createProjectEnv1
+		u.Type = CreateProjectEnvRequestBodyTypeCreateProjectEnv1
 		return nil
 	}
 
-	arrayOfcreateProjectEnvRequestBody2 := []CreateProjectEnvRequestBody2{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvRequestBody2, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnvRequestBody2 = arrayOfcreateProjectEnvRequestBody2
-		u.Type = CreateProjectEnvRequestBodyTypeArrayOfcreateProjectEnvRequestBody2
+	arrayOfcreateProjectEnv2 := []CreateProjectEnv2{}
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv2, "", true, true); err == nil {
+		u.ArrayOfcreateProjectEnv2 = arrayOfcreateProjectEnv2
+		u.Type = CreateProjectEnvRequestBodyTypeArrayOfcreateProjectEnv2
 		return nil
 	}
 
@@ -292,12 +292,12 @@ func (u *CreateProjectEnvRequestBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateProjectEnvRequestBody) MarshalJSON() ([]byte, error) {
-	if u.CreateProjectEnvRequestBody1 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnvRequestBody1, "", true)
+	if u.CreateProjectEnv1 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnv1, "", true)
 	}
 
-	if u.ArrayOfcreateProjectEnvRequestBody2 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvRequestBody2, "", true)
+	if u.ArrayOfcreateProjectEnv2 != nil {
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -341,818 +341,818 @@ func (o *CreateProjectEnvRequest) GetUpsert() *string {
 	return o.Upsert
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint12Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint12TypePostgresDatabase CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type = "postgres-database"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint12TypePostgresDatabase CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint12Type = "postgres-database"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint12Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint12Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint12Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-database":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint12Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint12Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint12 struct {
-	StoreID string                                                      `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type `json:"type"`
+type CreateProjectEnvProjects12 struct {
+	StoreID string                                                                                  `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint12Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint12) GetStoreID() string {
+func (o *CreateProjectEnvProjects12) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint12) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type {
+func (o *CreateProjectEnvProjects12) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint12Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint12Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint12Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHintType string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint11TypePostgresPassword CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type = "postgres-password"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHintTypePostgresPassword CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHintType = "postgres-password"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHintType) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHintType {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHintType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-password":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHintType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHintType: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint11 struct {
-	StoreID string                                                      `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type `json:"type"`
+type CreateProjectEnvProjects11 struct {
+	StoreID string                                                                                `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHintType `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint11) GetStoreID() string {
+func (o *CreateProjectEnvProjects11) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint11) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type {
+func (o *CreateProjectEnvProjects11) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHintType {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint11Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHintType("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint10TypePostgresHost CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type = "postgres-host"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2TypePostgresHost CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2Type = "postgres-host"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-host":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint10 struct {
-	StoreID string                                                      `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type `json:"type"`
+type CreateProjectEnvProjects10 struct {
+	StoreID string                                                                     `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint10) GetStoreID() string {
+func (o *CreateProjectEnvProjects10) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint10) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type {
+func (o *CreateProjectEnvProjects10) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint10Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint9Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint9TypePostgresUser CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type = "postgres-user"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint9TypePostgresUser CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint9Type = "postgres-user"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint9Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint9Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-user":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint9Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint9Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint9 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type `json:"type"`
+type CreateProjectEnvProjects9 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint9Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint9) GetStoreID() string {
+func (o *CreateProjectEnvProjects9) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint9) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type {
+func (o *CreateProjectEnvProjects9) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint9Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint9Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint9Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint8Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint8TypePostgresPrismaURL CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type = "postgres-prisma-url"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint8TypePostgresPrismaURL CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint8Type = "postgres-prisma-url"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint8Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint8Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-prisma-url":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint8Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint8Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint8 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type `json:"type"`
+type CreateProjectEnvProjects8 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint8Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint8) GetStoreID() string {
+func (o *CreateProjectEnvProjects8) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint8) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type {
+func (o *CreateProjectEnvProjects8) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint8Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint8Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint8Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint7Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint7TypePostgresURLNonPooling CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type = "postgres-url-non-pooling"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint7TypePostgresURLNonPooling CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint7Type = "postgres-url-non-pooling"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint7Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint7Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url-non-pooling":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint7Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint7Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint7 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type `json:"type"`
+type CreateProjectEnvProjects7 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint7Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint7) GetStoreID() string {
+func (o *CreateProjectEnvProjects7) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint7) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type {
+func (o *CreateProjectEnvProjects7) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint7Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint7Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint7Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint6Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint6TypePostgresURL CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type = "postgres-url"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint6TypePostgresURL CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint6Type = "postgres-url"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint6Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint6Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint6Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint6Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint6 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type `json:"type"`
+type CreateProjectEnvProjects6 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint6Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint6) GetStoreID() string {
+func (o *CreateProjectEnvProjects6) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint6) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type {
+func (o *CreateProjectEnvProjects6) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint6Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint6Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint6Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint5Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint5TypeBlobReadWriteToken CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type = "blob-read-write-token"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint5TypeBlobReadWriteToken CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint5Type = "blob-read-write-token"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint5Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint5Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "blob-read-write-token":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint5Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint5Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint5 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type `json:"type"`
+type CreateProjectEnvProjects5 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint5Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint5) GetStoreID() string {
+func (o *CreateProjectEnvProjects5) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint5) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type {
+func (o *CreateProjectEnvProjects5) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint5Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint5Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint5Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint4Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint4TypeRedisRestAPIReadOnlyToken CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type = "redis-rest-api-read-only-token"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint4TypeRedisRestAPIReadOnlyToken CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint4Type = "redis-rest-api-read-only-token"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint4Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint4Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint4Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-read-only-token":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint4Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint4Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint4 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type `json:"type"`
+type CreateProjectEnvProjects4 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint4Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint4) GetStoreID() string {
+func (o *CreateProjectEnvProjects4) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint4) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type {
+func (o *CreateProjectEnvProjects4) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint4Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint4Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint4Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint3Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint3TypeRedisRestAPIToken CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type = "redis-rest-api-token"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint3TypeRedisRestAPIToken CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint3Type = "redis-rest-api-token"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint3Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint3Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-token":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint3Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint3Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint3 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type `json:"type"`
+type CreateProjectEnvProjects3 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint3Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint3) GetStoreID() string {
+func (o *CreateProjectEnvProjects3) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint3) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type {
+func (o *CreateProjectEnvProjects3) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint3Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint3Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint3Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint2Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint2TypeRedisRestAPIURL CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type = "redis-rest-api-url"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint2TypeRedisRestAPIURL CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint2Type = "redis-rest-api-url"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint2Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint2Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-url":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint2Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint2 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type `json:"type"`
+type CreateProjectEnvProjectsResponse201ApplicationJSON2 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint2Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint2) GetStoreID() string {
+func (o *CreateProjectEnvProjectsResponse201ApplicationJSON2) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint2) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type {
+func (o *CreateProjectEnvProjectsResponse201ApplicationJSON2) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint2Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint2Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint2Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint1Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint1TypeRedisURL CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type = "redis-url"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint1TypeRedisURL CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint1Type = "redis-url"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint1Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint1Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-url":
-		*e = CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint1Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint1 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type `json:"type"`
+type CreateProjectEnvProjectsResponse201ApplicationJSON1 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint1Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint1) GetStoreID() string {
+func (o *CreateProjectEnvProjectsResponse201ApplicationJSON1) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2ContentHint1) GetType() CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type {
+func (o *CreateProjectEnvProjectsResponse201ApplicationJSON1) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint1Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated2ContentHint1Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated2ContentHint1Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHintType string
+type CreateProjectEnvProjectsContentHintType string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint1  CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_1"
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint2  CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_2"
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint3  CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_3"
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint4  CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_4"
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint5  CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_5"
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint6  CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_6"
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint7  CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_7"
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint8  CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_8"
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint9  CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_9"
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint10 CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_10"
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint11 CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_11"
-	CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint12 CreateProjectEnv201ApplicationJSONCreated2ContentHintType = "createProjectEnv_201ApplicationJSON_created_2_contentHint_12"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjectsResponse201ApplicationJSON1 CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_response_201_ApplicationJSON_1"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjectsResponse201ApplicationJSON2 CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_response_201_ApplicationJSON_2"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects3                           CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_3"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects4                           CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_4"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects5                           CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_5"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects6                           CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_6"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects7                           CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_7"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects8                           CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_8"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects9                           CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_9"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects10                          CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_10"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects11                          CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_11"
+	CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects12                          CreateProjectEnvProjectsContentHintType = "createProjectEnv_projects_12"
 )
 
-type CreateProjectEnv201ApplicationJSONCreated2ContentHint struct {
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint1  *CreateProjectEnv201ApplicationJSONCreated2ContentHint1
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint2  *CreateProjectEnv201ApplicationJSONCreated2ContentHint2
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint3  *CreateProjectEnv201ApplicationJSONCreated2ContentHint3
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint4  *CreateProjectEnv201ApplicationJSONCreated2ContentHint4
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint5  *CreateProjectEnv201ApplicationJSONCreated2ContentHint5
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint6  *CreateProjectEnv201ApplicationJSONCreated2ContentHint6
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint7  *CreateProjectEnv201ApplicationJSONCreated2ContentHint7
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint8  *CreateProjectEnv201ApplicationJSONCreated2ContentHint8
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint9  *CreateProjectEnv201ApplicationJSONCreated2ContentHint9
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint10 *CreateProjectEnv201ApplicationJSONCreated2ContentHint10
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint11 *CreateProjectEnv201ApplicationJSONCreated2ContentHint11
-	CreateProjectEnv201ApplicationJSONCreated2ContentHint12 *CreateProjectEnv201ApplicationJSONCreated2ContentHint12
+type CreateProjectEnvProjectsContentHint struct {
+	CreateProjectEnvProjectsResponse201ApplicationJSON1 *CreateProjectEnvProjectsResponse201ApplicationJSON1
+	CreateProjectEnvProjectsResponse201ApplicationJSON2 *CreateProjectEnvProjectsResponse201ApplicationJSON2
+	CreateProjectEnvProjects3                           *CreateProjectEnvProjects3
+	CreateProjectEnvProjects4                           *CreateProjectEnvProjects4
+	CreateProjectEnvProjects5                           *CreateProjectEnvProjects5
+	CreateProjectEnvProjects6                           *CreateProjectEnvProjects6
+	CreateProjectEnvProjects7                           *CreateProjectEnvProjects7
+	CreateProjectEnvProjects8                           *CreateProjectEnvProjects8
+	CreateProjectEnvProjects9                           *CreateProjectEnvProjects9
+	CreateProjectEnvProjects10                          *CreateProjectEnvProjects10
+	CreateProjectEnvProjects11                          *CreateProjectEnvProjects11
+	CreateProjectEnvProjects12                          *CreateProjectEnvProjects12
 
-	Type CreateProjectEnv201ApplicationJSONCreated2ContentHintType
+	Type CreateProjectEnvProjectsContentHintType
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint1(createProjectEnv201ApplicationJSONCreated2ContentHint1 CreateProjectEnv201ApplicationJSONCreated2ContentHint1) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint1
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjectsResponse201ApplicationJSON1(createProjectEnvProjectsResponse201ApplicationJSON1 CreateProjectEnvProjectsResponse201ApplicationJSON1) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjectsResponse201ApplicationJSON1
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint1: &createProjectEnv201ApplicationJSONCreated2ContentHint1,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjectsResponse201ApplicationJSON1: &createProjectEnvProjectsResponse201ApplicationJSON1,
 		Type: typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint2(createProjectEnv201ApplicationJSONCreated2ContentHint2 CreateProjectEnv201ApplicationJSONCreated2ContentHint2) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint2
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjectsResponse201ApplicationJSON2(createProjectEnvProjectsResponse201ApplicationJSON2 CreateProjectEnvProjectsResponse201ApplicationJSON2) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjectsResponse201ApplicationJSON2
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint2: &createProjectEnv201ApplicationJSONCreated2ContentHint2,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjectsResponse201ApplicationJSON2: &createProjectEnvProjectsResponse201ApplicationJSON2,
 		Type: typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint3(createProjectEnv201ApplicationJSONCreated2ContentHint3 CreateProjectEnv201ApplicationJSONCreated2ContentHint3) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint3
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjects3(createProjectEnvProjects3 CreateProjectEnvProjects3) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects3
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint3: &createProjectEnv201ApplicationJSONCreated2ContentHint3,
-		Type: typ,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjects3: &createProjectEnvProjects3,
+		Type:                      typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint4(createProjectEnv201ApplicationJSONCreated2ContentHint4 CreateProjectEnv201ApplicationJSONCreated2ContentHint4) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint4
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjects4(createProjectEnvProjects4 CreateProjectEnvProjects4) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects4
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint4: &createProjectEnv201ApplicationJSONCreated2ContentHint4,
-		Type: typ,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjects4: &createProjectEnvProjects4,
+		Type:                      typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint5(createProjectEnv201ApplicationJSONCreated2ContentHint5 CreateProjectEnv201ApplicationJSONCreated2ContentHint5) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint5
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjects5(createProjectEnvProjects5 CreateProjectEnvProjects5) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects5
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint5: &createProjectEnv201ApplicationJSONCreated2ContentHint5,
-		Type: typ,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjects5: &createProjectEnvProjects5,
+		Type:                      typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint6(createProjectEnv201ApplicationJSONCreated2ContentHint6 CreateProjectEnv201ApplicationJSONCreated2ContentHint6) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint6
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjects6(createProjectEnvProjects6 CreateProjectEnvProjects6) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects6
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint6: &createProjectEnv201ApplicationJSONCreated2ContentHint6,
-		Type: typ,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjects6: &createProjectEnvProjects6,
+		Type:                      typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint7(createProjectEnv201ApplicationJSONCreated2ContentHint7 CreateProjectEnv201ApplicationJSONCreated2ContentHint7) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint7
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjects7(createProjectEnvProjects7 CreateProjectEnvProjects7) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects7
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint7: &createProjectEnv201ApplicationJSONCreated2ContentHint7,
-		Type: typ,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjects7: &createProjectEnvProjects7,
+		Type:                      typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint8(createProjectEnv201ApplicationJSONCreated2ContentHint8 CreateProjectEnv201ApplicationJSONCreated2ContentHint8) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint8
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjects8(createProjectEnvProjects8 CreateProjectEnvProjects8) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects8
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint8: &createProjectEnv201ApplicationJSONCreated2ContentHint8,
-		Type: typ,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjects8: &createProjectEnvProjects8,
+		Type:                      typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint9(createProjectEnv201ApplicationJSONCreated2ContentHint9 CreateProjectEnv201ApplicationJSONCreated2ContentHint9) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint9
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjects9(createProjectEnvProjects9 CreateProjectEnvProjects9) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects9
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint9: &createProjectEnv201ApplicationJSONCreated2ContentHint9,
-		Type: typ,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjects9: &createProjectEnvProjects9,
+		Type:                      typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint10(createProjectEnv201ApplicationJSONCreated2ContentHint10 CreateProjectEnv201ApplicationJSONCreated2ContentHint10) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint10
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjects10(createProjectEnvProjects10 CreateProjectEnvProjects10) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects10
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint10: &createProjectEnv201ApplicationJSONCreated2ContentHint10,
-		Type: typ,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjects10: &createProjectEnvProjects10,
+		Type:                       typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint11(createProjectEnv201ApplicationJSONCreated2ContentHint11 CreateProjectEnv201ApplicationJSONCreated2ContentHint11) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint11
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjects11(createProjectEnvProjects11 CreateProjectEnvProjects11) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects11
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint11: &createProjectEnv201ApplicationJSONCreated2ContentHint11,
-		Type: typ,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjects11: &createProjectEnvProjects11,
+		Type:                       typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2ContentHintCreateProjectEnv201ApplicationJSONCreated2ContentHint12(createProjectEnv201ApplicationJSONCreated2ContentHint12 CreateProjectEnv201ApplicationJSONCreated2ContentHint12) CreateProjectEnv201ApplicationJSONCreated2ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint12
+func CreateCreateProjectEnvProjectsContentHintCreateProjectEnvProjects12(createProjectEnvProjects12 CreateProjectEnvProjects12) CreateProjectEnvProjectsContentHint {
+	typ := CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects12
 
-	return CreateProjectEnv201ApplicationJSONCreated2ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated2ContentHint12: &createProjectEnv201ApplicationJSONCreated2ContentHint12,
-		Type: typ,
+	return CreateProjectEnvProjectsContentHint{
+		CreateProjectEnvProjects12: &createProjectEnvProjects12,
+		Type:                       typ,
 	}
 }
 
-func (u *CreateProjectEnv201ApplicationJSONCreated2ContentHint) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectEnvProjectsContentHint) UnmarshalJSON(data []byte) error {
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint1 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint1)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint1, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint1 = createProjectEnv201ApplicationJSONCreated2ContentHint1
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint1
+	createProjectEnvProjectsResponse201ApplicationJSON1 := new(CreateProjectEnvProjectsResponse201ApplicationJSON1)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjectsResponse201ApplicationJSON1, "", true, true); err == nil {
+		u.CreateProjectEnvProjectsResponse201ApplicationJSON1 = createProjectEnvProjectsResponse201ApplicationJSON1
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjectsResponse201ApplicationJSON1
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint2 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint2)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint2, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint2 = createProjectEnv201ApplicationJSONCreated2ContentHint2
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint2
+	createProjectEnvProjectsResponse201ApplicationJSON2 := new(CreateProjectEnvProjectsResponse201ApplicationJSON2)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjectsResponse201ApplicationJSON2, "", true, true); err == nil {
+		u.CreateProjectEnvProjectsResponse201ApplicationJSON2 = createProjectEnvProjectsResponse201ApplicationJSON2
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjectsResponse201ApplicationJSON2
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint3 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint3)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint3, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint3 = createProjectEnv201ApplicationJSONCreated2ContentHint3
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint3
+	createProjectEnvProjects3 := new(CreateProjectEnvProjects3)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjects3, "", true, true); err == nil {
+		u.CreateProjectEnvProjects3 = createProjectEnvProjects3
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects3
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint4 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint4)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint4, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint4 = createProjectEnv201ApplicationJSONCreated2ContentHint4
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint4
+	createProjectEnvProjects4 := new(CreateProjectEnvProjects4)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjects4, "", true, true); err == nil {
+		u.CreateProjectEnvProjects4 = createProjectEnvProjects4
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects4
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint5 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint5)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint5, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint5 = createProjectEnv201ApplicationJSONCreated2ContentHint5
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint5
+	createProjectEnvProjects5 := new(CreateProjectEnvProjects5)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjects5, "", true, true); err == nil {
+		u.CreateProjectEnvProjects5 = createProjectEnvProjects5
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects5
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint6 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint6)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint6, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint6 = createProjectEnv201ApplicationJSONCreated2ContentHint6
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint6
+	createProjectEnvProjects6 := new(CreateProjectEnvProjects6)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjects6, "", true, true); err == nil {
+		u.CreateProjectEnvProjects6 = createProjectEnvProjects6
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects6
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint7 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint7)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint7, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint7 = createProjectEnv201ApplicationJSONCreated2ContentHint7
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint7
+	createProjectEnvProjects7 := new(CreateProjectEnvProjects7)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjects7, "", true, true); err == nil {
+		u.CreateProjectEnvProjects7 = createProjectEnvProjects7
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects7
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint8 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint8)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint8, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint8 = createProjectEnv201ApplicationJSONCreated2ContentHint8
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint8
+	createProjectEnvProjects8 := new(CreateProjectEnvProjects8)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjects8, "", true, true); err == nil {
+		u.CreateProjectEnvProjects8 = createProjectEnvProjects8
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects8
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint9 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint9)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint9, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint9 = createProjectEnv201ApplicationJSONCreated2ContentHint9
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint9
+	createProjectEnvProjects9 := new(CreateProjectEnvProjects9)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjects9, "", true, true); err == nil {
+		u.CreateProjectEnvProjects9 = createProjectEnvProjects9
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects9
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint10 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint10)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint10, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint10 = createProjectEnv201ApplicationJSONCreated2ContentHint10
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint10
+	createProjectEnvProjects10 := new(CreateProjectEnvProjects10)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjects10, "", true, true); err == nil {
+		u.CreateProjectEnvProjects10 = createProjectEnvProjects10
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects10
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint11 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint11)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint11, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint11 = createProjectEnv201ApplicationJSONCreated2ContentHint11
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint11
+	createProjectEnvProjects11 := new(CreateProjectEnvProjects11)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjects11, "", true, true); err == nil {
+		u.CreateProjectEnvProjects11 = createProjectEnvProjects11
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects11
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2ContentHint12 := new(CreateProjectEnv201ApplicationJSONCreated2ContentHint12)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2ContentHint12, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2ContentHint12 = createProjectEnv201ApplicationJSONCreated2ContentHint12
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2ContentHintTypeCreateProjectEnv201ApplicationJSONCreated2ContentHint12
+	createProjectEnvProjects12 := new(CreateProjectEnvProjects12)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjects12, "", true, true); err == nil {
+		u.CreateProjectEnvProjects12 = createProjectEnvProjects12
+		u.Type = CreateProjectEnvProjectsContentHintTypeCreateProjectEnvProjects12
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProjectEnv201ApplicationJSONCreated2ContentHint) MarshalJSON() ([]byte, error) {
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint1 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint1, "", true)
+func (u CreateProjectEnvProjectsContentHint) MarshalJSON() ([]byte, error) {
+	if u.CreateProjectEnvProjectsResponse201ApplicationJSON1 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjectsResponse201ApplicationJSON1, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint2 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint2, "", true)
+	if u.CreateProjectEnvProjectsResponse201ApplicationJSON2 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjectsResponse201ApplicationJSON2, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint3 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint3, "", true)
+	if u.CreateProjectEnvProjects3 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjects3, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint4 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint4, "", true)
+	if u.CreateProjectEnvProjects4 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjects4, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint5 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint5, "", true)
+	if u.CreateProjectEnvProjects5 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjects5, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint6 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint6, "", true)
+	if u.CreateProjectEnvProjects6 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjects6, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint7 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint7, "", true)
+	if u.CreateProjectEnvProjects7 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjects7, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint8 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint8, "", true)
+	if u.CreateProjectEnvProjects8 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjects8, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint9 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint9, "", true)
+	if u.CreateProjectEnvProjects9 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjects9, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint10 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint10, "", true)
+	if u.CreateProjectEnvProjects10 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjects10, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint11 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint11, "", true)
+	if u.CreateProjectEnvProjects11 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjects11, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2ContentHint12 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2ContentHint12, "", true)
+	if u.CreateProjectEnvProjects12 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjects12, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2Target2 string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2 string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2Target2Production  CreateProjectEnv201ApplicationJSONCreated2Target2 = "production"
-	CreateProjectEnv201ApplicationJSONCreated2Target2Preview     CreateProjectEnv201ApplicationJSONCreated2Target2 = "preview"
-	CreateProjectEnv201ApplicationJSONCreated2Target2Development CreateProjectEnv201ApplicationJSONCreated2Target2 = "development"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2Production  CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2 = "production"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2Preview     CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2 = "preview"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2Development CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2 = "development"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2Target2) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2Target2 {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2 {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2Target2) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1163,26 +1163,26 @@ func (e *CreateProjectEnv201ApplicationJSONCreated2Target2) UnmarshalJSON(data [
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnv201ApplicationJSONCreated2Target2(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2Target2: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2Target1 string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2Target1Production  CreateProjectEnv201ApplicationJSONCreated2Target1 = "production"
-	CreateProjectEnv201ApplicationJSONCreated2Target1Preview     CreateProjectEnv201ApplicationJSONCreated2Target1 = "preview"
-	CreateProjectEnv201ApplicationJSONCreated2Target1Development CreateProjectEnv201ApplicationJSONCreated2Target1 = "development"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1Production  CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 = "production"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1Preview     CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 = "preview"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1Development CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 = "development"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2Target1) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2Target1 {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2Target1) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1193,91 +1193,91 @@ func (e *CreateProjectEnv201ApplicationJSONCreated2Target1) UnmarshalJSON(data [
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnv201ApplicationJSONCreated2Target1(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2Target1: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2TargetType string
+type CreateProjectEnvProjectsResponse201TargetType string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2TargetTypeArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1 CreateProjectEnv201ApplicationJSONCreated2TargetType = "arrayOfcreateProjectEnv_201ApplicationJSON_created_2_target_1"
-	CreateProjectEnv201ApplicationJSONCreated2TargetTypeCreateProjectEnv201ApplicationJSONCreated2Target2        CreateProjectEnv201ApplicationJSONCreated2TargetType = "createProjectEnv_201ApplicationJSON_created_2_target_2"
+	CreateProjectEnvProjectsResponse201TargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 CreateProjectEnvProjectsResponse201TargetType = "arrayOfcreateProjectEnv_projects_response_201_ApplicationJSON_responseBody_1"
+	CreateProjectEnvProjectsResponse201TargetTypeCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2        CreateProjectEnvProjectsResponse201TargetType = "createProjectEnv_projects_response_201_ApplicationJSON_responseBody_2"
 )
 
-type CreateProjectEnv201ApplicationJSONCreated2Target struct {
-	ArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1 []CreateProjectEnv201ApplicationJSONCreated2Target1
-	CreateProjectEnv201ApplicationJSONCreated2Target2        *CreateProjectEnv201ApplicationJSONCreated2Target2
+type CreateProjectEnvProjectsResponse201Target struct {
+	ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2        *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2
 
-	Type CreateProjectEnv201ApplicationJSONCreated2TargetType
+	Type CreateProjectEnvProjectsResponse201TargetType
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2TargetArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1(arrayOfcreateProjectEnv201ApplicationJSONCreated2Target1 []CreateProjectEnv201ApplicationJSONCreated2Target1) CreateProjectEnv201ApplicationJSONCreated2Target {
-	typ := CreateProjectEnv201ApplicationJSONCreated2TargetTypeArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1
+func CreateCreateProjectEnvProjectsResponse201TargetArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1(arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1) CreateProjectEnvProjectsResponse201Target {
+	typ := CreateProjectEnvProjectsResponse201TargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
 
-	return CreateProjectEnv201ApplicationJSONCreated2Target{
-		ArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1: arrayOfcreateProjectEnv201ApplicationJSONCreated2Target1,
+	return CreateProjectEnvProjectsResponse201Target{
+		ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1: arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1,
 		Type: typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated2TargetCreateProjectEnv201ApplicationJSONCreated2Target2(createProjectEnv201ApplicationJSONCreated2Target2 CreateProjectEnv201ApplicationJSONCreated2Target2) CreateProjectEnv201ApplicationJSONCreated2Target {
-	typ := CreateProjectEnv201ApplicationJSONCreated2TargetTypeCreateProjectEnv201ApplicationJSONCreated2Target2
+func CreateCreateProjectEnvProjectsResponse201TargetCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2(createProjectEnvProjectsResponse201ApplicationJSONResponseBody2 CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2) CreateProjectEnvProjectsResponse201Target {
+	typ := CreateProjectEnvProjectsResponse201TargetTypeCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2
 
-	return CreateProjectEnv201ApplicationJSONCreated2Target{
-		CreateProjectEnv201ApplicationJSONCreated2Target2: &createProjectEnv201ApplicationJSONCreated2Target2,
+	return CreateProjectEnvProjectsResponse201Target{
+		CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2: &createProjectEnvProjectsResponse201ApplicationJSONResponseBody2,
 		Type: typ,
 	}
 }
 
-func (u *CreateProjectEnv201ApplicationJSONCreated2Target) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectEnvProjectsResponse201Target) UnmarshalJSON(data []byte) error {
 
-	arrayOfcreateProjectEnv201ApplicationJSONCreated2Target1 := []CreateProjectEnv201ApplicationJSONCreated2Target1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv201ApplicationJSONCreated2Target1, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1 = arrayOfcreateProjectEnv201ApplicationJSONCreated2Target1
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2TargetTypeArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1
+	arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 := []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1, "", true, true); err == nil {
+		u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 = arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
+		u.Type = CreateProjectEnvProjectsResponse201TargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated2Target2 := new(CreateProjectEnv201ApplicationJSONCreated2Target2)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated2Target2, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated2Target2 = createProjectEnv201ApplicationJSONCreated2Target2
-		u.Type = CreateProjectEnv201ApplicationJSONCreated2TargetTypeCreateProjectEnv201ApplicationJSONCreated2Target2
+	createProjectEnvProjectsResponse201ApplicationJSONResponseBody2 := new(CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjectsResponse201ApplicationJSONResponseBody2, "", true, true); err == nil {
+		u.CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2 = createProjectEnvProjectsResponse201ApplicationJSONResponseBody2
+		u.Type = CreateProjectEnvProjectsResponse201TargetTypeCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProjectEnv201ApplicationJSONCreated2Target) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2Target1, "", true)
+func (u CreateProjectEnvProjectsResponse201Target) MarshalJSON() ([]byte, error) {
+	if u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 != nil {
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated2Target2 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated2Target2, "", true)
+	if u.CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2Type string
+type CreateProjectEnvProjectsResponse201Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated2TypeSystem    CreateProjectEnv201ApplicationJSONCreated2Type = "system"
-	CreateProjectEnv201ApplicationJSONCreated2TypeSecret    CreateProjectEnv201ApplicationJSONCreated2Type = "secret"
-	CreateProjectEnv201ApplicationJSONCreated2TypeEncrypted CreateProjectEnv201ApplicationJSONCreated2Type = "encrypted"
-	CreateProjectEnv201ApplicationJSONCreated2TypePlain     CreateProjectEnv201ApplicationJSONCreated2Type = "plain"
-	CreateProjectEnv201ApplicationJSONCreated2TypeSensitive CreateProjectEnv201ApplicationJSONCreated2Type = "sensitive"
+	CreateProjectEnvProjectsResponse201TypeSystem    CreateProjectEnvProjectsResponse201Type = "system"
+	CreateProjectEnvProjectsResponse201TypeSecret    CreateProjectEnvProjectsResponse201Type = "secret"
+	CreateProjectEnvProjectsResponse201TypeEncrypted CreateProjectEnvProjectsResponse201Type = "encrypted"
+	CreateProjectEnvProjectsResponse201TypePlain     CreateProjectEnvProjectsResponse201Type = "plain"
+	CreateProjectEnvProjectsResponse201TypeSensitive CreateProjectEnvProjectsResponse201Type = "sensitive"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated2Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated2Type {
+func (e CreateProjectEnvProjectsResponse201Type) ToPointer() *CreateProjectEnvProjectsResponse201Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1292,957 +1292,957 @@ func (e *CreateProjectEnv201ApplicationJSONCreated2Type) UnmarshalJSON(data []by
 	case "plain":
 		fallthrough
 	case "sensitive":
-		*e = CreateProjectEnv201ApplicationJSONCreated2Type(v)
+		*e = CreateProjectEnvProjectsResponse201Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated2 struct {
-	ConfigurationID *string                                                `json:"configurationId,omitempty"`
-	ContentHint     *CreateProjectEnv201ApplicationJSONCreated2ContentHint `json:"contentHint,omitempty"`
-	CreatedAt       *int64                                                 `json:"createdAt,omitempty"`
-	CreatedBy       *string                                                `json:"createdBy,omitempty"`
+type CreateProjectEnvProjects2 struct {
+	ConfigurationID *string                              `json:"configurationId,omitempty"`
+	ContentHint     *CreateProjectEnvProjectsContentHint `json:"contentHint,omitempty"`
+	CreatedAt       *int64                               `json:"createdAt,omitempty"`
+	CreatedBy       *string                              `json:"createdBy,omitempty"`
 	// Whether `value` is decrypted.
-	Decrypted         *bool                                             `json:"decrypted,omitempty"`
-	EdgeConfigID      *string                                           `json:"edgeConfigId,omitempty"`
-	EdgeConfigTokenID *string                                           `json:"edgeConfigTokenId,omitempty"`
-	GitBranch         *string                                           `json:"gitBranch,omitempty"`
-	ID                *string                                           `json:"id,omitempty"`
-	Key               *string                                           `json:"key,omitempty"`
-	System            *bool                                             `json:"system,omitempty"`
-	Target            *CreateProjectEnv201ApplicationJSONCreated2Target `json:"target,omitempty"`
-	Type              *CreateProjectEnv201ApplicationJSONCreated2Type   `json:"type,omitempty"`
-	UpdatedAt         *int64                                            `json:"updatedAt,omitempty"`
-	UpdatedBy         *string                                           `json:"updatedBy,omitempty"`
-	Value             *string                                           `json:"value,omitempty"`
+	Decrypted         *bool                                      `json:"decrypted,omitempty"`
+	EdgeConfigID      *string                                    `json:"edgeConfigId,omitempty"`
+	EdgeConfigTokenID *string                                    `json:"edgeConfigTokenId,omitempty"`
+	GitBranch         *string                                    `json:"gitBranch,omitempty"`
+	ID                *string                                    `json:"id,omitempty"`
+	Key               *string                                    `json:"key,omitempty"`
+	System            *bool                                      `json:"system,omitempty"`
+	Target            *CreateProjectEnvProjectsResponse201Target `json:"target,omitempty"`
+	Type              *CreateProjectEnvProjectsResponse201Type   `json:"type,omitempty"`
+	UpdatedAt         *int64                                     `json:"updatedAt,omitempty"`
+	UpdatedBy         *string                                    `json:"updatedBy,omitempty"`
+	Value             *string                                    `json:"value,omitempty"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetConfigurationID() *string {
+func (o *CreateProjectEnvProjects2) GetConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConfigurationID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetContentHint() *CreateProjectEnv201ApplicationJSONCreated2ContentHint {
+func (o *CreateProjectEnvProjects2) GetContentHint() *CreateProjectEnvProjectsContentHint {
 	if o == nil {
 		return nil
 	}
 	return o.ContentHint
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetCreatedAt() *int64 {
+func (o *CreateProjectEnvProjects2) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetCreatedBy() *string {
+func (o *CreateProjectEnvProjects2) GetCreatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedBy
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetDecrypted() *bool {
+func (o *CreateProjectEnvProjects2) GetDecrypted() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Decrypted
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetEdgeConfigID() *string {
+func (o *CreateProjectEnvProjects2) GetEdgeConfigID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetEdgeConfigTokenID() *string {
+func (o *CreateProjectEnvProjects2) GetEdgeConfigTokenID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigTokenID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetGitBranch() *string {
+func (o *CreateProjectEnvProjects2) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetID() *string {
+func (o *CreateProjectEnvProjects2) GetID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetKey() *string {
+func (o *CreateProjectEnvProjects2) GetKey() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Key
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetSystem() *bool {
+func (o *CreateProjectEnvProjects2) GetSystem() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.System
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetTarget() *CreateProjectEnv201ApplicationJSONCreated2Target {
+func (o *CreateProjectEnvProjects2) GetTarget() *CreateProjectEnvProjectsResponse201Target {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetType() *CreateProjectEnv201ApplicationJSONCreated2Type {
+func (o *CreateProjectEnvProjects2) GetType() *CreateProjectEnvProjectsResponse201Type {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetUpdatedAt() *int64 {
+func (o *CreateProjectEnvProjects2) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetUpdatedBy() *string {
+func (o *CreateProjectEnvProjects2) GetUpdatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedBy
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated2) GetValue() *string {
+func (o *CreateProjectEnvProjects2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONType string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint12TypePostgresDatabase CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type = "postgres-database"
+	CreateProjectEnvProjectsResponse201ApplicationJSONTypePostgresDatabase CreateProjectEnvProjectsResponse201ApplicationJSONType = "postgres-database"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONType) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONType {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-database":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONType: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint12 struct {
-	StoreID string                                                      `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type `json:"type"`
+type CreateProjectEnv12 struct {
+	StoreID string                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONType `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint12) GetStoreID() string {
+func (o *CreateProjectEnv12) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint12) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type {
+func (o *CreateProjectEnv12) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONType {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint12Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONType("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint11Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint11TypePostgresPassword CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type = "postgres-password"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint11TypePostgresPassword CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint11Type = "postgres-password"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint11Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint11Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint11Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-password":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint11Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint11Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint11 struct {
-	StoreID string                                                      `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type `json:"type"`
+type CreateProjectEnv11 struct {
+	StoreID string                                                                                  `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint11Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint11) GetStoreID() string {
+func (o *CreateProjectEnv11) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint11) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type {
+func (o *CreateProjectEnv11) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint11Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint11Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint11Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint10Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint10TypePostgresHost CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type = "postgres-host"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint10TypePostgresHost CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint10Type = "postgres-host"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint10Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint10Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint10Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-host":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint10Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint10Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint10 struct {
-	StoreID string                                                      `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type `json:"type"`
+type CreateProjectEnv10 struct {
+	StoreID string                                                                                  `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint10Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint10) GetStoreID() string {
+func (o *CreateProjectEnv10) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint10) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type {
+func (o *CreateProjectEnv10) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint10Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint10Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint10Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint9Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint9TypePostgresUser CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type = "postgres-user"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint9TypePostgresUser CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint9Type = "postgres-user"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint9Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint9Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-user":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint9Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint9Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint9 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type `json:"type"`
+type CreateProjectEnv9 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint9Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint9) GetStoreID() string {
+func (o *CreateProjectEnv9) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint9) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type {
+func (o *CreateProjectEnv9) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint9Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint9Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint9Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint8Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint8TypePostgresPrismaURL CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type = "postgres-prisma-url"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint8TypePostgresPrismaURL CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint8Type = "postgres-prisma-url"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint8Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint8Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-prisma-url":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint8Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint8Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint8 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type `json:"type"`
+type CreateProjectEnv8 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint8Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint8) GetStoreID() string {
+func (o *CreateProjectEnv8) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint8) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type {
+func (o *CreateProjectEnv8) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint8Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint8Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint8Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint7Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint7TypePostgresURLNonPooling CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type = "postgres-url-non-pooling"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint7TypePostgresURLNonPooling CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint7Type = "postgres-url-non-pooling"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint7Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint7Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url-non-pooling":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint7Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint7Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint7 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type `json:"type"`
+type CreateProjectEnv7 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint7Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint7) GetStoreID() string {
+func (o *CreateProjectEnv7) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint7) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type {
+func (o *CreateProjectEnv7) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint7Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint7Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint7Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint6Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint6TypePostgresURL CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type = "postgres-url"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint6TypePostgresURL CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint6Type = "postgres-url"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint6Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint6Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint6Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint6Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint6 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type `json:"type"`
+type CreateProjectEnv6 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint6Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint6) GetStoreID() string {
+func (o *CreateProjectEnv6) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint6) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type {
+func (o *CreateProjectEnv6) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint6Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint6Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint6Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint5Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint5TypeBlobReadWriteToken CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type = "blob-read-write-token"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint5TypeBlobReadWriteToken CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint5Type = "blob-read-write-token"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint5Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint5Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "blob-read-write-token":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint5Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint5Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint5 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type `json:"type"`
+type CreateProjectEnv5 struct {
+	StoreID string                                                                                 `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint5Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint5) GetStoreID() string {
+func (o *CreateProjectEnv5) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint5) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type {
+func (o *CreateProjectEnv5) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint5Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint5Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHint5Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHintType string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint4TypeRedisRestAPIReadOnlyToken CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type = "redis-rest-api-read-only-token"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHintTypeRedisRestAPIReadOnlyToken CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHintType = "redis-rest-api-read-only-token"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHintType) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHintType {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHintType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-read-only-token":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHintType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHintType: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint4 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type `json:"type"`
+type CreateProjectEnv4 struct {
+	StoreID string                                                                                `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHintType `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint4) GetStoreID() string {
+func (o *CreateProjectEnv4) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint4) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type {
+func (o *CreateProjectEnv4) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHintType {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint4Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1ContentHintType("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1Type string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint3TypeRedisRestAPIToken CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type = "redis-rest-api-token"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1TypeRedisRestAPIToken CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1Type = "redis-rest-api-token"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1Type) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1Type {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-token":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1Type: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint3 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type `json:"type"`
+type CreateProjectEnv3 struct {
+	StoreID string                                                                     `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1Type `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint3) GetStoreID() string {
+func (o *CreateProjectEnv3) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint3) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type {
+func (o *CreateProjectEnv3) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1Type {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint3Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreated1Type("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreatedType string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint2TypeRedisRestAPIURL CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type = "redis-rest-api-url"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreatedTypeRedisRestAPIURL CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreatedType = "redis-rest-api-url"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreatedType) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreatedType {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreatedType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-url":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreatedType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreatedType: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint2 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type `json:"type"`
+type CreateProjectEnvProjectsResponse2 struct {
+	StoreID string                                                                    `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreatedType `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint2) GetStoreID() string {
+func (o *CreateProjectEnvProjectsResponse2) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint2) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type {
+func (o *CreateProjectEnvProjectsResponse2) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreatedType {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint2Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyCreatedType("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyType string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint1TypeRedisURL CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type = "redis-url"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyTypeRedisURL CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyType = "redis-url"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyType) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyType {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-url":
-		*e = CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyType: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint1 struct {
-	StoreID string                                                     `json:"storeId"`
-	Type    CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type `json:"type"`
+type CreateProjectEnvProjectsResponse1 struct {
+	StoreID string                                                             `json:"storeId"`
+	Type    CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyType `json:"type"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint1) GetStoreID() string {
+func (o *CreateProjectEnvProjectsResponse1) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1ContentHint1) GetType() CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type {
+func (o *CreateProjectEnvProjectsResponse1) GetType() CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyType {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated1ContentHint1Type("")
+		return CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyType("")
 	}
 	return o.Type
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHintType string
+type CreateProjectEnvContentHintType string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint1  CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_1"
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint2  CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_2"
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint3  CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_3"
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint4  CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_4"
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint5  CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_5"
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint6  CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_6"
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint7  CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_7"
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint8  CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_8"
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint9  CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_9"
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint10 CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_10"
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint11 CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_11"
-	CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint12 CreateProjectEnv201ApplicationJSONCreated1ContentHintType = "createProjectEnv_201ApplicationJSON_created_1_contentHint_12"
+	CreateProjectEnvContentHintTypeCreateProjectEnvProjectsResponse1 CreateProjectEnvContentHintType = "createProjectEnv_projects_response_1"
+	CreateProjectEnvContentHintTypeCreateProjectEnvProjectsResponse2 CreateProjectEnvContentHintType = "createProjectEnv_projects_response_2"
+	CreateProjectEnvContentHintTypeCreateProjectEnv3                 CreateProjectEnvContentHintType = "createProjectEnv_3"
+	CreateProjectEnvContentHintTypeCreateProjectEnv4                 CreateProjectEnvContentHintType = "createProjectEnv_4"
+	CreateProjectEnvContentHintTypeCreateProjectEnv5                 CreateProjectEnvContentHintType = "createProjectEnv_5"
+	CreateProjectEnvContentHintTypeCreateProjectEnv6                 CreateProjectEnvContentHintType = "createProjectEnv_6"
+	CreateProjectEnvContentHintTypeCreateProjectEnv7                 CreateProjectEnvContentHintType = "createProjectEnv_7"
+	CreateProjectEnvContentHintTypeCreateProjectEnv8                 CreateProjectEnvContentHintType = "createProjectEnv_8"
+	CreateProjectEnvContentHintTypeCreateProjectEnv9                 CreateProjectEnvContentHintType = "createProjectEnv_9"
+	CreateProjectEnvContentHintTypeCreateProjectEnv10                CreateProjectEnvContentHintType = "createProjectEnv_10"
+	CreateProjectEnvContentHintTypeCreateProjectEnv11                CreateProjectEnvContentHintType = "createProjectEnv_11"
+	CreateProjectEnvContentHintTypeCreateProjectEnv12                CreateProjectEnvContentHintType = "createProjectEnv_12"
 )
 
-type CreateProjectEnv201ApplicationJSONCreated1ContentHint struct {
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint1  *CreateProjectEnv201ApplicationJSONCreated1ContentHint1
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint2  *CreateProjectEnv201ApplicationJSONCreated1ContentHint2
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint3  *CreateProjectEnv201ApplicationJSONCreated1ContentHint3
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint4  *CreateProjectEnv201ApplicationJSONCreated1ContentHint4
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint5  *CreateProjectEnv201ApplicationJSONCreated1ContentHint5
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint6  *CreateProjectEnv201ApplicationJSONCreated1ContentHint6
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint7  *CreateProjectEnv201ApplicationJSONCreated1ContentHint7
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint8  *CreateProjectEnv201ApplicationJSONCreated1ContentHint8
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint9  *CreateProjectEnv201ApplicationJSONCreated1ContentHint9
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint10 *CreateProjectEnv201ApplicationJSONCreated1ContentHint10
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint11 *CreateProjectEnv201ApplicationJSONCreated1ContentHint11
-	CreateProjectEnv201ApplicationJSONCreated1ContentHint12 *CreateProjectEnv201ApplicationJSONCreated1ContentHint12
+type CreateProjectEnvContentHint struct {
+	CreateProjectEnvProjectsResponse1 *CreateProjectEnvProjectsResponse1
+	CreateProjectEnvProjectsResponse2 *CreateProjectEnvProjectsResponse2
+	CreateProjectEnv3                 *CreateProjectEnv3
+	CreateProjectEnv4                 *CreateProjectEnv4
+	CreateProjectEnv5                 *CreateProjectEnv5
+	CreateProjectEnv6                 *CreateProjectEnv6
+	CreateProjectEnv7                 *CreateProjectEnv7
+	CreateProjectEnv8                 *CreateProjectEnv8
+	CreateProjectEnv9                 *CreateProjectEnv9
+	CreateProjectEnv10                *CreateProjectEnv10
+	CreateProjectEnv11                *CreateProjectEnv11
+	CreateProjectEnv12                *CreateProjectEnv12
 
-	Type CreateProjectEnv201ApplicationJSONCreated1ContentHintType
+	Type CreateProjectEnvContentHintType
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint1(createProjectEnv201ApplicationJSONCreated1ContentHint1 CreateProjectEnv201ApplicationJSONCreated1ContentHint1) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint1
+func CreateCreateProjectEnvContentHintCreateProjectEnvProjectsResponse1(createProjectEnvProjectsResponse1 CreateProjectEnvProjectsResponse1) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnvProjectsResponse1
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint1: &createProjectEnv201ApplicationJSONCreated1ContentHint1,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnvProjectsResponse1: &createProjectEnvProjectsResponse1,
+		Type:                              typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint2(createProjectEnv201ApplicationJSONCreated1ContentHint2 CreateProjectEnv201ApplicationJSONCreated1ContentHint2) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint2
+func CreateCreateProjectEnvContentHintCreateProjectEnvProjectsResponse2(createProjectEnvProjectsResponse2 CreateProjectEnvProjectsResponse2) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnvProjectsResponse2
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint2: &createProjectEnv201ApplicationJSONCreated1ContentHint2,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnvProjectsResponse2: &createProjectEnvProjectsResponse2,
+		Type:                              typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint3(createProjectEnv201ApplicationJSONCreated1ContentHint3 CreateProjectEnv201ApplicationJSONCreated1ContentHint3) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint3
+func CreateCreateProjectEnvContentHintCreateProjectEnv3(createProjectEnv3 CreateProjectEnv3) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnv3
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint3: &createProjectEnv201ApplicationJSONCreated1ContentHint3,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnv3: &createProjectEnv3,
+		Type:              typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint4(createProjectEnv201ApplicationJSONCreated1ContentHint4 CreateProjectEnv201ApplicationJSONCreated1ContentHint4) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint4
+func CreateCreateProjectEnvContentHintCreateProjectEnv4(createProjectEnv4 CreateProjectEnv4) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnv4
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint4: &createProjectEnv201ApplicationJSONCreated1ContentHint4,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnv4: &createProjectEnv4,
+		Type:              typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint5(createProjectEnv201ApplicationJSONCreated1ContentHint5 CreateProjectEnv201ApplicationJSONCreated1ContentHint5) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint5
+func CreateCreateProjectEnvContentHintCreateProjectEnv5(createProjectEnv5 CreateProjectEnv5) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnv5
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint5: &createProjectEnv201ApplicationJSONCreated1ContentHint5,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnv5: &createProjectEnv5,
+		Type:              typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint6(createProjectEnv201ApplicationJSONCreated1ContentHint6 CreateProjectEnv201ApplicationJSONCreated1ContentHint6) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint6
+func CreateCreateProjectEnvContentHintCreateProjectEnv6(createProjectEnv6 CreateProjectEnv6) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnv6
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint6: &createProjectEnv201ApplicationJSONCreated1ContentHint6,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnv6: &createProjectEnv6,
+		Type:              typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint7(createProjectEnv201ApplicationJSONCreated1ContentHint7 CreateProjectEnv201ApplicationJSONCreated1ContentHint7) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint7
+func CreateCreateProjectEnvContentHintCreateProjectEnv7(createProjectEnv7 CreateProjectEnv7) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnv7
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint7: &createProjectEnv201ApplicationJSONCreated1ContentHint7,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnv7: &createProjectEnv7,
+		Type:              typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint8(createProjectEnv201ApplicationJSONCreated1ContentHint8 CreateProjectEnv201ApplicationJSONCreated1ContentHint8) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint8
+func CreateCreateProjectEnvContentHintCreateProjectEnv8(createProjectEnv8 CreateProjectEnv8) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnv8
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint8: &createProjectEnv201ApplicationJSONCreated1ContentHint8,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnv8: &createProjectEnv8,
+		Type:              typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint9(createProjectEnv201ApplicationJSONCreated1ContentHint9 CreateProjectEnv201ApplicationJSONCreated1ContentHint9) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint9
+func CreateCreateProjectEnvContentHintCreateProjectEnv9(createProjectEnv9 CreateProjectEnv9) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnv9
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint9: &createProjectEnv201ApplicationJSONCreated1ContentHint9,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnv9: &createProjectEnv9,
+		Type:              typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint10(createProjectEnv201ApplicationJSONCreated1ContentHint10 CreateProjectEnv201ApplicationJSONCreated1ContentHint10) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint10
+func CreateCreateProjectEnvContentHintCreateProjectEnv10(createProjectEnv10 CreateProjectEnv10) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnv10
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint10: &createProjectEnv201ApplicationJSONCreated1ContentHint10,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnv10: &createProjectEnv10,
+		Type:               typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint11(createProjectEnv201ApplicationJSONCreated1ContentHint11 CreateProjectEnv201ApplicationJSONCreated1ContentHint11) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint11
+func CreateCreateProjectEnvContentHintCreateProjectEnv11(createProjectEnv11 CreateProjectEnv11) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnv11
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint11: &createProjectEnv201ApplicationJSONCreated1ContentHint11,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnv11: &createProjectEnv11,
+		Type:               typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1ContentHintCreateProjectEnv201ApplicationJSONCreated1ContentHint12(createProjectEnv201ApplicationJSONCreated1ContentHint12 CreateProjectEnv201ApplicationJSONCreated1ContentHint12) CreateProjectEnv201ApplicationJSONCreated1ContentHint {
-	typ := CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint12
+func CreateCreateProjectEnvContentHintCreateProjectEnv12(createProjectEnv12 CreateProjectEnv12) CreateProjectEnvContentHint {
+	typ := CreateProjectEnvContentHintTypeCreateProjectEnv12
 
-	return CreateProjectEnv201ApplicationJSONCreated1ContentHint{
-		CreateProjectEnv201ApplicationJSONCreated1ContentHint12: &createProjectEnv201ApplicationJSONCreated1ContentHint12,
-		Type: typ,
+	return CreateProjectEnvContentHint{
+		CreateProjectEnv12: &createProjectEnv12,
+		Type:               typ,
 	}
 }
 
-func (u *CreateProjectEnv201ApplicationJSONCreated1ContentHint) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectEnvContentHint) UnmarshalJSON(data []byte) error {
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint1 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint1)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint1, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint1 = createProjectEnv201ApplicationJSONCreated1ContentHint1
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint1
+	createProjectEnvProjectsResponse1 := new(CreateProjectEnvProjectsResponse1)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjectsResponse1, "", true, true); err == nil {
+		u.CreateProjectEnvProjectsResponse1 = createProjectEnvProjectsResponse1
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnvProjectsResponse1
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint2 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint2)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint2, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint2 = createProjectEnv201ApplicationJSONCreated1ContentHint2
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint2
+	createProjectEnvProjectsResponse2 := new(CreateProjectEnvProjectsResponse2)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjectsResponse2, "", true, true); err == nil {
+		u.CreateProjectEnvProjectsResponse2 = createProjectEnvProjectsResponse2
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnvProjectsResponse2
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint3 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint3)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint3, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint3 = createProjectEnv201ApplicationJSONCreated1ContentHint3
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint3
+	createProjectEnv3 := new(CreateProjectEnv3)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv3, "", true, true); err == nil {
+		u.CreateProjectEnv3 = createProjectEnv3
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnv3
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint4 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint4)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint4, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint4 = createProjectEnv201ApplicationJSONCreated1ContentHint4
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint4
+	createProjectEnv4 := new(CreateProjectEnv4)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv4, "", true, true); err == nil {
+		u.CreateProjectEnv4 = createProjectEnv4
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnv4
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint5 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint5)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint5, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint5 = createProjectEnv201ApplicationJSONCreated1ContentHint5
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint5
+	createProjectEnv5 := new(CreateProjectEnv5)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv5, "", true, true); err == nil {
+		u.CreateProjectEnv5 = createProjectEnv5
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnv5
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint6 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint6)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint6, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint6 = createProjectEnv201ApplicationJSONCreated1ContentHint6
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint6
+	createProjectEnv6 := new(CreateProjectEnv6)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv6, "", true, true); err == nil {
+		u.CreateProjectEnv6 = createProjectEnv6
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnv6
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint7 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint7)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint7, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint7 = createProjectEnv201ApplicationJSONCreated1ContentHint7
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint7
+	createProjectEnv7 := new(CreateProjectEnv7)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv7, "", true, true); err == nil {
+		u.CreateProjectEnv7 = createProjectEnv7
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnv7
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint8 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint8)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint8, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint8 = createProjectEnv201ApplicationJSONCreated1ContentHint8
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint8
+	createProjectEnv8 := new(CreateProjectEnv8)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv8, "", true, true); err == nil {
+		u.CreateProjectEnv8 = createProjectEnv8
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnv8
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint9 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint9)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint9, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint9 = createProjectEnv201ApplicationJSONCreated1ContentHint9
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint9
+	createProjectEnv9 := new(CreateProjectEnv9)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv9, "", true, true); err == nil {
+		u.CreateProjectEnv9 = createProjectEnv9
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnv9
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint10 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint10)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint10, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint10 = createProjectEnv201ApplicationJSONCreated1ContentHint10
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint10
+	createProjectEnv10 := new(CreateProjectEnv10)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv10, "", true, true); err == nil {
+		u.CreateProjectEnv10 = createProjectEnv10
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnv10
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint11 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint11)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint11, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint11 = createProjectEnv201ApplicationJSONCreated1ContentHint11
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint11
+	createProjectEnv11 := new(CreateProjectEnv11)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv11, "", true, true); err == nil {
+		u.CreateProjectEnv11 = createProjectEnv11
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnv11
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1ContentHint12 := new(CreateProjectEnv201ApplicationJSONCreated1ContentHint12)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1ContentHint12, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1ContentHint12 = createProjectEnv201ApplicationJSONCreated1ContentHint12
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1ContentHintTypeCreateProjectEnv201ApplicationJSONCreated1ContentHint12
+	createProjectEnv12 := new(CreateProjectEnv12)
+	if err := utils.UnmarshalJSON(data, &createProjectEnv12, "", true, true); err == nil {
+		u.CreateProjectEnv12 = createProjectEnv12
+		u.Type = CreateProjectEnvContentHintTypeCreateProjectEnv12
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProjectEnv201ApplicationJSONCreated1ContentHint) MarshalJSON() ([]byte, error) {
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint1 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint1, "", true)
+func (u CreateProjectEnvContentHint) MarshalJSON() ([]byte, error) {
+	if u.CreateProjectEnvProjectsResponse1 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjectsResponse1, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint2 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint2, "", true)
+	if u.CreateProjectEnvProjectsResponse2 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjectsResponse2, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint3 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint3, "", true)
+	if u.CreateProjectEnv3 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnv3, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint4 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint4, "", true)
+	if u.CreateProjectEnv4 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnv4, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint5 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint5, "", true)
+	if u.CreateProjectEnv5 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnv5, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint6 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint6, "", true)
+	if u.CreateProjectEnv6 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnv6, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint7 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint7, "", true)
+	if u.CreateProjectEnv7 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnv7, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint8 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint8, "", true)
+	if u.CreateProjectEnv8 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnv8, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint9 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint9, "", true)
+	if u.CreateProjectEnv9 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnv9, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint10 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint10, "", true)
+	if u.CreateProjectEnv10 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnv10, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint11 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint11, "", true)
+	if u.CreateProjectEnv11 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnv11, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1ContentHint12 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1ContentHint12, "", true)
+	if u.CreateProjectEnv12 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnv12, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1Target2 string
+type CreateProjectEnvProjectsResponse2012 string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1Target2Production  CreateProjectEnv201ApplicationJSONCreated1Target2 = "production"
-	CreateProjectEnv201ApplicationJSONCreated1Target2Preview     CreateProjectEnv201ApplicationJSONCreated1Target2 = "preview"
-	CreateProjectEnv201ApplicationJSONCreated1Target2Development CreateProjectEnv201ApplicationJSONCreated1Target2 = "development"
+	CreateProjectEnvProjectsResponse2012Production  CreateProjectEnvProjectsResponse2012 = "production"
+	CreateProjectEnvProjectsResponse2012Preview     CreateProjectEnvProjectsResponse2012 = "preview"
+	CreateProjectEnvProjectsResponse2012Development CreateProjectEnvProjectsResponse2012 = "development"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1Target2) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1Target2 {
+func (e CreateProjectEnvProjectsResponse2012) ToPointer() *CreateProjectEnvProjectsResponse2012 {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1Target2) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse2012) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2253,26 +2253,26 @@ func (e *CreateProjectEnv201ApplicationJSONCreated1Target2) UnmarshalJSON(data [
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnv201ApplicationJSONCreated1Target2(v)
+		*e = CreateProjectEnvProjectsResponse2012(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1Target2: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse2012: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1Target1 string
+type CreateProjectEnvProjectsResponse2011 string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1Target1Production  CreateProjectEnv201ApplicationJSONCreated1Target1 = "production"
-	CreateProjectEnv201ApplicationJSONCreated1Target1Preview     CreateProjectEnv201ApplicationJSONCreated1Target1 = "preview"
-	CreateProjectEnv201ApplicationJSONCreated1Target1Development CreateProjectEnv201ApplicationJSONCreated1Target1 = "development"
+	CreateProjectEnvProjectsResponse2011Production  CreateProjectEnvProjectsResponse2011 = "production"
+	CreateProjectEnvProjectsResponse2011Preview     CreateProjectEnvProjectsResponse2011 = "preview"
+	CreateProjectEnvProjectsResponse2011Development CreateProjectEnvProjectsResponse2011 = "development"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1Target1) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1Target1 {
+func (e CreateProjectEnvProjectsResponse2011) ToPointer() *CreateProjectEnvProjectsResponse2011 {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1Target1) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse2011) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2283,91 +2283,91 @@ func (e *CreateProjectEnv201ApplicationJSONCreated1Target1) UnmarshalJSON(data [
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnv201ApplicationJSONCreated1Target1(v)
+		*e = CreateProjectEnvProjectsResponse2011(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1Target1: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse2011: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1TargetType string
+type CreateProjectEnvProjectsResponseTargetType string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1TargetTypeArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1 CreateProjectEnv201ApplicationJSONCreated1TargetType = "arrayOfcreateProjectEnv_201ApplicationJSON_created_1_target_1"
-	CreateProjectEnv201ApplicationJSONCreated1TargetTypeCreateProjectEnv201ApplicationJSONCreated1Target2        CreateProjectEnv201ApplicationJSONCreated1TargetType = "createProjectEnv_201ApplicationJSON_created_1_target_2"
+	CreateProjectEnvProjectsResponseTargetTypeArrayOfcreateProjectEnvProjectsResponse2011 CreateProjectEnvProjectsResponseTargetType = "arrayOfcreateProjectEnv_projects_response_201_1"
+	CreateProjectEnvProjectsResponseTargetTypeCreateProjectEnvProjectsResponse2012        CreateProjectEnvProjectsResponseTargetType = "createProjectEnv_projects_response_201_2"
 )
 
-type CreateProjectEnv201ApplicationJSONCreated1Target struct {
-	ArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1 []CreateProjectEnv201ApplicationJSONCreated1Target1
-	CreateProjectEnv201ApplicationJSONCreated1Target2        *CreateProjectEnv201ApplicationJSONCreated1Target2
+type CreateProjectEnvProjectsResponseTarget struct {
+	ArrayOfcreateProjectEnvProjectsResponse2011 []CreateProjectEnvProjectsResponse2011
+	CreateProjectEnvProjectsResponse2012        *CreateProjectEnvProjectsResponse2012
 
-	Type CreateProjectEnv201ApplicationJSONCreated1TargetType
+	Type CreateProjectEnvProjectsResponseTargetType
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1TargetArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1(arrayOfcreateProjectEnv201ApplicationJSONCreated1Target1 []CreateProjectEnv201ApplicationJSONCreated1Target1) CreateProjectEnv201ApplicationJSONCreated1Target {
-	typ := CreateProjectEnv201ApplicationJSONCreated1TargetTypeArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1
+func CreateCreateProjectEnvProjectsResponseTargetArrayOfcreateProjectEnvProjectsResponse2011(arrayOfcreateProjectEnvProjectsResponse2011 []CreateProjectEnvProjectsResponse2011) CreateProjectEnvProjectsResponseTarget {
+	typ := CreateProjectEnvProjectsResponseTargetTypeArrayOfcreateProjectEnvProjectsResponse2011
 
-	return CreateProjectEnv201ApplicationJSONCreated1Target{
-		ArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1: arrayOfcreateProjectEnv201ApplicationJSONCreated1Target1,
+	return CreateProjectEnvProjectsResponseTarget{
+		ArrayOfcreateProjectEnvProjectsResponse2011: arrayOfcreateProjectEnvProjectsResponse2011,
 		Type: typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreated1TargetCreateProjectEnv201ApplicationJSONCreated1Target2(createProjectEnv201ApplicationJSONCreated1Target2 CreateProjectEnv201ApplicationJSONCreated1Target2) CreateProjectEnv201ApplicationJSONCreated1Target {
-	typ := CreateProjectEnv201ApplicationJSONCreated1TargetTypeCreateProjectEnv201ApplicationJSONCreated1Target2
+func CreateCreateProjectEnvProjectsResponseTargetCreateProjectEnvProjectsResponse2012(createProjectEnvProjectsResponse2012 CreateProjectEnvProjectsResponse2012) CreateProjectEnvProjectsResponseTarget {
+	typ := CreateProjectEnvProjectsResponseTargetTypeCreateProjectEnvProjectsResponse2012
 
-	return CreateProjectEnv201ApplicationJSONCreated1Target{
-		CreateProjectEnv201ApplicationJSONCreated1Target2: &createProjectEnv201ApplicationJSONCreated1Target2,
-		Type: typ,
+	return CreateProjectEnvProjectsResponseTarget{
+		CreateProjectEnvProjectsResponse2012: &createProjectEnvProjectsResponse2012,
+		Type:                                 typ,
 	}
 }
 
-func (u *CreateProjectEnv201ApplicationJSONCreated1Target) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectEnvProjectsResponseTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfcreateProjectEnv201ApplicationJSONCreated1Target1 := []CreateProjectEnv201ApplicationJSONCreated1Target1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv201ApplicationJSONCreated1Target1, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1 = arrayOfcreateProjectEnv201ApplicationJSONCreated1Target1
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1TargetTypeArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1
+	arrayOfcreateProjectEnvProjectsResponse2011 := []CreateProjectEnvProjectsResponse2011{}
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvProjectsResponse2011, "", true, true); err == nil {
+		u.ArrayOfcreateProjectEnvProjectsResponse2011 = arrayOfcreateProjectEnvProjectsResponse2011
+		u.Type = CreateProjectEnvProjectsResponseTargetTypeArrayOfcreateProjectEnvProjectsResponse2011
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONCreated1Target2 := new(CreateProjectEnv201ApplicationJSONCreated1Target2)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1Target2, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1Target2 = createProjectEnv201ApplicationJSONCreated1Target2
-		u.Type = CreateProjectEnv201ApplicationJSONCreated1TargetTypeCreateProjectEnv201ApplicationJSONCreated1Target2
+	createProjectEnvProjectsResponse2012 := new(CreateProjectEnvProjectsResponse2012)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjectsResponse2012, "", true, true); err == nil {
+		u.CreateProjectEnvProjectsResponse2012 = createProjectEnvProjectsResponse2012
+		u.Type = CreateProjectEnvProjectsResponseTargetTypeCreateProjectEnvProjectsResponse2012
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProjectEnv201ApplicationJSONCreated1Target) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv201ApplicationJSONCreated1Target1, "", true)
+func (u CreateProjectEnvProjectsResponseTarget) MarshalJSON() ([]byte, error) {
+	if u.ArrayOfcreateProjectEnvProjectsResponse2011 != nil {
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvProjectsResponse2011, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONCreated1Target2 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1Target2, "", true)
+	if u.CreateProjectEnvProjectsResponse2012 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjectsResponse2012, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1Type string
+type CreateProjectEnvProjectsResponseType string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreated1TypeSystem    CreateProjectEnv201ApplicationJSONCreated1Type = "system"
-	CreateProjectEnv201ApplicationJSONCreated1TypeSecret    CreateProjectEnv201ApplicationJSONCreated1Type = "secret"
-	CreateProjectEnv201ApplicationJSONCreated1TypeEncrypted CreateProjectEnv201ApplicationJSONCreated1Type = "encrypted"
-	CreateProjectEnv201ApplicationJSONCreated1TypePlain     CreateProjectEnv201ApplicationJSONCreated1Type = "plain"
-	CreateProjectEnv201ApplicationJSONCreated1TypeSensitive CreateProjectEnv201ApplicationJSONCreated1Type = "sensitive"
+	CreateProjectEnvProjectsResponseTypeSystem    CreateProjectEnvProjectsResponseType = "system"
+	CreateProjectEnvProjectsResponseTypeSecret    CreateProjectEnvProjectsResponseType = "secret"
+	CreateProjectEnvProjectsResponseTypeEncrypted CreateProjectEnvProjectsResponseType = "encrypted"
+	CreateProjectEnvProjectsResponseTypePlain     CreateProjectEnvProjectsResponseType = "plain"
+	CreateProjectEnvProjectsResponseTypeSensitive CreateProjectEnvProjectsResponseType = "sensitive"
 )
 
-func (e CreateProjectEnv201ApplicationJSONCreated1Type) ToPointer() *CreateProjectEnv201ApplicationJSONCreated1Type {
+func (e CreateProjectEnvProjectsResponseType) ToPointer() *CreateProjectEnvProjectsResponseType {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONCreated1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponseType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2382,221 +2382,221 @@ func (e *CreateProjectEnv201ApplicationJSONCreated1Type) UnmarshalJSON(data []by
 	case "plain":
 		fallthrough
 	case "sensitive":
-		*e = CreateProjectEnv201ApplicationJSONCreated1Type(v)
+		*e = CreateProjectEnvProjectsResponseType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONCreated1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponseType: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONCreated1 struct {
-	ConfigurationID *string                                                `json:"configurationId,omitempty"`
-	ContentHint     *CreateProjectEnv201ApplicationJSONCreated1ContentHint `json:"contentHint,omitempty"`
-	CreatedAt       *int64                                                 `json:"createdAt,omitempty"`
-	CreatedBy       *string                                                `json:"createdBy,omitempty"`
+type CreateProjectEnvProjects1 struct {
+	ConfigurationID *string                      `json:"configurationId,omitempty"`
+	ContentHint     *CreateProjectEnvContentHint `json:"contentHint,omitempty"`
+	CreatedAt       *int64                       `json:"createdAt,omitempty"`
+	CreatedBy       *string                      `json:"createdBy,omitempty"`
 	// Whether `value` is decrypted.
-	Decrypted         *bool                                             `json:"decrypted,omitempty"`
-	EdgeConfigID      *string                                           `json:"edgeConfigId,omitempty"`
-	EdgeConfigTokenID *string                                           `json:"edgeConfigTokenId,omitempty"`
-	GitBranch         *string                                           `json:"gitBranch,omitempty"`
-	ID                *string                                           `json:"id,omitempty"`
-	Key               *string                                           `json:"key,omitempty"`
-	System            *bool                                             `json:"system,omitempty"`
-	Target            *CreateProjectEnv201ApplicationJSONCreated1Target `json:"target,omitempty"`
-	Type              *CreateProjectEnv201ApplicationJSONCreated1Type   `json:"type,omitempty"`
-	UpdatedAt         *int64                                            `json:"updatedAt,omitempty"`
-	UpdatedBy         *string                                           `json:"updatedBy,omitempty"`
-	Value             *string                                           `json:"value,omitempty"`
+	Decrypted         *bool                                   `json:"decrypted,omitempty"`
+	EdgeConfigID      *string                                 `json:"edgeConfigId,omitempty"`
+	EdgeConfigTokenID *string                                 `json:"edgeConfigTokenId,omitempty"`
+	GitBranch         *string                                 `json:"gitBranch,omitempty"`
+	ID                *string                                 `json:"id,omitempty"`
+	Key               *string                                 `json:"key,omitempty"`
+	System            *bool                                   `json:"system,omitempty"`
+	Target            *CreateProjectEnvProjectsResponseTarget `json:"target,omitempty"`
+	Type              *CreateProjectEnvProjectsResponseType   `json:"type,omitempty"`
+	UpdatedAt         *int64                                  `json:"updatedAt,omitempty"`
+	UpdatedBy         *string                                 `json:"updatedBy,omitempty"`
+	Value             *string                                 `json:"value,omitempty"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetConfigurationID() *string {
+func (o *CreateProjectEnvProjects1) GetConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConfigurationID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetContentHint() *CreateProjectEnv201ApplicationJSONCreated1ContentHint {
+func (o *CreateProjectEnvProjects1) GetContentHint() *CreateProjectEnvContentHint {
 	if o == nil {
 		return nil
 	}
 	return o.ContentHint
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetCreatedAt() *int64 {
+func (o *CreateProjectEnvProjects1) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetCreatedBy() *string {
+func (o *CreateProjectEnvProjects1) GetCreatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedBy
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetDecrypted() *bool {
+func (o *CreateProjectEnvProjects1) GetDecrypted() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Decrypted
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetEdgeConfigID() *string {
+func (o *CreateProjectEnvProjects1) GetEdgeConfigID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetEdgeConfigTokenID() *string {
+func (o *CreateProjectEnvProjects1) GetEdgeConfigTokenID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigTokenID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetGitBranch() *string {
+func (o *CreateProjectEnvProjects1) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetID() *string {
+func (o *CreateProjectEnvProjects1) GetID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetKey() *string {
+func (o *CreateProjectEnvProjects1) GetKey() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Key
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetSystem() *bool {
+func (o *CreateProjectEnvProjects1) GetSystem() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.System
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetTarget() *CreateProjectEnv201ApplicationJSONCreated1Target {
+func (o *CreateProjectEnvProjects1) GetTarget() *CreateProjectEnvProjectsResponseTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetType() *CreateProjectEnv201ApplicationJSONCreated1Type {
+func (o *CreateProjectEnvProjects1) GetType() *CreateProjectEnvProjectsResponseType {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetUpdatedAt() *int64 {
+func (o *CreateProjectEnvProjects1) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetUpdatedBy() *string {
+func (o *CreateProjectEnvProjects1) GetUpdatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedBy
 }
 
-func (o *CreateProjectEnv201ApplicationJSONCreated1) GetValue() *string {
+func (o *CreateProjectEnvProjects1) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type CreateProjectEnv201ApplicationJSONCreatedType string
+type CreatedType string
 
 const (
-	CreateProjectEnv201ApplicationJSONCreatedTypeCreateProjectEnv201ApplicationJSONCreated1        CreateProjectEnv201ApplicationJSONCreatedType = "createProjectEnv_201ApplicationJSON_created_1"
-	CreateProjectEnv201ApplicationJSONCreatedTypeArrayOfcreateProjectEnv201ApplicationJSONCreated2 CreateProjectEnv201ApplicationJSONCreatedType = "arrayOfcreateProjectEnv_201ApplicationJSON_created_2"
+	CreatedTypeCreateProjectEnvProjects1        CreatedType = "createProjectEnv_projects_1"
+	CreatedTypeArrayOfcreateProjectEnvProjects2 CreatedType = "arrayOfcreateProjectEnv_projects_2"
 )
 
-type CreateProjectEnv201ApplicationJSONCreated struct {
-	CreateProjectEnv201ApplicationJSONCreated1        *CreateProjectEnv201ApplicationJSONCreated1
-	ArrayOfcreateProjectEnv201ApplicationJSONCreated2 []CreateProjectEnv201ApplicationJSONCreated2
+type Created struct {
+	CreateProjectEnvProjects1        *CreateProjectEnvProjects1
+	ArrayOfcreateProjectEnvProjects2 []CreateProjectEnvProjects2
 
-	Type CreateProjectEnv201ApplicationJSONCreatedType
+	Type CreatedType
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreatedCreateProjectEnv201ApplicationJSONCreated1(createProjectEnv201ApplicationJSONCreated1 CreateProjectEnv201ApplicationJSONCreated1) CreateProjectEnv201ApplicationJSONCreated {
-	typ := CreateProjectEnv201ApplicationJSONCreatedTypeCreateProjectEnv201ApplicationJSONCreated1
+func CreateCreatedCreateProjectEnvProjects1(createProjectEnvProjects1 CreateProjectEnvProjects1) Created {
+	typ := CreatedTypeCreateProjectEnvProjects1
 
-	return CreateProjectEnv201ApplicationJSONCreated{
-		CreateProjectEnv201ApplicationJSONCreated1: &createProjectEnv201ApplicationJSONCreated1,
-		Type: typ,
+	return Created{
+		CreateProjectEnvProjects1: &createProjectEnvProjects1,
+		Type:                      typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONCreatedArrayOfcreateProjectEnv201ApplicationJSONCreated2(arrayOfcreateProjectEnv201ApplicationJSONCreated2 []CreateProjectEnv201ApplicationJSONCreated2) CreateProjectEnv201ApplicationJSONCreated {
-	typ := CreateProjectEnv201ApplicationJSONCreatedTypeArrayOfcreateProjectEnv201ApplicationJSONCreated2
+func CreateCreatedArrayOfcreateProjectEnvProjects2(arrayOfcreateProjectEnvProjects2 []CreateProjectEnvProjects2) Created {
+	typ := CreatedTypeArrayOfcreateProjectEnvProjects2
 
-	return CreateProjectEnv201ApplicationJSONCreated{
-		ArrayOfcreateProjectEnv201ApplicationJSONCreated2: arrayOfcreateProjectEnv201ApplicationJSONCreated2,
-		Type: typ,
+	return Created{
+		ArrayOfcreateProjectEnvProjects2: arrayOfcreateProjectEnvProjects2,
+		Type:                             typ,
 	}
 }
 
-func (u *CreateProjectEnv201ApplicationJSONCreated) UnmarshalJSON(data []byte) error {
+func (u *Created) UnmarshalJSON(data []byte) error {
 
-	createProjectEnv201ApplicationJSONCreated1 := new(CreateProjectEnv201ApplicationJSONCreated1)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONCreated1, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONCreated1 = createProjectEnv201ApplicationJSONCreated1
-		u.Type = CreateProjectEnv201ApplicationJSONCreatedTypeCreateProjectEnv201ApplicationJSONCreated1
+	createProjectEnvProjects1 := new(CreateProjectEnvProjects1)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjects1, "", true, true); err == nil {
+		u.CreateProjectEnvProjects1 = createProjectEnvProjects1
+		u.Type = CreatedTypeCreateProjectEnvProjects1
 		return nil
 	}
 
-	arrayOfcreateProjectEnv201ApplicationJSONCreated2 := []CreateProjectEnv201ApplicationJSONCreated2{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv201ApplicationJSONCreated2, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2 = arrayOfcreateProjectEnv201ApplicationJSONCreated2
-		u.Type = CreateProjectEnv201ApplicationJSONCreatedTypeArrayOfcreateProjectEnv201ApplicationJSONCreated2
+	arrayOfcreateProjectEnvProjects2 := []CreateProjectEnvProjects2{}
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvProjects2, "", true, true); err == nil {
+		u.ArrayOfcreateProjectEnvProjects2 = arrayOfcreateProjectEnvProjects2
+		u.Type = CreatedTypeArrayOfcreateProjectEnvProjects2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProjectEnv201ApplicationJSONCreated) MarshalJSON() ([]byte, error) {
-	if u.CreateProjectEnv201ApplicationJSONCreated1 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONCreated1, "", true)
+func (u Created) MarshalJSON() ([]byte, error) {
+	if u.CreateProjectEnvProjects1 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjects1, "", true)
 	}
 
-	if u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv201ApplicationJSONCreated2, "", true)
+	if u.ArrayOfcreateProjectEnvProjects2 != nil {
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvProjects2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProjectEnv201ApplicationJSONFailedErrorTarget2 string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2 string
 
 const (
-	CreateProjectEnv201ApplicationJSONFailedErrorTarget2Production  CreateProjectEnv201ApplicationJSONFailedErrorTarget2 = "production"
-	CreateProjectEnv201ApplicationJSONFailedErrorTarget2Preview     CreateProjectEnv201ApplicationJSONFailedErrorTarget2 = "preview"
-	CreateProjectEnv201ApplicationJSONFailedErrorTarget2Development CreateProjectEnv201ApplicationJSONFailedErrorTarget2 = "development"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2Production  CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2 = "production"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2Preview     CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2 = "preview"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2Development CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2 = "development"
 )
 
-func (e CreateProjectEnv201ApplicationJSONFailedErrorTarget2) ToPointer() *CreateProjectEnv201ApplicationJSONFailedErrorTarget2 {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2 {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONFailedErrorTarget2) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2607,26 +2607,26 @@ func (e *CreateProjectEnv201ApplicationJSONFailedErrorTarget2) UnmarshalJSON(dat
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnv201ApplicationJSONFailedErrorTarget2(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONFailedErrorTarget2: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONFailedErrorTarget1 string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 string
 
 const (
-	CreateProjectEnv201ApplicationJSONFailedErrorTarget1Production  CreateProjectEnv201ApplicationJSONFailedErrorTarget1 = "production"
-	CreateProjectEnv201ApplicationJSONFailedErrorTarget1Preview     CreateProjectEnv201ApplicationJSONFailedErrorTarget1 = "preview"
-	CreateProjectEnv201ApplicationJSONFailedErrorTarget1Development CreateProjectEnv201ApplicationJSONFailedErrorTarget1 = "development"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1Production  CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 = "production"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1Preview     CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 = "preview"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1Development CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 = "development"
 )
 
-func (e CreateProjectEnv201ApplicationJSONFailedErrorTarget1) ToPointer() *CreateProjectEnv201ApplicationJSONFailedErrorTarget1 {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONFailedErrorTarget1) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2637,89 +2637,89 @@ func (e *CreateProjectEnv201ApplicationJSONFailedErrorTarget1) UnmarshalJSON(dat
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnv201ApplicationJSONFailedErrorTarget1(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONFailedErrorTarget1: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONFailedErrorTargetType string
+type CreateProjectEnvProjectsResponse201ApplicationJSONTargetType string
 
 const (
-	CreateProjectEnv201ApplicationJSONFailedErrorTargetTypeArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1 CreateProjectEnv201ApplicationJSONFailedErrorTargetType = "arrayOfcreateProjectEnv_201ApplicationJSON_failed_error_target_1"
-	CreateProjectEnv201ApplicationJSONFailedErrorTargetTypeCreateProjectEnv201ApplicationJSONFailedErrorTarget2        CreateProjectEnv201ApplicationJSONFailedErrorTargetType = "createProjectEnv_201ApplicationJSON_failed_error_target_2"
+	CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 CreateProjectEnvProjectsResponse201ApplicationJSONTargetType = "arrayOfcreateProjectEnv_projects_response_201_ApplicationJSON_responseBody_failed_1"
+	CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2        CreateProjectEnvProjectsResponse201ApplicationJSONTargetType = "createProjectEnv_projects_response_201_ApplicationJSON_responseBody_failed_2"
 )
 
-type CreateProjectEnv201ApplicationJSONFailedErrorTarget struct {
-	ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1 []CreateProjectEnv201ApplicationJSONFailedErrorTarget1
-	CreateProjectEnv201ApplicationJSONFailedErrorTarget2        *CreateProjectEnv201ApplicationJSONFailedErrorTarget2
+type CreateProjectEnvProjectsResponse201ApplicationJSONTarget struct {
+	ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2        *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2
 
-	Type CreateProjectEnv201ApplicationJSONFailedErrorTargetType
+	Type CreateProjectEnvProjectsResponse201ApplicationJSONTargetType
 }
 
-func CreateCreateProjectEnv201ApplicationJSONFailedErrorTargetArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1(arrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1 []CreateProjectEnv201ApplicationJSONFailedErrorTarget1) CreateProjectEnv201ApplicationJSONFailedErrorTarget {
-	typ := CreateProjectEnv201ApplicationJSONFailedErrorTargetTypeArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1
+func CreateCreateProjectEnvProjectsResponse201ApplicationJSONTargetArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1(arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1) CreateProjectEnvProjectsResponse201ApplicationJSONTarget {
+	typ := CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
 
-	return CreateProjectEnv201ApplicationJSONFailedErrorTarget{
-		ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1: arrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1,
+	return CreateProjectEnvProjectsResponse201ApplicationJSONTarget{
+		ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1: arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1,
 		Type: typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONFailedErrorTargetCreateProjectEnv201ApplicationJSONFailedErrorTarget2(createProjectEnv201ApplicationJSONFailedErrorTarget2 CreateProjectEnv201ApplicationJSONFailedErrorTarget2) CreateProjectEnv201ApplicationJSONFailedErrorTarget {
-	typ := CreateProjectEnv201ApplicationJSONFailedErrorTargetTypeCreateProjectEnv201ApplicationJSONFailedErrorTarget2
+func CreateCreateProjectEnvProjectsResponse201ApplicationJSONTargetCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2(createProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2 CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2) CreateProjectEnvProjectsResponse201ApplicationJSONTarget {
+	typ := CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2
 
-	return CreateProjectEnv201ApplicationJSONFailedErrorTarget{
-		CreateProjectEnv201ApplicationJSONFailedErrorTarget2: &createProjectEnv201ApplicationJSONFailedErrorTarget2,
+	return CreateProjectEnvProjectsResponse201ApplicationJSONTarget{
+		CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2: &createProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2,
 		Type: typ,
 	}
 }
 
-func (u *CreateProjectEnv201ApplicationJSONFailedErrorTarget) UnmarshalJSON(data []byte) error {
+func (u *CreateProjectEnvProjectsResponse201ApplicationJSONTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1 := []CreateProjectEnv201ApplicationJSONFailedErrorTarget1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1 = arrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1
-		u.Type = CreateProjectEnv201ApplicationJSONFailedErrorTargetTypeArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1
+	arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 := []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1, "", true, true); err == nil {
+		u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 = arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
+		u.Type = CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
 		return nil
 	}
 
-	createProjectEnv201ApplicationJSONFailedErrorTarget2 := new(CreateProjectEnv201ApplicationJSONFailedErrorTarget2)
-	if err := utils.UnmarshalJSON(data, &createProjectEnv201ApplicationJSONFailedErrorTarget2, "", true, true); err == nil {
-		u.CreateProjectEnv201ApplicationJSONFailedErrorTarget2 = createProjectEnv201ApplicationJSONFailedErrorTarget2
-		u.Type = CreateProjectEnv201ApplicationJSONFailedErrorTargetTypeCreateProjectEnv201ApplicationJSONFailedErrorTarget2
+	createProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2 := new(CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2)
+	if err := utils.UnmarshalJSON(data, &createProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2, "", true, true); err == nil {
+		u.CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2 = createProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2
+		u.Type = CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProjectEnv201ApplicationJSONFailedErrorTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorTarget1, "", true)
+func (u CreateProjectEnvProjectsResponse201ApplicationJSONTarget) MarshalJSON() ([]byte, error) {
+	if u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 != nil {
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1, "", true)
 	}
 
-	if u.CreateProjectEnv201ApplicationJSONFailedErrorTarget2 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnv201ApplicationJSONFailedErrorTarget2, "", true)
+	if u.CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProjectEnv201ApplicationJSONFailedErrorValue2 string
+type CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 string
 
 const (
-	CreateProjectEnv201ApplicationJSONFailedErrorValue2Production  CreateProjectEnv201ApplicationJSONFailedErrorValue2 = "production"
-	CreateProjectEnv201ApplicationJSONFailedErrorValue2Preview     CreateProjectEnv201ApplicationJSONFailedErrorValue2 = "preview"
-	CreateProjectEnv201ApplicationJSONFailedErrorValue2Development CreateProjectEnv201ApplicationJSONFailedErrorValue2 = "development"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2Production  CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 = "production"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2Preview     CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 = "preview"
+	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2Development CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 = "development"
 )
 
-func (e CreateProjectEnv201ApplicationJSONFailedErrorValue2) ToPointer() *CreateProjectEnv201ApplicationJSONFailedErrorValue2 {
+func (e CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2) ToPointer() *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 {
 	return &e
 }
 
-func (e *CreateProjectEnv201ApplicationJSONFailedErrorValue2) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2730,194 +2730,194 @@ func (e *CreateProjectEnv201ApplicationJSONFailedErrorValue2) UnmarshalJSON(data
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnv201ApplicationJSONFailedErrorValue2(v)
+		*e = CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnv201ApplicationJSONFailedErrorValue2: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2: %v", v)
 	}
 }
 
-type CreateProjectEnv201ApplicationJSONFailedErrorValueType string
+type ValueType string
 
 const (
-	CreateProjectEnv201ApplicationJSONFailedErrorValueTypeStr                                                        CreateProjectEnv201ApplicationJSONFailedErrorValueType = "str"
-	CreateProjectEnv201ApplicationJSONFailedErrorValueTypeArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2 CreateProjectEnv201ApplicationJSONFailedErrorValueType = "arrayOfcreateProjectEnv_201ApplicationJSON_failed_error_value_2"
+	ValueTypeStr                                                                               ValueType = "str"
+	ValueTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 ValueType = "arrayOfcreateProjectEnv_projects_response_201_ApplicationJSON_responseBody_failed_error_2"
 )
 
-type CreateProjectEnv201ApplicationJSONFailedErrorValue struct {
-	Str                                                        *string
-	ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2 []CreateProjectEnv201ApplicationJSONFailedErrorValue2
+type Value struct {
+	Str                                                                               *string
+	ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
 
-	Type CreateProjectEnv201ApplicationJSONFailedErrorValueType
+	Type ValueType
 }
 
-func CreateCreateProjectEnv201ApplicationJSONFailedErrorValueStr(str string) CreateProjectEnv201ApplicationJSONFailedErrorValue {
-	typ := CreateProjectEnv201ApplicationJSONFailedErrorValueTypeStr
+func CreateValueStr(str string) Value {
+	typ := ValueTypeStr
 
-	return CreateProjectEnv201ApplicationJSONFailedErrorValue{
+	return Value{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateCreateProjectEnv201ApplicationJSONFailedErrorValueArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2(arrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2 []CreateProjectEnv201ApplicationJSONFailedErrorValue2) CreateProjectEnv201ApplicationJSONFailedErrorValue {
-	typ := CreateProjectEnv201ApplicationJSONFailedErrorValueTypeArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2
+func CreateValueArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2(arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2) Value {
+	typ := ValueTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
 
-	return CreateProjectEnv201ApplicationJSONFailedErrorValue{
-		ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2: arrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2,
+	return Value{
+		ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2: arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2,
 		Type: typ,
 	}
 }
 
-func (u *CreateProjectEnv201ApplicationJSONFailedErrorValue) UnmarshalJSON(data []byte) error {
+func (u *Value) UnmarshalJSON(data []byte) error {
 
 	str := new(string)
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = CreateProjectEnv201ApplicationJSONFailedErrorValueTypeStr
+		u.Type = ValueTypeStr
 		return nil
 	}
 
-	arrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2 := []CreateProjectEnv201ApplicationJSONFailedErrorValue2{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2 = arrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2
-		u.Type = CreateProjectEnv201ApplicationJSONFailedErrorValueTypeArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2
+	arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 := []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2{}
+	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2, "", true, true); err == nil {
+		u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 = arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
+		u.Type = ValueTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateProjectEnv201ApplicationJSONFailedErrorValue) MarshalJSON() ([]byte, error) {
+func (u Value) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv201ApplicationJSONFailedErrorValue2, "", true)
+	if u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 != nil {
+		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateProjectEnv201ApplicationJSONFailedError struct {
-	Action    *string                                              `json:"action,omitempty"`
-	Code      string                                               `json:"code"`
-	EnvVarID  *string                                              `json:"envVarId,omitempty"`
-	EnvVarKey *string                                              `json:"envVarKey,omitempty"`
-	GitBranch *string                                              `json:"gitBranch,omitempty"`
-	Key       *string                                              `json:"key,omitempty"`
-	Link      *string                                              `json:"link,omitempty"`
-	Message   string                                               `json:"message"`
-	Project   *string                                              `json:"project,omitempty"`
-	Target    *CreateProjectEnv201ApplicationJSONFailedErrorTarget `json:"target,omitempty"`
-	Value     *CreateProjectEnv201ApplicationJSONFailedErrorValue  `json:"value,omitempty"`
+type CreateProjectEnvError struct {
+	Action    *string                                                   `json:"action,omitempty"`
+	Code      string                                                    `json:"code"`
+	EnvVarID  *string                                                   `json:"envVarId,omitempty"`
+	EnvVarKey *string                                                   `json:"envVarKey,omitempty"`
+	GitBranch *string                                                   `json:"gitBranch,omitempty"`
+	Key       *string                                                   `json:"key,omitempty"`
+	Link      *string                                                   `json:"link,omitempty"`
+	Message   string                                                    `json:"message"`
+	Project   *string                                                   `json:"project,omitempty"`
+	Target    *CreateProjectEnvProjectsResponse201ApplicationJSONTarget `json:"target,omitempty"`
+	Value     *Value                                                    `json:"value,omitempty"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailedError) GetAction() *string {
+func (o *CreateProjectEnvError) GetAction() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Action
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailedError) GetCode() string {
+func (o *CreateProjectEnvError) GetCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.Code
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailedError) GetEnvVarID() *string {
+func (o *CreateProjectEnvError) GetEnvVarID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EnvVarID
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailedError) GetEnvVarKey() *string {
+func (o *CreateProjectEnvError) GetEnvVarKey() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EnvVarKey
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailedError) GetGitBranch() *string {
+func (o *CreateProjectEnvError) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailedError) GetKey() *string {
+func (o *CreateProjectEnvError) GetKey() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Key
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailedError) GetLink() *string {
+func (o *CreateProjectEnvError) GetLink() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Link
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailedError) GetMessage() string {
+func (o *CreateProjectEnvError) GetMessage() string {
 	if o == nil {
 		return ""
 	}
 	return o.Message
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailedError) GetProject() *string {
+func (o *CreateProjectEnvError) GetProject() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Project
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailedError) GetTarget() *CreateProjectEnv201ApplicationJSONFailedErrorTarget {
+func (o *CreateProjectEnvError) GetTarget() *CreateProjectEnvProjectsResponse201ApplicationJSONTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailedError) GetValue() *CreateProjectEnv201ApplicationJSONFailedErrorValue {
+func (o *CreateProjectEnvError) GetValue() *Value {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type CreateProjectEnv201ApplicationJSONFailed struct {
-	Error CreateProjectEnv201ApplicationJSONFailedError `json:"error"`
+type Failed struct {
+	Error CreateProjectEnvError `json:"error"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSONFailed) GetError() CreateProjectEnv201ApplicationJSONFailedError {
+func (o *Failed) GetError() CreateProjectEnvError {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONFailedError{}
+		return CreateProjectEnvError{}
 	}
 	return o.Error
 }
 
-// CreateProjectEnv201ApplicationJSON - The environment variable was created successfully
-type CreateProjectEnv201ApplicationJSON struct {
-	Created CreateProjectEnv201ApplicationJSONCreated  `json:"created"`
-	Failed  []CreateProjectEnv201ApplicationJSONFailed `json:"failed"`
+// CreateProjectEnvResponseBody - The environment variable was created successfully
+type CreateProjectEnvResponseBody struct {
+	Created Created  `json:"created"`
+	Failed  []Failed `json:"failed"`
 }
 
-func (o *CreateProjectEnv201ApplicationJSON) GetCreated() CreateProjectEnv201ApplicationJSONCreated {
+func (o *CreateProjectEnvResponseBody) GetCreated() Created {
 	if o == nil {
-		return CreateProjectEnv201ApplicationJSONCreated{}
+		return Created{}
 	}
 	return o.Created
 }
 
-func (o *CreateProjectEnv201ApplicationJSON) GetFailed() []CreateProjectEnv201ApplicationJSONFailed {
+func (o *CreateProjectEnvResponseBody) GetFailed() []Failed {
 	if o == nil {
-		return []CreateProjectEnv201ApplicationJSONFailed{}
+		return []Failed{}
 	}
 	return o.Failed
 }
@@ -2930,7 +2930,7 @@ type CreateProjectEnvResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The environment variable was created successfully
-	CreateProjectEnv201ApplicationJSONObject *CreateProjectEnv201ApplicationJSON
+	Object *CreateProjectEnvResponseBody
 }
 
 func (o *CreateProjectEnvResponse) GetContentType() string {
@@ -2954,9 +2954,9 @@ func (o *CreateProjectEnvResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateProjectEnvResponse) GetCreateProjectEnv201ApplicationJSONObject() *CreateProjectEnv201ApplicationJSON {
+func (o *CreateProjectEnvResponse) GetObject() *CreateProjectEnvResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.CreateProjectEnv201ApplicationJSONObject
+	return o.Object
 }

@@ -31,21 +31,21 @@ func (o *GetConfigurationRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type GetConfiguration200ApplicationJSON2DisabledReason string
+type GetConfigurationDisabledReason string
 
 const (
-	GetConfiguration200ApplicationJSON2DisabledReasonLogDrainHighErrorRate         GetConfiguration200ApplicationJSON2DisabledReason = "log-drain-high-error-rate"
-	GetConfiguration200ApplicationJSON2DisabledReasonLogDrainsAddOnDisabledByOwner GetConfiguration200ApplicationJSON2DisabledReason = "log-drains-add-on-disabled-by-owner"
-	GetConfiguration200ApplicationJSON2DisabledReasonAccountPlanDowngrade          GetConfiguration200ApplicationJSON2DisabledReason = "account-plan-downgrade"
-	GetConfiguration200ApplicationJSON2DisabledReasonDisabledByAdmin               GetConfiguration200ApplicationJSON2DisabledReason = "disabled-by-admin"
-	GetConfiguration200ApplicationJSON2DisabledReasonOriginalOwnerLeftTheTeam      GetConfiguration200ApplicationJSON2DisabledReason = "original-owner-left-the-team"
+	GetConfigurationDisabledReasonLogDrainHighErrorRate         GetConfigurationDisabledReason = "log-drain-high-error-rate"
+	GetConfigurationDisabledReasonLogDrainsAddOnDisabledByOwner GetConfigurationDisabledReason = "log-drains-add-on-disabled-by-owner"
+	GetConfigurationDisabledReasonAccountPlanDowngrade          GetConfigurationDisabledReason = "account-plan-downgrade"
+	GetConfigurationDisabledReasonDisabledByAdmin               GetConfigurationDisabledReason = "disabled-by-admin"
+	GetConfigurationDisabledReasonOriginalOwnerLeftTheTeam      GetConfigurationDisabledReason = "original-owner-left-the-team"
 )
 
-func (e GetConfiguration200ApplicationJSON2DisabledReason) ToPointer() *GetConfiguration200ApplicationJSON2DisabledReason {
+func (e GetConfigurationDisabledReason) ToPointer() *GetConfigurationDisabledReason {
 	return &e
 }
 
-func (e *GetConfiguration200ApplicationJSON2DisabledReason) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationDisabledReason) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -60,26 +60,26 @@ func (e *GetConfiguration200ApplicationJSON2DisabledReason) UnmarshalJSON(data [
 	case "disabled-by-admin":
 		fallthrough
 	case "original-owner-left-the-team":
-		*e = GetConfiguration200ApplicationJSON2DisabledReason(v)
+		*e = GetConfigurationDisabledReason(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfiguration200ApplicationJSON2DisabledReason: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationDisabledReason: %v", v)
 	}
 }
 
-// GetConfiguration200ApplicationJSON2ProjectSelection - A string representing the permission for projects. Possible values are `all` or `selected`.
-type GetConfiguration200ApplicationJSON2ProjectSelection string
+// ProjectSelection - A string representing the permission for projects. Possible values are `all` or `selected`.
+type ProjectSelection string
 
 const (
-	GetConfiguration200ApplicationJSON2ProjectSelectionSelected GetConfiguration200ApplicationJSON2ProjectSelection = "selected"
-	GetConfiguration200ApplicationJSON2ProjectSelectionAll      GetConfiguration200ApplicationJSON2ProjectSelection = "all"
+	ProjectSelectionSelected ProjectSelection = "selected"
+	ProjectSelectionAll      ProjectSelection = "all"
 )
 
-func (e GetConfiguration200ApplicationJSON2ProjectSelection) ToPointer() *GetConfiguration200ApplicationJSON2ProjectSelection {
+func (e ProjectSelection) ToPointer() *ProjectSelection {
 	return &e
 }
 
-func (e *GetConfiguration200ApplicationJSON2ProjectSelection) UnmarshalJSON(data []byte) error {
+func (e *ProjectSelection) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -88,40 +88,40 @@ func (e *GetConfiguration200ApplicationJSON2ProjectSelection) UnmarshalJSON(data
 	case "selected":
 		fallthrough
 	case "all":
-		*e = GetConfiguration200ApplicationJSON2ProjectSelection(v)
+		*e = ProjectSelection(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfiguration200ApplicationJSON2ProjectSelection: %v", v)
+		return fmt.Errorf("invalid value for ProjectSelection: %v", v)
 	}
 }
 
-type GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded string
+type GetConfigurationAdded string
 
 const (
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadIntegrationConfiguration      GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read:integration-configuration"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadWriteIntegrationConfiguration GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read-write:integration-configuration"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadDeployment                    GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read:deployment"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadWriteDeployment               GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read-write:deployment"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadWriteDeploymentCheck          GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read-write:deployment-check"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadProject                       GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read:project"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadWriteProject                  GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read-write:project"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadWriteProjectEnvVars           GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read-write:project-env-vars"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadWriteGlobalProjectEnvVars     GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read-write:global-project-env-vars"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadTeam                          GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read:team"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadUser                          GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read:user"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadWriteLogDrain                 GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read-write:log-drain"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadDomain                        GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read:domain"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadWriteDomain                   GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read-write:domain"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadWriteEdgeConfig               GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read-write:edge-config"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadWriteOtelEndpoint             GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read-write:otel-endpoint"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesAddedReadMonitoring                    GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded = "read:monitoring"
+	GetConfigurationAddedReadIntegrationConfiguration      GetConfigurationAdded = "read:integration-configuration"
+	GetConfigurationAddedReadWriteIntegrationConfiguration GetConfigurationAdded = "read-write:integration-configuration"
+	GetConfigurationAddedReadDeployment                    GetConfigurationAdded = "read:deployment"
+	GetConfigurationAddedReadWriteDeployment               GetConfigurationAdded = "read-write:deployment"
+	GetConfigurationAddedReadWriteDeploymentCheck          GetConfigurationAdded = "read-write:deployment-check"
+	GetConfigurationAddedReadProject                       GetConfigurationAdded = "read:project"
+	GetConfigurationAddedReadWriteProject                  GetConfigurationAdded = "read-write:project"
+	GetConfigurationAddedReadWriteProjectEnvVars           GetConfigurationAdded = "read-write:project-env-vars"
+	GetConfigurationAddedReadWriteGlobalProjectEnvVars     GetConfigurationAdded = "read-write:global-project-env-vars"
+	GetConfigurationAddedReadTeam                          GetConfigurationAdded = "read:team"
+	GetConfigurationAddedReadUser                          GetConfigurationAdded = "read:user"
+	GetConfigurationAddedReadWriteLogDrain                 GetConfigurationAdded = "read-write:log-drain"
+	GetConfigurationAddedReadDomain                        GetConfigurationAdded = "read:domain"
+	GetConfigurationAddedReadWriteDomain                   GetConfigurationAdded = "read-write:domain"
+	GetConfigurationAddedReadWriteEdgeConfig               GetConfigurationAdded = "read-write:edge-config"
+	GetConfigurationAddedReadWriteOtelEndpoint             GetConfigurationAdded = "read-write:otel-endpoint"
+	GetConfigurationAddedReadMonitoring                    GetConfigurationAdded = "read:monitoring"
 )
 
-func (e GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded) ToPointer() *GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded {
+func (e GetConfigurationAdded) ToPointer() *GetConfigurationAdded {
 	return &e
 }
 
-func (e *GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationAdded) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -160,40 +160,40 @@ func (e *GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded) UnmarshalJSO
 	case "read-write:otel-endpoint":
 		fallthrough
 	case "read:monitoring":
-		*e = GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded(v)
+		*e = GetConfigurationAdded(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationAdded: %v", v)
 	}
 }
 
-type GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded string
+type GetConfigurationUpgraded string
 
 const (
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadIntegrationConfiguration      GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read:integration-configuration"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadWriteIntegrationConfiguration GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read-write:integration-configuration"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadDeployment                    GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read:deployment"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadWriteDeployment               GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read-write:deployment"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadWriteDeploymentCheck          GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read-write:deployment-check"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadProject                       GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read:project"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadWriteProject                  GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read-write:project"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadWriteProjectEnvVars           GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read-write:project-env-vars"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadWriteGlobalProjectEnvVars     GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read-write:global-project-env-vars"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadTeam                          GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read:team"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadUser                          GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read:user"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadWriteLogDrain                 GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read-write:log-drain"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadDomain                        GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read:domain"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadWriteDomain                   GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read-write:domain"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadWriteEdgeConfig               GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read-write:edge-config"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadWriteOtelEndpoint             GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read-write:otel-endpoint"
-	GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgradedReadMonitoring                    GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded = "read:monitoring"
+	GetConfigurationUpgradedReadIntegrationConfiguration      GetConfigurationUpgraded = "read:integration-configuration"
+	GetConfigurationUpgradedReadWriteIntegrationConfiguration GetConfigurationUpgraded = "read-write:integration-configuration"
+	GetConfigurationUpgradedReadDeployment                    GetConfigurationUpgraded = "read:deployment"
+	GetConfigurationUpgradedReadWriteDeployment               GetConfigurationUpgraded = "read-write:deployment"
+	GetConfigurationUpgradedReadWriteDeploymentCheck          GetConfigurationUpgraded = "read-write:deployment-check"
+	GetConfigurationUpgradedReadProject                       GetConfigurationUpgraded = "read:project"
+	GetConfigurationUpgradedReadWriteProject                  GetConfigurationUpgraded = "read-write:project"
+	GetConfigurationUpgradedReadWriteProjectEnvVars           GetConfigurationUpgraded = "read-write:project-env-vars"
+	GetConfigurationUpgradedReadWriteGlobalProjectEnvVars     GetConfigurationUpgraded = "read-write:global-project-env-vars"
+	GetConfigurationUpgradedReadTeam                          GetConfigurationUpgraded = "read:team"
+	GetConfigurationUpgradedReadUser                          GetConfigurationUpgraded = "read:user"
+	GetConfigurationUpgradedReadWriteLogDrain                 GetConfigurationUpgraded = "read-write:log-drain"
+	GetConfigurationUpgradedReadDomain                        GetConfigurationUpgraded = "read:domain"
+	GetConfigurationUpgradedReadWriteDomain                   GetConfigurationUpgraded = "read-write:domain"
+	GetConfigurationUpgradedReadWriteEdgeConfig               GetConfigurationUpgraded = "read-write:edge-config"
+	GetConfigurationUpgradedReadWriteOtelEndpoint             GetConfigurationUpgraded = "read-write:otel-endpoint"
+	GetConfigurationUpgradedReadMonitoring                    GetConfigurationUpgraded = "read:monitoring"
 )
 
-func (e GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded) ToPointer() *GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded {
+func (e GetConfigurationUpgraded) ToPointer() *GetConfigurationUpgraded {
 	return &e
 }
 
-func (e *GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationUpgraded) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -232,81 +232,81 @@ func (e *GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded) Unmarshal
 	case "read-write:otel-endpoint":
 		fallthrough
 	case "read:monitoring":
-		*e = GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded(v)
+		*e = GetConfigurationUpgraded(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationUpgraded: %v", v)
 	}
 }
 
-type GetConfiguration200ApplicationJSON2ScopesQueueScopes struct {
-	Added    []GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded    `json:"added"`
-	Upgraded []GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded `json:"upgraded"`
+type GetConfigurationScopes struct {
+	Added    []GetConfigurationAdded    `json:"added"`
+	Upgraded []GetConfigurationUpgraded `json:"upgraded"`
 }
 
-func (o *GetConfiguration200ApplicationJSON2ScopesQueueScopes) GetAdded() []GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded {
+func (o *GetConfigurationScopes) GetAdded() []GetConfigurationAdded {
 	if o == nil {
-		return []GetConfiguration200ApplicationJSON2ScopesQueueScopesAdded{}
+		return []GetConfigurationAdded{}
 	}
 	return o.Added
 }
 
-func (o *GetConfiguration200ApplicationJSON2ScopesQueueScopes) GetUpgraded() []GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded {
+func (o *GetConfigurationScopes) GetUpgraded() []GetConfigurationUpgraded {
 	if o == nil {
-		return []GetConfiguration200ApplicationJSON2ScopesQueueScopesUpgraded{}
+		return []GetConfigurationUpgraded{}
 	}
 	return o.Upgraded
 }
 
-type GetConfiguration200ApplicationJSON2ScopesQueue struct {
-	ConfirmedAt *int64                                               `json:"confirmedAt,omitempty"`
-	Note        string                                               `json:"note"`
-	RequestedAt int64                                                `json:"requestedAt"`
-	Scopes      GetConfiguration200ApplicationJSON2ScopesQueueScopes `json:"scopes"`
+type GetConfigurationScopesQueue struct {
+	ConfirmedAt *int64                 `json:"confirmedAt,omitempty"`
+	Note        string                 `json:"note"`
+	RequestedAt int64                  `json:"requestedAt"`
+	Scopes      GetConfigurationScopes `json:"scopes"`
 }
 
-func (o *GetConfiguration200ApplicationJSON2ScopesQueue) GetConfirmedAt() *int64 {
+func (o *GetConfigurationScopesQueue) GetConfirmedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ConfirmedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON2ScopesQueue) GetNote() string {
+func (o *GetConfigurationScopesQueue) GetNote() string {
 	if o == nil {
 		return ""
 	}
 	return o.Note
 }
 
-func (o *GetConfiguration200ApplicationJSON2ScopesQueue) GetRequestedAt() int64 {
+func (o *GetConfigurationScopesQueue) GetRequestedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.RequestedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON2ScopesQueue) GetScopes() GetConfiguration200ApplicationJSON2ScopesQueueScopes {
+func (o *GetConfigurationScopesQueue) GetScopes() GetConfigurationScopes {
 	if o == nil {
-		return GetConfiguration200ApplicationJSON2ScopesQueueScopes{}
+		return GetConfigurationScopes{}
 	}
 	return o.Scopes
 }
 
-// GetConfiguration200ApplicationJSON2Source - Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
-type GetConfiguration200ApplicationJSON2Source string
+// GetConfigurationIntegrationsSource - Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
+type GetConfigurationIntegrationsSource string
 
 const (
-	GetConfiguration200ApplicationJSON2SourceMarketplace  GetConfiguration200ApplicationJSON2Source = "marketplace"
-	GetConfiguration200ApplicationJSON2SourceDeployButton GetConfiguration200ApplicationJSON2Source = "deploy-button"
-	GetConfiguration200ApplicationJSON2SourceExternal     GetConfiguration200ApplicationJSON2Source = "external"
+	GetConfigurationIntegrationsSourceMarketplace  GetConfigurationIntegrationsSource = "marketplace"
+	GetConfigurationIntegrationsSourceDeployButton GetConfigurationIntegrationsSource = "deploy-button"
+	GetConfigurationIntegrationsSourceExternal     GetConfigurationIntegrationsSource = "external"
 )
 
-func (e GetConfiguration200ApplicationJSON2Source) ToPointer() *GetConfiguration200ApplicationJSON2Source {
+func (e GetConfigurationIntegrationsSource) ToPointer() *GetConfigurationIntegrationsSource {
 	return &e
 }
 
-func (e *GetConfiguration200ApplicationJSON2Source) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationIntegrationsSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -317,38 +317,38 @@ func (e *GetConfiguration200ApplicationJSON2Source) UnmarshalJSON(data []byte) e
 	case "deploy-button":
 		fallthrough
 	case "external":
-		*e = GetConfiguration200ApplicationJSON2Source(v)
+		*e = GetConfigurationIntegrationsSource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfiguration200ApplicationJSON2Source: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationIntegrationsSource: %v", v)
 	}
 }
 
-type GetConfiguration200ApplicationJSON2Type string
+type GetConfigurationIntegrationsType string
 
 const (
-	GetConfiguration200ApplicationJSON2TypeIntegrationConfiguration GetConfiguration200ApplicationJSON2Type = "integration-configuration"
+	GetConfigurationIntegrationsTypeIntegrationConfiguration GetConfigurationIntegrationsType = "integration-configuration"
 )
 
-func (e GetConfiguration200ApplicationJSON2Type) ToPointer() *GetConfiguration200ApplicationJSON2Type {
+func (e GetConfigurationIntegrationsType) ToPointer() *GetConfigurationIntegrationsType {
 	return &e
 }
 
-func (e *GetConfiguration200ApplicationJSON2Type) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationIntegrationsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "integration-configuration":
-		*e = GetConfiguration200ApplicationJSON2Type(v)
+		*e = GetConfigurationIntegrationsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfiguration200ApplicationJSON2Type: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationIntegrationsType: %v", v)
 	}
 }
 
-type GetConfiguration200ApplicationJSON2 struct {
+type GetConfiguration2 struct {
 	CanConfigureOpenTelemetry *bool `json:"canConfigureOpenTelemetry,omitempty"`
 	// A timestamp that tells you when the configuration was installed successfully
 	CompletedAt *int64 `json:"completedAt,omitempty"`
@@ -357,8 +357,8 @@ type GetConfiguration200ApplicationJSON2 struct {
 	// A timestamp that tells you when the configuration was updated.
 	DeletedAt *int64 `json:"deletedAt,omitempty"`
 	// A timestamp that tells you when the configuration was disabled. Note: Configurations can be disabled when the associated user loses access to a team. They do not function during this time until the configuration is 'transferred', meaning the associated user is changed to one with access to the team.
-	DisabledAt     *int64                                             `json:"disabledAt,omitempty"`
-	DisabledReason *GetConfiguration200ApplicationJSON2DisabledReason `json:"disabledReason,omitempty"`
+	DisabledAt     *int64                          `json:"disabledAt,omitempty"`
+	DisabledReason *GetConfigurationDisabledReason `json:"disabledReason,omitempty"`
 	// The unique identifier of the configuration
 	ID string `json:"id"`
 	// The unique identifier of the app the configuration was created for
@@ -366,7 +366,7 @@ type GetConfiguration200ApplicationJSON2 struct {
 	// The user or team ID that owns the configuration
 	OwnerID string `json:"ownerId"`
 	// A string representing the permission for projects. Possible values are `all` or `selected`.
-	ProjectSelection GetConfiguration200ApplicationJSON2ProjectSelection `json:"projectSelection"`
+	ProjectSelection ProjectSelection `json:"projectSelection"`
 	// When a configuration is limited to access certain projects, this will contain each of the project ID it is allowed to access. If it is not defined, the configuration has full access.
 	Projects             []string `json:"projects,omitempty"`
 	RemovedLogDrainsAt   *int64   `json:"removedLogDrainsAt,omitempty"`
@@ -374,197 +374,197 @@ type GetConfiguration200ApplicationJSON2 struct {
 	RemovedTokensAt      *int64   `json:"removedTokensAt,omitempty"`
 	RemovedWebhooksAt    *int64   `json:"removedWebhooksAt,omitempty"`
 	// The resources that are allowed to be accessed by the configuration.
-	Scopes      []string                                         `json:"scopes"`
-	ScopesQueue []GetConfiguration200ApplicationJSON2ScopesQueue `json:"scopesQueue,omitempty"`
+	Scopes      []string                      `json:"scopes"`
+	ScopesQueue []GetConfigurationScopesQueue `json:"scopesQueue,omitempty"`
 	// The slug of the integration the configuration is created for.
 	Slug string `json:"slug"`
 	// Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
-	Source *GetConfiguration200ApplicationJSON2Source `json:"source,omitempty"`
+	Source *GetConfigurationIntegrationsSource `json:"source,omitempty"`
 	// When the configuration was created for a team, this will show the ID of the team.
-	TeamID *string                                 `json:"teamId,omitempty"`
-	Type   GetConfiguration200ApplicationJSON2Type `json:"type"`
+	TeamID *string                          `json:"teamId,omitempty"`
+	Type   GetConfigurationIntegrationsType `json:"type"`
 	// A timestamp that tells you when the configuration was updated.
 	UpdatedAt int64 `json:"updatedAt"`
 	// The ID of the user that created the configuration.
 	UserID string `json:"userId"`
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetCanConfigureOpenTelemetry() *bool {
+func (o *GetConfiguration2) GetCanConfigureOpenTelemetry() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.CanConfigureOpenTelemetry
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetCompletedAt() *int64 {
+func (o *GetConfiguration2) GetCompletedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CompletedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetCreatedAt() int64 {
+func (o *GetConfiguration2) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetDeletedAt() *int64 {
+func (o *GetConfiguration2) GetDeletedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DeletedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetDisabledAt() *int64 {
+func (o *GetConfiguration2) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetDisabledReason() *GetConfiguration200ApplicationJSON2DisabledReason {
+func (o *GetConfiguration2) GetDisabledReason() *GetConfigurationDisabledReason {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledReason
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetID() string {
+func (o *GetConfiguration2) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetIntegrationID() string {
+func (o *GetConfiguration2) GetIntegrationID() string {
 	if o == nil {
 		return ""
 	}
 	return o.IntegrationID
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetOwnerID() string {
+func (o *GetConfiguration2) GetOwnerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.OwnerID
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetProjectSelection() GetConfiguration200ApplicationJSON2ProjectSelection {
+func (o *GetConfiguration2) GetProjectSelection() ProjectSelection {
 	if o == nil {
-		return GetConfiguration200ApplicationJSON2ProjectSelection("")
+		return ProjectSelection("")
 	}
 	return o.ProjectSelection
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetProjects() []string {
+func (o *GetConfiguration2) GetProjects() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Projects
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetRemovedLogDrainsAt() *int64 {
+func (o *GetConfiguration2) GetRemovedLogDrainsAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.RemovedLogDrainsAt
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetRemovedProjectEnvsAt() *int64 {
+func (o *GetConfiguration2) GetRemovedProjectEnvsAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.RemovedProjectEnvsAt
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetRemovedTokensAt() *int64 {
+func (o *GetConfiguration2) GetRemovedTokensAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.RemovedTokensAt
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetRemovedWebhooksAt() *int64 {
+func (o *GetConfiguration2) GetRemovedWebhooksAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.RemovedWebhooksAt
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetScopes() []string {
+func (o *GetConfiguration2) GetScopes() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Scopes
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetScopesQueue() []GetConfiguration200ApplicationJSON2ScopesQueue {
+func (o *GetConfiguration2) GetScopesQueue() []GetConfigurationScopesQueue {
 	if o == nil {
 		return nil
 	}
 	return o.ScopesQueue
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetSlug() string {
+func (o *GetConfiguration2) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetSource() *GetConfiguration200ApplicationJSON2Source {
+func (o *GetConfiguration2) GetSource() *GetConfigurationIntegrationsSource {
 	if o == nil {
 		return nil
 	}
 	return o.Source
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetTeamID() *string {
+func (o *GetConfiguration2) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetType() GetConfiguration200ApplicationJSON2Type {
+func (o *GetConfiguration2) GetType() GetConfigurationIntegrationsType {
 	if o == nil {
-		return GetConfiguration200ApplicationJSON2Type("")
+		return GetConfigurationIntegrationsType("")
 	}
 	return o.Type
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetUpdatedAt() int64 {
+func (o *GetConfiguration2) GetUpdatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.UpdatedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON2) GetUserID() string {
+func (o *GetConfiguration2) GetUserID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UserID
 }
 
-type GetConfiguration200ApplicationJSON1DisabledReason string
+type GetConfigurationIntegrationsDisabledReason string
 
 const (
-	GetConfiguration200ApplicationJSON1DisabledReasonLogDrainHighErrorRate         GetConfiguration200ApplicationJSON1DisabledReason = "log-drain-high-error-rate"
-	GetConfiguration200ApplicationJSON1DisabledReasonLogDrainsAddOnDisabledByOwner GetConfiguration200ApplicationJSON1DisabledReason = "log-drains-add-on-disabled-by-owner"
-	GetConfiguration200ApplicationJSON1DisabledReasonAccountPlanDowngrade          GetConfiguration200ApplicationJSON1DisabledReason = "account-plan-downgrade"
-	GetConfiguration200ApplicationJSON1DisabledReasonDisabledByAdmin               GetConfiguration200ApplicationJSON1DisabledReason = "disabled-by-admin"
-	GetConfiguration200ApplicationJSON1DisabledReasonOriginalOwnerLeftTheTeam      GetConfiguration200ApplicationJSON1DisabledReason = "original-owner-left-the-team"
+	GetConfigurationIntegrationsDisabledReasonLogDrainHighErrorRate         GetConfigurationIntegrationsDisabledReason = "log-drain-high-error-rate"
+	GetConfigurationIntegrationsDisabledReasonLogDrainsAddOnDisabledByOwner GetConfigurationIntegrationsDisabledReason = "log-drains-add-on-disabled-by-owner"
+	GetConfigurationIntegrationsDisabledReasonAccountPlanDowngrade          GetConfigurationIntegrationsDisabledReason = "account-plan-downgrade"
+	GetConfigurationIntegrationsDisabledReasonDisabledByAdmin               GetConfigurationIntegrationsDisabledReason = "disabled-by-admin"
+	GetConfigurationIntegrationsDisabledReasonOriginalOwnerLeftTheTeam      GetConfigurationIntegrationsDisabledReason = "original-owner-left-the-team"
 )
 
-func (e GetConfiguration200ApplicationJSON1DisabledReason) ToPointer() *GetConfiguration200ApplicationJSON1DisabledReason {
+func (e GetConfigurationIntegrationsDisabledReason) ToPointer() *GetConfigurationIntegrationsDisabledReason {
 	return &e
 }
 
-func (e *GetConfiguration200ApplicationJSON1DisabledReason) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationIntegrationsDisabledReason) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -579,40 +579,40 @@ func (e *GetConfiguration200ApplicationJSON1DisabledReason) UnmarshalJSON(data [
 	case "disabled-by-admin":
 		fallthrough
 	case "original-owner-left-the-team":
-		*e = GetConfiguration200ApplicationJSON1DisabledReason(v)
+		*e = GetConfigurationIntegrationsDisabledReason(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfiguration200ApplicationJSON1DisabledReason: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationIntegrationsDisabledReason: %v", v)
 	}
 }
 
-type GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded string
+type GetConfigurationIntegrationsAdded string
 
 const (
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadIntegrationConfiguration      GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read:integration-configuration"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadWriteIntegrationConfiguration GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read-write:integration-configuration"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadDeployment                    GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read:deployment"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadWriteDeployment               GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read-write:deployment"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadWriteDeploymentCheck          GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read-write:deployment-check"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadProject                       GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read:project"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadWriteProject                  GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read-write:project"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadWriteProjectEnvVars           GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read-write:project-env-vars"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadWriteGlobalProjectEnvVars     GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read-write:global-project-env-vars"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadTeam                          GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read:team"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadUser                          GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read:user"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadWriteLogDrain                 GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read-write:log-drain"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadDomain                        GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read:domain"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadWriteDomain                   GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read-write:domain"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadWriteEdgeConfig               GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read-write:edge-config"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadWriteOtelEndpoint             GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read-write:otel-endpoint"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesAddedReadMonitoring                    GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded = "read:monitoring"
+	GetConfigurationIntegrationsAddedReadIntegrationConfiguration      GetConfigurationIntegrationsAdded = "read:integration-configuration"
+	GetConfigurationIntegrationsAddedReadWriteIntegrationConfiguration GetConfigurationIntegrationsAdded = "read-write:integration-configuration"
+	GetConfigurationIntegrationsAddedReadDeployment                    GetConfigurationIntegrationsAdded = "read:deployment"
+	GetConfigurationIntegrationsAddedReadWriteDeployment               GetConfigurationIntegrationsAdded = "read-write:deployment"
+	GetConfigurationIntegrationsAddedReadWriteDeploymentCheck          GetConfigurationIntegrationsAdded = "read-write:deployment-check"
+	GetConfigurationIntegrationsAddedReadProject                       GetConfigurationIntegrationsAdded = "read:project"
+	GetConfigurationIntegrationsAddedReadWriteProject                  GetConfigurationIntegrationsAdded = "read-write:project"
+	GetConfigurationIntegrationsAddedReadWriteProjectEnvVars           GetConfigurationIntegrationsAdded = "read-write:project-env-vars"
+	GetConfigurationIntegrationsAddedReadWriteGlobalProjectEnvVars     GetConfigurationIntegrationsAdded = "read-write:global-project-env-vars"
+	GetConfigurationIntegrationsAddedReadTeam                          GetConfigurationIntegrationsAdded = "read:team"
+	GetConfigurationIntegrationsAddedReadUser                          GetConfigurationIntegrationsAdded = "read:user"
+	GetConfigurationIntegrationsAddedReadWriteLogDrain                 GetConfigurationIntegrationsAdded = "read-write:log-drain"
+	GetConfigurationIntegrationsAddedReadDomain                        GetConfigurationIntegrationsAdded = "read:domain"
+	GetConfigurationIntegrationsAddedReadWriteDomain                   GetConfigurationIntegrationsAdded = "read-write:domain"
+	GetConfigurationIntegrationsAddedReadWriteEdgeConfig               GetConfigurationIntegrationsAdded = "read-write:edge-config"
+	GetConfigurationIntegrationsAddedReadWriteOtelEndpoint             GetConfigurationIntegrationsAdded = "read-write:otel-endpoint"
+	GetConfigurationIntegrationsAddedReadMonitoring                    GetConfigurationIntegrationsAdded = "read:monitoring"
 )
 
-func (e GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded) ToPointer() *GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded {
+func (e GetConfigurationIntegrationsAdded) ToPointer() *GetConfigurationIntegrationsAdded {
 	return &e
 }
 
-func (e *GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationIntegrationsAdded) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -651,40 +651,40 @@ func (e *GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded) UnmarshalJSO
 	case "read-write:otel-endpoint":
 		fallthrough
 	case "read:monitoring":
-		*e = GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded(v)
+		*e = GetConfigurationIntegrationsAdded(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationIntegrationsAdded: %v", v)
 	}
 }
 
-type GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded string
+type GetConfigurationIntegrationsUpgraded string
 
 const (
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadIntegrationConfiguration      GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read:integration-configuration"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadWriteIntegrationConfiguration GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read-write:integration-configuration"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadDeployment                    GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read:deployment"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadWriteDeployment               GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read-write:deployment"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadWriteDeploymentCheck          GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read-write:deployment-check"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadProject                       GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read:project"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadWriteProject                  GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read-write:project"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadWriteProjectEnvVars           GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read-write:project-env-vars"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadWriteGlobalProjectEnvVars     GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read-write:global-project-env-vars"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadTeam                          GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read:team"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadUser                          GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read:user"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadWriteLogDrain                 GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read-write:log-drain"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadDomain                        GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read:domain"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadWriteDomain                   GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read-write:domain"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadWriteEdgeConfig               GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read-write:edge-config"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadWriteOtelEndpoint             GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read-write:otel-endpoint"
-	GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgradedReadMonitoring                    GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded = "read:monitoring"
+	GetConfigurationIntegrationsUpgradedReadIntegrationConfiguration      GetConfigurationIntegrationsUpgraded = "read:integration-configuration"
+	GetConfigurationIntegrationsUpgradedReadWriteIntegrationConfiguration GetConfigurationIntegrationsUpgraded = "read-write:integration-configuration"
+	GetConfigurationIntegrationsUpgradedReadDeployment                    GetConfigurationIntegrationsUpgraded = "read:deployment"
+	GetConfigurationIntegrationsUpgradedReadWriteDeployment               GetConfigurationIntegrationsUpgraded = "read-write:deployment"
+	GetConfigurationIntegrationsUpgradedReadWriteDeploymentCheck          GetConfigurationIntegrationsUpgraded = "read-write:deployment-check"
+	GetConfigurationIntegrationsUpgradedReadProject                       GetConfigurationIntegrationsUpgraded = "read:project"
+	GetConfigurationIntegrationsUpgradedReadWriteProject                  GetConfigurationIntegrationsUpgraded = "read-write:project"
+	GetConfigurationIntegrationsUpgradedReadWriteProjectEnvVars           GetConfigurationIntegrationsUpgraded = "read-write:project-env-vars"
+	GetConfigurationIntegrationsUpgradedReadWriteGlobalProjectEnvVars     GetConfigurationIntegrationsUpgraded = "read-write:global-project-env-vars"
+	GetConfigurationIntegrationsUpgradedReadTeam                          GetConfigurationIntegrationsUpgraded = "read:team"
+	GetConfigurationIntegrationsUpgradedReadUser                          GetConfigurationIntegrationsUpgraded = "read:user"
+	GetConfigurationIntegrationsUpgradedReadWriteLogDrain                 GetConfigurationIntegrationsUpgraded = "read-write:log-drain"
+	GetConfigurationIntegrationsUpgradedReadDomain                        GetConfigurationIntegrationsUpgraded = "read:domain"
+	GetConfigurationIntegrationsUpgradedReadWriteDomain                   GetConfigurationIntegrationsUpgraded = "read-write:domain"
+	GetConfigurationIntegrationsUpgradedReadWriteEdgeConfig               GetConfigurationIntegrationsUpgraded = "read-write:edge-config"
+	GetConfigurationIntegrationsUpgradedReadWriteOtelEndpoint             GetConfigurationIntegrationsUpgraded = "read-write:otel-endpoint"
+	GetConfigurationIntegrationsUpgradedReadMonitoring                    GetConfigurationIntegrationsUpgraded = "read:monitoring"
 )
 
-func (e GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded) ToPointer() *GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded {
+func (e GetConfigurationIntegrationsUpgraded) ToPointer() *GetConfigurationIntegrationsUpgraded {
 	return &e
 }
 
-func (e *GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationIntegrationsUpgraded) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -723,81 +723,81 @@ func (e *GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded) Unmarshal
 	case "read-write:otel-endpoint":
 		fallthrough
 	case "read:monitoring":
-		*e = GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded(v)
+		*e = GetConfigurationIntegrationsUpgraded(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationIntegrationsUpgraded: %v", v)
 	}
 }
 
-type GetConfiguration200ApplicationJSON1ScopesQueueScopes struct {
-	Added    []GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded    `json:"added"`
-	Upgraded []GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded `json:"upgraded"`
+type GetConfigurationIntegrationsScopes struct {
+	Added    []GetConfigurationIntegrationsAdded    `json:"added"`
+	Upgraded []GetConfigurationIntegrationsUpgraded `json:"upgraded"`
 }
 
-func (o *GetConfiguration200ApplicationJSON1ScopesQueueScopes) GetAdded() []GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded {
+func (o *GetConfigurationIntegrationsScopes) GetAdded() []GetConfigurationIntegrationsAdded {
 	if o == nil {
-		return []GetConfiguration200ApplicationJSON1ScopesQueueScopesAdded{}
+		return []GetConfigurationIntegrationsAdded{}
 	}
 	return o.Added
 }
 
-func (o *GetConfiguration200ApplicationJSON1ScopesQueueScopes) GetUpgraded() []GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded {
+func (o *GetConfigurationIntegrationsScopes) GetUpgraded() []GetConfigurationIntegrationsUpgraded {
 	if o == nil {
-		return []GetConfiguration200ApplicationJSON1ScopesQueueScopesUpgraded{}
+		return []GetConfigurationIntegrationsUpgraded{}
 	}
 	return o.Upgraded
 }
 
-type GetConfiguration200ApplicationJSON1ScopesQueue struct {
-	ConfirmedAt *int64                                               `json:"confirmedAt,omitempty"`
-	Note        string                                               `json:"note"`
-	RequestedAt int64                                                `json:"requestedAt"`
-	Scopes      GetConfiguration200ApplicationJSON1ScopesQueueScopes `json:"scopes"`
+type GetConfigurationIntegrationsScopesQueue struct {
+	ConfirmedAt *int64                             `json:"confirmedAt,omitempty"`
+	Note        string                             `json:"note"`
+	RequestedAt int64                              `json:"requestedAt"`
+	Scopes      GetConfigurationIntegrationsScopes `json:"scopes"`
 }
 
-func (o *GetConfiguration200ApplicationJSON1ScopesQueue) GetConfirmedAt() *int64 {
+func (o *GetConfigurationIntegrationsScopesQueue) GetConfirmedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ConfirmedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON1ScopesQueue) GetNote() string {
+func (o *GetConfigurationIntegrationsScopesQueue) GetNote() string {
 	if o == nil {
 		return ""
 	}
 	return o.Note
 }
 
-func (o *GetConfiguration200ApplicationJSON1ScopesQueue) GetRequestedAt() int64 {
+func (o *GetConfigurationIntegrationsScopesQueue) GetRequestedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.RequestedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON1ScopesQueue) GetScopes() GetConfiguration200ApplicationJSON1ScopesQueueScopes {
+func (o *GetConfigurationIntegrationsScopesQueue) GetScopes() GetConfigurationIntegrationsScopes {
 	if o == nil {
-		return GetConfiguration200ApplicationJSON1ScopesQueueScopes{}
+		return GetConfigurationIntegrationsScopes{}
 	}
 	return o.Scopes
 }
 
-// GetConfiguration200ApplicationJSON1Source - Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
-type GetConfiguration200ApplicationJSON1Source string
+// GetConfigurationSource - Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
+type GetConfigurationSource string
 
 const (
-	GetConfiguration200ApplicationJSON1SourceMarketplace  GetConfiguration200ApplicationJSON1Source = "marketplace"
-	GetConfiguration200ApplicationJSON1SourceDeployButton GetConfiguration200ApplicationJSON1Source = "deploy-button"
-	GetConfiguration200ApplicationJSON1SourceExternal     GetConfiguration200ApplicationJSON1Source = "external"
+	GetConfigurationSourceMarketplace  GetConfigurationSource = "marketplace"
+	GetConfigurationSourceDeployButton GetConfigurationSource = "deploy-button"
+	GetConfigurationSourceExternal     GetConfigurationSource = "external"
 )
 
-func (e GetConfiguration200ApplicationJSON1Source) ToPointer() *GetConfiguration200ApplicationJSON1Source {
+func (e GetConfigurationSource) ToPointer() *GetConfigurationSource {
 	return &e
 }
 
-func (e *GetConfiguration200ApplicationJSON1Source) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -808,38 +808,38 @@ func (e *GetConfiguration200ApplicationJSON1Source) UnmarshalJSON(data []byte) e
 	case "deploy-button":
 		fallthrough
 	case "external":
-		*e = GetConfiguration200ApplicationJSON1Source(v)
+		*e = GetConfigurationSource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfiguration200ApplicationJSON1Source: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationSource: %v", v)
 	}
 }
 
-type GetConfiguration200ApplicationJSON1Type string
+type GetConfigurationType string
 
 const (
-	GetConfiguration200ApplicationJSON1TypeIntegrationConfiguration GetConfiguration200ApplicationJSON1Type = "integration-configuration"
+	GetConfigurationTypeIntegrationConfiguration GetConfigurationType = "integration-configuration"
 )
 
-func (e GetConfiguration200ApplicationJSON1Type) ToPointer() *GetConfiguration200ApplicationJSON1Type {
+func (e GetConfigurationType) ToPointer() *GetConfigurationType {
 	return &e
 }
 
-func (e *GetConfiguration200ApplicationJSON1Type) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "integration-configuration":
-		*e = GetConfiguration200ApplicationJSON1Type(v)
+		*e = GetConfigurationType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfiguration200ApplicationJSON1Type: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationType: %v", v)
 	}
 }
 
-type GetConfiguration200ApplicationJSON1 struct {
+type GetConfiguration1 struct {
 	// A timestamp that tells you when the configuration was installed successfully
 	CompletedAt *int64 `json:"completedAt,omitempty"`
 	// A timestamp that tells you when the configuration was created
@@ -847,8 +847,8 @@ type GetConfiguration200ApplicationJSON1 struct {
 	// A timestamp that tells you when the configuration was updated.
 	DeletedAt *int64 `json:"deletedAt,omitempty"`
 	// A timestamp that tells you when the configuration was disabled. Note: Configurations can be disabled when the associated user loses access to a team. They do not function during this time until the configuration is 'transferred', meaning the associated user is changed to one with access to the team.
-	DisabledAt     *int64                                             `json:"disabledAt,omitempty"`
-	DisabledReason *GetConfiguration200ApplicationJSON1DisabledReason `json:"disabledReason,omitempty"`
+	DisabledAt     *int64                                      `json:"disabledAt,omitempty"`
+	DisabledReason *GetConfigurationIntegrationsDisabledReason `json:"disabledReason,omitempty"`
 	// The unique identifier of the configuration
 	ID string `json:"id"`
 	// The unique identifier of the app the configuration was created for
@@ -862,226 +862,226 @@ type GetConfiguration200ApplicationJSON1 struct {
 	RemovedTokensAt      *int64   `json:"removedTokensAt,omitempty"`
 	RemovedWebhooksAt    *int64   `json:"removedWebhooksAt,omitempty"`
 	// The resources that are allowed to be accessed by the configuration.
-	Scopes      []string                                         `json:"scopes"`
-	ScopesQueue []GetConfiguration200ApplicationJSON1ScopesQueue `json:"scopesQueue,omitempty"`
+	Scopes      []string                                  `json:"scopes"`
+	ScopesQueue []GetConfigurationIntegrationsScopesQueue `json:"scopesQueue,omitempty"`
 	// The slug of the integration the configuration is created for.
 	Slug string `json:"slug"`
 	// Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
-	Source *GetConfiguration200ApplicationJSON1Source `json:"source,omitempty"`
+	Source *GetConfigurationSource `json:"source,omitempty"`
 	// When the configuration was created for a team, this will show the ID of the team.
-	TeamID *string                                 `json:"teamId,omitempty"`
-	Type   GetConfiguration200ApplicationJSON1Type `json:"type"`
+	TeamID *string              `json:"teamId,omitempty"`
+	Type   GetConfigurationType `json:"type"`
 	// A timestamp that tells you when the configuration was updated.
 	UpdatedAt int64 `json:"updatedAt"`
 	// The ID of the user that created the configuration.
 	UserID string `json:"userId"`
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetCompletedAt() *int64 {
+func (o *GetConfiguration1) GetCompletedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CompletedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetCreatedAt() int64 {
+func (o *GetConfiguration1) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetDeletedAt() *int64 {
+func (o *GetConfiguration1) GetDeletedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DeletedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetDisabledAt() *int64 {
+func (o *GetConfiguration1) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetDisabledReason() *GetConfiguration200ApplicationJSON1DisabledReason {
+func (o *GetConfiguration1) GetDisabledReason() *GetConfigurationIntegrationsDisabledReason {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledReason
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetID() string {
+func (o *GetConfiguration1) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetIntegrationID() string {
+func (o *GetConfiguration1) GetIntegrationID() string {
 	if o == nil {
 		return ""
 	}
 	return o.IntegrationID
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetOwnerID() string {
+func (o *GetConfiguration1) GetOwnerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.OwnerID
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetProjects() []string {
+func (o *GetConfiguration1) GetProjects() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Projects
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetRemovedLogDrainsAt() *int64 {
+func (o *GetConfiguration1) GetRemovedLogDrainsAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.RemovedLogDrainsAt
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetRemovedProjectEnvsAt() *int64 {
+func (o *GetConfiguration1) GetRemovedProjectEnvsAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.RemovedProjectEnvsAt
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetRemovedTokensAt() *int64 {
+func (o *GetConfiguration1) GetRemovedTokensAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.RemovedTokensAt
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetRemovedWebhooksAt() *int64 {
+func (o *GetConfiguration1) GetRemovedWebhooksAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.RemovedWebhooksAt
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetScopes() []string {
+func (o *GetConfiguration1) GetScopes() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Scopes
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetScopesQueue() []GetConfiguration200ApplicationJSON1ScopesQueue {
+func (o *GetConfiguration1) GetScopesQueue() []GetConfigurationIntegrationsScopesQueue {
 	if o == nil {
 		return nil
 	}
 	return o.ScopesQueue
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetSlug() string {
+func (o *GetConfiguration1) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetSource() *GetConfiguration200ApplicationJSON1Source {
+func (o *GetConfiguration1) GetSource() *GetConfigurationSource {
 	if o == nil {
 		return nil
 	}
 	return o.Source
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetTeamID() *string {
+func (o *GetConfiguration1) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetType() GetConfiguration200ApplicationJSON1Type {
+func (o *GetConfiguration1) GetType() GetConfigurationType {
 	if o == nil {
-		return GetConfiguration200ApplicationJSON1Type("")
+		return GetConfigurationType("")
 	}
 	return o.Type
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetUpdatedAt() int64 {
+func (o *GetConfiguration1) GetUpdatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.UpdatedAt
 }
 
-func (o *GetConfiguration200ApplicationJSON1) GetUserID() string {
+func (o *GetConfiguration1) GetUserID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UserID
 }
 
-type GetConfiguration200ApplicationJSONType string
+type GetConfigurationResponseBodyType string
 
 const (
-	GetConfiguration200ApplicationJSONTypeGetConfiguration200ApplicationJSON1 GetConfiguration200ApplicationJSONType = "getConfiguration_200ApplicationJSON_1"
-	GetConfiguration200ApplicationJSONTypeGetConfiguration200ApplicationJSON2 GetConfiguration200ApplicationJSONType = "getConfiguration_200ApplicationJSON_2"
+	GetConfigurationResponseBodyTypeGetConfiguration1 GetConfigurationResponseBodyType = "getConfiguration_1"
+	GetConfigurationResponseBodyTypeGetConfiguration2 GetConfigurationResponseBodyType = "getConfiguration_2"
 )
 
-type GetConfiguration200ApplicationJSON struct {
-	GetConfiguration200ApplicationJSON1 *GetConfiguration200ApplicationJSON1
-	GetConfiguration200ApplicationJSON2 *GetConfiguration200ApplicationJSON2
+type GetConfigurationResponseBody struct {
+	GetConfiguration1 *GetConfiguration1
+	GetConfiguration2 *GetConfiguration2
 
-	Type GetConfiguration200ApplicationJSONType
+	Type GetConfigurationResponseBodyType
 }
 
-func CreateGetConfiguration200ApplicationJSONGetConfiguration200ApplicationJSON1(getConfiguration200ApplicationJSON1 GetConfiguration200ApplicationJSON1) GetConfiguration200ApplicationJSON {
-	typ := GetConfiguration200ApplicationJSONTypeGetConfiguration200ApplicationJSON1
+func CreateGetConfigurationResponseBodyGetConfiguration1(getConfiguration1 GetConfiguration1) GetConfigurationResponseBody {
+	typ := GetConfigurationResponseBodyTypeGetConfiguration1
 
-	return GetConfiguration200ApplicationJSON{
-		GetConfiguration200ApplicationJSON1: &getConfiguration200ApplicationJSON1,
-		Type:                                typ,
+	return GetConfigurationResponseBody{
+		GetConfiguration1: &getConfiguration1,
+		Type:              typ,
 	}
 }
 
-func CreateGetConfiguration200ApplicationJSONGetConfiguration200ApplicationJSON2(getConfiguration200ApplicationJSON2 GetConfiguration200ApplicationJSON2) GetConfiguration200ApplicationJSON {
-	typ := GetConfiguration200ApplicationJSONTypeGetConfiguration200ApplicationJSON2
+func CreateGetConfigurationResponseBodyGetConfiguration2(getConfiguration2 GetConfiguration2) GetConfigurationResponseBody {
+	typ := GetConfigurationResponseBodyTypeGetConfiguration2
 
-	return GetConfiguration200ApplicationJSON{
-		GetConfiguration200ApplicationJSON2: &getConfiguration200ApplicationJSON2,
-		Type:                                typ,
+	return GetConfigurationResponseBody{
+		GetConfiguration2: &getConfiguration2,
+		Type:              typ,
 	}
 }
 
-func (u *GetConfiguration200ApplicationJSON) UnmarshalJSON(data []byte) error {
+func (u *GetConfigurationResponseBody) UnmarshalJSON(data []byte) error {
 
-	getConfiguration200ApplicationJSON1 := new(GetConfiguration200ApplicationJSON1)
-	if err := utils.UnmarshalJSON(data, &getConfiguration200ApplicationJSON1, "", true, true); err == nil {
-		u.GetConfiguration200ApplicationJSON1 = getConfiguration200ApplicationJSON1
-		u.Type = GetConfiguration200ApplicationJSONTypeGetConfiguration200ApplicationJSON1
+	getConfiguration1 := new(GetConfiguration1)
+	if err := utils.UnmarshalJSON(data, &getConfiguration1, "", true, true); err == nil {
+		u.GetConfiguration1 = getConfiguration1
+		u.Type = GetConfigurationResponseBodyTypeGetConfiguration1
 		return nil
 	}
 
-	getConfiguration200ApplicationJSON2 := new(GetConfiguration200ApplicationJSON2)
-	if err := utils.UnmarshalJSON(data, &getConfiguration200ApplicationJSON2, "", true, true); err == nil {
-		u.GetConfiguration200ApplicationJSON2 = getConfiguration200ApplicationJSON2
-		u.Type = GetConfiguration200ApplicationJSONTypeGetConfiguration200ApplicationJSON2
+	getConfiguration2 := new(GetConfiguration2)
+	if err := utils.UnmarshalJSON(data, &getConfiguration2, "", true, true); err == nil {
+		u.GetConfiguration2 = getConfiguration2
+		u.Type = GetConfigurationResponseBodyTypeGetConfiguration2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetConfiguration200ApplicationJSON) MarshalJSON() ([]byte, error) {
-	if u.GetConfiguration200ApplicationJSON1 != nil {
-		return utils.MarshalJSON(u.GetConfiguration200ApplicationJSON1, "", true)
+func (u GetConfigurationResponseBody) MarshalJSON() ([]byte, error) {
+	if u.GetConfiguration1 != nil {
+		return utils.MarshalJSON(u.GetConfiguration1, "", true)
 	}
 
-	if u.GetConfiguration200ApplicationJSON2 != nil {
-		return utils.MarshalJSON(u.GetConfiguration200ApplicationJSON2, "", true)
+	if u.GetConfiguration2 != nil {
+		return utils.MarshalJSON(u.GetConfiguration2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -1093,8 +1093,8 @@ type GetConfigurationResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                             *http.Response
-	GetConfiguration200ApplicationJSONOneOf *GetConfiguration200ApplicationJSON
+	RawResponse *http.Response
+	OneOf       *GetConfigurationResponseBody
 }
 
 func (o *GetConfigurationResponse) GetContentType() string {
@@ -1118,9 +1118,9 @@ func (o *GetConfigurationResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetConfigurationResponse) GetGetConfiguration200ApplicationJSONOneOf() *GetConfiguration200ApplicationJSON {
+func (o *GetConfigurationResponse) GetOneOf() *GetConfigurationResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetConfiguration200ApplicationJSONOneOf
+	return o.OneOf
 }

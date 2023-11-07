@@ -27,12 +27,12 @@ func (o *DeleteDomainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// DeleteDomain200ApplicationJSON - Successful response removing a domain.
-type DeleteDomain200ApplicationJSON struct {
+// DeleteDomainResponseBody - Successful response removing a domain.
+type DeleteDomainResponseBody struct {
 	UID string `json:"uid"`
 }
 
-func (o *DeleteDomain200ApplicationJSON) GetUID() string {
+func (o *DeleteDomainResponseBody) GetUID() string {
 	if o == nil {
 		return ""
 	}
@@ -47,7 +47,7 @@ type DeleteDomainResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response removing a domain.
-	DeleteDomain200ApplicationJSONObject *DeleteDomain200ApplicationJSON
+	Object *DeleteDomainResponseBody
 }
 
 func (o *DeleteDomainResponse) GetContentType() string {
@@ -71,9 +71,9 @@ func (o *DeleteDomainResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *DeleteDomainResponse) GetDeleteDomain200ApplicationJSONObject() *DeleteDomain200ApplicationJSON {
+func (o *DeleteDomainResponse) GetObject() *DeleteDomainResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.DeleteDomain200ApplicationJSONObject
+	return o.Object
 }

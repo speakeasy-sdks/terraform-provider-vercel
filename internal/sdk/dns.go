@@ -13,19 +13,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type dns struct {
+type DNS struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newDNS(sdkConfig sdkConfiguration) *dns {
-	return &dns{
+func newDNS(sdkConfig sdkConfiguration) *DNS {
+	return &DNS{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // CreateRecord - Create a DNS record
 // Creates a DNS record for a domain.
-func (s *dns) CreateRecord(ctx context.Context, request operations.CreateRecordRequest) (*operations.CreateRecordResponse, error) {
+func (s *DNS) CreateRecord(ctx context.Context, request operations.CreateRecordRequest) (*operations.CreateRecordResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/domains/{domain}/records", request, nil)
 	if err != nil {
@@ -81,12 +81,12 @@ func (s *dns) CreateRecord(ctx context.Context, request operations.CreateRecordR
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.CreateRecord200ApplicationJSON
+			var out operations.CreateRecordResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CreateRecord200ApplicationJSONOneOf = &out
+			res.OneOf = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -108,7 +108,7 @@ func (s *dns) CreateRecord(ctx context.Context, request operations.CreateRecordR
 
 // GetRecords - List existing DNS records
 // Retrieves a list of DNS records created for a domain name. By default it returns 20 records if no limit is provided. The rest can be retrieved using the pagination options.
-func (s *dns) GetRecords(ctx context.Context, request operations.GetRecordsRequest) (*operations.GetRecordsResponse, error) {
+func (s *DNS) GetRecords(ctx context.Context, request operations.GetRecordsRequest) (*operations.GetRecordsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v4/domains/{domain}/records", request, nil)
 	if err != nil {
@@ -154,12 +154,12 @@ func (s *dns) GetRecords(ctx context.Context, request operations.GetRecordsReque
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetRecords200ApplicationJSON
+			var out operations.GetRecordsResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetRecords200ApplicationJSONOneOf = &out
+			res.OneOf = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -177,7 +177,7 @@ func (s *dns) GetRecords(ctx context.Context, request operations.GetRecordsReque
 
 // RemoveRecord - Delete a DNS record
 // Removes an existing DNS record from a domain name.
-func (s *dns) RemoveRecord(ctx context.Context, request operations.RemoveRecordRequest) (*operations.RemoveRecordResponse, error) {
+func (s *DNS) RemoveRecord(ctx context.Context, request operations.RemoveRecordRequest) (*operations.RemoveRecordResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/domains/{domain}/records/{recordId}", request, nil)
 	if err != nil {
@@ -223,12 +223,12 @@ func (s *dns) RemoveRecord(ctx context.Context, request operations.RemoveRecordR
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.RemoveRecord200ApplicationJSON
+			var out operations.RemoveRecordResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.RemoveRecord200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -246,7 +246,7 @@ func (s *dns) RemoveRecord(ctx context.Context, request operations.RemoveRecordR
 
 // UpdateRecord - Update an existing DNS record
 // Updates an existing DNS record for a domain name.
-func (s *dns) UpdateRecord(ctx context.Context, request operations.UpdateRecordRequest) (*operations.UpdateRecordResponse, error) {
+func (s *DNS) UpdateRecord(ctx context.Context, request operations.UpdateRecordRequest) (*operations.UpdateRecordResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/domains/records/{recordId}", request, nil)
 	if err != nil {
@@ -302,12 +302,12 @@ func (s *dns) UpdateRecord(ctx context.Context, request operations.UpdateRecordR
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.UpdateRecord200ApplicationJSON
+			var out operations.UpdateRecordResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.UpdateRecord200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

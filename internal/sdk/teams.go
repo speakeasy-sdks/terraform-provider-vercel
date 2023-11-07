@@ -15,19 +15,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type teams struct {
+type Teams struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newTeams(sdkConfig sdkConfiguration) *teams {
-	return &teams{
+func newTeams(sdkConfig sdkConfiguration) *Teams {
+	return &Teams{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // CreateTeam - Create a Team
 // Create a new Team under your account. You need to send a POST request with the desired Team slug, and optionally the Team name.
-func (s *teams) CreateTeam(ctx context.Context, request *operations.CreateTeamRequestBody) (*operations.CreateTeamResponse, error) {
+func (s *Teams) CreateTeam(ctx context.Context, request *operations.CreateTeamRequestBody) (*operations.CreateTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v1/teams"
 
@@ -76,12 +76,12 @@ func (s *teams) CreateTeam(ctx context.Context, request *operations.CreateTeamRe
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.CreateTeam200ApplicationJSON
+			var out operations.CreateTeamResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CreateTeam200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -97,7 +97,7 @@ func (s *teams) CreateTeam(ctx context.Context, request *operations.CreateTeamRe
 
 // DeleteTeam - Delete a Team
 // Delete a team under your account. You need to send a `DELETE` request with the desired team `id`. An optional array of reasons for deletion may also be sent.
-func (s *teams) DeleteTeam(ctx context.Context, request operations.DeleteTeamRequest) (*operations.DeleteTeamResponse, error) {
+func (s *Teams) DeleteTeam(ctx context.Context, request operations.DeleteTeamRequest) (*operations.DeleteTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}", request, nil)
 	if err != nil {
@@ -149,12 +149,12 @@ func (s *teams) DeleteTeam(ctx context.Context, request operations.DeleteTeamReq
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.DeleteTeam200ApplicationJSON
+			var out operations.DeleteTeamResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.DeleteTeam200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -174,7 +174,7 @@ func (s *teams) DeleteTeam(ctx context.Context, request operations.DeleteTeamReq
 
 // DeleteTeamInviteCode - Delete a Team invite code
 // Delete an active Team invite code.
-func (s *teams) DeleteTeamInviteCode(ctx context.Context, request operations.DeleteTeamInviteCodeRequest) (*operations.DeleteTeamInviteCodeResponse, error) {
+func (s *Teams) DeleteTeamInviteCode(ctx context.Context, request operations.DeleteTeamInviteCodeRequest) (*operations.DeleteTeamInviteCodeResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/invites/{inviteId}", request, nil)
 	if err != nil {
@@ -216,12 +216,12 @@ func (s *teams) DeleteTeamInviteCode(ctx context.Context, request operations.Del
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.DeleteTeamInviteCode200ApplicationJSON
+			var out operations.DeleteTeamInviteCodeResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.DeleteTeamInviteCode200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -239,7 +239,7 @@ func (s *teams) DeleteTeamInviteCode(ctx context.Context, request operations.Del
 
 // GetTeam - Get a Team
 // Get information for the Team specified by the `teamId` parameter.
-func (s *teams) GetTeam(ctx context.Context, request operations.GetTeamRequest) (*operations.GetTeamResponse, error) {
+func (s *Teams) GetTeam(ctx context.Context, request operations.GetTeamRequest) (*operations.GetTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/teams/{teamId}", request, nil)
 	if err != nil {
@@ -308,7 +308,7 @@ func (s *teams) GetTeam(ctx context.Context, request operations.GetTeamRequest) 
 
 // GetTeamAccessRequest - Get access request status
 // Check the status of a join request. It'll respond with a 404 if the request has been declined. If no `userId` path segment was provided, this endpoint will instead return the status of the authenticated user.
-func (s *teams) GetTeamAccessRequest(ctx context.Context, request operations.GetTeamAccessRequestRequest) (*operations.GetTeamAccessRequestResponse, error) {
+func (s *Teams) GetTeamAccessRequest(ctx context.Context, request operations.GetTeamAccessRequestRequest) (*operations.GetTeamAccessRequestResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/request/{userId}", request, nil)
 	if err != nil {
@@ -350,12 +350,12 @@ func (s *teams) GetTeamAccessRequest(ctx context.Context, request operations.Get
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetTeamAccessRequest200ApplicationJSON
+			var out operations.GetTeamAccessRequestResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetTeamAccessRequest200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -373,7 +373,7 @@ func (s *teams) GetTeamAccessRequest(ctx context.Context, request operations.Get
 
 // GetTeamMembers - List team members
 // Get a paginated list of team members for the provided team.
-func (s *teams) GetTeamMembers(ctx context.Context, request operations.GetTeamMembersRequest) (*operations.GetTeamMembersResponse, error) {
+func (s *Teams) GetTeamMembers(ctx context.Context, request operations.GetTeamMembersRequest) (*operations.GetTeamMembersResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/teams/{teamId}/members", request, nil)
 	if err != nil {
@@ -419,12 +419,12 @@ func (s *teams) GetTeamMembers(ctx context.Context, request operations.GetTeamMe
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetTeamMembers200ApplicationJSON
+			var out operations.GetTeamMembersResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetTeamMembers200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -442,7 +442,7 @@ func (s *teams) GetTeamMembers(ctx context.Context, request operations.GetTeamMe
 
 // GetTeams - List all teams
 // Get a paginated list of all the Teams the authenticated User is a member of.
-func (s *teams) GetTeams(ctx context.Context, request operations.GetTeamsRequest) (*operations.GetTeamsResponse, error) {
+func (s *Teams) GetTeams(ctx context.Context, request operations.GetTeamsRequest) (*operations.GetTeamsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v2/teams"
 
@@ -485,12 +485,12 @@ func (s *teams) GetTeams(ctx context.Context, request operations.GetTeamsRequest
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetTeams200ApplicationJSON
+			var out operations.GetTeamsResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetTeams200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -506,7 +506,7 @@ func (s *teams) GetTeams(ctx context.Context, request operations.GetTeamsRequest
 
 // InviteUserToTeam - Invite a user
 // Invite a user to join the team specified in the URL. The authenticated user needs to be an `OWNER` in order to successfully invoke this endpoint. The user can be specified with an email or an ID. If both email and ID are provided, ID will take priority.
-func (s *teams) InviteUserToTeam(ctx context.Context, request operations.InviteUserToTeamRequest) (*operations.InviteUserToTeamResponse, error) {
+func (s *Teams) InviteUserToTeam(ctx context.Context, request operations.InviteUserToTeamRequest) (*operations.InviteUserToTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/members", request, nil)
 	if err != nil {
@@ -558,12 +558,12 @@ func (s *teams) InviteUserToTeam(ctx context.Context, request operations.InviteU
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.InviteUserToTeam200ApplicationJSON
+			var out operations.InviteUserToTeamResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.InviteUserToTeam200ApplicationJSONOneOf = &out
+			res.OneOf = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -581,7 +581,7 @@ func (s *teams) InviteUserToTeam(ctx context.Context, request operations.InviteU
 
 // JoinTeam - Join a team
 // Join a team with a provided invite code or team ID.
-func (s *teams) JoinTeam(ctx context.Context, request operations.JoinTeamRequest) (*operations.JoinTeamResponse, error) {
+func (s *Teams) JoinTeam(ctx context.Context, request operations.JoinTeamRequest) (*operations.JoinTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/members/teams/join", request, nil)
 	if err != nil {
@@ -633,12 +633,12 @@ func (s *teams) JoinTeam(ctx context.Context, request operations.JoinTeamRequest
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.JoinTeam200ApplicationJSON
+			var out operations.JoinTeamResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.JoinTeam200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -658,7 +658,7 @@ func (s *teams) JoinTeam(ctx context.Context, request operations.JoinTeamRequest
 
 // PatchTeam - Update a Team
 // Update the information of a Team specified by the `teamId` parameter. The request body should contain the information that will be updated on the Team.
-func (s *teams) PatchTeam(ctx context.Context, request operations.PatchTeamRequest) (*operations.PatchTeamResponse, error) {
+func (s *Teams) PatchTeam(ctx context.Context, request operations.PatchTeamRequest) (*operations.PatchTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/teams/{teamId}", request, nil)
 	if err != nil {
@@ -735,7 +735,7 @@ func (s *teams) PatchTeam(ctx context.Context, request operations.PatchTeamReque
 
 // RemoveTeamMember - Remove a Team Member
 // Remove a Team Member from the Team, or dismiss a user that requested access, or leave a team.
-func (s *teams) RemoveTeamMember(ctx context.Context, request operations.RemoveTeamMemberRequest) (*operations.RemoveTeamMemberResponse, error) {
+func (s *Teams) RemoveTeamMember(ctx context.Context, request operations.RemoveTeamMemberRequest) (*operations.RemoveTeamMemberResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/members/{uid}", request, nil)
 	if err != nil {
@@ -777,12 +777,12 @@ func (s *teams) RemoveTeamMember(ctx context.Context, request operations.RemoveT
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.RemoveTeamMember200ApplicationJSON
+			var out operations.RemoveTeamMemberResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.RemoveTeamMember200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -800,7 +800,7 @@ func (s *teams) RemoveTeamMember(ctx context.Context, request operations.RemoveT
 
 // RequestAccessToTeam - Request access to a team
 // Request access to a team as a member. An owner has to approve the request. Only 10 users can request access to a team at the same time.
-func (s *teams) RequestAccessToTeam(ctx context.Context, request operations.RequestAccessToTeamRequest) (*operations.RequestAccessToTeamResponse, error) {
+func (s *Teams) RequestAccessToTeam(ctx context.Context, request operations.RequestAccessToTeamRequest) (*operations.RequestAccessToTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/request", request, nil)
 	if err != nil {
@@ -852,12 +852,12 @@ func (s *teams) RequestAccessToTeam(ctx context.Context, request operations.Requ
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.RequestAccessToTeam200ApplicationJSON
+			var out operations.RequestAccessToTeamResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.RequestAccessToTeam200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -875,7 +875,7 @@ func (s *teams) RequestAccessToTeam(ctx context.Context, request operations.Requ
 
 // UpdateTeamMember - Update a Team Member
 // Update the membership of a Team Member on the Team specified by `teamId`, such as changing the _role_ of the member, or confirming a request to join the Team for an unconfirmed member. The authenticated user must be an `OWNER` of the Team.
-func (s *teams) UpdateTeamMember(ctx context.Context, request operations.UpdateTeamMemberRequest) (*operations.UpdateTeamMemberResponse, error) {
+func (s *Teams) UpdateTeamMember(ctx context.Context, request operations.UpdateTeamMemberRequest) (*operations.UpdateTeamMemberResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v1/teams/{teamId}/members/{uid}", request, nil)
 	if err != nil {
@@ -927,12 +927,12 @@ func (s *teams) UpdateTeamMember(ctx context.Context, request operations.UpdateT
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.UpdateTeamMember200ApplicationJSON
+			var out operations.UpdateTeamMemberResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.UpdateTeamMember200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

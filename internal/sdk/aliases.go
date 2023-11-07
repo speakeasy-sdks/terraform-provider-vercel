@@ -13,19 +13,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type aliases struct {
+type Aliases struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAliases(sdkConfig sdkConfiguration) *aliases {
-	return &aliases{
+func newAliases(sdkConfig sdkConfiguration) *Aliases {
+	return &Aliases{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // AssignAlias - Assign an Alias
 // Creates a new alias for the deployment with the given deployment ID. The authenticated user must own this deployment. If the desired alias is already assigned to another deployment, then it will be removed from the old deployment and assigned to the new one.
-func (s *aliases) AssignAlias(ctx context.Context, request operations.AssignAliasRequest) (*operations.AssignAliasResponse, error) {
+func (s *Aliases) AssignAlias(ctx context.Context, request operations.AssignAliasRequest) (*operations.AssignAliasResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/deployments/{id}/aliases", request, nil)
 	if err != nil {
@@ -81,12 +81,12 @@ func (s *aliases) AssignAlias(ctx context.Context, request operations.AssignAlia
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.AssignAlias200ApplicationJSON
+			var out operations.AssignAliasResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.AssignAlias200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -108,7 +108,7 @@ func (s *aliases) AssignAlias(ctx context.Context, request operations.AssignAlia
 
 // DeleteAlias - Delete an Alias
 // Delete an Alias with the specified ID.
-func (s *aliases) DeleteAlias(ctx context.Context, request operations.DeleteAliasRequest) (*operations.DeleteAliasResponse, error) {
+func (s *Aliases) DeleteAlias(ctx context.Context, request operations.DeleteAliasRequest) (*operations.DeleteAliasResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/aliases/{aliasId}", request, nil)
 	if err != nil {
@@ -154,12 +154,12 @@ func (s *aliases) DeleteAlias(ctx context.Context, request operations.DeleteAlia
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.DeleteAlias200ApplicationJSON
+			var out operations.DeleteAliasResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.DeleteAlias200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -177,7 +177,7 @@ func (s *aliases) DeleteAlias(ctx context.Context, request operations.DeleteAlia
 
 // GetAlias - Get an Alias
 // Retrieves an Alias for the given host name or alias ID.
-func (s *aliases) GetAlias(ctx context.Context, request operations.GetAliasRequest) (*operations.GetAliasResponse, error) {
+func (s *Aliases) GetAlias(ctx context.Context, request operations.GetAliasRequest) (*operations.GetAliasResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v4/aliases/{idOrAlias}", request, nil)
 	if err != nil {
@@ -223,12 +223,12 @@ func (s *aliases) GetAlias(ctx context.Context, request operations.GetAliasReque
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetAlias200ApplicationJSON
+			var out operations.GetAliasResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetAlias200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -246,7 +246,7 @@ func (s *aliases) GetAlias(ctx context.Context, request operations.GetAliasReque
 
 // ListDeploymentAliases - List Deployment Aliases
 // Retrieves all Aliases for the Deployment with the given ID. The authenticated User must own the deployment.
-func (s *aliases) ListDeploymentAliases(ctx context.Context, request operations.ListDeploymentAliasesRequest) (*operations.ListDeploymentAliasesResponse, error) {
+func (s *Aliases) ListDeploymentAliases(ctx context.Context, request operations.ListDeploymentAliasesRequest) (*operations.ListDeploymentAliasesResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/deployments/{id}/aliases", request, nil)
 	if err != nil {
@@ -292,12 +292,12 @@ func (s *aliases) ListDeploymentAliases(ctx context.Context, request operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.ListDeploymentAliases200ApplicationJSON
+			var out operations.ListDeploymentAliasesResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ListDeploymentAliases200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

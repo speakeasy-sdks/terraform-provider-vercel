@@ -46,8 +46,8 @@ func (o *JoinTeamRequest) GetTeamID() string {
 	return o.TeamID
 }
 
-// JoinTeam200ApplicationJSON - Successfully joined a team.
-type JoinTeam200ApplicationJSON struct {
+// JoinTeamResponseBody - Successfully joined a team.
+type JoinTeamResponseBody struct {
 	// The origin of how the user joined.
 	From string `json:"from"`
 	// The name of the team the user joined.
@@ -58,28 +58,28 @@ type JoinTeam200ApplicationJSON struct {
 	TeamID string `json:"teamId"`
 }
 
-func (o *JoinTeam200ApplicationJSON) GetFrom() string {
+func (o *JoinTeamResponseBody) GetFrom() string {
 	if o == nil {
 		return ""
 	}
 	return o.From
 }
 
-func (o *JoinTeam200ApplicationJSON) GetName() string {
+func (o *JoinTeamResponseBody) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *JoinTeam200ApplicationJSON) GetSlug() string {
+func (o *JoinTeamResponseBody) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *JoinTeam200ApplicationJSON) GetTeamID() string {
+func (o *JoinTeamResponseBody) GetTeamID() string {
 	if o == nil {
 		return ""
 	}
@@ -94,7 +94,7 @@ type JoinTeamResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successfully joined a team.
-	JoinTeam200ApplicationJSONObject *JoinTeam200ApplicationJSON
+	Object *JoinTeamResponseBody
 }
 
 func (o *JoinTeamResponse) GetContentType() string {
@@ -118,9 +118,9 @@ func (o *JoinTeamResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *JoinTeamResponse) GetJoinTeam200ApplicationJSONObject() *JoinTeam200ApplicationJSON {
+func (o *JoinTeamResponse) GetObject() *JoinTeamResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.JoinTeam200ApplicationJSONObject
+	return o.Object
 }

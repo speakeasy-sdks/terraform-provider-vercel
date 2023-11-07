@@ -29,7 +29,7 @@ func (o *CreateTeamRequestBody) GetSlug() string {
 	return o.Slug
 }
 
-type CreateTeam200ApplicationJSONBillingAddress struct {
+type Address struct {
 	City       *string `json:"city,omitempty"`
 	Country    *string `json:"country,omitempty"`
 	Line1      string  `json:"line1"`
@@ -38,98 +38,98 @@ type CreateTeam200ApplicationJSONBillingAddress struct {
 	State      *string `json:"state,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingAddress) GetCity() *string {
+func (o *Address) GetCity() *string {
 	if o == nil {
 		return nil
 	}
 	return o.City
 }
 
-func (o *CreateTeam200ApplicationJSONBillingAddress) GetCountry() *string {
+func (o *Address) GetCountry() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Country
 }
 
-func (o *CreateTeam200ApplicationJSONBillingAddress) GetLine1() string {
+func (o *Address) GetLine1() string {
 	if o == nil {
 		return ""
 	}
 	return o.Line1
 }
 
-func (o *CreateTeam200ApplicationJSONBillingAddress) GetLine2() *string {
+func (o *Address) GetLine2() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Line2
 }
 
-func (o *CreateTeam200ApplicationJSONBillingAddress) GetPostalCode() *string {
+func (o *Address) GetPostalCode() *string {
 	if o == nil {
 		return nil
 	}
 	return o.PostalCode
 }
 
-func (o *CreateTeam200ApplicationJSONBillingAddress) GetState() *string {
+func (o *Address) GetState() *string {
 	if o == nil {
 		return nil
 	}
 	return o.State
 }
 
-type CreateTeam200ApplicationJSONBillingContract struct {
+type Contract struct {
 	End   int64 `json:"end"`
 	Start int64 `json:"start"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingContract) GetEnd() int64 {
+func (o *Contract) GetEnd() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.End
 }
 
-func (o *CreateTeam200ApplicationJSONBillingContract) GetStart() int64 {
+func (o *Contract) GetStart() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Start
 }
 
-type CreateTeam200ApplicationJSONBillingControls struct {
+type Controls struct {
 	AnalyticsSampleRateInPercent *int64 `json:"analyticsSampleRateInPercent,omitempty"`
 	AnalyticsSpendLimitInDollars *int64 `json:"analyticsSpendLimitInDollars,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingControls) GetAnalyticsSampleRateInPercent() *int64 {
+func (o *Controls) GetAnalyticsSampleRateInPercent() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.AnalyticsSampleRateInPercent
 }
 
-func (o *CreateTeam200ApplicationJSONBillingControls) GetAnalyticsSpendLimitInDollars() *int64 {
+func (o *Controls) GetAnalyticsSpendLimitInDollars() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.AnalyticsSpendLimitInDollars
 }
 
-type CreateTeam200ApplicationJSONBillingCurrency string
+type Currency string
 
 const (
-	CreateTeam200ApplicationJSONBillingCurrencyUsd CreateTeam200ApplicationJSONBillingCurrency = "usd"
-	CreateTeam200ApplicationJSONBillingCurrencyEur CreateTeam200ApplicationJSONBillingCurrency = "eur"
+	CurrencyUsd Currency = "usd"
+	CurrencyEur Currency = "eur"
 )
 
-func (e CreateTeam200ApplicationJSONBillingCurrency) ToPointer() *CreateTeam200ApplicationJSONBillingCurrency {
+func (e Currency) ToPointer() *Currency {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingCurrency) UnmarshalJSON(data []byte) error {
+func (e *Currency) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -138,52 +138,52 @@ func (e *CreateTeam200ApplicationJSONBillingCurrency) UnmarshalJSON(data []byte)
 	case "usd":
 		fallthrough
 	case "eur":
-		*e = CreateTeam200ApplicationJSONBillingCurrency(v)
+		*e = Currency(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingCurrency: %v", v)
+		return fmt.Errorf("invalid value for Currency: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyInterval string
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval string
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalMonth CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyInterval = "month"
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsIntervalMonth CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval = "month"
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyInterval) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyInterval {
+func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyInterval) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "month":
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyInterval(v)
+		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyInterval: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount int64
+type IntervalCount int64
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCountOne    CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount = 1
-	CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCountTwelve CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount = 12
-	CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCountTwo    CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount = 2
-	CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCountThree  CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount = 3
-	CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCountSix    CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount = 6
+	IntervalCountOne    IntervalCount = 1
+	IntervalCountTwelve IntervalCount = 12
+	IntervalCountTwo    IntervalCount = 2
+	IntervalCountThree  IntervalCount = 3
+	IntervalCountSix    IntervalCount = 6
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount {
+func (e IntervalCount) ToPointer() *IntervalCount {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount) UnmarshalJSON(data []byte) error {
+func (e *IntervalCount) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -198,109 +198,109 @@ func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyInterv
 	case 3:
 		fallthrough
 	case 6:
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount(v)
+		*e = IntervalCount(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount: %v", v)
+		return fmt.Errorf("invalid value for IntervalCount: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequency struct {
-	Interval      CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyInterval      `json:"interval"`
-	IntervalCount CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount `json:"intervalCount"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency struct {
+	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval `json:"interval"`
+	IntervalCount IntervalCount                                                                             `json:"intervalCount"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequency) GetInterval() CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyInterval {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyInterval("")
+		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval("")
 	}
 	return o.Interval
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequency) GetIntervalCount() CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency) GetIntervalCount() IntervalCount {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequencyIntervalCount(0)
+		return IntervalCount(0)
 	}
 	return o.IntervalCount
 }
 
-// CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-type CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics struct {
-	CreatedAt   *int64                                                             `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                             `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                               `json:"hidden"`
-	MaxQuantity *int64                                                             `json:"maxQuantity,omitempty"`
-	Name        *string                                                            `json:"name,omitempty"`
-	Price       int64                                                              `json:"price"`
-	Quantity    int64                                                              `json:"quantity"`
-	Tier        *int64                                                             `json:"tier,omitempty"`
+// CreateTeamAnalytics - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
+type CreateTeamAnalytics struct {
+	CreatedAt   *int64                                                                                      `json:"createdAt,omitempty"`
+	DisabledAt  *int64                                                                                      `json:"disabledAt,omitempty"`
+	Frequency   *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency `json:"frequency,omitempty"`
+	Hidden      bool                                                                                        `json:"hidden"`
+	MaxQuantity *int64                                                                                      `json:"maxQuantity,omitempty"`
+	Name        *string                                                                                     `json:"name,omitempty"`
+	Price       int64                                                                                       `json:"price"`
+	Quantity    int64                                                                                       `json:"quantity"`
+	Tier        *int64                                                                                      `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics) GetCreatedAt() *int64 {
+func (o *CreateTeamAnalytics) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics) GetDisabledAt() *int64 {
+func (o *CreateTeamAnalytics) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics) GetFrequency() *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsFrequency {
+func (o *CreateTeamAnalytics) GetFrequency() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency {
 	if o == nil {
 		return nil
 	}
 	return o.Frequency
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics) GetHidden() bool {
+func (o *CreateTeamAnalytics) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics) GetMaxQuantity() *int64 {
+func (o *CreateTeamAnalytics) GetMaxQuantity() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxQuantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics) GetName() *string {
+func (o *CreateTeamAnalytics) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics) GetPrice() int64 {
+func (o *CreateTeamAnalytics) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics) GetQuantity() int64 {
+func (o *CreateTeamAnalytics) GetQuantity() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics) GetTier() *int64 {
+func (o *CreateTeamAnalytics) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage struct {
+type AnalyticsUsage struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -311,63 +311,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage) GetBatch() int64 {
+func (o *AnalyticsUsage) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage) GetDisabledAt() *int64 {
+func (o *AnalyticsUsage) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage) GetEnabledAt() *int64 {
+func (o *AnalyticsUsage) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage) GetHidden() bool {
+func (o *AnalyticsUsage) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage) GetName() *string {
+func (o *AnalyticsUsage) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage) GetPrice() int64 {
+func (o *AnalyticsUsage) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage) GetThreshold() int64 {
+func (o *AnalyticsUsage) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage) GetTier() *int64 {
+func (o *AnalyticsUsage) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts struct {
+type Artifacts struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -378,63 +378,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts) GetBatch() int64 {
+func (o *Artifacts) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts) GetDisabledAt() *int64 {
+func (o *Artifacts) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts) GetEnabledAt() *int64 {
+func (o *Artifacts) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts) GetHidden() bool {
+func (o *Artifacts) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts) GetName() *string {
+func (o *Artifacts) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts) GetPrice() int64 {
+func (o *Artifacts) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts) GetThreshold() int64 {
+func (o *Artifacts) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts) GetTier() *int64 {
+func (o *Artifacts) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth struct {
+type Bandwidth struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -445,101 +445,101 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth) GetBatch() int64 {
+func (o *Bandwidth) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth) GetDisabledAt() *int64 {
+func (o *Bandwidth) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth) GetEnabledAt() *int64 {
+func (o *Bandwidth) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth) GetHidden() bool {
+func (o *Bandwidth) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth) GetName() *string {
+func (o *Bandwidth) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth) GetPrice() int64 {
+func (o *Bandwidth) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth) GetThreshold() int64 {
+func (o *Bandwidth) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth) GetTier() *int64 {
+func (o *Bandwidth) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyInterval string
+type CreateTeamInterval string
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalMonth CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyInterval = "month"
+	CreateTeamIntervalMonth CreateTeamInterval = "month"
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyInterval) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyInterval {
+func (e CreateTeamInterval) ToPointer() *CreateTeamInterval {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyInterval) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "month":
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyInterval(v)
+		*e = CreateTeamInterval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyInterval: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamInterval: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount int64
+type CreateTeamIntervalCount int64
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCountOne    CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount = 1
-	CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCountTwelve CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount = 12
-	CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCountTwo    CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount = 2
-	CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCountThree  CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount = 3
-	CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCountSix    CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount = 6
+	CreateTeamIntervalCountOne    CreateTeamIntervalCount = 1
+	CreateTeamIntervalCountTwelve CreateTeamIntervalCount = 12
+	CreateTeamIntervalCountTwo    CreateTeamIntervalCount = 2
+	CreateTeamIntervalCountThree  CreateTeamIntervalCount = 3
+	CreateTeamIntervalCountSix    CreateTeamIntervalCount = 6
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount {
+func (e CreateTeamIntervalCount) ToPointer() *CreateTeamIntervalCount {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamIntervalCount) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -554,109 +554,109 @@ func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequenc
 	case 3:
 		fallthrough
 	case 6:
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount(v)
+		*e = CreateTeamIntervalCount(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamIntervalCount: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequency struct {
-	Interval      CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyInterval      `json:"interval"`
-	IntervalCount CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount `json:"intervalCount"`
+type CreateTeamFrequency struct {
+	Interval      CreateTeamInterval      `json:"interval"`
+	IntervalCount CreateTeamIntervalCount `json:"intervalCount"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequency) GetInterval() CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyInterval {
+func (o *CreateTeamFrequency) GetInterval() CreateTeamInterval {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyInterval("")
+		return CreateTeamInterval("")
 	}
 	return o.Interval
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequency) GetIntervalCount() CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount {
+func (o *CreateTeamFrequency) GetIntervalCount() CreateTeamIntervalCount {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequencyIntervalCount(0)
+		return CreateTeamIntervalCount(0)
 	}
 	return o.IntervalCount
 }
 
-// CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-type CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds struct {
-	CreatedAt   *int64                                                                    `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                                    `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                                      `json:"hidden"`
-	MaxQuantity *int64                                                                    `json:"maxQuantity,omitempty"`
-	Name        *string                                                                   `json:"name,omitempty"`
-	Price       int64                                                                     `json:"price"`
-	Quantity    int64                                                                     `json:"quantity"`
-	Tier        *int64                                                                    `json:"tier,omitempty"`
+// ConcurrentBuilds - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
+type ConcurrentBuilds struct {
+	CreatedAt   *int64               `json:"createdAt,omitempty"`
+	DisabledAt  *int64               `json:"disabledAt,omitempty"`
+	Frequency   *CreateTeamFrequency `json:"frequency,omitempty"`
+	Hidden      bool                 `json:"hidden"`
+	MaxQuantity *int64               `json:"maxQuantity,omitempty"`
+	Name        *string              `json:"name,omitempty"`
+	Price       int64                `json:"price"`
+	Quantity    int64                `json:"quantity"`
+	Tier        *int64               `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds) GetCreatedAt() *int64 {
+func (o *ConcurrentBuilds) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds) GetDisabledAt() *int64 {
+func (o *ConcurrentBuilds) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds) GetFrequency() *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuildsFrequency {
+func (o *ConcurrentBuilds) GetFrequency() *CreateTeamFrequency {
 	if o == nil {
 		return nil
 	}
 	return o.Frequency
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds) GetHidden() bool {
+func (o *ConcurrentBuilds) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds) GetMaxQuantity() *int64 {
+func (o *ConcurrentBuilds) GetMaxQuantity() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxQuantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds) GetName() *string {
+func (o *ConcurrentBuilds) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds) GetPrice() int64 {
+func (o *ConcurrentBuilds) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds) GetQuantity() int64 {
+func (o *ConcurrentBuilds) GetQuantity() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds) GetTier() *int64 {
+func (o *ConcurrentBuilds) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation struct {
+type CronJobInvocation struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -667,63 +667,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation) GetBatch() int64 {
+func (o *CronJobInvocation) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation) GetDisabledAt() *int64 {
+func (o *CronJobInvocation) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation) GetEnabledAt() *int64 {
+func (o *CronJobInvocation) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation) GetHidden() bool {
+func (o *CronJobInvocation) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation) GetName() *string {
+func (o *CronJobInvocation) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation) GetPrice() int64 {
+func (o *CronJobInvocation) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation) GetThreshold() int64 {
+func (o *CronJobInvocation) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation) GetTier() *int64 {
+func (o *CronJobInvocation) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead struct {
+type DataCacheRead struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -734,63 +734,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead) GetBatch() int64 {
+func (o *DataCacheRead) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead) GetDisabledAt() *int64 {
+func (o *DataCacheRead) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead) GetEnabledAt() *int64 {
+func (o *DataCacheRead) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead) GetHidden() bool {
+func (o *DataCacheRead) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead) GetName() *string {
+func (o *DataCacheRead) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead) GetPrice() int64 {
+func (o *DataCacheRead) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead) GetThreshold() int64 {
+func (o *DataCacheRead) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead) GetTier() *int64 {
+func (o *DataCacheRead) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation struct {
+type DataCacheRevalidation struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -801,63 +801,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation struct
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation) GetBatch() int64 {
+func (o *DataCacheRevalidation) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation) GetDisabledAt() *int64 {
+func (o *DataCacheRevalidation) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation) GetEnabledAt() *int64 {
+func (o *DataCacheRevalidation) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation) GetHidden() bool {
+func (o *DataCacheRevalidation) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation) GetName() *string {
+func (o *DataCacheRevalidation) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation) GetPrice() int64 {
+func (o *DataCacheRevalidation) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation) GetThreshold() int64 {
+func (o *DataCacheRevalidation) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation) GetTier() *int64 {
+func (o *DataCacheRevalidation) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite struct {
+type DataCacheWrite struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -868,63 +868,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite) GetBatch() int64 {
+func (o *DataCacheWrite) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite) GetDisabledAt() *int64 {
+func (o *DataCacheWrite) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite) GetEnabledAt() *int64 {
+func (o *DataCacheWrite) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite) GetHidden() bool {
+func (o *DataCacheWrite) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite) GetName() *string {
+func (o *DataCacheWrite) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite) GetPrice() int64 {
+func (o *DataCacheWrite) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite) GetThreshold() int64 {
+func (o *DataCacheWrite) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite) GetTier() *int64 {
+func (o *DataCacheWrite) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead struct {
+type EdgeConfigRead struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -935,63 +935,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead) GetBatch() int64 {
+func (o *EdgeConfigRead) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead) GetDisabledAt() *int64 {
+func (o *EdgeConfigRead) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead) GetEnabledAt() *int64 {
+func (o *EdgeConfigRead) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead) GetHidden() bool {
+func (o *EdgeConfigRead) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead) GetName() *string {
+func (o *EdgeConfigRead) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead) GetPrice() int64 {
+func (o *EdgeConfigRead) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead) GetThreshold() int64 {
+func (o *EdgeConfigRead) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead) GetTier() *int64 {
+func (o *EdgeConfigRead) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite struct {
+type EdgeConfigWrite struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -1002,63 +1002,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite) GetBatch() int64 {
+func (o *EdgeConfigWrite) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite) GetDisabledAt() *int64 {
+func (o *EdgeConfigWrite) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite) GetEnabledAt() *int64 {
+func (o *EdgeConfigWrite) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite) GetHidden() bool {
+func (o *EdgeConfigWrite) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite) GetName() *string {
+func (o *EdgeConfigWrite) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite) GetPrice() int64 {
+func (o *EdgeConfigWrite) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite) GetThreshold() int64 {
+func (o *EdgeConfigWrite) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite) GetTier() *int64 {
+func (o *EdgeConfigWrite) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits struct {
+type EdgeFunctionExecutionUnits struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -1069,63 +1069,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits s
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits) GetBatch() int64 {
+func (o *EdgeFunctionExecutionUnits) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits) GetDisabledAt() *int64 {
+func (o *EdgeFunctionExecutionUnits) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits) GetEnabledAt() *int64 {
+func (o *EdgeFunctionExecutionUnits) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits) GetHidden() bool {
+func (o *EdgeFunctionExecutionUnits) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits) GetName() *string {
+func (o *EdgeFunctionExecutionUnits) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits) GetPrice() int64 {
+func (o *EdgeFunctionExecutionUnits) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits) GetThreshold() int64 {
+func (o *EdgeFunctionExecutionUnits) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits) GetTier() *int64 {
+func (o *EdgeFunctionExecutionUnits) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations struct {
+type EdgeMiddlewareInvocations struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -1136,101 +1136,101 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations st
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations) GetBatch() int64 {
+func (o *EdgeMiddlewareInvocations) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations) GetDisabledAt() *int64 {
+func (o *EdgeMiddlewareInvocations) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations) GetEnabledAt() *int64 {
+func (o *EdgeMiddlewareInvocations) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations) GetHidden() bool {
+func (o *EdgeMiddlewareInvocations) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations) GetName() *string {
+func (o *EdgeMiddlewareInvocations) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations) GetPrice() int64 {
+func (o *EdgeMiddlewareInvocations) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations) GetThreshold() int64 {
+func (o *EdgeMiddlewareInvocations) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations) GetTier() *int64 {
+func (o *EdgeMiddlewareInvocations) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyInterval string
+type CreateTeamTeamsInterval string
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalMonth CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyInterval = "month"
+	CreateTeamTeamsIntervalMonth CreateTeamTeamsInterval = "month"
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyInterval) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyInterval {
+func (e CreateTeamTeamsInterval) ToPointer() *CreateTeamTeamsInterval {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyInterval) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "month":
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyInterval(v)
+		*e = CreateTeamTeamsInterval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyInterval: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsInterval: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount int64
+type CreateTeamTeamsIntervalCount int64
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCountOne    CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount = 1
-	CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCountTwelve CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount = 12
-	CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCountTwo    CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount = 2
-	CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCountThree  CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount = 3
-	CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCountSix    CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount = 6
+	CreateTeamTeamsIntervalCountOne    CreateTeamTeamsIntervalCount = 1
+	CreateTeamTeamsIntervalCountTwelve CreateTeamTeamsIntervalCount = 12
+	CreateTeamTeamsIntervalCountTwo    CreateTeamTeamsIntervalCount = 2
+	CreateTeamTeamsIntervalCountThree  CreateTeamTeamsIntervalCount = 3
+	CreateTeamTeamsIntervalCountSix    CreateTeamTeamsIntervalCount = 6
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount {
+func (e CreateTeamTeamsIntervalCount) ToPointer() *CreateTeamTeamsIntervalCount {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsIntervalCount) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1245,147 +1245,147 @@ func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyInter
 	case 3:
 		fallthrough
 	case 6:
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount(v)
+		*e = CreateTeamTeamsIntervalCount(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsIntervalCount: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequency struct {
-	Interval      CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyInterval      `json:"interval"`
-	IntervalCount CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount `json:"intervalCount"`
+type CreateTeamTeamsFrequency struct {
+	Interval      CreateTeamTeamsInterval      `json:"interval"`
+	IntervalCount CreateTeamTeamsIntervalCount `json:"intervalCount"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequency) GetInterval() CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyInterval {
+func (o *CreateTeamTeamsFrequency) GetInterval() CreateTeamTeamsInterval {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyInterval("")
+		return CreateTeamTeamsInterval("")
 	}
 	return o.Interval
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequency) GetIntervalCount() CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount {
+func (o *CreateTeamTeamsFrequency) GetIntervalCount() CreateTeamTeamsIntervalCount {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequencyIntervalCount(0)
+		return CreateTeamTeamsIntervalCount(0)
 	}
 	return o.IntervalCount
 }
 
-// CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-type CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise struct {
-	CreatedAt   *int64                                                              `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                              `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                                `json:"hidden"`
-	MaxQuantity *int64                                                              `json:"maxQuantity,omitempty"`
-	Name        *string                                                             `json:"name,omitempty"`
-	Price       int64                                                               `json:"price"`
-	Quantity    int64                                                               `json:"quantity"`
-	Tier        *int64                                                              `json:"tier,omitempty"`
+// Enterprise - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
+type Enterprise struct {
+	CreatedAt   *int64                    `json:"createdAt,omitempty"`
+	DisabledAt  *int64                    `json:"disabledAt,omitempty"`
+	Frequency   *CreateTeamTeamsFrequency `json:"frequency,omitempty"`
+	Hidden      bool                      `json:"hidden"`
+	MaxQuantity *int64                    `json:"maxQuantity,omitempty"`
+	Name        *string                   `json:"name,omitempty"`
+	Price       int64                     `json:"price"`
+	Quantity    int64                     `json:"quantity"`
+	Tier        *int64                    `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise) GetCreatedAt() *int64 {
+func (o *Enterprise) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise) GetDisabledAt() *int64 {
+func (o *Enterprise) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise) GetFrequency() *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterpriseFrequency {
+func (o *Enterprise) GetFrequency() *CreateTeamTeamsFrequency {
 	if o == nil {
 		return nil
 	}
 	return o.Frequency
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise) GetHidden() bool {
+func (o *Enterprise) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise) GetMaxQuantity() *int64 {
+func (o *Enterprise) GetMaxQuantity() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxQuantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise) GetName() *string {
+func (o *Enterprise) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise) GetPrice() int64 {
+func (o *Enterprise) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise) GetQuantity() int64 {
+func (o *Enterprise) GetQuantity() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise) GetTier() *int64 {
+func (o *Enterprise) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyInterval string
+type CreateTeamTeamsResponseInterval string
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalMonth CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyInterval = "month"
+	CreateTeamTeamsResponseIntervalMonth CreateTeamTeamsResponseInterval = "month"
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyInterval) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyInterval {
+func (e CreateTeamTeamsResponseInterval) ToPointer() *CreateTeamTeamsResponseInterval {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyInterval) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponseInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "month":
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyInterval(v)
+		*e = CreateTeamTeamsResponseInterval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyInterval: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponseInterval: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount int64
+type CreateTeamTeamsResponseIntervalCount int64
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCountOne    CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount = 1
-	CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCountTwelve CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount = 12
-	CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCountTwo    CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount = 2
-	CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCountThree  CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount = 3
-	CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCountSix    CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount = 6
+	CreateTeamTeamsResponseIntervalCountOne    CreateTeamTeamsResponseIntervalCount = 1
+	CreateTeamTeamsResponseIntervalCountTwelve CreateTeamTeamsResponseIntervalCount = 12
+	CreateTeamTeamsResponseIntervalCountTwo    CreateTeamTeamsResponseIntervalCount = 2
+	CreateTeamTeamsResponseIntervalCountThree  CreateTeamTeamsResponseIntervalCount = 3
+	CreateTeamTeamsResponseIntervalCountSix    CreateTeamTeamsResponseIntervalCount = 6
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount {
+func (e CreateTeamTeamsResponseIntervalCount) ToPointer() *CreateTeamTeamsResponseIntervalCount {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponseIntervalCount) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1400,109 +1400,109 @@ func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyInter
 	case 3:
 		fallthrough
 	case 6:
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount(v)
+		*e = CreateTeamTeamsResponseIntervalCount(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponseIntervalCount: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequency struct {
-	Interval      CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyInterval      `json:"interval"`
-	IntervalCount CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount `json:"intervalCount"`
+type CreateTeamTeamsResponseFrequency struct {
+	Interval      CreateTeamTeamsResponseInterval      `json:"interval"`
+	IntervalCount CreateTeamTeamsResponseIntervalCount `json:"intervalCount"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequency) GetInterval() CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyInterval {
+func (o *CreateTeamTeamsResponseFrequency) GetInterval() CreateTeamTeamsResponseInterval {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyInterval("")
+		return CreateTeamTeamsResponseInterval("")
 	}
 	return o.Interval
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequency) GetIntervalCount() CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount {
+func (o *CreateTeamTeamsResponseFrequency) GetIntervalCount() CreateTeamTeamsResponseIntervalCount {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequencyIntervalCount(0)
+		return CreateTeamTeamsResponseIntervalCount(0)
 	}
 	return o.IntervalCount
 }
 
-// CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-type CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring struct {
-	CreatedAt   *int64                                                              `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                              `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                                `json:"hidden"`
-	MaxQuantity *int64                                                              `json:"maxQuantity,omitempty"`
-	Name        *string                                                             `json:"name,omitempty"`
-	Price       int64                                                               `json:"price"`
-	Quantity    int64                                                               `json:"quantity"`
-	Tier        *int64                                                              `json:"tier,omitempty"`
+// Monitoring - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
+type Monitoring struct {
+	CreatedAt   *int64                            `json:"createdAt,omitempty"`
+	DisabledAt  *int64                            `json:"disabledAt,omitempty"`
+	Frequency   *CreateTeamTeamsResponseFrequency `json:"frequency,omitempty"`
+	Hidden      bool                              `json:"hidden"`
+	MaxQuantity *int64                            `json:"maxQuantity,omitempty"`
+	Name        *string                           `json:"name,omitempty"`
+	Price       int64                             `json:"price"`
+	Quantity    int64                             `json:"quantity"`
+	Tier        *int64                            `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring) GetCreatedAt() *int64 {
+func (o *Monitoring) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring) GetDisabledAt() *int64 {
+func (o *Monitoring) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring) GetFrequency() *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringFrequency {
+func (o *Monitoring) GetFrequency() *CreateTeamTeamsResponseFrequency {
 	if o == nil {
 		return nil
 	}
 	return o.Frequency
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring) GetHidden() bool {
+func (o *Monitoring) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring) GetMaxQuantity() *int64 {
+func (o *Monitoring) GetMaxQuantity() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxQuantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring) GetName() *string {
+func (o *Monitoring) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring) GetPrice() int64 {
+func (o *Monitoring) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring) GetQuantity() int64 {
+func (o *Monitoring) GetQuantity() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring) GetTier() *int64 {
+func (o *Monitoring) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric struct {
+type MonitoringMetric struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -1513,101 +1513,101 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric) GetBatch() int64 {
+func (o *MonitoringMetric) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric) GetDisabledAt() *int64 {
+func (o *MonitoringMetric) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric) GetEnabledAt() *int64 {
+func (o *MonitoringMetric) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric) GetHidden() bool {
+func (o *MonitoringMetric) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric) GetName() *string {
+func (o *MonitoringMetric) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric) GetPrice() int64 {
+func (o *MonitoringMetric) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric) GetThreshold() int64 {
+func (o *MonitoringMetric) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric) GetTier() *int64 {
+func (o *MonitoringMetric) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyInterval string
+type CreateTeamTeamsResponse200Interval string
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalMonth CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyInterval = "month"
+	CreateTeamTeamsResponse200IntervalMonth CreateTeamTeamsResponse200Interval = "month"
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyInterval) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyInterval {
+func (e CreateTeamTeamsResponse200Interval) ToPointer() *CreateTeamTeamsResponse200Interval {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyInterval) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200Interval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "month":
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyInterval(v)
+		*e = CreateTeamTeamsResponse200Interval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyInterval: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200Interval: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount int64
+type CreateTeamTeamsResponse200IntervalCount int64
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCountOne    CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount = 1
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCountTwelve CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount = 12
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCountTwo    CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount = 2
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCountThree  CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount = 3
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCountSix    CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount = 6
+	CreateTeamTeamsResponse200IntervalCountOne    CreateTeamTeamsResponse200IntervalCount = 1
+	CreateTeamTeamsResponse200IntervalCountTwelve CreateTeamTeamsResponse200IntervalCount = 12
+	CreateTeamTeamsResponse200IntervalCountTwo    CreateTeamTeamsResponse200IntervalCount = 2
+	CreateTeamTeamsResponse200IntervalCountThree  CreateTeamTeamsResponse200IntervalCount = 3
+	CreateTeamTeamsResponse200IntervalCountSix    CreateTeamTeamsResponse200IntervalCount = 6
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount {
+func (e CreateTeamTeamsResponse200IntervalCount) ToPointer() *CreateTeamTeamsResponse200IntervalCount {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200IntervalCount) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1622,109 +1622,109 @@ func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFreque
 	case 3:
 		fallthrough
 	case 6:
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount(v)
+		*e = CreateTeamTeamsResponse200IntervalCount(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200IntervalCount: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequency struct {
-	Interval      CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyInterval      `json:"interval"`
-	IntervalCount CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount `json:"intervalCount"`
+type CreateTeamTeamsResponse200Frequency struct {
+	Interval      CreateTeamTeamsResponse200Interval      `json:"interval"`
+	IntervalCount CreateTeamTeamsResponse200IntervalCount `json:"intervalCount"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequency) GetInterval() CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyInterval {
+func (o *CreateTeamTeamsResponse200Frequency) GetInterval() CreateTeamTeamsResponse200Interval {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyInterval("")
+		return CreateTeamTeamsResponse200Interval("")
 	}
 	return o.Interval
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequency) GetIntervalCount() CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount {
+func (o *CreateTeamTeamsResponse200Frequency) GetIntervalCount() CreateTeamTeamsResponse200IntervalCount {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequencyIntervalCount(0)
+		return CreateTeamTeamsResponse200IntervalCount(0)
 	}
 	return o.IntervalCount
 }
 
-// CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection struct {
-	CreatedAt   *int64                                                                      `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                                      `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                                        `json:"hidden"`
-	MaxQuantity *int64                                                                      `json:"maxQuantity,omitempty"`
-	Name        *string                                                                     `json:"name,omitempty"`
-	Price       int64                                                                       `json:"price"`
-	Quantity    int64                                                                       `json:"quantity"`
-	Tier        *int64                                                                      `json:"tier,omitempty"`
+// CreateTeamPasswordProtection - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
+type CreateTeamPasswordProtection struct {
+	CreatedAt   *int64                               `json:"createdAt,omitempty"`
+	DisabledAt  *int64                               `json:"disabledAt,omitempty"`
+	Frequency   *CreateTeamTeamsResponse200Frequency `json:"frequency,omitempty"`
+	Hidden      bool                                 `json:"hidden"`
+	MaxQuantity *int64                               `json:"maxQuantity,omitempty"`
+	Name        *string                              `json:"name,omitempty"`
+	Price       int64                                `json:"price"`
+	Quantity    int64                                `json:"quantity"`
+	Tier        *int64                               `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection) GetCreatedAt() *int64 {
+func (o *CreateTeamPasswordProtection) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection) GetDisabledAt() *int64 {
+func (o *CreateTeamPasswordProtection) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection) GetFrequency() *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtectionFrequency {
+func (o *CreateTeamPasswordProtection) GetFrequency() *CreateTeamTeamsResponse200Frequency {
 	if o == nil {
 		return nil
 	}
 	return o.Frequency
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection) GetHidden() bool {
+func (o *CreateTeamPasswordProtection) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection) GetMaxQuantity() *int64 {
+func (o *CreateTeamPasswordProtection) GetMaxQuantity() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxQuantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection) GetName() *string {
+func (o *CreateTeamPasswordProtection) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection) GetPrice() int64 {
+func (o *CreateTeamPasswordProtection) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection) GetQuantity() int64 {
+func (o *CreateTeamPasswordProtection) GetQuantity() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection) GetTier() *int64 {
+func (o *CreateTeamPasswordProtection) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime struct {
+type PostgresComputeTime struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -1735,63 +1735,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime) GetBatch() int64 {
+func (o *PostgresComputeTime) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime) GetDisabledAt() *int64 {
+func (o *PostgresComputeTime) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime) GetEnabledAt() *int64 {
+func (o *PostgresComputeTime) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime) GetHidden() bool {
+func (o *PostgresComputeTime) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime) GetName() *string {
+func (o *PostgresComputeTime) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime) GetPrice() int64 {
+func (o *PostgresComputeTime) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime) GetThreshold() int64 {
+func (o *PostgresComputeTime) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime) GetTier() *int64 {
+func (o *PostgresComputeTime) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage struct {
+type PostgresDataStorage struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -1802,63 +1802,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage) GetBatch() int64 {
+func (o *PostgresDataStorage) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage) GetDisabledAt() *int64 {
+func (o *PostgresDataStorage) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage) GetEnabledAt() *int64 {
+func (o *PostgresDataStorage) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage) GetHidden() bool {
+func (o *PostgresDataStorage) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage) GetName() *string {
+func (o *PostgresDataStorage) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage) GetPrice() int64 {
+func (o *PostgresDataStorage) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage) GetThreshold() int64 {
+func (o *PostgresDataStorage) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage) GetTier() *int64 {
+func (o *PostgresDataStorage) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer struct {
+type PostgresDataTransfer struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -1869,63 +1869,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer struct 
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer) GetBatch() int64 {
+func (o *PostgresDataTransfer) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer) GetDisabledAt() *int64 {
+func (o *PostgresDataTransfer) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer) GetEnabledAt() *int64 {
+func (o *PostgresDataTransfer) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer) GetHidden() bool {
+func (o *PostgresDataTransfer) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer) GetName() *string {
+func (o *PostgresDataTransfer) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer) GetPrice() int64 {
+func (o *PostgresDataTransfer) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer) GetThreshold() int64 {
+func (o *PostgresDataTransfer) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer) GetTier() *int64 {
+func (o *PostgresDataTransfer) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase struct {
+type PostgresDatabase struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -1936,63 +1936,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase) GetBatch() int64 {
+func (o *PostgresDatabase) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase) GetDisabledAt() *int64 {
+func (o *PostgresDatabase) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase) GetEnabledAt() *int64 {
+func (o *PostgresDatabase) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase) GetHidden() bool {
+func (o *PostgresDatabase) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase) GetName() *string {
+func (o *PostgresDatabase) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase) GetPrice() int64 {
+func (o *PostgresDatabase) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase) GetThreshold() int64 {
+func (o *PostgresDatabase) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase) GetTier() *int64 {
+func (o *PostgresDatabase) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData struct {
+type PostgresWrittenData struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -2003,101 +2003,101 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData) GetBatch() int64 {
+func (o *PostgresWrittenData) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData) GetDisabledAt() *int64 {
+func (o *PostgresWrittenData) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData) GetEnabledAt() *int64 {
+func (o *PostgresWrittenData) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData) GetHidden() bool {
+func (o *PostgresWrittenData) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData) GetName() *string {
+func (o *PostgresWrittenData) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData) GetPrice() int64 {
+func (o *PostgresWrittenData) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData) GetThreshold() int64 {
+func (o *PostgresWrittenData) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData) GetTier() *int64 {
+func (o *PostgresWrittenData) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval string
+type CreateTeamTeamsResponse200ApplicationJSONInterval string
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalMonth CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval = "month"
+	CreateTeamTeamsResponse200ApplicationJSONIntervalMonth CreateTeamTeamsResponse200ApplicationJSONInterval = "month"
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval {
+func (e CreateTeamTeamsResponse200ApplicationJSONInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONInterval {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200ApplicationJSONInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "month":
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval(v)
+		*e = CreateTeamTeamsResponse200ApplicationJSONInterval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONInterval: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount int64
+type CreateTeamTeamsResponse200ApplicationJSONIntervalCount int64
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCountOne    CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount = 1
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCountTwelve CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount = 12
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCountTwo    CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount = 2
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCountThree  CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount = 3
-	CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCountSix    CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount = 6
+	CreateTeamTeamsResponse200ApplicationJSONIntervalCountOne    CreateTeamTeamsResponse200ApplicationJSONIntervalCount = 1
+	CreateTeamTeamsResponse200ApplicationJSONIntervalCountTwelve CreateTeamTeamsResponse200ApplicationJSONIntervalCount = 12
+	CreateTeamTeamsResponse200ApplicationJSONIntervalCountTwo    CreateTeamTeamsResponse200ApplicationJSONIntervalCount = 2
+	CreateTeamTeamsResponse200ApplicationJSONIntervalCountThree  CreateTeamTeamsResponse200ApplicationJSONIntervalCount = 3
+	CreateTeamTeamsResponse200ApplicationJSONIntervalCountSix    CreateTeamTeamsResponse200ApplicationJSONIntervalCount = 6
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount {
+func (e CreateTeamTeamsResponse200ApplicationJSONIntervalCount) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONIntervalCount {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200ApplicationJSONIntervalCount) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2112,147 +2112,147 @@ func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixF
 	case 3:
 		fallthrough
 	case 6:
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount(v)
+		*e = CreateTeamTeamsResponse200ApplicationJSONIntervalCount(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONIntervalCount: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequency struct {
-	Interval      CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval      `json:"interval"`
-	IntervalCount CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount `json:"intervalCount"`
+type CreateTeamTeamsResponse200ApplicationJSONFrequency struct {
+	Interval      CreateTeamTeamsResponse200ApplicationJSONInterval      `json:"interval"`
+	IntervalCount CreateTeamTeamsResponse200ApplicationJSONIntervalCount `json:"intervalCount"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequency) GetInterval() CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval {
+func (o *CreateTeamTeamsResponse200ApplicationJSONFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONInterval {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyInterval("")
+		return CreateTeamTeamsResponse200ApplicationJSONInterval("")
 	}
 	return o.Interval
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequency) GetIntervalCount() CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONFrequency) GetIntervalCount() CreateTeamTeamsResponse200ApplicationJSONIntervalCount {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequencyIntervalCount(0)
+		return CreateTeamTeamsResponse200ApplicationJSONIntervalCount(0)
 	}
 	return o.IntervalCount
 }
 
-// CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix struct {
-	CreatedAt   *int64                                                                           `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                                           `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                                             `json:"hidden"`
-	MaxQuantity *int64                                                                           `json:"maxQuantity,omitempty"`
-	Name        *string                                                                          `json:"name,omitempty"`
-	Price       int64                                                                            `json:"price"`
-	Quantity    int64                                                                            `json:"quantity"`
-	Tier        *int64                                                                           `json:"tier,omitempty"`
+// PreviewDeploymentSuffix - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
+type PreviewDeploymentSuffix struct {
+	CreatedAt   *int64                                              `json:"createdAt,omitempty"`
+	DisabledAt  *int64                                              `json:"disabledAt,omitempty"`
+	Frequency   *CreateTeamTeamsResponse200ApplicationJSONFrequency `json:"frequency,omitempty"`
+	Hidden      bool                                                `json:"hidden"`
+	MaxQuantity *int64                                              `json:"maxQuantity,omitempty"`
+	Name        *string                                             `json:"name,omitempty"`
+	Price       int64                                               `json:"price"`
+	Quantity    int64                                               `json:"quantity"`
+	Tier        *int64                                              `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix) GetCreatedAt() *int64 {
+func (o *PreviewDeploymentSuffix) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix) GetDisabledAt() *int64 {
+func (o *PreviewDeploymentSuffix) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix) GetFrequency() *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffixFrequency {
+func (o *PreviewDeploymentSuffix) GetFrequency() *CreateTeamTeamsResponse200ApplicationJSONFrequency {
 	if o == nil {
 		return nil
 	}
 	return o.Frequency
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix) GetHidden() bool {
+func (o *PreviewDeploymentSuffix) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix) GetMaxQuantity() *int64 {
+func (o *PreviewDeploymentSuffix) GetMaxQuantity() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxQuantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix) GetName() *string {
+func (o *PreviewDeploymentSuffix) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix) GetPrice() int64 {
+func (o *PreviewDeploymentSuffix) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix) GetQuantity() int64 {
+func (o *PreviewDeploymentSuffix) GetQuantity() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix) GetTier() *int64 {
+func (o *PreviewDeploymentSuffix) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyInterval string
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval string
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalMonth CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyInterval = "month"
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalMonth CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval = "month"
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyInterval) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyInterval {
+func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyInterval) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "month":
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyInterval(v)
+		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyInterval: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount int64
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount int64
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCountOne    CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount = 1
-	CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCountTwelve CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount = 12
-	CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCountTwo    CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount = 2
-	CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCountThree  CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount = 3
-	CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCountSix    CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount = 6
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCountOne    CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount = 1
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCountTwelve CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount = 12
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCountTwo    CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount = 2
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCountThree  CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount = 3
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCountSix    CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount = 6
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount {
+func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2267,147 +2267,147 @@ func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCoun
 	case 3:
 		fallthrough
 	case 6:
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount(v)
+		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequency struct {
-	Interval      CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyInterval      `json:"interval"`
-	IntervalCount CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount `json:"intervalCount"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency struct {
+	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval      `json:"interval"`
+	IntervalCount CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount `json:"intervalCount"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequency) GetInterval() CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyInterval {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyInterval("")
+		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval("")
 	}
 	return o.Interval
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequency) GetIntervalCount() CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency) GetIntervalCount() CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequencyIntervalCount(0)
+		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount(0)
 	}
 	return o.IntervalCount
 }
 
-// CreateTeam200ApplicationJSONBillingInvoiceItemsPro - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-type CreateTeam200ApplicationJSONBillingInvoiceItemsPro struct {
-	CreatedAt   *int64                                                       `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                       `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                         `json:"hidden"`
-	MaxQuantity *int64                                                       `json:"maxQuantity,omitempty"`
-	Name        *string                                                      `json:"name,omitempty"`
-	Price       int64                                                        `json:"price"`
-	Quantity    int64                                                        `json:"quantity"`
-	Tier        *int64                                                       `json:"tier,omitempty"`
+// Pro - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
+type Pro struct {
+	CreatedAt   *int64                                                          `json:"createdAt,omitempty"`
+	DisabledAt  *int64                                                          `json:"disabledAt,omitempty"`
+	Frequency   *CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency `json:"frequency,omitempty"`
+	Hidden      bool                                                            `json:"hidden"`
+	MaxQuantity *int64                                                          `json:"maxQuantity,omitempty"`
+	Name        *string                                                         `json:"name,omitempty"`
+	Price       int64                                                           `json:"price"`
+	Quantity    int64                                                           `json:"quantity"`
+	Tier        *int64                                                          `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPro) GetCreatedAt() *int64 {
+func (o *Pro) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPro) GetDisabledAt() *int64 {
+func (o *Pro) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPro) GetFrequency() *CreateTeam200ApplicationJSONBillingInvoiceItemsProFrequency {
+func (o *Pro) GetFrequency() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency {
 	if o == nil {
 		return nil
 	}
 	return o.Frequency
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPro) GetHidden() bool {
+func (o *Pro) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPro) GetMaxQuantity() *int64 {
+func (o *Pro) GetMaxQuantity() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxQuantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPro) GetName() *string {
+func (o *Pro) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPro) GetPrice() int64 {
+func (o *Pro) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPro) GetQuantity() int64 {
+func (o *Pro) GetQuantity() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsPro) GetTier() *int64 {
+func (o *Pro) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyInterval string
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval string
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalMonth CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyInterval = "month"
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalMonth CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval = "month"
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyInterval) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyInterval {
+func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyInterval) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "month":
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyInterval(v)
+		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyInterval: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount int64
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount int64
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCountOne    CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount = 1
-	CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCountTwelve CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount = 12
-	CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCountTwo    CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount = 2
-	CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCountThree  CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount = 3
-	CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCountSix    CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount = 6
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCountOne    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount = 1
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCountTwelve CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount = 12
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCountTwo    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount = 2
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCountThree  CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount = 3
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCountSix    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount = 6
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount {
+func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2422,109 +2422,109 @@ func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCou
 	case 3:
 		fallthrough
 	case 6:
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount(v)
+		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequency struct {
-	Interval      CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyInterval      `json:"interval"`
-	IntervalCount CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount `json:"intervalCount"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency struct {
+	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval      `json:"interval"`
+	IntervalCount CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount `json:"intervalCount"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequency) GetInterval() CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyInterval {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyInterval("")
+		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval("")
 	}
 	return o.Interval
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequency) GetIntervalCount() CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency) GetIntervalCount() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequencyIntervalCount(0)
+		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount(0)
 	}
 	return o.IntervalCount
 }
 
-// CreateTeam200ApplicationJSONBillingInvoiceItemsSaml - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-type CreateTeam200ApplicationJSONBillingInvoiceItemsSaml struct {
-	CreatedAt   *int64                                                        `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                        `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                          `json:"hidden"`
-	MaxQuantity *int64                                                        `json:"maxQuantity,omitempty"`
-	Name        *string                                                       `json:"name,omitempty"`
-	Price       int64                                                         `json:"price"`
-	Quantity    int64                                                         `json:"quantity"`
-	Tier        *int64                                                        `json:"tier,omitempty"`
+// CreateTeamSaml - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
+type CreateTeamSaml struct {
+	CreatedAt   *int64                                                                 `json:"createdAt,omitempty"`
+	DisabledAt  *int64                                                                 `json:"disabledAt,omitempty"`
+	Frequency   *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency `json:"frequency,omitempty"`
+	Hidden      bool                                                                   `json:"hidden"`
+	MaxQuantity *int64                                                                 `json:"maxQuantity,omitempty"`
+	Name        *string                                                                `json:"name,omitempty"`
+	Price       int64                                                                  `json:"price"`
+	Quantity    int64                                                                  `json:"quantity"`
+	Tier        *int64                                                                 `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSaml) GetCreatedAt() *int64 {
+func (o *CreateTeamSaml) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSaml) GetDisabledAt() *int64 {
+func (o *CreateTeamSaml) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSaml) GetFrequency() *CreateTeam200ApplicationJSONBillingInvoiceItemsSamlFrequency {
+func (o *CreateTeamSaml) GetFrequency() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency {
 	if o == nil {
 		return nil
 	}
 	return o.Frequency
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSaml) GetHidden() bool {
+func (o *CreateTeamSaml) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSaml) GetMaxQuantity() *int64 {
+func (o *CreateTeamSaml) GetMaxQuantity() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxQuantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSaml) GetName() *string {
+func (o *CreateTeamSaml) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSaml) GetPrice() int64 {
+func (o *CreateTeamSaml) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSaml) GetQuantity() int64 {
+func (o *CreateTeamSaml) GetQuantity() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSaml) GetTier() *int64 {
+func (o *CreateTeamSaml) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution struct {
+type ServerlessFunctionExecution struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -2535,63 +2535,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution 
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution) GetBatch() int64 {
+func (o *ServerlessFunctionExecution) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution) GetDisabledAt() *int64 {
+func (o *ServerlessFunctionExecution) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution) GetEnabledAt() *int64 {
+func (o *ServerlessFunctionExecution) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution) GetHidden() bool {
+func (o *ServerlessFunctionExecution) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution) GetName() *string {
+func (o *ServerlessFunctionExecution) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution) GetPrice() int64 {
+func (o *ServerlessFunctionExecution) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution) GetThreshold() int64 {
+func (o *ServerlessFunctionExecution) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution) GetTier() *int64 {
+func (o *ServerlessFunctionExecution) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages struct {
+type SourceImages struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -2602,63 +2602,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages) GetBatch() int64 {
+func (o *SourceImages) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages) GetDisabledAt() *int64 {
+func (o *SourceImages) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages) GetEnabledAt() *int64 {
+func (o *SourceImages) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages) GetHidden() bool {
+func (o *SourceImages) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages) GetName() *string {
+func (o *SourceImages) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages) GetPrice() int64 {
+func (o *SourceImages) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages) GetThreshold() int64 {
+func (o *SourceImages) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages) GetTier() *int64 {
+func (o *SourceImages) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthInBytes struct {
+type StorageRedisTotalBandwidthInBytes struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -2669,63 +2669,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthIn
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetBatch() int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetHidden() bool {
+func (o *StorageRedisTotalBandwidthInBytes) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetName() *string {
+func (o *StorageRedisTotalBandwidthInBytes) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetPrice() int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetThreshold() int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthInBytes) GetTier() *int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands struct {
+type StorageRedisTotalCommands struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -2736,63 +2736,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands st
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands) GetBatch() int64 {
+func (o *StorageRedisTotalCommands) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalCommands) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalCommands) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands) GetHidden() bool {
+func (o *StorageRedisTotalCommands) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands) GetName() *string {
+func (o *StorageRedisTotalCommands) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands) GetPrice() int64 {
+func (o *StorageRedisTotalCommands) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands) GetThreshold() int64 {
+func (o *StorageRedisTotalCommands) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands) GetTier() *int64 {
+func (o *StorageRedisTotalCommands) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes struct {
+type StorageRedisTotalDailyAvgStorageInBytes struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -2803,63 +2803,63 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgSto
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetBatch() int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetHidden() bool {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetName() *string {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetPrice() int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetThreshold() int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes) GetTier() *int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases struct {
+type StorageRedisTotalDatabases struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -2870,101 +2870,101 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases s
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases) GetBatch() int64 {
+func (o *StorageRedisTotalDatabases) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalDatabases) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalDatabases) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases) GetHidden() bool {
+func (o *StorageRedisTotalDatabases) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases) GetName() *string {
+func (o *StorageRedisTotalDatabases) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases) GetPrice() int64 {
+func (o *StorageRedisTotalDatabases) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases) GetThreshold() int64 {
+func (o *StorageRedisTotalDatabases) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases) GetTier() *int64 {
+func (o *StorageRedisTotalDatabases) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyInterval string
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval string
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalMonth CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyInterval = "month"
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalMonth CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval = "month"
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyInterval) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyInterval {
+func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyInterval) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "month":
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyInterval(v)
+		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyInterval: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount int64
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount int64
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCountOne    CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount = 1
-	CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCountTwelve CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount = 12
-	CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCountTwo    CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount = 2
-	CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCountThree  CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount = 3
-	CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCountSix    CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount = 6
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCountOne    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount = 1
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCountTwelve CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount = 12
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCountTwo    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount = 2
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCountThree  CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount = 3
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCountSix    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount = 6
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount {
+func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2979,147 +2979,147 @@ func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyInterv
 	case 3:
 		fallthrough
 	case 6:
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount(v)
+		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequency struct {
-	Interval      CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyInterval      `json:"interval"`
-	IntervalCount CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount `json:"intervalCount"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFrequency struct {
+	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval      `json:"interval"`
+	IntervalCount CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount `json:"intervalCount"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequency) GetInterval() CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyInterval {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyInterval("")
+		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval("")
 	}
 	return o.Interval
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequency) GetIntervalCount() CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFrequency) GetIntervalCount() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequencyIntervalCount(0)
+		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount(0)
 	}
 	return o.IntervalCount
 }
 
-// CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-type CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats struct {
-	CreatedAt   *int64                                                             `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                             `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                               `json:"hidden"`
-	MaxQuantity *int64                                                             `json:"maxQuantity,omitempty"`
-	Name        *string                                                            `json:"name,omitempty"`
-	Price       int64                                                              `json:"price"`
-	Quantity    int64                                                              `json:"quantity"`
-	Tier        *int64                                                             `json:"tier,omitempty"`
+// TeamSeats - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
+type TeamSeats struct {
+	CreatedAt   *int64                                                                             `json:"createdAt,omitempty"`
+	DisabledAt  *int64                                                                             `json:"disabledAt,omitempty"`
+	Frequency   *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFrequency `json:"frequency,omitempty"`
+	Hidden      bool                                                                               `json:"hidden"`
+	MaxQuantity *int64                                                                             `json:"maxQuantity,omitempty"`
+	Name        *string                                                                            `json:"name,omitempty"`
+	Price       int64                                                                              `json:"price"`
+	Quantity    int64                                                                              `json:"quantity"`
+	Tier        *int64                                                                             `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats) GetCreatedAt() *int64 {
+func (o *TeamSeats) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats) GetDisabledAt() *int64 {
+func (o *TeamSeats) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats) GetFrequency() *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeatsFrequency {
+func (o *TeamSeats) GetFrequency() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFrequency {
 	if o == nil {
 		return nil
 	}
 	return o.Frequency
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats) GetHidden() bool {
+func (o *TeamSeats) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats) GetMaxQuantity() *int64 {
+func (o *TeamSeats) GetMaxQuantity() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxQuantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats) GetName() *string {
+func (o *TeamSeats) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats) GetPrice() int64 {
+func (o *TeamSeats) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats) GetQuantity() int64 {
+func (o *TeamSeats) GetQuantity() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats) GetTier() *int64 {
+func (o *TeamSeats) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyInterval string
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval string
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalMonth CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyInterval = "month"
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalMonth CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval = "month"
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyInterval) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyInterval {
+func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyInterval) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "month":
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyInterval(v)
+		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyInterval: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount int64
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount int64
 
 const (
-	CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCountOne    CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount = 1
-	CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCountTwelve CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount = 12
-	CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCountTwo    CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount = 2
-	CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCountThree  CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount = 3
-	CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCountSix    CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount = 6
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCountOne    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount = 1
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCountTwelve CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount = 12
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCountTwo    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount = 2
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCountThree  CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount = 3
+	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCountSix    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount = 6
 )
 
-func (e CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount) ToPointer() *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount {
+func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3134,109 +3134,109 @@ func (e *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyInt
 	case 3:
 		fallthrough
 	case 6:
-		*e = CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount(v)
+		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequency struct {
-	Interval      CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyInterval      `json:"interval"`
-	IntervalCount CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount `json:"intervalCount"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency struct {
+	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval      `json:"interval"`
+	IntervalCount CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount `json:"intervalCount"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequency) GetInterval() CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyInterval {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyInterval("")
+		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval("")
 	}
 	return o.Interval
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequency) GetIntervalCount() CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency) GetIntervalCount() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequencyIntervalCount(0)
+		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount(0)
 	}
 	return o.IntervalCount
 }
 
-// CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-type CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics struct {
-	CreatedAt   *int64                                                                `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                                `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                                  `json:"hidden"`
-	MaxQuantity *int64                                                                `json:"maxQuantity,omitempty"`
-	Name        *string                                                               `json:"name,omitempty"`
-	Price       int64                                                                 `json:"price"`
-	Quantity    int64                                                                 `json:"quantity"`
-	Tier        *int64                                                                `json:"tier,omitempty"`
+// WebAnalytics - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
+type WebAnalytics struct {
+	CreatedAt   *int64                                                                                         `json:"createdAt,omitempty"`
+	DisabledAt  *int64                                                                                         `json:"disabledAt,omitempty"`
+	Frequency   *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency `json:"frequency,omitempty"`
+	Hidden      bool                                                                                           `json:"hidden"`
+	MaxQuantity *int64                                                                                         `json:"maxQuantity,omitempty"`
+	Name        *string                                                                                        `json:"name,omitempty"`
+	Price       int64                                                                                          `json:"price"`
+	Quantity    int64                                                                                          `json:"quantity"`
+	Tier        *int64                                                                                         `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics) GetCreatedAt() *int64 {
+func (o *WebAnalytics) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics) GetDisabledAt() *int64 {
+func (o *WebAnalytics) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics) GetFrequency() *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsFrequency {
+func (o *WebAnalytics) GetFrequency() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency {
 	if o == nil {
 		return nil
 	}
 	return o.Frequency
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics) GetHidden() bool {
+func (o *WebAnalytics) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics) GetMaxQuantity() *int64 {
+func (o *WebAnalytics) GetMaxQuantity() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxQuantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics) GetName() *string {
+func (o *WebAnalytics) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics) GetPrice() int64 {
+func (o *WebAnalytics) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics) GetQuantity() int64 {
+func (o *WebAnalytics) GetQuantity() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics) GetTier() *int64 {
+func (o *WebAnalytics) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent struct {
+type WebAnalyticsEvent struct {
 	Batch      int64   `json:"batch"`
 	DisabledAt *int64  `json:"disabledAt,omitempty"`
 	EnabledAt  *int64  `json:"enabledAt,omitempty"`
@@ -3247,390 +3247,390 @@ type CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent struct {
 	Tier       *int64  `json:"tier,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent) GetBatch() int64 {
+func (o *WebAnalyticsEvent) GetBatch() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Batch
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent) GetDisabledAt() *int64 {
+func (o *WebAnalyticsEvent) GetDisabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent) GetEnabledAt() *int64 {
+func (o *WebAnalyticsEvent) GetEnabledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.EnabledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent) GetHidden() bool {
+func (o *WebAnalyticsEvent) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent) GetName() *string {
+func (o *WebAnalyticsEvent) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent) GetPrice() int64 {
+func (o *WebAnalyticsEvent) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Price
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent) GetThreshold() int64 {
+func (o *WebAnalyticsEvent) GetThreshold() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Threshold
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent) GetTier() *int64 {
+func (o *WebAnalyticsEvent) GetTier() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceItems struct {
+type InvoiceItems struct {
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	Analytics      *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics      `json:"analytics,omitempty"`
-	AnalyticsUsage *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage `json:"analyticsUsage,omitempty"`
-	Artifacts      *CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts      `json:"artifacts,omitempty"`
-	Bandwidth      *CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth      `json:"bandwidth,omitempty"`
+	Analytics      *CreateTeamAnalytics `json:"analytics,omitempty"`
+	AnalyticsUsage *AnalyticsUsage      `json:"analyticsUsage,omitempty"`
+	Artifacts      *Artifacts           `json:"artifacts,omitempty"`
+	Bandwidth      *Bandwidth           `json:"bandwidth,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	ConcurrentBuilds           *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds           `json:"concurrentBuilds,omitempty"`
-	CronJobInvocation          *CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation          `json:"cronJobInvocation,omitempty"`
-	DataCacheRead              *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead              `json:"dataCacheRead,omitempty"`
-	DataCacheRevalidation      *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation      `json:"dataCacheRevalidation,omitempty"`
-	DataCacheWrite             *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite             `json:"dataCacheWrite,omitempty"`
-	EdgeConfigRead             *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead             `json:"edgeConfigRead,omitempty"`
-	EdgeConfigWrite            *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite            `json:"edgeConfigWrite,omitempty"`
-	EdgeFunctionExecutionUnits *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits `json:"edgeFunctionExecutionUnits,omitempty"`
-	EdgeMiddlewareInvocations  *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations  `json:"edgeMiddlewareInvocations,omitempty"`
+	ConcurrentBuilds           *ConcurrentBuilds           `json:"concurrentBuilds,omitempty"`
+	CronJobInvocation          *CronJobInvocation          `json:"cronJobInvocation,omitempty"`
+	DataCacheRead              *DataCacheRead              `json:"dataCacheRead,omitempty"`
+	DataCacheRevalidation      *DataCacheRevalidation      `json:"dataCacheRevalidation,omitempty"`
+	DataCacheWrite             *DataCacheWrite             `json:"dataCacheWrite,omitempty"`
+	EdgeConfigRead             *EdgeConfigRead             `json:"edgeConfigRead,omitempty"`
+	EdgeConfigWrite            *EdgeConfigWrite            `json:"edgeConfigWrite,omitempty"`
+	EdgeFunctionExecutionUnits *EdgeFunctionExecutionUnits `json:"edgeFunctionExecutionUnits,omitempty"`
+	EdgeMiddlewareInvocations  *EdgeMiddlewareInvocations  `json:"edgeMiddlewareInvocations,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	Enterprise *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise `json:"enterprise,omitempty"`
+	Enterprise *Enterprise `json:"enterprise,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	Monitoring       *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring       `json:"monitoring,omitempty"`
-	MonitoringMetric *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric `json:"monitoringMetric,omitempty"`
+	Monitoring       *Monitoring       `json:"monitoring,omitempty"`
+	MonitoringMetric *MonitoringMetric `json:"monitoringMetric,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	PasswordProtection   *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection   `json:"passwordProtection,omitempty"`
-	PostgresComputeTime  *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime  `json:"postgresComputeTime,omitempty"`
-	PostgresDataStorage  *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage  `json:"postgresDataStorage,omitempty"`
-	PostgresDataTransfer *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer `json:"postgresDataTransfer,omitempty"`
-	PostgresDatabase     *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase     `json:"postgresDatabase,omitempty"`
-	PostgresWrittenData  *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData  `json:"postgresWrittenData,omitempty"`
+	PasswordProtection   *CreateTeamPasswordProtection `json:"passwordProtection,omitempty"`
+	PostgresComputeTime  *PostgresComputeTime          `json:"postgresComputeTime,omitempty"`
+	PostgresDataStorage  *PostgresDataStorage          `json:"postgresDataStorage,omitempty"`
+	PostgresDataTransfer *PostgresDataTransfer         `json:"postgresDataTransfer,omitempty"`
+	PostgresDatabase     *PostgresDatabase             `json:"postgresDatabase,omitempty"`
+	PostgresWrittenData  *PostgresWrittenData          `json:"postgresWrittenData,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	PreviewDeploymentSuffix *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix `json:"previewDeploymentSuffix,omitempty"`
+	PreviewDeploymentSuffix *PreviewDeploymentSuffix `json:"previewDeploymentSuffix,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	Pro *CreateTeam200ApplicationJSONBillingInvoiceItemsPro `json:"pro,omitempty"`
+	Pro *Pro `json:"pro,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	Saml                                    *CreateTeam200ApplicationJSONBillingInvoiceItemsSaml                                    `json:"saml,omitempty"`
-	ServerlessFunctionExecution             *CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution             `json:"serverlessFunctionExecution,omitempty"`
-	SourceImages                            *CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages                            `json:"sourceImages,omitempty"`
-	StorageRedisTotalBandwidthInBytes       *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthInBytes       `json:"storageRedisTotalBandwidthInBytes,omitempty"`
-	StorageRedisTotalCommands               *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands               `json:"storageRedisTotalCommands,omitempty"`
-	StorageRedisTotalDailyAvgStorageInBytes *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes `json:"storageRedisTotalDailyAvgStorageInBytes,omitempty"`
-	StorageRedisTotalDatabases              *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases              `json:"storageRedisTotalDatabases,omitempty"`
+	Saml                                    *CreateTeamSaml                          `json:"saml,omitempty"`
+	ServerlessFunctionExecution             *ServerlessFunctionExecution             `json:"serverlessFunctionExecution,omitempty"`
+	SourceImages                            *SourceImages                            `json:"sourceImages,omitempty"`
+	StorageRedisTotalBandwidthInBytes       *StorageRedisTotalBandwidthInBytes       `json:"storageRedisTotalBandwidthInBytes,omitempty"`
+	StorageRedisTotalCommands               *StorageRedisTotalCommands               `json:"storageRedisTotalCommands,omitempty"`
+	StorageRedisTotalDailyAvgStorageInBytes *StorageRedisTotalDailyAvgStorageInBytes `json:"storageRedisTotalDailyAvgStorageInBytes,omitempty"`
+	StorageRedisTotalDatabases              *StorageRedisTotalDatabases              `json:"storageRedisTotalDatabases,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	TeamSeats *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats `json:"teamSeats,omitempty"`
+	TeamSeats *TeamSeats `json:"teamSeats,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	WebAnalytics      *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics      `json:"webAnalytics,omitempty"`
-	WebAnalyticsEvent *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent `json:"webAnalyticsEvent,omitempty"`
+	WebAnalytics      *WebAnalytics      `json:"webAnalytics,omitempty"`
+	WebAnalyticsEvent *WebAnalyticsEvent `json:"webAnalyticsEvent,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetAnalytics() *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalytics {
+func (o *InvoiceItems) GetAnalytics() *CreateTeamAnalytics {
 	if o == nil {
 		return nil
 	}
 	return o.Analytics
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetAnalyticsUsage() *CreateTeam200ApplicationJSONBillingInvoiceItemsAnalyticsUsage {
+func (o *InvoiceItems) GetAnalyticsUsage() *AnalyticsUsage {
 	if o == nil {
 		return nil
 	}
 	return o.AnalyticsUsage
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetArtifacts() *CreateTeam200ApplicationJSONBillingInvoiceItemsArtifacts {
+func (o *InvoiceItems) GetArtifacts() *Artifacts {
 	if o == nil {
 		return nil
 	}
 	return o.Artifacts
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetBandwidth() *CreateTeam200ApplicationJSONBillingInvoiceItemsBandwidth {
+func (o *InvoiceItems) GetBandwidth() *Bandwidth {
 	if o == nil {
 		return nil
 	}
 	return o.Bandwidth
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetConcurrentBuilds() *CreateTeam200ApplicationJSONBillingInvoiceItemsConcurrentBuilds {
+func (o *InvoiceItems) GetConcurrentBuilds() *ConcurrentBuilds {
 	if o == nil {
 		return nil
 	}
 	return o.ConcurrentBuilds
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetCronJobInvocation() *CreateTeam200ApplicationJSONBillingInvoiceItemsCronJobInvocation {
+func (o *InvoiceItems) GetCronJobInvocation() *CronJobInvocation {
 	if o == nil {
 		return nil
 	}
 	return o.CronJobInvocation
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetDataCacheRead() *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRead {
+func (o *InvoiceItems) GetDataCacheRead() *DataCacheRead {
 	if o == nil {
 		return nil
 	}
 	return o.DataCacheRead
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetDataCacheRevalidation() *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheRevalidation {
+func (o *InvoiceItems) GetDataCacheRevalidation() *DataCacheRevalidation {
 	if o == nil {
 		return nil
 	}
 	return o.DataCacheRevalidation
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetDataCacheWrite() *CreateTeam200ApplicationJSONBillingInvoiceItemsDataCacheWrite {
+func (o *InvoiceItems) GetDataCacheWrite() *DataCacheWrite {
 	if o == nil {
 		return nil
 	}
 	return o.DataCacheWrite
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetEdgeConfigRead() *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigRead {
+func (o *InvoiceItems) GetEdgeConfigRead() *EdgeConfigRead {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigRead
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetEdgeConfigWrite() *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeConfigWrite {
+func (o *InvoiceItems) GetEdgeConfigWrite() *EdgeConfigWrite {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigWrite
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetEdgeFunctionExecutionUnits() *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeFunctionExecutionUnits {
+func (o *InvoiceItems) GetEdgeFunctionExecutionUnits() *EdgeFunctionExecutionUnits {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeFunctionExecutionUnits
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetEdgeMiddlewareInvocations() *CreateTeam200ApplicationJSONBillingInvoiceItemsEdgeMiddlewareInvocations {
+func (o *InvoiceItems) GetEdgeMiddlewareInvocations() *EdgeMiddlewareInvocations {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeMiddlewareInvocations
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetEnterprise() *CreateTeam200ApplicationJSONBillingInvoiceItemsEnterprise {
+func (o *InvoiceItems) GetEnterprise() *Enterprise {
 	if o == nil {
 		return nil
 	}
 	return o.Enterprise
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetMonitoring() *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoring {
+func (o *InvoiceItems) GetMonitoring() *Monitoring {
 	if o == nil {
 		return nil
 	}
 	return o.Monitoring
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetMonitoringMetric() *CreateTeam200ApplicationJSONBillingInvoiceItemsMonitoringMetric {
+func (o *InvoiceItems) GetMonitoringMetric() *MonitoringMetric {
 	if o == nil {
 		return nil
 	}
 	return o.MonitoringMetric
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetPasswordProtection() *CreateTeam200ApplicationJSONBillingInvoiceItemsPasswordProtection {
+func (o *InvoiceItems) GetPasswordProtection() *CreateTeamPasswordProtection {
 	if o == nil {
 		return nil
 	}
 	return o.PasswordProtection
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetPostgresComputeTime() *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresComputeTime {
+func (o *InvoiceItems) GetPostgresComputeTime() *PostgresComputeTime {
 	if o == nil {
 		return nil
 	}
 	return o.PostgresComputeTime
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetPostgresDataStorage() *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataStorage {
+func (o *InvoiceItems) GetPostgresDataStorage() *PostgresDataStorage {
 	if o == nil {
 		return nil
 	}
 	return o.PostgresDataStorage
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetPostgresDataTransfer() *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDataTransfer {
+func (o *InvoiceItems) GetPostgresDataTransfer() *PostgresDataTransfer {
 	if o == nil {
 		return nil
 	}
 	return o.PostgresDataTransfer
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetPostgresDatabase() *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresDatabase {
+func (o *InvoiceItems) GetPostgresDatabase() *PostgresDatabase {
 	if o == nil {
 		return nil
 	}
 	return o.PostgresDatabase
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetPostgresWrittenData() *CreateTeam200ApplicationJSONBillingInvoiceItemsPostgresWrittenData {
+func (o *InvoiceItems) GetPostgresWrittenData() *PostgresWrittenData {
 	if o == nil {
 		return nil
 	}
 	return o.PostgresWrittenData
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetPreviewDeploymentSuffix() *CreateTeam200ApplicationJSONBillingInvoiceItemsPreviewDeploymentSuffix {
+func (o *InvoiceItems) GetPreviewDeploymentSuffix() *PreviewDeploymentSuffix {
 	if o == nil {
 		return nil
 	}
 	return o.PreviewDeploymentSuffix
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetPro() *CreateTeam200ApplicationJSONBillingInvoiceItemsPro {
+func (o *InvoiceItems) GetPro() *Pro {
 	if o == nil {
 		return nil
 	}
 	return o.Pro
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetSaml() *CreateTeam200ApplicationJSONBillingInvoiceItemsSaml {
+func (o *InvoiceItems) GetSaml() *CreateTeamSaml {
 	if o == nil {
 		return nil
 	}
 	return o.Saml
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetServerlessFunctionExecution() *CreateTeam200ApplicationJSONBillingInvoiceItemsServerlessFunctionExecution {
+func (o *InvoiceItems) GetServerlessFunctionExecution() *ServerlessFunctionExecution {
 	if o == nil {
 		return nil
 	}
 	return o.ServerlessFunctionExecution
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetSourceImages() *CreateTeam200ApplicationJSONBillingInvoiceItemsSourceImages {
+func (o *InvoiceItems) GetSourceImages() *SourceImages {
 	if o == nil {
 		return nil
 	}
 	return o.SourceImages
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetStorageRedisTotalBandwidthInBytes() *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalBandwidthInBytes {
+func (o *InvoiceItems) GetStorageRedisTotalBandwidthInBytes() *StorageRedisTotalBandwidthInBytes {
 	if o == nil {
 		return nil
 	}
 	return o.StorageRedisTotalBandwidthInBytes
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetStorageRedisTotalCommands() *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalCommands {
+func (o *InvoiceItems) GetStorageRedisTotalCommands() *StorageRedisTotalCommands {
 	if o == nil {
 		return nil
 	}
 	return o.StorageRedisTotalCommands
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetStorageRedisTotalDailyAvgStorageInBytes() *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytes {
+func (o *InvoiceItems) GetStorageRedisTotalDailyAvgStorageInBytes() *StorageRedisTotalDailyAvgStorageInBytes {
 	if o == nil {
 		return nil
 	}
 	return o.StorageRedisTotalDailyAvgStorageInBytes
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetStorageRedisTotalDatabases() *CreateTeam200ApplicationJSONBillingInvoiceItemsStorageRedisTotalDatabases {
+func (o *InvoiceItems) GetStorageRedisTotalDatabases() *StorageRedisTotalDatabases {
 	if o == nil {
 		return nil
 	}
 	return o.StorageRedisTotalDatabases
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetTeamSeats() *CreateTeam200ApplicationJSONBillingInvoiceItemsTeamSeats {
+func (o *InvoiceItems) GetTeamSeats() *TeamSeats {
 	if o == nil {
 		return nil
 	}
 	return o.TeamSeats
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetWebAnalytics() *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalytics {
+func (o *InvoiceItems) GetWebAnalytics() *WebAnalytics {
 	if o == nil {
 		return nil
 	}
 	return o.WebAnalytics
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceItems) GetWebAnalyticsEvent() *CreateTeam200ApplicationJSONBillingInvoiceItemsWebAnalyticsEvent {
+func (o *InvoiceItems) GetWebAnalyticsEvent() *WebAnalyticsEvent {
 	if o == nil {
 		return nil
 	}
 	return o.WebAnalyticsEvent
 }
 
-type CreateTeam200ApplicationJSONBillingInvoiceSettings struct {
+type InvoiceSettings struct {
 	Footer *string `json:"footer,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingInvoiceSettings) GetFooter() *string {
+func (o *InvoiceSettings) GetFooter() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Footer
 }
 
-type CreateTeam200ApplicationJSONBillingPeriod struct {
+type Period struct {
 	End   int64 `json:"end"`
 	Start int64 `json:"start"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingPeriod) GetEnd() int64 {
+func (o *Period) GetEnd() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.End
 }
 
-func (o *CreateTeam200ApplicationJSONBillingPeriod) GetStart() int64 {
+func (o *Period) GetStart() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Start
 }
 
-type CreateTeam200ApplicationJSONBillingPlan string
+type CreateTeamPlan string
 
 const (
-	CreateTeam200ApplicationJSONBillingPlanEnterprise CreateTeam200ApplicationJSONBillingPlan = "enterprise"
-	CreateTeam200ApplicationJSONBillingPlanPro        CreateTeam200ApplicationJSONBillingPlan = "pro"
-	CreateTeam200ApplicationJSONBillingPlanHobby      CreateTeam200ApplicationJSONBillingPlan = "hobby"
+	CreateTeamPlanEnterprise CreateTeamPlan = "enterprise"
+	CreateTeamPlanPro        CreateTeamPlan = "pro"
+	CreateTeamPlanHobby      CreateTeamPlan = "hobby"
 )
 
-func (e CreateTeam200ApplicationJSONBillingPlan) ToPointer() *CreateTeam200ApplicationJSONBillingPlan {
+func (e CreateTeamPlan) ToPointer() *CreateTeamPlan {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingPlan) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamPlan) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3641,25 +3641,25 @@ func (e *CreateTeam200ApplicationJSONBillingPlan) UnmarshalJSON(data []byte) err
 	case "pro":
 		fallthrough
 	case "hobby":
-		*e = CreateTeam200ApplicationJSONBillingPlan(v)
+		*e = CreateTeamPlan(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingPlan: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamPlan: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingPlatform string
+type Platform string
 
 const (
-	CreateTeam200ApplicationJSONBillingPlatformStripeTestMode CreateTeam200ApplicationJSONBillingPlatform = "stripeTestMode"
-	CreateTeam200ApplicationJSONBillingPlatformStripe         CreateTeam200ApplicationJSONBillingPlatform = "stripe"
+	PlatformStripeTestMode Platform = "stripeTestMode"
+	PlatformStripe         Platform = "stripe"
 )
 
-func (e CreateTeam200ApplicationJSONBillingPlatform) ToPointer() *CreateTeam200ApplicationJSONBillingPlatform {
+func (e Platform) ToPointer() *Platform {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingPlatform) UnmarshalJSON(data []byte) error {
+func (e *Platform) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3668,49 +3668,49 @@ func (e *CreateTeam200ApplicationJSONBillingPlatform) UnmarshalJSON(data []byte)
 	case "stripeTestMode":
 		fallthrough
 	case "stripe":
-		*e = CreateTeam200ApplicationJSONBillingPlatform(v)
+		*e = Platform(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingPlatform: %v", v)
+		return fmt.Errorf("invalid value for Platform: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingPricingExperiment string
+type PricingExperiment string
 
 const (
-	CreateTeam200ApplicationJSONBillingPricingExperimentAugust2022 CreateTeam200ApplicationJSONBillingPricingExperiment = "august-2022"
+	PricingExperimentAugust2022 PricingExperiment = "august-2022"
 )
 
-func (e CreateTeam200ApplicationJSONBillingPricingExperiment) ToPointer() *CreateTeam200ApplicationJSONBillingPricingExperiment {
+func (e PricingExperiment) ToPointer() *PricingExperiment {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingPricingExperiment) UnmarshalJSON(data []byte) error {
+func (e *PricingExperiment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "august-2022":
-		*e = CreateTeam200ApplicationJSONBillingPricingExperiment(v)
+		*e = PricingExperiment(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingPricingExperiment: %v", v)
+		return fmt.Errorf("invalid value for PricingExperiment: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingProgramType string
+type ProgramType string
 
 const (
-	CreateTeam200ApplicationJSONBillingProgramTypeStartup CreateTeam200ApplicationJSONBillingProgramType = "startup"
-	CreateTeam200ApplicationJSONBillingProgramTypeAgency  CreateTeam200ApplicationJSONBillingProgramType = "agency"
+	ProgramTypeStartup ProgramType = "startup"
+	ProgramTypeAgency  ProgramType = "agency"
 )
 
-func (e CreateTeam200ApplicationJSONBillingProgramType) ToPointer() *CreateTeam200ApplicationJSONBillingProgramType {
+func (e ProgramType) ToPointer() *ProgramType {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingProgramType) UnmarshalJSON(data []byte) error {
+func (e *ProgramType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3719,28 +3719,28 @@ func (e *CreateTeam200ApplicationJSONBillingProgramType) UnmarshalJSON(data []by
 	case "startup":
 		fallthrough
 	case "agency":
-		*e = CreateTeam200ApplicationJSONBillingProgramType(v)
+		*e = ProgramType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingProgramType: %v", v)
+		return fmt.Errorf("invalid value for ProgramType: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingStatus string
+type CreateTeamStatus string
 
 const (
-	CreateTeam200ApplicationJSONBillingStatusTrialing CreateTeam200ApplicationJSONBillingStatus = "trialing"
-	CreateTeam200ApplicationJSONBillingStatusActive   CreateTeam200ApplicationJSONBillingStatus = "active"
-	CreateTeam200ApplicationJSONBillingStatusOverdue  CreateTeam200ApplicationJSONBillingStatus = "overdue"
-	CreateTeam200ApplicationJSONBillingStatusExpired  CreateTeam200ApplicationJSONBillingStatus = "expired"
-	CreateTeam200ApplicationJSONBillingStatusCanceled CreateTeam200ApplicationJSONBillingStatus = "canceled"
+	CreateTeamStatusTrialing CreateTeamStatus = "trialing"
+	CreateTeamStatusActive   CreateTeamStatus = "active"
+	CreateTeamStatusOverdue  CreateTeamStatus = "overdue"
+	CreateTeamStatusExpired  CreateTeamStatus = "expired"
+	CreateTeamStatusCanceled CreateTeamStatus = "canceled"
 )
 
-func (e CreateTeam200ApplicationJSONBillingStatus) ToPointer() *CreateTeam200ApplicationJSONBillingStatus {
+func (e CreateTeamStatus) ToPointer() *CreateTeamStatus {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingStatus) UnmarshalJSON(data []byte) error {
+func (e *CreateTeamStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3755,26 +3755,26 @@ func (e *CreateTeam200ApplicationJSONBillingStatus) UnmarshalJSON(data []byte) e
 	case "expired":
 		fallthrough
 	case "canceled":
-		*e = CreateTeam200ApplicationJSONBillingStatus(v)
+		*e = CreateTeamStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingStatus: %v", v)
+		return fmt.Errorf("invalid value for CreateTeamStatus: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration string
+type Duration string
 
 const (
-	CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDurationForever   CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration = "forever"
-	CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDurationRepeating CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration = "repeating"
-	CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDurationOnce      CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration = "once"
+	DurationForever   Duration = "forever"
+	DurationRepeating Duration = "repeating"
+	DurationOnce      Duration = "once"
 )
 
-func (e CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration) ToPointer() *CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration {
+func (e Duration) ToPointer() *Duration {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration) UnmarshalJSON(data []byte) error {
+func (e *Duration) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3785,97 +3785,97 @@ func (e *CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration)
 	case "repeating":
 		fallthrough
 	case "once":
-		*e = CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration(v)
+		*e = Duration(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration: %v", v)
+		return fmt.Errorf("invalid value for Duration: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCoupon struct {
-	AmountOff        *int64                                                                 `json:"amountOff"`
-	Duration         CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration `json:"duration"`
-	DurationInMonths *int64                                                                 `json:"durationInMonths"`
-	ID               string                                                                 `json:"id"`
-	Name             *string                                                                `json:"name"`
-	PercentageOff    *int64                                                                 `json:"percentageOff"`
+type Coupon struct {
+	AmountOff        *int64   `json:"amountOff"`
+	Duration         Duration `json:"duration"`
+	DurationInMonths *int64   `json:"durationInMonths"`
+	ID               string   `json:"id"`
+	Name             *string  `json:"name"`
+	PercentageOff    *int64   `json:"percentageOff"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCoupon) GetAmountOff() *int64 {
+func (o *Coupon) GetAmountOff() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.AmountOff
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCoupon) GetDuration() CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration {
+func (o *Coupon) GetDuration() Duration {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCouponDuration("")
+		return Duration("")
 	}
 	return o.Duration
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCoupon) GetDurationInMonths() *int64 {
+func (o *Coupon) GetDurationInMonths() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DurationInMonths
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCoupon) GetID() string {
+func (o *Coupon) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCoupon) GetName() *string {
+func (o *Coupon) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCoupon) GetPercentageOff() *int64 {
+func (o *Coupon) GetPercentageOff() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PercentageOff
 }
 
-type CreateTeam200ApplicationJSONBillingSubscriptionsDiscount struct {
-	Coupon CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCoupon `json:"coupon"`
-	ID     string                                                         `json:"id"`
+type Discount struct {
+	Coupon Coupon `json:"coupon"`
+	ID     string `json:"id"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsDiscount) GetCoupon() CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCoupon {
+func (o *Discount) GetCoupon() Coupon {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingSubscriptionsDiscountCoupon{}
+		return Coupon{}
 	}
 	return o.Coupon
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsDiscount) GetID() string {
+func (o *Discount) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-type CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval string
+type Interval string
 
 const (
-	CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyIntervalDay   CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval = "day"
-	CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyIntervalMonth CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval = "month"
-	CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyIntervalWeek  CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval = "week"
-	CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyIntervalYear  CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval = "year"
+	IntervalDay   Interval = "day"
+	IntervalMonth Interval = "month"
+	IntervalWeek  Interval = "week"
+	IntervalYear  Interval = "year"
 )
 
-func (e CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval) ToPointer() *CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval {
+func (e Interval) ToPointer() *Interval {
 	return &e
 }
 
-func (e *CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval) UnmarshalJSON(data []byte) error {
+func (e *Interval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3888,33 +3888,33 @@ func (e *CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval) Unma
 	case "week":
 		fallthrough
 	case "year":
-		*e = CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval(v)
+		*e = Interval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval: %v", v)
+		return fmt.Errorf("invalid value for Interval: %v", v)
 	}
 }
 
-type CreateTeam200ApplicationJSONBillingSubscriptionsFrequency struct {
-	Interval      CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval `json:"interval"`
-	IntervalCount int64                                                             `json:"intervalCount"`
+type Frequency struct {
+	Interval      Interval `json:"interval"`
+	IntervalCount int64    `json:"intervalCount"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsFrequency) GetInterval() CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval {
+func (o *Frequency) GetInterval() Interval {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingSubscriptionsFrequencyInterval("")
+		return Interval("")
 	}
 	return o.Interval
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsFrequency) GetIntervalCount() int64 {
+func (o *Frequency) GetIntervalCount() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.IntervalCount
 }
 
-type CreateTeam200ApplicationJSONBillingSubscriptionsItems struct {
+type Items struct {
 	Amount    int64  `json:"amount"`
 	ID        string `json:"id"`
 	PriceID   string `json:"priceId"`
@@ -3922,370 +3922,370 @@ type CreateTeam200ApplicationJSONBillingSubscriptionsItems struct {
 	Quantity  int64  `json:"quantity"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsItems) GetAmount() int64 {
+func (o *Items) GetAmount() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Amount
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsItems) GetID() string {
+func (o *Items) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsItems) GetPriceID() string {
+func (o *Items) GetPriceID() string {
 	if o == nil {
 		return ""
 	}
 	return o.PriceID
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsItems) GetProductID() string {
+func (o *Items) GetProductID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ProductID
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsItems) GetQuantity() int64 {
+func (o *Items) GetQuantity() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Quantity
 }
 
-type CreateTeam200ApplicationJSONBillingSubscriptionsPeriod struct {
+type CreateTeamPeriod struct {
 	End   int64 `json:"end"`
 	Start int64 `json:"start"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsPeriod) GetEnd() int64 {
+func (o *CreateTeamPeriod) GetEnd() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.End
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsPeriod) GetStart() int64 {
+func (o *CreateTeamPeriod) GetStart() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Start
 }
 
-type CreateTeam200ApplicationJSONBillingSubscriptionsTrial struct {
+type CreateTeamTrial struct {
 	End   int64 `json:"end"`
 	Start int64 `json:"start"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsTrial) GetEnd() int64 {
+func (o *CreateTeamTrial) GetEnd() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.End
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptionsTrial) GetStart() int64 {
+func (o *CreateTeamTrial) GetStart() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Start
 }
 
-type CreateTeam200ApplicationJSONBillingSubscriptions struct {
-	Discount  *CreateTeam200ApplicationJSONBillingSubscriptionsDiscount `json:"discount"`
-	Frequency CreateTeam200ApplicationJSONBillingSubscriptionsFrequency `json:"frequency"`
-	ID        string                                                    `json:"id"`
-	Items     []CreateTeam200ApplicationJSONBillingSubscriptionsItems   `json:"items"`
-	Period    CreateTeam200ApplicationJSONBillingSubscriptionsPeriod    `json:"period"`
-	Trial     *CreateTeam200ApplicationJSONBillingSubscriptionsTrial    `json:"trial"`
+type Subscriptions struct {
+	Discount  *Discount        `json:"discount"`
+	Frequency Frequency        `json:"frequency"`
+	ID        string           `json:"id"`
+	Items     []Items          `json:"items"`
+	Period    CreateTeamPeriod `json:"period"`
+	Trial     *CreateTeamTrial `json:"trial"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptions) GetDiscount() *CreateTeam200ApplicationJSONBillingSubscriptionsDiscount {
+func (o *Subscriptions) GetDiscount() *Discount {
 	if o == nil {
 		return nil
 	}
 	return o.Discount
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptions) GetFrequency() CreateTeam200ApplicationJSONBillingSubscriptionsFrequency {
+func (o *Subscriptions) GetFrequency() Frequency {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingSubscriptionsFrequency{}
+		return Frequency{}
 	}
 	return o.Frequency
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptions) GetID() string {
+func (o *Subscriptions) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptions) GetItems() []CreateTeam200ApplicationJSONBillingSubscriptionsItems {
+func (o *Subscriptions) GetItems() []Items {
 	if o == nil {
-		return []CreateTeam200ApplicationJSONBillingSubscriptionsItems{}
+		return []Items{}
 	}
 	return o.Items
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptions) GetPeriod() CreateTeam200ApplicationJSONBillingSubscriptionsPeriod {
+func (o *Subscriptions) GetPeriod() CreateTeamPeriod {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingSubscriptionsPeriod{}
+		return CreateTeamPeriod{}
 	}
 	return o.Period
 }
 
-func (o *CreateTeam200ApplicationJSONBillingSubscriptions) GetTrial() *CreateTeam200ApplicationJSONBillingSubscriptionsTrial {
+func (o *Subscriptions) GetTrial() *CreateTeamTrial {
 	if o == nil {
 		return nil
 	}
 	return o.Trial
 }
 
-type CreateTeam200ApplicationJSONBillingTax struct {
+type Tax struct {
 	ID   string `json:"id"`
 	Type string `json:"type"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingTax) GetID() string {
+func (o *Tax) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateTeam200ApplicationJSONBillingTax) GetType() string {
+func (o *Tax) GetType() string {
 	if o == nil {
 		return ""
 	}
 	return o.Type
 }
 
-type CreateTeam200ApplicationJSONBillingTrial struct {
+type Trial struct {
 	End   int64 `json:"end"`
 	Start int64 `json:"start"`
 }
 
-func (o *CreateTeam200ApplicationJSONBillingTrial) GetEnd() int64 {
+func (o *Trial) GetEnd() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.End
 }
 
-func (o *CreateTeam200ApplicationJSONBillingTrial) GetStart() int64 {
+func (o *Trial) GetStart() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Start
 }
 
-type CreateTeam200ApplicationJSONBilling struct {
-	Address                 *CreateTeam200ApplicationJSONBillingAddress           `json:"address,omitempty"`
-	Cancelation             *int64                                                `json:"cancelation,omitempty"`
-	Contract                *CreateTeam200ApplicationJSONBillingContract          `json:"contract,omitempty"`
-	Controls                *CreateTeam200ApplicationJSONBillingControls          `json:"controls,omitempty"`
-	Currency                *CreateTeam200ApplicationJSONBillingCurrency          `json:"currency,omitempty"`
-	Email                   *string                                               `json:"email,omitempty"`
-	InvoiceItems            *CreateTeam200ApplicationJSONBillingInvoiceItems      `json:"invoiceItems,omitempty"`
-	InvoiceSettings         *CreateTeam200ApplicationJSONBillingInvoiceSettings   `json:"invoiceSettings,omitempty"`
-	Language                *string                                               `json:"language,omitempty"`
-	Name                    *string                                               `json:"name,omitempty"`
-	OrbCustomerID           *string                                               `json:"orbCustomerId,omitempty"`
-	OrbMigrationScheduledAt *int64                                                `json:"orbMigrationScheduledAt,omitempty"`
-	Period                  *CreateTeam200ApplicationJSONBillingPeriod            `json:"period"`
-	Plan                    CreateTeam200ApplicationJSONBillingPlan               `json:"plan"`
-	Platform                *CreateTeam200ApplicationJSONBillingPlatform          `json:"platform,omitempty"`
-	PricingExperiment       *CreateTeam200ApplicationJSONBillingPricingExperiment `json:"pricingExperiment,omitempty"`
-	ProgramType             *CreateTeam200ApplicationJSONBillingProgramType       `json:"programType,omitempty"`
-	PurchaseOrder           *string                                               `json:"purchaseOrder,omitempty"`
-	Status                  *CreateTeam200ApplicationJSONBillingStatus            `json:"status,omitempty"`
-	Subscriptions           []CreateTeam200ApplicationJSONBillingSubscriptions    `json:"subscriptions,omitempty"`
-	SyncedAt                *int64                                                `json:"syncedAt,omitempty"`
-	Tax                     *CreateTeam200ApplicationJSONBillingTax               `json:"tax,omitempty"`
-	Trial                   *CreateTeam200ApplicationJSONBillingTrial             `json:"trial,omitempty"`
+type Billing struct {
+	Address                 *Address           `json:"address,omitempty"`
+	Cancelation             *int64             `json:"cancelation,omitempty"`
+	Contract                *Contract          `json:"contract,omitempty"`
+	Controls                *Controls          `json:"controls,omitempty"`
+	Currency                *Currency          `json:"currency,omitempty"`
+	Email                   *string            `json:"email,omitempty"`
+	InvoiceItems            *InvoiceItems      `json:"invoiceItems,omitempty"`
+	InvoiceSettings         *InvoiceSettings   `json:"invoiceSettings,omitempty"`
+	Language                *string            `json:"language,omitempty"`
+	Name                    *string            `json:"name,omitempty"`
+	OrbCustomerID           *string            `json:"orbCustomerId,omitempty"`
+	OrbMigrationScheduledAt *int64             `json:"orbMigrationScheduledAt,omitempty"`
+	Period                  *Period            `json:"period"`
+	Plan                    CreateTeamPlan     `json:"plan"`
+	Platform                *Platform          `json:"platform,omitempty"`
+	PricingExperiment       *PricingExperiment `json:"pricingExperiment,omitempty"`
+	ProgramType             *ProgramType       `json:"programType,omitempty"`
+	PurchaseOrder           *string            `json:"purchaseOrder,omitempty"`
+	Status                  *CreateTeamStatus  `json:"status,omitempty"`
+	Subscriptions           []Subscriptions    `json:"subscriptions,omitempty"`
+	SyncedAt                *int64             `json:"syncedAt,omitempty"`
+	Tax                     *Tax               `json:"tax,omitempty"`
+	Trial                   *Trial             `json:"trial,omitempty"`
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetAddress() *CreateTeam200ApplicationJSONBillingAddress {
+func (o *Billing) GetAddress() *Address {
 	if o == nil {
 		return nil
 	}
 	return o.Address
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetCancelation() *int64 {
+func (o *Billing) GetCancelation() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Cancelation
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetContract() *CreateTeam200ApplicationJSONBillingContract {
+func (o *Billing) GetContract() *Contract {
 	if o == nil {
 		return nil
 	}
 	return o.Contract
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetControls() *CreateTeam200ApplicationJSONBillingControls {
+func (o *Billing) GetControls() *Controls {
 	if o == nil {
 		return nil
 	}
 	return o.Controls
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetCurrency() *CreateTeam200ApplicationJSONBillingCurrency {
+func (o *Billing) GetCurrency() *Currency {
 	if o == nil {
 		return nil
 	}
 	return o.Currency
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetEmail() *string {
+func (o *Billing) GetEmail() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Email
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetInvoiceItems() *CreateTeam200ApplicationJSONBillingInvoiceItems {
+func (o *Billing) GetInvoiceItems() *InvoiceItems {
 	if o == nil {
 		return nil
 	}
 	return o.InvoiceItems
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetInvoiceSettings() *CreateTeam200ApplicationJSONBillingInvoiceSettings {
+func (o *Billing) GetInvoiceSettings() *InvoiceSettings {
 	if o == nil {
 		return nil
 	}
 	return o.InvoiceSettings
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetLanguage() *string {
+func (o *Billing) GetLanguage() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Language
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetName() *string {
+func (o *Billing) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetOrbCustomerID() *string {
+func (o *Billing) GetOrbCustomerID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.OrbCustomerID
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetOrbMigrationScheduledAt() *int64 {
+func (o *Billing) GetOrbMigrationScheduledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.OrbMigrationScheduledAt
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetPeriod() *CreateTeam200ApplicationJSONBillingPeriod {
+func (o *Billing) GetPeriod() *Period {
 	if o == nil {
 		return nil
 	}
 	return o.Period
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetPlan() CreateTeam200ApplicationJSONBillingPlan {
+func (o *Billing) GetPlan() CreateTeamPlan {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBillingPlan("")
+		return CreateTeamPlan("")
 	}
 	return o.Plan
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetPlatform() *CreateTeam200ApplicationJSONBillingPlatform {
+func (o *Billing) GetPlatform() *Platform {
 	if o == nil {
 		return nil
 	}
 	return o.Platform
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetPricingExperiment() *CreateTeam200ApplicationJSONBillingPricingExperiment {
+func (o *Billing) GetPricingExperiment() *PricingExperiment {
 	if o == nil {
 		return nil
 	}
 	return o.PricingExperiment
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetProgramType() *CreateTeam200ApplicationJSONBillingProgramType {
+func (o *Billing) GetProgramType() *ProgramType {
 	if o == nil {
 		return nil
 	}
 	return o.ProgramType
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetPurchaseOrder() *string {
+func (o *Billing) GetPurchaseOrder() *string {
 	if o == nil {
 		return nil
 	}
 	return o.PurchaseOrder
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetStatus() *CreateTeam200ApplicationJSONBillingStatus {
+func (o *Billing) GetStatus() *CreateTeamStatus {
 	if o == nil {
 		return nil
 	}
 	return o.Status
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetSubscriptions() []CreateTeam200ApplicationJSONBillingSubscriptions {
+func (o *Billing) GetSubscriptions() []Subscriptions {
 	if o == nil {
 		return nil
 	}
 	return o.Subscriptions
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetSyncedAt() *int64 {
+func (o *Billing) GetSyncedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.SyncedAt
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetTax() *CreateTeam200ApplicationJSONBillingTax {
+func (o *Billing) GetTax() *Tax {
 	if o == nil {
 		return nil
 	}
 	return o.Tax
 }
 
-func (o *CreateTeam200ApplicationJSONBilling) GetTrial() *CreateTeam200ApplicationJSONBillingTrial {
+func (o *Billing) GetTrial() *Trial {
 	if o == nil {
 		return nil
 	}
 	return o.Trial
 }
 
-// CreateTeam200ApplicationJSON - The team was created successfully
-type CreateTeam200ApplicationJSON struct {
-	Billing CreateTeam200ApplicationJSONBilling `json:"billing"`
+// CreateTeamResponseBody - The team was created successfully
+type CreateTeamResponseBody struct {
+	Billing Billing `json:"billing"`
 	// Id of the created team
 	ID string `json:"id"`
 }
 
-func (o *CreateTeam200ApplicationJSON) GetBilling() CreateTeam200ApplicationJSONBilling {
+func (o *CreateTeamResponseBody) GetBilling() Billing {
 	if o == nil {
-		return CreateTeam200ApplicationJSONBilling{}
+		return Billing{}
 	}
 	return o.Billing
 }
 
-func (o *CreateTeam200ApplicationJSON) GetID() string {
+func (o *CreateTeamResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
@@ -4300,7 +4300,7 @@ type CreateTeamResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The team was created successfully
-	CreateTeam200ApplicationJSONObject *CreateTeam200ApplicationJSON
+	Object *CreateTeamResponseBody
 }
 
 func (o *CreateTeamResponse) GetContentType() string {
@@ -4324,9 +4324,9 @@ func (o *CreateTeamResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateTeamResponse) GetCreateTeam200ApplicationJSONObject() *CreateTeam200ApplicationJSON {
+func (o *CreateTeamResponse) GetObject() *CreateTeamResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.CreateTeam200ApplicationJSONObject
+	return o.Object
 }

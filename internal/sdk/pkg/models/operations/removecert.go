@@ -27,7 +27,7 @@ func (o *RemoveCertRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type RemoveCert200ApplicationJSON struct {
+type RemoveCertResponseBody struct {
 }
 
 type RemoveCertResponse struct {
@@ -36,8 +36,8 @@ type RemoveCertResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                        *http.Response
-	RemoveCert200ApplicationJSONObject *RemoveCert200ApplicationJSON
+	RawResponse *http.Response
+	Object      *RemoveCertResponseBody
 }
 
 func (o *RemoveCertResponse) GetContentType() string {
@@ -61,9 +61,9 @@ func (o *RemoveCertResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *RemoveCertResponse) GetRemoveCert200ApplicationJSONObject() *RemoveCert200ApplicationJSON {
+func (o *RemoveCertResponse) GetObject() *RemoveCertResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.RemoveCert200ApplicationJSONObject
+	return o.Object
 }

@@ -58,8 +58,8 @@ func (o *AssignAliasRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// AssignAlias200ApplicationJSON - The alias was successfully assigned to the deployment
-type AssignAlias200ApplicationJSON struct {
+// AssignAliasResponseBody - The alias was successfully assigned to the deployment
+type AssignAliasResponseBody struct {
 	// The assigned alias name
 	Alias string `json:"alias"`
 	// The date when the alias was created
@@ -70,39 +70,39 @@ type AssignAlias200ApplicationJSON struct {
 	UID string `json:"uid"`
 }
 
-func (a AssignAlias200ApplicationJSON) MarshalJSON() ([]byte, error) {
+func (a AssignAliasResponseBody) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(a, "", false)
 }
 
-func (a *AssignAlias200ApplicationJSON) UnmarshalJSON(data []byte) error {
+func (a *AssignAliasResponseBody) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AssignAlias200ApplicationJSON) GetAlias() string {
+func (o *AssignAliasResponseBody) GetAlias() string {
 	if o == nil {
 		return ""
 	}
 	return o.Alias
 }
 
-func (o *AssignAlias200ApplicationJSON) GetCreated() time.Time {
+func (o *AssignAliasResponseBody) GetCreated() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.Created
 }
 
-func (o *AssignAlias200ApplicationJSON) GetOldDeploymentID() *string {
+func (o *AssignAliasResponseBody) GetOldDeploymentID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.OldDeploymentID
 }
 
-func (o *AssignAlias200ApplicationJSON) GetUID() string {
+func (o *AssignAliasResponseBody) GetUID() string {
 	if o == nil {
 		return ""
 	}
@@ -117,7 +117,7 @@ type AssignAliasResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The alias was successfully assigned to the deployment
-	AssignAlias200ApplicationJSONObject *AssignAlias200ApplicationJSON
+	Object *AssignAliasResponseBody
 }
 
 func (o *AssignAliasResponse) GetContentType() string {
@@ -141,9 +141,9 @@ func (o *AssignAliasResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *AssignAliasResponse) GetAssignAlias200ApplicationJSONObject() *AssignAlias200ApplicationJSON {
+func (o *AssignAliasResponse) GetObject() *AssignAliasResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.AssignAlias200ApplicationJSONObject
+	return o.Object
 }

@@ -11,86 +11,86 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type CreateAuthTokenRequestBody2Type string
+type CreateAuthTokenType string
 
 const (
-	CreateAuthTokenRequestBody2TypeOauth2Token CreateAuthTokenRequestBody2Type = "oauth2-token"
+	CreateAuthTokenTypeOauth2Token CreateAuthTokenType = "oauth2-token"
 )
 
-func (e CreateAuthTokenRequestBody2Type) ToPointer() *CreateAuthTokenRequestBody2Type {
+func (e CreateAuthTokenType) ToPointer() *CreateAuthTokenType {
 	return &e
 }
 
-func (e *CreateAuthTokenRequestBody2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateAuthTokenType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2-token":
-		*e = CreateAuthTokenRequestBody2Type(v)
+		*e = CreateAuthTokenType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateAuthTokenRequestBody2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateAuthTokenType: %v", v)
 	}
 }
 
-type CreateAuthTokenRequestBody2 struct {
-	ClientID       *string                         `json:"clientId,omitempty"`
-	ExpiresAt      *int64                          `json:"expiresAt,omitempty"`
-	InstallationID *string                         `json:"installationId,omitempty"`
-	Name           string                          `json:"name"`
-	Type           CreateAuthTokenRequestBody2Type `json:"type"`
+type CreateAuthToken2 struct {
+	ClientID       *string             `json:"clientId,omitempty"`
+	ExpiresAt      *int64              `json:"expiresAt,omitempty"`
+	InstallationID *string             `json:"installationId,omitempty"`
+	Name           string              `json:"name"`
+	Type           CreateAuthTokenType `json:"type"`
 }
 
-func (o *CreateAuthTokenRequestBody2) GetClientID() *string {
+func (o *CreateAuthToken2) GetClientID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ClientID
 }
 
-func (o *CreateAuthTokenRequestBody2) GetExpiresAt() *int64 {
+func (o *CreateAuthToken2) GetExpiresAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ExpiresAt
 }
 
-func (o *CreateAuthTokenRequestBody2) GetInstallationID() *string {
+func (o *CreateAuthToken2) GetInstallationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.InstallationID
 }
 
-func (o *CreateAuthTokenRequestBody2) GetName() string {
+func (o *CreateAuthToken2) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateAuthTokenRequestBody2) GetType() CreateAuthTokenRequestBody2Type {
+func (o *CreateAuthToken2) GetType() CreateAuthTokenType {
 	if o == nil {
-		return CreateAuthTokenRequestBody2Type("")
+		return CreateAuthTokenType("")
 	}
 	return o.Type
 }
 
-type CreateAuthTokenRequestBody1 struct {
+type CreateAuthToken1 struct {
 	ExpiresAt *int64 `json:"expiresAt,omitempty"`
 	Name      string `json:"name"`
 }
 
-func (o *CreateAuthTokenRequestBody1) GetExpiresAt() *int64 {
+func (o *CreateAuthToken1) GetExpiresAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ExpiresAt
 }
 
-func (o *CreateAuthTokenRequestBody1) GetName() string {
+func (o *CreateAuthToken1) GetName() string {
 	if o == nil {
 		return ""
 	}
@@ -100,48 +100,48 @@ func (o *CreateAuthTokenRequestBody1) GetName() string {
 type CreateAuthTokenRequestBodyType string
 
 const (
-	CreateAuthTokenRequestBodyTypeCreateAuthTokenRequestBody1 CreateAuthTokenRequestBodyType = "createAuthToken_requestBody_1"
-	CreateAuthTokenRequestBodyTypeCreateAuthTokenRequestBody2 CreateAuthTokenRequestBodyType = "createAuthToken_requestBody_2"
+	CreateAuthTokenRequestBodyTypeCreateAuthToken1 CreateAuthTokenRequestBodyType = "createAuthToken_1"
+	CreateAuthTokenRequestBodyTypeCreateAuthToken2 CreateAuthTokenRequestBodyType = "createAuthToken_2"
 )
 
 type CreateAuthTokenRequestBody struct {
-	CreateAuthTokenRequestBody1 *CreateAuthTokenRequestBody1
-	CreateAuthTokenRequestBody2 *CreateAuthTokenRequestBody2
+	CreateAuthToken1 *CreateAuthToken1
+	CreateAuthToken2 *CreateAuthToken2
 
 	Type CreateAuthTokenRequestBodyType
 }
 
-func CreateCreateAuthTokenRequestBodyCreateAuthTokenRequestBody1(createAuthTokenRequestBody1 CreateAuthTokenRequestBody1) CreateAuthTokenRequestBody {
-	typ := CreateAuthTokenRequestBodyTypeCreateAuthTokenRequestBody1
+func CreateCreateAuthTokenRequestBodyCreateAuthToken1(createAuthToken1 CreateAuthToken1) CreateAuthTokenRequestBody {
+	typ := CreateAuthTokenRequestBodyTypeCreateAuthToken1
 
 	return CreateAuthTokenRequestBody{
-		CreateAuthTokenRequestBody1: &createAuthTokenRequestBody1,
-		Type:                        typ,
+		CreateAuthToken1: &createAuthToken1,
+		Type:             typ,
 	}
 }
 
-func CreateCreateAuthTokenRequestBodyCreateAuthTokenRequestBody2(createAuthTokenRequestBody2 CreateAuthTokenRequestBody2) CreateAuthTokenRequestBody {
-	typ := CreateAuthTokenRequestBodyTypeCreateAuthTokenRequestBody2
+func CreateCreateAuthTokenRequestBodyCreateAuthToken2(createAuthToken2 CreateAuthToken2) CreateAuthTokenRequestBody {
+	typ := CreateAuthTokenRequestBodyTypeCreateAuthToken2
 
 	return CreateAuthTokenRequestBody{
-		CreateAuthTokenRequestBody2: &createAuthTokenRequestBody2,
-		Type:                        typ,
+		CreateAuthToken2: &createAuthToken2,
+		Type:             typ,
 	}
 }
 
 func (u *CreateAuthTokenRequestBody) UnmarshalJSON(data []byte) error {
 
-	createAuthTokenRequestBody1 := new(CreateAuthTokenRequestBody1)
-	if err := utils.UnmarshalJSON(data, &createAuthTokenRequestBody1, "", true, true); err == nil {
-		u.CreateAuthTokenRequestBody1 = createAuthTokenRequestBody1
-		u.Type = CreateAuthTokenRequestBodyTypeCreateAuthTokenRequestBody1
+	createAuthToken1 := new(CreateAuthToken1)
+	if err := utils.UnmarshalJSON(data, &createAuthToken1, "", true, true); err == nil {
+		u.CreateAuthToken1 = createAuthToken1
+		u.Type = CreateAuthTokenRequestBodyTypeCreateAuthToken1
 		return nil
 	}
 
-	createAuthTokenRequestBody2 := new(CreateAuthTokenRequestBody2)
-	if err := utils.UnmarshalJSON(data, &createAuthTokenRequestBody2, "", true, true); err == nil {
-		u.CreateAuthTokenRequestBody2 = createAuthTokenRequestBody2
-		u.Type = CreateAuthTokenRequestBodyTypeCreateAuthTokenRequestBody2
+	createAuthToken2 := new(CreateAuthToken2)
+	if err := utils.UnmarshalJSON(data, &createAuthToken2, "", true, true); err == nil {
+		u.CreateAuthToken2 = createAuthToken2
+		u.Type = CreateAuthTokenRequestBodyTypeCreateAuthToken2
 		return nil
 	}
 
@@ -149,12 +149,12 @@ func (u *CreateAuthTokenRequestBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateAuthTokenRequestBody) MarshalJSON() ([]byte, error) {
-	if u.CreateAuthTokenRequestBody1 != nil {
-		return utils.MarshalJSON(u.CreateAuthTokenRequestBody1, "", true)
+	if u.CreateAuthToken1 != nil {
+		return utils.MarshalJSON(u.CreateAuthToken1, "", true)
 	}
 
-	if u.CreateAuthTokenRequestBody2 != nil {
-		return utils.MarshalJSON(u.CreateAuthTokenRequestBody2, "", true)
+	if u.CreateAuthToken2 != nil {
+		return utils.MarshalJSON(u.CreateAuthToken2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -180,22 +180,22 @@ func (o *CreateAuthTokenRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// CreateAuthToken200ApplicationJSON - Successful response.
-type CreateAuthToken200ApplicationJSON struct {
+// CreateAuthTokenResponseBody - Successful response.
+type CreateAuthTokenResponseBody struct {
 	// The authentication token's actual value. This token is only provided in this response, and can never be retrieved again in the future. Be sure to save it somewhere safe!
 	BearerToken string `json:"bearerToken"`
 	// Authentication token metadata.
 	Token shared.AuthToken `json:"token"`
 }
 
-func (o *CreateAuthToken200ApplicationJSON) GetBearerToken() string {
+func (o *CreateAuthTokenResponseBody) GetBearerToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.BearerToken
 }
 
-func (o *CreateAuthToken200ApplicationJSON) GetToken() shared.AuthToken {
+func (o *CreateAuthTokenResponseBody) GetToken() shared.AuthToken {
 	if o == nil {
 		return shared.AuthToken{}
 	}
@@ -210,7 +210,7 @@ type CreateAuthTokenResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response.
-	CreateAuthToken200ApplicationJSONObject *CreateAuthToken200ApplicationJSON
+	Object *CreateAuthTokenResponseBody
 }
 
 func (o *CreateAuthTokenResponse) GetContentType() string {
@@ -234,9 +234,9 @@ func (o *CreateAuthTokenResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateAuthTokenResponse) GetCreateAuthToken200ApplicationJSONObject() *CreateAuthToken200ApplicationJSON {
+func (o *CreateAuthTokenResponse) GetObject() *CreateAuthTokenResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.CreateAuthToken200ApplicationJSONObject
+	return o.Object
 }

@@ -7,35 +7,35 @@ import (
 	"fmt"
 )
 
-// UserEventEntitiesType - The type of entity.
-type UserEventEntitiesType string
+// UserEventType - The type of entity.
+type UserEventType string
 
 const (
-	UserEventEntitiesTypeBold           UserEventEntitiesType = "bold"
-	UserEventEntitiesTypeLink           UserEventEntitiesType = "link"
-	UserEventEntitiesTypeAuthor         UserEventEntitiesType = "author"
-	UserEventEntitiesTypeBitbucketLogin UserEventEntitiesType = "bitbucket_login"
-	UserEventEntitiesTypeDeploymentHost UserEventEntitiesType = "deployment_host"
-	UserEventEntitiesTypeDNSRecord      UserEventEntitiesType = "dns_record"
-	UserEventEntitiesTypeGitLink        UserEventEntitiesType = "git_link"
-	UserEventEntitiesTypeGithubLogin    UserEventEntitiesType = "github_login"
-	UserEventEntitiesTypeGitlabLogin    UserEventEntitiesType = "gitlab_login"
-	UserEventEntitiesTypeHookName       UserEventEntitiesType = "hook_name"
-	UserEventEntitiesTypeIntegration    UserEventEntitiesType = "integration"
-	UserEventEntitiesTypeEdgeConfig     UserEventEntitiesType = "edge-config"
-	UserEventEntitiesTypeProjectName    UserEventEntitiesType = "project_name"
-	UserEventEntitiesTypeScalingRules   UserEventEntitiesType = "scaling_rules"
-	UserEventEntitiesTypeEnvVarName     UserEventEntitiesType = "env_var_name"
-	UserEventEntitiesTypeTarget         UserEventEntitiesType = "target"
-	UserEventEntitiesTypeStore          UserEventEntitiesType = "store"
-	UserEventEntitiesTypeSystem         UserEventEntitiesType = "system"
+	UserEventTypeBold           UserEventType = "bold"
+	UserEventTypeLink           UserEventType = "link"
+	UserEventTypeAuthor         UserEventType = "author"
+	UserEventTypeBitbucketLogin UserEventType = "bitbucket_login"
+	UserEventTypeDeploymentHost UserEventType = "deployment_host"
+	UserEventTypeDNSRecord      UserEventType = "dns_record"
+	UserEventTypeGitLink        UserEventType = "git_link"
+	UserEventTypeGithubLogin    UserEventType = "github_login"
+	UserEventTypeGitlabLogin    UserEventType = "gitlab_login"
+	UserEventTypeHookName       UserEventType = "hook_name"
+	UserEventTypeIntegration    UserEventType = "integration"
+	UserEventTypeEdgeConfig     UserEventType = "edge-config"
+	UserEventTypeProjectName    UserEventType = "project_name"
+	UserEventTypeScalingRules   UserEventType = "scaling_rules"
+	UserEventTypeEnvVarName     UserEventType = "env_var_name"
+	UserEventTypeTarget         UserEventType = "target"
+	UserEventTypeStore          UserEventType = "store"
+	UserEventTypeSystem         UserEventType = "system"
 )
 
-func (e UserEventEntitiesType) ToPointer() *UserEventEntitiesType {
+func (e UserEventType) ToPointer() *UserEventType {
 	return &e
 }
 
-func (e *UserEventEntitiesType) UnmarshalJSON(data []byte) error {
+func (e *UserEventType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -76,46 +76,46 @@ func (e *UserEventEntitiesType) UnmarshalJSON(data []byte) error {
 	case "store":
 		fallthrough
 	case "system":
-		*e = UserEventEntitiesType(v)
+		*e = UserEventType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UserEventEntitiesType: %v", v)
+		return fmt.Errorf("invalid value for UserEventType: %v", v)
 	}
 }
 
-// UserEventEntities - A list of "entities" within the event `text`. Useful for enhancing the displayed text with additional styling and links.
-type UserEventEntities struct {
+// Entities - A list of "entities" within the event `text`. Useful for enhancing the displayed text with additional styling and links.
+type Entities struct {
 	// The index of where the entity ends within the `text` (non-inclusive).
 	End int64 `json:"end"`
 	// The index of where the entity begins within the `text` (inclusive).
 	Start int64 `json:"start"`
 	// The type of entity.
-	Type UserEventEntitiesType `json:"type"`
+	Type UserEventType `json:"type"`
 }
 
-func (o *UserEventEntities) GetEnd() int64 {
+func (o *Entities) GetEnd() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.End
 }
 
-func (o *UserEventEntities) GetStart() int64 {
+func (o *Entities) GetStart() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Start
 }
 
-func (o *UserEventEntities) GetType() UserEventEntitiesType {
+func (o *Entities) GetType() UserEventType {
 	if o == nil {
-		return UserEventEntitiesType("")
+		return UserEventType("")
 	}
 	return o.Type
 }
 
-// UserEventUser - Metadata for the User who generated the event.
-type UserEventUser struct {
+// User - Metadata for the User who generated the event.
+type User struct {
 	Avatar   string  `json:"avatar"`
 	Email    string  `json:"email"`
 	Slug     *string `json:"slug,omitempty"`
@@ -123,35 +123,35 @@ type UserEventUser struct {
 	Username string  `json:"username"`
 }
 
-func (o *UserEventUser) GetAvatar() string {
+func (o *User) GetAvatar() string {
 	if o == nil {
 		return ""
 	}
 	return o.Avatar
 }
 
-func (o *UserEventUser) GetEmail() string {
+func (o *User) GetEmail() string {
 	if o == nil {
 		return ""
 	}
 	return o.Email
 }
 
-func (o *UserEventUser) GetSlug() *string {
+func (o *User) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Slug
 }
 
-func (o *UserEventUser) GetUID() string {
+func (o *User) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *UserEventUser) GetUsername() string {
+func (o *User) GetUsername() string {
 	if o == nil {
 		return ""
 	}
@@ -163,13 +163,13 @@ type UserEvent struct {
 	// Timestamp (in milliseconds) of when the event was generated.
 	CreatedAt int64 `json:"createdAt"`
 	// A list of "entities" within the event `text`. Useful for enhancing the displayed text with additional styling and links.
-	Entities []UserEventEntities `json:"entities"`
+	Entities []Entities `json:"entities"`
 	// The unique identifier of the Event.
 	ID string `json:"id"`
 	// The human-readable text of the Event.
 	Text string `json:"text"`
 	// Metadata for the User who generated the event.
-	User *UserEventUser `json:"user,omitempty"`
+	User *User `json:"user,omitempty"`
 	// The unique identifier of the User who generated the event.
 	UserID string `json:"userId"`
 }
@@ -181,9 +181,9 @@ func (o *UserEvent) GetCreatedAt() int64 {
 	return o.CreatedAt
 }
 
-func (o *UserEvent) GetEntities() []UserEventEntities {
+func (o *UserEvent) GetEntities() []Entities {
 	if o == nil {
-		return []UserEventEntities{}
+		return []Entities{}
 	}
 	return o.Entities
 }
@@ -202,7 +202,7 @@ func (o *UserEvent) GetText() string {
 	return o.Text
 }
 
-func (o *UserEvent) GetUser() *UserEventUser {
+func (o *UserEvent) GetUser() *User {
 	if o == nil {
 		return nil
 	}

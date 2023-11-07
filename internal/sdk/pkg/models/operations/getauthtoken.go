@@ -19,13 +19,13 @@ func (o *GetAuthTokenRequest) GetTokenID() string {
 	return o.TokenID
 }
 
-// GetAuthToken200ApplicationJSON - Successful response.
-type GetAuthToken200ApplicationJSON struct {
+// GetAuthTokenResponseBody - Successful response.
+type GetAuthTokenResponseBody struct {
 	// Authentication token metadata.
 	Token shared.AuthToken `json:"token"`
 }
 
-func (o *GetAuthToken200ApplicationJSON) GetToken() shared.AuthToken {
+func (o *GetAuthTokenResponseBody) GetToken() shared.AuthToken {
 	if o == nil {
 		return shared.AuthToken{}
 	}
@@ -40,7 +40,7 @@ type GetAuthTokenResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response.
-	GetAuthToken200ApplicationJSONObject *GetAuthToken200ApplicationJSON
+	Object *GetAuthTokenResponseBody
 }
 
 func (o *GetAuthTokenResponse) GetContentType() string {
@@ -64,9 +64,9 @@ func (o *GetAuthTokenResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetAuthTokenResponse) GetGetAuthToken200ApplicationJSONObject() *GetAuthToken200ApplicationJSON {
+func (o *GetAuthTokenResponse) GetObject() *GetAuthTokenResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetAuthToken200ApplicationJSONObject
+	return o.Object
 }

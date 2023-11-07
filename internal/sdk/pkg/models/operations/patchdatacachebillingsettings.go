@@ -17,11 +17,11 @@ func (o *PatchDataCacheBillingSettingsRequestBody) GetExcessBillingEnabled() *bo
 	return o.ExcessBillingEnabled
 }
 
-type PatchDataCacheBillingSettings200ApplicationJSON struct {
+type PatchDataCacheBillingSettingsResponseBody struct {
 	ExcessBillingEnabled *bool `json:"excessBillingEnabled,omitempty"`
 }
 
-func (o *PatchDataCacheBillingSettings200ApplicationJSON) GetExcessBillingEnabled() *bool {
+func (o *PatchDataCacheBillingSettingsResponseBody) GetExcessBillingEnabled() *bool {
 	if o == nil {
 		return nil
 	}
@@ -34,8 +34,8 @@ type PatchDataCacheBillingSettingsResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                                           *http.Response
-	PatchDataCacheBillingSettings200ApplicationJSONObject *PatchDataCacheBillingSettings200ApplicationJSON
+	RawResponse *http.Response
+	Object      *PatchDataCacheBillingSettingsResponseBody
 }
 
 func (o *PatchDataCacheBillingSettingsResponse) GetContentType() string {
@@ -59,9 +59,9 @@ func (o *PatchDataCacheBillingSettingsResponse) GetRawResponse() *http.Response 
 	return o.RawResponse
 }
 
-func (o *PatchDataCacheBillingSettingsResponse) GetPatchDataCacheBillingSettings200ApplicationJSONObject() *PatchDataCacheBillingSettings200ApplicationJSON {
+func (o *PatchDataCacheBillingSettingsResponse) GetObject() *PatchDataCacheBillingSettingsResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.PatchDataCacheBillingSettings200ApplicationJSONObject
+	return o.Object
 }

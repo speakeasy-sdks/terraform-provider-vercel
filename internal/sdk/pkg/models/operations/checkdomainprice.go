@@ -8,19 +8,19 @@ import (
 	"net/http"
 )
 
-// CheckDomainPriceType - In which status of the domain the price needs to be checked.
-type CheckDomainPriceType string
+// QueryParamType - In which status of the domain the price needs to be checked.
+type QueryParamType string
 
 const (
-	CheckDomainPriceTypeNew     CheckDomainPriceType = "new"
-	CheckDomainPriceTypeRenewal CheckDomainPriceType = "renewal"
+	QueryParamTypeNew     QueryParamType = "new"
+	QueryParamTypeRenewal QueryParamType = "renewal"
 )
 
-func (e CheckDomainPriceType) ToPointer() *CheckDomainPriceType {
+func (e QueryParamType) ToPointer() *QueryParamType {
 	return &e
 }
 
-func (e *CheckDomainPriceType) UnmarshalJSON(data []byte) error {
+func (e *QueryParamType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -29,10 +29,10 @@ func (e *CheckDomainPriceType) UnmarshalJSON(data []byte) error {
 	case "new":
 		fallthrough
 	case "renewal":
-		*e = CheckDomainPriceType(v)
+		*e = QueryParamType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CheckDomainPriceType: %v", v)
+		return fmt.Errorf("invalid value for QueryParamType: %v", v)
 	}
 }
 
@@ -42,7 +42,7 @@ type CheckDomainPriceRequest struct {
 	// The Team identifier or slug to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// In which status of the domain the price needs to be checked.
-	Type *CheckDomainPriceType `queryParam:"style=form,explode=true,name=type"`
+	Type *QueryParamType `queryParam:"style=form,explode=true,name=type"`
 }
 
 func (o *CheckDomainPriceRequest) GetName() string {
@@ -59,29 +59,29 @@ func (o *CheckDomainPriceRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-func (o *CheckDomainPriceRequest) GetType() *CheckDomainPriceType {
+func (o *CheckDomainPriceRequest) GetType() *QueryParamType {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-// CheckDomainPrice200ApplicationJSON - Successful response which returns the price of the domain and the period.
-type CheckDomainPrice200ApplicationJSON struct {
+// CheckDomainPriceResponseBody - Successful response which returns the price of the domain and the period.
+type CheckDomainPriceResponseBody struct {
 	// The number of years the domain could be held before paying again.
 	Period int64 `json:"period"`
 	// The domain price in USD.
 	Price int64 `json:"price"`
 }
 
-func (o *CheckDomainPrice200ApplicationJSON) GetPeriod() int64 {
+func (o *CheckDomainPriceResponseBody) GetPeriod() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Period
 }
 
-func (o *CheckDomainPrice200ApplicationJSON) GetPrice() int64 {
+func (o *CheckDomainPriceResponseBody) GetPrice() int64 {
 	if o == nil {
 		return 0
 	}
@@ -96,7 +96,7 @@ type CheckDomainPriceResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response which returns the price of the domain and the period.
-	CheckDomainPrice200ApplicationJSONObject *CheckDomainPrice200ApplicationJSON
+	Object *CheckDomainPriceResponseBody
 }
 
 func (o *CheckDomainPriceResponse) GetContentType() string {
@@ -120,9 +120,9 @@ func (o *CheckDomainPriceResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CheckDomainPriceResponse) GetCheckDomainPrice200ApplicationJSONObject() *CheckDomainPrice200ApplicationJSON {
+func (o *CheckDomainPriceResponse) GetObject() *CheckDomainPriceResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.CheckDomainPrice200ApplicationJSONObject
+	return o.Object
 }

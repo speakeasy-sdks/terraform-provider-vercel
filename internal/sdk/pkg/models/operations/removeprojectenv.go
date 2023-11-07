@@ -40,818 +40,818 @@ func (o *RemoveProjectEnvRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint12Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint12TypePostgresDatabase RemoveProjectEnv200ApplicationJSON3ContentHint12Type = "postgres-database"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12TypePostgresDatabase RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type = "postgres-database"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint12Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint12Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint12Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-database":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint12Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint12Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint12 struct {
-	StoreID string                                               `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint12Type `json:"type"`
+type RemoveProjectEnvProjectsResponse12 struct {
+	StoreID string                                                                           `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint12) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse12) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint12) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint12Type {
+func (o *RemoveProjectEnvProjectsResponse12) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint12Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint11Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint11TypePostgresPassword RemoveProjectEnv200ApplicationJSON3ContentHint11Type = "postgres-password"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintTypePostgresPassword RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType = "postgres-password"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint11Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint11Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint11Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-password":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint11Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint11Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint11 struct {
-	StoreID string                                               `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint11Type `json:"type"`
+type RemoveProjectEnvProjectsResponse11 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint11) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse11) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint11) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint11Type {
+func (o *RemoveProjectEnvProjectsResponse11) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint11Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint10Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint10TypePostgresHost RemoveProjectEnv200ApplicationJSON3ContentHint10Type = "postgres-host"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3TypePostgresHost RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type = "postgres-host"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint10Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint10Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint10Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-host":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint10Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint10Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint10 struct {
-	StoreID string                                               `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint10Type `json:"type"`
+type RemoveProjectEnvProjectsResponse10 struct {
+	StoreID string                                                              `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint10) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse10) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint10) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint10Type {
+func (o *RemoveProjectEnvProjectsResponse10) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint10Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint9Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint9TypePostgresUser RemoveProjectEnv200ApplicationJSON3ContentHint9Type = "postgres-user"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9TypePostgresUser RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type = "postgres-user"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint9Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint9Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint9Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-user":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint9Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint9Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint9 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint9Type `json:"type"`
+type RemoveProjectEnvProjectsResponse9 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint9) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse9) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint9) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint9Type {
+func (o *RemoveProjectEnvProjectsResponse9) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint9Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint8Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint8TypePostgresPrismaURL RemoveProjectEnv200ApplicationJSON3ContentHint8Type = "postgres-prisma-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8TypePostgresPrismaURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type = "postgres-prisma-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint8Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint8Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint8Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-prisma-url":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint8Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint8Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint8 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint8Type `json:"type"`
+type RemoveProjectEnvProjectsResponse8 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint8) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse8) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint8) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint8Type {
+func (o *RemoveProjectEnvProjectsResponse8) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint8Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint7Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint7TypePostgresURLNonPooling RemoveProjectEnv200ApplicationJSON3ContentHint7Type = "postgres-url-non-pooling"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7TypePostgresURLNonPooling RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type = "postgres-url-non-pooling"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint7Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint7Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint7Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url-non-pooling":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint7Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint7Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint7 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint7Type `json:"type"`
+type RemoveProjectEnvProjectsResponse7 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint7) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse7) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint7) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint7Type {
+func (o *RemoveProjectEnvProjectsResponse7) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint7Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint6Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint6TypePostgresURL RemoveProjectEnv200ApplicationJSON3ContentHint6Type = "postgres-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6TypePostgresURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type = "postgres-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint6Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint6Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint6Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint6Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint6Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint6 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint6Type `json:"type"`
+type RemoveProjectEnvProjectsResponse6 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint6) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse6) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint6) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint6Type {
+func (o *RemoveProjectEnvProjectsResponse6) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint6Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint5Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint5TypeBlobReadWriteToken RemoveProjectEnv200ApplicationJSON3ContentHint5Type = "blob-read-write-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5TypeBlobReadWriteToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type = "blob-read-write-token"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint5Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint5Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint5Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "blob-read-write-token":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint5Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint5Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint5 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint5Type `json:"type"`
+type RemoveProjectEnvProjectsResponse5 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint5) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse5) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint5) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint5Type {
+func (o *RemoveProjectEnvProjectsResponse5) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint5Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint4Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint4TypeRedisRestAPIReadOnlyToken RemoveProjectEnv200ApplicationJSON3ContentHint4Type = "redis-rest-api-read-only-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4TypeRedisRestAPIReadOnlyToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type = "redis-rest-api-read-only-token"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint4Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint4Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint4Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-read-only-token":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint4Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint4Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint4 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint4Type `json:"type"`
+type RemoveProjectEnvProjectsResponse4 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint4) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse4) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint4) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint4Type {
+func (o *RemoveProjectEnvProjectsResponse4) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint4Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint3Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint3TypeRedisRestAPIToken RemoveProjectEnv200ApplicationJSON3ContentHint3Type = "redis-rest-api-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3TypeRedisRestAPIToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type = "redis-rest-api-token"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint3Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint3Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint3Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-token":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint3Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint3Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint3 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint3Type `json:"type"`
+type RemoveProjectEnvProjectsResponse2003 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint3) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse2003) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint3) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint3Type {
+func (o *RemoveProjectEnvProjectsResponse2003) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint3Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint2Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint2TypeRedisRestAPIURL RemoveProjectEnv200ApplicationJSON3ContentHint2Type = "redis-rest-api-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2TypeRedisRestAPIURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type = "redis-rest-api-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint2Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint2Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint2Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-url":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint2Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint2Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint2 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint2Type `json:"type"`
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint2) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint2) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint2Type {
+func (o *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint2Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint1Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHint1TypeRedisURL RemoveProjectEnv200ApplicationJSON3ContentHint1Type = "redis-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1TypeRedisURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type = "redis-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3ContentHint1Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3ContentHint1Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3ContentHint1Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-url":
-		*e = RemoveProjectEnv200ApplicationJSON3ContentHint1Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3ContentHint1Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint1 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON3ContentHint1Type `json:"type"`
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint1) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3ContentHint1) GetType() RemoveProjectEnv200ApplicationJSON3ContentHint1Type {
+func (o *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3ContentHint1Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON3ContentHintType string
+type RemoveProjectEnvProjectsResponseContentHintType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint1  RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_1"
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint2  RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_2"
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint3  RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_3"
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint4  RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_4"
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint5  RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_5"
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint6  RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_6"
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint7  RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_7"
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint8  RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_8"
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint9  RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_9"
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint10 RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_10"
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint11 RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_11"
-	RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint12 RemoveProjectEnv200ApplicationJSON3ContentHintType = "removeProjectEnv_200ApplicationJSON_3_contentHint_12"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1 RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_200_ApplicationJSON_responseBody_1"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2 RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_200_ApplicationJSON_responseBody_2"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse2003                            RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_200_3"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse4                               RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_4"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse5                               RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_5"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse6                               RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_6"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse7                               RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_7"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse8                               RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_8"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse9                               RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_9"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse10                              RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_10"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse11                              RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_11"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse12                              RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_12"
 )
 
-type RemoveProjectEnv200ApplicationJSON3ContentHint struct {
-	RemoveProjectEnv200ApplicationJSON3ContentHint1  *RemoveProjectEnv200ApplicationJSON3ContentHint1
-	RemoveProjectEnv200ApplicationJSON3ContentHint2  *RemoveProjectEnv200ApplicationJSON3ContentHint2
-	RemoveProjectEnv200ApplicationJSON3ContentHint3  *RemoveProjectEnv200ApplicationJSON3ContentHint3
-	RemoveProjectEnv200ApplicationJSON3ContentHint4  *RemoveProjectEnv200ApplicationJSON3ContentHint4
-	RemoveProjectEnv200ApplicationJSON3ContentHint5  *RemoveProjectEnv200ApplicationJSON3ContentHint5
-	RemoveProjectEnv200ApplicationJSON3ContentHint6  *RemoveProjectEnv200ApplicationJSON3ContentHint6
-	RemoveProjectEnv200ApplicationJSON3ContentHint7  *RemoveProjectEnv200ApplicationJSON3ContentHint7
-	RemoveProjectEnv200ApplicationJSON3ContentHint8  *RemoveProjectEnv200ApplicationJSON3ContentHint8
-	RemoveProjectEnv200ApplicationJSON3ContentHint9  *RemoveProjectEnv200ApplicationJSON3ContentHint9
-	RemoveProjectEnv200ApplicationJSON3ContentHint10 *RemoveProjectEnv200ApplicationJSON3ContentHint10
-	RemoveProjectEnv200ApplicationJSON3ContentHint11 *RemoveProjectEnv200ApplicationJSON3ContentHint11
-	RemoveProjectEnv200ApplicationJSON3ContentHint12 *RemoveProjectEnv200ApplicationJSON3ContentHint12
+type RemoveProjectEnvProjectsResponseContentHint struct {
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1 *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2 *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2
+	RemoveProjectEnvProjectsResponse2003                            *RemoveProjectEnvProjectsResponse2003
+	RemoveProjectEnvProjectsResponse4                               *RemoveProjectEnvProjectsResponse4
+	RemoveProjectEnvProjectsResponse5                               *RemoveProjectEnvProjectsResponse5
+	RemoveProjectEnvProjectsResponse6                               *RemoveProjectEnvProjectsResponse6
+	RemoveProjectEnvProjectsResponse7                               *RemoveProjectEnvProjectsResponse7
+	RemoveProjectEnvProjectsResponse8                               *RemoveProjectEnvProjectsResponse8
+	RemoveProjectEnvProjectsResponse9                               *RemoveProjectEnvProjectsResponse9
+	RemoveProjectEnvProjectsResponse10                              *RemoveProjectEnvProjectsResponse10
+	RemoveProjectEnvProjectsResponse11                              *RemoveProjectEnvProjectsResponse11
+	RemoveProjectEnvProjectsResponse12                              *RemoveProjectEnvProjectsResponse12
 
-	Type RemoveProjectEnv200ApplicationJSON3ContentHintType
+	Type RemoveProjectEnvProjectsResponseContentHintType
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint1(removeProjectEnv200ApplicationJSON3ContentHint1 RemoveProjectEnv200ApplicationJSON3ContentHint1) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint1
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1(removeProjectEnvProjectsResponse200ApplicationJSONResponseBody1 RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint1: &removeProjectEnv200ApplicationJSON3ContentHint1,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1: &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody1,
 		Type: typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint2(removeProjectEnv200ApplicationJSON3ContentHint2 RemoveProjectEnv200ApplicationJSON3ContentHint2) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint2
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2(removeProjectEnvProjectsResponse200ApplicationJSONResponseBody2 RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint2: &removeProjectEnv200ApplicationJSON3ContentHint2,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2: &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody2,
 		Type: typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint3(removeProjectEnv200ApplicationJSON3ContentHint3 RemoveProjectEnv200ApplicationJSON3ContentHint3) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint3
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse2003(removeProjectEnvProjectsResponse2003 RemoveProjectEnvProjectsResponse2003) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse2003
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint3: &removeProjectEnv200ApplicationJSON3ContentHint3,
-		Type: typ,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse2003: &removeProjectEnvProjectsResponse2003,
+		Type:                                 typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint4(removeProjectEnv200ApplicationJSON3ContentHint4 RemoveProjectEnv200ApplicationJSON3ContentHint4) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint4
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse4(removeProjectEnvProjectsResponse4 RemoveProjectEnvProjectsResponse4) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse4
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint4: &removeProjectEnv200ApplicationJSON3ContentHint4,
-		Type: typ,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse4: &removeProjectEnvProjectsResponse4,
+		Type:                              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint5(removeProjectEnv200ApplicationJSON3ContentHint5 RemoveProjectEnv200ApplicationJSON3ContentHint5) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint5
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse5(removeProjectEnvProjectsResponse5 RemoveProjectEnvProjectsResponse5) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse5
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint5: &removeProjectEnv200ApplicationJSON3ContentHint5,
-		Type: typ,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse5: &removeProjectEnvProjectsResponse5,
+		Type:                              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint6(removeProjectEnv200ApplicationJSON3ContentHint6 RemoveProjectEnv200ApplicationJSON3ContentHint6) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint6
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse6(removeProjectEnvProjectsResponse6 RemoveProjectEnvProjectsResponse6) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse6
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint6: &removeProjectEnv200ApplicationJSON3ContentHint6,
-		Type: typ,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse6: &removeProjectEnvProjectsResponse6,
+		Type:                              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint7(removeProjectEnv200ApplicationJSON3ContentHint7 RemoveProjectEnv200ApplicationJSON3ContentHint7) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint7
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse7(removeProjectEnvProjectsResponse7 RemoveProjectEnvProjectsResponse7) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse7
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint7: &removeProjectEnv200ApplicationJSON3ContentHint7,
-		Type: typ,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse7: &removeProjectEnvProjectsResponse7,
+		Type:                              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint8(removeProjectEnv200ApplicationJSON3ContentHint8 RemoveProjectEnv200ApplicationJSON3ContentHint8) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint8
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse8(removeProjectEnvProjectsResponse8 RemoveProjectEnvProjectsResponse8) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse8
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint8: &removeProjectEnv200ApplicationJSON3ContentHint8,
-		Type: typ,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse8: &removeProjectEnvProjectsResponse8,
+		Type:                              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint9(removeProjectEnv200ApplicationJSON3ContentHint9 RemoveProjectEnv200ApplicationJSON3ContentHint9) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint9
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse9(removeProjectEnvProjectsResponse9 RemoveProjectEnvProjectsResponse9) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse9
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint9: &removeProjectEnv200ApplicationJSON3ContentHint9,
-		Type: typ,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse9: &removeProjectEnvProjectsResponse9,
+		Type:                              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint10(removeProjectEnv200ApplicationJSON3ContentHint10 RemoveProjectEnv200ApplicationJSON3ContentHint10) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint10
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse10(removeProjectEnvProjectsResponse10 RemoveProjectEnvProjectsResponse10) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse10
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint10: &removeProjectEnv200ApplicationJSON3ContentHint10,
-		Type: typ,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse10: &removeProjectEnvProjectsResponse10,
+		Type:                               typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint11(removeProjectEnv200ApplicationJSON3ContentHint11 RemoveProjectEnv200ApplicationJSON3ContentHint11) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint11
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse11(removeProjectEnvProjectsResponse11 RemoveProjectEnvProjectsResponse11) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse11
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint11: &removeProjectEnv200ApplicationJSON3ContentHint11,
-		Type: typ,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse11: &removeProjectEnvProjectsResponse11,
+		Type:                               typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3ContentHintRemoveProjectEnv200ApplicationJSON3ContentHint12(removeProjectEnv200ApplicationJSON3ContentHint12 RemoveProjectEnv200ApplicationJSON3ContentHint12) RemoveProjectEnv200ApplicationJSON3ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint12
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse12(removeProjectEnvProjectsResponse12 RemoveProjectEnvProjectsResponse12) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse12
 
-	return RemoveProjectEnv200ApplicationJSON3ContentHint{
-		RemoveProjectEnv200ApplicationJSON3ContentHint12: &removeProjectEnv200ApplicationJSON3ContentHint12,
-		Type: typ,
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse12: &removeProjectEnvProjectsResponse12,
+		Type:                               typ,
 	}
 }
 
-func (u *RemoveProjectEnv200ApplicationJSON3ContentHint) UnmarshalJSON(data []byte) error {
+func (u *RemoveProjectEnvProjectsResponseContentHint) UnmarshalJSON(data []byte) error {
 
-	removeProjectEnv200ApplicationJSON3ContentHint1 := new(RemoveProjectEnv200ApplicationJSON3ContentHint1)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint1, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint1 = removeProjectEnv200ApplicationJSON3ContentHint1
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint1
+	removeProjectEnvProjectsResponse200ApplicationJSONResponseBody1 := new(RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody1, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1 = removeProjectEnvProjectsResponse200ApplicationJSONResponseBody1
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3ContentHint2 := new(RemoveProjectEnv200ApplicationJSON3ContentHint2)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint2, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint2 = removeProjectEnv200ApplicationJSON3ContentHint2
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint2
+	removeProjectEnvProjectsResponse200ApplicationJSONResponseBody2 := new(RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody2, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2 = removeProjectEnvProjectsResponse200ApplicationJSONResponseBody2
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3ContentHint3 := new(RemoveProjectEnv200ApplicationJSON3ContentHint3)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint3, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint3 = removeProjectEnv200ApplicationJSON3ContentHint3
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint3
+	removeProjectEnvProjectsResponse2003 := new(RemoveProjectEnvProjectsResponse2003)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse2003, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse2003 = removeProjectEnvProjectsResponse2003
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse2003
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3ContentHint4 := new(RemoveProjectEnv200ApplicationJSON3ContentHint4)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint4, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint4 = removeProjectEnv200ApplicationJSON3ContentHint4
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint4
+	removeProjectEnvProjectsResponse4 := new(RemoveProjectEnvProjectsResponse4)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse4, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse4 = removeProjectEnvProjectsResponse4
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse4
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3ContentHint5 := new(RemoveProjectEnv200ApplicationJSON3ContentHint5)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint5, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint5 = removeProjectEnv200ApplicationJSON3ContentHint5
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint5
+	removeProjectEnvProjectsResponse5 := new(RemoveProjectEnvProjectsResponse5)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse5, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse5 = removeProjectEnvProjectsResponse5
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse5
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3ContentHint6 := new(RemoveProjectEnv200ApplicationJSON3ContentHint6)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint6, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint6 = removeProjectEnv200ApplicationJSON3ContentHint6
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint6
+	removeProjectEnvProjectsResponse6 := new(RemoveProjectEnvProjectsResponse6)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse6, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse6 = removeProjectEnvProjectsResponse6
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse6
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3ContentHint7 := new(RemoveProjectEnv200ApplicationJSON3ContentHint7)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint7, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint7 = removeProjectEnv200ApplicationJSON3ContentHint7
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint7
+	removeProjectEnvProjectsResponse7 := new(RemoveProjectEnvProjectsResponse7)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse7, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse7 = removeProjectEnvProjectsResponse7
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse7
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3ContentHint8 := new(RemoveProjectEnv200ApplicationJSON3ContentHint8)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint8, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint8 = removeProjectEnv200ApplicationJSON3ContentHint8
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint8
+	removeProjectEnvProjectsResponse8 := new(RemoveProjectEnvProjectsResponse8)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse8, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse8 = removeProjectEnvProjectsResponse8
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse8
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3ContentHint9 := new(RemoveProjectEnv200ApplicationJSON3ContentHint9)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint9, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint9 = removeProjectEnv200ApplicationJSON3ContentHint9
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint9
+	removeProjectEnvProjectsResponse9 := new(RemoveProjectEnvProjectsResponse9)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse9, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse9 = removeProjectEnvProjectsResponse9
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse9
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3ContentHint10 := new(RemoveProjectEnv200ApplicationJSON3ContentHint10)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint10, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint10 = removeProjectEnv200ApplicationJSON3ContentHint10
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint10
+	removeProjectEnvProjectsResponse10 := new(RemoveProjectEnvProjectsResponse10)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse10, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse10 = removeProjectEnvProjectsResponse10
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse10
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3ContentHint11 := new(RemoveProjectEnv200ApplicationJSON3ContentHint11)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint11, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint11 = removeProjectEnv200ApplicationJSON3ContentHint11
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint11
+	removeProjectEnvProjectsResponse11 := new(RemoveProjectEnvProjectsResponse11)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse11, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse11 = removeProjectEnvProjectsResponse11
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse11
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3ContentHint12 := new(RemoveProjectEnv200ApplicationJSON3ContentHint12)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3ContentHint12, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3ContentHint12 = removeProjectEnv200ApplicationJSON3ContentHint12
-		u.Type = RemoveProjectEnv200ApplicationJSON3ContentHintTypeRemoveProjectEnv200ApplicationJSON3ContentHint12
+	removeProjectEnvProjectsResponse12 := new(RemoveProjectEnvProjectsResponse12)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse12, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse12 = removeProjectEnvProjectsResponse12
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse12
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u RemoveProjectEnv200ApplicationJSON3ContentHint) MarshalJSON() ([]byte, error) {
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint1 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint1, "", true)
+func (u RemoveProjectEnvProjectsResponseContentHint) MarshalJSON() ([]byte, error) {
+	if u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint2 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint2, "", true)
+	if u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint3 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint3, "", true)
+	if u.RemoveProjectEnvProjectsResponse2003 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse2003, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint4 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint4, "", true)
+	if u.RemoveProjectEnvProjectsResponse4 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse4, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint5 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint5, "", true)
+	if u.RemoveProjectEnvProjectsResponse5 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse5, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint6 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint6, "", true)
+	if u.RemoveProjectEnvProjectsResponse6 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse6, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint7 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint7, "", true)
+	if u.RemoveProjectEnvProjectsResponse7 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse7, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint8 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint8, "", true)
+	if u.RemoveProjectEnvProjectsResponse8 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse8, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint9 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint9, "", true)
+	if u.RemoveProjectEnvProjectsResponse9 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse9, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint10 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint10, "", true)
+	if u.RemoveProjectEnvProjectsResponse10 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse10, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint11 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint11, "", true)
+	if u.RemoveProjectEnvProjectsResponse11 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse11, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3ContentHint12 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3ContentHint12, "", true)
+	if u.RemoveProjectEnvProjectsResponse12 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse12, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type RemoveProjectEnv200ApplicationJSON3Target2 string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3Target2Production  RemoveProjectEnv200ApplicationJSON3Target2 = "production"
-	RemoveProjectEnv200ApplicationJSON3Target2Preview     RemoveProjectEnv200ApplicationJSON3Target2 = "preview"
-	RemoveProjectEnv200ApplicationJSON3Target2Development RemoveProjectEnv200ApplicationJSON3Target2 = "development"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32Production  RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 = "production"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32Preview     RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 = "preview"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32Development RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 = "development"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3Target2) ToPointer() *RemoveProjectEnv200ApplicationJSON3Target2 {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3Target2) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -862,26 +862,26 @@ func (e *RemoveProjectEnv200ApplicationJSON3Target2) UnmarshalJSON(data []byte) 
 	case "preview":
 		fallthrough
 	case "development":
-		*e = RemoveProjectEnv200ApplicationJSON3Target2(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3Target2: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3Target1 string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3Target1Production  RemoveProjectEnv200ApplicationJSON3Target1 = "production"
-	RemoveProjectEnv200ApplicationJSON3Target1Preview     RemoveProjectEnv200ApplicationJSON3Target1 = "preview"
-	RemoveProjectEnv200ApplicationJSON3Target1Development RemoveProjectEnv200ApplicationJSON3Target1 = "development"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31Production  RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 = "production"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31Preview     RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 = "preview"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31Development RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 = "development"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3Target1) ToPointer() *RemoveProjectEnv200ApplicationJSON3Target1 {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3Target1) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -892,91 +892,91 @@ func (e *RemoveProjectEnv200ApplicationJSON3Target1) UnmarshalJSON(data []byte) 
 	case "preview":
 		fallthrough
 	case "development":
-		*e = RemoveProjectEnv200ApplicationJSON3Target1(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3Target1: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3TargetType string
+type RemoveProjectEnvProjectsResponseTargetType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3TargetTypeArrayOfremoveProjectEnv200ApplicationJSON3Target1 RemoveProjectEnv200ApplicationJSON3TargetType = "arrayOfremoveProjectEnv_200ApplicationJSON_3_target_1"
-	RemoveProjectEnv200ApplicationJSON3TargetTypeRemoveProjectEnv200ApplicationJSON3Target2        RemoveProjectEnv200ApplicationJSON3TargetType = "removeProjectEnv_200ApplicationJSON_3_target_2"
+	RemoveProjectEnvProjectsResponseTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 RemoveProjectEnvProjectsResponseTargetType = "arrayOfremoveProjectEnv_projects_response_200_ApplicationJSON_responseBody_3_1"
+	RemoveProjectEnvProjectsResponseTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32        RemoveProjectEnvProjectsResponseTargetType = "removeProjectEnv_projects_response_200_ApplicationJSON_responseBody_3_2"
 )
 
-type RemoveProjectEnv200ApplicationJSON3Target struct {
-	ArrayOfremoveProjectEnv200ApplicationJSON3Target1 []RemoveProjectEnv200ApplicationJSON3Target1
-	RemoveProjectEnv200ApplicationJSON3Target2        *RemoveProjectEnv200ApplicationJSON3Target2
+type RemoveProjectEnvProjectsResponseTarget struct {
+	ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32        *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32
 
-	Type RemoveProjectEnv200ApplicationJSON3TargetType
+	Type RemoveProjectEnvProjectsResponseTargetType
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3TargetArrayOfremoveProjectEnv200ApplicationJSON3Target1(arrayOfremoveProjectEnv200ApplicationJSON3Target1 []RemoveProjectEnv200ApplicationJSON3Target1) RemoveProjectEnv200ApplicationJSON3Target {
-	typ := RemoveProjectEnv200ApplicationJSON3TargetTypeArrayOfremoveProjectEnv200ApplicationJSON3Target1
+func CreateRemoveProjectEnvProjectsResponseTargetArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31(arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31) RemoveProjectEnvProjectsResponseTarget {
+	typ := RemoveProjectEnvProjectsResponseTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
 
-	return RemoveProjectEnv200ApplicationJSON3Target{
-		ArrayOfremoveProjectEnv200ApplicationJSON3Target1: arrayOfremoveProjectEnv200ApplicationJSON3Target1,
+	return RemoveProjectEnvProjectsResponseTarget{
+		ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31: arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31,
 		Type: typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON3TargetRemoveProjectEnv200ApplicationJSON3Target2(removeProjectEnv200ApplicationJSON3Target2 RemoveProjectEnv200ApplicationJSON3Target2) RemoveProjectEnv200ApplicationJSON3Target {
-	typ := RemoveProjectEnv200ApplicationJSON3TargetTypeRemoveProjectEnv200ApplicationJSON3Target2
+func CreateRemoveProjectEnvProjectsResponseTargetRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32(removeProjectEnvProjectsResponse200ApplicationJSONResponseBody32 RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32) RemoveProjectEnvProjectsResponseTarget {
+	typ := RemoveProjectEnvProjectsResponseTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32
 
-	return RemoveProjectEnv200ApplicationJSON3Target{
-		RemoveProjectEnv200ApplicationJSON3Target2: &removeProjectEnv200ApplicationJSON3Target2,
+	return RemoveProjectEnvProjectsResponseTarget{
+		RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32: &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody32,
 		Type: typ,
 	}
 }
 
-func (u *RemoveProjectEnv200ApplicationJSON3Target) UnmarshalJSON(data []byte) error {
+func (u *RemoveProjectEnvProjectsResponseTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfremoveProjectEnv200ApplicationJSON3Target1 := []RemoveProjectEnv200ApplicationJSON3Target1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnv200ApplicationJSON3Target1, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnv200ApplicationJSON3Target1 = arrayOfremoveProjectEnv200ApplicationJSON3Target1
-		u.Type = RemoveProjectEnv200ApplicationJSON3TargetTypeArrayOfremoveProjectEnv200ApplicationJSON3Target1
+	arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 := []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31{}
+	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31, "", true, true); err == nil {
+		u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 = arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
+		u.Type = RemoveProjectEnvProjectsResponseTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON3Target2 := new(RemoveProjectEnv200ApplicationJSON3Target2)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3Target2, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3Target2 = removeProjectEnv200ApplicationJSON3Target2
-		u.Type = RemoveProjectEnv200ApplicationJSON3TargetTypeRemoveProjectEnv200ApplicationJSON3Target2
+	removeProjectEnvProjectsResponse200ApplicationJSONResponseBody32 := new(RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody32, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 = removeProjectEnvProjectsResponse200ApplicationJSONResponseBody32
+		u.Type = RemoveProjectEnvProjectsResponseTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u RemoveProjectEnv200ApplicationJSON3Target) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnv200ApplicationJSON3Target1 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnv200ApplicationJSON3Target1, "", true)
+func (u RemoveProjectEnvProjectsResponseTarget) MarshalJSON() ([]byte, error) {
+	if u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 != nil {
+		return utils.MarshalJSON(u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3Target2 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3Target2, "", true)
+	if u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type RemoveProjectEnv200ApplicationJSON3Type string
+type RemoveProjectEnvProjectsResponseType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON3TypeSystem    RemoveProjectEnv200ApplicationJSON3Type = "system"
-	RemoveProjectEnv200ApplicationJSON3TypeEncrypted RemoveProjectEnv200ApplicationJSON3Type = "encrypted"
-	RemoveProjectEnv200ApplicationJSON3TypePlain     RemoveProjectEnv200ApplicationJSON3Type = "plain"
-	RemoveProjectEnv200ApplicationJSON3TypeSensitive RemoveProjectEnv200ApplicationJSON3Type = "sensitive"
-	RemoveProjectEnv200ApplicationJSON3TypeSecret    RemoveProjectEnv200ApplicationJSON3Type = "secret"
+	RemoveProjectEnvProjectsResponseTypeSystem    RemoveProjectEnvProjectsResponseType = "system"
+	RemoveProjectEnvProjectsResponseTypeEncrypted RemoveProjectEnvProjectsResponseType = "encrypted"
+	RemoveProjectEnvProjectsResponseTypePlain     RemoveProjectEnvProjectsResponseType = "plain"
+	RemoveProjectEnvProjectsResponseTypeSensitive RemoveProjectEnvProjectsResponseType = "sensitive"
+	RemoveProjectEnvProjectsResponseTypeSecret    RemoveProjectEnvProjectsResponseType = "secret"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON3Type) ToPointer() *RemoveProjectEnv200ApplicationJSON3Type {
+func (e RemoveProjectEnvProjectsResponseType) ToPointer() *RemoveProjectEnvProjectsResponseType {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON3Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponseType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -991,949 +991,949 @@ func (e *RemoveProjectEnv200ApplicationJSON3Type) UnmarshalJSON(data []byte) err
 	case "sensitive":
 		fallthrough
 	case "secret":
-		*e = RemoveProjectEnv200ApplicationJSON3Type(v)
+		*e = RemoveProjectEnvProjectsResponseType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON3Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponseType: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON3 struct {
-	ConfigurationID *string                                         `json:"configurationId,omitempty"`
-	ContentHint     *RemoveProjectEnv200ApplicationJSON3ContentHint `json:"contentHint,omitempty"`
-	CreatedAt       *int64                                          `json:"createdAt,omitempty"`
-	CreatedBy       *string                                         `json:"createdBy,omitempty"`
+type RemoveProjectEnv3 struct {
+	ConfigurationID *string                                      `json:"configurationId,omitempty"`
+	ContentHint     *RemoveProjectEnvProjectsResponseContentHint `json:"contentHint,omitempty"`
+	CreatedAt       *int64                                       `json:"createdAt,omitempty"`
+	CreatedBy       *string                                      `json:"createdBy,omitempty"`
 	// Whether `value` is decrypted.
-	Decrypted         *bool                                      `json:"decrypted,omitempty"`
-	EdgeConfigID      *string                                    `json:"edgeConfigId,omitempty"`
-	EdgeConfigTokenID *string                                    `json:"edgeConfigTokenId,omitempty"`
-	GitBranch         *string                                    `json:"gitBranch,omitempty"`
-	ID                *string                                    `json:"id,omitempty"`
-	Key               string                                     `json:"key"`
-	Target            *RemoveProjectEnv200ApplicationJSON3Target `json:"target,omitempty"`
-	Type              RemoveProjectEnv200ApplicationJSON3Type    `json:"type"`
-	UpdatedAt         *int64                                     `json:"updatedAt,omitempty"`
-	UpdatedBy         *string                                    `json:"updatedBy,omitempty"`
-	Value             string                                     `json:"value"`
+	Decrypted         *bool                                   `json:"decrypted,omitempty"`
+	EdgeConfigID      *string                                 `json:"edgeConfigId,omitempty"`
+	EdgeConfigTokenID *string                                 `json:"edgeConfigTokenId,omitempty"`
+	GitBranch         *string                                 `json:"gitBranch,omitempty"`
+	ID                *string                                 `json:"id,omitempty"`
+	Key               string                                  `json:"key"`
+	Target            *RemoveProjectEnvProjectsResponseTarget `json:"target,omitempty"`
+	Type              RemoveProjectEnvProjectsResponseType    `json:"type"`
+	UpdatedAt         *int64                                  `json:"updatedAt,omitempty"`
+	UpdatedBy         *string                                 `json:"updatedBy,omitempty"`
+	Value             string                                  `json:"value"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetConfigurationID() *string {
+func (o *RemoveProjectEnv3) GetConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConfigurationID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetContentHint() *RemoveProjectEnv200ApplicationJSON3ContentHint {
+func (o *RemoveProjectEnv3) GetContentHint() *RemoveProjectEnvProjectsResponseContentHint {
 	if o == nil {
 		return nil
 	}
 	return o.ContentHint
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetCreatedAt() *int64 {
+func (o *RemoveProjectEnv3) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetCreatedBy() *string {
+func (o *RemoveProjectEnv3) GetCreatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedBy
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetDecrypted() *bool {
+func (o *RemoveProjectEnv3) GetDecrypted() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Decrypted
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetEdgeConfigID() *string {
+func (o *RemoveProjectEnv3) GetEdgeConfigID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetEdgeConfigTokenID() *string {
+func (o *RemoveProjectEnv3) GetEdgeConfigTokenID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigTokenID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetGitBranch() *string {
+func (o *RemoveProjectEnv3) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetID() *string {
+func (o *RemoveProjectEnv3) GetID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetKey() string {
+func (o *RemoveProjectEnv3) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetTarget() *RemoveProjectEnv200ApplicationJSON3Target {
+func (o *RemoveProjectEnv3) GetTarget() *RemoveProjectEnvProjectsResponseTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetType() RemoveProjectEnv200ApplicationJSON3Type {
+func (o *RemoveProjectEnv3) GetType() RemoveProjectEnvProjectsResponseType {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON3Type("")
+		return RemoveProjectEnvProjectsResponseType("")
 	}
 	return o.Type
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetUpdatedAt() *int64 {
+func (o *RemoveProjectEnv3) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetUpdatedBy() *string {
+func (o *RemoveProjectEnv3) GetUpdatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedBy
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON3) GetValue() string {
+func (o *RemoveProjectEnv3) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint12Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint12TypePostgresDatabase RemoveProjectEnv200ApplicationJSON2ContentHint12Type = "postgres-database"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12TypePostgresDatabase RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type = "postgres-database"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint12Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint12Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint12Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-database":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint12Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint12Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint12 struct {
-	StoreID string                                               `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint12Type `json:"type"`
+type RemoveProjectEnvProjects12 struct {
+	StoreID string                                                                           `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint12) GetStoreID() string {
+func (o *RemoveProjectEnvProjects12) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint12) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint12Type {
+func (o *RemoveProjectEnvProjects12) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint12Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint11Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint11TypePostgresPassword RemoveProjectEnv200ApplicationJSON2ContentHint11Type = "postgres-password"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintTypePostgresPassword RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType = "postgres-password"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint11Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint11Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint11Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-password":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint11Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint11Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint11 struct {
-	StoreID string                                               `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint11Type `json:"type"`
+type RemoveProjectEnvProjects11 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint11) GetStoreID() string {
+func (o *RemoveProjectEnvProjects11) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint11) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint11Type {
+func (o *RemoveProjectEnvProjects11) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint11Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint10Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint10TypePostgresHost RemoveProjectEnv200ApplicationJSON2ContentHint10Type = "postgres-host"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2TypePostgresHost RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type = "postgres-host"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint10Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint10Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint10Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-host":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint10Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint10Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint10 struct {
-	StoreID string                                               `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint10Type `json:"type"`
+type RemoveProjectEnvProjects10 struct {
+	StoreID string                                                              `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint10) GetStoreID() string {
+func (o *RemoveProjectEnvProjects10) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint10) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint10Type {
+func (o *RemoveProjectEnvProjects10) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint10Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint9Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint9TypePostgresUser RemoveProjectEnv200ApplicationJSON2ContentHint9Type = "postgres-user"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9TypePostgresUser RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type = "postgres-user"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint9Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint9Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint9Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-user":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint9Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint9Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint9 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint9Type `json:"type"`
+type RemoveProjectEnvProjects9 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint9) GetStoreID() string {
+func (o *RemoveProjectEnvProjects9) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint9) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint9Type {
+func (o *RemoveProjectEnvProjects9) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint9Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint8Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint8TypePostgresPrismaURL RemoveProjectEnv200ApplicationJSON2ContentHint8Type = "postgres-prisma-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8TypePostgresPrismaURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type = "postgres-prisma-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint8Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint8Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint8Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-prisma-url":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint8Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint8Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint8 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint8Type `json:"type"`
+type RemoveProjectEnvProjects8 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint8) GetStoreID() string {
+func (o *RemoveProjectEnvProjects8) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint8) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint8Type {
+func (o *RemoveProjectEnvProjects8) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint8Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint7Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint7TypePostgresURLNonPooling RemoveProjectEnv200ApplicationJSON2ContentHint7Type = "postgres-url-non-pooling"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7TypePostgresURLNonPooling RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type = "postgres-url-non-pooling"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint7Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint7Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint7Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url-non-pooling":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint7Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint7Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint7 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint7Type `json:"type"`
+type RemoveProjectEnvProjects7 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint7) GetStoreID() string {
+func (o *RemoveProjectEnvProjects7) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint7) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint7Type {
+func (o *RemoveProjectEnvProjects7) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint7Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint6Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint6TypePostgresURL RemoveProjectEnv200ApplicationJSON2ContentHint6Type = "postgres-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6TypePostgresURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type = "postgres-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint6Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint6Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint6Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint6Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint6Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint6 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint6Type `json:"type"`
+type RemoveProjectEnvProjects6 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint6) GetStoreID() string {
+func (o *RemoveProjectEnvProjects6) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint6) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint6Type {
+func (o *RemoveProjectEnvProjects6) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint6Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint5Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint5TypeBlobReadWriteToken RemoveProjectEnv200ApplicationJSON2ContentHint5Type = "blob-read-write-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5TypeBlobReadWriteToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type = "blob-read-write-token"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint5Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint5Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint5Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "blob-read-write-token":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint5Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint5Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint5 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint5Type `json:"type"`
+type RemoveProjectEnvProjects5 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint5) GetStoreID() string {
+func (o *RemoveProjectEnvProjects5) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint5) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint5Type {
+func (o *RemoveProjectEnvProjects5) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint5Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint4Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint4TypeRedisRestAPIReadOnlyToken RemoveProjectEnv200ApplicationJSON2ContentHint4Type = "redis-rest-api-read-only-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4TypeRedisRestAPIReadOnlyToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type = "redis-rest-api-read-only-token"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint4Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint4Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint4Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-read-only-token":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint4Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint4Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint4 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint4Type `json:"type"`
+type RemoveProjectEnvProjects4 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint4) GetStoreID() string {
+func (o *RemoveProjectEnvProjects4) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint4) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint4Type {
+func (o *RemoveProjectEnvProjects4) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint4Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint3Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint3TypeRedisRestAPIToken RemoveProjectEnv200ApplicationJSON2ContentHint3Type = "redis-rest-api-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3TypeRedisRestAPIToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type = "redis-rest-api-token"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint3Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint3Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint3Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-token":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint3Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint3Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint3 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint3Type `json:"type"`
+type RemoveProjectEnvProjectsResponse3 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint3) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse3) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint3) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint3Type {
+func (o *RemoveProjectEnvProjectsResponse3) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint3Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint2Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint2TypeRedisRestAPIURL RemoveProjectEnv200ApplicationJSON2ContentHint2Type = "redis-rest-api-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2TypeRedisRestAPIURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type = "redis-rest-api-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint2Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint2Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint2Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-url":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint2Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint2Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint2 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint2Type `json:"type"`
+type RemoveProjectEnvProjectsResponse2002 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint2) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse2002) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint2) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint2Type {
+func (o *RemoveProjectEnvProjectsResponse2002) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint2Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint1Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHint1TypeRedisURL RemoveProjectEnv200ApplicationJSON2ContentHint1Type = "redis-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1TypeRedisURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type = "redis-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2ContentHint1Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2ContentHint1Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2ContentHint1Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-url":
-		*e = RemoveProjectEnv200ApplicationJSON2ContentHint1Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2ContentHint1Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint1 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON2ContentHint1Type `json:"type"`
+type RemoveProjectEnvProjectsResponse2001 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint1) GetStoreID() string {
+func (o *RemoveProjectEnvProjectsResponse2001) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2ContentHint1) GetType() RemoveProjectEnv200ApplicationJSON2ContentHint1Type {
+func (o *RemoveProjectEnvProjectsResponse2001) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2ContentHint1Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON2ContentHintType string
+type RemoveProjectEnvProjectsContentHintType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint1  RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_1"
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint2  RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_2"
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint3  RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_3"
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint4  RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_4"
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint5  RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_5"
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint6  RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_6"
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint7  RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_7"
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint8  RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_8"
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint9  RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_9"
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint10 RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_10"
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint11 RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_11"
-	RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint12 RemoveProjectEnv200ApplicationJSON2ContentHintType = "removeProjectEnv_200ApplicationJSON_2_contentHint_12"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse2001 RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_response_200_1"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse2002 RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_response_200_2"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse3    RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_response_3"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects4            RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_4"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects5            RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_5"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects6            RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_6"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects7            RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_7"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects8            RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_8"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects9            RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_9"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects10           RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_10"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects11           RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_11"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects12           RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_12"
 )
 
-type RemoveProjectEnv200ApplicationJSON2ContentHint struct {
-	RemoveProjectEnv200ApplicationJSON2ContentHint1  *RemoveProjectEnv200ApplicationJSON2ContentHint1
-	RemoveProjectEnv200ApplicationJSON2ContentHint2  *RemoveProjectEnv200ApplicationJSON2ContentHint2
-	RemoveProjectEnv200ApplicationJSON2ContentHint3  *RemoveProjectEnv200ApplicationJSON2ContentHint3
-	RemoveProjectEnv200ApplicationJSON2ContentHint4  *RemoveProjectEnv200ApplicationJSON2ContentHint4
-	RemoveProjectEnv200ApplicationJSON2ContentHint5  *RemoveProjectEnv200ApplicationJSON2ContentHint5
-	RemoveProjectEnv200ApplicationJSON2ContentHint6  *RemoveProjectEnv200ApplicationJSON2ContentHint6
-	RemoveProjectEnv200ApplicationJSON2ContentHint7  *RemoveProjectEnv200ApplicationJSON2ContentHint7
-	RemoveProjectEnv200ApplicationJSON2ContentHint8  *RemoveProjectEnv200ApplicationJSON2ContentHint8
-	RemoveProjectEnv200ApplicationJSON2ContentHint9  *RemoveProjectEnv200ApplicationJSON2ContentHint9
-	RemoveProjectEnv200ApplicationJSON2ContentHint10 *RemoveProjectEnv200ApplicationJSON2ContentHint10
-	RemoveProjectEnv200ApplicationJSON2ContentHint11 *RemoveProjectEnv200ApplicationJSON2ContentHint11
-	RemoveProjectEnv200ApplicationJSON2ContentHint12 *RemoveProjectEnv200ApplicationJSON2ContentHint12
+type RemoveProjectEnvProjectsContentHint struct {
+	RemoveProjectEnvProjectsResponse2001 *RemoveProjectEnvProjectsResponse2001
+	RemoveProjectEnvProjectsResponse2002 *RemoveProjectEnvProjectsResponse2002
+	RemoveProjectEnvProjectsResponse3    *RemoveProjectEnvProjectsResponse3
+	RemoveProjectEnvProjects4            *RemoveProjectEnvProjects4
+	RemoveProjectEnvProjects5            *RemoveProjectEnvProjects5
+	RemoveProjectEnvProjects6            *RemoveProjectEnvProjects6
+	RemoveProjectEnvProjects7            *RemoveProjectEnvProjects7
+	RemoveProjectEnvProjects8            *RemoveProjectEnvProjects8
+	RemoveProjectEnvProjects9            *RemoveProjectEnvProjects9
+	RemoveProjectEnvProjects10           *RemoveProjectEnvProjects10
+	RemoveProjectEnvProjects11           *RemoveProjectEnvProjects11
+	RemoveProjectEnvProjects12           *RemoveProjectEnvProjects12
 
-	Type RemoveProjectEnv200ApplicationJSON2ContentHintType
+	Type RemoveProjectEnvProjectsContentHintType
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint1(removeProjectEnv200ApplicationJSON2ContentHint1 RemoveProjectEnv200ApplicationJSON2ContentHint1) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint1
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjectsResponse2001(removeProjectEnvProjectsResponse2001 RemoveProjectEnvProjectsResponse2001) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse2001
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint1: &removeProjectEnv200ApplicationJSON2ContentHint1,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjectsResponse2001: &removeProjectEnvProjectsResponse2001,
+		Type:                                 typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint2(removeProjectEnv200ApplicationJSON2ContentHint2 RemoveProjectEnv200ApplicationJSON2ContentHint2) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint2
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjectsResponse2002(removeProjectEnvProjectsResponse2002 RemoveProjectEnvProjectsResponse2002) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse2002
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint2: &removeProjectEnv200ApplicationJSON2ContentHint2,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjectsResponse2002: &removeProjectEnvProjectsResponse2002,
+		Type:                                 typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint3(removeProjectEnv200ApplicationJSON2ContentHint3 RemoveProjectEnv200ApplicationJSON2ContentHint3) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint3
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjectsResponse3(removeProjectEnvProjectsResponse3 RemoveProjectEnvProjectsResponse3) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse3
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint3: &removeProjectEnv200ApplicationJSON2ContentHint3,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjectsResponse3: &removeProjectEnvProjectsResponse3,
+		Type:                              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint4(removeProjectEnv200ApplicationJSON2ContentHint4 RemoveProjectEnv200ApplicationJSON2ContentHint4) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint4
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects4(removeProjectEnvProjects4 RemoveProjectEnvProjects4) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects4
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint4: &removeProjectEnv200ApplicationJSON2ContentHint4,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjects4: &removeProjectEnvProjects4,
+		Type:                      typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint5(removeProjectEnv200ApplicationJSON2ContentHint5 RemoveProjectEnv200ApplicationJSON2ContentHint5) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint5
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects5(removeProjectEnvProjects5 RemoveProjectEnvProjects5) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects5
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint5: &removeProjectEnv200ApplicationJSON2ContentHint5,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjects5: &removeProjectEnvProjects5,
+		Type:                      typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint6(removeProjectEnv200ApplicationJSON2ContentHint6 RemoveProjectEnv200ApplicationJSON2ContentHint6) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint6
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects6(removeProjectEnvProjects6 RemoveProjectEnvProjects6) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects6
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint6: &removeProjectEnv200ApplicationJSON2ContentHint6,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjects6: &removeProjectEnvProjects6,
+		Type:                      typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint7(removeProjectEnv200ApplicationJSON2ContentHint7 RemoveProjectEnv200ApplicationJSON2ContentHint7) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint7
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects7(removeProjectEnvProjects7 RemoveProjectEnvProjects7) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects7
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint7: &removeProjectEnv200ApplicationJSON2ContentHint7,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjects7: &removeProjectEnvProjects7,
+		Type:                      typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint8(removeProjectEnv200ApplicationJSON2ContentHint8 RemoveProjectEnv200ApplicationJSON2ContentHint8) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint8
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects8(removeProjectEnvProjects8 RemoveProjectEnvProjects8) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects8
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint8: &removeProjectEnv200ApplicationJSON2ContentHint8,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjects8: &removeProjectEnvProjects8,
+		Type:                      typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint9(removeProjectEnv200ApplicationJSON2ContentHint9 RemoveProjectEnv200ApplicationJSON2ContentHint9) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint9
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects9(removeProjectEnvProjects9 RemoveProjectEnvProjects9) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects9
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint9: &removeProjectEnv200ApplicationJSON2ContentHint9,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjects9: &removeProjectEnvProjects9,
+		Type:                      typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint10(removeProjectEnv200ApplicationJSON2ContentHint10 RemoveProjectEnv200ApplicationJSON2ContentHint10) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint10
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects10(removeProjectEnvProjects10 RemoveProjectEnvProjects10) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects10
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint10: &removeProjectEnv200ApplicationJSON2ContentHint10,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjects10: &removeProjectEnvProjects10,
+		Type:                       typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint11(removeProjectEnv200ApplicationJSON2ContentHint11 RemoveProjectEnv200ApplicationJSON2ContentHint11) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint11
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects11(removeProjectEnvProjects11 RemoveProjectEnvProjects11) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects11
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint11: &removeProjectEnv200ApplicationJSON2ContentHint11,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjects11: &removeProjectEnvProjects11,
+		Type:                       typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2ContentHintRemoveProjectEnv200ApplicationJSON2ContentHint12(removeProjectEnv200ApplicationJSON2ContentHint12 RemoveProjectEnv200ApplicationJSON2ContentHint12) RemoveProjectEnv200ApplicationJSON2ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint12
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects12(removeProjectEnvProjects12 RemoveProjectEnvProjects12) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects12
 
-	return RemoveProjectEnv200ApplicationJSON2ContentHint{
-		RemoveProjectEnv200ApplicationJSON2ContentHint12: &removeProjectEnv200ApplicationJSON2ContentHint12,
-		Type: typ,
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjects12: &removeProjectEnvProjects12,
+		Type:                       typ,
 	}
 }
 
-func (u *RemoveProjectEnv200ApplicationJSON2ContentHint) UnmarshalJSON(data []byte) error {
+func (u *RemoveProjectEnvProjectsContentHint) UnmarshalJSON(data []byte) error {
 
-	removeProjectEnv200ApplicationJSON2ContentHint1 := new(RemoveProjectEnv200ApplicationJSON2ContentHint1)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint1, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint1 = removeProjectEnv200ApplicationJSON2ContentHint1
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint1
+	removeProjectEnvProjectsResponse2001 := new(RemoveProjectEnvProjectsResponse2001)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse2001, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse2001 = removeProjectEnvProjectsResponse2001
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse2001
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2ContentHint2 := new(RemoveProjectEnv200ApplicationJSON2ContentHint2)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint2, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint2 = removeProjectEnv200ApplicationJSON2ContentHint2
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint2
+	removeProjectEnvProjectsResponse2002 := new(RemoveProjectEnvProjectsResponse2002)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse2002, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse2002 = removeProjectEnvProjectsResponse2002
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse2002
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2ContentHint3 := new(RemoveProjectEnv200ApplicationJSON2ContentHint3)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint3, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint3 = removeProjectEnv200ApplicationJSON2ContentHint3
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint3
+	removeProjectEnvProjectsResponse3 := new(RemoveProjectEnvProjectsResponse3)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse3, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse3 = removeProjectEnvProjectsResponse3
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse3
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2ContentHint4 := new(RemoveProjectEnv200ApplicationJSON2ContentHint4)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint4, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint4 = removeProjectEnv200ApplicationJSON2ContentHint4
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint4
+	removeProjectEnvProjects4 := new(RemoveProjectEnvProjects4)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects4, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects4 = removeProjectEnvProjects4
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects4
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2ContentHint5 := new(RemoveProjectEnv200ApplicationJSON2ContentHint5)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint5, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint5 = removeProjectEnv200ApplicationJSON2ContentHint5
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint5
+	removeProjectEnvProjects5 := new(RemoveProjectEnvProjects5)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects5, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects5 = removeProjectEnvProjects5
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects5
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2ContentHint6 := new(RemoveProjectEnv200ApplicationJSON2ContentHint6)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint6, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint6 = removeProjectEnv200ApplicationJSON2ContentHint6
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint6
+	removeProjectEnvProjects6 := new(RemoveProjectEnvProjects6)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects6, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects6 = removeProjectEnvProjects6
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects6
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2ContentHint7 := new(RemoveProjectEnv200ApplicationJSON2ContentHint7)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint7, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint7 = removeProjectEnv200ApplicationJSON2ContentHint7
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint7
+	removeProjectEnvProjects7 := new(RemoveProjectEnvProjects7)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects7, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects7 = removeProjectEnvProjects7
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects7
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2ContentHint8 := new(RemoveProjectEnv200ApplicationJSON2ContentHint8)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint8, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint8 = removeProjectEnv200ApplicationJSON2ContentHint8
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint8
+	removeProjectEnvProjects8 := new(RemoveProjectEnvProjects8)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects8, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects8 = removeProjectEnvProjects8
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects8
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2ContentHint9 := new(RemoveProjectEnv200ApplicationJSON2ContentHint9)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint9, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint9 = removeProjectEnv200ApplicationJSON2ContentHint9
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint9
+	removeProjectEnvProjects9 := new(RemoveProjectEnvProjects9)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects9, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects9 = removeProjectEnvProjects9
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects9
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2ContentHint10 := new(RemoveProjectEnv200ApplicationJSON2ContentHint10)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint10, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint10 = removeProjectEnv200ApplicationJSON2ContentHint10
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint10
+	removeProjectEnvProjects10 := new(RemoveProjectEnvProjects10)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects10, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects10 = removeProjectEnvProjects10
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects10
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2ContentHint11 := new(RemoveProjectEnv200ApplicationJSON2ContentHint11)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint11, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint11 = removeProjectEnv200ApplicationJSON2ContentHint11
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint11
+	removeProjectEnvProjects11 := new(RemoveProjectEnvProjects11)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects11, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects11 = removeProjectEnvProjects11
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects11
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2ContentHint12 := new(RemoveProjectEnv200ApplicationJSON2ContentHint12)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2ContentHint12, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2ContentHint12 = removeProjectEnv200ApplicationJSON2ContentHint12
-		u.Type = RemoveProjectEnv200ApplicationJSON2ContentHintTypeRemoveProjectEnv200ApplicationJSON2ContentHint12
+	removeProjectEnvProjects12 := new(RemoveProjectEnvProjects12)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects12, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects12 = removeProjectEnvProjects12
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects12
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u RemoveProjectEnv200ApplicationJSON2ContentHint) MarshalJSON() ([]byte, error) {
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint1 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint1, "", true)
+func (u RemoveProjectEnvProjectsContentHint) MarshalJSON() ([]byte, error) {
+	if u.RemoveProjectEnvProjectsResponse2001 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse2001, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint2 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint2, "", true)
+	if u.RemoveProjectEnvProjectsResponse2002 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse2002, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint3 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint3, "", true)
+	if u.RemoveProjectEnvProjectsResponse3 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse3, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint4 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint4, "", true)
+	if u.RemoveProjectEnvProjects4 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects4, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint5 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint5, "", true)
+	if u.RemoveProjectEnvProjects5 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects5, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint6 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint6, "", true)
+	if u.RemoveProjectEnvProjects6 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects6, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint7 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint7, "", true)
+	if u.RemoveProjectEnvProjects7 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects7, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint8 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint8, "", true)
+	if u.RemoveProjectEnvProjects8 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects8, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint9 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint9, "", true)
+	if u.RemoveProjectEnvProjects9 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects9, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint10 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint10, "", true)
+	if u.RemoveProjectEnvProjects10 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects10, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint11 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint11, "", true)
+	if u.RemoveProjectEnvProjects11 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects11, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2ContentHint12 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2ContentHint12, "", true)
+	if u.RemoveProjectEnvProjects12 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects12, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type RemoveProjectEnv200ApplicationJSON2Target2 string
+type RemoveProjectEnvProjectsResponse200ApplicationJSON2 string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2Target2Production  RemoveProjectEnv200ApplicationJSON2Target2 = "production"
-	RemoveProjectEnv200ApplicationJSON2Target2Preview     RemoveProjectEnv200ApplicationJSON2Target2 = "preview"
-	RemoveProjectEnv200ApplicationJSON2Target2Development RemoveProjectEnv200ApplicationJSON2Target2 = "development"
+	RemoveProjectEnvProjectsResponse200ApplicationJSON2Production  RemoveProjectEnvProjectsResponse200ApplicationJSON2 = "production"
+	RemoveProjectEnvProjectsResponse200ApplicationJSON2Preview     RemoveProjectEnvProjectsResponse200ApplicationJSON2 = "preview"
+	RemoveProjectEnvProjectsResponse200ApplicationJSON2Development RemoveProjectEnvProjectsResponse200ApplicationJSON2 = "development"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2Target2) ToPointer() *RemoveProjectEnv200ApplicationJSON2Target2 {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSON2) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSON2 {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2Target2) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSON2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1944,26 +1944,26 @@ func (e *RemoveProjectEnv200ApplicationJSON2Target2) UnmarshalJSON(data []byte) 
 	case "preview":
 		fallthrough
 	case "development":
-		*e = RemoveProjectEnv200ApplicationJSON2Target2(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSON2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2Target2: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSON2: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2Target1 string
+type RemoveProjectEnvProjectsResponse200ApplicationJSON1 string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2Target1Production  RemoveProjectEnv200ApplicationJSON2Target1 = "production"
-	RemoveProjectEnv200ApplicationJSON2Target1Preview     RemoveProjectEnv200ApplicationJSON2Target1 = "preview"
-	RemoveProjectEnv200ApplicationJSON2Target1Development RemoveProjectEnv200ApplicationJSON2Target1 = "development"
+	RemoveProjectEnvProjectsResponse200ApplicationJSON1Production  RemoveProjectEnvProjectsResponse200ApplicationJSON1 = "production"
+	RemoveProjectEnvProjectsResponse200ApplicationJSON1Preview     RemoveProjectEnvProjectsResponse200ApplicationJSON1 = "preview"
+	RemoveProjectEnvProjectsResponse200ApplicationJSON1Development RemoveProjectEnvProjectsResponse200ApplicationJSON1 = "development"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2Target1) ToPointer() *RemoveProjectEnv200ApplicationJSON2Target1 {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSON1) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSON1 {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2Target1) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSON1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1974,91 +1974,91 @@ func (e *RemoveProjectEnv200ApplicationJSON2Target1) UnmarshalJSON(data []byte) 
 	case "preview":
 		fallthrough
 	case "development":
-		*e = RemoveProjectEnv200ApplicationJSON2Target1(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSON1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2Target1: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSON1: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2TargetType string
+type RemoveProjectEnvProjectsTargetType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2TargetTypeArrayOfremoveProjectEnv200ApplicationJSON2Target1 RemoveProjectEnv200ApplicationJSON2TargetType = "arrayOfremoveProjectEnv_200ApplicationJSON_2_target_1"
-	RemoveProjectEnv200ApplicationJSON2TargetTypeRemoveProjectEnv200ApplicationJSON2Target2        RemoveProjectEnv200ApplicationJSON2TargetType = "removeProjectEnv_200ApplicationJSON_2_target_2"
+	RemoveProjectEnvProjectsTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 RemoveProjectEnvProjectsTargetType = "arrayOfremoveProjectEnv_projects_response_200_ApplicationJSON_1"
+	RemoveProjectEnvProjectsTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSON2        RemoveProjectEnvProjectsTargetType = "removeProjectEnv_projects_response_200_ApplicationJSON_2"
 )
 
-type RemoveProjectEnv200ApplicationJSON2Target struct {
-	ArrayOfremoveProjectEnv200ApplicationJSON2Target1 []RemoveProjectEnv200ApplicationJSON2Target1
-	RemoveProjectEnv200ApplicationJSON2Target2        *RemoveProjectEnv200ApplicationJSON2Target2
+type RemoveProjectEnvProjectsTarget struct {
+	ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 []RemoveProjectEnvProjectsResponse200ApplicationJSON1
+	RemoveProjectEnvProjectsResponse200ApplicationJSON2        *RemoveProjectEnvProjectsResponse200ApplicationJSON2
 
-	Type RemoveProjectEnv200ApplicationJSON2TargetType
+	Type RemoveProjectEnvProjectsTargetType
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2TargetArrayOfremoveProjectEnv200ApplicationJSON2Target1(arrayOfremoveProjectEnv200ApplicationJSON2Target1 []RemoveProjectEnv200ApplicationJSON2Target1) RemoveProjectEnv200ApplicationJSON2Target {
-	typ := RemoveProjectEnv200ApplicationJSON2TargetTypeArrayOfremoveProjectEnv200ApplicationJSON2Target1
+func CreateRemoveProjectEnvProjectsTargetArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1(arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 []RemoveProjectEnvProjectsResponse200ApplicationJSON1) RemoveProjectEnvProjectsTarget {
+	typ := RemoveProjectEnvProjectsTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1
 
-	return RemoveProjectEnv200ApplicationJSON2Target{
-		ArrayOfremoveProjectEnv200ApplicationJSON2Target1: arrayOfremoveProjectEnv200ApplicationJSON2Target1,
+	return RemoveProjectEnvProjectsTarget{
+		ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1: arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1,
 		Type: typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON2TargetRemoveProjectEnv200ApplicationJSON2Target2(removeProjectEnv200ApplicationJSON2Target2 RemoveProjectEnv200ApplicationJSON2Target2) RemoveProjectEnv200ApplicationJSON2Target {
-	typ := RemoveProjectEnv200ApplicationJSON2TargetTypeRemoveProjectEnv200ApplicationJSON2Target2
+func CreateRemoveProjectEnvProjectsTargetRemoveProjectEnvProjectsResponse200ApplicationJSON2(removeProjectEnvProjectsResponse200ApplicationJSON2 RemoveProjectEnvProjectsResponse200ApplicationJSON2) RemoveProjectEnvProjectsTarget {
+	typ := RemoveProjectEnvProjectsTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSON2
 
-	return RemoveProjectEnv200ApplicationJSON2Target{
-		RemoveProjectEnv200ApplicationJSON2Target2: &removeProjectEnv200ApplicationJSON2Target2,
+	return RemoveProjectEnvProjectsTarget{
+		RemoveProjectEnvProjectsResponse200ApplicationJSON2: &removeProjectEnvProjectsResponse200ApplicationJSON2,
 		Type: typ,
 	}
 }
 
-func (u *RemoveProjectEnv200ApplicationJSON2Target) UnmarshalJSON(data []byte) error {
+func (u *RemoveProjectEnvProjectsTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfremoveProjectEnv200ApplicationJSON2Target1 := []RemoveProjectEnv200ApplicationJSON2Target1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnv200ApplicationJSON2Target1, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnv200ApplicationJSON2Target1 = arrayOfremoveProjectEnv200ApplicationJSON2Target1
-		u.Type = RemoveProjectEnv200ApplicationJSON2TargetTypeArrayOfremoveProjectEnv200ApplicationJSON2Target1
+	arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 := []RemoveProjectEnvProjectsResponse200ApplicationJSON1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1, "", true, true); err == nil {
+		u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 = arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1
+		u.Type = RemoveProjectEnvProjectsTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2Target2 := new(RemoveProjectEnv200ApplicationJSON2Target2)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2Target2, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2Target2 = removeProjectEnv200ApplicationJSON2Target2
-		u.Type = RemoveProjectEnv200ApplicationJSON2TargetTypeRemoveProjectEnv200ApplicationJSON2Target2
+	removeProjectEnvProjectsResponse200ApplicationJSON2 := new(RemoveProjectEnvProjectsResponse200ApplicationJSON2)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse200ApplicationJSON2, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse200ApplicationJSON2 = removeProjectEnvProjectsResponse200ApplicationJSON2
+		u.Type = RemoveProjectEnvProjectsTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSON2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u RemoveProjectEnv200ApplicationJSON2Target) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnv200ApplicationJSON2Target1 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnv200ApplicationJSON2Target1, "", true)
+func (u RemoveProjectEnvProjectsTarget) MarshalJSON() ([]byte, error) {
+	if u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 != nil {
+		return utils.MarshalJSON(u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2Target2 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2Target2, "", true)
+	if u.RemoveProjectEnvProjectsResponse200ApplicationJSON2 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse200ApplicationJSON2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type RemoveProjectEnv200ApplicationJSON2Type string
+type RemoveProjectEnvProjectsType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON2TypeSystem    RemoveProjectEnv200ApplicationJSON2Type = "system"
-	RemoveProjectEnv200ApplicationJSON2TypeEncrypted RemoveProjectEnv200ApplicationJSON2Type = "encrypted"
-	RemoveProjectEnv200ApplicationJSON2TypePlain     RemoveProjectEnv200ApplicationJSON2Type = "plain"
-	RemoveProjectEnv200ApplicationJSON2TypeSensitive RemoveProjectEnv200ApplicationJSON2Type = "sensitive"
-	RemoveProjectEnv200ApplicationJSON2TypeSecret    RemoveProjectEnv200ApplicationJSON2Type = "secret"
+	RemoveProjectEnvProjectsTypeSystem    RemoveProjectEnvProjectsType = "system"
+	RemoveProjectEnvProjectsTypeEncrypted RemoveProjectEnvProjectsType = "encrypted"
+	RemoveProjectEnvProjectsTypePlain     RemoveProjectEnvProjectsType = "plain"
+	RemoveProjectEnvProjectsTypeSensitive RemoveProjectEnvProjectsType = "sensitive"
+	RemoveProjectEnvProjectsTypeSecret    RemoveProjectEnvProjectsType = "secret"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON2Type) ToPointer() *RemoveProjectEnv200ApplicationJSON2Type {
+func (e RemoveProjectEnvProjectsType) ToPointer() *RemoveProjectEnvProjectsType {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON2Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2073,957 +2073,957 @@ func (e *RemoveProjectEnv200ApplicationJSON2Type) UnmarshalJSON(data []byte) err
 	case "sensitive":
 		fallthrough
 	case "secret":
-		*e = RemoveProjectEnv200ApplicationJSON2Type(v)
+		*e = RemoveProjectEnvProjectsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON2Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsType: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON2 struct {
-	ConfigurationID *string                                         `json:"configurationId,omitempty"`
-	ContentHint     *RemoveProjectEnv200ApplicationJSON2ContentHint `json:"contentHint,omitempty"`
-	CreatedAt       *int64                                          `json:"createdAt,omitempty"`
-	CreatedBy       *string                                         `json:"createdBy,omitempty"`
+type RemoveProjectEnv2 struct {
+	ConfigurationID *string                              `json:"configurationId,omitempty"`
+	ContentHint     *RemoveProjectEnvProjectsContentHint `json:"contentHint,omitempty"`
+	CreatedAt       *int64                               `json:"createdAt,omitempty"`
+	CreatedBy       *string                              `json:"createdBy,omitempty"`
 	// Whether `value` is decrypted.
-	Decrypted         *bool                                      `json:"decrypted,omitempty"`
-	EdgeConfigID      *string                                    `json:"edgeConfigId,omitempty"`
-	EdgeConfigTokenID *string                                    `json:"edgeConfigTokenId,omitempty"`
-	GitBranch         *string                                    `json:"gitBranch,omitempty"`
-	ID                *string                                    `json:"id,omitempty"`
-	Key               string                                     `json:"key"`
-	System            *bool                                      `json:"system,omitempty"`
-	Target            *RemoveProjectEnv200ApplicationJSON2Target `json:"target,omitempty"`
-	Type              RemoveProjectEnv200ApplicationJSON2Type    `json:"type"`
-	UpdatedAt         *int64                                     `json:"updatedAt,omitempty"`
-	UpdatedBy         *string                                    `json:"updatedBy,omitempty"`
-	Value             string                                     `json:"value"`
+	Decrypted         *bool                           `json:"decrypted,omitempty"`
+	EdgeConfigID      *string                         `json:"edgeConfigId,omitempty"`
+	EdgeConfigTokenID *string                         `json:"edgeConfigTokenId,omitempty"`
+	GitBranch         *string                         `json:"gitBranch,omitempty"`
+	ID                *string                         `json:"id,omitempty"`
+	Key               string                          `json:"key"`
+	System            *bool                           `json:"system,omitempty"`
+	Target            *RemoveProjectEnvProjectsTarget `json:"target,omitempty"`
+	Type              RemoveProjectEnvProjectsType    `json:"type"`
+	UpdatedAt         *int64                          `json:"updatedAt,omitempty"`
+	UpdatedBy         *string                         `json:"updatedBy,omitempty"`
+	Value             string                          `json:"value"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetConfigurationID() *string {
+func (o *RemoveProjectEnv2) GetConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConfigurationID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetContentHint() *RemoveProjectEnv200ApplicationJSON2ContentHint {
+func (o *RemoveProjectEnv2) GetContentHint() *RemoveProjectEnvProjectsContentHint {
 	if o == nil {
 		return nil
 	}
 	return o.ContentHint
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetCreatedAt() *int64 {
+func (o *RemoveProjectEnv2) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetCreatedBy() *string {
+func (o *RemoveProjectEnv2) GetCreatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedBy
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetDecrypted() *bool {
+func (o *RemoveProjectEnv2) GetDecrypted() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Decrypted
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetEdgeConfigID() *string {
+func (o *RemoveProjectEnv2) GetEdgeConfigID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetEdgeConfigTokenID() *string {
+func (o *RemoveProjectEnv2) GetEdgeConfigTokenID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigTokenID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetGitBranch() *string {
+func (o *RemoveProjectEnv2) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetID() *string {
+func (o *RemoveProjectEnv2) GetID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetKey() string {
+func (o *RemoveProjectEnv2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetSystem() *bool {
+func (o *RemoveProjectEnv2) GetSystem() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.System
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetTarget() *RemoveProjectEnv200ApplicationJSON2Target {
+func (o *RemoveProjectEnv2) GetTarget() *RemoveProjectEnvProjectsTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetType() RemoveProjectEnv200ApplicationJSON2Type {
+func (o *RemoveProjectEnv2) GetType() RemoveProjectEnvProjectsType {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON2Type("")
+		return RemoveProjectEnvProjectsType("")
 	}
 	return o.Type
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetUpdatedAt() *int64 {
+func (o *RemoveProjectEnv2) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetUpdatedBy() *string {
+func (o *RemoveProjectEnv2) GetUpdatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedBy
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON2) GetValue() string {
+func (o *RemoveProjectEnv2) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint12Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint12TypePostgresDatabase RemoveProjectEnv200ApplicationJSON1ContentHint12Type = "postgres-database"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12TypePostgresDatabase RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type = "postgres-database"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint12Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint12Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint12Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-database":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint12Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint12Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint12 struct {
-	StoreID string                                               `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint12Type `json:"type"`
+type RemoveProjectEnv12 struct {
+	StoreID string                                                                           `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint12) GetStoreID() string {
+func (o *RemoveProjectEnv12) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint12) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint12Type {
+func (o *RemoveProjectEnv12) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint12Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint11Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint11TypePostgresPassword RemoveProjectEnv200ApplicationJSON1ContentHint11Type = "postgres-password"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11TypePostgresPassword RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type = "postgres-password"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint11Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint11Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint11Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-password":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint11Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint11Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint11 struct {
-	StoreID string                                               `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint11Type `json:"type"`
+type RemoveProjectEnv11 struct {
+	StoreID string                                                                           `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint11) GetStoreID() string {
+func (o *RemoveProjectEnv11) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint11) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint11Type {
+func (o *RemoveProjectEnv11) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint11Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint10Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint10TypePostgresHost RemoveProjectEnv200ApplicationJSON1ContentHint10Type = "postgres-host"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10TypePostgresHost RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type = "postgres-host"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint10Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint10Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint10Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-host":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint10Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint10Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint10 struct {
-	StoreID string                                               `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint10Type `json:"type"`
+type RemoveProjectEnv10 struct {
+	StoreID string                                                                           `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint10) GetStoreID() string {
+func (o *RemoveProjectEnv10) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint10) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint10Type {
+func (o *RemoveProjectEnv10) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint10Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint9Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint9TypePostgresUser RemoveProjectEnv200ApplicationJSON1ContentHint9Type = "postgres-user"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9TypePostgresUser RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type = "postgres-user"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint9Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint9Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint9Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-user":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint9Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint9Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint9 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint9Type `json:"type"`
+type RemoveProjectEnv9 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint9) GetStoreID() string {
+func (o *RemoveProjectEnv9) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint9) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint9Type {
+func (o *RemoveProjectEnv9) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint9Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint8Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint8TypePostgresPrismaURL RemoveProjectEnv200ApplicationJSON1ContentHint8Type = "postgres-prisma-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8TypePostgresPrismaURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type = "postgres-prisma-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint8Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint8Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint8Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-prisma-url":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint8Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint8Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint8 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint8Type `json:"type"`
+type RemoveProjectEnv8 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint8) GetStoreID() string {
+func (o *RemoveProjectEnv8) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint8) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint8Type {
+func (o *RemoveProjectEnv8) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint8Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint7Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint7TypePostgresURLNonPooling RemoveProjectEnv200ApplicationJSON1ContentHint7Type = "postgres-url-non-pooling"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7TypePostgresURLNonPooling RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type = "postgres-url-non-pooling"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint7Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint7Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint7Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url-non-pooling":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint7Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint7Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint7 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint7Type `json:"type"`
+type RemoveProjectEnv7 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint7) GetStoreID() string {
+func (o *RemoveProjectEnv7) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint7) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint7Type {
+func (o *RemoveProjectEnv7) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint7Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint6Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint6TypePostgresURL RemoveProjectEnv200ApplicationJSON1ContentHint6Type = "postgres-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6TypePostgresURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type = "postgres-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint6Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint6Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint6Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-url":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint6Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint6Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint6 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint6Type `json:"type"`
+type RemoveProjectEnv6 struct {
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint6) GetStoreID() string {
+func (o *RemoveProjectEnv6) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint6) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint6Type {
+func (o *RemoveProjectEnv6) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint6Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint5Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint5TypeBlobReadWriteToken RemoveProjectEnv200ApplicationJSON1ContentHint5Type = "blob-read-write-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintTypeBlobReadWriteToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType = "blob-read-write-token"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint5Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint5Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint5Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "blob-read-write-token":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint5Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint5Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint5 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint5Type `json:"type"`
+type RemoveProjectEnv5 struct {
+	StoreID string                                                                         `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint5) GetStoreID() string {
+func (o *RemoveProjectEnv5) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint5) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint5Type {
+func (o *RemoveProjectEnv5) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint5Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint4Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint4TypeRedisRestAPIReadOnlyToken RemoveProjectEnv200ApplicationJSON1ContentHint4Type = "redis-rest-api-read-only-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1TypeRedisRestAPIReadOnlyToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type = "redis-rest-api-read-only-token"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint4Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint4Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint4Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-read-only-token":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint4Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint4Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint4 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint4Type `json:"type"`
+type RemoveProjectEnv4 struct {
+	StoreID string                                                              `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint4) GetStoreID() string {
+func (o *RemoveProjectEnv4) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint4) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint4Type {
+func (o *RemoveProjectEnv4) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint4Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint3Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint3TypeRedisRestAPIToken RemoveProjectEnv200ApplicationJSON1ContentHint3Type = "redis-rest-api-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyTypeRedisRestAPIToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType = "redis-rest-api-token"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint3Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint3Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint3Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-token":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint3Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint3Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint3 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint3Type `json:"type"`
+type RemoveProjectEnvProjects3 struct {
+	StoreID string                                                             `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint3) GetStoreID() string {
+func (o *RemoveProjectEnvProjects3) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint3) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint3Type {
+func (o *RemoveProjectEnvProjects3) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint3Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint2Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint2TypeRedisRestAPIURL RemoveProjectEnv200ApplicationJSON1ContentHint2Type = "redis-rest-api-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONTypeRedisRestAPIURL RemoveProjectEnvProjectsResponse200ApplicationJSONType = "redis-rest-api-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint2Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint2Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONType {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint2Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-url":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint2Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint2Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONType: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint2 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint2Type `json:"type"`
+type RemoveProjectEnvProjects2 struct {
+	StoreID string                                                 `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONType `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint2) GetStoreID() string {
+func (o *RemoveProjectEnvProjects2) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint2) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint2Type {
+func (o *RemoveProjectEnvProjects2) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONType {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint2Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONType("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint1Type string
+type RemoveProjectEnvProjectsResponse200Type string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHint1TypeRedisURL RemoveProjectEnv200ApplicationJSON1ContentHint1Type = "redis-url"
+	RemoveProjectEnvProjectsResponse200TypeRedisURL RemoveProjectEnvProjectsResponse200Type = "redis-url"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1ContentHint1Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1ContentHint1Type {
+func (e RemoveProjectEnvProjectsResponse200Type) ToPointer() *RemoveProjectEnvProjectsResponse200Type {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1ContentHint1Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-url":
-		*e = RemoveProjectEnv200ApplicationJSON1ContentHint1Type(v)
+		*e = RemoveProjectEnvProjectsResponse200Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1ContentHint1Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200Type: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint1 struct {
-	StoreID string                                              `json:"storeId"`
-	Type    RemoveProjectEnv200ApplicationJSON1ContentHint1Type `json:"type"`
+type RemoveProjectEnvProjects1 struct {
+	StoreID string                                  `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200Type `json:"type"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint1) GetStoreID() string {
+func (o *RemoveProjectEnvProjects1) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1ContentHint1) GetType() RemoveProjectEnv200ApplicationJSON1ContentHint1Type {
+func (o *RemoveProjectEnvProjects1) GetType() RemoveProjectEnvProjectsResponse200Type {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1ContentHint1Type("")
+		return RemoveProjectEnvProjectsResponse200Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnv200ApplicationJSON1ContentHintType string
+type RemoveProjectEnvContentHintType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint1  RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_1"
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint2  RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_2"
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint3  RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_3"
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint4  RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_4"
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint5  RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_5"
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint6  RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_6"
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint7  RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_7"
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint8  RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_8"
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint9  RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_9"
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint10 RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_10"
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint11 RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_11"
-	RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint12 RemoveProjectEnv200ApplicationJSON1ContentHintType = "removeProjectEnv_200ApplicationJSON_1_contentHint_12"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects1 RemoveProjectEnvContentHintType = "removeProjectEnv_projects_1"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects2 RemoveProjectEnvContentHintType = "removeProjectEnv_projects_2"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects3 RemoveProjectEnvContentHintType = "removeProjectEnv_projects_3"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnv4         RemoveProjectEnvContentHintType = "removeProjectEnv_4"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnv5         RemoveProjectEnvContentHintType = "removeProjectEnv_5"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnv6         RemoveProjectEnvContentHintType = "removeProjectEnv_6"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnv7         RemoveProjectEnvContentHintType = "removeProjectEnv_7"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnv8         RemoveProjectEnvContentHintType = "removeProjectEnv_8"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnv9         RemoveProjectEnvContentHintType = "removeProjectEnv_9"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnv10        RemoveProjectEnvContentHintType = "removeProjectEnv_10"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnv11        RemoveProjectEnvContentHintType = "removeProjectEnv_11"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnv12        RemoveProjectEnvContentHintType = "removeProjectEnv_12"
 )
 
-type RemoveProjectEnv200ApplicationJSON1ContentHint struct {
-	RemoveProjectEnv200ApplicationJSON1ContentHint1  *RemoveProjectEnv200ApplicationJSON1ContentHint1
-	RemoveProjectEnv200ApplicationJSON1ContentHint2  *RemoveProjectEnv200ApplicationJSON1ContentHint2
-	RemoveProjectEnv200ApplicationJSON1ContentHint3  *RemoveProjectEnv200ApplicationJSON1ContentHint3
-	RemoveProjectEnv200ApplicationJSON1ContentHint4  *RemoveProjectEnv200ApplicationJSON1ContentHint4
-	RemoveProjectEnv200ApplicationJSON1ContentHint5  *RemoveProjectEnv200ApplicationJSON1ContentHint5
-	RemoveProjectEnv200ApplicationJSON1ContentHint6  *RemoveProjectEnv200ApplicationJSON1ContentHint6
-	RemoveProjectEnv200ApplicationJSON1ContentHint7  *RemoveProjectEnv200ApplicationJSON1ContentHint7
-	RemoveProjectEnv200ApplicationJSON1ContentHint8  *RemoveProjectEnv200ApplicationJSON1ContentHint8
-	RemoveProjectEnv200ApplicationJSON1ContentHint9  *RemoveProjectEnv200ApplicationJSON1ContentHint9
-	RemoveProjectEnv200ApplicationJSON1ContentHint10 *RemoveProjectEnv200ApplicationJSON1ContentHint10
-	RemoveProjectEnv200ApplicationJSON1ContentHint11 *RemoveProjectEnv200ApplicationJSON1ContentHint11
-	RemoveProjectEnv200ApplicationJSON1ContentHint12 *RemoveProjectEnv200ApplicationJSON1ContentHint12
+type RemoveProjectEnvContentHint struct {
+	RemoveProjectEnvProjects1 *RemoveProjectEnvProjects1
+	RemoveProjectEnvProjects2 *RemoveProjectEnvProjects2
+	RemoveProjectEnvProjects3 *RemoveProjectEnvProjects3
+	RemoveProjectEnv4         *RemoveProjectEnv4
+	RemoveProjectEnv5         *RemoveProjectEnv5
+	RemoveProjectEnv6         *RemoveProjectEnv6
+	RemoveProjectEnv7         *RemoveProjectEnv7
+	RemoveProjectEnv8         *RemoveProjectEnv8
+	RemoveProjectEnv9         *RemoveProjectEnv9
+	RemoveProjectEnv10        *RemoveProjectEnv10
+	RemoveProjectEnv11        *RemoveProjectEnv11
+	RemoveProjectEnv12        *RemoveProjectEnv12
 
-	Type RemoveProjectEnv200ApplicationJSON1ContentHintType
+	Type RemoveProjectEnvContentHintType
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint1(removeProjectEnv200ApplicationJSON1ContentHint1 RemoveProjectEnv200ApplicationJSON1ContentHint1) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint1
+func CreateRemoveProjectEnvContentHintRemoveProjectEnvProjects1(removeProjectEnvProjects1 RemoveProjectEnvProjects1) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects1
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint1: &removeProjectEnv200ApplicationJSON1ContentHint1,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnvProjects1: &removeProjectEnvProjects1,
+		Type:                      typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint2(removeProjectEnv200ApplicationJSON1ContentHint2 RemoveProjectEnv200ApplicationJSON1ContentHint2) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint2
+func CreateRemoveProjectEnvContentHintRemoveProjectEnvProjects2(removeProjectEnvProjects2 RemoveProjectEnvProjects2) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects2
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint2: &removeProjectEnv200ApplicationJSON1ContentHint2,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnvProjects2: &removeProjectEnvProjects2,
+		Type:                      typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint3(removeProjectEnv200ApplicationJSON1ContentHint3 RemoveProjectEnv200ApplicationJSON1ContentHint3) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint3
+func CreateRemoveProjectEnvContentHintRemoveProjectEnvProjects3(removeProjectEnvProjects3 RemoveProjectEnvProjects3) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects3
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint3: &removeProjectEnv200ApplicationJSON1ContentHint3,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnvProjects3: &removeProjectEnvProjects3,
+		Type:                      typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint4(removeProjectEnv200ApplicationJSON1ContentHint4 RemoveProjectEnv200ApplicationJSON1ContentHint4) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint4
+func CreateRemoveProjectEnvContentHintRemoveProjectEnv4(removeProjectEnv4 RemoveProjectEnv4) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnv4
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint4: &removeProjectEnv200ApplicationJSON1ContentHint4,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnv4: &removeProjectEnv4,
+		Type:              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint5(removeProjectEnv200ApplicationJSON1ContentHint5 RemoveProjectEnv200ApplicationJSON1ContentHint5) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint5
+func CreateRemoveProjectEnvContentHintRemoveProjectEnv5(removeProjectEnv5 RemoveProjectEnv5) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnv5
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint5: &removeProjectEnv200ApplicationJSON1ContentHint5,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnv5: &removeProjectEnv5,
+		Type:              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint6(removeProjectEnv200ApplicationJSON1ContentHint6 RemoveProjectEnv200ApplicationJSON1ContentHint6) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint6
+func CreateRemoveProjectEnvContentHintRemoveProjectEnv6(removeProjectEnv6 RemoveProjectEnv6) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnv6
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint6: &removeProjectEnv200ApplicationJSON1ContentHint6,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnv6: &removeProjectEnv6,
+		Type:              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint7(removeProjectEnv200ApplicationJSON1ContentHint7 RemoveProjectEnv200ApplicationJSON1ContentHint7) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint7
+func CreateRemoveProjectEnvContentHintRemoveProjectEnv7(removeProjectEnv7 RemoveProjectEnv7) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnv7
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint7: &removeProjectEnv200ApplicationJSON1ContentHint7,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnv7: &removeProjectEnv7,
+		Type:              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint8(removeProjectEnv200ApplicationJSON1ContentHint8 RemoveProjectEnv200ApplicationJSON1ContentHint8) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint8
+func CreateRemoveProjectEnvContentHintRemoveProjectEnv8(removeProjectEnv8 RemoveProjectEnv8) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnv8
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint8: &removeProjectEnv200ApplicationJSON1ContentHint8,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnv8: &removeProjectEnv8,
+		Type:              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint9(removeProjectEnv200ApplicationJSON1ContentHint9 RemoveProjectEnv200ApplicationJSON1ContentHint9) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint9
+func CreateRemoveProjectEnvContentHintRemoveProjectEnv9(removeProjectEnv9 RemoveProjectEnv9) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnv9
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint9: &removeProjectEnv200ApplicationJSON1ContentHint9,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnv9: &removeProjectEnv9,
+		Type:              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint10(removeProjectEnv200ApplicationJSON1ContentHint10 RemoveProjectEnv200ApplicationJSON1ContentHint10) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint10
+func CreateRemoveProjectEnvContentHintRemoveProjectEnv10(removeProjectEnv10 RemoveProjectEnv10) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnv10
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint10: &removeProjectEnv200ApplicationJSON1ContentHint10,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnv10: &removeProjectEnv10,
+		Type:               typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint11(removeProjectEnv200ApplicationJSON1ContentHint11 RemoveProjectEnv200ApplicationJSON1ContentHint11) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint11
+func CreateRemoveProjectEnvContentHintRemoveProjectEnv11(removeProjectEnv11 RemoveProjectEnv11) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnv11
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint11: &removeProjectEnv200ApplicationJSON1ContentHint11,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnv11: &removeProjectEnv11,
+		Type:               typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1ContentHintRemoveProjectEnv200ApplicationJSON1ContentHint12(removeProjectEnv200ApplicationJSON1ContentHint12 RemoveProjectEnv200ApplicationJSON1ContentHint12) RemoveProjectEnv200ApplicationJSON1ContentHint {
-	typ := RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint12
+func CreateRemoveProjectEnvContentHintRemoveProjectEnv12(removeProjectEnv12 RemoveProjectEnv12) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnv12
 
-	return RemoveProjectEnv200ApplicationJSON1ContentHint{
-		RemoveProjectEnv200ApplicationJSON1ContentHint12: &removeProjectEnv200ApplicationJSON1ContentHint12,
-		Type: typ,
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnv12: &removeProjectEnv12,
+		Type:               typ,
 	}
 }
 
-func (u *RemoveProjectEnv200ApplicationJSON1ContentHint) UnmarshalJSON(data []byte) error {
+func (u *RemoveProjectEnvContentHint) UnmarshalJSON(data []byte) error {
 
-	removeProjectEnv200ApplicationJSON1ContentHint1 := new(RemoveProjectEnv200ApplicationJSON1ContentHint1)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint1, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint1 = removeProjectEnv200ApplicationJSON1ContentHint1
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint1
+	removeProjectEnvProjects1 := new(RemoveProjectEnvProjects1)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects1, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects1 = removeProjectEnvProjects1
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects1
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1ContentHint2 := new(RemoveProjectEnv200ApplicationJSON1ContentHint2)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint2, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint2 = removeProjectEnv200ApplicationJSON1ContentHint2
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint2
+	removeProjectEnvProjects2 := new(RemoveProjectEnvProjects2)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects2, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects2 = removeProjectEnvProjects2
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects2
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1ContentHint3 := new(RemoveProjectEnv200ApplicationJSON1ContentHint3)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint3, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint3 = removeProjectEnv200ApplicationJSON1ContentHint3
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint3
+	removeProjectEnvProjects3 := new(RemoveProjectEnvProjects3)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects3, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects3 = removeProjectEnvProjects3
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects3
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1ContentHint4 := new(RemoveProjectEnv200ApplicationJSON1ContentHint4)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint4, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint4 = removeProjectEnv200ApplicationJSON1ContentHint4
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint4
+	removeProjectEnv4 := new(RemoveProjectEnv4)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv4, "", true, true); err == nil {
+		u.RemoveProjectEnv4 = removeProjectEnv4
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv4
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1ContentHint5 := new(RemoveProjectEnv200ApplicationJSON1ContentHint5)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint5, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint5 = removeProjectEnv200ApplicationJSON1ContentHint5
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint5
+	removeProjectEnv5 := new(RemoveProjectEnv5)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv5, "", true, true); err == nil {
+		u.RemoveProjectEnv5 = removeProjectEnv5
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv5
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1ContentHint6 := new(RemoveProjectEnv200ApplicationJSON1ContentHint6)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint6, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint6 = removeProjectEnv200ApplicationJSON1ContentHint6
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint6
+	removeProjectEnv6 := new(RemoveProjectEnv6)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv6, "", true, true); err == nil {
+		u.RemoveProjectEnv6 = removeProjectEnv6
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv6
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1ContentHint7 := new(RemoveProjectEnv200ApplicationJSON1ContentHint7)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint7, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint7 = removeProjectEnv200ApplicationJSON1ContentHint7
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint7
+	removeProjectEnv7 := new(RemoveProjectEnv7)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv7, "", true, true); err == nil {
+		u.RemoveProjectEnv7 = removeProjectEnv7
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv7
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1ContentHint8 := new(RemoveProjectEnv200ApplicationJSON1ContentHint8)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint8, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint8 = removeProjectEnv200ApplicationJSON1ContentHint8
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint8
+	removeProjectEnv8 := new(RemoveProjectEnv8)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv8, "", true, true); err == nil {
+		u.RemoveProjectEnv8 = removeProjectEnv8
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv8
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1ContentHint9 := new(RemoveProjectEnv200ApplicationJSON1ContentHint9)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint9, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint9 = removeProjectEnv200ApplicationJSON1ContentHint9
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint9
+	removeProjectEnv9 := new(RemoveProjectEnv9)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv9, "", true, true); err == nil {
+		u.RemoveProjectEnv9 = removeProjectEnv9
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv9
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1ContentHint10 := new(RemoveProjectEnv200ApplicationJSON1ContentHint10)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint10, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint10 = removeProjectEnv200ApplicationJSON1ContentHint10
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint10
+	removeProjectEnv10 := new(RemoveProjectEnv10)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv10, "", true, true); err == nil {
+		u.RemoveProjectEnv10 = removeProjectEnv10
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv10
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1ContentHint11 := new(RemoveProjectEnv200ApplicationJSON1ContentHint11)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint11, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint11 = removeProjectEnv200ApplicationJSON1ContentHint11
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint11
+	removeProjectEnv11 := new(RemoveProjectEnv11)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv11, "", true, true); err == nil {
+		u.RemoveProjectEnv11 = removeProjectEnv11
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv11
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1ContentHint12 := new(RemoveProjectEnv200ApplicationJSON1ContentHint12)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1ContentHint12, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1ContentHint12 = removeProjectEnv200ApplicationJSON1ContentHint12
-		u.Type = RemoveProjectEnv200ApplicationJSON1ContentHintTypeRemoveProjectEnv200ApplicationJSON1ContentHint12
+	removeProjectEnv12 := new(RemoveProjectEnv12)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv12, "", true, true); err == nil {
+		u.RemoveProjectEnv12 = removeProjectEnv12
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv12
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u RemoveProjectEnv200ApplicationJSON1ContentHint) MarshalJSON() ([]byte, error) {
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint1 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint1, "", true)
+func (u RemoveProjectEnvContentHint) MarshalJSON() ([]byte, error) {
+	if u.RemoveProjectEnvProjects1 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects1, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint2 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint2, "", true)
+	if u.RemoveProjectEnvProjects2 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects2, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint3 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint3, "", true)
+	if u.RemoveProjectEnvProjects3 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects3, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint4 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint4, "", true)
+	if u.RemoveProjectEnv4 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv4, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint5 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint5, "", true)
+	if u.RemoveProjectEnv5 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv5, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint6 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint6, "", true)
+	if u.RemoveProjectEnv6 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv6, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint7 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint7, "", true)
+	if u.RemoveProjectEnv7 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv7, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint8 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint8, "", true)
+	if u.RemoveProjectEnv8 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv8, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint9 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint9, "", true)
+	if u.RemoveProjectEnv9 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv9, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint10 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint10, "", true)
+	if u.RemoveProjectEnv10 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv10, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint11 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint11, "", true)
+	if u.RemoveProjectEnv11 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv11, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1ContentHint12 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1ContentHint12, "", true)
+	if u.RemoveProjectEnv12 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv12, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type RemoveProjectEnv200ApplicationJSON1Target2 string
+type RemoveProjectEnvProjectsResponse2 string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1Target2Production  RemoveProjectEnv200ApplicationJSON1Target2 = "production"
-	RemoveProjectEnv200ApplicationJSON1Target2Preview     RemoveProjectEnv200ApplicationJSON1Target2 = "preview"
-	RemoveProjectEnv200ApplicationJSON1Target2Development RemoveProjectEnv200ApplicationJSON1Target2 = "development"
+	RemoveProjectEnvProjectsResponse2Production  RemoveProjectEnvProjectsResponse2 = "production"
+	RemoveProjectEnvProjectsResponse2Preview     RemoveProjectEnvProjectsResponse2 = "preview"
+	RemoveProjectEnvProjectsResponse2Development RemoveProjectEnvProjectsResponse2 = "development"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1Target2) ToPointer() *RemoveProjectEnv200ApplicationJSON1Target2 {
+func (e RemoveProjectEnvProjectsResponse2) ToPointer() *RemoveProjectEnvProjectsResponse2 {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1Target2) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3034,26 +3034,26 @@ func (e *RemoveProjectEnv200ApplicationJSON1Target2) UnmarshalJSON(data []byte) 
 	case "preview":
 		fallthrough
 	case "development":
-		*e = RemoveProjectEnv200ApplicationJSON1Target2(v)
+		*e = RemoveProjectEnvProjectsResponse2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1Target2: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse2: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1Target1 string
+type RemoveProjectEnvProjectsResponse1 string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1Target1Production  RemoveProjectEnv200ApplicationJSON1Target1 = "production"
-	RemoveProjectEnv200ApplicationJSON1Target1Preview     RemoveProjectEnv200ApplicationJSON1Target1 = "preview"
-	RemoveProjectEnv200ApplicationJSON1Target1Development RemoveProjectEnv200ApplicationJSON1Target1 = "development"
+	RemoveProjectEnvProjectsResponse1Production  RemoveProjectEnvProjectsResponse1 = "production"
+	RemoveProjectEnvProjectsResponse1Preview     RemoveProjectEnvProjectsResponse1 = "preview"
+	RemoveProjectEnvProjectsResponse1Development RemoveProjectEnvProjectsResponse1 = "development"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1Target1) ToPointer() *RemoveProjectEnv200ApplicationJSON1Target1 {
+func (e RemoveProjectEnvProjectsResponse1) ToPointer() *RemoveProjectEnvProjectsResponse1 {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1Target1) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3064,91 +3064,91 @@ func (e *RemoveProjectEnv200ApplicationJSON1Target1) UnmarshalJSON(data []byte) 
 	case "preview":
 		fallthrough
 	case "development":
-		*e = RemoveProjectEnv200ApplicationJSON1Target1(v)
+		*e = RemoveProjectEnvProjectsResponse1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1Target1: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse1: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1TargetType string
+type RemoveProjectEnvTargetType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1TargetTypeArrayOfremoveProjectEnv200ApplicationJSON1Target1 RemoveProjectEnv200ApplicationJSON1TargetType = "arrayOfremoveProjectEnv_200ApplicationJSON_1_target_1"
-	RemoveProjectEnv200ApplicationJSON1TargetTypeRemoveProjectEnv200ApplicationJSON1Target2        RemoveProjectEnv200ApplicationJSON1TargetType = "removeProjectEnv_200ApplicationJSON_1_target_2"
+	RemoveProjectEnvTargetTypeArrayOfremoveProjectEnvProjectsResponse1 RemoveProjectEnvTargetType = "arrayOfremoveProjectEnv_projects_response_1"
+	RemoveProjectEnvTargetTypeRemoveProjectEnvProjectsResponse2        RemoveProjectEnvTargetType = "removeProjectEnv_projects_response_2"
 )
 
-type RemoveProjectEnv200ApplicationJSON1Target struct {
-	ArrayOfremoveProjectEnv200ApplicationJSON1Target1 []RemoveProjectEnv200ApplicationJSON1Target1
-	RemoveProjectEnv200ApplicationJSON1Target2        *RemoveProjectEnv200ApplicationJSON1Target2
+type RemoveProjectEnvTarget struct {
+	ArrayOfremoveProjectEnvProjectsResponse1 []RemoveProjectEnvProjectsResponse1
+	RemoveProjectEnvProjectsResponse2        *RemoveProjectEnvProjectsResponse2
 
-	Type RemoveProjectEnv200ApplicationJSON1TargetType
+	Type RemoveProjectEnvTargetType
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1TargetArrayOfremoveProjectEnv200ApplicationJSON1Target1(arrayOfremoveProjectEnv200ApplicationJSON1Target1 []RemoveProjectEnv200ApplicationJSON1Target1) RemoveProjectEnv200ApplicationJSON1Target {
-	typ := RemoveProjectEnv200ApplicationJSON1TargetTypeArrayOfremoveProjectEnv200ApplicationJSON1Target1
+func CreateRemoveProjectEnvTargetArrayOfremoveProjectEnvProjectsResponse1(arrayOfremoveProjectEnvProjectsResponse1 []RemoveProjectEnvProjectsResponse1) RemoveProjectEnvTarget {
+	typ := RemoveProjectEnvTargetTypeArrayOfremoveProjectEnvProjectsResponse1
 
-	return RemoveProjectEnv200ApplicationJSON1Target{
-		ArrayOfremoveProjectEnv200ApplicationJSON1Target1: arrayOfremoveProjectEnv200ApplicationJSON1Target1,
-		Type: typ,
+	return RemoveProjectEnvTarget{
+		ArrayOfremoveProjectEnvProjectsResponse1: arrayOfremoveProjectEnvProjectsResponse1,
+		Type:                                     typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSON1TargetRemoveProjectEnv200ApplicationJSON1Target2(removeProjectEnv200ApplicationJSON1Target2 RemoveProjectEnv200ApplicationJSON1Target2) RemoveProjectEnv200ApplicationJSON1Target {
-	typ := RemoveProjectEnv200ApplicationJSON1TargetTypeRemoveProjectEnv200ApplicationJSON1Target2
+func CreateRemoveProjectEnvTargetRemoveProjectEnvProjectsResponse2(removeProjectEnvProjectsResponse2 RemoveProjectEnvProjectsResponse2) RemoveProjectEnvTarget {
+	typ := RemoveProjectEnvTargetTypeRemoveProjectEnvProjectsResponse2
 
-	return RemoveProjectEnv200ApplicationJSON1Target{
-		RemoveProjectEnv200ApplicationJSON1Target2: &removeProjectEnv200ApplicationJSON1Target2,
-		Type: typ,
+	return RemoveProjectEnvTarget{
+		RemoveProjectEnvProjectsResponse2: &removeProjectEnvProjectsResponse2,
+		Type:                              typ,
 	}
 }
 
-func (u *RemoveProjectEnv200ApplicationJSON1Target) UnmarshalJSON(data []byte) error {
+func (u *RemoveProjectEnvTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfremoveProjectEnv200ApplicationJSON1Target1 := []RemoveProjectEnv200ApplicationJSON1Target1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnv200ApplicationJSON1Target1, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnv200ApplicationJSON1Target1 = arrayOfremoveProjectEnv200ApplicationJSON1Target1
-		u.Type = RemoveProjectEnv200ApplicationJSON1TargetTypeArrayOfremoveProjectEnv200ApplicationJSON1Target1
+	arrayOfremoveProjectEnvProjectsResponse1 := []RemoveProjectEnvProjectsResponse1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnvProjectsResponse1, "", true, true); err == nil {
+		u.ArrayOfremoveProjectEnvProjectsResponse1 = arrayOfremoveProjectEnvProjectsResponse1
+		u.Type = RemoveProjectEnvTargetTypeArrayOfremoveProjectEnvProjectsResponse1
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON1Target2 := new(RemoveProjectEnv200ApplicationJSON1Target2)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON1Target2, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON1Target2 = removeProjectEnv200ApplicationJSON1Target2
-		u.Type = RemoveProjectEnv200ApplicationJSON1TargetTypeRemoveProjectEnv200ApplicationJSON1Target2
+	removeProjectEnvProjectsResponse2 := new(RemoveProjectEnvProjectsResponse2)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse2, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse2 = removeProjectEnvProjectsResponse2
+		u.Type = RemoveProjectEnvTargetTypeRemoveProjectEnvProjectsResponse2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u RemoveProjectEnv200ApplicationJSON1Target) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnv200ApplicationJSON1Target1 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnv200ApplicationJSON1Target1, "", true)
+func (u RemoveProjectEnvTarget) MarshalJSON() ([]byte, error) {
+	if u.ArrayOfremoveProjectEnvProjectsResponse1 != nil {
+		return utils.MarshalJSON(u.ArrayOfremoveProjectEnvProjectsResponse1, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON1Target2 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON1Target2, "", true)
+	if u.RemoveProjectEnvProjectsResponse2 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type RemoveProjectEnv200ApplicationJSON1Type string
+type RemoveProjectEnvType string
 
 const (
-	RemoveProjectEnv200ApplicationJSON1TypeSystem    RemoveProjectEnv200ApplicationJSON1Type = "system"
-	RemoveProjectEnv200ApplicationJSON1TypeEncrypted RemoveProjectEnv200ApplicationJSON1Type = "encrypted"
-	RemoveProjectEnv200ApplicationJSON1TypePlain     RemoveProjectEnv200ApplicationJSON1Type = "plain"
-	RemoveProjectEnv200ApplicationJSON1TypeSensitive RemoveProjectEnv200ApplicationJSON1Type = "sensitive"
-	RemoveProjectEnv200ApplicationJSON1TypeSecret    RemoveProjectEnv200ApplicationJSON1Type = "secret"
+	RemoveProjectEnvTypeSystem    RemoveProjectEnvType = "system"
+	RemoveProjectEnvTypeEncrypted RemoveProjectEnvType = "encrypted"
+	RemoveProjectEnvTypePlain     RemoveProjectEnvType = "plain"
+	RemoveProjectEnvTypeSensitive RemoveProjectEnvType = "sensitive"
+	RemoveProjectEnvTypeSecret    RemoveProjectEnvType = "secret"
 )
 
-func (e RemoveProjectEnv200ApplicationJSON1Type) ToPointer() *RemoveProjectEnv200ApplicationJSON1Type {
+func (e RemoveProjectEnvType) ToPointer() *RemoveProjectEnvType {
 	return &e
 }
 
-func (e *RemoveProjectEnv200ApplicationJSON1Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3163,217 +3163,217 @@ func (e *RemoveProjectEnv200ApplicationJSON1Type) UnmarshalJSON(data []byte) err
 	case "sensitive":
 		fallthrough
 	case "secret":
-		*e = RemoveProjectEnv200ApplicationJSON1Type(v)
+		*e = RemoveProjectEnvType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnv200ApplicationJSON1Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvType: %v", v)
 	}
 }
 
-type RemoveProjectEnv200ApplicationJSON1 struct {
-	ConfigurationID *string                                         `json:"configurationId,omitempty"`
-	ContentHint     *RemoveProjectEnv200ApplicationJSON1ContentHint `json:"contentHint,omitempty"`
-	CreatedAt       *int64                                          `json:"createdAt,omitempty"`
-	CreatedBy       *string                                         `json:"createdBy,omitempty"`
+type RemoveProjectEnv1 struct {
+	ConfigurationID *string                      `json:"configurationId,omitempty"`
+	ContentHint     *RemoveProjectEnvContentHint `json:"contentHint,omitempty"`
+	CreatedAt       *int64                       `json:"createdAt,omitempty"`
+	CreatedBy       *string                      `json:"createdBy,omitempty"`
 	// Whether `value` is decrypted.
-	Decrypted         *bool                                      `json:"decrypted,omitempty"`
-	EdgeConfigID      *string                                    `json:"edgeConfigId,omitempty"`
-	EdgeConfigTokenID *string                                    `json:"edgeConfigTokenId,omitempty"`
-	GitBranch         *string                                    `json:"gitBranch,omitempty"`
-	ID                *string                                    `json:"id,omitempty"`
-	Key               string                                     `json:"key"`
-	Target            *RemoveProjectEnv200ApplicationJSON1Target `json:"target,omitempty"`
-	Type              RemoveProjectEnv200ApplicationJSON1Type    `json:"type"`
-	UpdatedAt         *int64                                     `json:"updatedAt,omitempty"`
-	UpdatedBy         *string                                    `json:"updatedBy,omitempty"`
-	Value             string                                     `json:"value"`
+	Decrypted         *bool                   `json:"decrypted,omitempty"`
+	EdgeConfigID      *string                 `json:"edgeConfigId,omitempty"`
+	EdgeConfigTokenID *string                 `json:"edgeConfigTokenId,omitempty"`
+	GitBranch         *string                 `json:"gitBranch,omitempty"`
+	ID                *string                 `json:"id,omitempty"`
+	Key               string                  `json:"key"`
+	Target            *RemoveProjectEnvTarget `json:"target,omitempty"`
+	Type              RemoveProjectEnvType    `json:"type"`
+	UpdatedAt         *int64                  `json:"updatedAt,omitempty"`
+	UpdatedBy         *string                 `json:"updatedBy,omitempty"`
+	Value             string                  `json:"value"`
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetConfigurationID() *string {
+func (o *RemoveProjectEnv1) GetConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConfigurationID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetContentHint() *RemoveProjectEnv200ApplicationJSON1ContentHint {
+func (o *RemoveProjectEnv1) GetContentHint() *RemoveProjectEnvContentHint {
 	if o == nil {
 		return nil
 	}
 	return o.ContentHint
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetCreatedAt() *int64 {
+func (o *RemoveProjectEnv1) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetCreatedBy() *string {
+func (o *RemoveProjectEnv1) GetCreatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedBy
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetDecrypted() *bool {
+func (o *RemoveProjectEnv1) GetDecrypted() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Decrypted
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetEdgeConfigID() *string {
+func (o *RemoveProjectEnv1) GetEdgeConfigID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetEdgeConfigTokenID() *string {
+func (o *RemoveProjectEnv1) GetEdgeConfigTokenID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigTokenID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetGitBranch() *string {
+func (o *RemoveProjectEnv1) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetID() *string {
+func (o *RemoveProjectEnv1) GetID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ID
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetKey() string {
+func (o *RemoveProjectEnv1) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetTarget() *RemoveProjectEnv200ApplicationJSON1Target {
+func (o *RemoveProjectEnv1) GetTarget() *RemoveProjectEnvTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetType() RemoveProjectEnv200ApplicationJSON1Type {
+func (o *RemoveProjectEnv1) GetType() RemoveProjectEnvType {
 	if o == nil {
-		return RemoveProjectEnv200ApplicationJSON1Type("")
+		return RemoveProjectEnvType("")
 	}
 	return o.Type
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetUpdatedAt() *int64 {
+func (o *RemoveProjectEnv1) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetUpdatedBy() *string {
+func (o *RemoveProjectEnv1) GetUpdatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedBy
 }
 
-func (o *RemoveProjectEnv200ApplicationJSON1) GetValue() string {
+func (o *RemoveProjectEnv1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type RemoveProjectEnv200ApplicationJSONType string
+type RemoveProjectEnvResponseBodyType string
 
 const (
-	RemoveProjectEnv200ApplicationJSONTypeArrayOfremoveProjectEnv200ApplicationJSON1 RemoveProjectEnv200ApplicationJSONType = "arrayOfremoveProjectEnv_200ApplicationJSON_1"
-	RemoveProjectEnv200ApplicationJSONTypeRemoveProjectEnv200ApplicationJSON2        RemoveProjectEnv200ApplicationJSONType = "removeProjectEnv_200ApplicationJSON_2"
-	RemoveProjectEnv200ApplicationJSONTypeRemoveProjectEnv200ApplicationJSON3        RemoveProjectEnv200ApplicationJSONType = "removeProjectEnv_200ApplicationJSON_3"
+	RemoveProjectEnvResponseBodyTypeArrayOfremoveProjectEnv1 RemoveProjectEnvResponseBodyType = "arrayOfremoveProjectEnv_1"
+	RemoveProjectEnvResponseBodyTypeRemoveProjectEnv2        RemoveProjectEnvResponseBodyType = "removeProjectEnv_2"
+	RemoveProjectEnvResponseBodyTypeRemoveProjectEnv3        RemoveProjectEnvResponseBodyType = "removeProjectEnv_3"
 )
 
-type RemoveProjectEnv200ApplicationJSON struct {
-	ArrayOfremoveProjectEnv200ApplicationJSON1 []RemoveProjectEnv200ApplicationJSON1
-	RemoveProjectEnv200ApplicationJSON2        *RemoveProjectEnv200ApplicationJSON2
-	RemoveProjectEnv200ApplicationJSON3        *RemoveProjectEnv200ApplicationJSON3
+type RemoveProjectEnvResponseBody struct {
+	ArrayOfremoveProjectEnv1 []RemoveProjectEnv1
+	RemoveProjectEnv2        *RemoveProjectEnv2
+	RemoveProjectEnv3        *RemoveProjectEnv3
 
-	Type RemoveProjectEnv200ApplicationJSONType
+	Type RemoveProjectEnvResponseBodyType
 }
 
-func CreateRemoveProjectEnv200ApplicationJSONArrayOfremoveProjectEnv200ApplicationJSON1(arrayOfremoveProjectEnv200ApplicationJSON1 []RemoveProjectEnv200ApplicationJSON1) RemoveProjectEnv200ApplicationJSON {
-	typ := RemoveProjectEnv200ApplicationJSONTypeArrayOfremoveProjectEnv200ApplicationJSON1
+func CreateRemoveProjectEnvResponseBodyArrayOfremoveProjectEnv1(arrayOfremoveProjectEnv1 []RemoveProjectEnv1) RemoveProjectEnvResponseBody {
+	typ := RemoveProjectEnvResponseBodyTypeArrayOfremoveProjectEnv1
 
-	return RemoveProjectEnv200ApplicationJSON{
-		ArrayOfremoveProjectEnv200ApplicationJSON1: arrayOfremoveProjectEnv200ApplicationJSON1,
-		Type: typ,
+	return RemoveProjectEnvResponseBody{
+		ArrayOfremoveProjectEnv1: arrayOfremoveProjectEnv1,
+		Type:                     typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSONRemoveProjectEnv200ApplicationJSON2(removeProjectEnv200ApplicationJSON2 RemoveProjectEnv200ApplicationJSON2) RemoveProjectEnv200ApplicationJSON {
-	typ := RemoveProjectEnv200ApplicationJSONTypeRemoveProjectEnv200ApplicationJSON2
+func CreateRemoveProjectEnvResponseBodyRemoveProjectEnv2(removeProjectEnv2 RemoveProjectEnv2) RemoveProjectEnvResponseBody {
+	typ := RemoveProjectEnvResponseBodyTypeRemoveProjectEnv2
 
-	return RemoveProjectEnv200ApplicationJSON{
-		RemoveProjectEnv200ApplicationJSON2: &removeProjectEnv200ApplicationJSON2,
-		Type:                                typ,
+	return RemoveProjectEnvResponseBody{
+		RemoveProjectEnv2: &removeProjectEnv2,
+		Type:              typ,
 	}
 }
 
-func CreateRemoveProjectEnv200ApplicationJSONRemoveProjectEnv200ApplicationJSON3(removeProjectEnv200ApplicationJSON3 RemoveProjectEnv200ApplicationJSON3) RemoveProjectEnv200ApplicationJSON {
-	typ := RemoveProjectEnv200ApplicationJSONTypeRemoveProjectEnv200ApplicationJSON3
+func CreateRemoveProjectEnvResponseBodyRemoveProjectEnv3(removeProjectEnv3 RemoveProjectEnv3) RemoveProjectEnvResponseBody {
+	typ := RemoveProjectEnvResponseBodyTypeRemoveProjectEnv3
 
-	return RemoveProjectEnv200ApplicationJSON{
-		RemoveProjectEnv200ApplicationJSON3: &removeProjectEnv200ApplicationJSON3,
-		Type:                                typ,
+	return RemoveProjectEnvResponseBody{
+		RemoveProjectEnv3: &removeProjectEnv3,
+		Type:              typ,
 	}
 }
 
-func (u *RemoveProjectEnv200ApplicationJSON) UnmarshalJSON(data []byte) error {
+func (u *RemoveProjectEnvResponseBody) UnmarshalJSON(data []byte) error {
 
-	removeProjectEnv200ApplicationJSON3 := new(RemoveProjectEnv200ApplicationJSON3)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON3, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON3 = removeProjectEnv200ApplicationJSON3
-		u.Type = RemoveProjectEnv200ApplicationJSONTypeRemoveProjectEnv200ApplicationJSON3
+	removeProjectEnv3 := new(RemoveProjectEnv3)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv3, "", true, true); err == nil {
+		u.RemoveProjectEnv3 = removeProjectEnv3
+		u.Type = RemoveProjectEnvResponseBodyTypeRemoveProjectEnv3
 		return nil
 	}
 
-	removeProjectEnv200ApplicationJSON2 := new(RemoveProjectEnv200ApplicationJSON2)
-	if err := utils.UnmarshalJSON(data, &removeProjectEnv200ApplicationJSON2, "", true, true); err == nil {
-		u.RemoveProjectEnv200ApplicationJSON2 = removeProjectEnv200ApplicationJSON2
-		u.Type = RemoveProjectEnv200ApplicationJSONTypeRemoveProjectEnv200ApplicationJSON2
+	removeProjectEnv2 := new(RemoveProjectEnv2)
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv2, "", true, true); err == nil {
+		u.RemoveProjectEnv2 = removeProjectEnv2
+		u.Type = RemoveProjectEnvResponseBodyTypeRemoveProjectEnv2
 		return nil
 	}
 
-	arrayOfremoveProjectEnv200ApplicationJSON1 := []RemoveProjectEnv200ApplicationJSON1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnv200ApplicationJSON1, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnv200ApplicationJSON1 = arrayOfremoveProjectEnv200ApplicationJSON1
-		u.Type = RemoveProjectEnv200ApplicationJSONTypeArrayOfremoveProjectEnv200ApplicationJSON1
+	arrayOfremoveProjectEnv1 := []RemoveProjectEnv1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnv1, "", true, true); err == nil {
+		u.ArrayOfremoveProjectEnv1 = arrayOfremoveProjectEnv1
+		u.Type = RemoveProjectEnvResponseBodyTypeArrayOfremoveProjectEnv1
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u RemoveProjectEnv200ApplicationJSON) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnv200ApplicationJSON1 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnv200ApplicationJSON1, "", true)
+func (u RemoveProjectEnvResponseBody) MarshalJSON() ([]byte, error) {
+	if u.ArrayOfremoveProjectEnv1 != nil {
+		return utils.MarshalJSON(u.ArrayOfremoveProjectEnv1, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON2 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON2, "", true)
+	if u.RemoveProjectEnv2 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv2, "", true)
 	}
 
-	if u.RemoveProjectEnv200ApplicationJSON3 != nil {
-		return utils.MarshalJSON(u.RemoveProjectEnv200ApplicationJSON3, "", true)
+	if u.RemoveProjectEnv3 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -3387,7 +3387,7 @@ type RemoveProjectEnvResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The environment variable was successfully removed
-	RemoveProjectEnv200ApplicationJSONOneOf *RemoveProjectEnv200ApplicationJSON
+	OneOf *RemoveProjectEnvResponseBody
 }
 
 func (o *RemoveProjectEnvResponse) GetContentType() string {
@@ -3411,9 +3411,9 @@ func (o *RemoveProjectEnvResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *RemoveProjectEnvResponse) GetRemoveProjectEnv200ApplicationJSONOneOf() *RemoveProjectEnv200ApplicationJSON {
+func (o *RemoveProjectEnvResponse) GetOneOf() *RemoveProjectEnvResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.RemoveProjectEnv200ApplicationJSONOneOf
+	return o.OneOf
 }

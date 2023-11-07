@@ -45,36 +45,36 @@ func (o *UpdateEdgeConfigRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// UpdateEdgeConfig200ApplicationJSONTransfer - Keeps track of the current state of the Edge Config while it gets transferred.
-type UpdateEdgeConfig200ApplicationJSONTransfer struct {
+// UpdateEdgeConfigTransfer - Keeps track of the current state of the Edge Config while it gets transferred.
+type UpdateEdgeConfigTransfer struct {
 	DoneAt        *int64 `json:"doneAt"`
 	FromAccountID string `json:"fromAccountId"`
 	StartedAt     int64  `json:"startedAt"`
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSONTransfer) GetDoneAt() *int64 {
+func (o *UpdateEdgeConfigTransfer) GetDoneAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DoneAt
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSONTransfer) GetFromAccountID() string {
+func (o *UpdateEdgeConfigTransfer) GetFromAccountID() string {
 	if o == nil {
 		return ""
 	}
 	return o.FromAccountID
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSONTransfer) GetStartedAt() int64 {
+func (o *UpdateEdgeConfigTransfer) GetStartedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.StartedAt
 }
 
-// UpdateEdgeConfig200ApplicationJSON - An Edge Config
-type UpdateEdgeConfig200ApplicationJSON struct {
+// UpdateEdgeConfigResponseBody - An Edge Config
+type UpdateEdgeConfigResponseBody struct {
 	CreatedAt   *int64  `json:"createdAt,omitempty"`
 	Digest      *string `json:"digest,omitempty"`
 	ID          *string `json:"id,omitempty"`
@@ -84,67 +84,67 @@ type UpdateEdgeConfig200ApplicationJSON struct {
 	// Name for the Edge Config Names are not unique. Must start with an alphabetic character and can contain only alphanumeric characters and underscores).
 	Slug *string `json:"slug,omitempty"`
 	// Keeps track of the current state of the Edge Config while it gets transferred.
-	Transfer  *UpdateEdgeConfig200ApplicationJSONTransfer `json:"transfer,omitempty"`
-	UpdatedAt *int64                                      `json:"updatedAt,omitempty"`
+	Transfer  *UpdateEdgeConfigTransfer `json:"transfer,omitempty"`
+	UpdatedAt *int64                    `json:"updatedAt,omitempty"`
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSON) GetCreatedAt() *int64 {
+func (o *UpdateEdgeConfigResponseBody) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSON) GetDigest() *string {
+func (o *UpdateEdgeConfigResponseBody) GetDigest() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Digest
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSON) GetID() *string {
+func (o *UpdateEdgeConfigResponseBody) GetID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ID
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSON) GetItemCount() int64 {
+func (o *UpdateEdgeConfigResponseBody) GetItemCount() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ItemCount
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSON) GetOwnerID() *string {
+func (o *UpdateEdgeConfigResponseBody) GetOwnerID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.OwnerID
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSON) GetSizeInBytes() int64 {
+func (o *UpdateEdgeConfigResponseBody) GetSizeInBytes() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.SizeInBytes
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSON) GetSlug() *string {
+func (o *UpdateEdgeConfigResponseBody) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Slug
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSON) GetTransfer() *UpdateEdgeConfig200ApplicationJSONTransfer {
+func (o *UpdateEdgeConfigResponseBody) GetTransfer() *UpdateEdgeConfigTransfer {
 	if o == nil {
 		return nil
 	}
 	return o.Transfer
 }
 
-func (o *UpdateEdgeConfig200ApplicationJSON) GetUpdatedAt() *int64 {
+func (o *UpdateEdgeConfigResponseBody) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
@@ -157,8 +157,8 @@ type UpdateEdgeConfigResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                              *http.Response
-	UpdateEdgeConfig200ApplicationJSONObject *UpdateEdgeConfig200ApplicationJSON
+	RawResponse *http.Response
+	Object      *UpdateEdgeConfigResponseBody
 }
 
 func (o *UpdateEdgeConfigResponse) GetContentType() string {
@@ -182,9 +182,9 @@ func (o *UpdateEdgeConfigResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateEdgeConfigResponse) GetUpdateEdgeConfig200ApplicationJSONObject() *UpdateEdgeConfig200ApplicationJSON {
+func (o *UpdateEdgeConfigResponse) GetObject() *UpdateEdgeConfigResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.UpdateEdgeConfig200ApplicationJSONObject
+	return o.Object
 }

@@ -8,21 +8,21 @@ import (
 	"net/http"
 )
 
-// AddProjectDomainRequestBodyRedirectStatusCode - Status code for domain redirect
-type AddProjectDomainRequestBodyRedirectStatusCode int64
+// RedirectStatusCode - Status code for domain redirect
+type RedirectStatusCode int64
 
 const (
-	AddProjectDomainRequestBodyRedirectStatusCodeThreeHundredAndOne   AddProjectDomainRequestBodyRedirectStatusCode = 301
-	AddProjectDomainRequestBodyRedirectStatusCodeThreeHundredAndTwo   AddProjectDomainRequestBodyRedirectStatusCode = 302
-	AddProjectDomainRequestBodyRedirectStatusCodeThreeHundredAndSeven AddProjectDomainRequestBodyRedirectStatusCode = 307
-	AddProjectDomainRequestBodyRedirectStatusCodeThreeHundredAndEight AddProjectDomainRequestBodyRedirectStatusCode = 308
+	RedirectStatusCodeThreeHundredAndOne   RedirectStatusCode = 301
+	RedirectStatusCodeThreeHundredAndTwo   RedirectStatusCode = 302
+	RedirectStatusCodeThreeHundredAndSeven RedirectStatusCode = 307
+	RedirectStatusCodeThreeHundredAndEight RedirectStatusCode = 308
 )
 
-func (e AddProjectDomainRequestBodyRedirectStatusCode) ToPointer() *AddProjectDomainRequestBodyRedirectStatusCode {
+func (e RedirectStatusCode) ToPointer() *RedirectStatusCode {
 	return &e
 }
 
-func (e *AddProjectDomainRequestBodyRedirectStatusCode) UnmarshalJSON(data []byte) error {
+func (e *RedirectStatusCode) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -35,10 +35,10 @@ func (e *AddProjectDomainRequestBodyRedirectStatusCode) UnmarshalJSON(data []byt
 	case 307:
 		fallthrough
 	case 308:
-		*e = AddProjectDomainRequestBodyRedirectStatusCode(v)
+		*e = RedirectStatusCode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AddProjectDomainRequestBodyRedirectStatusCode: %v", v)
+		return fmt.Errorf("invalid value for RedirectStatusCode: %v", v)
 	}
 }
 
@@ -50,7 +50,7 @@ type AddProjectDomainRequestBody struct {
 	// Target destination domain for redirect
 	Redirect *string `json:"redirect,omitempty"`
 	// Status code for domain redirect
-	RedirectStatusCode *AddProjectDomainRequestBodyRedirectStatusCode `json:"redirectStatusCode,omitempty"`
+	RedirectStatusCode *RedirectStatusCode `json:"redirectStatusCode,omitempty"`
 }
 
 func (o *AddProjectDomainRequestBody) GetGitBranch() *string {
@@ -74,7 +74,7 @@ func (o *AddProjectDomainRequestBody) GetRedirect() *string {
 	return o.Redirect
 }
 
-func (o *AddProjectDomainRequestBody) GetRedirectStatusCode() *AddProjectDomainRequestBodyRedirectStatusCode {
+func (o *AddProjectDomainRequestBody) GetRedirectStatusCode() *RedirectStatusCode {
 	if o == nil {
 		return nil
 	}
@@ -110,20 +110,20 @@ func (o *AddProjectDomainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type AddProjectDomain200ApplicationJSONRedirectStatusCode int64
+type AddProjectDomainRedirectStatusCode int64
 
 const (
-	AddProjectDomain200ApplicationJSONRedirectStatusCodeThreeHundredAndSeven AddProjectDomain200ApplicationJSONRedirectStatusCode = 307
-	AddProjectDomain200ApplicationJSONRedirectStatusCodeThreeHundredAndOne   AddProjectDomain200ApplicationJSONRedirectStatusCode = 301
-	AddProjectDomain200ApplicationJSONRedirectStatusCodeThreeHundredAndTwo   AddProjectDomain200ApplicationJSONRedirectStatusCode = 302
-	AddProjectDomain200ApplicationJSONRedirectStatusCodeThreeHundredAndEight AddProjectDomain200ApplicationJSONRedirectStatusCode = 308
+	AddProjectDomainRedirectStatusCodeThreeHundredAndSeven AddProjectDomainRedirectStatusCode = 307
+	AddProjectDomainRedirectStatusCodeThreeHundredAndOne   AddProjectDomainRedirectStatusCode = 301
+	AddProjectDomainRedirectStatusCodeThreeHundredAndTwo   AddProjectDomainRedirectStatusCode = 302
+	AddProjectDomainRedirectStatusCodeThreeHundredAndEight AddProjectDomainRedirectStatusCode = 308
 )
 
-func (e AddProjectDomain200ApplicationJSONRedirectStatusCode) ToPointer() *AddProjectDomain200ApplicationJSONRedirectStatusCode {
+func (e AddProjectDomainRedirectStatusCode) ToPointer() *AddProjectDomainRedirectStatusCode {
 	return &e
 }
 
-func (e *AddProjectDomain200ApplicationJSONRedirectStatusCode) UnmarshalJSON(data []byte) error {
+func (e *AddProjectDomainRedirectStatusCode) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -136,129 +136,129 @@ func (e *AddProjectDomain200ApplicationJSONRedirectStatusCode) UnmarshalJSON(dat
 	case 302:
 		fallthrough
 	case 308:
-		*e = AddProjectDomain200ApplicationJSONRedirectStatusCode(v)
+		*e = AddProjectDomainRedirectStatusCode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AddProjectDomain200ApplicationJSONRedirectStatusCode: %v", v)
+		return fmt.Errorf("invalid value for AddProjectDomainRedirectStatusCode: %v", v)
 	}
 }
 
-// AddProjectDomain200ApplicationJSONVerification - A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
-type AddProjectDomain200ApplicationJSONVerification struct {
+// Verification - A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
+type Verification struct {
 	Domain string `json:"domain"`
 	Reason string `json:"reason"`
 	Type   string `json:"type"`
 	Value  string `json:"value"`
 }
 
-func (o *AddProjectDomain200ApplicationJSONVerification) GetDomain() string {
+func (o *Verification) GetDomain() string {
 	if o == nil {
 		return ""
 	}
 	return o.Domain
 }
 
-func (o *AddProjectDomain200ApplicationJSONVerification) GetReason() string {
+func (o *Verification) GetReason() string {
 	if o == nil {
 		return ""
 	}
 	return o.Reason
 }
 
-func (o *AddProjectDomain200ApplicationJSONVerification) GetType() string {
+func (o *Verification) GetType() string {
 	if o == nil {
 		return ""
 	}
 	return o.Type
 }
 
-func (o *AddProjectDomain200ApplicationJSONVerification) GetValue() string {
+func (o *Verification) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-// AddProjectDomain200ApplicationJSON - The domain was successfully added to the project
-type AddProjectDomain200ApplicationJSON struct {
-	ApexName           string                                                `json:"apexName"`
-	CreatedAt          *int64                                                `json:"createdAt,omitempty"`
-	GitBranch          *string                                               `json:"gitBranch,omitempty"`
-	Name               string                                                `json:"name"`
-	ProjectID          string                                                `json:"projectId"`
-	Redirect           *string                                               `json:"redirect,omitempty"`
-	RedirectStatusCode *AddProjectDomain200ApplicationJSONRedirectStatusCode `json:"redirectStatusCode,omitempty"`
-	UpdatedAt          *int64                                                `json:"updatedAt,omitempty"`
+// AddProjectDomainResponseBody - The domain was successfully added to the project
+type AddProjectDomainResponseBody struct {
+	ApexName           string                              `json:"apexName"`
+	CreatedAt          *int64                              `json:"createdAt,omitempty"`
+	GitBranch          *string                             `json:"gitBranch,omitempty"`
+	Name               string                              `json:"name"`
+	ProjectID          string                              `json:"projectId"`
+	Redirect           *string                             `json:"redirect,omitempty"`
+	RedirectStatusCode *AddProjectDomainRedirectStatusCode `json:"redirectStatusCode,omitempty"`
+	UpdatedAt          *int64                              `json:"updatedAt,omitempty"`
 	// A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
-	Verification []AddProjectDomain200ApplicationJSONVerification `json:"verification,omitempty"`
+	Verification []Verification `json:"verification,omitempty"`
 	// `true` if the domain is verified for use with the project. If `false` it will not be used as an alias on this project until the challenge in `verification` is completed.
 	Verified bool `json:"verified"`
 }
 
-func (o *AddProjectDomain200ApplicationJSON) GetApexName() string {
+func (o *AddProjectDomainResponseBody) GetApexName() string {
 	if o == nil {
 		return ""
 	}
 	return o.ApexName
 }
 
-func (o *AddProjectDomain200ApplicationJSON) GetCreatedAt() *int64 {
+func (o *AddProjectDomainResponseBody) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *AddProjectDomain200ApplicationJSON) GetGitBranch() *string {
+func (o *AddProjectDomainResponseBody) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *AddProjectDomain200ApplicationJSON) GetName() string {
+func (o *AddProjectDomainResponseBody) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *AddProjectDomain200ApplicationJSON) GetProjectID() string {
+func (o *AddProjectDomainResponseBody) GetProjectID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ProjectID
 }
 
-func (o *AddProjectDomain200ApplicationJSON) GetRedirect() *string {
+func (o *AddProjectDomainResponseBody) GetRedirect() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Redirect
 }
 
-func (o *AddProjectDomain200ApplicationJSON) GetRedirectStatusCode() *AddProjectDomain200ApplicationJSONRedirectStatusCode {
+func (o *AddProjectDomainResponseBody) GetRedirectStatusCode() *AddProjectDomainRedirectStatusCode {
 	if o == nil {
 		return nil
 	}
 	return o.RedirectStatusCode
 }
 
-func (o *AddProjectDomain200ApplicationJSON) GetUpdatedAt() *int64 {
+func (o *AddProjectDomainResponseBody) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *AddProjectDomain200ApplicationJSON) GetVerification() []AddProjectDomain200ApplicationJSONVerification {
+func (o *AddProjectDomainResponseBody) GetVerification() []Verification {
 	if o == nil {
 		return nil
 	}
 	return o.Verification
 }
 
-func (o *AddProjectDomain200ApplicationJSON) GetVerified() bool {
+func (o *AddProjectDomainResponseBody) GetVerified() bool {
 	if o == nil {
 		return false
 	}
@@ -273,7 +273,7 @@ type AddProjectDomainResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The domain was successfully added to the project
-	AddProjectDomain200ApplicationJSONObject *AddProjectDomain200ApplicationJSON
+	Object *AddProjectDomainResponseBody
 }
 
 func (o *AddProjectDomainResponse) GetContentType() string {
@@ -297,9 +297,9 @@ func (o *AddProjectDomainResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *AddProjectDomainResponse) GetAddProjectDomain200ApplicationJSONObject() *AddProjectDomain200ApplicationJSON {
+func (o *AddProjectDomainResponse) GetObject() *AddProjectDomainResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.AddProjectDomain200ApplicationJSONObject
+	return o.Object
 }

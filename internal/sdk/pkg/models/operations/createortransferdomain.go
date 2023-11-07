@@ -10,8 +10,8 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-// CreateOrTransferDomainRequestBody3 - transfer-in
-type CreateOrTransferDomainRequestBody3 struct {
+// CreateOrTransferDomain3 - transfer-in
+type CreateOrTransferDomain3 struct {
 	// The authorization code assigned to the domain.
 	AuthCode *string `json:"authCode,omitempty"`
 	// The price you expect to be charged for the required 1 year renewal.
@@ -22,36 +22,36 @@ type CreateOrTransferDomainRequestBody3 struct {
 	Name string `json:"name"`
 }
 
-func (o *CreateOrTransferDomainRequestBody3) GetAuthCode() *string {
+func (o *CreateOrTransferDomain3) GetAuthCode() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AuthCode
 }
 
-func (o *CreateOrTransferDomainRequestBody3) GetExpectedPrice() *int64 {
+func (o *CreateOrTransferDomain3) GetExpectedPrice() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ExpectedPrice
 }
 
-func (o *CreateOrTransferDomainRequestBody3) GetMethod() string {
+func (o *CreateOrTransferDomain3) GetMethod() string {
 	if o == nil {
 		return ""
 	}
 	return o.Method
 }
 
-func (o *CreateOrTransferDomainRequestBody3) GetName() string {
+func (o *CreateOrTransferDomain3) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-// CreateOrTransferDomainRequestBody2 - move-in
-type CreateOrTransferDomainRequestBody2 struct {
+// CreateOrTransferDomain2 - move-in
+type CreateOrTransferDomain2 struct {
 	// The domain operation to perform.
 	Method string `json:"method"`
 	// The domain name you want to add.
@@ -60,29 +60,29 @@ type CreateOrTransferDomainRequestBody2 struct {
 	Token *string `json:"token,omitempty"`
 }
 
-func (o *CreateOrTransferDomainRequestBody2) GetMethod() string {
+func (o *CreateOrTransferDomain2) GetMethod() string {
 	if o == nil {
 		return ""
 	}
 	return o.Method
 }
 
-func (o *CreateOrTransferDomainRequestBody2) GetName() string {
+func (o *CreateOrTransferDomain2) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateOrTransferDomainRequestBody2) GetToken() *string {
+func (o *CreateOrTransferDomain2) GetToken() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Token
 }
 
-// CreateOrTransferDomainRequestBody1 - add
-type CreateOrTransferDomainRequestBody1 struct {
+// CreateOrTransferDomain1 - add
+type CreateOrTransferDomain1 struct {
 	// Whether the domain has the Vercel Edge Network enabled or not.
 	CdnEnabled *bool `json:"cdnEnabled,omitempty"`
 	// The domain operation to perform.
@@ -92,28 +92,28 @@ type CreateOrTransferDomainRequestBody1 struct {
 	Zone *bool  `json:"zone,omitempty"`
 }
 
-func (o *CreateOrTransferDomainRequestBody1) GetCdnEnabled() *bool {
+func (o *CreateOrTransferDomain1) GetCdnEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.CdnEnabled
 }
 
-func (o *CreateOrTransferDomainRequestBody1) GetMethod() *string {
+func (o *CreateOrTransferDomain1) GetMethod() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Method
 }
 
-func (o *CreateOrTransferDomainRequestBody1) GetName() string {
+func (o *CreateOrTransferDomain1) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateOrTransferDomainRequestBody1) GetZone() *bool {
+func (o *CreateOrTransferDomain1) GetZone() *bool {
 	if o == nil {
 		return nil
 	}
@@ -123,66 +123,66 @@ func (o *CreateOrTransferDomainRequestBody1) GetZone() *bool {
 type CreateOrTransferDomainRequestBodyType string
 
 const (
-	CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody1 CreateOrTransferDomainRequestBodyType = "createOrTransferDomain_requestBody_1"
-	CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody2 CreateOrTransferDomainRequestBodyType = "createOrTransferDomain_requestBody_2"
-	CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody3 CreateOrTransferDomainRequestBodyType = "createOrTransferDomain_requestBody_3"
+	CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain1 CreateOrTransferDomainRequestBodyType = "createOrTransferDomain_1"
+	CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain2 CreateOrTransferDomainRequestBodyType = "createOrTransferDomain_2"
+	CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain3 CreateOrTransferDomainRequestBodyType = "createOrTransferDomain_3"
 )
 
 type CreateOrTransferDomainRequestBody struct {
-	CreateOrTransferDomainRequestBody1 *CreateOrTransferDomainRequestBody1
-	CreateOrTransferDomainRequestBody2 *CreateOrTransferDomainRequestBody2
-	CreateOrTransferDomainRequestBody3 *CreateOrTransferDomainRequestBody3
+	CreateOrTransferDomain1 *CreateOrTransferDomain1
+	CreateOrTransferDomain2 *CreateOrTransferDomain2
+	CreateOrTransferDomain3 *CreateOrTransferDomain3
 
 	Type CreateOrTransferDomainRequestBodyType
 }
 
-func CreateCreateOrTransferDomainRequestBodyCreateOrTransferDomainRequestBody1(createOrTransferDomainRequestBody1 CreateOrTransferDomainRequestBody1) CreateOrTransferDomainRequestBody {
-	typ := CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody1
+func CreateCreateOrTransferDomainRequestBodyCreateOrTransferDomain1(createOrTransferDomain1 CreateOrTransferDomain1) CreateOrTransferDomainRequestBody {
+	typ := CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain1
 
 	return CreateOrTransferDomainRequestBody{
-		CreateOrTransferDomainRequestBody1: &createOrTransferDomainRequestBody1,
-		Type:                               typ,
+		CreateOrTransferDomain1: &createOrTransferDomain1,
+		Type:                    typ,
 	}
 }
 
-func CreateCreateOrTransferDomainRequestBodyCreateOrTransferDomainRequestBody2(createOrTransferDomainRequestBody2 CreateOrTransferDomainRequestBody2) CreateOrTransferDomainRequestBody {
-	typ := CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody2
+func CreateCreateOrTransferDomainRequestBodyCreateOrTransferDomain2(createOrTransferDomain2 CreateOrTransferDomain2) CreateOrTransferDomainRequestBody {
+	typ := CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain2
 
 	return CreateOrTransferDomainRequestBody{
-		CreateOrTransferDomainRequestBody2: &createOrTransferDomainRequestBody2,
-		Type:                               typ,
+		CreateOrTransferDomain2: &createOrTransferDomain2,
+		Type:                    typ,
 	}
 }
 
-func CreateCreateOrTransferDomainRequestBodyCreateOrTransferDomainRequestBody3(createOrTransferDomainRequestBody3 CreateOrTransferDomainRequestBody3) CreateOrTransferDomainRequestBody {
-	typ := CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody3
+func CreateCreateOrTransferDomainRequestBodyCreateOrTransferDomain3(createOrTransferDomain3 CreateOrTransferDomain3) CreateOrTransferDomainRequestBody {
+	typ := CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain3
 
 	return CreateOrTransferDomainRequestBody{
-		CreateOrTransferDomainRequestBody3: &createOrTransferDomainRequestBody3,
-		Type:                               typ,
+		CreateOrTransferDomain3: &createOrTransferDomain3,
+		Type:                    typ,
 	}
 }
 
 func (u *CreateOrTransferDomainRequestBody) UnmarshalJSON(data []byte) error {
 
-	createOrTransferDomainRequestBody2 := new(CreateOrTransferDomainRequestBody2)
-	if err := utils.UnmarshalJSON(data, &createOrTransferDomainRequestBody2, "", true, true); err == nil {
-		u.CreateOrTransferDomainRequestBody2 = createOrTransferDomainRequestBody2
-		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody2
+	createOrTransferDomain2 := new(CreateOrTransferDomain2)
+	if err := utils.UnmarshalJSON(data, &createOrTransferDomain2, "", true, true); err == nil {
+		u.CreateOrTransferDomain2 = createOrTransferDomain2
+		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain2
 		return nil
 	}
 
-	createOrTransferDomainRequestBody1 := new(CreateOrTransferDomainRequestBody1)
-	if err := utils.UnmarshalJSON(data, &createOrTransferDomainRequestBody1, "", true, true); err == nil {
-		u.CreateOrTransferDomainRequestBody1 = createOrTransferDomainRequestBody1
-		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody1
+	createOrTransferDomain1 := new(CreateOrTransferDomain1)
+	if err := utils.UnmarshalJSON(data, &createOrTransferDomain1, "", true, true); err == nil {
+		u.CreateOrTransferDomain1 = createOrTransferDomain1
+		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain1
 		return nil
 	}
 
-	createOrTransferDomainRequestBody3 := new(CreateOrTransferDomainRequestBody3)
-	if err := utils.UnmarshalJSON(data, &createOrTransferDomainRequestBody3, "", true, true); err == nil {
-		u.CreateOrTransferDomainRequestBody3 = createOrTransferDomainRequestBody3
-		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody3
+	createOrTransferDomain3 := new(CreateOrTransferDomain3)
+	if err := utils.UnmarshalJSON(data, &createOrTransferDomain3, "", true, true); err == nil {
+		u.CreateOrTransferDomain3 = createOrTransferDomain3
+		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain3
 		return nil
 	}
 
@@ -190,16 +190,16 @@ func (u *CreateOrTransferDomainRequestBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateOrTransferDomainRequestBody) MarshalJSON() ([]byte, error) {
-	if u.CreateOrTransferDomainRequestBody1 != nil {
-		return utils.MarshalJSON(u.CreateOrTransferDomainRequestBody1, "", true)
+	if u.CreateOrTransferDomain1 != nil {
+		return utils.MarshalJSON(u.CreateOrTransferDomain1, "", true)
 	}
 
-	if u.CreateOrTransferDomainRequestBody2 != nil {
-		return utils.MarshalJSON(u.CreateOrTransferDomainRequestBody2, "", true)
+	if u.CreateOrTransferDomain2 != nil {
+		return utils.MarshalJSON(u.CreateOrTransferDomain2, "", true)
 	}
 
-	if u.CreateOrTransferDomainRequestBody3 != nil {
-		return utils.MarshalJSON(u.CreateOrTransferDomainRequestBody3, "", true)
+	if u.CreateOrTransferDomain3 != nil {
+		return utils.MarshalJSON(u.CreateOrTransferDomain3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -225,8 +225,8 @@ func (o *CreateOrTransferDomainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// CreateOrTransferDomain200ApplicationJSONDomainCreator - An object containing information of the domain creator, including the user's id, username, and email.
-type CreateOrTransferDomain200ApplicationJSONDomainCreator struct {
+// CreateOrTransferDomainCreator - An object containing information of the domain creator, including the user's id, username, and email.
+type CreateOrTransferDomainCreator struct {
 	CustomerID       *string `json:"customerId,omitempty"`
 	Email            string  `json:"email"`
 	ID               string  `json:"id"`
@@ -234,55 +234,55 @@ type CreateOrTransferDomain200ApplicationJSONDomainCreator struct {
 	Username         string  `json:"username"`
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomainCreator) GetCustomerID() *string {
+func (o *CreateOrTransferDomainCreator) GetCustomerID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CustomerID
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomainCreator) GetEmail() string {
+func (o *CreateOrTransferDomainCreator) GetEmail() string {
 	if o == nil {
 		return ""
 	}
 	return o.Email
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomainCreator) GetID() string {
+func (o *CreateOrTransferDomainCreator) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomainCreator) GetIsDomainReseller() *bool {
+func (o *CreateOrTransferDomainCreator) GetIsDomainReseller() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IsDomainReseller
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomainCreator) GetUsername() string {
+func (o *CreateOrTransferDomainCreator) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
 }
 
-// CreateOrTransferDomain200ApplicationJSONDomainServiceType - The type of service the domain is handled by. `external` if the DNS is externally handled, `zeit.world` if handled with Vercel, or `na` if the service is not available.
-type CreateOrTransferDomain200ApplicationJSONDomainServiceType string
+// ServiceType - The type of service the domain is handled by. `external` if the DNS is externally handled, `zeit.world` if handled with Vercel, or `na` if the service is not available.
+type ServiceType string
 
 const (
-	CreateOrTransferDomain200ApplicationJSONDomainServiceTypeZeitWorld CreateOrTransferDomain200ApplicationJSONDomainServiceType = "zeit.world"
-	CreateOrTransferDomain200ApplicationJSONDomainServiceTypeExternal  CreateOrTransferDomain200ApplicationJSONDomainServiceType = "external"
-	CreateOrTransferDomain200ApplicationJSONDomainServiceTypeNa        CreateOrTransferDomain200ApplicationJSONDomainServiceType = "na"
+	ServiceTypeZeitWorld ServiceType = "zeit.world"
+	ServiceTypeExternal  ServiceType = "external"
+	ServiceTypeNa        ServiceType = "na"
 )
 
-func (e CreateOrTransferDomain200ApplicationJSONDomainServiceType) ToPointer() *CreateOrTransferDomain200ApplicationJSONDomainServiceType {
+func (e ServiceType) ToPointer() *ServiceType {
 	return &e
 }
 
-func (e *CreateOrTransferDomain200ApplicationJSONDomainServiceType) UnmarshalJSON(data []byte) error {
+func (e *ServiceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -293,20 +293,20 @@ func (e *CreateOrTransferDomain200ApplicationJSONDomainServiceType) UnmarshalJSO
 	case "external":
 		fallthrough
 	case "na":
-		*e = CreateOrTransferDomain200ApplicationJSONDomainServiceType(v)
+		*e = ServiceType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateOrTransferDomain200ApplicationJSONDomainServiceType: %v", v)
+		return fmt.Errorf("invalid value for ServiceType: %v", v)
 	}
 }
 
-type CreateOrTransferDomain200ApplicationJSONDomain struct {
+type CreateOrTransferDomainDomain struct {
 	// If it was purchased through Vercel, the timestamp in milliseconds when it was purchased.
 	BoughtAt *int64 `json:"boughtAt"`
 	// Timestamp in milliseconds when the domain was created in the registry.
 	CreatedAt int64 `json:"createdAt"`
 	// An object containing information of the domain creator, including the user's id, username, and email.
-	Creator CreateOrTransferDomain200ApplicationJSONDomainCreator `json:"creator"`
+	Creator CreateOrTransferDomainCreator `json:"creator"`
 	// A list of custom nameservers for the domain to point to. Only applies to domains purchased with Vercel.
 	CustomNameservers []string `json:"customNameservers,omitempty"`
 	// Timestamp in milliseconds at which the domain is set to expire. `null` if not bought with Vercel.
@@ -324,7 +324,7 @@ type CreateOrTransferDomain200ApplicationJSONDomain struct {
 	// Indicates whether the domain is set to automatically renew.
 	Renew *bool `json:"renew,omitempty"`
 	// The type of service the domain is handled by. `external` if the DNS is externally handled, `zeit.world` if handled with Vercel, or `na` if the service is not available.
-	ServiceType CreateOrTransferDomain200ApplicationJSONDomainServiceType `json:"serviceType"`
+	ServiceType ServiceType `json:"serviceType"`
 	// If transferred into Vercel, timestamp in milliseconds when the domain transfer was initiated.
 	TransferStartedAt *int64 `json:"transferStartedAt,omitempty"`
 	// Timestamp in milliseconds at which the domain was successfully transferred into Vercel. `null` if the transfer is still processing or was never transferred in.
@@ -333,118 +333,118 @@ type CreateOrTransferDomain200ApplicationJSONDomain struct {
 	Verified bool `json:"verified"`
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetBoughtAt() *int64 {
+func (o *CreateOrTransferDomainDomain) GetBoughtAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.BoughtAt
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetCreatedAt() int64 {
+func (o *CreateOrTransferDomainDomain) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetCreator() CreateOrTransferDomain200ApplicationJSONDomainCreator {
+func (o *CreateOrTransferDomainDomain) GetCreator() CreateOrTransferDomainCreator {
 	if o == nil {
-		return CreateOrTransferDomain200ApplicationJSONDomainCreator{}
+		return CreateOrTransferDomainCreator{}
 	}
 	return o.Creator
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetCustomNameservers() []string {
+func (o *CreateOrTransferDomainDomain) GetCustomNameservers() []string {
 	if o == nil {
 		return nil
 	}
 	return o.CustomNameservers
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetExpiresAt() *int64 {
+func (o *CreateOrTransferDomainDomain) GetExpiresAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ExpiresAt
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetID() string {
+func (o *CreateOrTransferDomainDomain) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetIntendedNameservers() []string {
+func (o *CreateOrTransferDomainDomain) GetIntendedNameservers() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.IntendedNameservers
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetName() string {
+func (o *CreateOrTransferDomainDomain) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetNameservers() []string {
+func (o *CreateOrTransferDomainDomain) GetNameservers() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Nameservers
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetOrderedAt() *int64 {
+func (o *CreateOrTransferDomainDomain) GetOrderedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.OrderedAt
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetRenew() *bool {
+func (o *CreateOrTransferDomainDomain) GetRenew() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Renew
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetServiceType() CreateOrTransferDomain200ApplicationJSONDomainServiceType {
+func (o *CreateOrTransferDomainDomain) GetServiceType() ServiceType {
 	if o == nil {
-		return CreateOrTransferDomain200ApplicationJSONDomainServiceType("")
+		return ServiceType("")
 	}
 	return o.ServiceType
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetTransferStartedAt() *int64 {
+func (o *CreateOrTransferDomainDomain) GetTransferStartedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.TransferStartedAt
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetTransferredAt() *int64 {
+func (o *CreateOrTransferDomainDomain) GetTransferredAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.TransferredAt
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSONDomain) GetVerified() bool {
+func (o *CreateOrTransferDomainDomain) GetVerified() bool {
 	if o == nil {
 		return false
 	}
 	return o.Verified
 }
 
-type CreateOrTransferDomain200ApplicationJSON struct {
-	Domain CreateOrTransferDomain200ApplicationJSONDomain `json:"domain"`
+type CreateOrTransferDomainResponseBody struct {
+	Domain CreateOrTransferDomainDomain `json:"domain"`
 }
 
-func (o *CreateOrTransferDomain200ApplicationJSON) GetDomain() CreateOrTransferDomain200ApplicationJSONDomain {
+func (o *CreateOrTransferDomainResponseBody) GetDomain() CreateOrTransferDomainDomain {
 	if o == nil {
-		return CreateOrTransferDomain200ApplicationJSONDomain{}
+		return CreateOrTransferDomainDomain{}
 	}
 	return o.Domain
 }
@@ -455,8 +455,8 @@ type CreateOrTransferDomainResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                                    *http.Response
-	CreateOrTransferDomain200ApplicationJSONObject *CreateOrTransferDomain200ApplicationJSON
+	RawResponse *http.Response
+	Object      *CreateOrTransferDomainResponseBody
 }
 
 func (o *CreateOrTransferDomainResponse) GetContentType() string {
@@ -480,9 +480,9 @@ func (o *CreateOrTransferDomainResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateOrTransferDomainResponse) GetCreateOrTransferDomain200ApplicationJSONObject() *CreateOrTransferDomain200ApplicationJSON {
+func (o *CreateOrTransferDomainResponse) GetObject() *CreateOrTransferDomainResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.CreateOrTransferDomain200ApplicationJSONObject
+	return o.Object
 }

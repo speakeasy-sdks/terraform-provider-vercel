@@ -36,8 +36,8 @@ func (o *RemoveProjectDomainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// RemoveProjectDomain200ApplicationJSON - The domain was succesfully removed from the project
-type RemoveProjectDomain200ApplicationJSON struct {
+// RemoveProjectDomainResponseBody - The domain was succesfully removed from the project
+type RemoveProjectDomainResponseBody struct {
 }
 
 type RemoveProjectDomainResponse struct {
@@ -48,7 +48,7 @@ type RemoveProjectDomainResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The domain was succesfully removed from the project
-	RemoveProjectDomain200ApplicationJSONObject *RemoveProjectDomain200ApplicationJSON
+	Object *RemoveProjectDomainResponseBody
 }
 
 func (o *RemoveProjectDomainResponse) GetContentType() string {
@@ -72,9 +72,9 @@ func (o *RemoveProjectDomainResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *RemoveProjectDomainResponse) GetRemoveProjectDomain200ApplicationJSONObject() *RemoveProjectDomain200ApplicationJSON {
+func (o *RemoveProjectDomainResponse) GetObject() *RemoveProjectDomainResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.RemoveProjectDomain200ApplicationJSONObject
+	return o.Object
 }

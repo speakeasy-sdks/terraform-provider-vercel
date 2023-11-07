@@ -45,19 +45,19 @@ func (o *CreateEdgeConfigTokenRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type CreateEdgeConfigToken201ApplicationJSON struct {
+type CreateEdgeConfigTokenResponseBody struct {
 	ID    string `json:"id"`
 	Token string `json:"token"`
 }
 
-func (o *CreateEdgeConfigToken201ApplicationJSON) GetID() string {
+func (o *CreateEdgeConfigTokenResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateEdgeConfigToken201ApplicationJSON) GetToken() string {
+func (o *CreateEdgeConfigTokenResponseBody) GetToken() string {
 	if o == nil {
 		return ""
 	}
@@ -70,8 +70,8 @@ type CreateEdgeConfigTokenResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                                   *http.Response
-	CreateEdgeConfigToken201ApplicationJSONObject *CreateEdgeConfigToken201ApplicationJSON
+	RawResponse *http.Response
+	Object      *CreateEdgeConfigTokenResponseBody
 }
 
 func (o *CreateEdgeConfigTokenResponse) GetContentType() string {
@@ -95,9 +95,9 @@ func (o *CreateEdgeConfigTokenResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateEdgeConfigTokenResponse) GetCreateEdgeConfigToken201ApplicationJSONObject() *CreateEdgeConfigToken201ApplicationJSON {
+func (o *CreateEdgeConfigTokenResponse) GetObject() *CreateEdgeConfigTokenResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.CreateEdgeConfigToken201ApplicationJSONObject
+	return o.Object
 }

@@ -26,11 +26,11 @@ func (o *PatchtEdgeConfigItemsRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type PatchtEdgeConfigItems200ApplicationJSON struct {
+type PatchtEdgeConfigItemsResponseBody struct {
 	Status string `json:"status"`
 }
 
-func (o *PatchtEdgeConfigItems200ApplicationJSON) GetStatus() string {
+func (o *PatchtEdgeConfigItemsResponseBody) GetStatus() string {
 	if o == nil {
 		return ""
 	}
@@ -43,8 +43,8 @@ type PatchtEdgeConfigItemsResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                                   *http.Response
-	PatchtEdgeConfigItems200ApplicationJSONObject *PatchtEdgeConfigItems200ApplicationJSON
+	RawResponse *http.Response
+	Object      *PatchtEdgeConfigItemsResponseBody
 }
 
 func (o *PatchtEdgeConfigItemsResponse) GetContentType() string {
@@ -68,9 +68,9 @@ func (o *PatchtEdgeConfigItemsResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *PatchtEdgeConfigItemsResponse) GetPatchtEdgeConfigItems200ApplicationJSONObject() *PatchtEdgeConfigItems200ApplicationJSON {
+func (o *PatchtEdgeConfigItemsResponse) GetObject() *PatchtEdgeConfigItemsResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.PatchtEdgeConfigItems200ApplicationJSONObject
+	return o.Object
 }

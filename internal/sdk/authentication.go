@@ -14,19 +14,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type authentication struct {
+type Authentication struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAuthentication(sdkConfig sdkConfiguration) *authentication {
-	return &authentication{
+func newAuthentication(sdkConfig sdkConfiguration) *Authentication {
+	return &Authentication{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // CreateAuthToken - Create an Auth Token
 // Creates and returns a new authentication token for the currently authenticated User. The `bearerToken` property is only provided once, in the response body, so be sure to save it on the client for use with API requests.
-func (s *authentication) CreateAuthToken(ctx context.Context, request operations.CreateAuthTokenRequest) (*operations.CreateAuthTokenResponse, error) {
+func (s *Authentication) CreateAuthToken(ctx context.Context, request operations.CreateAuthTokenRequest) (*operations.CreateAuthTokenResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v3/user/tokens"
 
@@ -79,12 +79,12 @@ func (s *authentication) CreateAuthToken(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.CreateAuthToken200ApplicationJSON
+			var out operations.CreateAuthTokenResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CreateAuthToken200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -102,7 +102,7 @@ func (s *authentication) CreateAuthToken(ctx context.Context, request operations
 
 // DeleteAuthToken - Delete an authentication token
 // Invalidate an authentication token, such that it will no longer be valid for future HTTP requests.
-func (s *authentication) DeleteAuthToken(ctx context.Context, request operations.DeleteAuthTokenRequest) (*operations.DeleteAuthTokenResponse, error) {
+func (s *Authentication) DeleteAuthToken(ctx context.Context, request operations.DeleteAuthTokenRequest) (*operations.DeleteAuthTokenResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v3/user/tokens/{tokenId}", request, nil)
 	if err != nil {
@@ -144,12 +144,12 @@ func (s *authentication) DeleteAuthToken(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.DeleteAuthToken200ApplicationJSON
+			var out operations.DeleteAuthTokenResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.DeleteAuthToken200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -167,7 +167,7 @@ func (s *authentication) DeleteAuthToken(ctx context.Context, request operations
 
 // EmailLogin - Login with email
 // Request a new login for a user to get a token. This will respond with a verification token and send an email to confirm the request. Once confirmed you can use the verification token to get an authentication token.
-func (s *authentication) EmailLogin(ctx context.Context, request *operations.EmailLoginRequestBody) (*operations.EmailLoginResponse, error) {
+func (s *Authentication) EmailLogin(ctx context.Context, request *operations.EmailLoginRequestBody) (*operations.EmailLoginResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/registration"
 
@@ -216,12 +216,12 @@ func (s *authentication) EmailLogin(ctx context.Context, request *operations.Ema
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.EmailLogin200ApplicationJSON
+			var out operations.EmailLoginResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.EmailLogin200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -233,7 +233,7 @@ func (s *authentication) EmailLogin(ctx context.Context, request *operations.Ema
 
 // GetAuthToken - Get Auth Token Metadata
 // Retrieve metadata about an authentication token belonging to the currently authenticated User.
-func (s *authentication) GetAuthToken(ctx context.Context, request operations.GetAuthTokenRequest) (*operations.GetAuthTokenResponse, error) {
+func (s *Authentication) GetAuthToken(ctx context.Context, request operations.GetAuthTokenRequest) (*operations.GetAuthTokenResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v5/user/tokens/{tokenId}", request, nil)
 	if err != nil {
@@ -275,12 +275,12 @@ func (s *authentication) GetAuthToken(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetAuthToken200ApplicationJSON
+			var out operations.GetAuthTokenResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetAuthToken200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -296,7 +296,7 @@ func (s *authentication) GetAuthToken(ctx context.Context, request operations.Ge
 
 // ListAuthTokens - List Auth Tokens
 // Retrieve a list of the current User's authentication tokens.
-func (s *authentication) ListAuthTokens(ctx context.Context) (*operations.ListAuthTokensResponse, error) {
+func (s *Authentication) ListAuthTokens(ctx context.Context) (*operations.ListAuthTokensResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v5/user/tokens"
 
@@ -335,12 +335,12 @@ func (s *authentication) ListAuthTokens(ctx context.Context) (*operations.ListAu
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.ListAuthTokens200ApplicationJSON
+			var out operations.ListAuthTokensResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ListAuthTokens200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -356,7 +356,7 @@ func (s *authentication) ListAuthTokens(ctx context.Context) (*operations.ListAu
 
 // VerifyToken - Verify a login request to get an authentication token
 // Verify the user accepted the login request and get a authentication token. The user email address and the token received after requesting the login must be added to the URL as a query string with the names `email` and `token`.
-func (s *authentication) VerifyToken(ctx context.Context, request operations.VerifyTokenRequest) (*operations.VerifyTokenResponse, error) {
+func (s *Authentication) VerifyToken(ctx context.Context, request operations.VerifyTokenRequest) (*operations.VerifyTokenResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/registration/verify"
 
@@ -399,12 +399,12 @@ func (s *authentication) VerifyToken(ctx context.Context, request operations.Ver
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.VerifyToken200ApplicationJSON
+			var out operations.VerifyTokenResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.VerifyToken200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

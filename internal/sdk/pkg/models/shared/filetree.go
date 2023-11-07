@@ -7,23 +7,23 @@ import (
 	"fmt"
 )
 
-// FileTreeType - String indicating the type of file tree entry.
-type FileTreeType string
+// Type - String indicating the type of file tree entry.
+type Type string
 
 const (
-	FileTreeTypeDirectory  FileTreeType = "directory"
-	FileTreeTypeFile       FileTreeType = "file"
-	FileTreeTypeSymlink    FileTreeType = "symlink"
-	FileTreeTypeLambda     FileTreeType = "lambda"
-	FileTreeTypeMiddleware FileTreeType = "middleware"
-	FileTreeTypeInvalid    FileTreeType = "invalid"
+	TypeDirectory  Type = "directory"
+	TypeFile       Type = "file"
+	TypeSymlink    Type = "symlink"
+	TypeLambda     Type = "lambda"
+	TypeMiddleware Type = "middleware"
+	TypeInvalid    Type = "invalid"
 )
 
-func (e FileTreeType) ToPointer() *FileTreeType {
+func (e Type) ToPointer() *Type {
 	return &e
 }
 
-func (e *FileTreeType) UnmarshalJSON(data []byte) error {
+func (e *Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -40,10 +40,10 @@ func (e *FileTreeType) UnmarshalJSON(data []byte) error {
 	case "middleware":
 		fallthrough
 	case "invalid":
-		*e = FileTreeType(v)
+		*e = Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for FileTreeType: %v", v)
+		return fmt.Errorf("invalid value for Type: %v", v)
 	}
 }
 
@@ -60,7 +60,7 @@ type FileTree struct {
 	// Not currently used. See `file-list-to-tree.ts`.
 	Symlink *string `json:"symlink,omitempty"`
 	// String indicating the type of file tree entry.
-	Type FileTreeType `json:"type"`
+	Type Type `json:"type"`
 	// The unique identifier of the file (only valid for the `file` type)
 	UID *string `json:"uid,omitempty"`
 }
@@ -100,9 +100,9 @@ func (o *FileTree) GetSymlink() *string {
 	return o.Symlink
 }
 
-func (o *FileTree) GetType() FileTreeType {
+func (o *FileTree) GetType() Type {
 	if o == nil {
-		return FileTreeType("")
+		return Type("")
 	}
 	return o.Type
 }

@@ -14,19 +14,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type domains struct {
+type Domains struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newDomains(sdkConfig sdkConfiguration) *domains {
-	return &domains{
+func newDomains(sdkConfig sdkConfiguration) *Domains {
+	return &Domains{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // BuyDomain - Purchase a domain
 // Allows to purchase the specified domain.
-func (s *domains) BuyDomain(ctx context.Context, request operations.BuyDomainRequest) (*operations.BuyDomainResponse, error) {
+func (s *Domains) BuyDomain(ctx context.Context, request operations.BuyDomainRequest) (*operations.BuyDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v4/domains/buy"
 
@@ -79,24 +79,24 @@ func (s *domains) BuyDomain(ctx context.Context, request operations.BuyDomainReq
 	case httpRes.StatusCode == 201:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.BuyDomain201ApplicationJSON
+			var out operations.BuyDomainResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.BuyDomain201ApplicationJSONObject = &out
+			res.TwoHundredAndOneApplicationJSONObject = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	case httpRes.StatusCode == 202:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.BuyDomain202ApplicationJSON
+			var out operations.BuyDomainDomainsResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.BuyDomain202ApplicationJSONObject = &out
+			res.TwoHundredAndTwoApplicationJSONObject = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -116,7 +116,7 @@ func (s *domains) BuyDomain(ctx context.Context, request operations.BuyDomainReq
 
 // CheckDomainPrice - Check the price for a domain
 // Check the price to purchase a domain and how long a single purchase period is.
-func (s *domains) CheckDomainPrice(ctx context.Context, request operations.CheckDomainPriceRequest) (*operations.CheckDomainPriceResponse, error) {
+func (s *Domains) CheckDomainPrice(ctx context.Context, request operations.CheckDomainPriceRequest) (*operations.CheckDomainPriceResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v4/domains/price"
 
@@ -159,12 +159,12 @@ func (s *domains) CheckDomainPrice(ctx context.Context, request operations.Check
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.CheckDomainPrice200ApplicationJSON
+			var out operations.CheckDomainPriceResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CheckDomainPrice200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -180,7 +180,7 @@ func (s *domains) CheckDomainPrice(ctx context.Context, request operations.Check
 
 // CheckDomainStatus - Check a Domain Availability
 // Check if a domain name is available for purchase.
-func (s *domains) CheckDomainStatus(ctx context.Context, request operations.CheckDomainStatusRequest) (*operations.CheckDomainStatusResponse, error) {
+func (s *Domains) CheckDomainStatus(ctx context.Context, request operations.CheckDomainStatusRequest) (*operations.CheckDomainStatusResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v4/domains/status"
 
@@ -223,12 +223,12 @@ func (s *domains) CheckDomainStatus(ctx context.Context, request operations.Chec
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.CheckDomainStatus200ApplicationJSON
+			var out operations.CheckDomainStatusResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CheckDomainStatus200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -244,7 +244,7 @@ func (s *domains) CheckDomainStatus(ctx context.Context, request operations.Chec
 
 // CreateOrTransferDomain - Register or transfer-in a new Domain
 // This endpoint is used for adding a new apex domain name with Vercel for the authenticating user. Can also be used for initiating a domain transfer request from an external Registrar to Vercel.
-func (s *domains) CreateOrTransferDomain(ctx context.Context, request operations.CreateOrTransferDomainRequest) (*operations.CreateOrTransferDomainResponse, error) {
+func (s *Domains) CreateOrTransferDomain(ctx context.Context, request operations.CreateOrTransferDomainRequest) (*operations.CreateOrTransferDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v5/domains"
 
@@ -297,12 +297,12 @@ func (s *domains) CreateOrTransferDomain(ctx context.Context, request operations
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.CreateOrTransferDomain200ApplicationJSON
+			var out operations.CreateOrTransferDomainResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CreateOrTransferDomain200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -324,7 +324,7 @@ func (s *domains) CreateOrTransferDomain(ctx context.Context, request operations
 
 // DeleteDomain - Remove a domain by name
 // Delete a previously registered domain name from Vercel. Deleting a domain will automatically remove any associated aliases.
-func (s *domains) DeleteDomain(ctx context.Context, request operations.DeleteDomainRequest) (*operations.DeleteDomainResponse, error) {
+func (s *Domains) DeleteDomain(ctx context.Context, request operations.DeleteDomainRequest) (*operations.DeleteDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v6/domains/{domain}", request, nil)
 	if err != nil {
@@ -370,12 +370,12 @@ func (s *domains) DeleteDomain(ctx context.Context, request operations.DeleteDom
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.DeleteDomain200ApplicationJSON
+			var out operations.DeleteDomainResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.DeleteDomain200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -395,7 +395,7 @@ func (s *domains) DeleteDomain(ctx context.Context, request operations.DeleteDom
 
 // GetDomain - Get Information for a Single Domain
 // Get information for a single domain in an account or team.
-func (s *domains) GetDomain(ctx context.Context, request operations.GetDomainRequest) (*operations.GetDomainResponse, error) {
+func (s *Domains) GetDomain(ctx context.Context, request operations.GetDomainRequest) (*operations.GetDomainResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v5/domains/{domain}", request, nil)
 	if err != nil {
@@ -441,12 +441,12 @@ func (s *domains) GetDomain(ctx context.Context, request operations.GetDomainReq
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetDomain200ApplicationJSON
+			var out operations.GetDomainResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetDomain200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -464,7 +464,7 @@ func (s *domains) GetDomain(ctx context.Context, request operations.GetDomainReq
 
 // GetDomainConfig - Get a Domain's configuration
 // Get a Domain's configuration.
-func (s *domains) GetDomainConfig(ctx context.Context, request operations.GetDomainConfigRequest) (*operations.GetDomainConfigResponse, error) {
+func (s *Domains) GetDomainConfig(ctx context.Context, request operations.GetDomainConfigRequest) (*operations.GetDomainConfigResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v6/domains/{domain}/config", request, nil)
 	if err != nil {
@@ -510,12 +510,12 @@ func (s *domains) GetDomainConfig(ctx context.Context, request operations.GetDom
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetDomainConfig200ApplicationJSON
+			var out operations.GetDomainConfigResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetDomainConfig200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -531,7 +531,7 @@ func (s *domains) GetDomainConfig(ctx context.Context, request operations.GetDom
 
 // GetDomains - List all the domains
 // Retrieves a list of domains registered for the authenticating user. By default it returns the last 20 domains if no limit is provided.
-func (s *domains) GetDomains(ctx context.Context, request operations.GetDomainsRequest) (*operations.GetDomainsResponse, error) {
+func (s *Domains) GetDomains(ctx context.Context, request operations.GetDomainsRequest) (*operations.GetDomainsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v5/domains"
 
@@ -574,12 +574,12 @@ func (s *domains) GetDomains(ctx context.Context, request operations.GetDomainsR
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetDomains200ApplicationJSON
+			var out operations.GetDomainsResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetDomains200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

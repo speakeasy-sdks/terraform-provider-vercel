@@ -56,7 +56,7 @@ func (o *BuyDomainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type BuyDomain202ApplicationJSONDomain struct {
+type BuyDomainDomain struct {
 	Created  int64    `json:"created"`
 	Ns       []string `json:"ns"`
 	Pending  bool     `json:"pending"`
@@ -64,54 +64,54 @@ type BuyDomain202ApplicationJSONDomain struct {
 	Verified bool     `json:"verified"`
 }
 
-func (o *BuyDomain202ApplicationJSONDomain) GetCreated() int64 {
+func (o *BuyDomainDomain) GetCreated() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Created
 }
 
-func (o *BuyDomain202ApplicationJSONDomain) GetNs() []string {
+func (o *BuyDomainDomain) GetNs() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Ns
 }
 
-func (o *BuyDomain202ApplicationJSONDomain) GetPending() bool {
+func (o *BuyDomainDomain) GetPending() bool {
 	if o == nil {
 		return false
 	}
 	return o.Pending
 }
 
-func (o *BuyDomain202ApplicationJSONDomain) GetUID() string {
+func (o *BuyDomainDomain) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *BuyDomain202ApplicationJSONDomain) GetVerified() bool {
+func (o *BuyDomainDomain) GetVerified() bool {
 	if o == nil {
 		return false
 	}
 	return o.Verified
 }
 
-// BuyDomain202ApplicationJSON - Domain purchase is being processed asynchronously.
-type BuyDomain202ApplicationJSON struct {
-	Domain BuyDomain202ApplicationJSONDomain `json:"domain"`
+// BuyDomainDomainsResponseBody - Domain purchase is being processed asynchronously.
+type BuyDomainDomainsResponseBody struct {
+	Domain BuyDomainDomain `json:"domain"`
 }
 
-func (o *BuyDomain202ApplicationJSON) GetDomain() BuyDomain202ApplicationJSONDomain {
+func (o *BuyDomainDomainsResponseBody) GetDomain() BuyDomainDomain {
 	if o == nil {
-		return BuyDomain202ApplicationJSONDomain{}
+		return BuyDomainDomain{}
 	}
 	return o.Domain
 }
 
-type BuyDomain201ApplicationJSONDomain struct {
+type Domain struct {
 	Created  int64    `json:"created"`
 	Ns       []string `json:"ns"`
 	Pending  bool     `json:"pending"`
@@ -119,64 +119,78 @@ type BuyDomain201ApplicationJSONDomain struct {
 	Verified bool     `json:"verified"`
 }
 
-func (o *BuyDomain201ApplicationJSONDomain) GetCreated() int64 {
+func (o *Domain) GetCreated() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Created
 }
 
-func (o *BuyDomain201ApplicationJSONDomain) GetNs() []string {
+func (o *Domain) GetNs() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Ns
 }
 
-func (o *BuyDomain201ApplicationJSONDomain) GetPending() bool {
+func (o *Domain) GetPending() bool {
 	if o == nil {
 		return false
 	}
 	return o.Pending
 }
 
-func (o *BuyDomain201ApplicationJSONDomain) GetUID() string {
+func (o *Domain) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *BuyDomain201ApplicationJSONDomain) GetVerified() bool {
+func (o *Domain) GetVerified() bool {
 	if o == nil {
 		return false
 	}
 	return o.Verified
 }
 
-// BuyDomain201ApplicationJSON - Successful response for purchasing a Domain.
-type BuyDomain201ApplicationJSON struct {
-	Domain BuyDomain201ApplicationJSONDomain `json:"domain"`
+// BuyDomainResponseBody - Successful response for purchasing a Domain.
+type BuyDomainResponseBody struct {
+	Domain Domain `json:"domain"`
 }
 
-func (o *BuyDomain201ApplicationJSON) GetDomain() BuyDomain201ApplicationJSONDomain {
+func (o *BuyDomainResponseBody) GetDomain() Domain {
 	if o == nil {
-		return BuyDomain201ApplicationJSONDomain{}
+		return Domain{}
 	}
 	return o.Domain
 }
 
 type BuyDomainResponse struct {
+	// Successful response for purchasing a Domain.
+	TwoHundredAndOneApplicationJSONObject *BuyDomainResponseBody
+	// Domain purchase is being processed asynchronously.
+	TwoHundredAndTwoApplicationJSONObject *BuyDomainDomainsResponseBody
 	// HTTP response content type for this operation
 	ContentType string
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-	// Successful response for purchasing a Domain.
-	BuyDomain201ApplicationJSONObject *BuyDomain201ApplicationJSON
-	// Domain purchase is being processed asynchronously.
-	BuyDomain202ApplicationJSONObject *BuyDomain202ApplicationJSON
+}
+
+func (o *BuyDomainResponse) GetTwoHundredAndOneApplicationJSONObject() *BuyDomainResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.TwoHundredAndOneApplicationJSONObject
+}
+
+func (o *BuyDomainResponse) GetTwoHundredAndTwoApplicationJSONObject() *BuyDomainDomainsResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.TwoHundredAndTwoApplicationJSONObject
 }
 
 func (o *BuyDomainResponse) GetContentType() string {
@@ -198,18 +212,4 @@ func (o *BuyDomainResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
-}
-
-func (o *BuyDomainResponse) GetBuyDomain201ApplicationJSONObject() *BuyDomain201ApplicationJSON {
-	if o == nil {
-		return nil
-	}
-	return o.BuyDomain201ApplicationJSONObject
-}
-
-func (o *BuyDomainResponse) GetBuyDomain202ApplicationJSONObject() *BuyDomain202ApplicationJSON {
-	if o == nil {
-		return nil
-	}
-	return o.BuyDomain202ApplicationJSONObject
 }

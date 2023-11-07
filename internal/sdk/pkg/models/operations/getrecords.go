@@ -58,25 +58,25 @@ func (o *GetRecordsRequest) GetUntil() *string {
 	return o.Until
 }
 
-type GetRecords200ApplicationJSON3RecordsType string
+type GetRecordsDNSType string
 
 const (
-	GetRecords200ApplicationJSON3RecordsTypeA     GetRecords200ApplicationJSON3RecordsType = "A"
-	GetRecords200ApplicationJSON3RecordsTypeAaaa  GetRecords200ApplicationJSON3RecordsType = "AAAA"
-	GetRecords200ApplicationJSON3RecordsTypeAlias GetRecords200ApplicationJSON3RecordsType = "ALIAS"
-	GetRecords200ApplicationJSON3RecordsTypeCaa   GetRecords200ApplicationJSON3RecordsType = "CAA"
-	GetRecords200ApplicationJSON3RecordsTypeCname GetRecords200ApplicationJSON3RecordsType = "CNAME"
-	GetRecords200ApplicationJSON3RecordsTypeMx    GetRecords200ApplicationJSON3RecordsType = "MX"
-	GetRecords200ApplicationJSON3RecordsTypeSrv   GetRecords200ApplicationJSON3RecordsType = "SRV"
-	GetRecords200ApplicationJSON3RecordsTypeTxt   GetRecords200ApplicationJSON3RecordsType = "TXT"
-	GetRecords200ApplicationJSON3RecordsTypeNs    GetRecords200ApplicationJSON3RecordsType = "NS"
+	GetRecordsDNSTypeA     GetRecordsDNSType = "A"
+	GetRecordsDNSTypeAaaa  GetRecordsDNSType = "AAAA"
+	GetRecordsDNSTypeAlias GetRecordsDNSType = "ALIAS"
+	GetRecordsDNSTypeCaa   GetRecordsDNSType = "CAA"
+	GetRecordsDNSTypeCname GetRecordsDNSType = "CNAME"
+	GetRecordsDNSTypeMx    GetRecordsDNSType = "MX"
+	GetRecordsDNSTypeSrv   GetRecordsDNSType = "SRV"
+	GetRecordsDNSTypeTxt   GetRecordsDNSType = "TXT"
+	GetRecordsDNSTypeNs    GetRecordsDNSType = "NS"
 )
 
-func (e GetRecords200ApplicationJSON3RecordsType) ToPointer() *GetRecords200ApplicationJSON3RecordsType {
+func (e GetRecordsDNSType) ToPointer() *GetRecordsDNSType {
 	return &e
 }
 
-func (e *GetRecords200ApplicationJSON3RecordsType) UnmarshalJSON(data []byte) error {
+func (e *GetRecordsDNSType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -99,152 +99,152 @@ func (e *GetRecords200ApplicationJSON3RecordsType) UnmarshalJSON(data []byte) er
 	case "TXT":
 		fallthrough
 	case "NS":
-		*e = GetRecords200ApplicationJSON3RecordsType(v)
+		*e = GetRecordsDNSType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetRecords200ApplicationJSON3RecordsType: %v", v)
+		return fmt.Errorf("invalid value for GetRecordsDNSType: %v", v)
 	}
 }
 
-type GetRecords200ApplicationJSON3Records struct {
-	Created    *int64                                   `json:"created"`
-	CreatedAt  *int64                                   `json:"createdAt"`
-	Creator    string                                   `json:"creator"`
-	ID         string                                   `json:"id"`
-	MxPriority *int64                                   `json:"mxPriority,omitempty"`
-	Name       string                                   `json:"name"`
-	Priority   *int64                                   `json:"priority,omitempty"`
-	Slug       string                                   `json:"slug"`
-	Type       GetRecords200ApplicationJSON3RecordsType `json:"type"`
-	Updated    *int64                                   `json:"updated"`
-	UpdatedAt  *int64                                   `json:"updatedAt"`
-	Value      string                                   `json:"value"`
+type GetRecordsRecords struct {
+	Created    *int64            `json:"created"`
+	CreatedAt  *int64            `json:"createdAt"`
+	Creator    string            `json:"creator"`
+	ID         string            `json:"id"`
+	MxPriority *int64            `json:"mxPriority,omitempty"`
+	Name       string            `json:"name"`
+	Priority   *int64            `json:"priority,omitempty"`
+	Slug       string            `json:"slug"`
+	Type       GetRecordsDNSType `json:"type"`
+	Updated    *int64            `json:"updated"`
+	UpdatedAt  *int64            `json:"updatedAt"`
+	Value      string            `json:"value"`
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetCreated() *int64 {
+func (o *GetRecordsRecords) GetCreated() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Created
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetCreatedAt() *int64 {
+func (o *GetRecordsRecords) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetCreator() string {
+func (o *GetRecordsRecords) GetCreator() string {
 	if o == nil {
 		return ""
 	}
 	return o.Creator
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetID() string {
+func (o *GetRecordsRecords) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetMxPriority() *int64 {
+func (o *GetRecordsRecords) GetMxPriority() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MxPriority
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetName() string {
+func (o *GetRecordsRecords) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetPriority() *int64 {
+func (o *GetRecordsRecords) GetPriority() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Priority
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetSlug() string {
+func (o *GetRecordsRecords) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetType() GetRecords200ApplicationJSON3RecordsType {
+func (o *GetRecordsRecords) GetType() GetRecordsDNSType {
 	if o == nil {
-		return GetRecords200ApplicationJSON3RecordsType("")
+		return GetRecordsDNSType("")
 	}
 	return o.Type
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetUpdated() *int64 {
+func (o *GetRecordsRecords) GetUpdated() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Updated
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetUpdatedAt() *int64 {
+func (o *GetRecordsRecords) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *GetRecords200ApplicationJSON3Records) GetValue() string {
+func (o *GetRecordsRecords) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-// GetRecords200ApplicationJSON3 - Successful response retrieving a list of paginated DNS records.
-type GetRecords200ApplicationJSON3 struct {
+// GetRecords3 - Successful response retrieving a list of paginated DNS records.
+type GetRecords3 struct {
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
-	Pagination shared.Pagination                      `json:"pagination"`
-	Records    []GetRecords200ApplicationJSON3Records `json:"records"`
+	Pagination shared.Pagination   `json:"pagination"`
+	Records    []GetRecordsRecords `json:"records"`
 }
 
-func (o *GetRecords200ApplicationJSON3) GetPagination() shared.Pagination {
+func (o *GetRecords3) GetPagination() shared.Pagination {
 	if o == nil {
 		return shared.Pagination{}
 	}
 	return o.Pagination
 }
 
-func (o *GetRecords200ApplicationJSON3) GetRecords() []GetRecords200ApplicationJSON3Records {
+func (o *GetRecords3) GetRecords() []GetRecordsRecords {
 	if o == nil {
-		return []GetRecords200ApplicationJSON3Records{}
+		return []GetRecordsRecords{}
 	}
 	return o.Records
 }
 
-type GetRecords200ApplicationJSON2RecordsType string
+type GetRecordsType string
 
 const (
-	GetRecords200ApplicationJSON2RecordsTypeA     GetRecords200ApplicationJSON2RecordsType = "A"
-	GetRecords200ApplicationJSON2RecordsTypeAaaa  GetRecords200ApplicationJSON2RecordsType = "AAAA"
-	GetRecords200ApplicationJSON2RecordsTypeAlias GetRecords200ApplicationJSON2RecordsType = "ALIAS"
-	GetRecords200ApplicationJSON2RecordsTypeCaa   GetRecords200ApplicationJSON2RecordsType = "CAA"
-	GetRecords200ApplicationJSON2RecordsTypeCname GetRecords200ApplicationJSON2RecordsType = "CNAME"
-	GetRecords200ApplicationJSON2RecordsTypeMx    GetRecords200ApplicationJSON2RecordsType = "MX"
-	GetRecords200ApplicationJSON2RecordsTypeSrv   GetRecords200ApplicationJSON2RecordsType = "SRV"
-	GetRecords200ApplicationJSON2RecordsTypeTxt   GetRecords200ApplicationJSON2RecordsType = "TXT"
-	GetRecords200ApplicationJSON2RecordsTypeNs    GetRecords200ApplicationJSON2RecordsType = "NS"
+	GetRecordsTypeA     GetRecordsType = "A"
+	GetRecordsTypeAaaa  GetRecordsType = "AAAA"
+	GetRecordsTypeAlias GetRecordsType = "ALIAS"
+	GetRecordsTypeCaa   GetRecordsType = "CAA"
+	GetRecordsTypeCname GetRecordsType = "CNAME"
+	GetRecordsTypeMx    GetRecordsType = "MX"
+	GetRecordsTypeSrv   GetRecordsType = "SRV"
+	GetRecordsTypeTxt   GetRecordsType = "TXT"
+	GetRecordsTypeNs    GetRecordsType = "NS"
 )
 
-func (e GetRecords200ApplicationJSON2RecordsType) ToPointer() *GetRecords200ApplicationJSON2RecordsType {
+func (e GetRecordsType) ToPointer() *GetRecordsType {
 	return &e
 }
 
-func (e *GetRecords200ApplicationJSON2RecordsType) UnmarshalJSON(data []byte) error {
+func (e *GetRecordsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -267,203 +267,203 @@ func (e *GetRecords200ApplicationJSON2RecordsType) UnmarshalJSON(data []byte) er
 	case "TXT":
 		fallthrough
 	case "NS":
-		*e = GetRecords200ApplicationJSON2RecordsType(v)
+		*e = GetRecordsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetRecords200ApplicationJSON2RecordsType: %v", v)
+		return fmt.Errorf("invalid value for GetRecordsType: %v", v)
 	}
 }
 
-type GetRecords200ApplicationJSON2Records struct {
-	Created    *int64                                   `json:"created"`
-	CreatedAt  *int64                                   `json:"createdAt"`
-	Creator    string                                   `json:"creator"`
-	ID         string                                   `json:"id"`
-	MxPriority *int64                                   `json:"mxPriority,omitempty"`
-	Name       string                                   `json:"name"`
-	Priority   *int64                                   `json:"priority,omitempty"`
-	Slug       string                                   `json:"slug"`
-	Type       GetRecords200ApplicationJSON2RecordsType `json:"type"`
-	Updated    *int64                                   `json:"updated"`
-	UpdatedAt  *int64                                   `json:"updatedAt"`
-	Value      string                                   `json:"value"`
+type Records struct {
+	Created    *int64         `json:"created"`
+	CreatedAt  *int64         `json:"createdAt"`
+	Creator    string         `json:"creator"`
+	ID         string         `json:"id"`
+	MxPriority *int64         `json:"mxPriority,omitempty"`
+	Name       string         `json:"name"`
+	Priority   *int64         `json:"priority,omitempty"`
+	Slug       string         `json:"slug"`
+	Type       GetRecordsType `json:"type"`
+	Updated    *int64         `json:"updated"`
+	UpdatedAt  *int64         `json:"updatedAt"`
+	Value      string         `json:"value"`
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetCreated() *int64 {
+func (o *Records) GetCreated() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Created
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetCreatedAt() *int64 {
+func (o *Records) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetCreator() string {
+func (o *Records) GetCreator() string {
 	if o == nil {
 		return ""
 	}
 	return o.Creator
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetID() string {
+func (o *Records) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetMxPriority() *int64 {
+func (o *Records) GetMxPriority() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MxPriority
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetName() string {
+func (o *Records) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetPriority() *int64 {
+func (o *Records) GetPriority() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Priority
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetSlug() string {
+func (o *Records) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetType() GetRecords200ApplicationJSON2RecordsType {
+func (o *Records) GetType() GetRecordsType {
 	if o == nil {
-		return GetRecords200ApplicationJSON2RecordsType("")
+		return GetRecordsType("")
 	}
 	return o.Type
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetUpdated() *int64 {
+func (o *Records) GetUpdated() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Updated
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetUpdatedAt() *int64 {
+func (o *Records) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *GetRecords200ApplicationJSON2Records) GetValue() string {
+func (o *Records) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type GetRecords200ApplicationJSON2 struct {
-	Records []GetRecords200ApplicationJSON2Records `json:"records"`
+type GetRecords2 struct {
+	Records []Records `json:"records"`
 }
 
-func (o *GetRecords200ApplicationJSON2) GetRecords() []GetRecords200ApplicationJSON2Records {
+func (o *GetRecords2) GetRecords() []Records {
 	if o == nil {
-		return []GetRecords200ApplicationJSON2Records{}
+		return []Records{}
 	}
 	return o.Records
 }
 
-type GetRecords200ApplicationJSONType string
+type GetRecordsResponseBodyType string
 
 const (
-	GetRecords200ApplicationJSONTypeStr                           GetRecords200ApplicationJSONType = "str"
-	GetRecords200ApplicationJSONTypeGetRecords200ApplicationJSON2 GetRecords200ApplicationJSONType = "getRecords_200ApplicationJSON_2"
-	GetRecords200ApplicationJSONTypeGetRecords200ApplicationJSON3 GetRecords200ApplicationJSONType = "getRecords_200ApplicationJSON_3"
+	GetRecordsResponseBodyTypeStr         GetRecordsResponseBodyType = "str"
+	GetRecordsResponseBodyTypeGetRecords2 GetRecordsResponseBodyType = "getRecords_2"
+	GetRecordsResponseBodyTypeGetRecords3 GetRecordsResponseBodyType = "getRecords_3"
 )
 
-type GetRecords200ApplicationJSON struct {
-	Str                           *string
-	GetRecords200ApplicationJSON2 *GetRecords200ApplicationJSON2
-	GetRecords200ApplicationJSON3 *GetRecords200ApplicationJSON3
+type GetRecordsResponseBody struct {
+	Str         *string
+	GetRecords2 *GetRecords2
+	GetRecords3 *GetRecords3
 
-	Type GetRecords200ApplicationJSONType
+	Type GetRecordsResponseBodyType
 }
 
-func CreateGetRecords200ApplicationJSONStr(str string) GetRecords200ApplicationJSON {
-	typ := GetRecords200ApplicationJSONTypeStr
+func CreateGetRecordsResponseBodyStr(str string) GetRecordsResponseBody {
+	typ := GetRecordsResponseBodyTypeStr
 
-	return GetRecords200ApplicationJSON{
+	return GetRecordsResponseBody{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateGetRecords200ApplicationJSONGetRecords200ApplicationJSON2(getRecords200ApplicationJSON2 GetRecords200ApplicationJSON2) GetRecords200ApplicationJSON {
-	typ := GetRecords200ApplicationJSONTypeGetRecords200ApplicationJSON2
+func CreateGetRecordsResponseBodyGetRecords2(getRecords2 GetRecords2) GetRecordsResponseBody {
+	typ := GetRecordsResponseBodyTypeGetRecords2
 
-	return GetRecords200ApplicationJSON{
-		GetRecords200ApplicationJSON2: &getRecords200ApplicationJSON2,
-		Type:                          typ,
+	return GetRecordsResponseBody{
+		GetRecords2: &getRecords2,
+		Type:        typ,
 	}
 }
 
-func CreateGetRecords200ApplicationJSONGetRecords200ApplicationJSON3(getRecords200ApplicationJSON3 GetRecords200ApplicationJSON3) GetRecords200ApplicationJSON {
-	typ := GetRecords200ApplicationJSONTypeGetRecords200ApplicationJSON3
+func CreateGetRecordsResponseBodyGetRecords3(getRecords3 GetRecords3) GetRecordsResponseBody {
+	typ := GetRecordsResponseBodyTypeGetRecords3
 
-	return GetRecords200ApplicationJSON{
-		GetRecords200ApplicationJSON3: &getRecords200ApplicationJSON3,
-		Type:                          typ,
+	return GetRecordsResponseBody{
+		GetRecords3: &getRecords3,
+		Type:        typ,
 	}
 }
 
-func (u *GetRecords200ApplicationJSON) UnmarshalJSON(data []byte) error {
+func (u *GetRecordsResponseBody) UnmarshalJSON(data []byte) error {
 
-	getRecords200ApplicationJSON2 := new(GetRecords200ApplicationJSON2)
-	if err := utils.UnmarshalJSON(data, &getRecords200ApplicationJSON2, "", true, true); err == nil {
-		u.GetRecords200ApplicationJSON2 = getRecords200ApplicationJSON2
-		u.Type = GetRecords200ApplicationJSONTypeGetRecords200ApplicationJSON2
+	getRecords2 := new(GetRecords2)
+	if err := utils.UnmarshalJSON(data, &getRecords2, "", true, true); err == nil {
+		u.GetRecords2 = getRecords2
+		u.Type = GetRecordsResponseBodyTypeGetRecords2
 		return nil
 	}
 
-	getRecords200ApplicationJSON3 := new(GetRecords200ApplicationJSON3)
-	if err := utils.UnmarshalJSON(data, &getRecords200ApplicationJSON3, "", true, true); err == nil {
-		u.GetRecords200ApplicationJSON3 = getRecords200ApplicationJSON3
-		u.Type = GetRecords200ApplicationJSONTypeGetRecords200ApplicationJSON3
+	getRecords3 := new(GetRecords3)
+	if err := utils.UnmarshalJSON(data, &getRecords3, "", true, true); err == nil {
+		u.GetRecords3 = getRecords3
+		u.Type = GetRecordsResponseBodyTypeGetRecords3
 		return nil
 	}
 
 	str := new(string)
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = GetRecords200ApplicationJSONTypeStr
+		u.Type = GetRecordsResponseBodyTypeStr
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetRecords200ApplicationJSON) MarshalJSON() ([]byte, error) {
+func (u GetRecordsResponseBody) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.GetRecords200ApplicationJSON2 != nil {
-		return utils.MarshalJSON(u.GetRecords200ApplicationJSON2, "", true)
+	if u.GetRecords2 != nil {
+		return utils.MarshalJSON(u.GetRecords2, "", true)
 	}
 
-	if u.GetRecords200ApplicationJSON3 != nil {
-		return utils.MarshalJSON(u.GetRecords200ApplicationJSON3, "", true)
+	if u.GetRecords3 != nil {
+		return utils.MarshalJSON(u.GetRecords3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -477,7 +477,7 @@ type GetRecordsResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response retrieving a list of paginated DNS records.
-	GetRecords200ApplicationJSONOneOf *GetRecords200ApplicationJSON
+	OneOf *GetRecordsResponseBody
 }
 
 func (o *GetRecordsResponse) GetContentType() string {
@@ -501,9 +501,9 @@ func (o *GetRecordsResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetRecordsResponse) GetGetRecords200ApplicationJSONOneOf() *GetRecords200ApplicationJSON {
+func (o *GetRecordsResponse) GetOneOf() *GetRecordsResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetRecords200ApplicationJSONOneOf
+	return o.OneOf
 }

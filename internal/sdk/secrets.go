@@ -14,19 +14,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type secrets struct {
+type Secrets struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newSecrets(sdkConfig sdkConfiguration) *secrets {
-	return &secrets{
+func newSecrets(sdkConfig sdkConfiguration) *Secrets {
+	return &Secrets{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // DeleteSecret - Delete a secret
 // This deletes the user's secret defined in the URL.
-func (s *secrets) DeleteSecret(ctx context.Context, request operations.DeleteSecretRequest) (*operations.DeleteSecretResponse, error) {
+func (s *Secrets) DeleteSecret(ctx context.Context, request operations.DeleteSecretRequest) (*operations.DeleteSecretResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v2/secrets/{idOrName}", request, nil)
 	if err != nil {
@@ -72,12 +72,12 @@ func (s *secrets) DeleteSecret(ctx context.Context, request operations.DeleteSec
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.DeleteSecret200ApplicationJSON
+			var out operations.DeleteSecretResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.DeleteSecret200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -93,7 +93,7 @@ func (s *secrets) DeleteSecret(ctx context.Context, request operations.DeleteSec
 
 // GetSecret - Get a single secret
 // Retrieves the information for a specific secret by passing either the secret id or name in the URL.
-func (s *secrets) GetSecret(ctx context.Context, request operations.GetSecretRequest) (*operations.GetSecretResponse, error) {
+func (s *Secrets) GetSecret(ctx context.Context, request operations.GetSecretRequest) (*operations.GetSecretResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v3/secrets/{idOrName}", request, nil)
 	if err != nil {
@@ -139,12 +139,12 @@ func (s *secrets) GetSecret(ctx context.Context, request operations.GetSecretReq
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetSecret200ApplicationJSON
+			var out operations.GetSecretResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetSecret200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -162,7 +162,7 @@ func (s *secrets) GetSecret(ctx context.Context, request operations.GetSecretReq
 
 // GetSecrets - List secrets
 // Retrieves the active Vercel secrets for the authenticated user. By default it returns 20 secrets. The rest can be retrieved using the pagination options. The body will contain an entry for each secret.
-func (s *secrets) GetSecrets(ctx context.Context, request operations.GetSecretsRequest) (*operations.GetSecretsResponse, error) {
+func (s *Secrets) GetSecrets(ctx context.Context, request operations.GetSecretsRequest) (*operations.GetSecretsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v3/secrets"
 
@@ -205,12 +205,12 @@ func (s *secrets) GetSecrets(ctx context.Context, request operations.GetSecretsR
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetSecrets200ApplicationJSON
+			var out operations.GetSecretsResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetSecrets200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

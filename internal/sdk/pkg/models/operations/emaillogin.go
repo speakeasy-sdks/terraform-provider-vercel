@@ -27,22 +27,22 @@ func (o *EmailLoginRequestBody) GetTokenName() *string {
 	return o.TokenName
 }
 
-// EmailLogin200ApplicationJSON - The request was successful and an email was sent
-type EmailLogin200ApplicationJSON struct {
+// EmailLoginResponseBody - The request was successful and an email was sent
+type EmailLoginResponseBody struct {
 	// The code the user is going to receive on the email. **Must** be displayed to the user so they can verify the request is the correct.
 	SecurityCode string `json:"securityCode"`
 	// The token used to verify the user accepted the login request
 	Token string `json:"token"`
 }
 
-func (o *EmailLogin200ApplicationJSON) GetSecurityCode() string {
+func (o *EmailLoginResponseBody) GetSecurityCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.SecurityCode
 }
 
-func (o *EmailLogin200ApplicationJSON) GetToken() string {
+func (o *EmailLoginResponseBody) GetToken() string {
 	if o == nil {
 		return ""
 	}
@@ -57,7 +57,7 @@ type EmailLoginResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The request was successful and an email was sent
-	EmailLogin200ApplicationJSONObject *EmailLogin200ApplicationJSON
+	Object *EmailLoginResponseBody
 }
 
 func (o *EmailLoginResponse) GetContentType() string {
@@ -81,9 +81,9 @@ func (o *EmailLoginResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *EmailLoginResponse) GetEmailLogin200ApplicationJSONObject() *EmailLogin200ApplicationJSON {
+func (o *EmailLoginResponse) GetObject() *EmailLoginResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.EmailLogin200ApplicationJSONObject
+	return o.Object
 }

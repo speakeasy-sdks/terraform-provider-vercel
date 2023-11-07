@@ -39,8 +39,8 @@ func (o *GetSecretsRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// GetSecrets200ApplicationJSONSecrets - Data representing a secret.
-type GetSecrets200ApplicationJSONSecrets struct {
+// Secrets - Data representing a secret.
+type Secrets struct {
 	// The date when the secret was created.
 	Created time.Time `json:"created"`
 	// Timestamp for when the secret was created.
@@ -61,97 +61,97 @@ type GetSecrets200ApplicationJSONSecrets struct {
 	Value *string `json:"value,omitempty"`
 }
 
-func (g GetSecrets200ApplicationJSONSecrets) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(g, "", false)
+func (s Secrets) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
 }
 
-func (g *GetSecrets200ApplicationJSONSecrets) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
+func (s *Secrets) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *GetSecrets200ApplicationJSONSecrets) GetCreated() time.Time {
+func (o *Secrets) GetCreated() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.Created
 }
 
-func (o *GetSecrets200ApplicationJSONSecrets) GetCreatedAt() *int64 {
+func (o *Secrets) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *GetSecrets200ApplicationJSONSecrets) GetDecryptable() *bool {
+func (o *Secrets) GetDecryptable() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Decryptable
 }
 
-func (o *GetSecrets200ApplicationJSONSecrets) GetName() string {
+func (o *Secrets) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetSecrets200ApplicationJSONSecrets) GetProjectID() *string {
+func (o *Secrets) GetProjectID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectID
 }
 
-func (o *GetSecrets200ApplicationJSONSecrets) GetTeamID() *string {
+func (o *Secrets) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
 }
 
-func (o *GetSecrets200ApplicationJSONSecrets) GetUID() string {
+func (o *Secrets) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *GetSecrets200ApplicationJSONSecrets) GetUserID() *string {
+func (o *Secrets) GetUserID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.UserID
 }
 
-func (o *GetSecrets200ApplicationJSONSecrets) GetValue() *string {
+func (o *Secrets) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-// GetSecrets200ApplicationJSON - Successful response retrieving a list of secrets.
-type GetSecrets200ApplicationJSON struct {
+// GetSecretsResponseBody - Successful response retrieving a list of secrets.
+type GetSecretsResponseBody struct {
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
-	Pagination shared.Pagination                     `json:"pagination"`
-	Secrets    []GetSecrets200ApplicationJSONSecrets `json:"secrets"`
+	Pagination shared.Pagination `json:"pagination"`
+	Secrets    []Secrets         `json:"secrets"`
 }
 
-func (o *GetSecrets200ApplicationJSON) GetPagination() shared.Pagination {
+func (o *GetSecretsResponseBody) GetPagination() shared.Pagination {
 	if o == nil {
 		return shared.Pagination{}
 	}
 	return o.Pagination
 }
 
-func (o *GetSecrets200ApplicationJSON) GetSecrets() []GetSecrets200ApplicationJSONSecrets {
+func (o *GetSecretsResponseBody) GetSecrets() []Secrets {
 	if o == nil {
-		return []GetSecrets200ApplicationJSONSecrets{}
+		return []Secrets{}
 	}
 	return o.Secrets
 }
@@ -164,7 +164,7 @@ type GetSecretsResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response retrieving a list of secrets.
-	GetSecrets200ApplicationJSONObject *GetSecrets200ApplicationJSON
+	Object *GetSecretsResponseBody
 }
 
 func (o *GetSecretsResponse) GetContentType() string {
@@ -188,9 +188,9 @@ func (o *GetSecretsResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetSecretsResponse) GetGetSecrets200ApplicationJSONObject() *GetSecrets200ApplicationJSON {
+func (o *GetSecretsResponse) GetObject() *GetSecretsResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetSecrets200ApplicationJSONObject
+	return o.Object
 }

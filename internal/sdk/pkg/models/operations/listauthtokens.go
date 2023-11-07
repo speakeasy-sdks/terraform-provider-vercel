@@ -7,7 +7,7 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-type ListAuthTokens200ApplicationJSON struct {
+type ListAuthTokensResponseBody struct {
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 	Pagination shared.Pagination `json:"pagination"`
 	// Authentication token metadata.
@@ -15,21 +15,21 @@ type ListAuthTokens200ApplicationJSON struct {
 	Tokens       []shared.AuthToken `json:"tokens"`
 }
 
-func (o *ListAuthTokens200ApplicationJSON) GetPagination() shared.Pagination {
+func (o *ListAuthTokensResponseBody) GetPagination() shared.Pagination {
 	if o == nil {
 		return shared.Pagination{}
 	}
 	return o.Pagination
 }
 
-func (o *ListAuthTokens200ApplicationJSON) GetTestingToken() *shared.AuthToken {
+func (o *ListAuthTokensResponseBody) GetTestingToken() *shared.AuthToken {
 	if o == nil {
 		return nil
 	}
 	return o.TestingToken
 }
 
-func (o *ListAuthTokens200ApplicationJSON) GetTokens() []shared.AuthToken {
+func (o *ListAuthTokensResponseBody) GetTokens() []shared.AuthToken {
 	if o == nil {
 		return []shared.AuthToken{}
 	}
@@ -42,8 +42,8 @@ type ListAuthTokensResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                            *http.Response
-	ListAuthTokens200ApplicationJSONObject *ListAuthTokens200ApplicationJSON
+	RawResponse *http.Response
+	Object      *ListAuthTokensResponseBody
 }
 
 func (o *ListAuthTokensResponse) GetContentType() string {
@@ -67,9 +67,9 @@ func (o *ListAuthTokensResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *ListAuthTokensResponse) GetListAuthTokens200ApplicationJSONObject() *ListAuthTokens200ApplicationJSON {
+func (o *ListAuthTokensResponse) GetObject() *ListAuthTokensResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.ListAuthTokens200ApplicationJSONObject
+	return o.Object
 }

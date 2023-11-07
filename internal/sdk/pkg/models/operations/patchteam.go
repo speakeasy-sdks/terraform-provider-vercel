@@ -9,35 +9,35 @@ import (
 	"vercel/internal/sdk/pkg/models/shared"
 )
 
-// PatchTeamRequestBodyRemoteCaching - Whether or not remote caching is enabled for the team
-type PatchTeamRequestBodyRemoteCaching struct {
+// RemoteCaching - Whether or not remote caching is enabled for the team
+type RemoteCaching struct {
 	// Enable or disable remote caching for the team.
 	Enabled *bool `json:"enabled,omitempty"`
 }
 
-func (o *PatchTeamRequestBodyRemoteCaching) GetEnabled() *bool {
+func (o *RemoteCaching) GetEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Enabled
 }
 
-type PatchTeamRequestBodySamlRoles string
+type PatchTeamRoles string
 
 const (
-	PatchTeamRequestBodySamlRolesOwner       PatchTeamRequestBodySamlRoles = "OWNER"
-	PatchTeamRequestBodySamlRolesMember      PatchTeamRequestBodySamlRoles = "MEMBER"
-	PatchTeamRequestBodySamlRolesViewer      PatchTeamRequestBodySamlRoles = "VIEWER"
-	PatchTeamRequestBodySamlRolesDeveloper   PatchTeamRequestBodySamlRoles = "DEVELOPER"
-	PatchTeamRequestBodySamlRolesBilling     PatchTeamRequestBodySamlRoles = "BILLING"
-	PatchTeamRequestBodySamlRolesContributor PatchTeamRequestBodySamlRoles = "CONTRIBUTOR"
+	PatchTeamRolesOwner       PatchTeamRoles = "OWNER"
+	PatchTeamRolesMember      PatchTeamRoles = "MEMBER"
+	PatchTeamRolesViewer      PatchTeamRoles = "VIEWER"
+	PatchTeamRolesDeveloper   PatchTeamRoles = "DEVELOPER"
+	PatchTeamRolesBilling     PatchTeamRoles = "BILLING"
+	PatchTeamRolesContributor PatchTeamRoles = "CONTRIBUTOR"
 )
 
-func (e PatchTeamRequestBodySamlRoles) ToPointer() *PatchTeamRequestBodySamlRoles {
+func (e PatchTeamRoles) ToPointer() *PatchTeamRoles {
 	return &e
 }
 
-func (e *PatchTeamRequestBodySamlRoles) UnmarshalJSON(data []byte) error {
+func (e *PatchTeamRoles) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -54,27 +54,27 @@ func (e *PatchTeamRequestBodySamlRoles) UnmarshalJSON(data []byte) error {
 	case "BILLING":
 		fallthrough
 	case "CONTRIBUTOR":
-		*e = PatchTeamRequestBodySamlRoles(v)
+		*e = PatchTeamRoles(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for PatchTeamRequestBodySamlRoles: %v", v)
+		return fmt.Errorf("invalid value for PatchTeamRoles: %v", v)
 	}
 }
 
-type PatchTeamRequestBodySaml struct {
+type Saml struct {
 	// Require that members of the team use SAML Single Sign-On.
-	Enforced *bool                                    `json:"enforced,omitempty"`
-	Roles    map[string]PatchTeamRequestBodySamlRoles `json:"roles,omitempty"`
+	Enforced *bool                     `json:"enforced,omitempty"`
+	Roles    map[string]PatchTeamRoles `json:"roles,omitempty"`
 }
 
-func (o *PatchTeamRequestBodySaml) GetEnforced() *bool {
+func (o *Saml) GetEnforced() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Enforced
 }
 
-func (o *PatchTeamRequestBodySaml) GetRoles() map[string]PatchTeamRequestBodySamlRoles {
+func (o *Saml) GetRoles() map[string]PatchTeamRoles {
 	if o == nil {
 		return nil
 	}
@@ -100,8 +100,8 @@ type PatchTeamRequestBody struct {
 	// Create a new invite code and replace the current one.
 	RegenerateInviteCode *bool `json:"regenerateInviteCode,omitempty"`
 	// Whether or not remote caching is enabled for the team
-	RemoteCaching *PatchTeamRequestBodyRemoteCaching `json:"remoteCaching,omitempty"`
-	Saml          *PatchTeamRequestBodySaml          `json:"saml,omitempty"`
+	RemoteCaching *RemoteCaching `json:"remoteCaching,omitempty"`
+	Saml          *Saml          `json:"saml,omitempty"`
 	// Sensitive environment variable policy: one of on, off or default.
 	SensitiveEnvironmentVariablePolicy *string `json:"sensitiveEnvironmentVariablePolicy,omitempty"`
 	// A new slug for the team.
@@ -171,14 +171,14 @@ func (o *PatchTeamRequestBody) GetRegenerateInviteCode() *bool {
 	return o.RegenerateInviteCode
 }
 
-func (o *PatchTeamRequestBody) GetRemoteCaching() *PatchTeamRequestBodyRemoteCaching {
+func (o *PatchTeamRequestBody) GetRemoteCaching() *RemoteCaching {
 	if o == nil {
 		return nil
 	}
 	return o.RemoteCaching
 }
 
-func (o *PatchTeamRequestBody) GetSaml() *PatchTeamRequestBodySaml {
+func (o *PatchTeamRequestBody) GetSaml() *Saml {
 	if o == nil {
 		return nil
 	}

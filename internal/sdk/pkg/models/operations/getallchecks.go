@@ -29,22 +29,22 @@ func (o *GetAllChecksRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type GetAllChecks200ApplicationJSONChecksConclusion string
+type GetAllChecksConclusion string
 
 const (
-	GetAllChecks200ApplicationJSONChecksConclusionCanceled  GetAllChecks200ApplicationJSONChecksConclusion = "canceled"
-	GetAllChecks200ApplicationJSONChecksConclusionFailed    GetAllChecks200ApplicationJSONChecksConclusion = "failed"
-	GetAllChecks200ApplicationJSONChecksConclusionNeutral   GetAllChecks200ApplicationJSONChecksConclusion = "neutral"
-	GetAllChecks200ApplicationJSONChecksConclusionSucceeded GetAllChecks200ApplicationJSONChecksConclusion = "succeeded"
-	GetAllChecks200ApplicationJSONChecksConclusionSkipped   GetAllChecks200ApplicationJSONChecksConclusion = "skipped"
-	GetAllChecks200ApplicationJSONChecksConclusionStale     GetAllChecks200ApplicationJSONChecksConclusion = "stale"
+	GetAllChecksConclusionCanceled  GetAllChecksConclusion = "canceled"
+	GetAllChecksConclusionFailed    GetAllChecksConclusion = "failed"
+	GetAllChecksConclusionNeutral   GetAllChecksConclusion = "neutral"
+	GetAllChecksConclusionSucceeded GetAllChecksConclusion = "succeeded"
+	GetAllChecksConclusionSkipped   GetAllChecksConclusion = "skipped"
+	GetAllChecksConclusionStale     GetAllChecksConclusion = "stale"
 )
 
-func (e GetAllChecks200ApplicationJSONChecksConclusion) ToPointer() *GetAllChecks200ApplicationJSONChecksConclusion {
+func (e GetAllChecksConclusion) ToPointer() *GetAllChecksConclusion {
 	return &e
 }
 
-func (e *GetAllChecks200ApplicationJSONChecksConclusion) UnmarshalJSON(data []byte) error {
+func (e *GetAllChecksConclusion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -61,335 +61,335 @@ func (e *GetAllChecks200ApplicationJSONChecksConclusion) UnmarshalJSON(data []by
 	case "skipped":
 		fallthrough
 	case "stale":
-		*e = GetAllChecks200ApplicationJSONChecksConclusion(v)
+		*e = GetAllChecksConclusion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetAllChecks200ApplicationJSONChecksConclusion: %v", v)
+		return fmt.Errorf("invalid value for GetAllChecksConclusion: %v", v)
 	}
 }
 
-type GetAllChecks200ApplicationJSONChecksOutputMetricsCLSSource string
+type GetAllChecksSource string
 
 const (
-	GetAllChecks200ApplicationJSONChecksOutputMetricsCLSSourceWebVitals GetAllChecks200ApplicationJSONChecksOutputMetricsCLSSource = "web-vitals"
+	GetAllChecksSourceWebVitals GetAllChecksSource = "web-vitals"
 )
 
-func (e GetAllChecks200ApplicationJSONChecksOutputMetricsCLSSource) ToPointer() *GetAllChecks200ApplicationJSONChecksOutputMetricsCLSSource {
+func (e GetAllChecksSource) ToPointer() *GetAllChecksSource {
 	return &e
 }
 
-func (e *GetAllChecks200ApplicationJSONChecksOutputMetricsCLSSource) UnmarshalJSON(data []byte) error {
+func (e *GetAllChecksSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "web-vitals":
-		*e = GetAllChecks200ApplicationJSONChecksOutputMetricsCLSSource(v)
+		*e = GetAllChecksSource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetAllChecks200ApplicationJSONChecksOutputMetricsCLSSource: %v", v)
+		return fmt.Errorf("invalid value for GetAllChecksSource: %v", v)
 	}
 }
 
-type GetAllChecks200ApplicationJSONChecksOutputMetricsCLS struct {
-	PreviousValue *int64                                                     `json:"previousValue,omitempty"`
-	Source        GetAllChecks200ApplicationJSONChecksOutputMetricsCLSSource `json:"source"`
-	Value         *int64                                                     `json:"value"`
+type GetAllChecksCLS struct {
+	PreviousValue *int64             `json:"previousValue,omitempty"`
+	Source        GetAllChecksSource `json:"source"`
+	Value         *int64             `json:"value"`
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsCLS) GetPreviousValue() *int64 {
+func (o *GetAllChecksCLS) GetPreviousValue() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PreviousValue
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsCLS) GetSource() GetAllChecks200ApplicationJSONChecksOutputMetricsCLSSource {
+func (o *GetAllChecksCLS) GetSource() GetAllChecksSource {
 	if o == nil {
-		return GetAllChecks200ApplicationJSONChecksOutputMetricsCLSSource("")
+		return GetAllChecksSource("")
 	}
 	return o.Source
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsCLS) GetValue() *int64 {
+func (o *GetAllChecksCLS) GetValue() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type GetAllChecks200ApplicationJSONChecksOutputMetricsFCPSource string
+type GetAllChecksChecksSource string
 
 const (
-	GetAllChecks200ApplicationJSONChecksOutputMetricsFCPSourceWebVitals GetAllChecks200ApplicationJSONChecksOutputMetricsFCPSource = "web-vitals"
+	GetAllChecksChecksSourceWebVitals GetAllChecksChecksSource = "web-vitals"
 )
 
-func (e GetAllChecks200ApplicationJSONChecksOutputMetricsFCPSource) ToPointer() *GetAllChecks200ApplicationJSONChecksOutputMetricsFCPSource {
+func (e GetAllChecksChecksSource) ToPointer() *GetAllChecksChecksSource {
 	return &e
 }
 
-func (e *GetAllChecks200ApplicationJSONChecksOutputMetricsFCPSource) UnmarshalJSON(data []byte) error {
+func (e *GetAllChecksChecksSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "web-vitals":
-		*e = GetAllChecks200ApplicationJSONChecksOutputMetricsFCPSource(v)
+		*e = GetAllChecksChecksSource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetAllChecks200ApplicationJSONChecksOutputMetricsFCPSource: %v", v)
+		return fmt.Errorf("invalid value for GetAllChecksChecksSource: %v", v)
 	}
 }
 
-type GetAllChecks200ApplicationJSONChecksOutputMetricsFCP struct {
-	PreviousValue *int64                                                     `json:"previousValue,omitempty"`
-	Source        GetAllChecks200ApplicationJSONChecksOutputMetricsFCPSource `json:"source"`
-	Value         *int64                                                     `json:"value"`
+type GetAllChecksFCP struct {
+	PreviousValue *int64                   `json:"previousValue,omitempty"`
+	Source        GetAllChecksChecksSource `json:"source"`
+	Value         *int64                   `json:"value"`
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsFCP) GetPreviousValue() *int64 {
+func (o *GetAllChecksFCP) GetPreviousValue() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PreviousValue
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsFCP) GetSource() GetAllChecks200ApplicationJSONChecksOutputMetricsFCPSource {
+func (o *GetAllChecksFCP) GetSource() GetAllChecksChecksSource {
 	if o == nil {
-		return GetAllChecks200ApplicationJSONChecksOutputMetricsFCPSource("")
+		return GetAllChecksChecksSource("")
 	}
 	return o.Source
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsFCP) GetValue() *int64 {
+func (o *GetAllChecksFCP) GetValue() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type GetAllChecks200ApplicationJSONChecksOutputMetricsLCPSource string
+type GetAllChecksChecksResponseSource string
 
 const (
-	GetAllChecks200ApplicationJSONChecksOutputMetricsLCPSourceWebVitals GetAllChecks200ApplicationJSONChecksOutputMetricsLCPSource = "web-vitals"
+	GetAllChecksChecksResponseSourceWebVitals GetAllChecksChecksResponseSource = "web-vitals"
 )
 
-func (e GetAllChecks200ApplicationJSONChecksOutputMetricsLCPSource) ToPointer() *GetAllChecks200ApplicationJSONChecksOutputMetricsLCPSource {
+func (e GetAllChecksChecksResponseSource) ToPointer() *GetAllChecksChecksResponseSource {
 	return &e
 }
 
-func (e *GetAllChecks200ApplicationJSONChecksOutputMetricsLCPSource) UnmarshalJSON(data []byte) error {
+func (e *GetAllChecksChecksResponseSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "web-vitals":
-		*e = GetAllChecks200ApplicationJSONChecksOutputMetricsLCPSource(v)
+		*e = GetAllChecksChecksResponseSource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetAllChecks200ApplicationJSONChecksOutputMetricsLCPSource: %v", v)
+		return fmt.Errorf("invalid value for GetAllChecksChecksResponseSource: %v", v)
 	}
 }
 
-type GetAllChecks200ApplicationJSONChecksOutputMetricsLCP struct {
-	PreviousValue *int64                                                     `json:"previousValue,omitempty"`
-	Source        GetAllChecks200ApplicationJSONChecksOutputMetricsLCPSource `json:"source"`
-	Value         *int64                                                     `json:"value"`
+type GetAllChecksLCP struct {
+	PreviousValue *int64                           `json:"previousValue,omitempty"`
+	Source        GetAllChecksChecksResponseSource `json:"source"`
+	Value         *int64                           `json:"value"`
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsLCP) GetPreviousValue() *int64 {
+func (o *GetAllChecksLCP) GetPreviousValue() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PreviousValue
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsLCP) GetSource() GetAllChecks200ApplicationJSONChecksOutputMetricsLCPSource {
+func (o *GetAllChecksLCP) GetSource() GetAllChecksChecksResponseSource {
 	if o == nil {
-		return GetAllChecks200ApplicationJSONChecksOutputMetricsLCPSource("")
+		return GetAllChecksChecksResponseSource("")
 	}
 	return o.Source
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsLCP) GetValue() *int64 {
+func (o *GetAllChecksLCP) GetValue() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type GetAllChecks200ApplicationJSONChecksOutputMetricsTBTSource string
+type GetAllChecksChecksResponse200Source string
 
 const (
-	GetAllChecks200ApplicationJSONChecksOutputMetricsTBTSourceWebVitals GetAllChecks200ApplicationJSONChecksOutputMetricsTBTSource = "web-vitals"
+	GetAllChecksChecksResponse200SourceWebVitals GetAllChecksChecksResponse200Source = "web-vitals"
 )
 
-func (e GetAllChecks200ApplicationJSONChecksOutputMetricsTBTSource) ToPointer() *GetAllChecks200ApplicationJSONChecksOutputMetricsTBTSource {
+func (e GetAllChecksChecksResponse200Source) ToPointer() *GetAllChecksChecksResponse200Source {
 	return &e
 }
 
-func (e *GetAllChecks200ApplicationJSONChecksOutputMetricsTBTSource) UnmarshalJSON(data []byte) error {
+func (e *GetAllChecksChecksResponse200Source) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "web-vitals":
-		*e = GetAllChecks200ApplicationJSONChecksOutputMetricsTBTSource(v)
+		*e = GetAllChecksChecksResponse200Source(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetAllChecks200ApplicationJSONChecksOutputMetricsTBTSource: %v", v)
+		return fmt.Errorf("invalid value for GetAllChecksChecksResponse200Source: %v", v)
 	}
 }
 
-type GetAllChecks200ApplicationJSONChecksOutputMetricsTBT struct {
-	PreviousValue *int64                                                     `json:"previousValue,omitempty"`
-	Source        GetAllChecks200ApplicationJSONChecksOutputMetricsTBTSource `json:"source"`
-	Value         *int64                                                     `json:"value"`
+type GetAllChecksTBT struct {
+	PreviousValue *int64                              `json:"previousValue,omitempty"`
+	Source        GetAllChecksChecksResponse200Source `json:"source"`
+	Value         *int64                              `json:"value"`
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsTBT) GetPreviousValue() *int64 {
+func (o *GetAllChecksTBT) GetPreviousValue() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PreviousValue
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsTBT) GetSource() GetAllChecks200ApplicationJSONChecksOutputMetricsTBTSource {
+func (o *GetAllChecksTBT) GetSource() GetAllChecksChecksResponse200Source {
 	if o == nil {
-		return GetAllChecks200ApplicationJSONChecksOutputMetricsTBTSource("")
+		return GetAllChecksChecksResponse200Source("")
 	}
 	return o.Source
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsTBT) GetValue() *int64 {
+func (o *GetAllChecksTBT) GetValue() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScoreSource string
+type GetAllChecksChecksResponse200ApplicationJSONSource string
 
 const (
-	GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScoreSourceWebVitals GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScoreSource = "web-vitals"
+	GetAllChecksChecksResponse200ApplicationJSONSourceWebVitals GetAllChecksChecksResponse200ApplicationJSONSource = "web-vitals"
 )
 
-func (e GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScoreSource) ToPointer() *GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScoreSource {
+func (e GetAllChecksChecksResponse200ApplicationJSONSource) ToPointer() *GetAllChecksChecksResponse200ApplicationJSONSource {
 	return &e
 }
 
-func (e *GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScoreSource) UnmarshalJSON(data []byte) error {
+func (e *GetAllChecksChecksResponse200ApplicationJSONSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "web-vitals":
-		*e = GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScoreSource(v)
+		*e = GetAllChecksChecksResponse200ApplicationJSONSource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScoreSource: %v", v)
+		return fmt.Errorf("invalid value for GetAllChecksChecksResponse200ApplicationJSONSource: %v", v)
 	}
 }
 
-type GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScore struct {
-	PreviousValue *int64                                                                        `json:"previousValue,omitempty"`
-	Source        GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScoreSource `json:"source"`
-	Value         *int64                                                                        `json:"value"`
+type GetAllChecksVirtualExperienceScore struct {
+	PreviousValue *int64                                             `json:"previousValue,omitempty"`
+	Source        GetAllChecksChecksResponse200ApplicationJSONSource `json:"source"`
+	Value         *int64                                             `json:"value"`
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScore) GetPreviousValue() *int64 {
+func (o *GetAllChecksVirtualExperienceScore) GetPreviousValue() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PreviousValue
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScore) GetSource() GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScoreSource {
+func (o *GetAllChecksVirtualExperienceScore) GetSource() GetAllChecksChecksResponse200ApplicationJSONSource {
 	if o == nil {
-		return GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScoreSource("")
+		return GetAllChecksChecksResponse200ApplicationJSONSource("")
 	}
 	return o.Source
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScore) GetValue() *int64 {
+func (o *GetAllChecksVirtualExperienceScore) GetValue() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type GetAllChecks200ApplicationJSONChecksOutputMetrics struct {
-	Cls                    GetAllChecks200ApplicationJSONChecksOutputMetricsCLS                     `json:"CLS"`
-	Fcp                    GetAllChecks200ApplicationJSONChecksOutputMetricsFCP                     `json:"FCP"`
-	Lcp                    GetAllChecks200ApplicationJSONChecksOutputMetricsLCP                     `json:"LCP"`
-	Tbt                    GetAllChecks200ApplicationJSONChecksOutputMetricsTBT                     `json:"TBT"`
-	VirtualExperienceScore *GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScore `json:"virtualExperienceScore,omitempty"`
+type GetAllChecksMetrics struct {
+	Cls                    GetAllChecksCLS                     `json:"CLS"`
+	Fcp                    GetAllChecksFCP                     `json:"FCP"`
+	Lcp                    GetAllChecksLCP                     `json:"LCP"`
+	Tbt                    GetAllChecksTBT                     `json:"TBT"`
+	VirtualExperienceScore *GetAllChecksVirtualExperienceScore `json:"virtualExperienceScore,omitempty"`
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetrics) GetCls() GetAllChecks200ApplicationJSONChecksOutputMetricsCLS {
+func (o *GetAllChecksMetrics) GetCls() GetAllChecksCLS {
 	if o == nil {
-		return GetAllChecks200ApplicationJSONChecksOutputMetricsCLS{}
+		return GetAllChecksCLS{}
 	}
 	return o.Cls
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetrics) GetFcp() GetAllChecks200ApplicationJSONChecksOutputMetricsFCP {
+func (o *GetAllChecksMetrics) GetFcp() GetAllChecksFCP {
 	if o == nil {
-		return GetAllChecks200ApplicationJSONChecksOutputMetricsFCP{}
+		return GetAllChecksFCP{}
 	}
 	return o.Fcp
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetrics) GetLcp() GetAllChecks200ApplicationJSONChecksOutputMetricsLCP {
+func (o *GetAllChecksMetrics) GetLcp() GetAllChecksLCP {
 	if o == nil {
-		return GetAllChecks200ApplicationJSONChecksOutputMetricsLCP{}
+		return GetAllChecksLCP{}
 	}
 	return o.Lcp
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetrics) GetTbt() GetAllChecks200ApplicationJSONChecksOutputMetricsTBT {
+func (o *GetAllChecksMetrics) GetTbt() GetAllChecksTBT {
 	if o == nil {
-		return GetAllChecks200ApplicationJSONChecksOutputMetricsTBT{}
+		return GetAllChecksTBT{}
 	}
 	return o.Tbt
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutputMetrics) GetVirtualExperienceScore() *GetAllChecks200ApplicationJSONChecksOutputMetricsVirtualExperienceScore {
+func (o *GetAllChecksMetrics) GetVirtualExperienceScore() *GetAllChecksVirtualExperienceScore {
 	if o == nil {
 		return nil
 	}
 	return o.VirtualExperienceScore
 }
 
-type GetAllChecks200ApplicationJSONChecksOutput struct {
-	Metrics *GetAllChecks200ApplicationJSONChecksOutputMetrics `json:"metrics,omitempty"`
+type GetAllChecksOutput struct {
+	Metrics *GetAllChecksMetrics `json:"metrics,omitempty"`
 }
 
-func (o *GetAllChecks200ApplicationJSONChecksOutput) GetMetrics() *GetAllChecks200ApplicationJSONChecksOutputMetrics {
+func (o *GetAllChecksOutput) GetMetrics() *GetAllChecksMetrics {
 	if o == nil {
 		return nil
 	}
 	return o.Metrics
 }
 
-type GetAllChecks200ApplicationJSONChecksStatus string
+type GetAllChecksStatus string
 
 const (
-	GetAllChecks200ApplicationJSONChecksStatusRegistered GetAllChecks200ApplicationJSONChecksStatus = "registered"
-	GetAllChecks200ApplicationJSONChecksStatusRunning    GetAllChecks200ApplicationJSONChecksStatus = "running"
-	GetAllChecks200ApplicationJSONChecksStatusCompleted  GetAllChecks200ApplicationJSONChecksStatus = "completed"
+	GetAllChecksStatusRegistered GetAllChecksStatus = "registered"
+	GetAllChecksStatusRunning    GetAllChecksStatus = "running"
+	GetAllChecksStatusCompleted  GetAllChecksStatus = "completed"
 )
 
-func (e GetAllChecks200ApplicationJSONChecksStatus) ToPointer() *GetAllChecks200ApplicationJSONChecksStatus {
+func (e GetAllChecksStatus) ToPointer() *GetAllChecksStatus {
 	return &e
 }
 
-func (e *GetAllChecks200ApplicationJSONChecksStatus) UnmarshalJSON(data []byte) error {
+func (e *GetAllChecksStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -400,127 +400,127 @@ func (e *GetAllChecks200ApplicationJSONChecksStatus) UnmarshalJSON(data []byte) 
 	case "running":
 		fallthrough
 	case "completed":
-		*e = GetAllChecks200ApplicationJSONChecksStatus(v)
+		*e = GetAllChecksStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetAllChecks200ApplicationJSONChecksStatus: %v", v)
+		return fmt.Errorf("invalid value for GetAllChecksStatus: %v", v)
 	}
 }
 
-type GetAllChecks200ApplicationJSONChecks struct {
-	CompletedAt   *int64                                          `json:"completedAt,omitempty"`
-	Conclusion    *GetAllChecks200ApplicationJSONChecksConclusion `json:"conclusion,omitempty"`
-	CreatedAt     int64                                           `json:"createdAt"`
-	DetailsURL    *string                                         `json:"detailsUrl,omitempty"`
-	ID            string                                          `json:"id"`
-	IntegrationID string                                          `json:"integrationId"`
-	Name          string                                          `json:"name"`
-	Output        *GetAllChecks200ApplicationJSONChecksOutput     `json:"output,omitempty"`
-	Path          *string                                         `json:"path,omitempty"`
-	Rerequestable bool                                            `json:"rerequestable"`
-	StartedAt     *int64                                          `json:"startedAt,omitempty"`
-	Status        GetAllChecks200ApplicationJSONChecksStatus      `json:"status"`
-	UpdatedAt     int64                                           `json:"updatedAt"`
+type Checks struct {
+	CompletedAt   *int64                  `json:"completedAt,omitempty"`
+	Conclusion    *GetAllChecksConclusion `json:"conclusion,omitempty"`
+	CreatedAt     int64                   `json:"createdAt"`
+	DetailsURL    *string                 `json:"detailsUrl,omitempty"`
+	ID            string                  `json:"id"`
+	IntegrationID string                  `json:"integrationId"`
+	Name          string                  `json:"name"`
+	Output        *GetAllChecksOutput     `json:"output,omitempty"`
+	Path          *string                 `json:"path,omitempty"`
+	Rerequestable bool                    `json:"rerequestable"`
+	StartedAt     *int64                  `json:"startedAt,omitempty"`
+	Status        GetAllChecksStatus      `json:"status"`
+	UpdatedAt     int64                   `json:"updatedAt"`
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetCompletedAt() *int64 {
+func (o *Checks) GetCompletedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CompletedAt
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetConclusion() *GetAllChecks200ApplicationJSONChecksConclusion {
+func (o *Checks) GetConclusion() *GetAllChecksConclusion {
 	if o == nil {
 		return nil
 	}
 	return o.Conclusion
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetCreatedAt() int64 {
+func (o *Checks) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetDetailsURL() *string {
+func (o *Checks) GetDetailsURL() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DetailsURL
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetID() string {
+func (o *Checks) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetIntegrationID() string {
+func (o *Checks) GetIntegrationID() string {
 	if o == nil {
 		return ""
 	}
 	return o.IntegrationID
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetName() string {
+func (o *Checks) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetOutput() *GetAllChecks200ApplicationJSONChecksOutput {
+func (o *Checks) GetOutput() *GetAllChecksOutput {
 	if o == nil {
 		return nil
 	}
 	return o.Output
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetPath() *string {
+func (o *Checks) GetPath() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Path
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetRerequestable() bool {
+func (o *Checks) GetRerequestable() bool {
 	if o == nil {
 		return false
 	}
 	return o.Rerequestable
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetStartedAt() *int64 {
+func (o *Checks) GetStartedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.StartedAt
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetStatus() GetAllChecks200ApplicationJSONChecksStatus {
+func (o *Checks) GetStatus() GetAllChecksStatus {
 	if o == nil {
-		return GetAllChecks200ApplicationJSONChecksStatus("")
+		return GetAllChecksStatus("")
 	}
 	return o.Status
 }
 
-func (o *GetAllChecks200ApplicationJSONChecks) GetUpdatedAt() int64 {
+func (o *Checks) GetUpdatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.UpdatedAt
 }
 
-type GetAllChecks200ApplicationJSON struct {
-	Checks []GetAllChecks200ApplicationJSONChecks `json:"checks"`
+type GetAllChecksResponseBody struct {
+	Checks []Checks `json:"checks"`
 }
 
-func (o *GetAllChecks200ApplicationJSON) GetChecks() []GetAllChecks200ApplicationJSONChecks {
+func (o *GetAllChecksResponseBody) GetChecks() []Checks {
 	if o == nil {
-		return []GetAllChecks200ApplicationJSONChecks{}
+		return []Checks{}
 	}
 	return o.Checks
 }
@@ -531,8 +531,8 @@ type GetAllChecksResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                          *http.Response
-	GetAllChecks200ApplicationJSONObject *GetAllChecks200ApplicationJSON
+	RawResponse *http.Response
+	Object      *GetAllChecksResponseBody
 }
 
 func (o *GetAllChecksResponse) GetContentType() string {
@@ -556,9 +556,9 @@ func (o *GetAllChecksResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetAllChecksResponse) GetGetAllChecks200ApplicationJSONObject() *GetAllChecks200ApplicationJSON {
+func (o *GetAllChecksResponse) GetObject() *GetAllChecksResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetAllChecks200ApplicationJSONObject
+	return o.Object
 }

@@ -27,13 +27,13 @@ func (o *DeleteTeamInviteCodeRequest) GetTeamID() string {
 	return o.TeamID
 }
 
-// DeleteTeamInviteCode200ApplicationJSON - Successfully deleted Team invite code.
-type DeleteTeamInviteCode200ApplicationJSON struct {
+// DeleteTeamInviteCodeResponseBody - Successfully deleted Team invite code.
+type DeleteTeamInviteCodeResponseBody struct {
 	// ID of the team.
 	ID string `json:"id"`
 }
 
-func (o *DeleteTeamInviteCode200ApplicationJSON) GetID() string {
+func (o *DeleteTeamInviteCodeResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
@@ -48,7 +48,7 @@ type DeleteTeamInviteCodeResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successfully deleted Team invite code.
-	DeleteTeamInviteCode200ApplicationJSONObject *DeleteTeamInviteCode200ApplicationJSON
+	Object *DeleteTeamInviteCodeResponseBody
 }
 
 func (o *DeleteTeamInviteCodeResponse) GetContentType() string {
@@ -72,9 +72,9 @@ func (o *DeleteTeamInviteCodeResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *DeleteTeamInviteCodeResponse) GetDeleteTeamInviteCode200ApplicationJSONObject() *DeleteTeamInviteCode200ApplicationJSON {
+func (o *DeleteTeamInviteCodeResponse) GetObject() *DeleteTeamInviteCodeResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.DeleteTeamInviteCode200ApplicationJSONObject
+	return o.Object
 }

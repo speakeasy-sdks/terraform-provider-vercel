@@ -6,22 +6,22 @@ import (
 	"net/http"
 )
 
-// DeleteTeamRequestBodyReasons - An object describing the reason why the team is being deleted.
-type DeleteTeamRequestBodyReasons struct {
+// Reasons - An object describing the reason why the team is being deleted.
+type Reasons struct {
 	// Description of the reason why the team is being deleted.
 	Description string `json:"description"`
 	// Idenitifier slug of the reason why the team is being deleted.
 	Slug string `json:"slug"`
 }
 
-func (o *DeleteTeamRequestBodyReasons) GetDescription() string {
+func (o *Reasons) GetDescription() string {
 	if o == nil {
 		return ""
 	}
 	return o.Description
 }
 
-func (o *DeleteTeamRequestBodyReasons) GetSlug() string {
+func (o *Reasons) GetSlug() string {
 	if o == nil {
 		return ""
 	}
@@ -30,10 +30,10 @@ func (o *DeleteTeamRequestBodyReasons) GetSlug() string {
 
 type DeleteTeamRequestBody struct {
 	// Optional array of objects that describe the reason why the team is being deleted.
-	Reasons []DeleteTeamRequestBodyReasons `json:"reasons,omitempty"`
+	Reasons []Reasons `json:"reasons,omitempty"`
 }
 
-func (o *DeleteTeamRequestBody) GetReasons() []DeleteTeamRequestBodyReasons {
+func (o *DeleteTeamRequestBody) GetReasons() []Reasons {
 	if o == nil {
 		return nil
 	}
@@ -60,13 +60,13 @@ func (o *DeleteTeamRequest) GetTeamID() string {
 	return o.TeamID
 }
 
-// DeleteTeam200ApplicationJSON - The Team was successfuly deleted
-type DeleteTeam200ApplicationJSON struct {
+// DeleteTeamResponseBody - The Team was successfuly deleted
+type DeleteTeamResponseBody struct {
 	// The ID of the deleted Team
 	ID string `json:"id"`
 }
 
-func (o *DeleteTeam200ApplicationJSON) GetID() string {
+func (o *DeleteTeamResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
@@ -81,7 +81,7 @@ type DeleteTeamResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The Team was successfuly deleted
-	DeleteTeam200ApplicationJSONObject *DeleteTeam200ApplicationJSON
+	Object *DeleteTeamResponseBody
 }
 
 func (o *DeleteTeamResponse) GetContentType() string {
@@ -105,9 +105,9 @@ func (o *DeleteTeamResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *DeleteTeamResponse) GetDeleteTeam200ApplicationJSONObject() *DeleteTeam200ApplicationJSON {
+func (o *DeleteTeamResponse) GetObject() *DeleteTeamResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.DeleteTeam200ApplicationJSONObject
+	return o.Object
 }

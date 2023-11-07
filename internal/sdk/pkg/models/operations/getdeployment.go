@@ -40,75 +40,75 @@ func (o *GetDeploymentRequest) GetWithGitRepoInfo() *string {
 	return o.WithGitRepoInfo
 }
 
-// GetDeployment200ApplicationJSON2AliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
-type GetDeployment200ApplicationJSON2AliasError struct {
+// GetDeploymentDeploymentsAliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
+type GetDeploymentDeploymentsAliasError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (o *GetDeployment200ApplicationJSON2AliasError) GetCode() string {
+func (o *GetDeploymentDeploymentsAliasError) GetCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.Code
 }
 
-func (o *GetDeployment200ApplicationJSON2AliasError) GetMessage() string {
+func (o *GetDeploymentDeploymentsAliasError) GetMessage() string {
 	if o == nil {
 		return ""
 	}
 	return o.Message
 }
 
-type GetDeployment200ApplicationJSON2AliasWarning struct {
+type GetDeploymentDeploymentsAliasWarning struct {
 	Action  *string `json:"action,omitempty"`
 	Code    string  `json:"code"`
 	Link    *string `json:"link,omitempty"`
 	Message string  `json:"message"`
 }
 
-func (o *GetDeployment200ApplicationJSON2AliasWarning) GetAction() *string {
+func (o *GetDeploymentDeploymentsAliasWarning) GetAction() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Action
 }
 
-func (o *GetDeployment200ApplicationJSON2AliasWarning) GetCode() string {
+func (o *GetDeploymentDeploymentsAliasWarning) GetCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.Code
 }
 
-func (o *GetDeployment200ApplicationJSON2AliasWarning) GetLink() *string {
+func (o *GetDeploymentDeploymentsAliasWarning) GetLink() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Link
 }
 
-func (o *GetDeployment200ApplicationJSON2AliasWarning) GetMessage() string {
+func (o *GetDeploymentDeploymentsAliasWarning) GetMessage() string {
 	if o == nil {
 		return ""
 	}
 	return o.Message
 }
 
-type GetDeployment200ApplicationJSON2ChecksConclusion string
+type GetDeploymentDeploymentsChecksConclusion string
 
 const (
-	GetDeployment200ApplicationJSON2ChecksConclusionSucceeded GetDeployment200ApplicationJSON2ChecksConclusion = "succeeded"
-	GetDeployment200ApplicationJSON2ChecksConclusionFailed    GetDeployment200ApplicationJSON2ChecksConclusion = "failed"
-	GetDeployment200ApplicationJSON2ChecksConclusionSkipped   GetDeployment200ApplicationJSON2ChecksConclusion = "skipped"
-	GetDeployment200ApplicationJSON2ChecksConclusionCanceled  GetDeployment200ApplicationJSON2ChecksConclusion = "canceled"
+	GetDeploymentDeploymentsChecksConclusionSucceeded GetDeploymentDeploymentsChecksConclusion = "succeeded"
+	GetDeploymentDeploymentsChecksConclusionFailed    GetDeploymentDeploymentsChecksConclusion = "failed"
+	GetDeploymentDeploymentsChecksConclusionSkipped   GetDeploymentDeploymentsChecksConclusion = "skipped"
+	GetDeploymentDeploymentsChecksConclusionCanceled  GetDeploymentDeploymentsChecksConclusion = "canceled"
 )
 
-func (e GetDeployment200ApplicationJSON2ChecksConclusion) ToPointer() *GetDeployment200ApplicationJSON2ChecksConclusion {
+func (e GetDeploymentDeploymentsChecksConclusion) ToPointer() *GetDeploymentDeploymentsChecksConclusion {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2ChecksConclusion) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsChecksConclusion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -121,26 +121,26 @@ func (e *GetDeployment200ApplicationJSON2ChecksConclusion) UnmarshalJSON(data []
 	case "skipped":
 		fallthrough
 	case "canceled":
-		*e = GetDeployment200ApplicationJSON2ChecksConclusion(v)
+		*e = GetDeploymentDeploymentsChecksConclusion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2ChecksConclusion: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsChecksConclusion: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON2ChecksState string
+type GetDeploymentDeploymentsChecksState string
 
 const (
-	GetDeployment200ApplicationJSON2ChecksStateRegistered GetDeployment200ApplicationJSON2ChecksState = "registered"
-	GetDeployment200ApplicationJSON2ChecksStateRunning    GetDeployment200ApplicationJSON2ChecksState = "running"
-	GetDeployment200ApplicationJSON2ChecksStateCompleted  GetDeployment200ApplicationJSON2ChecksState = "completed"
+	GetDeploymentDeploymentsChecksStateRegistered GetDeploymentDeploymentsChecksState = "registered"
+	GetDeploymentDeploymentsChecksStateRunning    GetDeploymentDeploymentsChecksState = "running"
+	GetDeploymentDeploymentsChecksStateCompleted  GetDeploymentDeploymentsChecksState = "completed"
 )
 
-func (e GetDeployment200ApplicationJSON2ChecksState) ToPointer() *GetDeployment200ApplicationJSON2ChecksState {
+func (e GetDeploymentDeploymentsChecksState) ToPointer() *GetDeploymentDeploymentsChecksState {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2ChecksState) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsChecksState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -151,513 +151,513 @@ func (e *GetDeployment200ApplicationJSON2ChecksState) UnmarshalJSON(data []byte)
 	case "running":
 		fallthrough
 	case "completed":
-		*e = GetDeployment200ApplicationJSON2ChecksState(v)
+		*e = GetDeploymentDeploymentsChecksState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2ChecksState: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsChecksState: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON2Creator - Information about the deployment creator
-type GetDeployment200ApplicationJSON2Creator struct {
+// GetDeploymentDeploymentsCreator - Information about the deployment creator
+type GetDeploymentDeploymentsCreator struct {
 	// The ID of the user that created the deployment
 	UID string `json:"uid"`
 	// The username of the user that created the deployment
 	Username *string `json:"username,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON2Creator) GetUID() string {
+func (o *GetDeploymentDeploymentsCreator) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *GetDeployment200ApplicationJSON2Creator) GetUsername() *string {
+func (o *GetDeploymentDeploymentsCreator) GetUsername() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Username
 }
 
-type GetDeployment200ApplicationJSON2GitSource9Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource9Type string
 
 const (
-	GetDeployment200ApplicationJSON2GitSource9TypeBitbucket GetDeployment200ApplicationJSON2GitSource9Type = "bitbucket"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource9TypeBitbucket GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource9Type = "bitbucket"
 )
 
-func (e GetDeployment200ApplicationJSON2GitSource9Type) ToPointer() *GetDeployment200ApplicationJSON2GitSource9Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource9Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource9Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2GitSource9Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = GetDeployment200ApplicationJSON2GitSource9Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource9Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2GitSource9Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource9Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON2GitSource9 struct {
-	Owner         *string                                        `json:"owner,omitempty"`
-	Ref           string                                         `json:"ref"`
-	RepoUUID      string                                         `json:"repoUuid"`
-	Sha           string                                         `json:"sha"`
-	Slug          *string                                        `json:"slug,omitempty"`
-	Type          GetDeployment200ApplicationJSON2GitSource9Type `json:"type"`
-	WorkspaceUUID string                                         `json:"workspaceUuid"`
+type GetDeploymentDeployments9 struct {
+	Owner         *string                                                                       `json:"owner,omitempty"`
+	Ref           string                                                                        `json:"ref"`
+	RepoUUID      string                                                                        `json:"repoUuid"`
+	Sha           string                                                                        `json:"sha"`
+	Slug          *string                                                                       `json:"slug,omitempty"`
+	Type          GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource9Type `json:"type"`
+	WorkspaceUUID string                                                                        `json:"workspaceUuid"`
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource9) GetOwner() *string {
+func (o *GetDeploymentDeployments9) GetOwner() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Owner
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource9) GetRef() string {
+func (o *GetDeploymentDeployments9) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource9) GetRepoUUID() string {
+func (o *GetDeploymentDeployments9) GetRepoUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoUUID
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource9) GetSha() string {
+func (o *GetDeploymentDeployments9) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource9) GetSlug() *string {
+func (o *GetDeploymentDeployments9) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Slug
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource9) GetType() GetDeployment200ApplicationJSON2GitSource9Type {
+func (o *GetDeploymentDeployments9) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource9Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2GitSource9Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource9Type("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource9) GetWorkspaceUUID() string {
+func (o *GetDeploymentDeployments9) GetWorkspaceUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.WorkspaceUUID
 }
 
-type GetDeployment200ApplicationJSON2GitSource8Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource8Type string
 
 const (
-	GetDeployment200ApplicationJSON2GitSource8TypeGitlab GetDeployment200ApplicationJSON2GitSource8Type = "gitlab"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource8TypeGitlab GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource8Type = "gitlab"
 )
 
-func (e GetDeployment200ApplicationJSON2GitSource8Type) ToPointer() *GetDeployment200ApplicationJSON2GitSource8Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource8Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource8Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2GitSource8Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = GetDeployment200ApplicationJSON2GitSource8Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource8Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2GitSource8Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource8Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON2GitSource8 struct {
-	ProjectID int64                                          `json:"projectId"`
-	Ref       string                                         `json:"ref"`
-	Sha       string                                         `json:"sha"`
-	Type      GetDeployment200ApplicationJSON2GitSource8Type `json:"type"`
+type GetDeploymentDeployments8 struct {
+	ProjectID int64                                                                         `json:"projectId"`
+	Ref       string                                                                        `json:"ref"`
+	Sha       string                                                                        `json:"sha"`
+	Type      GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource8Type `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource8) GetProjectID() int64 {
+func (o *GetDeploymentDeployments8) GetProjectID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ProjectID
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource8) GetRef() string {
+func (o *GetDeploymentDeployments8) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource8) GetSha() string {
+func (o *GetDeploymentDeployments8) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource8) GetType() GetDeployment200ApplicationJSON2GitSource8Type {
+func (o *GetDeploymentDeployments8) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource8Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2GitSource8Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource8Type("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON2GitSource7Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource7Type string
 
 const (
-	GetDeployment200ApplicationJSON2GitSource7TypeGithub GetDeployment200ApplicationJSON2GitSource7Type = "github"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource7TypeGithub GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource7Type = "github"
 )
 
-func (e GetDeployment200ApplicationJSON2GitSource7Type) ToPointer() *GetDeployment200ApplicationJSON2GitSource7Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource7Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource7Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2GitSource7Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = GetDeployment200ApplicationJSON2GitSource7Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource7Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2GitSource7Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource7Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON2GitSource7 struct {
-	Org    *string                                        `json:"org,omitempty"`
-	Ref    string                                         `json:"ref"`
-	Repo   *string                                        `json:"repo,omitempty"`
-	RepoID int64                                          `json:"repoId"`
-	Sha    string                                         `json:"sha"`
-	Type   GetDeployment200ApplicationJSON2GitSource7Type `json:"type"`
+type GetDeploymentDeployments7 struct {
+	Org    *string                                                                       `json:"org,omitempty"`
+	Ref    string                                                                        `json:"ref"`
+	Repo   *string                                                                       `json:"repo,omitempty"`
+	RepoID int64                                                                         `json:"repoId"`
+	Sha    string                                                                        `json:"sha"`
+	Type   GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource7Type `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource7) GetOrg() *string {
+func (o *GetDeploymentDeployments7) GetOrg() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Org
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource7) GetRef() string {
+func (o *GetDeploymentDeployments7) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource7) GetRepo() *string {
+func (o *GetDeploymentDeployments7) GetRepo() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Repo
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource7) GetRepoID() int64 {
+func (o *GetDeploymentDeployments7) GetRepoID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.RepoID
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource7) GetSha() string {
+func (o *GetDeploymentDeployments7) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource7) GetType() GetDeployment200ApplicationJSON2GitSource7Type {
+func (o *GetDeploymentDeployments7) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource7Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2GitSource7Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource7Type("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON2GitSource6Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource6Type string
 
 const (
-	GetDeployment200ApplicationJSON2GitSource6TypeCustom GetDeployment200ApplicationJSON2GitSource6Type = "custom"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource6TypeCustom GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource6Type = "custom"
 )
 
-func (e GetDeployment200ApplicationJSON2GitSource6Type) ToPointer() *GetDeployment200ApplicationJSON2GitSource6Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource6Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource6Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2GitSource6Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "custom":
-		*e = GetDeployment200ApplicationJSON2GitSource6Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource6Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2GitSource6Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource6Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON2GitSource6 struct {
-	GitURL string                                         `json:"gitUrl"`
-	Ref    string                                         `json:"ref"`
-	Sha    string                                         `json:"sha"`
-	Type   GetDeployment200ApplicationJSON2GitSource6Type `json:"type"`
+type GetDeploymentDeployments6 struct {
+	GitURL string                                                                        `json:"gitUrl"`
+	Ref    string                                                                        `json:"ref"`
+	Sha    string                                                                        `json:"sha"`
+	Type   GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource6Type `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource6) GetGitURL() string {
+func (o *GetDeploymentDeployments6) GetGitURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.GitURL
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource6) GetRef() string {
+func (o *GetDeploymentDeployments6) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource6) GetSha() string {
+func (o *GetDeploymentDeployments6) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource6) GetType() GetDeployment200ApplicationJSON2GitSource6Type {
+func (o *GetDeploymentDeployments6) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource6Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2GitSource6Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource6Type("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON2GitSource5Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource5Type string
 
 const (
-	GetDeployment200ApplicationJSON2GitSource5TypeBitbucket GetDeployment200ApplicationJSON2GitSource5Type = "bitbucket"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource5TypeBitbucket GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource5Type = "bitbucket"
 )
 
-func (e GetDeployment200ApplicationJSON2GitSource5Type) ToPointer() *GetDeployment200ApplicationJSON2GitSource5Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource5Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource5Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2GitSource5Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = GetDeployment200ApplicationJSON2GitSource5Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource5Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2GitSource5Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource5Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON2GitSource5 struct {
-	Owner string                                         `json:"owner"`
-	PrID  *int64                                         `json:"prId,omitempty"`
-	Ref   *string                                        `json:"ref,omitempty"`
-	Sha   *string                                        `json:"sha,omitempty"`
-	Slug  string                                         `json:"slug"`
-	Type  GetDeployment200ApplicationJSON2GitSource5Type `json:"type"`
+type GetDeploymentDeployments5 struct {
+	Owner string                                                                        `json:"owner"`
+	PrID  *int64                                                                        `json:"prId,omitempty"`
+	Ref   *string                                                                       `json:"ref,omitempty"`
+	Sha   *string                                                                       `json:"sha,omitempty"`
+	Slug  string                                                                        `json:"slug"`
+	Type  GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource5Type `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource5) GetOwner() string {
+func (o *GetDeploymentDeployments5) GetOwner() string {
 	if o == nil {
 		return ""
 	}
 	return o.Owner
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource5) GetPrID() *int64 {
+func (o *GetDeploymentDeployments5) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource5) GetRef() *string {
+func (o *GetDeploymentDeployments5) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource5) GetSha() *string {
+func (o *GetDeploymentDeployments5) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource5) GetSlug() string {
+func (o *GetDeploymentDeployments5) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource5) GetType() GetDeployment200ApplicationJSON2GitSource5Type {
+func (o *GetDeploymentDeployments5) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource5Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2GitSource5Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource5Type("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON2GitSource4Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource4Type string
 
 const (
-	GetDeployment200ApplicationJSON2GitSource4TypeBitbucket GetDeployment200ApplicationJSON2GitSource4Type = "bitbucket"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource4TypeBitbucket GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource4Type = "bitbucket"
 )
 
-func (e GetDeployment200ApplicationJSON2GitSource4Type) ToPointer() *GetDeployment200ApplicationJSON2GitSource4Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource4Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource4Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2GitSource4Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource4Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = GetDeployment200ApplicationJSON2GitSource4Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource4Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2GitSource4Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource4Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON2GitSource4 struct {
-	PrID          *int64                                         `json:"prId,omitempty"`
-	Ref           *string                                        `json:"ref,omitempty"`
-	RepoUUID      string                                         `json:"repoUuid"`
-	Sha           *string                                        `json:"sha,omitempty"`
-	Type          GetDeployment200ApplicationJSON2GitSource4Type `json:"type"`
-	WorkspaceUUID *string                                        `json:"workspaceUuid,omitempty"`
+type GetDeploymentDeployments4 struct {
+	PrID          *int64                                                                        `json:"prId,omitempty"`
+	Ref           *string                                                                       `json:"ref,omitempty"`
+	RepoUUID      string                                                                        `json:"repoUuid"`
+	Sha           *string                                                                       `json:"sha,omitempty"`
+	Type          GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource4Type `json:"type"`
+	WorkspaceUUID *string                                                                       `json:"workspaceUuid,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource4) GetPrID() *int64 {
+func (o *GetDeploymentDeployments4) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource4) GetRef() *string {
+func (o *GetDeploymentDeployments4) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource4) GetRepoUUID() string {
+func (o *GetDeploymentDeployments4) GetRepoUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoUUID
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource4) GetSha() *string {
+func (o *GetDeploymentDeployments4) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource4) GetType() GetDeployment200ApplicationJSON2GitSource4Type {
+func (o *GetDeploymentDeployments4) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource4Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2GitSource4Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource4Type("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource4) GetWorkspaceUUID() *string {
+func (o *GetDeploymentDeployments4) GetWorkspaceUUID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.WorkspaceUUID
 }
 
-type GetDeployment200ApplicationJSON2GitSource3ProjectIDType string
+type GetDeploymentDeploymentsProjectIDType string
 
 const (
-	GetDeployment200ApplicationJSON2GitSource3ProjectIDTypeStr     GetDeployment200ApplicationJSON2GitSource3ProjectIDType = "str"
-	GetDeployment200ApplicationJSON2GitSource3ProjectIDTypeInteger GetDeployment200ApplicationJSON2GitSource3ProjectIDType = "integer"
+	GetDeploymentDeploymentsProjectIDTypeStr     GetDeploymentDeploymentsProjectIDType = "str"
+	GetDeploymentDeploymentsProjectIDTypeInteger GetDeploymentDeploymentsProjectIDType = "integer"
 )
 
-type GetDeployment200ApplicationJSON2GitSource3ProjectID struct {
+type GetDeploymentDeploymentsProjectID struct {
 	Str     *string
 	Integer *int64
 
-	Type GetDeployment200ApplicationJSON2GitSource3ProjectIDType
+	Type GetDeploymentDeploymentsProjectIDType
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSource3ProjectIDStr(str string) GetDeployment200ApplicationJSON2GitSource3ProjectID {
-	typ := GetDeployment200ApplicationJSON2GitSource3ProjectIDTypeStr
+func CreateGetDeploymentDeploymentsProjectIDStr(str string) GetDeploymentDeploymentsProjectID {
+	typ := GetDeploymentDeploymentsProjectIDTypeStr
 
-	return GetDeployment200ApplicationJSON2GitSource3ProjectID{
+	return GetDeploymentDeploymentsProjectID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSource3ProjectIDInteger(integer int64) GetDeployment200ApplicationJSON2GitSource3ProjectID {
-	typ := GetDeployment200ApplicationJSON2GitSource3ProjectIDTypeInteger
+func CreateGetDeploymentDeploymentsProjectIDInteger(integer int64) GetDeploymentDeploymentsProjectID {
+	typ := GetDeploymentDeploymentsProjectIDTypeInteger
 
-	return GetDeployment200ApplicationJSON2GitSource3ProjectID{
+	return GetDeploymentDeploymentsProjectID{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON2GitSource3ProjectID) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentDeploymentsProjectID) UnmarshalJSON(data []byte) error {
 
 	str := new(string)
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = GetDeployment200ApplicationJSON2GitSource3ProjectIDTypeStr
+		u.Type = GetDeploymentDeploymentsProjectIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = GetDeployment200ApplicationJSON2GitSource3ProjectIDTypeInteger
+		u.Type = GetDeploymentDeploymentsProjectIDTypeInteger
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON2GitSource3ProjectID) MarshalJSON() ([]byte, error) {
+func (u GetDeploymentDeploymentsProjectID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -669,200 +669,200 @@ func (u GetDeployment200ApplicationJSON2GitSource3ProjectID) MarshalJSON() ([]by
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type GetDeployment200ApplicationJSON2GitSource3Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource3Type string
 
 const (
-	GetDeployment200ApplicationJSON2GitSource3TypeGitlab GetDeployment200ApplicationJSON2GitSource3Type = "gitlab"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource3TypeGitlab GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource3Type = "gitlab"
 )
 
-func (e GetDeployment200ApplicationJSON2GitSource3Type) ToPointer() *GetDeployment200ApplicationJSON2GitSource3Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource3Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource3Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2GitSource3Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = GetDeployment200ApplicationJSON2GitSource3Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource3Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2GitSource3Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource3Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON2GitSource3 struct {
-	PrID      *int64                                              `json:"prId,omitempty"`
-	ProjectID GetDeployment200ApplicationJSON2GitSource3ProjectID `json:"projectId"`
-	Ref       *string                                             `json:"ref,omitempty"`
-	Sha       *string                                             `json:"sha,omitempty"`
-	Type      GetDeployment200ApplicationJSON2GitSource3Type      `json:"type"`
+type GetDeploymentDeploymentsResponse2003 struct {
+	PrID      *int64                                                                        `json:"prId,omitempty"`
+	ProjectID GetDeploymentDeploymentsProjectID                                             `json:"projectId"`
+	Ref       *string                                                                       `json:"ref,omitempty"`
+	Sha       *string                                                                       `json:"sha,omitempty"`
+	Type      GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource3Type `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource3) GetPrID() *int64 {
+func (o *GetDeploymentDeploymentsResponse2003) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource3) GetProjectID() GetDeployment200ApplicationJSON2GitSource3ProjectID {
+func (o *GetDeploymentDeploymentsResponse2003) GetProjectID() GetDeploymentDeploymentsProjectID {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2GitSource3ProjectID{}
+		return GetDeploymentDeploymentsProjectID{}
 	}
 	return o.ProjectID
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource3) GetRef() *string {
+func (o *GetDeploymentDeploymentsResponse2003) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource3) GetSha() *string {
+func (o *GetDeploymentDeploymentsResponse2003) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource3) GetType() GetDeployment200ApplicationJSON2GitSource3Type {
+func (o *GetDeploymentDeploymentsResponse2003) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource3Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2GitSource3Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSource3Type("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON2GitSource2Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSourceType string
 
 const (
-	GetDeployment200ApplicationJSON2GitSource2TypeGithub GetDeployment200ApplicationJSON2GitSource2Type = "github"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSourceTypeGithub GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSourceType = "github"
 )
 
-func (e GetDeployment200ApplicationJSON2GitSource2Type) ToPointer() *GetDeployment200ApplicationJSON2GitSource2Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSourceType) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSourceType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2GitSource2Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSourceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = GetDeployment200ApplicationJSON2GitSource2Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSourceType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2GitSource2Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSourceType: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON2GitSource2 struct {
-	Org  string                                         `json:"org"`
-	PrID *int64                                         `json:"prId,omitempty"`
-	Ref  *string                                        `json:"ref,omitempty"`
-	Repo string                                         `json:"repo"`
-	Sha  *string                                        `json:"sha,omitempty"`
-	Type GetDeployment200ApplicationJSON2GitSource2Type `json:"type"`
+type GetDeploymentDeploymentsResponse200ApplicationJSON2 struct {
+	Org  string                                                                       `json:"org"`
+	PrID *int64                                                                       `json:"prId,omitempty"`
+	Ref  *string                                                                      `json:"ref,omitempty"`
+	Repo string                                                                       `json:"repo"`
+	Sha  *string                                                                      `json:"sha,omitempty"`
+	Type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSourceType `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource2) GetOrg() string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSON2) GetOrg() string {
 	if o == nil {
 		return ""
 	}
 	return o.Org
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource2) GetPrID() *int64 {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSON2) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource2) GetRef() *string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSON2) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource2) GetRepo() string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSON2) GetRepo() string {
 	if o == nil {
 		return ""
 	}
 	return o.Repo
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource2) GetSha() *string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSON2) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource2) GetType() GetDeployment200ApplicationJSON2GitSource2Type {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSON2) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSourceType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2GitSource2Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2GitSourceType("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON2GitSource1RepoIDType string
+type GetDeploymentDeploymentsRepoIDType string
 
 const (
-	GetDeployment200ApplicationJSON2GitSource1RepoIDTypeStr     GetDeployment200ApplicationJSON2GitSource1RepoIDType = "str"
-	GetDeployment200ApplicationJSON2GitSource1RepoIDTypeInteger GetDeployment200ApplicationJSON2GitSource1RepoIDType = "integer"
+	GetDeploymentDeploymentsRepoIDTypeStr     GetDeploymentDeploymentsRepoIDType = "str"
+	GetDeploymentDeploymentsRepoIDTypeInteger GetDeploymentDeploymentsRepoIDType = "integer"
 )
 
-type GetDeployment200ApplicationJSON2GitSource1RepoID struct {
+type GetDeploymentDeploymentsRepoID struct {
 	Str     *string
 	Integer *int64
 
-	Type GetDeployment200ApplicationJSON2GitSource1RepoIDType
+	Type GetDeploymentDeploymentsRepoIDType
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSource1RepoIDStr(str string) GetDeployment200ApplicationJSON2GitSource1RepoID {
-	typ := GetDeployment200ApplicationJSON2GitSource1RepoIDTypeStr
+func CreateGetDeploymentDeploymentsRepoIDStr(str string) GetDeploymentDeploymentsRepoID {
+	typ := GetDeploymentDeploymentsRepoIDTypeStr
 
-	return GetDeployment200ApplicationJSON2GitSource1RepoID{
+	return GetDeploymentDeploymentsRepoID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSource1RepoIDInteger(integer int64) GetDeployment200ApplicationJSON2GitSource1RepoID {
-	typ := GetDeployment200ApplicationJSON2GitSource1RepoIDTypeInteger
+func CreateGetDeploymentDeploymentsRepoIDInteger(integer int64) GetDeploymentDeploymentsRepoID {
+	typ := GetDeploymentDeploymentsRepoIDTypeInteger
 
-	return GetDeployment200ApplicationJSON2GitSource1RepoID{
+	return GetDeploymentDeploymentsRepoID{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON2GitSource1RepoID) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentDeploymentsRepoID) UnmarshalJSON(data []byte) error {
 
 	str := new(string)
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = GetDeployment200ApplicationJSON2GitSource1RepoIDTypeStr
+		u.Type = GetDeploymentDeploymentsRepoIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = GetDeployment200ApplicationJSON2GitSource1RepoIDTypeInteger
+		u.Type = GetDeploymentDeploymentsRepoIDTypeInteger
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON2GitSource1RepoID) MarshalJSON() ([]byte, error) {
+func (u GetDeploymentDeploymentsRepoID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -874,323 +874,323 @@ func (u GetDeployment200ApplicationJSON2GitSource1RepoID) MarshalJSON() ([]byte,
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type GetDeployment200ApplicationJSON2GitSource1Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2Type string
 
 const (
-	GetDeployment200ApplicationJSON2GitSource1TypeGithub GetDeployment200ApplicationJSON2GitSource1Type = "github"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2TypeGithub GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2Type = "github"
 )
 
-func (e GetDeployment200ApplicationJSON2GitSource1Type) ToPointer() *GetDeployment200ApplicationJSON2GitSource1Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2GitSource1Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = GetDeployment200ApplicationJSON2GitSource1Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2GitSource1Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON2GitSource1 struct {
-	PrID   *int64                                           `json:"prId,omitempty"`
-	Ref    *string                                          `json:"ref,omitempty"`
-	RepoID GetDeployment200ApplicationJSON2GitSource1RepoID `json:"repoId"`
-	Sha    *string                                          `json:"sha,omitempty"`
-	Type   GetDeployment200ApplicationJSON2GitSource1Type   `json:"type"`
+type GetDeploymentDeploymentsResponse200ApplicationJSON1 struct {
+	PrID   *int64                                                              `json:"prId,omitempty"`
+	Ref    *string                                                             `json:"ref,omitempty"`
+	RepoID GetDeploymentDeploymentsRepoID                                      `json:"repoId"`
+	Sha    *string                                                             `json:"sha,omitempty"`
+	Type   GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2Type `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource1) GetPrID() *int64 {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSON1) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource1) GetRef() *string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSON1) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource1) GetRepoID() GetDeployment200ApplicationJSON2GitSource1RepoID {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSON1) GetRepoID() GetDeploymentDeploymentsRepoID {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2GitSource1RepoID{}
+		return GetDeploymentDeploymentsRepoID{}
 	}
 	return o.RepoID
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource1) GetSha() *string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSON1) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON2GitSource1) GetType() GetDeployment200ApplicationJSON2GitSource1Type {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSON1) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2GitSource1Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2Type("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON2GitSourceType string
+type GetDeploymentDeploymentsGitSourceType string
 
 const (
-	GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource1 GetDeployment200ApplicationJSON2GitSourceType = "getDeployment_200ApplicationJSON_2_gitSource_1"
-	GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource2 GetDeployment200ApplicationJSON2GitSourceType = "getDeployment_200ApplicationJSON_2_gitSource_2"
-	GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource3 GetDeployment200ApplicationJSON2GitSourceType = "getDeployment_200ApplicationJSON_2_gitSource_3"
-	GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource4 GetDeployment200ApplicationJSON2GitSourceType = "getDeployment_200ApplicationJSON_2_gitSource_4"
-	GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource5 GetDeployment200ApplicationJSON2GitSourceType = "getDeployment_200ApplicationJSON_2_gitSource_5"
-	GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource6 GetDeployment200ApplicationJSON2GitSourceType = "getDeployment_200ApplicationJSON_2_gitSource_6"
-	GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource7 GetDeployment200ApplicationJSON2GitSourceType = "getDeployment_200ApplicationJSON_2_gitSource_7"
-	GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource8 GetDeployment200ApplicationJSON2GitSourceType = "getDeployment_200ApplicationJSON_2_gitSource_8"
-	GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource9 GetDeployment200ApplicationJSON2GitSourceType = "getDeployment_200ApplicationJSON_2_gitSource_9"
+	GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeploymentsResponse200ApplicationJSON1 GetDeploymentDeploymentsGitSourceType = "getDeployment_deployments_response_200_ApplicationJSON_1"
+	GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeploymentsResponse200ApplicationJSON2 GetDeploymentDeploymentsGitSourceType = "getDeployment_deployments_response_200_ApplicationJSON_2"
+	GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeploymentsResponse2003                GetDeploymentDeploymentsGitSourceType = "getDeployment_deployments_response_200_3"
+	GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments4                           GetDeploymentDeploymentsGitSourceType = "getDeployment_deployments_4"
+	GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments5                           GetDeploymentDeploymentsGitSourceType = "getDeployment_deployments_5"
+	GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments6                           GetDeploymentDeploymentsGitSourceType = "getDeployment_deployments_6"
+	GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments7                           GetDeploymentDeploymentsGitSourceType = "getDeployment_deployments_7"
+	GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments8                           GetDeploymentDeploymentsGitSourceType = "getDeployment_deployments_8"
+	GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments9                           GetDeploymentDeploymentsGitSourceType = "getDeployment_deployments_9"
 )
 
-type GetDeployment200ApplicationJSON2GitSource struct {
-	GetDeployment200ApplicationJSON2GitSource1 *GetDeployment200ApplicationJSON2GitSource1
-	GetDeployment200ApplicationJSON2GitSource2 *GetDeployment200ApplicationJSON2GitSource2
-	GetDeployment200ApplicationJSON2GitSource3 *GetDeployment200ApplicationJSON2GitSource3
-	GetDeployment200ApplicationJSON2GitSource4 *GetDeployment200ApplicationJSON2GitSource4
-	GetDeployment200ApplicationJSON2GitSource5 *GetDeployment200ApplicationJSON2GitSource5
-	GetDeployment200ApplicationJSON2GitSource6 *GetDeployment200ApplicationJSON2GitSource6
-	GetDeployment200ApplicationJSON2GitSource7 *GetDeployment200ApplicationJSON2GitSource7
-	GetDeployment200ApplicationJSON2GitSource8 *GetDeployment200ApplicationJSON2GitSource8
-	GetDeployment200ApplicationJSON2GitSource9 *GetDeployment200ApplicationJSON2GitSource9
+type GetDeploymentDeploymentsGitSource struct {
+	GetDeploymentDeploymentsResponse200ApplicationJSON1 *GetDeploymentDeploymentsResponse200ApplicationJSON1
+	GetDeploymentDeploymentsResponse200ApplicationJSON2 *GetDeploymentDeploymentsResponse200ApplicationJSON2
+	GetDeploymentDeploymentsResponse2003                *GetDeploymentDeploymentsResponse2003
+	GetDeploymentDeployments4                           *GetDeploymentDeployments4
+	GetDeploymentDeployments5                           *GetDeploymentDeployments5
+	GetDeploymentDeployments6                           *GetDeploymentDeployments6
+	GetDeploymentDeployments7                           *GetDeploymentDeployments7
+	GetDeploymentDeployments8                           *GetDeploymentDeployments8
+	GetDeploymentDeployments9                           *GetDeploymentDeployments9
 
-	Type GetDeployment200ApplicationJSON2GitSourceType
+	Type GetDeploymentDeploymentsGitSourceType
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSourceGetDeployment200ApplicationJSON2GitSource1(getDeployment200ApplicationJSON2GitSource1 GetDeployment200ApplicationJSON2GitSource1) GetDeployment200ApplicationJSON2GitSource {
-	typ := GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource1
+func CreateGetDeploymentDeploymentsGitSourceGetDeploymentDeploymentsResponse200ApplicationJSON1(getDeploymentDeploymentsResponse200ApplicationJSON1 GetDeploymentDeploymentsResponse200ApplicationJSON1) GetDeploymentDeploymentsGitSource {
+	typ := GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeploymentsResponse200ApplicationJSON1
 
-	return GetDeployment200ApplicationJSON2GitSource{
-		GetDeployment200ApplicationJSON2GitSource1: &getDeployment200ApplicationJSON2GitSource1,
+	return GetDeploymentDeploymentsGitSource{
+		GetDeploymentDeploymentsResponse200ApplicationJSON1: &getDeploymentDeploymentsResponse200ApplicationJSON1,
 		Type: typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSourceGetDeployment200ApplicationJSON2GitSource2(getDeployment200ApplicationJSON2GitSource2 GetDeployment200ApplicationJSON2GitSource2) GetDeployment200ApplicationJSON2GitSource {
-	typ := GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource2
+func CreateGetDeploymentDeploymentsGitSourceGetDeploymentDeploymentsResponse200ApplicationJSON2(getDeploymentDeploymentsResponse200ApplicationJSON2 GetDeploymentDeploymentsResponse200ApplicationJSON2) GetDeploymentDeploymentsGitSource {
+	typ := GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeploymentsResponse200ApplicationJSON2
 
-	return GetDeployment200ApplicationJSON2GitSource{
-		GetDeployment200ApplicationJSON2GitSource2: &getDeployment200ApplicationJSON2GitSource2,
+	return GetDeploymentDeploymentsGitSource{
+		GetDeploymentDeploymentsResponse200ApplicationJSON2: &getDeploymentDeploymentsResponse200ApplicationJSON2,
 		Type: typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSourceGetDeployment200ApplicationJSON2GitSource3(getDeployment200ApplicationJSON2GitSource3 GetDeployment200ApplicationJSON2GitSource3) GetDeployment200ApplicationJSON2GitSource {
-	typ := GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource3
+func CreateGetDeploymentDeploymentsGitSourceGetDeploymentDeploymentsResponse2003(getDeploymentDeploymentsResponse2003 GetDeploymentDeploymentsResponse2003) GetDeploymentDeploymentsGitSource {
+	typ := GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeploymentsResponse2003
 
-	return GetDeployment200ApplicationJSON2GitSource{
-		GetDeployment200ApplicationJSON2GitSource3: &getDeployment200ApplicationJSON2GitSource3,
-		Type: typ,
+	return GetDeploymentDeploymentsGitSource{
+		GetDeploymentDeploymentsResponse2003: &getDeploymentDeploymentsResponse2003,
+		Type:                                 typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSourceGetDeployment200ApplicationJSON2GitSource4(getDeployment200ApplicationJSON2GitSource4 GetDeployment200ApplicationJSON2GitSource4) GetDeployment200ApplicationJSON2GitSource {
-	typ := GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource4
+func CreateGetDeploymentDeploymentsGitSourceGetDeploymentDeployments4(getDeploymentDeployments4 GetDeploymentDeployments4) GetDeploymentDeploymentsGitSource {
+	typ := GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments4
 
-	return GetDeployment200ApplicationJSON2GitSource{
-		GetDeployment200ApplicationJSON2GitSource4: &getDeployment200ApplicationJSON2GitSource4,
-		Type: typ,
+	return GetDeploymentDeploymentsGitSource{
+		GetDeploymentDeployments4: &getDeploymentDeployments4,
+		Type:                      typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSourceGetDeployment200ApplicationJSON2GitSource5(getDeployment200ApplicationJSON2GitSource5 GetDeployment200ApplicationJSON2GitSource5) GetDeployment200ApplicationJSON2GitSource {
-	typ := GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource5
+func CreateGetDeploymentDeploymentsGitSourceGetDeploymentDeployments5(getDeploymentDeployments5 GetDeploymentDeployments5) GetDeploymentDeploymentsGitSource {
+	typ := GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments5
 
-	return GetDeployment200ApplicationJSON2GitSource{
-		GetDeployment200ApplicationJSON2GitSource5: &getDeployment200ApplicationJSON2GitSource5,
-		Type: typ,
+	return GetDeploymentDeploymentsGitSource{
+		GetDeploymentDeployments5: &getDeploymentDeployments5,
+		Type:                      typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSourceGetDeployment200ApplicationJSON2GitSource6(getDeployment200ApplicationJSON2GitSource6 GetDeployment200ApplicationJSON2GitSource6) GetDeployment200ApplicationJSON2GitSource {
-	typ := GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource6
+func CreateGetDeploymentDeploymentsGitSourceGetDeploymentDeployments6(getDeploymentDeployments6 GetDeploymentDeployments6) GetDeploymentDeploymentsGitSource {
+	typ := GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments6
 
-	return GetDeployment200ApplicationJSON2GitSource{
-		GetDeployment200ApplicationJSON2GitSource6: &getDeployment200ApplicationJSON2GitSource6,
-		Type: typ,
+	return GetDeploymentDeploymentsGitSource{
+		GetDeploymentDeployments6: &getDeploymentDeployments6,
+		Type:                      typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSourceGetDeployment200ApplicationJSON2GitSource7(getDeployment200ApplicationJSON2GitSource7 GetDeployment200ApplicationJSON2GitSource7) GetDeployment200ApplicationJSON2GitSource {
-	typ := GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource7
+func CreateGetDeploymentDeploymentsGitSourceGetDeploymentDeployments7(getDeploymentDeployments7 GetDeploymentDeployments7) GetDeploymentDeploymentsGitSource {
+	typ := GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments7
 
-	return GetDeployment200ApplicationJSON2GitSource{
-		GetDeployment200ApplicationJSON2GitSource7: &getDeployment200ApplicationJSON2GitSource7,
-		Type: typ,
+	return GetDeploymentDeploymentsGitSource{
+		GetDeploymentDeployments7: &getDeploymentDeployments7,
+		Type:                      typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSourceGetDeployment200ApplicationJSON2GitSource8(getDeployment200ApplicationJSON2GitSource8 GetDeployment200ApplicationJSON2GitSource8) GetDeployment200ApplicationJSON2GitSource {
-	typ := GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource8
+func CreateGetDeploymentDeploymentsGitSourceGetDeploymentDeployments8(getDeploymentDeployments8 GetDeploymentDeployments8) GetDeploymentDeploymentsGitSource {
+	typ := GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments8
 
-	return GetDeployment200ApplicationJSON2GitSource{
-		GetDeployment200ApplicationJSON2GitSource8: &getDeployment200ApplicationJSON2GitSource8,
-		Type: typ,
+	return GetDeploymentDeploymentsGitSource{
+		GetDeploymentDeployments8: &getDeploymentDeployments8,
+		Type:                      typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON2GitSourceGetDeployment200ApplicationJSON2GitSource9(getDeployment200ApplicationJSON2GitSource9 GetDeployment200ApplicationJSON2GitSource9) GetDeployment200ApplicationJSON2GitSource {
-	typ := GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource9
+func CreateGetDeploymentDeploymentsGitSourceGetDeploymentDeployments9(getDeploymentDeployments9 GetDeploymentDeployments9) GetDeploymentDeploymentsGitSource {
+	typ := GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments9
 
-	return GetDeployment200ApplicationJSON2GitSource{
-		GetDeployment200ApplicationJSON2GitSource9: &getDeployment200ApplicationJSON2GitSource9,
-		Type: typ,
+	return GetDeploymentDeploymentsGitSource{
+		GetDeploymentDeployments9: &getDeploymentDeployments9,
+		Type:                      typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON2GitSource) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentDeploymentsGitSource) UnmarshalJSON(data []byte) error {
 
-	getDeployment200ApplicationJSON2GitSource6 := new(GetDeployment200ApplicationJSON2GitSource6)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource6, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource6 = getDeployment200ApplicationJSON2GitSource6
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource6
+	getDeploymentDeployments6 := new(GetDeploymentDeployments6)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeployments6, "", true, true); err == nil {
+		u.GetDeploymentDeployments6 = getDeploymentDeployments6
+		u.Type = GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments6
 		return nil
 	}
 
-	getDeployment200ApplicationJSON2GitSource8 := new(GetDeployment200ApplicationJSON2GitSource8)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource8, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource8 = getDeployment200ApplicationJSON2GitSource8
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource8
+	getDeploymentDeployments8 := new(GetDeploymentDeployments8)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeployments8, "", true, true); err == nil {
+		u.GetDeploymentDeployments8 = getDeploymentDeployments8
+		u.Type = GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments8
 		return nil
 	}
 
-	getDeployment200ApplicationJSON2GitSource1 := new(GetDeployment200ApplicationJSON2GitSource1)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource1, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource1 = getDeployment200ApplicationJSON2GitSource1
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource1
+	getDeploymentDeploymentsResponse200ApplicationJSON1 := new(GetDeploymentDeploymentsResponse200ApplicationJSON1)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse200ApplicationJSON1, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse200ApplicationJSON1 = getDeploymentDeploymentsResponse200ApplicationJSON1
+		u.Type = GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeploymentsResponse200ApplicationJSON1
 		return nil
 	}
 
-	getDeployment200ApplicationJSON2GitSource3 := new(GetDeployment200ApplicationJSON2GitSource3)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource3, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource3 = getDeployment200ApplicationJSON2GitSource3
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource3
+	getDeploymentDeploymentsResponse2003 := new(GetDeploymentDeploymentsResponse2003)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse2003, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse2003 = getDeploymentDeploymentsResponse2003
+		u.Type = GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeploymentsResponse2003
 		return nil
 	}
 
-	getDeployment200ApplicationJSON2GitSource2 := new(GetDeployment200ApplicationJSON2GitSource2)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource2, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource2 = getDeployment200ApplicationJSON2GitSource2
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource2
+	getDeploymentDeploymentsResponse200ApplicationJSON2 := new(GetDeploymentDeploymentsResponse200ApplicationJSON2)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse200ApplicationJSON2, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse200ApplicationJSON2 = getDeploymentDeploymentsResponse200ApplicationJSON2
+		u.Type = GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeploymentsResponse200ApplicationJSON2
 		return nil
 	}
 
-	getDeployment200ApplicationJSON2GitSource4 := new(GetDeployment200ApplicationJSON2GitSource4)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource4, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource4 = getDeployment200ApplicationJSON2GitSource4
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource4
+	getDeploymentDeployments4 := new(GetDeploymentDeployments4)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeployments4, "", true, true); err == nil {
+		u.GetDeploymentDeployments4 = getDeploymentDeployments4
+		u.Type = GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments4
 		return nil
 	}
 
-	getDeployment200ApplicationJSON2GitSource5 := new(GetDeployment200ApplicationJSON2GitSource5)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource5, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource5 = getDeployment200ApplicationJSON2GitSource5
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource5
+	getDeploymentDeployments5 := new(GetDeploymentDeployments5)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeployments5, "", true, true); err == nil {
+		u.GetDeploymentDeployments5 = getDeploymentDeployments5
+		u.Type = GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments5
 		return nil
 	}
 
-	getDeployment200ApplicationJSON2GitSource7 := new(GetDeployment200ApplicationJSON2GitSource7)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource7, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource7 = getDeployment200ApplicationJSON2GitSource7
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource7
+	getDeploymentDeployments7 := new(GetDeploymentDeployments7)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeployments7, "", true, true); err == nil {
+		u.GetDeploymentDeployments7 = getDeploymentDeployments7
+		u.Type = GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments7
 		return nil
 	}
 
-	getDeployment200ApplicationJSON2GitSource9 := new(GetDeployment200ApplicationJSON2GitSource9)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2GitSource9, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON2GitSource9 = getDeployment200ApplicationJSON2GitSource9
-		u.Type = GetDeployment200ApplicationJSON2GitSourceTypeGetDeployment200ApplicationJSON2GitSource9
+	getDeploymentDeployments9 := new(GetDeploymentDeployments9)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeployments9, "", true, true); err == nil {
+		u.GetDeploymentDeployments9 = getDeploymentDeployments9
+		u.Type = GetDeploymentDeploymentsGitSourceTypeGetDeploymentDeployments9
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON2GitSource) MarshalJSON() ([]byte, error) {
-	if u.GetDeployment200ApplicationJSON2GitSource1 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource1, "", true)
+func (u GetDeploymentDeploymentsGitSource) MarshalJSON() ([]byte, error) {
+	if u.GetDeploymentDeploymentsResponse200ApplicationJSON1 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse200ApplicationJSON1, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON2GitSource2 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource2, "", true)
+	if u.GetDeploymentDeploymentsResponse200ApplicationJSON2 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse200ApplicationJSON2, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON2GitSource3 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource3, "", true)
+	if u.GetDeploymentDeploymentsResponse2003 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse2003, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON2GitSource4 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource4, "", true)
+	if u.GetDeploymentDeployments4 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeployments4, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON2GitSource5 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource5, "", true)
+	if u.GetDeploymentDeployments5 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeployments5, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON2GitSource6 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource6, "", true)
+	if u.GetDeploymentDeployments6 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeployments6, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON2GitSource7 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource7, "", true)
+	if u.GetDeploymentDeployments7 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeployments7, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON2GitSource8 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource8, "", true)
+	if u.GetDeploymentDeployments8 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeployments8, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON2GitSource9 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2GitSource9, "", true)
+	if u.GetDeploymentDeployments9 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeployments9, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type GetDeployment200ApplicationJSON2LambdasOutput struct {
+type GetDeploymentDeploymentsOutput struct {
 	FunctionName string `json:"functionName"`
 	Path         string `json:"path"`
 }
 
-func (o *GetDeployment200ApplicationJSON2LambdasOutput) GetFunctionName() string {
+func (o *GetDeploymentDeploymentsOutput) GetFunctionName() string {
 	if o == nil {
 		return ""
 	}
 	return o.FunctionName
 }
 
-func (o *GetDeployment200ApplicationJSON2LambdasOutput) GetPath() string {
+func (o *GetDeploymentDeploymentsOutput) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-type GetDeployment200ApplicationJSON2LambdasReadyState string
+type GetDeploymentDeploymentsResponseReadyState string
 
 const (
-	GetDeployment200ApplicationJSON2LambdasReadyStateBuilding     GetDeployment200ApplicationJSON2LambdasReadyState = "BUILDING"
-	GetDeployment200ApplicationJSON2LambdasReadyStateError        GetDeployment200ApplicationJSON2LambdasReadyState = "ERROR"
-	GetDeployment200ApplicationJSON2LambdasReadyStateInitializing GetDeployment200ApplicationJSON2LambdasReadyState = "INITIALIZING"
-	GetDeployment200ApplicationJSON2LambdasReadyStateReady        GetDeployment200ApplicationJSON2LambdasReadyState = "READY"
+	GetDeploymentDeploymentsResponseReadyStateBuilding     GetDeploymentDeploymentsResponseReadyState = "BUILDING"
+	GetDeploymentDeploymentsResponseReadyStateError        GetDeploymentDeploymentsResponseReadyState = "ERROR"
+	GetDeploymentDeploymentsResponseReadyStateInitializing GetDeploymentDeploymentsResponseReadyState = "INITIALIZING"
+	GetDeploymentDeploymentsResponseReadyStateReady        GetDeploymentDeploymentsResponseReadyState = "READY"
 )
 
-func (e GetDeployment200ApplicationJSON2LambdasReadyState) ToPointer() *GetDeployment200ApplicationJSON2LambdasReadyState {
+func (e GetDeploymentDeploymentsResponseReadyState) ToPointer() *GetDeploymentDeploymentsResponseReadyState {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2LambdasReadyState) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponseReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1203,81 +1203,81 @@ func (e *GetDeployment200ApplicationJSON2LambdasReadyState) UnmarshalJSON(data [
 	case "INITIALIZING":
 		fallthrough
 	case "READY":
-		*e = GetDeployment200ApplicationJSON2LambdasReadyState(v)
+		*e = GetDeploymentDeploymentsResponseReadyState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2LambdasReadyState: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponseReadyState: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON2Lambdas struct {
-	CreatedAt    *int64                                             `json:"createdAt,omitempty"`
-	Entrypoint   *string                                            `json:"entrypoint,omitempty"`
-	ID           string                                             `json:"id"`
-	Output       []GetDeployment200ApplicationJSON2LambdasOutput    `json:"output"`
-	ReadyState   *GetDeployment200ApplicationJSON2LambdasReadyState `json:"readyState,omitempty"`
-	ReadyStateAt *int64                                             `json:"readyStateAt,omitempty"`
+type GetDeploymentDeploymentsLambdas struct {
+	CreatedAt    *int64                                      `json:"createdAt,omitempty"`
+	Entrypoint   *string                                     `json:"entrypoint,omitempty"`
+	ID           string                                      `json:"id"`
+	Output       []GetDeploymentDeploymentsOutput            `json:"output"`
+	ReadyState   *GetDeploymentDeploymentsResponseReadyState `json:"readyState,omitempty"`
+	ReadyStateAt *int64                                      `json:"readyStateAt,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON2Lambdas) GetCreatedAt() *int64 {
+func (o *GetDeploymentDeploymentsLambdas) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *GetDeployment200ApplicationJSON2Lambdas) GetEntrypoint() *string {
+func (o *GetDeploymentDeploymentsLambdas) GetEntrypoint() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Entrypoint
 }
 
-func (o *GetDeployment200ApplicationJSON2Lambdas) GetID() string {
+func (o *GetDeploymentDeploymentsLambdas) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetDeployment200ApplicationJSON2Lambdas) GetOutput() []GetDeployment200ApplicationJSON2LambdasOutput {
+func (o *GetDeploymentDeploymentsLambdas) GetOutput() []GetDeploymentDeploymentsOutput {
 	if o == nil {
-		return []GetDeployment200ApplicationJSON2LambdasOutput{}
+		return []GetDeploymentDeploymentsOutput{}
 	}
 	return o.Output
 }
 
-func (o *GetDeployment200ApplicationJSON2Lambdas) GetReadyState() *GetDeployment200ApplicationJSON2LambdasReadyState {
+func (o *GetDeploymentDeploymentsLambdas) GetReadyState() *GetDeploymentDeploymentsResponseReadyState {
 	if o == nil {
 		return nil
 	}
 	return o.ReadyState
 }
 
-func (o *GetDeployment200ApplicationJSON2Lambdas) GetReadyStateAt() *int64 {
+func (o *GetDeploymentDeploymentsLambdas) GetReadyStateAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ReadyStateAt
 }
 
-// GetDeployment200ApplicationJSON2ReadyState - The state of the deployment depending on the process of deploying, or if it is ready or in an error state
-type GetDeployment200ApplicationJSON2ReadyState string
+// GetDeploymentDeploymentsReadyState - The state of the deployment depending on the process of deploying, or if it is ready or in an error state
+type GetDeploymentDeploymentsReadyState string
 
 const (
-	GetDeployment200ApplicationJSON2ReadyStateQueued       GetDeployment200ApplicationJSON2ReadyState = "QUEUED"
-	GetDeployment200ApplicationJSON2ReadyStateBuilding     GetDeployment200ApplicationJSON2ReadyState = "BUILDING"
-	GetDeployment200ApplicationJSON2ReadyStateError        GetDeployment200ApplicationJSON2ReadyState = "ERROR"
-	GetDeployment200ApplicationJSON2ReadyStateInitializing GetDeployment200ApplicationJSON2ReadyState = "INITIALIZING"
-	GetDeployment200ApplicationJSON2ReadyStateReady        GetDeployment200ApplicationJSON2ReadyState = "READY"
-	GetDeployment200ApplicationJSON2ReadyStateCanceled     GetDeployment200ApplicationJSON2ReadyState = "CANCELED"
+	GetDeploymentDeploymentsReadyStateQueued       GetDeploymentDeploymentsReadyState = "QUEUED"
+	GetDeploymentDeploymentsReadyStateBuilding     GetDeploymentDeploymentsReadyState = "BUILDING"
+	GetDeploymentDeploymentsReadyStateError        GetDeploymentDeploymentsReadyState = "ERROR"
+	GetDeploymentDeploymentsReadyStateInitializing GetDeploymentDeploymentsReadyState = "INITIALIZING"
+	GetDeploymentDeploymentsReadyStateReady        GetDeploymentDeploymentsReadyState = "READY"
+	GetDeploymentDeploymentsReadyStateCanceled     GetDeploymentDeploymentsReadyState = "CANCELED"
 )
 
-func (e GetDeployment200ApplicationJSON2ReadyState) ToPointer() *GetDeployment200ApplicationJSON2ReadyState {
+func (e GetDeploymentDeploymentsReadyState) ToPointer() *GetDeploymentDeploymentsReadyState {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2ReadyState) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1294,26 +1294,26 @@ func (e *GetDeployment200ApplicationJSON2ReadyState) UnmarshalJSON(data []byte) 
 	case "READY":
 		fallthrough
 	case "CANCELED":
-		*e = GetDeployment200ApplicationJSON2ReadyState(v)
+		*e = GetDeploymentDeploymentsReadyState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2ReadyState: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsReadyState: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON2ReadySubstate - The substate of the deployment when the state is "READY"
-type GetDeployment200ApplicationJSON2ReadySubstate string
+// GetDeploymentDeploymentsReadySubstate - The substate of the deployment when the state is "READY"
+type GetDeploymentDeploymentsReadySubstate string
 
 const (
-	GetDeployment200ApplicationJSON2ReadySubstateStaged   GetDeployment200ApplicationJSON2ReadySubstate = "STAGED"
-	GetDeployment200ApplicationJSON2ReadySubstatePromoted GetDeployment200ApplicationJSON2ReadySubstate = "PROMOTED"
+	GetDeploymentDeploymentsReadySubstateStaged   GetDeploymentDeploymentsReadySubstate = "STAGED"
+	GetDeploymentDeploymentsReadySubstatePromoted GetDeploymentDeploymentsReadySubstate = "PROMOTED"
 )
 
-func (e GetDeployment200ApplicationJSON2ReadySubstate) ToPointer() *GetDeployment200ApplicationJSON2ReadySubstate {
+func (e GetDeploymentDeploymentsReadySubstate) ToPointer() *GetDeploymentDeploymentsReadySubstate {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2ReadySubstate) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsReadySubstate) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1322,29 +1322,29 @@ func (e *GetDeployment200ApplicationJSON2ReadySubstate) UnmarshalJSON(data []byt
 	case "STAGED":
 		fallthrough
 	case "PROMOTED":
-		*e = GetDeployment200ApplicationJSON2ReadySubstate(v)
+		*e = GetDeploymentDeploymentsReadySubstate(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2ReadySubstate: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsReadySubstate: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON2Source - Where was the deployment created from
-type GetDeployment200ApplicationJSON2Source string
+// GetDeploymentDeploymentsSource - Where was the deployment created from
+type GetDeploymentDeploymentsSource string
 
 const (
-	GetDeployment200ApplicationJSON2SourceCli        GetDeployment200ApplicationJSON2Source = "cli"
-	GetDeployment200ApplicationJSON2SourceGit        GetDeployment200ApplicationJSON2Source = "git"
-	GetDeployment200ApplicationJSON2SourceImport     GetDeployment200ApplicationJSON2Source = "import"
-	GetDeployment200ApplicationJSON2SourceImportRepo GetDeployment200ApplicationJSON2Source = "import/repo"
-	GetDeployment200ApplicationJSON2SourceCloneRepo  GetDeployment200ApplicationJSON2Source = "clone/repo"
+	GetDeploymentDeploymentsSourceCli        GetDeploymentDeploymentsSource = "cli"
+	GetDeploymentDeploymentsSourceGit        GetDeploymentDeploymentsSource = "git"
+	GetDeploymentDeploymentsSourceImport     GetDeploymentDeploymentsSource = "import"
+	GetDeploymentDeploymentsSourceImportRepo GetDeploymentDeploymentsSource = "import/repo"
+	GetDeploymentDeploymentsSourceCloneRepo  GetDeploymentDeploymentsSource = "clone/repo"
 )
 
-func (e GetDeployment200ApplicationJSON2Source) ToPointer() *GetDeployment200ApplicationJSON2Source {
+func (e GetDeploymentDeploymentsSource) ToPointer() *GetDeploymentDeploymentsSource {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2Source) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1359,26 +1359,26 @@ func (e *GetDeployment200ApplicationJSON2Source) UnmarshalJSON(data []byte) erro
 	case "import/repo":
 		fallthrough
 	case "clone/repo":
-		*e = GetDeployment200ApplicationJSON2Source(v)
+		*e = GetDeploymentDeploymentsSource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2Source: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsSource: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON2Target - If defined, either `staging` if a staging alias in the format `<project>.<team>.now.sh` was assigned upon creation, or `production` if the aliases from `alias` were assigned
-type GetDeployment200ApplicationJSON2Target string
+// GetDeploymentDeploymentsTarget - If defined, either `staging` if a staging alias in the format `<project>.<team>.now.sh` was assigned upon creation, or `production` if the aliases from `alias` were assigned
+type GetDeploymentDeploymentsTarget string
 
 const (
-	GetDeployment200ApplicationJSON2TargetStaging    GetDeployment200ApplicationJSON2Target = "staging"
-	GetDeployment200ApplicationJSON2TargetProduction GetDeployment200ApplicationJSON2Target = "production"
+	GetDeploymentDeploymentsTargetStaging    GetDeploymentDeploymentsTarget = "staging"
+	GetDeploymentDeploymentsTargetProduction GetDeploymentDeploymentsTarget = "production"
 )
 
-func (e GetDeployment200ApplicationJSON2Target) ToPointer() *GetDeployment200ApplicationJSON2Target {
+func (e GetDeploymentDeploymentsTarget) ToPointer() *GetDeploymentDeploymentsTarget {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2Target) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1387,15 +1387,15 @@ func (e *GetDeployment200ApplicationJSON2Target) UnmarshalJSON(data []byte) erro
 	case "staging":
 		fallthrough
 	case "production":
-		*e = GetDeployment200ApplicationJSON2Target(v)
+		*e = GetDeploymentDeploymentsTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2Target: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsTarget: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON2Team - The team that owns the deployment if any
-type GetDeployment200ApplicationJSON2Team struct {
+// GetDeploymentDeploymentsTeam - The team that owns the deployment if any
+type GetDeploymentDeploymentsTeam struct {
 	// The ID of the team owner
 	ID string `json:"id"`
 	// The name of the team owner
@@ -1404,106 +1404,106 @@ type GetDeployment200ApplicationJSON2Team struct {
 	Slug string `json:"slug"`
 }
 
-func (o *GetDeployment200ApplicationJSON2Team) GetID() string {
+func (o *GetDeploymentDeploymentsTeam) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetDeployment200ApplicationJSON2Team) GetName() string {
+func (o *GetDeploymentDeploymentsTeam) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetDeployment200ApplicationJSON2Team) GetSlug() string {
+func (o *GetDeploymentDeploymentsTeam) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-type GetDeployment200ApplicationJSON2Type string
+type GetDeploymentDeploymentsType string
 
 const (
-	GetDeployment200ApplicationJSON2TypeLambdas GetDeployment200ApplicationJSON2Type = "LAMBDAS"
+	GetDeploymentDeploymentsTypeLambdas GetDeploymentDeploymentsType = "LAMBDAS"
 )
 
-func (e GetDeployment200ApplicationJSON2Type) ToPointer() *GetDeployment200ApplicationJSON2Type {
+func (e GetDeploymentDeploymentsType) ToPointer() *GetDeploymentDeploymentsType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "LAMBDAS":
-		*e = GetDeployment200ApplicationJSON2Type(v)
+		*e = GetDeploymentDeploymentsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsType: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON2Version - The platform version that was used to create the deployment.
-type GetDeployment200ApplicationJSON2Version int64
+// GetDeploymentDeploymentsVersion - The platform version that was used to create the deployment.
+type GetDeploymentDeploymentsVersion int64
 
 const (
-	GetDeployment200ApplicationJSON2VersionTwo GetDeployment200ApplicationJSON2Version = 2
+	GetDeploymentDeploymentsVersionTwo GetDeploymentDeploymentsVersion = 2
 )
 
-func (e GetDeployment200ApplicationJSON2Version) ToPointer() *GetDeployment200ApplicationJSON2Version {
+func (e GetDeploymentDeploymentsVersion) ToPointer() *GetDeploymentDeploymentsVersion {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON2Version) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsVersion) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case 2:
-		*e = GetDeployment200ApplicationJSON2Version(v)
+		*e = GetDeploymentDeploymentsVersion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON2Version: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsVersion: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON2 - The deployment including only public information
-type GetDeployment200ApplicationJSON2 struct {
+// GetDeployment2 - The deployment including only public information
+type GetDeployment2 struct {
 	// A list of all the aliases (default aliases, staging aliases and production aliases) that were assigned upon deployment creation
 	Alias []string `json:"alias"`
 	// A boolean that will be true when the aliases from the alias property were assigned successfully
 	AliasAssigned bool `json:"aliasAssigned"`
 	// An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
-	AliasError              *GetDeployment200ApplicationJSON2AliasError       `json:"aliasError,omitempty"`
-	AliasFinal              *string                                           `json:"aliasFinal,omitempty"`
-	AliasWarning            *GetDeployment200ApplicationJSON2AliasWarning     `json:"aliasWarning,omitempty"`
-	AutoAssignCustomDomains *bool                                             `json:"autoAssignCustomDomains,omitempty"`
-	AutomaticAliases        []string                                          `json:"automaticAliases,omitempty"`
-	BootedAt                int64                                             `json:"bootedAt"`
-	BuildErrorAt            *int64                                            `json:"buildErrorAt,omitempty"`
-	BuildingAt              int64                                             `json:"buildingAt"`
-	CanceledAt              *int64                                            `json:"canceledAt,omitempty"`
-	ChecksConclusion        *GetDeployment200ApplicationJSON2ChecksConclusion `json:"checksConclusion,omitempty"`
-	ChecksState             *GetDeployment200ApplicationJSON2ChecksState      `json:"checksState,omitempty"`
+	AliasError              *GetDeploymentDeploymentsAliasError       `json:"aliasError,omitempty"`
+	AliasFinal              *string                                   `json:"aliasFinal,omitempty"`
+	AliasWarning            *GetDeploymentDeploymentsAliasWarning     `json:"aliasWarning,omitempty"`
+	AutoAssignCustomDomains *bool                                     `json:"autoAssignCustomDomains,omitempty"`
+	AutomaticAliases        []string                                  `json:"automaticAliases,omitempty"`
+	BootedAt                int64                                     `json:"bootedAt"`
+	BuildErrorAt            *int64                                    `json:"buildErrorAt,omitempty"`
+	BuildingAt              int64                                     `json:"buildingAt"`
+	CanceledAt              *int64                                    `json:"canceledAt,omitempty"`
+	ChecksConclusion        *GetDeploymentDeploymentsChecksConclusion `json:"checksConclusion,omitempty"`
+	ChecksState             *GetDeploymentDeploymentsChecksState      `json:"checksState,omitempty"`
 	// A number containing the date when the deployment was created in milliseconds
 	CreatedAt int64 `json:"createdAt"`
 	// Information about the deployment creator
-	Creator      GetDeployment200ApplicationJSON2Creator    `json:"creator"`
-	ErrorCode    *string                                    `json:"errorCode,omitempty"`
-	ErrorLink    *string                                    `json:"errorLink,omitempty"`
-	ErrorMessage *string                                    `json:"errorMessage,omitempty"`
-	ErrorStep    *string                                    `json:"errorStep,omitempty"`
-	GitSource    *GetDeployment200ApplicationJSON2GitSource `json:"gitSource,omitempty"`
+	Creator      GetDeploymentDeploymentsCreator    `json:"creator"`
+	ErrorCode    *string                            `json:"errorCode,omitempty"`
+	ErrorLink    *string                            `json:"errorLink,omitempty"`
+	ErrorMessage *string                            `json:"errorMessage,omitempty"`
+	ErrorStep    *string                            `json:"errorStep,omitempty"`
+	GitSource    *GetDeploymentDeploymentsGitSource `json:"gitSource,omitempty"`
 	// A string holding the unique ID of the deployment
-	ID      string                                    `json:"id"`
-	Lambdas []GetDeployment200ApplicationJSON2Lambdas `json:"lambdas,omitempty"`
+	ID      string                            `json:"id"`
+	Lambdas []GetDeploymentDeploymentsLambdas `json:"lambdas,omitempty"`
 	// An object containing the deployment's metadata
 	Meta map[string]string `json:"meta"`
 	// The name of the project associated with the deployment at the time that the deployment was created
@@ -1513,330 +1513,330 @@ type GetDeployment200ApplicationJSON2 struct {
 	// A boolean representing if the deployment is public or not. By default this is `false`
 	Public bool `json:"public"`
 	// The state of the deployment depending on the process of deploying, or if it is ready or in an error state
-	ReadyState GetDeployment200ApplicationJSON2ReadyState `json:"readyState"`
+	ReadyState GetDeploymentDeploymentsReadyState `json:"readyState"`
 	// The substate of the deployment when the state is "READY"
-	ReadySubstate *GetDeployment200ApplicationJSON2ReadySubstate `json:"readySubstate,omitempty"`
+	ReadySubstate *GetDeploymentDeploymentsReadySubstate `json:"readySubstate,omitempty"`
 	// The regions the deployment exists in
 	Regions []string `json:"regions"`
 	// Where was the deployment created from
-	Source *GetDeployment200ApplicationJSON2Source `json:"source,omitempty"`
+	Source *GetDeploymentDeploymentsSource `json:"source,omitempty"`
 	// If defined, either `staging` if a staging alias in the format `<project>.<team>.now.sh` was assigned upon creation, or `production` if the aliases from `alias` were assigned
-	Target *GetDeployment200ApplicationJSON2Target `json:"target,omitempty"`
+	Target *GetDeploymentDeploymentsTarget `json:"target,omitempty"`
 	// The team that owns the deployment if any
-	Team *GetDeployment200ApplicationJSON2Team `json:"team,omitempty"`
-	Type GetDeployment200ApplicationJSON2Type  `json:"type"`
+	Team *GetDeploymentDeploymentsTeam `json:"team,omitempty"`
+	Type GetDeploymentDeploymentsType  `json:"type"`
 	// A string with the unique URL of the deployment
 	URL string `json:"url"`
 	// An array of domains that were provided by the user when creating the Deployment.
 	UserAliases []string `json:"userAliases,omitempty"`
 	// The platform version that was used to create the deployment.
-	Version GetDeployment200ApplicationJSON2Version `json:"version"`
+	Version GetDeploymentDeploymentsVersion `json:"version"`
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetAlias() []string {
+func (o *GetDeployment2) GetAlias() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Alias
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetAliasAssigned() bool {
+func (o *GetDeployment2) GetAliasAssigned() bool {
 	if o == nil {
 		return false
 	}
 	return o.AliasAssigned
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetAliasError() *GetDeployment200ApplicationJSON2AliasError {
+func (o *GetDeployment2) GetAliasError() *GetDeploymentDeploymentsAliasError {
 	if o == nil {
 		return nil
 	}
 	return o.AliasError
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetAliasFinal() *string {
+func (o *GetDeployment2) GetAliasFinal() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AliasFinal
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetAliasWarning() *GetDeployment200ApplicationJSON2AliasWarning {
+func (o *GetDeployment2) GetAliasWarning() *GetDeploymentDeploymentsAliasWarning {
 	if o == nil {
 		return nil
 	}
 	return o.AliasWarning
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetAutoAssignCustomDomains() *bool {
+func (o *GetDeployment2) GetAutoAssignCustomDomains() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.AutoAssignCustomDomains
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetAutomaticAliases() []string {
+func (o *GetDeployment2) GetAutomaticAliases() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AutomaticAliases
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetBootedAt() int64 {
+func (o *GetDeployment2) GetBootedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.BootedAt
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetBuildErrorAt() *int64 {
+func (o *GetDeployment2) GetBuildErrorAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.BuildErrorAt
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetBuildingAt() int64 {
+func (o *GetDeployment2) GetBuildingAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.BuildingAt
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetCanceledAt() *int64 {
+func (o *GetDeployment2) GetCanceledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CanceledAt
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetChecksConclusion() *GetDeployment200ApplicationJSON2ChecksConclusion {
+func (o *GetDeployment2) GetChecksConclusion() *GetDeploymentDeploymentsChecksConclusion {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksConclusion
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetChecksState() *GetDeployment200ApplicationJSON2ChecksState {
+func (o *GetDeployment2) GetChecksState() *GetDeploymentDeploymentsChecksState {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksState
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetCreatedAt() int64 {
+func (o *GetDeployment2) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetCreator() GetDeployment200ApplicationJSON2Creator {
+func (o *GetDeployment2) GetCreator() GetDeploymentDeploymentsCreator {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2Creator{}
+		return GetDeploymentDeploymentsCreator{}
 	}
 	return o.Creator
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetErrorCode() *string {
+func (o *GetDeployment2) GetErrorCode() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorCode
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetErrorLink() *string {
+func (o *GetDeployment2) GetErrorLink() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorLink
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetErrorMessage() *string {
+func (o *GetDeployment2) GetErrorMessage() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorMessage
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetErrorStep() *string {
+func (o *GetDeployment2) GetErrorStep() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorStep
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetGitSource() *GetDeployment200ApplicationJSON2GitSource {
+func (o *GetDeployment2) GetGitSource() *GetDeploymentDeploymentsGitSource {
 	if o == nil {
 		return nil
 	}
 	return o.GitSource
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetID() string {
+func (o *GetDeployment2) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetLambdas() []GetDeployment200ApplicationJSON2Lambdas {
+func (o *GetDeployment2) GetLambdas() []GetDeploymentDeploymentsLambdas {
 	if o == nil {
 		return nil
 	}
 	return o.Lambdas
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetMeta() map[string]string {
+func (o *GetDeployment2) GetMeta() map[string]string {
 	if o == nil {
 		return map[string]string{}
 	}
 	return o.Meta
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetName() string {
+func (o *GetDeployment2) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetPreviewCommentsEnabled() *bool {
+func (o *GetDeployment2) GetPreviewCommentsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.PreviewCommentsEnabled
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetPublic() bool {
+func (o *GetDeployment2) GetPublic() bool {
 	if o == nil {
 		return false
 	}
 	return o.Public
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetReadyState() GetDeployment200ApplicationJSON2ReadyState {
+func (o *GetDeployment2) GetReadyState() GetDeploymentDeploymentsReadyState {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2ReadyState("")
+		return GetDeploymentDeploymentsReadyState("")
 	}
 	return o.ReadyState
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetReadySubstate() *GetDeployment200ApplicationJSON2ReadySubstate {
+func (o *GetDeployment2) GetReadySubstate() *GetDeploymentDeploymentsReadySubstate {
 	if o == nil {
 		return nil
 	}
 	return o.ReadySubstate
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetRegions() []string {
+func (o *GetDeployment2) GetRegions() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Regions
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetSource() *GetDeployment200ApplicationJSON2Source {
+func (o *GetDeployment2) GetSource() *GetDeploymentDeploymentsSource {
 	if o == nil {
 		return nil
 	}
 	return o.Source
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetTarget() *GetDeployment200ApplicationJSON2Target {
+func (o *GetDeployment2) GetTarget() *GetDeploymentDeploymentsTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetTeam() *GetDeployment200ApplicationJSON2Team {
+func (o *GetDeployment2) GetTeam() *GetDeploymentDeploymentsTeam {
 	if o == nil {
 		return nil
 	}
 	return o.Team
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetType() GetDeployment200ApplicationJSON2Type {
+func (o *GetDeployment2) GetType() GetDeploymentDeploymentsType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2Type("")
+		return GetDeploymentDeploymentsType("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetURL() string {
+func (o *GetDeployment2) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetUserAliases() []string {
+func (o *GetDeployment2) GetUserAliases() []string {
 	if o == nil {
 		return nil
 	}
 	return o.UserAliases
 }
 
-func (o *GetDeployment200ApplicationJSON2) GetVersion() GetDeployment200ApplicationJSON2Version {
+func (o *GetDeployment2) GetVersion() GetDeploymentDeploymentsVersion {
 	if o == nil {
-		return GetDeployment200ApplicationJSON2Version(0)
+		return GetDeploymentDeploymentsVersion(0)
 	}
 	return o.Version
 }
 
-type GetDeployment200ApplicationJSON1AliasAssignedAtType string
+type GetDeploymentAliasAssignedAtType string
 
 const (
-	GetDeployment200ApplicationJSON1AliasAssignedAtTypeInteger GetDeployment200ApplicationJSON1AliasAssignedAtType = "integer"
-	GetDeployment200ApplicationJSON1AliasAssignedAtTypeBoolean GetDeployment200ApplicationJSON1AliasAssignedAtType = "boolean"
+	GetDeploymentAliasAssignedAtTypeInteger GetDeploymentAliasAssignedAtType = "integer"
+	GetDeploymentAliasAssignedAtTypeBoolean GetDeploymentAliasAssignedAtType = "boolean"
 )
 
-type GetDeployment200ApplicationJSON1AliasAssignedAt struct {
+type GetDeploymentAliasAssignedAt struct {
 	Integer *int64
 	Boolean *bool
 
-	Type GetDeployment200ApplicationJSON1AliasAssignedAtType
+	Type GetDeploymentAliasAssignedAtType
 }
 
-func CreateGetDeployment200ApplicationJSON1AliasAssignedAtInteger(integer int64) GetDeployment200ApplicationJSON1AliasAssignedAt {
-	typ := GetDeployment200ApplicationJSON1AliasAssignedAtTypeInteger
+func CreateGetDeploymentAliasAssignedAtInteger(integer int64) GetDeploymentAliasAssignedAt {
+	typ := GetDeploymentAliasAssignedAtTypeInteger
 
-	return GetDeployment200ApplicationJSON1AliasAssignedAt{
+	return GetDeploymentAliasAssignedAt{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1AliasAssignedAtBoolean(boolean bool) GetDeployment200ApplicationJSON1AliasAssignedAt {
-	typ := GetDeployment200ApplicationJSON1AliasAssignedAtTypeBoolean
+func CreateGetDeploymentAliasAssignedAtBoolean(boolean bool) GetDeploymentAliasAssignedAt {
+	typ := GetDeploymentAliasAssignedAtTypeBoolean
 
-	return GetDeployment200ApplicationJSON1AliasAssignedAt{
+	return GetDeploymentAliasAssignedAt{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON1AliasAssignedAt) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentAliasAssignedAt) UnmarshalJSON(data []byte) error {
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = GetDeployment200ApplicationJSON1AliasAssignedAtTypeInteger
+		u.Type = GetDeploymentAliasAssignedAtTypeInteger
 		return nil
 	}
 
 	boolean := new(bool)
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
-		u.Type = GetDeployment200ApplicationJSON1AliasAssignedAtTypeBoolean
+		u.Type = GetDeploymentAliasAssignedAtTypeBoolean
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON1AliasAssignedAt) MarshalJSON() ([]byte, error) {
+func (u GetDeploymentAliasAssignedAt) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
@@ -1848,90 +1848,90 @@ func (u GetDeployment200ApplicationJSON1AliasAssignedAt) MarshalJSON() ([]byte, 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// GetDeployment200ApplicationJSON1AliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
-type GetDeployment200ApplicationJSON1AliasError struct {
+// GetDeploymentAliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
+type GetDeploymentAliasError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (o *GetDeployment200ApplicationJSON1AliasError) GetCode() string {
+func (o *GetDeploymentAliasError) GetCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.Code
 }
 
-func (o *GetDeployment200ApplicationJSON1AliasError) GetMessage() string {
+func (o *GetDeploymentAliasError) GetMessage() string {
 	if o == nil {
 		return ""
 	}
 	return o.Message
 }
 
-type GetDeployment200ApplicationJSON1AliasWarning struct {
+type GetDeploymentAliasWarning struct {
 	Action  *string `json:"action,omitempty"`
 	Code    string  `json:"code"`
 	Link    *string `json:"link,omitempty"`
 	Message string  `json:"message"`
 }
 
-func (o *GetDeployment200ApplicationJSON1AliasWarning) GetAction() *string {
+func (o *GetDeploymentAliasWarning) GetAction() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Action
 }
 
-func (o *GetDeployment200ApplicationJSON1AliasWarning) GetCode() string {
+func (o *GetDeploymentAliasWarning) GetCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.Code
 }
 
-func (o *GetDeployment200ApplicationJSON1AliasWarning) GetLink() *string {
+func (o *GetDeploymentAliasWarning) GetLink() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Link
 }
 
-func (o *GetDeployment200ApplicationJSON1AliasWarning) GetMessage() string {
+func (o *GetDeploymentAliasWarning) GetMessage() string {
 	if o == nil {
 		return ""
 	}
 	return o.Message
 }
 
-type GetDeployment200ApplicationJSON1Build struct {
+type GetDeploymentBuild struct {
 	// The keys of the environment variables that were assigned during the build phase.
 	Env []string `json:"env"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Build) GetEnv() []string {
+func (o *GetDeploymentBuild) GetEnv() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Env
 }
 
-type GetDeployment200ApplicationJSON1Builds struct {
+type GetDeploymentBuilds struct {
 }
 
-type GetDeployment200ApplicationJSON1ChecksConclusion string
+type GetDeploymentChecksConclusion string
 
 const (
-	GetDeployment200ApplicationJSON1ChecksConclusionSucceeded GetDeployment200ApplicationJSON1ChecksConclusion = "succeeded"
-	GetDeployment200ApplicationJSON1ChecksConclusionFailed    GetDeployment200ApplicationJSON1ChecksConclusion = "failed"
-	GetDeployment200ApplicationJSON1ChecksConclusionSkipped   GetDeployment200ApplicationJSON1ChecksConclusion = "skipped"
-	GetDeployment200ApplicationJSON1ChecksConclusionCanceled  GetDeployment200ApplicationJSON1ChecksConclusion = "canceled"
+	GetDeploymentChecksConclusionSucceeded GetDeploymentChecksConclusion = "succeeded"
+	GetDeploymentChecksConclusionFailed    GetDeploymentChecksConclusion = "failed"
+	GetDeploymentChecksConclusionSkipped   GetDeploymentChecksConclusion = "skipped"
+	GetDeploymentChecksConclusionCanceled  GetDeploymentChecksConclusion = "canceled"
 )
 
-func (e GetDeployment200ApplicationJSON1ChecksConclusion) ToPointer() *GetDeployment200ApplicationJSON1ChecksConclusion {
+func (e GetDeploymentChecksConclusion) ToPointer() *GetDeploymentChecksConclusion {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1ChecksConclusion) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentChecksConclusion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1944,26 +1944,26 @@ func (e *GetDeployment200ApplicationJSON1ChecksConclusion) UnmarshalJSON(data []
 	case "skipped":
 		fallthrough
 	case "canceled":
-		*e = GetDeployment200ApplicationJSON1ChecksConclusion(v)
+		*e = GetDeploymentChecksConclusion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1ChecksConclusion: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentChecksConclusion: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1ChecksState string
+type GetDeploymentChecksState string
 
 const (
-	GetDeployment200ApplicationJSON1ChecksStateRegistered GetDeployment200ApplicationJSON1ChecksState = "registered"
-	GetDeployment200ApplicationJSON1ChecksStateRunning    GetDeployment200ApplicationJSON1ChecksState = "running"
-	GetDeployment200ApplicationJSON1ChecksStateCompleted  GetDeployment200ApplicationJSON1ChecksState = "completed"
+	GetDeploymentChecksStateRegistered GetDeploymentChecksState = "registered"
+	GetDeploymentChecksStateRunning    GetDeploymentChecksState = "running"
+	GetDeploymentChecksStateCompleted  GetDeploymentChecksState = "completed"
 )
 
-func (e GetDeployment200ApplicationJSON1ChecksState) ToPointer() *GetDeployment200ApplicationJSON1ChecksState {
+func (e GetDeploymentChecksState) ToPointer() *GetDeploymentChecksState {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1ChecksState) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentChecksState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1974,37 +1974,37 @@ func (e *GetDeployment200ApplicationJSON1ChecksState) UnmarshalJSON(data []byte)
 	case "running":
 		fallthrough
 	case "completed":
-		*e = GetDeployment200ApplicationJSON1ChecksState(v)
+		*e = GetDeploymentChecksState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1ChecksState: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentChecksState: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON1Creator - Information about the deployment creator
-type GetDeployment200ApplicationJSON1Creator struct {
+// GetDeploymentCreator - Information about the deployment creator
+type GetDeploymentCreator struct {
 	// The ID of the user that created the deployment
 	UID string `json:"uid"`
 	// The username of the user that created the deployment
 	Username *string `json:"username,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Creator) GetUID() string {
+func (o *GetDeploymentCreator) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *GetDeployment200ApplicationJSON1Creator) GetUsername() *string {
+func (o *GetDeploymentCreator) GetUsername() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Username
 }
 
-// GetDeployment200ApplicationJSON1Functions - An object used to configure your Serverless Functions
-type GetDeployment200ApplicationJSON1Functions struct {
+// GetDeploymentFunctions - An object used to configure your Serverless Functions
+type GetDeploymentFunctions struct {
 	ExcludeFiles *string `json:"excludeFiles,omitempty"`
 	IncludeFiles *string `json:"includeFiles,omitempty"`
 	MaxDuration  *int64  `json:"maxDuration,omitempty"`
@@ -2012,53 +2012,53 @@ type GetDeployment200ApplicationJSON1Functions struct {
 	Runtime      *string `json:"runtime,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Functions) GetExcludeFiles() *string {
+func (o *GetDeploymentFunctions) GetExcludeFiles() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ExcludeFiles
 }
 
-func (o *GetDeployment200ApplicationJSON1Functions) GetIncludeFiles() *string {
+func (o *GetDeploymentFunctions) GetIncludeFiles() *string {
 	if o == nil {
 		return nil
 	}
 	return o.IncludeFiles
 }
 
-func (o *GetDeployment200ApplicationJSON1Functions) GetMaxDuration() *int64 {
+func (o *GetDeploymentFunctions) GetMaxDuration() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxDuration
 }
 
-func (o *GetDeployment200ApplicationJSON1Functions) GetMemory() *int64 {
+func (o *GetDeploymentFunctions) GetMemory() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Memory
 }
 
-func (o *GetDeployment200ApplicationJSON1Functions) GetRuntime() *string {
+func (o *GetDeploymentFunctions) GetRuntime() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Runtime
 }
 
-type GetDeployment200ApplicationJSON1GitRepo3OwnerType string
+type GetDeploymentDeploymentsResponseOwnerType string
 
 const (
-	GetDeployment200ApplicationJSON1GitRepo3OwnerTypeTeam GetDeployment200ApplicationJSON1GitRepo3OwnerType = "team"
-	GetDeployment200ApplicationJSON1GitRepo3OwnerTypeUser GetDeployment200ApplicationJSON1GitRepo3OwnerType = "user"
+	GetDeploymentDeploymentsResponseOwnerTypeTeam GetDeploymentDeploymentsResponseOwnerType = "team"
+	GetDeploymentDeploymentsResponseOwnerTypeUser GetDeploymentDeploymentsResponseOwnerType = "user"
 )
 
-func (e GetDeployment200ApplicationJSON1GitRepo3OwnerType) ToPointer() *GetDeployment200ApplicationJSON1GitRepo3OwnerType {
+func (e GetDeploymentDeploymentsResponseOwnerType) ToPointer() *GetDeploymentDeploymentsResponseOwnerType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitRepo3OwnerType) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponseOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2067,132 +2067,132 @@ func (e *GetDeployment200ApplicationJSON1GitRepo3OwnerType) UnmarshalJSON(data [
 	case "team":
 		fallthrough
 	case "user":
-		*e = GetDeployment200ApplicationJSON1GitRepo3OwnerType(v)
+		*e = GetDeploymentDeploymentsResponseOwnerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitRepo3OwnerType: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponseOwnerType: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitRepo3Type string
+type GetDeploymentDeploymentsResponseType string
 
 const (
-	GetDeployment200ApplicationJSON1GitRepo3TypeBitbucket GetDeployment200ApplicationJSON1GitRepo3Type = "bitbucket"
+	GetDeploymentDeploymentsResponseTypeBitbucket GetDeploymentDeploymentsResponseType = "bitbucket"
 )
 
-func (e GetDeployment200ApplicationJSON1GitRepo3Type) ToPointer() *GetDeployment200ApplicationJSON1GitRepo3Type {
+func (e GetDeploymentDeploymentsResponseType) ToPointer() *GetDeploymentDeploymentsResponseType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitRepo3Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponseType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = GetDeployment200ApplicationJSON1GitRepo3Type(v)
+		*e = GetDeploymentDeploymentsResponseType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitRepo3Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponseType: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitRepo3 struct {
-	DefaultBranch string                                            `json:"defaultBranch"`
-	Name          string                                            `json:"name"`
-	Owner         string                                            `json:"owner"`
-	OwnerType     GetDeployment200ApplicationJSON1GitRepo3OwnerType `json:"ownerType"`
-	Path          string                                            `json:"path"`
-	Private       bool                                              `json:"private"`
-	RepoUUID      string                                            `json:"repoUuid"`
-	Slug          string                                            `json:"slug"`
-	Type          GetDeployment200ApplicationJSON1GitRepo3Type      `json:"type"`
-	WorkspaceUUID string                                            `json:"workspaceUuid"`
+type GetDeployment3 struct {
+	DefaultBranch string                                    `json:"defaultBranch"`
+	Name          string                                    `json:"name"`
+	Owner         string                                    `json:"owner"`
+	OwnerType     GetDeploymentDeploymentsResponseOwnerType `json:"ownerType"`
+	Path          string                                    `json:"path"`
+	Private       bool                                      `json:"private"`
+	RepoUUID      string                                    `json:"repoUuid"`
+	Slug          string                                    `json:"slug"`
+	Type          GetDeploymentDeploymentsResponseType      `json:"type"`
+	WorkspaceUUID string                                    `json:"workspaceUuid"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo3) GetDefaultBranch() string {
+func (o *GetDeployment3) GetDefaultBranch() string {
 	if o == nil {
 		return ""
 	}
 	return o.DefaultBranch
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo3) GetName() string {
+func (o *GetDeployment3) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo3) GetOwner() string {
+func (o *GetDeployment3) GetOwner() string {
 	if o == nil {
 		return ""
 	}
 	return o.Owner
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo3) GetOwnerType() GetDeployment200ApplicationJSON1GitRepo3OwnerType {
+func (o *GetDeployment3) GetOwnerType() GetDeploymentDeploymentsResponseOwnerType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitRepo3OwnerType("")
+		return GetDeploymentDeploymentsResponseOwnerType("")
 	}
 	return o.OwnerType
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo3) GetPath() string {
+func (o *GetDeployment3) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo3) GetPrivate() bool {
+func (o *GetDeployment3) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo3) GetRepoUUID() string {
+func (o *GetDeployment3) GetRepoUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoUUID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo3) GetSlug() string {
+func (o *GetDeployment3) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo3) GetType() GetDeployment200ApplicationJSON1GitRepo3Type {
+func (o *GetDeployment3) GetType() GetDeploymentDeploymentsResponseType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitRepo3Type("")
+		return GetDeploymentDeploymentsResponseType("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo3) GetWorkspaceUUID() string {
+func (o *GetDeployment3) GetWorkspaceUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.WorkspaceUUID
 }
 
-type GetDeployment200ApplicationJSON1GitRepo2OwnerType string
+type GetDeploymentDeploymentsOwnerType string
 
 const (
-	GetDeployment200ApplicationJSON1GitRepo2OwnerTypeTeam GetDeployment200ApplicationJSON1GitRepo2OwnerType = "team"
-	GetDeployment200ApplicationJSON1GitRepo2OwnerTypeUser GetDeployment200ApplicationJSON1GitRepo2OwnerType = "user"
+	GetDeploymentDeploymentsOwnerTypeTeam GetDeploymentDeploymentsOwnerType = "team"
+	GetDeploymentDeploymentsOwnerTypeUser GetDeploymentDeploymentsOwnerType = "user"
 )
 
-func (e GetDeployment200ApplicationJSON1GitRepo2OwnerType) ToPointer() *GetDeployment200ApplicationJSON1GitRepo2OwnerType {
+func (e GetDeploymentDeploymentsOwnerType) ToPointer() *GetDeploymentDeploymentsOwnerType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitRepo2OwnerType) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2201,132 +2201,132 @@ func (e *GetDeployment200ApplicationJSON1GitRepo2OwnerType) UnmarshalJSON(data [
 	case "team":
 		fallthrough
 	case "user":
-		*e = GetDeployment200ApplicationJSON1GitRepo2OwnerType(v)
+		*e = GetDeploymentDeploymentsOwnerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitRepo2OwnerType: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsOwnerType: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitRepo2Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepo2Type string
 
 const (
-	GetDeployment200ApplicationJSON1GitRepo2TypeGithub GetDeployment200ApplicationJSON1GitRepo2Type = "github"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepo2TypeGithub GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepo2Type = "github"
 )
 
-func (e GetDeployment200ApplicationJSON1GitRepo2Type) ToPointer() *GetDeployment200ApplicationJSON1GitRepo2Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepo2Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepo2Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitRepo2Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepo2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = GetDeployment200ApplicationJSON1GitRepo2Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepo2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitRepo2Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepo2Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitRepo2 struct {
-	DefaultBranch string                                            `json:"defaultBranch"`
-	Name          string                                            `json:"name"`
-	Org           string                                            `json:"org"`
-	OwnerType     GetDeployment200ApplicationJSON1GitRepo2OwnerType `json:"ownerType"`
-	Path          string                                            `json:"path"`
-	Private       bool                                              `json:"private"`
-	Repo          string                                            `json:"repo"`
-	RepoID        int64                                             `json:"repoId"`
-	RepoOwnerID   string                                            `json:"repoOwnerId"`
-	Type          GetDeployment200ApplicationJSON1GitRepo2Type      `json:"type"`
+type GetDeploymentDeployments2 struct {
+	DefaultBranch string                                                                      `json:"defaultBranch"`
+	Name          string                                                                      `json:"name"`
+	Org           string                                                                      `json:"org"`
+	OwnerType     GetDeploymentDeploymentsOwnerType                                           `json:"ownerType"`
+	Path          string                                                                      `json:"path"`
+	Private       bool                                                                        `json:"private"`
+	Repo          string                                                                      `json:"repo"`
+	RepoID        int64                                                                       `json:"repoId"`
+	RepoOwnerID   string                                                                      `json:"repoOwnerId"`
+	Type          GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepo2Type `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo2) GetDefaultBranch() string {
+func (o *GetDeploymentDeployments2) GetDefaultBranch() string {
 	if o == nil {
 		return ""
 	}
 	return o.DefaultBranch
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo2) GetName() string {
+func (o *GetDeploymentDeployments2) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo2) GetOrg() string {
+func (o *GetDeploymentDeployments2) GetOrg() string {
 	if o == nil {
 		return ""
 	}
 	return o.Org
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo2) GetOwnerType() GetDeployment200ApplicationJSON1GitRepo2OwnerType {
+func (o *GetDeploymentDeployments2) GetOwnerType() GetDeploymentDeploymentsOwnerType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitRepo2OwnerType("")
+		return GetDeploymentDeploymentsOwnerType("")
 	}
 	return o.OwnerType
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo2) GetPath() string {
+func (o *GetDeploymentDeployments2) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo2) GetPrivate() bool {
+func (o *GetDeploymentDeployments2) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo2) GetRepo() string {
+func (o *GetDeploymentDeployments2) GetRepo() string {
 	if o == nil {
 		return ""
 	}
 	return o.Repo
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo2) GetRepoID() int64 {
+func (o *GetDeploymentDeployments2) GetRepoID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.RepoID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo2) GetRepoOwnerID() string {
+func (o *GetDeploymentDeployments2) GetRepoOwnerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoOwnerID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo2) GetType() GetDeployment200ApplicationJSON1GitRepo2Type {
+func (o *GetDeploymentDeployments2) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepo2Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitRepo2Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepo2Type("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON1GitRepo1OwnerType string
+type GetDeploymentOwnerType string
 
 const (
-	GetDeployment200ApplicationJSON1GitRepo1OwnerTypeTeam GetDeployment200ApplicationJSON1GitRepo1OwnerType = "team"
-	GetDeployment200ApplicationJSON1GitRepo1OwnerTypeUser GetDeployment200ApplicationJSON1GitRepo1OwnerType = "user"
+	GetDeploymentOwnerTypeTeam GetDeploymentOwnerType = "team"
+	GetDeploymentOwnerTypeUser GetDeploymentOwnerType = "user"
 )
 
-func (e GetDeployment200ApplicationJSON1GitRepo1OwnerType) ToPointer() *GetDeployment200ApplicationJSON1GitRepo1OwnerType {
+func (e GetDeploymentOwnerType) ToPointer() *GetDeploymentOwnerType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitRepo1OwnerType) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2335,675 +2335,675 @@ func (e *GetDeployment200ApplicationJSON1GitRepo1OwnerType) UnmarshalJSON(data [
 	case "team":
 		fallthrough
 	case "user":
-		*e = GetDeployment200ApplicationJSON1GitRepo1OwnerType(v)
+		*e = GetDeploymentOwnerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitRepo1OwnerType: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentOwnerType: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitRepo1Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepoType string
 
 const (
-	GetDeployment200ApplicationJSON1GitRepo1TypeGitlab GetDeployment200ApplicationJSON1GitRepo1Type = "gitlab"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepoTypeGitlab GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepoType = "gitlab"
 )
 
-func (e GetDeployment200ApplicationJSON1GitRepo1Type) ToPointer() *GetDeployment200ApplicationJSON1GitRepo1Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepoType) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepoType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitRepo1Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepoType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = GetDeployment200ApplicationJSON1GitRepo1Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepoType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitRepo1Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepoType: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitRepo1 struct {
-	DefaultBranch string                                            `json:"defaultBranch"`
-	Name          string                                            `json:"name"`
-	Namespace     string                                            `json:"namespace"`
-	OwnerType     GetDeployment200ApplicationJSON1GitRepo1OwnerType `json:"ownerType"`
-	Path          string                                            `json:"path"`
-	Private       bool                                              `json:"private"`
-	ProjectID     int64                                             `json:"projectId"`
-	Type          GetDeployment200ApplicationJSON1GitRepo1Type      `json:"type"`
-	URL           string                                            `json:"url"`
+type GetDeploymentDeployments1 struct {
+	DefaultBranch string                                                                     `json:"defaultBranch"`
+	Name          string                                                                     `json:"name"`
+	Namespace     string                                                                     `json:"namespace"`
+	OwnerType     GetDeploymentOwnerType                                                     `json:"ownerType"`
+	Path          string                                                                     `json:"path"`
+	Private       bool                                                                       `json:"private"`
+	ProjectID     int64                                                                      `json:"projectId"`
+	Type          GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepoType `json:"type"`
+	URL           string                                                                     `json:"url"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo1) GetDefaultBranch() string {
+func (o *GetDeploymentDeployments1) GetDefaultBranch() string {
 	if o == nil {
 		return ""
 	}
 	return o.DefaultBranch
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo1) GetName() string {
+func (o *GetDeploymentDeployments1) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo1) GetNamespace() string {
+func (o *GetDeploymentDeployments1) GetNamespace() string {
 	if o == nil {
 		return ""
 	}
 	return o.Namespace
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo1) GetOwnerType() GetDeployment200ApplicationJSON1GitRepo1OwnerType {
+func (o *GetDeploymentDeployments1) GetOwnerType() GetDeploymentOwnerType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitRepo1OwnerType("")
+		return GetDeploymentOwnerType("")
 	}
 	return o.OwnerType
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo1) GetPath() string {
+func (o *GetDeploymentDeployments1) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo1) GetPrivate() bool {
+func (o *GetDeploymentDeployments1) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo1) GetProjectID() int64 {
+func (o *GetDeploymentDeployments1) GetProjectID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ProjectID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo1) GetType() GetDeployment200ApplicationJSON1GitRepo1Type {
+func (o *GetDeploymentDeployments1) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepoType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitRepo1Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitRepoType("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON1GitRepo1) GetURL() string {
+func (o *GetDeploymentDeployments1) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-type GetDeployment200ApplicationJSON1GitRepoType string
+type GetDeploymentGitRepoType string
 
 const (
-	GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo1 GetDeployment200ApplicationJSON1GitRepoType = "getDeployment_200ApplicationJSON_1_gitRepo_1"
-	GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo2 GetDeployment200ApplicationJSON1GitRepoType = "getDeployment_200ApplicationJSON_1_gitRepo_2"
-	GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo3 GetDeployment200ApplicationJSON1GitRepoType = "getDeployment_200ApplicationJSON_1_gitRepo_3"
+	GetDeploymentGitRepoTypeGetDeploymentDeployments1 GetDeploymentGitRepoType = "getDeployment_deployments_1"
+	GetDeploymentGitRepoTypeGetDeploymentDeployments2 GetDeploymentGitRepoType = "getDeployment_deployments_2"
+	GetDeploymentGitRepoTypeGetDeployment3            GetDeploymentGitRepoType = "getDeployment_3"
 )
 
-type GetDeployment200ApplicationJSON1GitRepo struct {
-	GetDeployment200ApplicationJSON1GitRepo1 *GetDeployment200ApplicationJSON1GitRepo1
-	GetDeployment200ApplicationJSON1GitRepo2 *GetDeployment200ApplicationJSON1GitRepo2
-	GetDeployment200ApplicationJSON1GitRepo3 *GetDeployment200ApplicationJSON1GitRepo3
+type GetDeploymentGitRepo struct {
+	GetDeploymentDeployments1 *GetDeploymentDeployments1
+	GetDeploymentDeployments2 *GetDeploymentDeployments2
+	GetDeployment3            *GetDeployment3
 
-	Type GetDeployment200ApplicationJSON1GitRepoType
+	Type GetDeploymentGitRepoType
 }
 
-func CreateGetDeployment200ApplicationJSON1GitRepoGetDeployment200ApplicationJSON1GitRepo1(getDeployment200ApplicationJSON1GitRepo1 GetDeployment200ApplicationJSON1GitRepo1) GetDeployment200ApplicationJSON1GitRepo {
-	typ := GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo1
+func CreateGetDeploymentGitRepoGetDeploymentDeployments1(getDeploymentDeployments1 GetDeploymentDeployments1) GetDeploymentGitRepo {
+	typ := GetDeploymentGitRepoTypeGetDeploymentDeployments1
 
-	return GetDeployment200ApplicationJSON1GitRepo{
-		GetDeployment200ApplicationJSON1GitRepo1: &getDeployment200ApplicationJSON1GitRepo1,
-		Type:                                     typ,
+	return GetDeploymentGitRepo{
+		GetDeploymentDeployments1: &getDeploymentDeployments1,
+		Type:                      typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitRepoGetDeployment200ApplicationJSON1GitRepo2(getDeployment200ApplicationJSON1GitRepo2 GetDeployment200ApplicationJSON1GitRepo2) GetDeployment200ApplicationJSON1GitRepo {
-	typ := GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo2
+func CreateGetDeploymentGitRepoGetDeploymentDeployments2(getDeploymentDeployments2 GetDeploymentDeployments2) GetDeploymentGitRepo {
+	typ := GetDeploymentGitRepoTypeGetDeploymentDeployments2
 
-	return GetDeployment200ApplicationJSON1GitRepo{
-		GetDeployment200ApplicationJSON1GitRepo2: &getDeployment200ApplicationJSON1GitRepo2,
-		Type:                                     typ,
+	return GetDeploymentGitRepo{
+		GetDeploymentDeployments2: &getDeploymentDeployments2,
+		Type:                      typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitRepoGetDeployment200ApplicationJSON1GitRepo3(getDeployment200ApplicationJSON1GitRepo3 GetDeployment200ApplicationJSON1GitRepo3) GetDeployment200ApplicationJSON1GitRepo {
-	typ := GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo3
+func CreateGetDeploymentGitRepoGetDeployment3(getDeployment3 GetDeployment3) GetDeploymentGitRepo {
+	typ := GetDeploymentGitRepoTypeGetDeployment3
 
-	return GetDeployment200ApplicationJSON1GitRepo{
-		GetDeployment200ApplicationJSON1GitRepo3: &getDeployment200ApplicationJSON1GitRepo3,
-		Type:                                     typ,
+	return GetDeploymentGitRepo{
+		GetDeployment3: &getDeployment3,
+		Type:           typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON1GitRepo) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentGitRepo) UnmarshalJSON(data []byte) error {
 
-	getDeployment200ApplicationJSON1GitRepo1 := new(GetDeployment200ApplicationJSON1GitRepo1)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitRepo1, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitRepo1 = getDeployment200ApplicationJSON1GitRepo1
-		u.Type = GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo1
+	getDeploymentDeployments1 := new(GetDeploymentDeployments1)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeployments1, "", true, true); err == nil {
+		u.GetDeploymentDeployments1 = getDeploymentDeployments1
+		u.Type = GetDeploymentGitRepoTypeGetDeploymentDeployments1
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitRepo2 := new(GetDeployment200ApplicationJSON1GitRepo2)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitRepo2, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitRepo2 = getDeployment200ApplicationJSON1GitRepo2
-		u.Type = GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo2
+	getDeploymentDeployments2 := new(GetDeploymentDeployments2)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeployments2, "", true, true); err == nil {
+		u.GetDeploymentDeployments2 = getDeploymentDeployments2
+		u.Type = GetDeploymentGitRepoTypeGetDeploymentDeployments2
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitRepo3 := new(GetDeployment200ApplicationJSON1GitRepo3)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitRepo3, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitRepo3 = getDeployment200ApplicationJSON1GitRepo3
-		u.Type = GetDeployment200ApplicationJSON1GitRepoTypeGetDeployment200ApplicationJSON1GitRepo3
+	getDeployment3 := new(GetDeployment3)
+	if err := utils.UnmarshalJSON(data, &getDeployment3, "", true, true); err == nil {
+		u.GetDeployment3 = getDeployment3
+		u.Type = GetDeploymentGitRepoTypeGetDeployment3
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON1GitRepo) MarshalJSON() ([]byte, error) {
-	if u.GetDeployment200ApplicationJSON1GitRepo1 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitRepo1, "", true)
+func (u GetDeploymentGitRepo) MarshalJSON() ([]byte, error) {
+	if u.GetDeploymentDeployments1 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeployments1, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1GitRepo2 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitRepo2, "", true)
+	if u.GetDeploymentDeployments2 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeployments2, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1GitRepo3 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitRepo3, "", true)
+	if u.GetDeployment3 != nil {
+		return utils.MarshalJSON(u.GetDeployment3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type GetDeployment200ApplicationJSON1GitSource9Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource9Type string
 
 const (
-	GetDeployment200ApplicationJSON1GitSource9TypeBitbucket GetDeployment200ApplicationJSON1GitSource9Type = "bitbucket"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource9TypeBitbucket GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource9Type = "bitbucket"
 )
 
-func (e GetDeployment200ApplicationJSON1GitSource9Type) ToPointer() *GetDeployment200ApplicationJSON1GitSource9Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource9Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource9Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitSource9Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = GetDeployment200ApplicationJSON1GitSource9Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource9Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitSource9Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource9Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitSource9 struct {
-	Owner         *string                                        `json:"owner,omitempty"`
-	Ref           string                                         `json:"ref"`
-	RepoUUID      string                                         `json:"repoUuid"`
-	Sha           string                                         `json:"sha"`
-	Slug          *string                                        `json:"slug,omitempty"`
-	Type          GetDeployment200ApplicationJSON1GitSource9Type `json:"type"`
-	WorkspaceUUID string                                         `json:"workspaceUuid"`
+type GetDeployment9 struct {
+	Owner         *string                                                                       `json:"owner,omitempty"`
+	Ref           string                                                                        `json:"ref"`
+	RepoUUID      string                                                                        `json:"repoUuid"`
+	Sha           string                                                                        `json:"sha"`
+	Slug          *string                                                                       `json:"slug,omitempty"`
+	Type          GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource9Type `json:"type"`
+	WorkspaceUUID string                                                                        `json:"workspaceUuid"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource9) GetOwner() *string {
+func (o *GetDeployment9) GetOwner() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Owner
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource9) GetRef() string {
+func (o *GetDeployment9) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource9) GetRepoUUID() string {
+func (o *GetDeployment9) GetRepoUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoUUID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource9) GetSha() string {
+func (o *GetDeployment9) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource9) GetSlug() *string {
+func (o *GetDeployment9) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Slug
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource9) GetType() GetDeployment200ApplicationJSON1GitSource9Type {
+func (o *GetDeployment9) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource9Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitSource9Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource9Type("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource9) GetWorkspaceUUID() string {
+func (o *GetDeployment9) GetWorkspaceUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.WorkspaceUUID
 }
 
-type GetDeployment200ApplicationJSON1GitSource8Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource8Type string
 
 const (
-	GetDeployment200ApplicationJSON1GitSource8TypeGitlab GetDeployment200ApplicationJSON1GitSource8Type = "gitlab"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource8TypeGitlab GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource8Type = "gitlab"
 )
 
-func (e GetDeployment200ApplicationJSON1GitSource8Type) ToPointer() *GetDeployment200ApplicationJSON1GitSource8Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource8Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource8Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitSource8Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = GetDeployment200ApplicationJSON1GitSource8Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource8Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitSource8Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource8Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitSource8 struct {
-	ProjectID int64                                          `json:"projectId"`
-	Ref       string                                         `json:"ref"`
-	Sha       string                                         `json:"sha"`
-	Type      GetDeployment200ApplicationJSON1GitSource8Type `json:"type"`
+type GetDeployment8 struct {
+	ProjectID int64                                                                         `json:"projectId"`
+	Ref       string                                                                        `json:"ref"`
+	Sha       string                                                                        `json:"sha"`
+	Type      GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource8Type `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource8) GetProjectID() int64 {
+func (o *GetDeployment8) GetProjectID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ProjectID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource8) GetRef() string {
+func (o *GetDeployment8) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource8) GetSha() string {
+func (o *GetDeployment8) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource8) GetType() GetDeployment200ApplicationJSON1GitSource8Type {
+func (o *GetDeployment8) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource8Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitSource8Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource8Type("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON1GitSource7Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource7Type string
 
 const (
-	GetDeployment200ApplicationJSON1GitSource7TypeGithub GetDeployment200ApplicationJSON1GitSource7Type = "github"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource7TypeGithub GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource7Type = "github"
 )
 
-func (e GetDeployment200ApplicationJSON1GitSource7Type) ToPointer() *GetDeployment200ApplicationJSON1GitSource7Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource7Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource7Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitSource7Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = GetDeployment200ApplicationJSON1GitSource7Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource7Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitSource7Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource7Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitSource7 struct {
-	Org    *string                                        `json:"org,omitempty"`
-	Ref    string                                         `json:"ref"`
-	Repo   *string                                        `json:"repo,omitempty"`
-	RepoID int64                                          `json:"repoId"`
-	Sha    string                                         `json:"sha"`
-	Type   GetDeployment200ApplicationJSON1GitSource7Type `json:"type"`
+type GetDeployment7 struct {
+	Org    *string                                                                       `json:"org,omitempty"`
+	Ref    string                                                                        `json:"ref"`
+	Repo   *string                                                                       `json:"repo,omitempty"`
+	RepoID int64                                                                         `json:"repoId"`
+	Sha    string                                                                        `json:"sha"`
+	Type   GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource7Type `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource7) GetOrg() *string {
+func (o *GetDeployment7) GetOrg() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Org
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource7) GetRef() string {
+func (o *GetDeployment7) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource7) GetRepo() *string {
+func (o *GetDeployment7) GetRepo() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Repo
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource7) GetRepoID() int64 {
+func (o *GetDeployment7) GetRepoID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.RepoID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource7) GetSha() string {
+func (o *GetDeployment7) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource7) GetType() GetDeployment200ApplicationJSON1GitSource7Type {
+func (o *GetDeployment7) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource7Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitSource7Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource7Type("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON1GitSource6Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource6Type string
 
 const (
-	GetDeployment200ApplicationJSON1GitSource6TypeCustom GetDeployment200ApplicationJSON1GitSource6Type = "custom"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource6TypeCustom GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource6Type = "custom"
 )
 
-func (e GetDeployment200ApplicationJSON1GitSource6Type) ToPointer() *GetDeployment200ApplicationJSON1GitSource6Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource6Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource6Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitSource6Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "custom":
-		*e = GetDeployment200ApplicationJSON1GitSource6Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource6Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitSource6Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource6Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitSource6 struct {
-	GitURL string                                         `json:"gitUrl"`
-	Ref    string                                         `json:"ref"`
-	Sha    string                                         `json:"sha"`
-	Type   GetDeployment200ApplicationJSON1GitSource6Type `json:"type"`
+type GetDeployment6 struct {
+	GitURL string                                                                        `json:"gitUrl"`
+	Ref    string                                                                        `json:"ref"`
+	Sha    string                                                                        `json:"sha"`
+	Type   GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource6Type `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource6) GetGitURL() string {
+func (o *GetDeployment6) GetGitURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.GitURL
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource6) GetRef() string {
+func (o *GetDeployment6) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource6) GetSha() string {
+func (o *GetDeployment6) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource6) GetType() GetDeployment200ApplicationJSON1GitSource6Type {
+func (o *GetDeployment6) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource6Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitSource6Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSource6Type("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON1GitSource5Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSourceType string
 
 const (
-	GetDeployment200ApplicationJSON1GitSource5TypeBitbucket GetDeployment200ApplicationJSON1GitSource5Type = "bitbucket"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSourceTypeBitbucket GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSourceType = "bitbucket"
 )
 
-func (e GetDeployment200ApplicationJSON1GitSource5Type) ToPointer() *GetDeployment200ApplicationJSON1GitSource5Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSourceType) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSourceType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitSource5Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSourceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = GetDeployment200ApplicationJSON1GitSource5Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSourceType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitSource5Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSourceType: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitSource5 struct {
-	Owner string                                         `json:"owner"`
-	PrID  *int64                                         `json:"prId,omitempty"`
-	Ref   *string                                        `json:"ref,omitempty"`
-	Sha   *string                                        `json:"sha,omitempty"`
-	Slug  string                                         `json:"slug"`
-	Type  GetDeployment200ApplicationJSON1GitSource5Type `json:"type"`
+type GetDeployment5 struct {
+	Owner string                                                                       `json:"owner"`
+	PrID  *int64                                                                       `json:"prId,omitempty"`
+	Ref   *string                                                                      `json:"ref,omitempty"`
+	Sha   *string                                                                      `json:"sha,omitempty"`
+	Slug  string                                                                       `json:"slug"`
+	Type  GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSourceType `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource5) GetOwner() string {
+func (o *GetDeployment5) GetOwner() string {
 	if o == nil {
 		return ""
 	}
 	return o.Owner
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource5) GetPrID() *int64 {
+func (o *GetDeployment5) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource5) GetRef() *string {
+func (o *GetDeployment5) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource5) GetSha() *string {
+func (o *GetDeployment5) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource5) GetSlug() string {
+func (o *GetDeployment5) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource5) GetType() GetDeployment200ApplicationJSON1GitSource5Type {
+func (o *GetDeployment5) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSourceType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitSource5Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1GitSourceType("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON1GitSource4Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Type string
 
 const (
-	GetDeployment200ApplicationJSON1GitSource4TypeBitbucket GetDeployment200ApplicationJSON1GitSource4Type = "bitbucket"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1TypeBitbucket GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Type = "bitbucket"
 )
 
-func (e GetDeployment200ApplicationJSON1GitSource4Type) ToPointer() *GetDeployment200ApplicationJSON1GitSource4Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitSource4Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = GetDeployment200ApplicationJSON1GitSource4Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitSource4Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitSource4 struct {
-	PrID          *int64                                         `json:"prId,omitempty"`
-	Ref           *string                                        `json:"ref,omitempty"`
-	RepoUUID      string                                         `json:"repoUuid"`
-	Sha           *string                                        `json:"sha,omitempty"`
-	Type          GetDeployment200ApplicationJSON1GitSource4Type `json:"type"`
-	WorkspaceUUID *string                                        `json:"workspaceUuid,omitempty"`
+type GetDeployment4 struct {
+	PrID          *int64                                                              `json:"prId,omitempty"`
+	Ref           *string                                                             `json:"ref,omitempty"`
+	RepoUUID      string                                                              `json:"repoUuid"`
+	Sha           *string                                                             `json:"sha,omitempty"`
+	Type          GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Type `json:"type"`
+	WorkspaceUUID *string                                                             `json:"workspaceUuid,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource4) GetPrID() *int64 {
+func (o *GetDeployment4) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource4) GetRef() *string {
+func (o *GetDeployment4) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource4) GetRepoUUID() string {
+func (o *GetDeployment4) GetRepoUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoUUID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource4) GetSha() *string {
+func (o *GetDeployment4) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource4) GetType() GetDeployment200ApplicationJSON1GitSource4Type {
+func (o *GetDeployment4) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitSource4Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Type("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource4) GetWorkspaceUUID() *string {
+func (o *GetDeployment4) GetWorkspaceUUID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.WorkspaceUUID
 }
 
-type GetDeployment200ApplicationJSON1GitSource3ProjectIDType string
+type GetDeploymentProjectIDType string
 
 const (
-	GetDeployment200ApplicationJSON1GitSource3ProjectIDTypeStr     GetDeployment200ApplicationJSON1GitSource3ProjectIDType = "str"
-	GetDeployment200ApplicationJSON1GitSource3ProjectIDTypeInteger GetDeployment200ApplicationJSON1GitSource3ProjectIDType = "integer"
+	GetDeploymentProjectIDTypeStr     GetDeploymentProjectIDType = "str"
+	GetDeploymentProjectIDTypeInteger GetDeploymentProjectIDType = "integer"
 )
 
-type GetDeployment200ApplicationJSON1GitSource3ProjectID struct {
+type GetDeploymentProjectID struct {
 	Str     *string
 	Integer *int64
 
-	Type GetDeployment200ApplicationJSON1GitSource3ProjectIDType
+	Type GetDeploymentProjectIDType
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSource3ProjectIDStr(str string) GetDeployment200ApplicationJSON1GitSource3ProjectID {
-	typ := GetDeployment200ApplicationJSON1GitSource3ProjectIDTypeStr
+func CreateGetDeploymentProjectIDStr(str string) GetDeploymentProjectID {
+	typ := GetDeploymentProjectIDTypeStr
 
-	return GetDeployment200ApplicationJSON1GitSource3ProjectID{
+	return GetDeploymentProjectID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSource3ProjectIDInteger(integer int64) GetDeployment200ApplicationJSON1GitSource3ProjectID {
-	typ := GetDeployment200ApplicationJSON1GitSource3ProjectIDTypeInteger
+func CreateGetDeploymentProjectIDInteger(integer int64) GetDeploymentProjectID {
+	typ := GetDeploymentProjectIDTypeInteger
 
-	return GetDeployment200ApplicationJSON1GitSource3ProjectID{
+	return GetDeploymentProjectID{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON1GitSource3ProjectID) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentProjectID) UnmarshalJSON(data []byte) error {
 
 	str := new(string)
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = GetDeployment200ApplicationJSON1GitSource3ProjectIDTypeStr
+		u.Type = GetDeploymentProjectIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = GetDeployment200ApplicationJSON1GitSource3ProjectIDTypeInteger
+		u.Type = GetDeploymentProjectIDTypeInteger
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON1GitSource3ProjectID) MarshalJSON() ([]byte, error) {
+func (u GetDeploymentProjectID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -3015,200 +3015,200 @@ func (u GetDeployment200ApplicationJSON1GitSource3ProjectID) MarshalJSON() ([]by
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type GetDeployment200ApplicationJSON1GitSource3Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType string
 
 const (
-	GetDeployment200ApplicationJSON1GitSource3TypeGitlab GetDeployment200ApplicationJSON1GitSource3Type = "gitlab"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBodyTypeGitlab GetDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType = "gitlab"
 )
 
-func (e GetDeployment200ApplicationJSON1GitSource3Type) ToPointer() *GetDeployment200ApplicationJSON1GitSource3Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitSource3Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = GetDeployment200ApplicationJSON1GitSource3Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitSource3Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitSource3 struct {
-	PrID      *int64                                              `json:"prId,omitempty"`
-	ProjectID GetDeployment200ApplicationJSON1GitSource3ProjectID `json:"projectId"`
-	Ref       *string                                             `json:"ref,omitempty"`
-	Sha       *string                                             `json:"sha,omitempty"`
-	Type      GetDeployment200ApplicationJSON1GitSource3Type      `json:"type"`
+type GetDeploymentDeployments3 struct {
+	PrID      *int64                                                             `json:"prId,omitempty"`
+	ProjectID GetDeploymentProjectID                                             `json:"projectId"`
+	Ref       *string                                                            `json:"ref,omitempty"`
+	Sha       *string                                                            `json:"sha,omitempty"`
+	Type      GetDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource3) GetPrID() *int64 {
+func (o *GetDeploymentDeployments3) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource3) GetProjectID() GetDeployment200ApplicationJSON1GitSource3ProjectID {
+func (o *GetDeploymentDeployments3) GetProjectID() GetDeploymentProjectID {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitSource3ProjectID{}
+		return GetDeploymentProjectID{}
 	}
 	return o.ProjectID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource3) GetRef() *string {
+func (o *GetDeploymentDeployments3) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource3) GetSha() *string {
+func (o *GetDeploymentDeployments3) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource3) GetType() GetDeployment200ApplicationJSON1GitSource3Type {
+func (o *GetDeploymentDeployments3) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitSource3Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON1GitSource2Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONType string
 
 const (
-	GetDeployment200ApplicationJSON1GitSource2TypeGithub GetDeployment200ApplicationJSON1GitSource2Type = "github"
+	GetDeploymentDeploymentsResponse200ApplicationJSONTypeGithub GetDeploymentDeploymentsResponse200ApplicationJSONType = "github"
 )
 
-func (e GetDeployment200ApplicationJSON1GitSource2Type) ToPointer() *GetDeployment200ApplicationJSON1GitSource2Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONType) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitSource2Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = GetDeployment200ApplicationJSON1GitSource2Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitSource2Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONType: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitSource2 struct {
-	Org  string                                         `json:"org"`
-	PrID *int64                                         `json:"prId,omitempty"`
-	Ref  *string                                        `json:"ref,omitempty"`
-	Repo string                                         `json:"repo"`
-	Sha  *string                                        `json:"sha,omitempty"`
-	Type GetDeployment200ApplicationJSON1GitSource2Type `json:"type"`
+type GetDeploymentDeploymentsResponse2 struct {
+	Org  string                                                 `json:"org"`
+	PrID *int64                                                 `json:"prId,omitempty"`
+	Ref  *string                                                `json:"ref,omitempty"`
+	Repo string                                                 `json:"repo"`
+	Sha  *string                                                `json:"sha,omitempty"`
+	Type GetDeploymentDeploymentsResponse200ApplicationJSONType `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource2) GetOrg() string {
+func (o *GetDeploymentDeploymentsResponse2) GetOrg() string {
 	if o == nil {
 		return ""
 	}
 	return o.Org
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource2) GetPrID() *int64 {
+func (o *GetDeploymentDeploymentsResponse2) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource2) GetRef() *string {
+func (o *GetDeploymentDeploymentsResponse2) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource2) GetRepo() string {
+func (o *GetDeploymentDeploymentsResponse2) GetRepo() string {
 	if o == nil {
 		return ""
 	}
 	return o.Repo
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource2) GetSha() *string {
+func (o *GetDeploymentDeploymentsResponse2) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource2) GetType() GetDeployment200ApplicationJSON1GitSource2Type {
+func (o *GetDeploymentDeploymentsResponse2) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitSource2Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONType("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON1GitSource1RepoIDType string
+type GetDeploymentRepoIDType string
 
 const (
-	GetDeployment200ApplicationJSON1GitSource1RepoIDTypeStr     GetDeployment200ApplicationJSON1GitSource1RepoIDType = "str"
-	GetDeployment200ApplicationJSON1GitSource1RepoIDTypeInteger GetDeployment200ApplicationJSON1GitSource1RepoIDType = "integer"
+	GetDeploymentRepoIDTypeStr     GetDeploymentRepoIDType = "str"
+	GetDeploymentRepoIDTypeInteger GetDeploymentRepoIDType = "integer"
 )
 
-type GetDeployment200ApplicationJSON1GitSource1RepoID struct {
+type GetDeploymentRepoID struct {
 	Str     *string
 	Integer *int64
 
-	Type GetDeployment200ApplicationJSON1GitSource1RepoIDType
+	Type GetDeploymentRepoIDType
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSource1RepoIDStr(str string) GetDeployment200ApplicationJSON1GitSource1RepoID {
-	typ := GetDeployment200ApplicationJSON1GitSource1RepoIDTypeStr
+func CreateGetDeploymentRepoIDStr(str string) GetDeploymentRepoID {
+	typ := GetDeploymentRepoIDTypeStr
 
-	return GetDeployment200ApplicationJSON1GitSource1RepoID{
+	return GetDeploymentRepoID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSource1RepoIDInteger(integer int64) GetDeployment200ApplicationJSON1GitSource1RepoID {
-	typ := GetDeployment200ApplicationJSON1GitSource1RepoIDTypeInteger
+func CreateGetDeploymentRepoIDInteger(integer int64) GetDeploymentRepoID {
+	typ := GetDeploymentRepoIDTypeInteger
 
-	return GetDeployment200ApplicationJSON1GitSource1RepoID{
+	return GetDeploymentRepoID{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON1GitSource1RepoID) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentRepoID) UnmarshalJSON(data []byte) error {
 
 	str := new(string)
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = GetDeployment200ApplicationJSON1GitSource1RepoIDTypeStr
+		u.Type = GetDeploymentRepoIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = GetDeployment200ApplicationJSON1GitSource1RepoIDTypeInteger
+		u.Type = GetDeploymentRepoIDTypeInteger
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON1GitSource1RepoID) MarshalJSON() ([]byte, error) {
+func (u GetDeploymentRepoID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -3220,323 +3220,323 @@ func (u GetDeployment200ApplicationJSON1GitSource1RepoID) MarshalJSON() ([]byte,
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type GetDeployment200ApplicationJSON1GitSource1Type string
+type GetDeploymentDeploymentsResponse200Type string
 
 const (
-	GetDeployment200ApplicationJSON1GitSource1TypeGithub GetDeployment200ApplicationJSON1GitSource1Type = "github"
+	GetDeploymentDeploymentsResponse200TypeGithub GetDeploymentDeploymentsResponse200Type = "github"
 )
 
-func (e GetDeployment200ApplicationJSON1GitSource1Type) ToPointer() *GetDeployment200ApplicationJSON1GitSource1Type {
+func (e GetDeploymentDeploymentsResponse200Type) ToPointer() *GetDeploymentDeploymentsResponse200Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1GitSource1Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = GetDeployment200ApplicationJSON1GitSource1Type(v)
+		*e = GetDeploymentDeploymentsResponse200Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1GitSource1Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1GitSource1 struct {
-	PrID   *int64                                           `json:"prId,omitempty"`
-	Ref    *string                                          `json:"ref,omitempty"`
-	RepoID GetDeployment200ApplicationJSON1GitSource1RepoID `json:"repoId"`
-	Sha    *string                                          `json:"sha,omitempty"`
-	Type   GetDeployment200ApplicationJSON1GitSource1Type   `json:"type"`
+type GetDeploymentDeploymentsResponse1 struct {
+	PrID   *int64                                  `json:"prId,omitempty"`
+	Ref    *string                                 `json:"ref,omitempty"`
+	RepoID GetDeploymentRepoID                     `json:"repoId"`
+	Sha    *string                                 `json:"sha,omitempty"`
+	Type   GetDeploymentDeploymentsResponse200Type `json:"type"`
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource1) GetPrID() *int64 {
+func (o *GetDeploymentDeploymentsResponse1) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource1) GetRef() *string {
+func (o *GetDeploymentDeploymentsResponse1) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource1) GetRepoID() GetDeployment200ApplicationJSON1GitSource1RepoID {
+func (o *GetDeploymentDeploymentsResponse1) GetRepoID() GetDeploymentRepoID {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitSource1RepoID{}
+		return GetDeploymentRepoID{}
 	}
 	return o.RepoID
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource1) GetSha() *string {
+func (o *GetDeploymentDeploymentsResponse1) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *GetDeployment200ApplicationJSON1GitSource1) GetType() GetDeployment200ApplicationJSON1GitSource1Type {
+func (o *GetDeploymentDeploymentsResponse1) GetType() GetDeploymentDeploymentsResponse200Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1GitSource1Type("")
+		return GetDeploymentDeploymentsResponse200Type("")
 	}
 	return o.Type
 }
 
-type GetDeployment200ApplicationJSON1GitSourceType string
+type GetDeploymentGitSourceType string
 
 const (
-	GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource1 GetDeployment200ApplicationJSON1GitSourceType = "getDeployment_200ApplicationJSON_1_gitSource_1"
-	GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource2 GetDeployment200ApplicationJSON1GitSourceType = "getDeployment_200ApplicationJSON_1_gitSource_2"
-	GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource3 GetDeployment200ApplicationJSON1GitSourceType = "getDeployment_200ApplicationJSON_1_gitSource_3"
-	GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource4 GetDeployment200ApplicationJSON1GitSourceType = "getDeployment_200ApplicationJSON_1_gitSource_4"
-	GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource5 GetDeployment200ApplicationJSON1GitSourceType = "getDeployment_200ApplicationJSON_1_gitSource_5"
-	GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource6 GetDeployment200ApplicationJSON1GitSourceType = "getDeployment_200ApplicationJSON_1_gitSource_6"
-	GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource7 GetDeployment200ApplicationJSON1GitSourceType = "getDeployment_200ApplicationJSON_1_gitSource_7"
-	GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource8 GetDeployment200ApplicationJSON1GitSourceType = "getDeployment_200ApplicationJSON_1_gitSource_8"
-	GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource9 GetDeployment200ApplicationJSON1GitSourceType = "getDeployment_200ApplicationJSON_1_gitSource_9"
+	GetDeploymentGitSourceTypeGetDeploymentDeploymentsResponse1 GetDeploymentGitSourceType = "getDeployment_deployments_response_1"
+	GetDeploymentGitSourceTypeGetDeploymentDeploymentsResponse2 GetDeploymentGitSourceType = "getDeployment_deployments_response_2"
+	GetDeploymentGitSourceTypeGetDeploymentDeployments3         GetDeploymentGitSourceType = "getDeployment_deployments_3"
+	GetDeploymentGitSourceTypeGetDeployment4                    GetDeploymentGitSourceType = "getDeployment_4"
+	GetDeploymentGitSourceTypeGetDeployment5                    GetDeploymentGitSourceType = "getDeployment_5"
+	GetDeploymentGitSourceTypeGetDeployment6                    GetDeploymentGitSourceType = "getDeployment_6"
+	GetDeploymentGitSourceTypeGetDeployment7                    GetDeploymentGitSourceType = "getDeployment_7"
+	GetDeploymentGitSourceTypeGetDeployment8                    GetDeploymentGitSourceType = "getDeployment_8"
+	GetDeploymentGitSourceTypeGetDeployment9                    GetDeploymentGitSourceType = "getDeployment_9"
 )
 
-type GetDeployment200ApplicationJSON1GitSource struct {
-	GetDeployment200ApplicationJSON1GitSource1 *GetDeployment200ApplicationJSON1GitSource1
-	GetDeployment200ApplicationJSON1GitSource2 *GetDeployment200ApplicationJSON1GitSource2
-	GetDeployment200ApplicationJSON1GitSource3 *GetDeployment200ApplicationJSON1GitSource3
-	GetDeployment200ApplicationJSON1GitSource4 *GetDeployment200ApplicationJSON1GitSource4
-	GetDeployment200ApplicationJSON1GitSource5 *GetDeployment200ApplicationJSON1GitSource5
-	GetDeployment200ApplicationJSON1GitSource6 *GetDeployment200ApplicationJSON1GitSource6
-	GetDeployment200ApplicationJSON1GitSource7 *GetDeployment200ApplicationJSON1GitSource7
-	GetDeployment200ApplicationJSON1GitSource8 *GetDeployment200ApplicationJSON1GitSource8
-	GetDeployment200ApplicationJSON1GitSource9 *GetDeployment200ApplicationJSON1GitSource9
+type GetDeploymentGitSource struct {
+	GetDeploymentDeploymentsResponse1 *GetDeploymentDeploymentsResponse1
+	GetDeploymentDeploymentsResponse2 *GetDeploymentDeploymentsResponse2
+	GetDeploymentDeployments3         *GetDeploymentDeployments3
+	GetDeployment4                    *GetDeployment4
+	GetDeployment5                    *GetDeployment5
+	GetDeployment6                    *GetDeployment6
+	GetDeployment7                    *GetDeployment7
+	GetDeployment8                    *GetDeployment8
+	GetDeployment9                    *GetDeployment9
 
-	Type GetDeployment200ApplicationJSON1GitSourceType
+	Type GetDeploymentGitSourceType
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSourceGetDeployment200ApplicationJSON1GitSource1(getDeployment200ApplicationJSON1GitSource1 GetDeployment200ApplicationJSON1GitSource1) GetDeployment200ApplicationJSON1GitSource {
-	typ := GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource1
+func CreateGetDeploymentGitSourceGetDeploymentDeploymentsResponse1(getDeploymentDeploymentsResponse1 GetDeploymentDeploymentsResponse1) GetDeploymentGitSource {
+	typ := GetDeploymentGitSourceTypeGetDeploymentDeploymentsResponse1
 
-	return GetDeployment200ApplicationJSON1GitSource{
-		GetDeployment200ApplicationJSON1GitSource1: &getDeployment200ApplicationJSON1GitSource1,
-		Type: typ,
+	return GetDeploymentGitSource{
+		GetDeploymentDeploymentsResponse1: &getDeploymentDeploymentsResponse1,
+		Type:                              typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSourceGetDeployment200ApplicationJSON1GitSource2(getDeployment200ApplicationJSON1GitSource2 GetDeployment200ApplicationJSON1GitSource2) GetDeployment200ApplicationJSON1GitSource {
-	typ := GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource2
+func CreateGetDeploymentGitSourceGetDeploymentDeploymentsResponse2(getDeploymentDeploymentsResponse2 GetDeploymentDeploymentsResponse2) GetDeploymentGitSource {
+	typ := GetDeploymentGitSourceTypeGetDeploymentDeploymentsResponse2
 
-	return GetDeployment200ApplicationJSON1GitSource{
-		GetDeployment200ApplicationJSON1GitSource2: &getDeployment200ApplicationJSON1GitSource2,
-		Type: typ,
+	return GetDeploymentGitSource{
+		GetDeploymentDeploymentsResponse2: &getDeploymentDeploymentsResponse2,
+		Type:                              typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSourceGetDeployment200ApplicationJSON1GitSource3(getDeployment200ApplicationJSON1GitSource3 GetDeployment200ApplicationJSON1GitSource3) GetDeployment200ApplicationJSON1GitSource {
-	typ := GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource3
+func CreateGetDeploymentGitSourceGetDeploymentDeployments3(getDeploymentDeployments3 GetDeploymentDeployments3) GetDeploymentGitSource {
+	typ := GetDeploymentGitSourceTypeGetDeploymentDeployments3
 
-	return GetDeployment200ApplicationJSON1GitSource{
-		GetDeployment200ApplicationJSON1GitSource3: &getDeployment200ApplicationJSON1GitSource3,
-		Type: typ,
+	return GetDeploymentGitSource{
+		GetDeploymentDeployments3: &getDeploymentDeployments3,
+		Type:                      typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSourceGetDeployment200ApplicationJSON1GitSource4(getDeployment200ApplicationJSON1GitSource4 GetDeployment200ApplicationJSON1GitSource4) GetDeployment200ApplicationJSON1GitSource {
-	typ := GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource4
+func CreateGetDeploymentGitSourceGetDeployment4(getDeployment4 GetDeployment4) GetDeploymentGitSource {
+	typ := GetDeploymentGitSourceTypeGetDeployment4
 
-	return GetDeployment200ApplicationJSON1GitSource{
-		GetDeployment200ApplicationJSON1GitSource4: &getDeployment200ApplicationJSON1GitSource4,
-		Type: typ,
+	return GetDeploymentGitSource{
+		GetDeployment4: &getDeployment4,
+		Type:           typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSourceGetDeployment200ApplicationJSON1GitSource5(getDeployment200ApplicationJSON1GitSource5 GetDeployment200ApplicationJSON1GitSource5) GetDeployment200ApplicationJSON1GitSource {
-	typ := GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource5
+func CreateGetDeploymentGitSourceGetDeployment5(getDeployment5 GetDeployment5) GetDeploymentGitSource {
+	typ := GetDeploymentGitSourceTypeGetDeployment5
 
-	return GetDeployment200ApplicationJSON1GitSource{
-		GetDeployment200ApplicationJSON1GitSource5: &getDeployment200ApplicationJSON1GitSource5,
-		Type: typ,
+	return GetDeploymentGitSource{
+		GetDeployment5: &getDeployment5,
+		Type:           typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSourceGetDeployment200ApplicationJSON1GitSource6(getDeployment200ApplicationJSON1GitSource6 GetDeployment200ApplicationJSON1GitSource6) GetDeployment200ApplicationJSON1GitSource {
-	typ := GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource6
+func CreateGetDeploymentGitSourceGetDeployment6(getDeployment6 GetDeployment6) GetDeploymentGitSource {
+	typ := GetDeploymentGitSourceTypeGetDeployment6
 
-	return GetDeployment200ApplicationJSON1GitSource{
-		GetDeployment200ApplicationJSON1GitSource6: &getDeployment200ApplicationJSON1GitSource6,
-		Type: typ,
+	return GetDeploymentGitSource{
+		GetDeployment6: &getDeployment6,
+		Type:           typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSourceGetDeployment200ApplicationJSON1GitSource7(getDeployment200ApplicationJSON1GitSource7 GetDeployment200ApplicationJSON1GitSource7) GetDeployment200ApplicationJSON1GitSource {
-	typ := GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource7
+func CreateGetDeploymentGitSourceGetDeployment7(getDeployment7 GetDeployment7) GetDeploymentGitSource {
+	typ := GetDeploymentGitSourceTypeGetDeployment7
 
-	return GetDeployment200ApplicationJSON1GitSource{
-		GetDeployment200ApplicationJSON1GitSource7: &getDeployment200ApplicationJSON1GitSource7,
-		Type: typ,
+	return GetDeploymentGitSource{
+		GetDeployment7: &getDeployment7,
+		Type:           typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSourceGetDeployment200ApplicationJSON1GitSource8(getDeployment200ApplicationJSON1GitSource8 GetDeployment200ApplicationJSON1GitSource8) GetDeployment200ApplicationJSON1GitSource {
-	typ := GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource8
+func CreateGetDeploymentGitSourceGetDeployment8(getDeployment8 GetDeployment8) GetDeploymentGitSource {
+	typ := GetDeploymentGitSourceTypeGetDeployment8
 
-	return GetDeployment200ApplicationJSON1GitSource{
-		GetDeployment200ApplicationJSON1GitSource8: &getDeployment200ApplicationJSON1GitSource8,
-		Type: typ,
+	return GetDeploymentGitSource{
+		GetDeployment8: &getDeployment8,
+		Type:           typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1GitSourceGetDeployment200ApplicationJSON1GitSource9(getDeployment200ApplicationJSON1GitSource9 GetDeployment200ApplicationJSON1GitSource9) GetDeployment200ApplicationJSON1GitSource {
-	typ := GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource9
+func CreateGetDeploymentGitSourceGetDeployment9(getDeployment9 GetDeployment9) GetDeploymentGitSource {
+	typ := GetDeploymentGitSourceTypeGetDeployment9
 
-	return GetDeployment200ApplicationJSON1GitSource{
-		GetDeployment200ApplicationJSON1GitSource9: &getDeployment200ApplicationJSON1GitSource9,
-		Type: typ,
+	return GetDeploymentGitSource{
+		GetDeployment9: &getDeployment9,
+		Type:           typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON1GitSource) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentGitSource) UnmarshalJSON(data []byte) error {
 
-	getDeployment200ApplicationJSON1GitSource6 := new(GetDeployment200ApplicationJSON1GitSource6)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource6, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource6 = getDeployment200ApplicationJSON1GitSource6
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource6
+	getDeployment6 := new(GetDeployment6)
+	if err := utils.UnmarshalJSON(data, &getDeployment6, "", true, true); err == nil {
+		u.GetDeployment6 = getDeployment6
+		u.Type = GetDeploymentGitSourceTypeGetDeployment6
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitSource8 := new(GetDeployment200ApplicationJSON1GitSource8)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource8, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource8 = getDeployment200ApplicationJSON1GitSource8
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource8
+	getDeployment8 := new(GetDeployment8)
+	if err := utils.UnmarshalJSON(data, &getDeployment8, "", true, true); err == nil {
+		u.GetDeployment8 = getDeployment8
+		u.Type = GetDeploymentGitSourceTypeGetDeployment8
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitSource1 := new(GetDeployment200ApplicationJSON1GitSource1)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource1, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource1 = getDeployment200ApplicationJSON1GitSource1
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource1
+	getDeploymentDeploymentsResponse1 := new(GetDeploymentDeploymentsResponse1)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse1, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse1 = getDeploymentDeploymentsResponse1
+		u.Type = GetDeploymentGitSourceTypeGetDeploymentDeploymentsResponse1
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitSource3 := new(GetDeployment200ApplicationJSON1GitSource3)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource3, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource3 = getDeployment200ApplicationJSON1GitSource3
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource3
+	getDeploymentDeployments3 := new(GetDeploymentDeployments3)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeployments3, "", true, true); err == nil {
+		u.GetDeploymentDeployments3 = getDeploymentDeployments3
+		u.Type = GetDeploymentGitSourceTypeGetDeploymentDeployments3
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitSource2 := new(GetDeployment200ApplicationJSON1GitSource2)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource2, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource2 = getDeployment200ApplicationJSON1GitSource2
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource2
+	getDeploymentDeploymentsResponse2 := new(GetDeploymentDeploymentsResponse2)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse2, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse2 = getDeploymentDeploymentsResponse2
+		u.Type = GetDeploymentGitSourceTypeGetDeploymentDeploymentsResponse2
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitSource4 := new(GetDeployment200ApplicationJSON1GitSource4)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource4, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource4 = getDeployment200ApplicationJSON1GitSource4
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource4
+	getDeployment4 := new(GetDeployment4)
+	if err := utils.UnmarshalJSON(data, &getDeployment4, "", true, true); err == nil {
+		u.GetDeployment4 = getDeployment4
+		u.Type = GetDeploymentGitSourceTypeGetDeployment4
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitSource5 := new(GetDeployment200ApplicationJSON1GitSource5)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource5, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource5 = getDeployment200ApplicationJSON1GitSource5
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource5
+	getDeployment5 := new(GetDeployment5)
+	if err := utils.UnmarshalJSON(data, &getDeployment5, "", true, true); err == nil {
+		u.GetDeployment5 = getDeployment5
+		u.Type = GetDeploymentGitSourceTypeGetDeployment5
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitSource7 := new(GetDeployment200ApplicationJSON1GitSource7)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource7, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource7 = getDeployment200ApplicationJSON1GitSource7
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource7
+	getDeployment7 := new(GetDeployment7)
+	if err := utils.UnmarshalJSON(data, &getDeployment7, "", true, true); err == nil {
+		u.GetDeployment7 = getDeployment7
+		u.Type = GetDeploymentGitSourceTypeGetDeployment7
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1GitSource9 := new(GetDeployment200ApplicationJSON1GitSource9)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1GitSource9, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1GitSource9 = getDeployment200ApplicationJSON1GitSource9
-		u.Type = GetDeployment200ApplicationJSON1GitSourceTypeGetDeployment200ApplicationJSON1GitSource9
+	getDeployment9 := new(GetDeployment9)
+	if err := utils.UnmarshalJSON(data, &getDeployment9, "", true, true); err == nil {
+		u.GetDeployment9 = getDeployment9
+		u.Type = GetDeploymentGitSourceTypeGetDeployment9
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON1GitSource) MarshalJSON() ([]byte, error) {
-	if u.GetDeployment200ApplicationJSON1GitSource1 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource1, "", true)
+func (u GetDeploymentGitSource) MarshalJSON() ([]byte, error) {
+	if u.GetDeploymentDeploymentsResponse1 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse1, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1GitSource2 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource2, "", true)
+	if u.GetDeploymentDeploymentsResponse2 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse2, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1GitSource3 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource3, "", true)
+	if u.GetDeploymentDeployments3 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeployments3, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1GitSource4 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource4, "", true)
+	if u.GetDeployment4 != nil {
+		return utils.MarshalJSON(u.GetDeployment4, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1GitSource5 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource5, "", true)
+	if u.GetDeployment5 != nil {
+		return utils.MarshalJSON(u.GetDeployment5, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1GitSource6 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource6, "", true)
+	if u.GetDeployment6 != nil {
+		return utils.MarshalJSON(u.GetDeployment6, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1GitSource7 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource7, "", true)
+	if u.GetDeployment7 != nil {
+		return utils.MarshalJSON(u.GetDeployment7, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1GitSource8 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource8, "", true)
+	if u.GetDeployment8 != nil {
+		return utils.MarshalJSON(u.GetDeployment8, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1GitSource9 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1GitSource9, "", true)
+	if u.GetDeployment9 != nil {
+		return utils.MarshalJSON(u.GetDeployment9, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type GetDeployment200ApplicationJSON1LambdasOutput struct {
+type GetDeploymentOutput struct {
 	FunctionName string `json:"functionName"`
 	Path         string `json:"path"`
 }
 
-func (o *GetDeployment200ApplicationJSON1LambdasOutput) GetFunctionName() string {
+func (o *GetDeploymentOutput) GetFunctionName() string {
 	if o == nil {
 		return ""
 	}
 	return o.FunctionName
 }
 
-func (o *GetDeployment200ApplicationJSON1LambdasOutput) GetPath() string {
+func (o *GetDeploymentOutput) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-type GetDeployment200ApplicationJSON1LambdasReadyState string
+type GetDeploymentDeploymentsResponse200ReadyState string
 
 const (
-	GetDeployment200ApplicationJSON1LambdasReadyStateBuilding     GetDeployment200ApplicationJSON1LambdasReadyState = "BUILDING"
-	GetDeployment200ApplicationJSON1LambdasReadyStateError        GetDeployment200ApplicationJSON1LambdasReadyState = "ERROR"
-	GetDeployment200ApplicationJSON1LambdasReadyStateInitializing GetDeployment200ApplicationJSON1LambdasReadyState = "INITIALIZING"
-	GetDeployment200ApplicationJSON1LambdasReadyStateReady        GetDeployment200ApplicationJSON1LambdasReadyState = "READY"
+	GetDeploymentDeploymentsResponse200ReadyStateBuilding     GetDeploymentDeploymentsResponse200ReadyState = "BUILDING"
+	GetDeploymentDeploymentsResponse200ReadyStateError        GetDeploymentDeploymentsResponse200ReadyState = "ERROR"
+	GetDeploymentDeploymentsResponse200ReadyStateInitializing GetDeploymentDeploymentsResponse200ReadyState = "INITIALIZING"
+	GetDeploymentDeploymentsResponse200ReadyStateReady        GetDeploymentDeploymentsResponse200ReadyState = "READY"
 )
 
-func (e GetDeployment200ApplicationJSON1LambdasReadyState) ToPointer() *GetDeployment200ApplicationJSON1LambdasReadyState {
+func (e GetDeploymentDeploymentsResponse200ReadyState) ToPointer() *GetDeploymentDeploymentsResponse200ReadyState {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1LambdasReadyState) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3549,79 +3549,79 @@ func (e *GetDeployment200ApplicationJSON1LambdasReadyState) UnmarshalJSON(data [
 	case "INITIALIZING":
 		fallthrough
 	case "READY":
-		*e = GetDeployment200ApplicationJSON1LambdasReadyState(v)
+		*e = GetDeploymentDeploymentsResponse200ReadyState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1LambdasReadyState: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ReadyState: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1Lambdas struct {
-	CreatedAt    *int64                                             `json:"createdAt,omitempty"`
-	Entrypoint   *string                                            `json:"entrypoint,omitempty"`
-	ID           string                                             `json:"id"`
-	Output       []GetDeployment200ApplicationJSON1LambdasOutput    `json:"output"`
-	ReadyState   *GetDeployment200ApplicationJSON1LambdasReadyState `json:"readyState,omitempty"`
-	ReadyStateAt *int64                                             `json:"readyStateAt,omitempty"`
+type GetDeploymentLambdas struct {
+	CreatedAt    *int64                                         `json:"createdAt,omitempty"`
+	Entrypoint   *string                                        `json:"entrypoint,omitempty"`
+	ID           string                                         `json:"id"`
+	Output       []GetDeploymentOutput                          `json:"output"`
+	ReadyState   *GetDeploymentDeploymentsResponse200ReadyState `json:"readyState,omitempty"`
+	ReadyStateAt *int64                                         `json:"readyStateAt,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Lambdas) GetCreatedAt() *int64 {
+func (o *GetDeploymentLambdas) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *GetDeployment200ApplicationJSON1Lambdas) GetEntrypoint() *string {
+func (o *GetDeploymentLambdas) GetEntrypoint() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Entrypoint
 }
 
-func (o *GetDeployment200ApplicationJSON1Lambdas) GetID() string {
+func (o *GetDeploymentLambdas) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetDeployment200ApplicationJSON1Lambdas) GetOutput() []GetDeployment200ApplicationJSON1LambdasOutput {
+func (o *GetDeploymentLambdas) GetOutput() []GetDeploymentOutput {
 	if o == nil {
-		return []GetDeployment200ApplicationJSON1LambdasOutput{}
+		return []GetDeploymentOutput{}
 	}
 	return o.Output
 }
 
-func (o *GetDeployment200ApplicationJSON1Lambdas) GetReadyState() *GetDeployment200ApplicationJSON1LambdasReadyState {
+func (o *GetDeploymentLambdas) GetReadyState() *GetDeploymentDeploymentsResponse200ReadyState {
 	if o == nil {
 		return nil
 	}
 	return o.ReadyState
 }
 
-func (o *GetDeployment200ApplicationJSON1Lambdas) GetReadyStateAt() *int64 {
+func (o *GetDeploymentLambdas) GetReadyStateAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ReadyStateAt
 }
 
-// GetDeployment200ApplicationJSON1Plan - The pricing plan the deployment was made under
-type GetDeployment200ApplicationJSON1Plan string
+// GetDeploymentPlan - The pricing plan the deployment was made under
+type GetDeploymentPlan string
 
 const (
-	GetDeployment200ApplicationJSON1PlanPro        GetDeployment200ApplicationJSON1Plan = "pro"
-	GetDeployment200ApplicationJSON1PlanEnterprise GetDeployment200ApplicationJSON1Plan = "enterprise"
-	GetDeployment200ApplicationJSON1PlanHobby      GetDeployment200ApplicationJSON1Plan = "hobby"
-	GetDeployment200ApplicationJSON1PlanOss        GetDeployment200ApplicationJSON1Plan = "oss"
+	GetDeploymentPlanPro        GetDeploymentPlan = "pro"
+	GetDeploymentPlanEnterprise GetDeploymentPlan = "enterprise"
+	GetDeploymentPlanHobby      GetDeploymentPlan = "hobby"
+	GetDeploymentPlanOss        GetDeploymentPlan = "oss"
 )
 
-func (e GetDeployment200ApplicationJSON1Plan) ToPointer() *GetDeployment200ApplicationJSON1Plan {
+func (e GetDeploymentPlan) ToPointer() *GetDeploymentPlan {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1Plan) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentPlan) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3634,30 +3634,30 @@ func (e *GetDeployment200ApplicationJSON1Plan) UnmarshalJSON(data []byte) error 
 	case "hobby":
 		fallthrough
 	case "oss":
-		*e = GetDeployment200ApplicationJSON1Plan(v)
+		*e = GetDeploymentPlan(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1Plan: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentPlan: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON1ReadyState - The state of the deployment depending on the process of deploying, or if it is ready or in an error state
-type GetDeployment200ApplicationJSON1ReadyState string
+// GetDeploymentReadyState - The state of the deployment depending on the process of deploying, or if it is ready or in an error state
+type GetDeploymentReadyState string
 
 const (
-	GetDeployment200ApplicationJSON1ReadyStateQueued       GetDeployment200ApplicationJSON1ReadyState = "QUEUED"
-	GetDeployment200ApplicationJSON1ReadyStateBuilding     GetDeployment200ApplicationJSON1ReadyState = "BUILDING"
-	GetDeployment200ApplicationJSON1ReadyStateError        GetDeployment200ApplicationJSON1ReadyState = "ERROR"
-	GetDeployment200ApplicationJSON1ReadyStateInitializing GetDeployment200ApplicationJSON1ReadyState = "INITIALIZING"
-	GetDeployment200ApplicationJSON1ReadyStateReady        GetDeployment200ApplicationJSON1ReadyState = "READY"
-	GetDeployment200ApplicationJSON1ReadyStateCanceled     GetDeployment200ApplicationJSON1ReadyState = "CANCELED"
+	GetDeploymentReadyStateQueued       GetDeploymentReadyState = "QUEUED"
+	GetDeploymentReadyStateBuilding     GetDeploymentReadyState = "BUILDING"
+	GetDeploymentReadyStateError        GetDeploymentReadyState = "ERROR"
+	GetDeploymentReadyStateInitializing GetDeploymentReadyState = "INITIALIZING"
+	GetDeploymentReadyStateReady        GetDeploymentReadyState = "READY"
+	GetDeploymentReadyStateCanceled     GetDeploymentReadyState = "CANCELED"
 )
 
-func (e GetDeployment200ApplicationJSON1ReadyState) ToPointer() *GetDeployment200ApplicationJSON1ReadyState {
+func (e GetDeploymentReadyState) ToPointer() *GetDeploymentReadyState {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1ReadyState) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3674,26 +3674,26 @@ func (e *GetDeployment200ApplicationJSON1ReadyState) UnmarshalJSON(data []byte) 
 	case "READY":
 		fallthrough
 	case "CANCELED":
-		*e = GetDeployment200ApplicationJSON1ReadyState(v)
+		*e = GetDeploymentReadyState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1ReadyState: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentReadyState: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON1ReadySubstate - The substate of the deployment when the state is "READY"
-type GetDeployment200ApplicationJSON1ReadySubstate string
+// GetDeploymentReadySubstate - The substate of the deployment when the state is "READY"
+type GetDeploymentReadySubstate string
 
 const (
-	GetDeployment200ApplicationJSON1ReadySubstateStaged   GetDeployment200ApplicationJSON1ReadySubstate = "STAGED"
-	GetDeployment200ApplicationJSON1ReadySubstatePromoted GetDeployment200ApplicationJSON1ReadySubstate = "PROMOTED"
+	GetDeploymentReadySubstateStaged   GetDeploymentReadySubstate = "STAGED"
+	GetDeploymentReadySubstatePromoted GetDeploymentReadySubstate = "PROMOTED"
 )
 
-func (e GetDeployment200ApplicationJSON1ReadySubstate) ToPointer() *GetDeployment200ApplicationJSON1ReadySubstate {
+func (e GetDeploymentReadySubstate) ToPointer() *GetDeploymentReadySubstate {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1ReadySubstate) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentReadySubstate) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3702,81 +3702,81 @@ func (e *GetDeployment200ApplicationJSON1ReadySubstate) UnmarshalJSON(data []byt
 	case "STAGED":
 		fallthrough
 	case "PROMOTED":
-		*e = GetDeployment200ApplicationJSON1ReadySubstate(v)
+		*e = GetDeploymentReadySubstate(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1ReadySubstate: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentReadySubstate: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1Routes3Middleware int64
+type GetDeploymentMiddleware int64
 
 const (
-	GetDeployment200ApplicationJSON1Routes3MiddlewareZero GetDeployment200ApplicationJSON1Routes3Middleware = 0
+	GetDeploymentMiddlewareZero GetDeploymentMiddleware = 0
 )
 
-func (e GetDeployment200ApplicationJSON1Routes3Middleware) ToPointer() *GetDeployment200ApplicationJSON1Routes3Middleware {
+func (e GetDeploymentMiddleware) ToPointer() *GetDeploymentMiddleware {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1Routes3Middleware) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentMiddleware) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case 0:
-		*e = GetDeployment200ApplicationJSON1Routes3Middleware(v)
+		*e = GetDeploymentMiddleware(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1Routes3Middleware: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentMiddleware: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON1Routes3 - A list of routes objects used to rewrite paths to point towards other internal or external paths
-type GetDeployment200ApplicationJSON1Routes3 struct {
-	Continue   bool                                              `json:"continue"`
-	Middleware GetDeployment200ApplicationJSON1Routes3Middleware `json:"middleware"`
-	Src        string                                            `json:"src"`
+// GetDeploymentDeploymentsResponse3 - A list of routes objects used to rewrite paths to point towards other internal or external paths
+type GetDeploymentDeploymentsResponse3 struct {
+	Continue   bool                    `json:"continue"`
+	Middleware GetDeploymentMiddleware `json:"middleware"`
+	Src        string                  `json:"src"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes3) GetContinue() bool {
+func (o *GetDeploymentDeploymentsResponse3) GetContinue() bool {
 	if o == nil {
 		return false
 	}
 	return o.Continue
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes3) GetMiddleware() GetDeployment200ApplicationJSON1Routes3Middleware {
+func (o *GetDeploymentDeploymentsResponse3) GetMiddleware() GetDeploymentMiddleware {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1Routes3Middleware(0)
+		return GetDeploymentMiddleware(0)
 	}
 	return o.Middleware
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes3) GetSrc() string {
+func (o *GetDeploymentDeploymentsResponse3) GetSrc() string {
 	if o == nil {
 		return ""
 	}
 	return o.Src
 }
 
-type GetDeployment200ApplicationJSON1Routes2Handle string
+type GetDeploymentHandle string
 
 const (
-	GetDeployment200ApplicationJSON1Routes2HandleError      GetDeployment200ApplicationJSON1Routes2Handle = "error"
-	GetDeployment200ApplicationJSON1Routes2HandleFilesystem GetDeployment200ApplicationJSON1Routes2Handle = "filesystem"
-	GetDeployment200ApplicationJSON1Routes2HandleHit        GetDeployment200ApplicationJSON1Routes2Handle = "hit"
-	GetDeployment200ApplicationJSON1Routes2HandleMiss       GetDeployment200ApplicationJSON1Routes2Handle = "miss"
-	GetDeployment200ApplicationJSON1Routes2HandleRewrite    GetDeployment200ApplicationJSON1Routes2Handle = "rewrite"
-	GetDeployment200ApplicationJSON1Routes2HandleResource   GetDeployment200ApplicationJSON1Routes2Handle = "resource"
+	GetDeploymentHandleError      GetDeploymentHandle = "error"
+	GetDeploymentHandleFilesystem GetDeploymentHandle = "filesystem"
+	GetDeploymentHandleHit        GetDeploymentHandle = "hit"
+	GetDeploymentHandleMiss       GetDeploymentHandle = "miss"
+	GetDeploymentHandleRewrite    GetDeploymentHandle = "rewrite"
+	GetDeploymentHandleResource   GetDeploymentHandle = "resource"
 )
 
-func (e GetDeployment200ApplicationJSON1Routes2Handle) ToPointer() *GetDeployment200ApplicationJSON1Routes2Handle {
+func (e GetDeploymentHandle) ToPointer() *GetDeploymentHandle {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1Routes2Handle) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentHandle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3793,62 +3793,62 @@ func (e *GetDeployment200ApplicationJSON1Routes2Handle) UnmarshalJSON(data []byt
 	case "rewrite":
 		fallthrough
 	case "resource":
-		*e = GetDeployment200ApplicationJSON1Routes2Handle(v)
+		*e = GetDeploymentHandle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1Routes2Handle: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentHandle: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON1Routes2 - A list of routes objects used to rewrite paths to point towards other internal or external paths
-type GetDeployment200ApplicationJSON1Routes2 struct {
-	Dest   *string                                       `json:"dest,omitempty"`
-	Handle GetDeployment200ApplicationJSON1Routes2Handle `json:"handle"`
-	Src    *string                                       `json:"src,omitempty"`
-	Status *int64                                        `json:"status,omitempty"`
+// GetDeploymentDeploymentsResponse2002 - A list of routes objects used to rewrite paths to point towards other internal or external paths
+type GetDeploymentDeploymentsResponse2002 struct {
+	Dest   *string             `json:"dest,omitempty"`
+	Handle GetDeploymentHandle `json:"handle"`
+	Src    *string             `json:"src,omitempty"`
+	Status *int64              `json:"status,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes2) GetDest() *string {
+func (o *GetDeploymentDeploymentsResponse2002) GetDest() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dest
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes2) GetHandle() GetDeployment200ApplicationJSON1Routes2Handle {
+func (o *GetDeploymentDeploymentsResponse2002) GetHandle() GetDeploymentHandle {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1Routes2Handle("")
+		return GetDeploymentHandle("")
 	}
 	return o.Handle
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes2) GetSrc() *string {
+func (o *GetDeploymentDeploymentsResponse2002) GetSrc() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Src
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes2) GetStatus() *int64 {
+func (o *GetDeploymentDeploymentsResponse2002) GetStatus() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Status
 }
 
-type GetDeployment200ApplicationJSON1Routes1Has2Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type string
 
 const (
-	GetDeployment200ApplicationJSON1Routes1Has2TypeHeader GetDeployment200ApplicationJSON1Routes1Has2Type = "header"
-	GetDeployment200ApplicationJSON1Routes1Has2TypeCookie GetDeployment200ApplicationJSON1Routes1Has2Type = "cookie"
-	GetDeployment200ApplicationJSON1Routes1Has2TypeQuery  GetDeployment200ApplicationJSON1Routes1Has2Type = "query"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1TypeHeader GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type = "header"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1TypeCookie GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type = "cookie"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1TypeQuery  GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type = "query"
 )
 
-func (e GetDeployment200ApplicationJSON1Routes1Has2Type) ToPointer() *GetDeployment200ApplicationJSON1Routes1Has2Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1Routes1Has2Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3859,178 +3859,178 @@ func (e *GetDeployment200ApplicationJSON1Routes1Has2Type) UnmarshalJSON(data []b
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = GetDeployment200ApplicationJSON1Routes1Has2Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1Routes1Has2Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1Routes1Has2 struct {
-	Key   string                                          `json:"key"`
-	Type  GetDeployment200ApplicationJSON1Routes1Has2Type `json:"type"`
-	Value *string                                         `json:"value,omitempty"`
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12 struct {
+	Key   string                                                                     `json:"key"`
+	Type  GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type `json:"type"`
+	Value *string                                                                    `json:"value,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Has2) GetKey() string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Has2) GetType() GetDeployment200ApplicationJSON1Routes1Has2Type {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1Routes1Has2Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Type("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Has2) GetValue() *string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type GetDeployment200ApplicationJSON1Routes1Has1Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1RoutesType string
 
 const (
-	GetDeployment200ApplicationJSON1Routes1Has1TypeHost GetDeployment200ApplicationJSON1Routes1Has1Type = "host"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1RoutesTypeHost GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1RoutesType = "host"
 )
 
-func (e GetDeployment200ApplicationJSON1Routes1Has1Type) ToPointer() *GetDeployment200ApplicationJSON1Routes1Has1Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1RoutesType) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1RoutesType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1Routes1Has1Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1RoutesType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = GetDeployment200ApplicationJSON1Routes1Has1Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1RoutesType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1Routes1Has1Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1RoutesType: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1Routes1Has1 struct {
-	Type  GetDeployment200ApplicationJSON1Routes1Has1Type `json:"type"`
-	Value string                                          `json:"value"`
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11 struct {
+	Type  GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1RoutesType `json:"type"`
+	Value string                                                                    `json:"value"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Has1) GetType() GetDeployment200ApplicationJSON1Routes1Has1Type {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1RoutesType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1Routes1Has1Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1RoutesType("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Has1) GetValue() string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type GetDeployment200ApplicationJSON1Routes1HasType string
+type GetDeploymentHasType string
 
 const (
-	GetDeployment200ApplicationJSON1Routes1HasTypeGetDeployment200ApplicationJSON1Routes1Has1 GetDeployment200ApplicationJSON1Routes1HasType = "getDeployment_200ApplicationJSON_1_routes_1_has_1"
-	GetDeployment200ApplicationJSON1Routes1HasTypeGetDeployment200ApplicationJSON1Routes1Has2 GetDeployment200ApplicationJSON1Routes1HasType = "getDeployment_200ApplicationJSON_1_routes_1_has_2"
+	GetDeploymentHasTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11 GetDeploymentHasType = "getDeployment_deployments_response_200_ApplicationJSON_responseBody_1_1"
+	GetDeploymentHasTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12 GetDeploymentHasType = "getDeployment_deployments_response_200_ApplicationJSON_responseBody_1_2"
 )
 
-type GetDeployment200ApplicationJSON1Routes1Has struct {
-	GetDeployment200ApplicationJSON1Routes1Has1 *GetDeployment200ApplicationJSON1Routes1Has1
-	GetDeployment200ApplicationJSON1Routes1Has2 *GetDeployment200ApplicationJSON1Routes1Has2
+type GetDeploymentHas struct {
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11 *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12 *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12
 
-	Type GetDeployment200ApplicationJSON1Routes1HasType
+	Type GetDeploymentHasType
 }
 
-func CreateGetDeployment200ApplicationJSON1Routes1HasGetDeployment200ApplicationJSON1Routes1Has1(getDeployment200ApplicationJSON1Routes1Has1 GetDeployment200ApplicationJSON1Routes1Has1) GetDeployment200ApplicationJSON1Routes1Has {
-	typ := GetDeployment200ApplicationJSON1Routes1HasTypeGetDeployment200ApplicationJSON1Routes1Has1
+func CreateGetDeploymentHasGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11(getDeploymentDeploymentsResponse200ApplicationJSONResponseBody11 GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11) GetDeploymentHas {
+	typ := GetDeploymentHasTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11
 
-	return GetDeployment200ApplicationJSON1Routes1Has{
-		GetDeployment200ApplicationJSON1Routes1Has1: &getDeployment200ApplicationJSON1Routes1Has1,
+	return GetDeploymentHas{
+		GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11: &getDeploymentDeploymentsResponse200ApplicationJSONResponseBody11,
 		Type: typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1Routes1HasGetDeployment200ApplicationJSON1Routes1Has2(getDeployment200ApplicationJSON1Routes1Has2 GetDeployment200ApplicationJSON1Routes1Has2) GetDeployment200ApplicationJSON1Routes1Has {
-	typ := GetDeployment200ApplicationJSON1Routes1HasTypeGetDeployment200ApplicationJSON1Routes1Has2
+func CreateGetDeploymentHasGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12(getDeploymentDeploymentsResponse200ApplicationJSONResponseBody12 GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12) GetDeploymentHas {
+	typ := GetDeploymentHasTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12
 
-	return GetDeployment200ApplicationJSON1Routes1Has{
-		GetDeployment200ApplicationJSON1Routes1Has2: &getDeployment200ApplicationJSON1Routes1Has2,
+	return GetDeploymentHas{
+		GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12: &getDeploymentDeploymentsResponse200ApplicationJSONResponseBody12,
 		Type: typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON1Routes1Has) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentHas) UnmarshalJSON(data []byte) error {
 
-	getDeployment200ApplicationJSON1Routes1Has1 := new(GetDeployment200ApplicationJSON1Routes1Has1)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes1Has1, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1Routes1Has1 = getDeployment200ApplicationJSON1Routes1Has1
-		u.Type = GetDeployment200ApplicationJSON1Routes1HasTypeGetDeployment200ApplicationJSON1Routes1Has1
+	getDeploymentDeploymentsResponse200ApplicationJSONResponseBody11 := new(GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse200ApplicationJSONResponseBody11, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11 = getDeploymentDeploymentsResponse200ApplicationJSONResponseBody11
+		u.Type = GetDeploymentHasTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1Routes1Has2 := new(GetDeployment200ApplicationJSON1Routes1Has2)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes1Has2, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1Routes1Has2 = getDeployment200ApplicationJSON1Routes1Has2
-		u.Type = GetDeployment200ApplicationJSON1Routes1HasTypeGetDeployment200ApplicationJSON1Routes1Has2
+	getDeploymentDeploymentsResponse200ApplicationJSONResponseBody12 := new(GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse200ApplicationJSONResponseBody12, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12 = getDeploymentDeploymentsResponse200ApplicationJSONResponseBody12
+		u.Type = GetDeploymentHasTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON1Routes1Has) MarshalJSON() ([]byte, error) {
-	if u.GetDeployment200ApplicationJSON1Routes1Has1 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes1Has1, "", true)
+func (u GetDeploymentHas) MarshalJSON() ([]byte, error) {
+	if u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1Routes1Has2 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes1Has2, "", true)
+	if u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type GetDeployment200ApplicationJSON1Routes1Locale struct {
+type GetDeploymentLocale struct {
 	Cookie   *string           `json:"cookie,omitempty"`
 	Redirect map[string]string `json:"redirect,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Locale) GetCookie() *string {
+func (o *GetDeploymentLocale) GetCookie() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Cookie
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Locale) GetRedirect() map[string]string {
+func (o *GetDeploymentLocale) GetRedirect() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Redirect
 }
 
-type GetDeployment200ApplicationJSON1Routes1Missing2Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type string
 
 const (
-	GetDeployment200ApplicationJSON1Routes1Missing2TypeHeader GetDeployment200ApplicationJSON1Routes1Missing2Type = "header"
-	GetDeployment200ApplicationJSON1Routes1Missing2TypeCookie GetDeployment200ApplicationJSON1Routes1Missing2Type = "cookie"
-	GetDeployment200ApplicationJSON1Routes1Missing2TypeQuery  GetDeployment200ApplicationJSON1Routes1Missing2Type = "query"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2TypeHeader GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type = "header"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2TypeCookie GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type = "cookie"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2TypeQuery  GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type = "query"
 )
 
-func (e GetDeployment200ApplicationJSON1Routes1Missing2Type) ToPointer() *GetDeployment200ApplicationJSON1Routes1Missing2Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1Routes1Missing2Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4041,382 +4041,382 @@ func (e *GetDeployment200ApplicationJSON1Routes1Missing2Type) UnmarshalJSON(data
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = GetDeployment200ApplicationJSON1Routes1Missing2Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1Routes1Missing2Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1Routes1Missing2 struct {
-	Key   string                                              `json:"key"`
-	Type  GetDeployment200ApplicationJSON1Routes1Missing2Type `json:"type"`
-	Value *string                                             `json:"value,omitempty"`
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 struct {
+	Key   string                                                                             `json:"key"`
+	Type  GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type `json:"type"`
+	Value *string                                                                            `json:"value,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Missing2) GetKey() string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Missing2) GetType() GetDeployment200ApplicationJSON1Routes1Missing2Type {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1Routes1Missing2Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1Missing2Type("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Missing2) GetValue() *string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type GetDeployment200ApplicationJSON1Routes1Missing1Type string
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1MissingType string
 
 const (
-	GetDeployment200ApplicationJSON1Routes1Missing1TypeHost GetDeployment200ApplicationJSON1Routes1Missing1Type = "host"
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1MissingTypeHost GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1MissingType = "host"
 )
 
-func (e GetDeployment200ApplicationJSON1Routes1Missing1Type) ToPointer() *GetDeployment200ApplicationJSON1Routes1Missing1Type {
+func (e GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1MissingType) ToPointer() *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1MissingType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1Routes1Missing1Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1MissingType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = GetDeployment200ApplicationJSON1Routes1Missing1Type(v)
+		*e = GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1MissingType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1Routes1Missing1Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1MissingType: %v", v)
 	}
 }
 
-type GetDeployment200ApplicationJSON1Routes1Missing1 struct {
-	Type  GetDeployment200ApplicationJSON1Routes1Missing1Type `json:"type"`
-	Value string                                              `json:"value"`
+type GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 struct {
+	Type  GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1MissingType `json:"type"`
+	Value string                                                                            `json:"value"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Missing1) GetType() GetDeployment200ApplicationJSON1Routes1Missing1Type {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1) GetType() GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1MissingType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1Routes1Missing1Type("")
+		return GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1Routes1MissingType("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1Missing1) GetValue() string {
+func (o *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type GetDeployment200ApplicationJSON1Routes1MissingType string
+type GetDeploymentMissingType string
 
 const (
-	GetDeployment200ApplicationJSON1Routes1MissingTypeGetDeployment200ApplicationJSON1Routes1Missing1 GetDeployment200ApplicationJSON1Routes1MissingType = "getDeployment_200ApplicationJSON_1_routes_1_missing_1"
-	GetDeployment200ApplicationJSON1Routes1MissingTypeGetDeployment200ApplicationJSON1Routes1Missing2 GetDeployment200ApplicationJSON1Routes1MissingType = "getDeployment_200ApplicationJSON_1_routes_1_missing_2"
+	GetDeploymentMissingTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 GetDeploymentMissingType = "getDeployment_deployments_response_200_ApplicationJSON_responseBody_1"
+	GetDeploymentMissingTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 GetDeploymentMissingType = "getDeployment_deployments_response_200_ApplicationJSON_responseBody_2"
 )
 
-type GetDeployment200ApplicationJSON1Routes1Missing struct {
-	GetDeployment200ApplicationJSON1Routes1Missing1 *GetDeployment200ApplicationJSON1Routes1Missing1
-	GetDeployment200ApplicationJSON1Routes1Missing2 *GetDeployment200ApplicationJSON1Routes1Missing2
+type GetDeploymentMissing struct {
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
+	GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 *GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
 
-	Type GetDeployment200ApplicationJSON1Routes1MissingType
+	Type GetDeploymentMissingType
 }
 
-func CreateGetDeployment200ApplicationJSON1Routes1MissingGetDeployment200ApplicationJSON1Routes1Missing1(getDeployment200ApplicationJSON1Routes1Missing1 GetDeployment200ApplicationJSON1Routes1Missing1) GetDeployment200ApplicationJSON1Routes1Missing {
-	typ := GetDeployment200ApplicationJSON1Routes1MissingTypeGetDeployment200ApplicationJSON1Routes1Missing1
+func CreateGetDeploymentMissingGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1(getDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1) GetDeploymentMissing {
+	typ := GetDeploymentMissingTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
 
-	return GetDeployment200ApplicationJSON1Routes1Missing{
-		GetDeployment200ApplicationJSON1Routes1Missing1: &getDeployment200ApplicationJSON1Routes1Missing1,
+	return GetDeploymentMissing{
+		GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1: &getDeploymentDeploymentsResponse200ApplicationJSONResponseBody1,
 		Type: typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1Routes1MissingGetDeployment200ApplicationJSON1Routes1Missing2(getDeployment200ApplicationJSON1Routes1Missing2 GetDeployment200ApplicationJSON1Routes1Missing2) GetDeployment200ApplicationJSON1Routes1Missing {
-	typ := GetDeployment200ApplicationJSON1Routes1MissingTypeGetDeployment200ApplicationJSON1Routes1Missing2
+func CreateGetDeploymentMissingGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2(getDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) GetDeploymentMissing {
+	typ := GetDeploymentMissingTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
 
-	return GetDeployment200ApplicationJSON1Routes1Missing{
-		GetDeployment200ApplicationJSON1Routes1Missing2: &getDeployment200ApplicationJSON1Routes1Missing2,
+	return GetDeploymentMissing{
+		GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2: &getDeploymentDeploymentsResponse200ApplicationJSONResponseBody2,
 		Type: typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON1Routes1Missing) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentMissing) UnmarshalJSON(data []byte) error {
 
-	getDeployment200ApplicationJSON1Routes1Missing1 := new(GetDeployment200ApplicationJSON1Routes1Missing1)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes1Missing1, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1Routes1Missing1 = getDeployment200ApplicationJSON1Routes1Missing1
-		u.Type = GetDeployment200ApplicationJSON1Routes1MissingTypeGetDeployment200ApplicationJSON1Routes1Missing1
+	getDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 := new(GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse200ApplicationJSONResponseBody1, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 = getDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
+		u.Type = GetDeploymentMissingTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1Routes1Missing2 := new(GetDeployment200ApplicationJSON1Routes1Missing2)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes1Missing2, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1Routes1Missing2 = getDeployment200ApplicationJSON1Routes1Missing2
-		u.Type = GetDeployment200ApplicationJSON1Routes1MissingTypeGetDeployment200ApplicationJSON1Routes1Missing2
+	getDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 := new(GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse200ApplicationJSONResponseBody2, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 = getDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
+		u.Type = GetDeploymentMissingTypeGetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON1Routes1Missing) MarshalJSON() ([]byte, error) {
-	if u.GetDeployment200ApplicationJSON1Routes1Missing1 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes1Missing1, "", true)
+func (u GetDeploymentMissing) MarshalJSON() ([]byte, error) {
+	if u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1Routes1Missing2 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes1Missing2, "", true)
+	if u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// GetDeployment200ApplicationJSON1Routes1 - A list of routes objects used to rewrite paths to point towards other internal or external paths
-type GetDeployment200ApplicationJSON1Routes1 struct {
-	CaseSensitive *bool                                          `json:"caseSensitive,omitempty"`
-	Check         *bool                                          `json:"check,omitempty"`
-	Continue      *bool                                          `json:"continue,omitempty"`
-	Dest          *string                                        `json:"dest,omitempty"`
-	Has           []GetDeployment200ApplicationJSON1Routes1Has   `json:"has,omitempty"`
-	Headers       map[string]string                              `json:"headers,omitempty"`
-	Important     *bool                                          `json:"important,omitempty"`
-	Locale        *GetDeployment200ApplicationJSON1Routes1Locale `json:"locale,omitempty"`
-	Methods       []string                                       `json:"methods,omitempty"`
+// GetDeploymentDeploymentsResponse2001 - A list of routes objects used to rewrite paths to point towards other internal or external paths
+type GetDeploymentDeploymentsResponse2001 struct {
+	CaseSensitive *bool                `json:"caseSensitive,omitempty"`
+	Check         *bool                `json:"check,omitempty"`
+	Continue      *bool                `json:"continue,omitempty"`
+	Dest          *string              `json:"dest,omitempty"`
+	Has           []GetDeploymentHas   `json:"has,omitempty"`
+	Headers       map[string]string    `json:"headers,omitempty"`
+	Important     *bool                `json:"important,omitempty"`
+	Locale        *GetDeploymentLocale `json:"locale,omitempty"`
+	Methods       []string             `json:"methods,omitempty"`
 	// A middleware index in the `middleware` key under the build result
 	Middleware *int64 `json:"middleware,omitempty"`
 	// A middleware key within the `output` key under the build result. Overrides a `middleware` definition.
 	MiddlewarePath *string `json:"middlewarePath,omitempty"`
 	// The original middleware matchers.
-	MiddlewareRawSrc []string                                         `json:"middlewareRawSrc,omitempty"`
-	Missing          []GetDeployment200ApplicationJSON1Routes1Missing `json:"missing,omitempty"`
-	Override         *bool                                            `json:"override,omitempty"`
-	Src              string                                           `json:"src"`
-	Status           *int64                                           `json:"status,omitempty"`
+	MiddlewareRawSrc []string               `json:"middlewareRawSrc,omitempty"`
+	Missing          []GetDeploymentMissing `json:"missing,omitempty"`
+	Override         *bool                  `json:"override,omitempty"`
+	Src              string                 `json:"src"`
+	Status           *int64                 `json:"status,omitempty"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetCaseSensitive() *bool {
+func (o *GetDeploymentDeploymentsResponse2001) GetCaseSensitive() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.CaseSensitive
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetCheck() *bool {
+func (o *GetDeploymentDeploymentsResponse2001) GetCheck() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Check
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetContinue() *bool {
+func (o *GetDeploymentDeploymentsResponse2001) GetContinue() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Continue
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetDest() *string {
+func (o *GetDeploymentDeploymentsResponse2001) GetDest() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dest
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetHas() []GetDeployment200ApplicationJSON1Routes1Has {
+func (o *GetDeploymentDeploymentsResponse2001) GetHas() []GetDeploymentHas {
 	if o == nil {
 		return nil
 	}
 	return o.Has
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetHeaders() map[string]string {
+func (o *GetDeploymentDeploymentsResponse2001) GetHeaders() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Headers
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetImportant() *bool {
+func (o *GetDeploymentDeploymentsResponse2001) GetImportant() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Important
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetLocale() *GetDeployment200ApplicationJSON1Routes1Locale {
+func (o *GetDeploymentDeploymentsResponse2001) GetLocale() *GetDeploymentLocale {
 	if o == nil {
 		return nil
 	}
 	return o.Locale
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetMethods() []string {
+func (o *GetDeploymentDeploymentsResponse2001) GetMethods() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Methods
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetMiddleware() *int64 {
+func (o *GetDeploymentDeploymentsResponse2001) GetMiddleware() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Middleware
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetMiddlewarePath() *string {
+func (o *GetDeploymentDeploymentsResponse2001) GetMiddlewarePath() *string {
 	if o == nil {
 		return nil
 	}
 	return o.MiddlewarePath
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetMiddlewareRawSrc() []string {
+func (o *GetDeploymentDeploymentsResponse2001) GetMiddlewareRawSrc() []string {
 	if o == nil {
 		return nil
 	}
 	return o.MiddlewareRawSrc
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetMissing() []GetDeployment200ApplicationJSON1Routes1Missing {
+func (o *GetDeploymentDeploymentsResponse2001) GetMissing() []GetDeploymentMissing {
 	if o == nil {
 		return nil
 	}
 	return o.Missing
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetOverride() *bool {
+func (o *GetDeploymentDeploymentsResponse2001) GetOverride() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Override
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetSrc() string {
+func (o *GetDeploymentDeploymentsResponse2001) GetSrc() string {
 	if o == nil {
 		return ""
 	}
 	return o.Src
 }
 
-func (o *GetDeployment200ApplicationJSON1Routes1) GetStatus() *int64 {
+func (o *GetDeploymentDeploymentsResponse2001) GetStatus() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Status
 }
 
-type GetDeployment200ApplicationJSON1RoutesType string
+type GetDeploymentRoutesType string
 
 const (
-	GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes1 GetDeployment200ApplicationJSON1RoutesType = "getDeployment_200ApplicationJSON_1_routes_1"
-	GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes2 GetDeployment200ApplicationJSON1RoutesType = "getDeployment_200ApplicationJSON_1_routes_2"
-	GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes3 GetDeployment200ApplicationJSON1RoutesType = "getDeployment_200ApplicationJSON_1_routes_3"
+	GetDeploymentRoutesTypeGetDeploymentDeploymentsResponse2001 GetDeploymentRoutesType = "getDeployment_deployments_response_200_1"
+	GetDeploymentRoutesTypeGetDeploymentDeploymentsResponse2002 GetDeploymentRoutesType = "getDeployment_deployments_response_200_2"
+	GetDeploymentRoutesTypeGetDeploymentDeploymentsResponse3    GetDeploymentRoutesType = "getDeployment_deployments_response_3"
 )
 
-type GetDeployment200ApplicationJSON1Routes struct {
-	GetDeployment200ApplicationJSON1Routes1 *GetDeployment200ApplicationJSON1Routes1
-	GetDeployment200ApplicationJSON1Routes2 *GetDeployment200ApplicationJSON1Routes2
-	GetDeployment200ApplicationJSON1Routes3 *GetDeployment200ApplicationJSON1Routes3
+type GetDeploymentRoutes struct {
+	GetDeploymentDeploymentsResponse2001 *GetDeploymentDeploymentsResponse2001
+	GetDeploymentDeploymentsResponse2002 *GetDeploymentDeploymentsResponse2002
+	GetDeploymentDeploymentsResponse3    *GetDeploymentDeploymentsResponse3
 
-	Type GetDeployment200ApplicationJSON1RoutesType
+	Type GetDeploymentRoutesType
 }
 
-func CreateGetDeployment200ApplicationJSON1RoutesGetDeployment200ApplicationJSON1Routes1(getDeployment200ApplicationJSON1Routes1 GetDeployment200ApplicationJSON1Routes1) GetDeployment200ApplicationJSON1Routes {
-	typ := GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes1
+func CreateGetDeploymentRoutesGetDeploymentDeploymentsResponse2001(getDeploymentDeploymentsResponse2001 GetDeploymentDeploymentsResponse2001) GetDeploymentRoutes {
+	typ := GetDeploymentRoutesTypeGetDeploymentDeploymentsResponse2001
 
-	return GetDeployment200ApplicationJSON1Routes{
-		GetDeployment200ApplicationJSON1Routes1: &getDeployment200ApplicationJSON1Routes1,
-		Type:                                    typ,
+	return GetDeploymentRoutes{
+		GetDeploymentDeploymentsResponse2001: &getDeploymentDeploymentsResponse2001,
+		Type:                                 typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1RoutesGetDeployment200ApplicationJSON1Routes2(getDeployment200ApplicationJSON1Routes2 GetDeployment200ApplicationJSON1Routes2) GetDeployment200ApplicationJSON1Routes {
-	typ := GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes2
+func CreateGetDeploymentRoutesGetDeploymentDeploymentsResponse2002(getDeploymentDeploymentsResponse2002 GetDeploymentDeploymentsResponse2002) GetDeploymentRoutes {
+	typ := GetDeploymentRoutesTypeGetDeploymentDeploymentsResponse2002
 
-	return GetDeployment200ApplicationJSON1Routes{
-		GetDeployment200ApplicationJSON1Routes2: &getDeployment200ApplicationJSON1Routes2,
-		Type:                                    typ,
+	return GetDeploymentRoutes{
+		GetDeploymentDeploymentsResponse2002: &getDeploymentDeploymentsResponse2002,
+		Type:                                 typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSON1RoutesGetDeployment200ApplicationJSON1Routes3(getDeployment200ApplicationJSON1Routes3 GetDeployment200ApplicationJSON1Routes3) GetDeployment200ApplicationJSON1Routes {
-	typ := GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes3
+func CreateGetDeploymentRoutesGetDeploymentDeploymentsResponse3(getDeploymentDeploymentsResponse3 GetDeploymentDeploymentsResponse3) GetDeploymentRoutes {
+	typ := GetDeploymentRoutesTypeGetDeploymentDeploymentsResponse3
 
-	return GetDeployment200ApplicationJSON1Routes{
-		GetDeployment200ApplicationJSON1Routes3: &getDeployment200ApplicationJSON1Routes3,
-		Type:                                    typ,
+	return GetDeploymentRoutes{
+		GetDeploymentDeploymentsResponse3: &getDeploymentDeploymentsResponse3,
+		Type:                              typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON1Routes) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentRoutes) UnmarshalJSON(data []byte) error {
 
-	getDeployment200ApplicationJSON1Routes3 := new(GetDeployment200ApplicationJSON1Routes3)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes3, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1Routes3 = getDeployment200ApplicationJSON1Routes3
-		u.Type = GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes3
+	getDeploymentDeploymentsResponse3 := new(GetDeploymentDeploymentsResponse3)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse3, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse3 = getDeploymentDeploymentsResponse3
+		u.Type = GetDeploymentRoutesTypeGetDeploymentDeploymentsResponse3
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1Routes2 := new(GetDeployment200ApplicationJSON1Routes2)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes2, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1Routes2 = getDeployment200ApplicationJSON1Routes2
-		u.Type = GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes2
+	getDeploymentDeploymentsResponse2002 := new(GetDeploymentDeploymentsResponse2002)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse2002, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse2002 = getDeploymentDeploymentsResponse2002
+		u.Type = GetDeploymentRoutesTypeGetDeploymentDeploymentsResponse2002
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1Routes1 := new(GetDeployment200ApplicationJSON1Routes1)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1Routes1, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1Routes1 = getDeployment200ApplicationJSON1Routes1
-		u.Type = GetDeployment200ApplicationJSON1RoutesTypeGetDeployment200ApplicationJSON1Routes1
+	getDeploymentDeploymentsResponse2001 := new(GetDeploymentDeploymentsResponse2001)
+	if err := utils.UnmarshalJSON(data, &getDeploymentDeploymentsResponse2001, "", true, true); err == nil {
+		u.GetDeploymentDeploymentsResponse2001 = getDeploymentDeploymentsResponse2001
+		u.Type = GetDeploymentRoutesTypeGetDeploymentDeploymentsResponse2001
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON1Routes) MarshalJSON() ([]byte, error) {
-	if u.GetDeployment200ApplicationJSON1Routes1 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes1, "", true)
+func (u GetDeploymentRoutes) MarshalJSON() ([]byte, error) {
+	if u.GetDeploymentDeploymentsResponse2001 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse2001, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1Routes2 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes2, "", true)
+	if u.GetDeploymentDeploymentsResponse2002 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse2002, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON1Routes3 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1Routes3, "", true)
+	if u.GetDeploymentDeploymentsResponse3 != nil {
+		return utils.MarshalJSON(u.GetDeploymentDeploymentsResponse3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// GetDeployment200ApplicationJSON1Source - Where was the deployment created from
-type GetDeployment200ApplicationJSON1Source string
+// GetDeploymentSource - Where was the deployment created from
+type GetDeploymentSource string
 
 const (
-	GetDeployment200ApplicationJSON1SourceCli        GetDeployment200ApplicationJSON1Source = "cli"
-	GetDeployment200ApplicationJSON1SourceGit        GetDeployment200ApplicationJSON1Source = "git"
-	GetDeployment200ApplicationJSON1SourceImport     GetDeployment200ApplicationJSON1Source = "import"
-	GetDeployment200ApplicationJSON1SourceImportRepo GetDeployment200ApplicationJSON1Source = "import/repo"
-	GetDeployment200ApplicationJSON1SourceCloneRepo  GetDeployment200ApplicationJSON1Source = "clone/repo"
+	GetDeploymentSourceCli        GetDeploymentSource = "cli"
+	GetDeploymentSourceGit        GetDeploymentSource = "git"
+	GetDeploymentSourceImport     GetDeploymentSource = "import"
+	GetDeploymentSourceImportRepo GetDeploymentSource = "import/repo"
+	GetDeploymentSourceCloneRepo  GetDeploymentSource = "clone/repo"
 )
 
-func (e GetDeployment200ApplicationJSON1Source) ToPointer() *GetDeployment200ApplicationJSON1Source {
+func (e GetDeploymentSource) ToPointer() *GetDeploymentSource {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1Source) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4431,26 +4431,26 @@ func (e *GetDeployment200ApplicationJSON1Source) UnmarshalJSON(data []byte) erro
 	case "import/repo":
 		fallthrough
 	case "clone/repo":
-		*e = GetDeployment200ApplicationJSON1Source(v)
+		*e = GetDeploymentSource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1Source: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentSource: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON1Target - If defined, either `staging` if a staging alias in the format `<project>.<team>.now.sh` was assigned upon creation, or `production` if the aliases from `alias` were assigned
-type GetDeployment200ApplicationJSON1Target string
+// GetDeploymentTarget - If defined, either `staging` if a staging alias in the format `<project>.<team>.now.sh` was assigned upon creation, or `production` if the aliases from `alias` were assigned
+type GetDeploymentTarget string
 
 const (
-	GetDeployment200ApplicationJSON1TargetStaging    GetDeployment200ApplicationJSON1Target = "staging"
-	GetDeployment200ApplicationJSON1TargetProduction GetDeployment200ApplicationJSON1Target = "production"
+	GetDeploymentTargetStaging    GetDeploymentTarget = "staging"
+	GetDeploymentTargetProduction GetDeploymentTarget = "production"
 )
 
-func (e GetDeployment200ApplicationJSON1Target) ToPointer() *GetDeployment200ApplicationJSON1Target {
+func (e GetDeploymentTarget) ToPointer() *GetDeploymentTarget {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1Target) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4459,15 +4459,15 @@ func (e *GetDeployment200ApplicationJSON1Target) UnmarshalJSON(data []byte) erro
 	case "staging":
 		fallthrough
 	case "production":
-		*e = GetDeployment200ApplicationJSON1Target(v)
+		*e = GetDeploymentTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1Target: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentTarget: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON1Team - The team that owns the deployment if any
-type GetDeployment200ApplicationJSON1Team struct {
+// GetDeploymentTeam - The team that owns the deployment if any
+type GetDeploymentTeam struct {
 	// The ID of the team owner
 	ID string `json:"id"`
 	// The name of the team owner
@@ -4476,97 +4476,97 @@ type GetDeployment200ApplicationJSON1Team struct {
 	Slug string `json:"slug"`
 }
 
-func (o *GetDeployment200ApplicationJSON1Team) GetID() string {
+func (o *GetDeploymentTeam) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetDeployment200ApplicationJSON1Team) GetName() string {
+func (o *GetDeploymentTeam) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetDeployment200ApplicationJSON1Team) GetSlug() string {
+func (o *GetDeploymentTeam) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-type GetDeployment200ApplicationJSON1Type string
+type GetDeploymentType string
 
 const (
-	GetDeployment200ApplicationJSON1TypeLambdas GetDeployment200ApplicationJSON1Type = "LAMBDAS"
+	GetDeploymentTypeLambdas GetDeploymentType = "LAMBDAS"
 )
 
-func (e GetDeployment200ApplicationJSON1Type) ToPointer() *GetDeployment200ApplicationJSON1Type {
+func (e GetDeploymentType) ToPointer() *GetDeploymentType {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "LAMBDAS":
-		*e = GetDeployment200ApplicationJSON1Type(v)
+		*e = GetDeploymentType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentType: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON1Version - The platform version that was used to create the deployment.
-type GetDeployment200ApplicationJSON1Version int64
+// GetDeploymentVersion - The platform version that was used to create the deployment.
+type GetDeploymentVersion int64
 
 const (
-	GetDeployment200ApplicationJSON1VersionTwo GetDeployment200ApplicationJSON1Version = 2
+	GetDeploymentVersionTwo GetDeploymentVersion = 2
 )
 
-func (e GetDeployment200ApplicationJSON1Version) ToPointer() *GetDeployment200ApplicationJSON1Version {
+func (e GetDeploymentVersion) ToPointer() *GetDeploymentVersion {
 	return &e
 }
 
-func (e *GetDeployment200ApplicationJSON1Version) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentVersion) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case 2:
-		*e = GetDeployment200ApplicationJSON1Version(v)
+		*e = GetDeploymentVersion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeployment200ApplicationJSON1Version: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentVersion: %v", v)
 	}
 }
 
-// GetDeployment200ApplicationJSON1 - The deployment including both public and private information
-type GetDeployment200ApplicationJSON1 struct {
+// GetDeployment1 - The deployment including both public and private information
+type GetDeployment1 struct {
 	// A list of all the aliases (default aliases, staging aliases and production aliases) that were assigned upon deployment creation
 	Alias []string `json:"alias"`
 	// A boolean that will be true when the aliases from the alias property were assigned successfully
-	AliasAssigned   bool                                             `json:"aliasAssigned"`
-	AliasAssignedAt *GetDeployment200ApplicationJSON1AliasAssignedAt `json:"aliasAssignedAt,omitempty"`
+	AliasAssigned   bool                          `json:"aliasAssigned"`
+	AliasAssignedAt *GetDeploymentAliasAssignedAt `json:"aliasAssignedAt,omitempty"`
 	// An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
-	AliasError              *GetDeployment200ApplicationJSON1AliasError       `json:"aliasError,omitempty"`
-	AliasFinal              *string                                           `json:"aliasFinal,omitempty"`
-	AliasWarning            *GetDeployment200ApplicationJSON1AliasWarning     `json:"aliasWarning,omitempty"`
-	AutoAssignCustomDomains *bool                                             `json:"autoAssignCustomDomains,omitempty"`
-	AutomaticAliases        []string                                          `json:"automaticAliases,omitempty"`
-	BootedAt                int64                                             `json:"bootedAt"`
-	Build                   GetDeployment200ApplicationJSON1Build             `json:"build"`
-	BuildErrorAt            *int64                                            `json:"buildErrorAt,omitempty"`
-	BuildingAt              int64                                             `json:"buildingAt"`
-	Builds                  []GetDeployment200ApplicationJSON1Builds          `json:"builds,omitempty"`
-	CanceledAt              *int64                                            `json:"canceledAt,omitempty"`
-	ChecksConclusion        *GetDeployment200ApplicationJSON1ChecksConclusion `json:"checksConclusion,omitempty"`
-	ChecksState             *GetDeployment200ApplicationJSON1ChecksState      `json:"checksState,omitempty"`
+	AliasError              *GetDeploymentAliasError       `json:"aliasError,omitempty"`
+	AliasFinal              *string                        `json:"aliasFinal,omitempty"`
+	AliasWarning            *GetDeploymentAliasWarning     `json:"aliasWarning,omitempty"`
+	AutoAssignCustomDomains *bool                          `json:"autoAssignCustomDomains,omitempty"`
+	AutomaticAliases        []string                       `json:"automaticAliases,omitempty"`
+	BootedAt                int64                          `json:"bootedAt"`
+	Build                   GetDeploymentBuild             `json:"build"`
+	BuildErrorAt            *int64                         `json:"buildErrorAt,omitempty"`
+	BuildingAt              int64                          `json:"buildingAt"`
+	Builds                  []GetDeploymentBuilds          `json:"builds,omitempty"`
+	CanceledAt              *int64                         `json:"canceledAt,omitempty"`
+	ChecksConclusion        *GetDeploymentChecksConclusion `json:"checksConclusion,omitempty"`
+	ChecksState             *GetDeploymentChecksState      `json:"checksState,omitempty"`
 	// The flag saying if Vercel Connect configuration is used for builds
 	ConnectBuildsEnabled *bool `json:"connectBuildsEnabled,omitempty"`
 	// The ID of Vercel Connect configuration used for this deployment
@@ -4576,7 +4576,7 @@ type GetDeployment200ApplicationJSON1 struct {
 	// The region where the deployment was first created
 	CreatedIn string `json:"createdIn"`
 	// Information about the deployment creator
-	Creator GetDeployment200ApplicationJSON1Creator `json:"creator"`
+	Creator GetDeploymentCreator `json:"creator"`
 	// The keys of the environment variables that were assigned during runtime
 	Env          []string `json:"env"`
 	ErrorCode    *string  `json:"errorCode,omitempty"`
@@ -4584,16 +4584,16 @@ type GetDeployment200ApplicationJSON1 struct {
 	ErrorMessage *string  `json:"errorMessage,omitempty"`
 	ErrorStep    *string  `json:"errorStep,omitempty"`
 	// An object used to configure your Serverless Functions
-	Functions map[string]GetDeployment200ApplicationJSON1Functions `json:"functions,omitempty"`
-	GitRepo   *GetDeployment200ApplicationJSON1GitRepo             `json:"gitRepo,omitempty"`
-	GitSource *GetDeployment200ApplicationJSON1GitSource           `json:"gitSource,omitempty"`
+	Functions map[string]GetDeploymentFunctions `json:"functions,omitempty"`
+	GitRepo   *GetDeploymentGitRepo             `json:"gitRepo,omitempty"`
+	GitSource *GetDeploymentGitSource           `json:"gitSource,omitempty"`
 	// A string holding the unique ID of the deployment
 	ID string `json:"id"`
 	// Vercel URL to inspect the deployment.
 	InspectorURL *string `json:"inspectorUrl"`
 	// Is the deployment currently queued waiting for a Concurrent Build Slot to be available
-	IsInConcurrentBuildsQueue bool                                      `json:"isInConcurrentBuildsQueue"`
-	Lambdas                   []GetDeployment200ApplicationJSON1Lambdas `json:"lambdas,omitempty"`
+	IsInConcurrentBuildsQueue bool                   `json:"isInConcurrentBuildsQueue"`
+	Lambdas                   []GetDeploymentLambdas `json:"lambdas,omitempty"`
 	// An object containing the deployment's metadata
 	Meta map[string]string `json:"meta"`
 	// An monorepo manager that was used for the deployment
@@ -4603,7 +4603,7 @@ type GetDeployment200ApplicationJSON1 struct {
 	// The unique ID of the user or team the deployment belongs to
 	OwnerID string `json:"ownerId"`
 	// The pricing plan the deployment was made under
-	Plan GetDeployment200ApplicationJSON1Plan `json:"plan"`
+	Plan GetDeploymentPlan `json:"plan"`
 	// Whether or not preview comments are enabled for the deployment
 	PreviewCommentsEnabled *bool `json:"previewCommentsEnabled,omitempty"`
 	// The ID of the project the deployment is associated with
@@ -4611,450 +4611,450 @@ type GetDeployment200ApplicationJSON1 struct {
 	// A boolean representing if the deployment is public or not. By default this is `false`
 	Public bool `json:"public"`
 	// The state of the deployment depending on the process of deploying, or if it is ready or in an error state
-	ReadyState GetDeployment200ApplicationJSON1ReadyState `json:"readyState"`
+	ReadyState GetDeploymentReadyState `json:"readyState"`
 	// The substate of the deployment when the state is "READY"
-	ReadySubstate *GetDeployment200ApplicationJSON1ReadySubstate `json:"readySubstate,omitempty"`
+	ReadySubstate *GetDeploymentReadySubstate `json:"readySubstate,omitempty"`
 	// The regions the deployment exists in
 	Regions []string `json:"regions"`
 	// A list of routes objects used to rewrite paths to point towards other internal or external paths
-	Routes []GetDeployment200ApplicationJSON1Routes `json:"routes"`
+	Routes []GetDeploymentRoutes `json:"routes"`
 	// Where was the deployment created from
-	Source *GetDeployment200ApplicationJSON1Source `json:"source,omitempty"`
+	Source *GetDeploymentSource `json:"source,omitempty"`
 	// If defined, either `staging` if a staging alias in the format `<project>.<team>.now.sh` was assigned upon creation, or `production` if the aliases from `alias` were assigned
-	Target *GetDeployment200ApplicationJSON1Target `json:"target,omitempty"`
+	Target *GetDeploymentTarget `json:"target,omitempty"`
 	// The team that owns the deployment if any
-	Team *GetDeployment200ApplicationJSON1Team `json:"team,omitempty"`
-	Type GetDeployment200ApplicationJSON1Type  `json:"type"`
+	Team *GetDeploymentTeam `json:"team,omitempty"`
+	Type GetDeploymentType  `json:"type"`
 	// A string with the unique URL of the deployment
 	URL string `json:"url"`
 	// An array of domains that were provided by the user when creating the Deployment.
 	UserAliases []string `json:"userAliases,omitempty"`
 	// The platform version that was used to create the deployment.
-	Version GetDeployment200ApplicationJSON1Version `json:"version"`
+	Version GetDeploymentVersion `json:"version"`
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetAlias() []string {
+func (o *GetDeployment1) GetAlias() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Alias
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetAliasAssigned() bool {
+func (o *GetDeployment1) GetAliasAssigned() bool {
 	if o == nil {
 		return false
 	}
 	return o.AliasAssigned
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetAliasAssignedAt() *GetDeployment200ApplicationJSON1AliasAssignedAt {
+func (o *GetDeployment1) GetAliasAssignedAt() *GetDeploymentAliasAssignedAt {
 	if o == nil {
 		return nil
 	}
 	return o.AliasAssignedAt
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetAliasError() *GetDeployment200ApplicationJSON1AliasError {
+func (o *GetDeployment1) GetAliasError() *GetDeploymentAliasError {
 	if o == nil {
 		return nil
 	}
 	return o.AliasError
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetAliasFinal() *string {
+func (o *GetDeployment1) GetAliasFinal() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AliasFinal
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetAliasWarning() *GetDeployment200ApplicationJSON1AliasWarning {
+func (o *GetDeployment1) GetAliasWarning() *GetDeploymentAliasWarning {
 	if o == nil {
 		return nil
 	}
 	return o.AliasWarning
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetAutoAssignCustomDomains() *bool {
+func (o *GetDeployment1) GetAutoAssignCustomDomains() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.AutoAssignCustomDomains
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetAutomaticAliases() []string {
+func (o *GetDeployment1) GetAutomaticAliases() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AutomaticAliases
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetBootedAt() int64 {
+func (o *GetDeployment1) GetBootedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.BootedAt
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetBuild() GetDeployment200ApplicationJSON1Build {
+func (o *GetDeployment1) GetBuild() GetDeploymentBuild {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1Build{}
+		return GetDeploymentBuild{}
 	}
 	return o.Build
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetBuildErrorAt() *int64 {
+func (o *GetDeployment1) GetBuildErrorAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.BuildErrorAt
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetBuildingAt() int64 {
+func (o *GetDeployment1) GetBuildingAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.BuildingAt
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetBuilds() []GetDeployment200ApplicationJSON1Builds {
+func (o *GetDeployment1) GetBuilds() []GetDeploymentBuilds {
 	if o == nil {
 		return nil
 	}
 	return o.Builds
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetCanceledAt() *int64 {
+func (o *GetDeployment1) GetCanceledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CanceledAt
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetChecksConclusion() *GetDeployment200ApplicationJSON1ChecksConclusion {
+func (o *GetDeployment1) GetChecksConclusion() *GetDeploymentChecksConclusion {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksConclusion
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetChecksState() *GetDeployment200ApplicationJSON1ChecksState {
+func (o *GetDeployment1) GetChecksState() *GetDeploymentChecksState {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksState
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetConnectBuildsEnabled() *bool {
+func (o *GetDeployment1) GetConnectBuildsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectBuildsEnabled
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetConnectConfigurationID() *string {
+func (o *GetDeployment1) GetConnectConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectConfigurationID
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetCreatedAt() int64 {
+func (o *GetDeployment1) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetCreatedIn() string {
+func (o *GetDeployment1) GetCreatedIn() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedIn
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetCreator() GetDeployment200ApplicationJSON1Creator {
+func (o *GetDeployment1) GetCreator() GetDeploymentCreator {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1Creator{}
+		return GetDeploymentCreator{}
 	}
 	return o.Creator
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetEnv() []string {
+func (o *GetDeployment1) GetEnv() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Env
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetErrorCode() *string {
+func (o *GetDeployment1) GetErrorCode() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorCode
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetErrorLink() *string {
+func (o *GetDeployment1) GetErrorLink() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorLink
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetErrorMessage() *string {
+func (o *GetDeployment1) GetErrorMessage() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorMessage
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetErrorStep() *string {
+func (o *GetDeployment1) GetErrorStep() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorStep
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetFunctions() map[string]GetDeployment200ApplicationJSON1Functions {
+func (o *GetDeployment1) GetFunctions() map[string]GetDeploymentFunctions {
 	if o == nil {
 		return nil
 	}
 	return o.Functions
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetGitRepo() *GetDeployment200ApplicationJSON1GitRepo {
+func (o *GetDeployment1) GetGitRepo() *GetDeploymentGitRepo {
 	if o == nil {
 		return nil
 	}
 	return o.GitRepo
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetGitSource() *GetDeployment200ApplicationJSON1GitSource {
+func (o *GetDeployment1) GetGitSource() *GetDeploymentGitSource {
 	if o == nil {
 		return nil
 	}
 	return o.GitSource
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetID() string {
+func (o *GetDeployment1) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetInspectorURL() *string {
+func (o *GetDeployment1) GetInspectorURL() *string {
 	if o == nil {
 		return nil
 	}
 	return o.InspectorURL
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetIsInConcurrentBuildsQueue() bool {
+func (o *GetDeployment1) GetIsInConcurrentBuildsQueue() bool {
 	if o == nil {
 		return false
 	}
 	return o.IsInConcurrentBuildsQueue
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetLambdas() []GetDeployment200ApplicationJSON1Lambdas {
+func (o *GetDeployment1) GetLambdas() []GetDeploymentLambdas {
 	if o == nil {
 		return nil
 	}
 	return o.Lambdas
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetMeta() map[string]string {
+func (o *GetDeployment1) GetMeta() map[string]string {
 	if o == nil {
 		return map[string]string{}
 	}
 	return o.Meta
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetMonorepoManager() *string {
+func (o *GetDeployment1) GetMonorepoManager() *string {
 	if o == nil {
 		return nil
 	}
 	return o.MonorepoManager
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetName() string {
+func (o *GetDeployment1) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetOwnerID() string {
+func (o *GetDeployment1) GetOwnerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.OwnerID
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetPlan() GetDeployment200ApplicationJSON1Plan {
+func (o *GetDeployment1) GetPlan() GetDeploymentPlan {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1Plan("")
+		return GetDeploymentPlan("")
 	}
 	return o.Plan
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetPreviewCommentsEnabled() *bool {
+func (o *GetDeployment1) GetPreviewCommentsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.PreviewCommentsEnabled
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetProjectID() string {
+func (o *GetDeployment1) GetProjectID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ProjectID
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetPublic() bool {
+func (o *GetDeployment1) GetPublic() bool {
 	if o == nil {
 		return false
 	}
 	return o.Public
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetReadyState() GetDeployment200ApplicationJSON1ReadyState {
+func (o *GetDeployment1) GetReadyState() GetDeploymentReadyState {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1ReadyState("")
+		return GetDeploymentReadyState("")
 	}
 	return o.ReadyState
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetReadySubstate() *GetDeployment200ApplicationJSON1ReadySubstate {
+func (o *GetDeployment1) GetReadySubstate() *GetDeploymentReadySubstate {
 	if o == nil {
 		return nil
 	}
 	return o.ReadySubstate
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetRegions() []string {
+func (o *GetDeployment1) GetRegions() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Regions
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetRoutes() []GetDeployment200ApplicationJSON1Routes {
+func (o *GetDeployment1) GetRoutes() []GetDeploymentRoutes {
 	if o == nil {
 		return nil
 	}
 	return o.Routes
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetSource() *GetDeployment200ApplicationJSON1Source {
+func (o *GetDeployment1) GetSource() *GetDeploymentSource {
 	if o == nil {
 		return nil
 	}
 	return o.Source
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetTarget() *GetDeployment200ApplicationJSON1Target {
+func (o *GetDeployment1) GetTarget() *GetDeploymentTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetTeam() *GetDeployment200ApplicationJSON1Team {
+func (o *GetDeployment1) GetTeam() *GetDeploymentTeam {
 	if o == nil {
 		return nil
 	}
 	return o.Team
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetType() GetDeployment200ApplicationJSON1Type {
+func (o *GetDeployment1) GetType() GetDeploymentType {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1Type("")
+		return GetDeploymentType("")
 	}
 	return o.Type
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetURL() string {
+func (o *GetDeployment1) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetUserAliases() []string {
+func (o *GetDeployment1) GetUserAliases() []string {
 	if o == nil {
 		return nil
 	}
 	return o.UserAliases
 }
 
-func (o *GetDeployment200ApplicationJSON1) GetVersion() GetDeployment200ApplicationJSON1Version {
+func (o *GetDeployment1) GetVersion() GetDeploymentVersion {
 	if o == nil {
-		return GetDeployment200ApplicationJSON1Version(0)
+		return GetDeploymentVersion(0)
 	}
 	return o.Version
 }
 
-type GetDeployment200ApplicationJSONType string
+type GetDeploymentResponseBodyType string
 
 const (
-	GetDeployment200ApplicationJSONTypeGetDeployment200ApplicationJSON1 GetDeployment200ApplicationJSONType = "getDeployment_200ApplicationJSON_1"
-	GetDeployment200ApplicationJSONTypeGetDeployment200ApplicationJSON2 GetDeployment200ApplicationJSONType = "getDeployment_200ApplicationJSON_2"
+	GetDeploymentResponseBodyTypeGetDeployment1 GetDeploymentResponseBodyType = "getDeployment_1"
+	GetDeploymentResponseBodyTypeGetDeployment2 GetDeploymentResponseBodyType = "getDeployment_2"
 )
 
-type GetDeployment200ApplicationJSON struct {
-	GetDeployment200ApplicationJSON1 *GetDeployment200ApplicationJSON1
-	GetDeployment200ApplicationJSON2 *GetDeployment200ApplicationJSON2
+type GetDeploymentResponseBody struct {
+	GetDeployment1 *GetDeployment1
+	GetDeployment2 *GetDeployment2
 
-	Type GetDeployment200ApplicationJSONType
+	Type GetDeploymentResponseBodyType
 }
 
-func CreateGetDeployment200ApplicationJSONGetDeployment200ApplicationJSON1(getDeployment200ApplicationJSON1 GetDeployment200ApplicationJSON1) GetDeployment200ApplicationJSON {
-	typ := GetDeployment200ApplicationJSONTypeGetDeployment200ApplicationJSON1
+func CreateGetDeploymentResponseBodyGetDeployment1(getDeployment1 GetDeployment1) GetDeploymentResponseBody {
+	typ := GetDeploymentResponseBodyTypeGetDeployment1
 
-	return GetDeployment200ApplicationJSON{
-		GetDeployment200ApplicationJSON1: &getDeployment200ApplicationJSON1,
-		Type:                             typ,
+	return GetDeploymentResponseBody{
+		GetDeployment1: &getDeployment1,
+		Type:           typ,
 	}
 }
 
-func CreateGetDeployment200ApplicationJSONGetDeployment200ApplicationJSON2(getDeployment200ApplicationJSON2 GetDeployment200ApplicationJSON2) GetDeployment200ApplicationJSON {
-	typ := GetDeployment200ApplicationJSONTypeGetDeployment200ApplicationJSON2
+func CreateGetDeploymentResponseBodyGetDeployment2(getDeployment2 GetDeployment2) GetDeploymentResponseBody {
+	typ := GetDeploymentResponseBodyTypeGetDeployment2
 
-	return GetDeployment200ApplicationJSON{
-		GetDeployment200ApplicationJSON2: &getDeployment200ApplicationJSON2,
-		Type:                             typ,
+	return GetDeploymentResponseBody{
+		GetDeployment2: &getDeployment2,
+		Type:           typ,
 	}
 }
 
-func (u *GetDeployment200ApplicationJSON) UnmarshalJSON(data []byte) error {
+func (u *GetDeploymentResponseBody) UnmarshalJSON(data []byte) error {
 
-	getDeployment200ApplicationJSON2 := new(GetDeployment200ApplicationJSON2)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON2, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON2 = getDeployment200ApplicationJSON2
-		u.Type = GetDeployment200ApplicationJSONTypeGetDeployment200ApplicationJSON2
+	getDeployment2 := new(GetDeployment2)
+	if err := utils.UnmarshalJSON(data, &getDeployment2, "", true, true); err == nil {
+		u.GetDeployment2 = getDeployment2
+		u.Type = GetDeploymentResponseBodyTypeGetDeployment2
 		return nil
 	}
 
-	getDeployment200ApplicationJSON1 := new(GetDeployment200ApplicationJSON1)
-	if err := utils.UnmarshalJSON(data, &getDeployment200ApplicationJSON1, "", true, true); err == nil {
-		u.GetDeployment200ApplicationJSON1 = getDeployment200ApplicationJSON1
-		u.Type = GetDeployment200ApplicationJSONTypeGetDeployment200ApplicationJSON1
+	getDeployment1 := new(GetDeployment1)
+	if err := utils.UnmarshalJSON(data, &getDeployment1, "", true, true); err == nil {
+		u.GetDeployment1 = getDeployment1
+		u.Type = GetDeploymentResponseBodyTypeGetDeployment1
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u GetDeployment200ApplicationJSON) MarshalJSON() ([]byte, error) {
-	if u.GetDeployment200ApplicationJSON1 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON1, "", true)
+func (u GetDeploymentResponseBody) MarshalJSON() ([]byte, error) {
+	if u.GetDeployment1 != nil {
+		return utils.MarshalJSON(u.GetDeployment1, "", true)
 	}
 
-	if u.GetDeployment200ApplicationJSON2 != nil {
-		return utils.MarshalJSON(u.GetDeployment200ApplicationJSON2, "", true)
+	if u.GetDeployment2 != nil {
+		return utils.MarshalJSON(u.GetDeployment2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -5069,7 +5069,7 @@ type GetDeploymentResponse struct {
 	RawResponse *http.Response
 	// The deployment including only public information
 	// The deployment including both public and private information
-	GetDeployment200ApplicationJSONOneOf *GetDeployment200ApplicationJSON
+	OneOf *GetDeploymentResponseBody
 }
 
 func (o *GetDeploymentResponse) GetContentType() string {
@@ -5093,9 +5093,9 @@ func (o *GetDeploymentResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetDeploymentResponse) GetGetDeployment200ApplicationJSONOneOf() *GetDeployment200ApplicationJSON {
+func (o *GetDeploymentResponse) GetOneOf() *GetDeploymentResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.GetDeployment200ApplicationJSONOneOf
+	return o.OneOf
 }

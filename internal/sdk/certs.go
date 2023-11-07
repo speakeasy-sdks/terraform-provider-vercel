@@ -14,19 +14,19 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type certs struct {
+type Certs struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newCerts(sdkConfig sdkConfiguration) *certs {
-	return &certs{
+func newCerts(sdkConfig sdkConfiguration) *Certs {
+	return &Certs{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // GetCertByID - Get cert by id
 // Get cert by id
-func (s *certs) GetCertByID(ctx context.Context, request operations.GetCertByIDRequest) (*operations.GetCertByIDResponse, error) {
+func (s *Certs) GetCertByID(ctx context.Context, request operations.GetCertByIDRequest) (*operations.GetCertByIDResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v7/certs/{id}", request, nil)
 	if err != nil {
@@ -72,12 +72,12 @@ func (s *certs) GetCertByID(ctx context.Context, request operations.GetCertByIDR
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.GetCertByID200ApplicationJSON
+			var out operations.GetCertByIDResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetCertByID200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -95,7 +95,7 @@ func (s *certs) GetCertByID(ctx context.Context, request operations.GetCertByIDR
 
 // IssueCert - Issue a new cert
 // Issue a new cert
-func (s *certs) IssueCert(ctx context.Context, request operations.IssueCertRequest) (*operations.IssueCertResponse, error) {
+func (s *Certs) IssueCert(ctx context.Context, request operations.IssueCertRequest) (*operations.IssueCertResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v7/certs"
 
@@ -148,12 +148,12 @@ func (s *certs) IssueCert(ctx context.Context, request operations.IssueCertReque
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.IssueCert200ApplicationJSON
+			var out operations.IssueCertResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.IssueCert200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -177,7 +177,7 @@ func (s *certs) IssueCert(ctx context.Context, request operations.IssueCertReque
 
 // RemoveCert - Remove cert
 // Remove cert
-func (s *certs) RemoveCert(ctx context.Context, request operations.RemoveCertRequest) (*operations.RemoveCertResponse, error) {
+func (s *Certs) RemoveCert(ctx context.Context, request operations.RemoveCertRequest) (*operations.RemoveCertResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/v7/certs/{id}", request, nil)
 	if err != nil {
@@ -223,12 +223,12 @@ func (s *certs) RemoveCert(ctx context.Context, request operations.RemoveCertReq
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.RemoveCert200ApplicationJSON
+			var out operations.RemoveCertResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.RemoveCert200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -246,7 +246,7 @@ func (s *certs) RemoveCert(ctx context.Context, request operations.RemoveCertReq
 
 // UploadCert - Upload a cert
 // Upload a cert
-func (s *certs) UploadCert(ctx context.Context, request operations.UploadCertRequest) (*operations.UploadCertResponse, error) {
+func (s *Certs) UploadCert(ctx context.Context, request operations.UploadCertRequest) (*operations.UploadCertResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/v7/certs"
 
@@ -299,12 +299,12 @@ func (s *certs) UploadCert(ctx context.Context, request operations.UploadCertReq
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.UploadCert200ApplicationJSON
+			var out operations.UploadCertResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.UploadCert200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

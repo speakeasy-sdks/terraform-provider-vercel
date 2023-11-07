@@ -38,20 +38,20 @@ func (o *VerifyProjectDomainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type VerifyProjectDomain200ApplicationJSONRedirectStatusCode int64
+type VerifyProjectDomainRedirectStatusCode int64
 
 const (
-	VerifyProjectDomain200ApplicationJSONRedirectStatusCodeThreeHundredAndSeven VerifyProjectDomain200ApplicationJSONRedirectStatusCode = 307
-	VerifyProjectDomain200ApplicationJSONRedirectStatusCodeThreeHundredAndOne   VerifyProjectDomain200ApplicationJSONRedirectStatusCode = 301
-	VerifyProjectDomain200ApplicationJSONRedirectStatusCodeThreeHundredAndTwo   VerifyProjectDomain200ApplicationJSONRedirectStatusCode = 302
-	VerifyProjectDomain200ApplicationJSONRedirectStatusCodeThreeHundredAndEight VerifyProjectDomain200ApplicationJSONRedirectStatusCode = 308
+	VerifyProjectDomainRedirectStatusCodeThreeHundredAndSeven VerifyProjectDomainRedirectStatusCode = 307
+	VerifyProjectDomainRedirectStatusCodeThreeHundredAndOne   VerifyProjectDomainRedirectStatusCode = 301
+	VerifyProjectDomainRedirectStatusCodeThreeHundredAndTwo   VerifyProjectDomainRedirectStatusCode = 302
+	VerifyProjectDomainRedirectStatusCodeThreeHundredAndEight VerifyProjectDomainRedirectStatusCode = 308
 )
 
-func (e VerifyProjectDomain200ApplicationJSONRedirectStatusCode) ToPointer() *VerifyProjectDomain200ApplicationJSONRedirectStatusCode {
+func (e VerifyProjectDomainRedirectStatusCode) ToPointer() *VerifyProjectDomainRedirectStatusCode {
 	return &e
 }
 
-func (e *VerifyProjectDomain200ApplicationJSONRedirectStatusCode) UnmarshalJSON(data []byte) error {
+func (e *VerifyProjectDomainRedirectStatusCode) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -64,130 +64,130 @@ func (e *VerifyProjectDomain200ApplicationJSONRedirectStatusCode) UnmarshalJSON(
 	case 302:
 		fallthrough
 	case 308:
-		*e = VerifyProjectDomain200ApplicationJSONRedirectStatusCode(v)
+		*e = VerifyProjectDomainRedirectStatusCode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for VerifyProjectDomain200ApplicationJSONRedirectStatusCode: %v", v)
+		return fmt.Errorf("invalid value for VerifyProjectDomainRedirectStatusCode: %v", v)
 	}
 }
 
-// VerifyProjectDomain200ApplicationJSONVerification - A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
-type VerifyProjectDomain200ApplicationJSONVerification struct {
+// VerifyProjectDomainVerification - A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
+type VerifyProjectDomainVerification struct {
 	Domain string `json:"domain"`
 	Reason string `json:"reason"`
 	Type   string `json:"type"`
 	Value  string `json:"value"`
 }
 
-func (o *VerifyProjectDomain200ApplicationJSONVerification) GetDomain() string {
+func (o *VerifyProjectDomainVerification) GetDomain() string {
 	if o == nil {
 		return ""
 	}
 	return o.Domain
 }
 
-func (o *VerifyProjectDomain200ApplicationJSONVerification) GetReason() string {
+func (o *VerifyProjectDomainVerification) GetReason() string {
 	if o == nil {
 		return ""
 	}
 	return o.Reason
 }
 
-func (o *VerifyProjectDomain200ApplicationJSONVerification) GetType() string {
+func (o *VerifyProjectDomainVerification) GetType() string {
 	if o == nil {
 		return ""
 	}
 	return o.Type
 }
 
-func (o *VerifyProjectDomain200ApplicationJSONVerification) GetValue() string {
+func (o *VerifyProjectDomainVerification) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-// VerifyProjectDomain200ApplicationJSON - The project domain was verified successfully
+// VerifyProjectDomainResponseBody - The project domain was verified successfully
 // Domain is already verified
-type VerifyProjectDomain200ApplicationJSON struct {
-	ApexName           string                                                   `json:"apexName"`
-	CreatedAt          *int64                                                   `json:"createdAt,omitempty"`
-	GitBranch          *string                                                  `json:"gitBranch,omitempty"`
-	Name               string                                                   `json:"name"`
-	ProjectID          string                                                   `json:"projectId"`
-	Redirect           *string                                                  `json:"redirect,omitempty"`
-	RedirectStatusCode *VerifyProjectDomain200ApplicationJSONRedirectStatusCode `json:"redirectStatusCode,omitempty"`
-	UpdatedAt          *int64                                                   `json:"updatedAt,omitempty"`
+type VerifyProjectDomainResponseBody struct {
+	ApexName           string                                 `json:"apexName"`
+	CreatedAt          *int64                                 `json:"createdAt,omitempty"`
+	GitBranch          *string                                `json:"gitBranch,omitempty"`
+	Name               string                                 `json:"name"`
+	ProjectID          string                                 `json:"projectId"`
+	Redirect           *string                                `json:"redirect,omitempty"`
+	RedirectStatusCode *VerifyProjectDomainRedirectStatusCode `json:"redirectStatusCode,omitempty"`
+	UpdatedAt          *int64                                 `json:"updatedAt,omitempty"`
 	// A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
-	Verification []VerifyProjectDomain200ApplicationJSONVerification `json:"verification,omitempty"`
+	Verification []VerifyProjectDomainVerification `json:"verification,omitempty"`
 	// `true` if the domain is verified for use with the project. If `false` it will not be used as an alias on this project until the challenge in `verification` is completed.
 	Verified bool `json:"verified"`
 }
 
-func (o *VerifyProjectDomain200ApplicationJSON) GetApexName() string {
+func (o *VerifyProjectDomainResponseBody) GetApexName() string {
 	if o == nil {
 		return ""
 	}
 	return o.ApexName
 }
 
-func (o *VerifyProjectDomain200ApplicationJSON) GetCreatedAt() *int64 {
+func (o *VerifyProjectDomainResponseBody) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *VerifyProjectDomain200ApplicationJSON) GetGitBranch() *string {
+func (o *VerifyProjectDomainResponseBody) GetGitBranch() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GitBranch
 }
 
-func (o *VerifyProjectDomain200ApplicationJSON) GetName() string {
+func (o *VerifyProjectDomainResponseBody) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *VerifyProjectDomain200ApplicationJSON) GetProjectID() string {
+func (o *VerifyProjectDomainResponseBody) GetProjectID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ProjectID
 }
 
-func (o *VerifyProjectDomain200ApplicationJSON) GetRedirect() *string {
+func (o *VerifyProjectDomainResponseBody) GetRedirect() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Redirect
 }
 
-func (o *VerifyProjectDomain200ApplicationJSON) GetRedirectStatusCode() *VerifyProjectDomain200ApplicationJSONRedirectStatusCode {
+func (o *VerifyProjectDomainResponseBody) GetRedirectStatusCode() *VerifyProjectDomainRedirectStatusCode {
 	if o == nil {
 		return nil
 	}
 	return o.RedirectStatusCode
 }
 
-func (o *VerifyProjectDomain200ApplicationJSON) GetUpdatedAt() *int64 {
+func (o *VerifyProjectDomainResponseBody) GetUpdatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *VerifyProjectDomain200ApplicationJSON) GetVerification() []VerifyProjectDomain200ApplicationJSONVerification {
+func (o *VerifyProjectDomainResponseBody) GetVerification() []VerifyProjectDomainVerification {
 	if o == nil {
 		return nil
 	}
 	return o.Verification
 }
 
-func (o *VerifyProjectDomain200ApplicationJSON) GetVerified() bool {
+func (o *VerifyProjectDomainResponseBody) GetVerified() bool {
 	if o == nil {
 		return false
 	}
@@ -203,7 +203,7 @@ type VerifyProjectDomainResponse struct {
 	RawResponse *http.Response
 	// The project domain was verified successfully
 	// Domain is already verified
-	VerifyProjectDomain200ApplicationJSONObject *VerifyProjectDomain200ApplicationJSON
+	Object *VerifyProjectDomainResponseBody
 }
 
 func (o *VerifyProjectDomainResponse) GetContentType() string {
@@ -227,9 +227,9 @@ func (o *VerifyProjectDomainResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *VerifyProjectDomainResponse) GetVerifyProjectDomain200ApplicationJSONObject() *VerifyProjectDomain200ApplicationJSON {
+func (o *VerifyProjectDomainResponse) GetObject() *VerifyProjectDomainResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.VerifyProjectDomain200ApplicationJSONObject
+	return o.Object
 }

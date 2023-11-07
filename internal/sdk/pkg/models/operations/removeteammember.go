@@ -26,13 +26,13 @@ func (o *RemoveTeamMemberRequest) GetUID() string {
 	return o.UID
 }
 
-// RemoveTeamMember200ApplicationJSON - Successfully removed a member of the team.
-type RemoveTeamMember200ApplicationJSON struct {
+// RemoveTeamMemberResponseBody - Successfully removed a member of the team.
+type RemoveTeamMemberResponseBody struct {
 	// ID of the team.
 	ID string `json:"id"`
 }
 
-func (o *RemoveTeamMember200ApplicationJSON) GetID() string {
+func (o *RemoveTeamMemberResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
@@ -47,7 +47,7 @@ type RemoveTeamMemberResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successfully removed a member of the team.
-	RemoveTeamMember200ApplicationJSONObject *RemoveTeamMember200ApplicationJSON
+	Object *RemoveTeamMemberResponseBody
 }
 
 func (o *RemoveTeamMemberResponse) GetContentType() string {
@@ -71,9 +71,9 @@ func (o *RemoveTeamMemberResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *RemoveTeamMemberResponse) GetRemoveTeamMember200ApplicationJSONObject() *RemoveTeamMember200ApplicationJSON {
+func (o *RemoveTeamMemberResponse) GetObject() *RemoveTeamMemberResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.RemoveTeamMember200ApplicationJSONObject
+	return o.Object
 }

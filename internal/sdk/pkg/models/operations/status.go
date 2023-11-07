@@ -20,20 +20,20 @@ func (o *StatusRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type Status200ApplicationJSONStatus string
+type StatusStatus string
 
 const (
-	Status200ApplicationJSONStatusDisabled  Status200ApplicationJSONStatus = "disabled"
-	Status200ApplicationJSONStatusEnabled   Status200ApplicationJSONStatus = "enabled"
-	Status200ApplicationJSONStatusOverLimit Status200ApplicationJSONStatus = "over_limit"
-	Status200ApplicationJSONStatusPaused    Status200ApplicationJSONStatus = "paused"
+	StatusStatusDisabled  StatusStatus = "disabled"
+	StatusStatusEnabled   StatusStatus = "enabled"
+	StatusStatusOverLimit StatusStatus = "over_limit"
+	StatusStatusPaused    StatusStatus = "paused"
 )
 
-func (e Status200ApplicationJSONStatus) ToPointer() *Status200ApplicationJSONStatus {
+func (e StatusStatus) ToPointer() *StatusStatus {
 	return &e
 }
 
-func (e *Status200ApplicationJSONStatus) UnmarshalJSON(data []byte) error {
+func (e *StatusStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -46,20 +46,20 @@ func (e *Status200ApplicationJSONStatus) UnmarshalJSON(data []byte) error {
 	case "over_limit":
 		fallthrough
 	case "paused":
-		*e = Status200ApplicationJSONStatus(v)
+		*e = StatusStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Status200ApplicationJSONStatus: %v", v)
+		return fmt.Errorf("invalid value for StatusStatus: %v", v)
 	}
 }
 
-type Status200ApplicationJSON struct {
-	Status Status200ApplicationJSONStatus `json:"status"`
+type StatusResponseBody struct {
+	Status StatusStatus `json:"status"`
 }
 
-func (o *Status200ApplicationJSON) GetStatus() Status200ApplicationJSONStatus {
+func (o *StatusResponseBody) GetStatus() StatusStatus {
 	if o == nil {
-		return Status200ApplicationJSONStatus("")
+		return StatusStatus("")
 	}
 	return o.Status
 }
@@ -70,8 +70,8 @@ type StatusResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                    *http.Response
-	Status200ApplicationJSONObject *Status200ApplicationJSON
+	RawResponse *http.Response
+	Object      *StatusResponseBody
 }
 
 func (o *StatusResponse) GetContentType() string {
@@ -95,9 +95,9 @@ func (o *StatusResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *StatusResponse) GetStatus200ApplicationJSONObject() *Status200ApplicationJSON {
+func (o *StatusResponse) GetObject() *StatusResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.Status200ApplicationJSONObject
+	return o.Object
 }

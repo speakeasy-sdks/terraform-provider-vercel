@@ -10,18 +10,18 @@ import (
 	"vercel/internal/sdk/pkg/utils"
 )
 
-type CreateDeploymentRequestBodyBranchCurrentState string
+type CurrentState string
 
 const (
-	CreateDeploymentRequestBodyBranchCurrentStateInit  CreateDeploymentRequestBodyBranchCurrentState = "init"
-	CreateDeploymentRequestBodyBranchCurrentStateReady CreateDeploymentRequestBodyBranchCurrentState = "ready"
+	CurrentStateInit  CurrentState = "init"
+	CurrentStateReady CurrentState = "ready"
 )
 
-func (e CreateDeploymentRequestBodyBranchCurrentState) ToPointer() *CreateDeploymentRequestBodyBranchCurrentState {
+func (e CurrentState) ToPointer() *CurrentState {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyBranchCurrentState) UnmarshalJSON(data []byte) error {
+func (e *CurrentState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -30,162 +30,162 @@ func (e *CreateDeploymentRequestBodyBranchCurrentState) UnmarshalJSON(data []byt
 	case "init":
 		fallthrough
 	case "ready":
-		*e = CreateDeploymentRequestBodyBranchCurrentState(v)
+		*e = CurrentState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyBranchCurrentState: %v", v)
+		return fmt.Errorf("invalid value for CurrentState: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyBranch struct {
-	CreatedAt    string                                        `json:"created_at"`
-	CurrentState CreateDeploymentRequestBodyBranchCurrentState `json:"current_state"`
-	ID           string                                        `json:"id"`
-	Name         string                                        `json:"name"`
-	ParentID     *string                                       `json:"parent_id,omitempty"`
-	Primary      bool                                          `json:"primary"`
-	ProjectID    string                                        `json:"project_id"`
-	UpdatedAt    string                                        `json:"updated_at"`
+type Branch struct {
+	CreatedAt    string       `json:"created_at"`
+	CurrentState CurrentState `json:"current_state"`
+	ID           string       `json:"id"`
+	Name         string       `json:"name"`
+	ParentID     *string      `json:"parent_id,omitempty"`
+	Primary      bool         `json:"primary"`
+	ProjectID    string       `json:"project_id"`
+	UpdatedAt    string       `json:"updated_at"`
 }
 
-func (o *CreateDeploymentRequestBodyBranch) GetCreatedAt() string {
+func (o *Branch) GetCreatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateDeploymentRequestBodyBranch) GetCurrentState() CreateDeploymentRequestBodyBranchCurrentState {
+func (o *Branch) GetCurrentState() CurrentState {
 	if o == nil {
-		return CreateDeploymentRequestBodyBranchCurrentState("")
+		return CurrentState("")
 	}
 	return o.CurrentState
 }
 
-func (o *CreateDeploymentRequestBodyBranch) GetID() string {
+func (o *Branch) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateDeploymentRequestBodyBranch) GetName() string {
+func (o *Branch) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeploymentRequestBodyBranch) GetParentID() *string {
+func (o *Branch) GetParentID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ParentID
 }
 
-func (o *CreateDeploymentRequestBodyBranch) GetPrimary() bool {
+func (o *Branch) GetPrimary() bool {
 	if o == nil {
 		return false
 	}
 	return o.Primary
 }
 
-func (o *CreateDeploymentRequestBodyBranch) GetProjectID() string {
+func (o *Branch) GetProjectID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ProjectID
 }
 
-func (o *CreateDeploymentRequestBodyBranch) GetUpdatedAt() string {
+func (o *Branch) GetUpdatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.UpdatedAt
 }
 
-// CreateDeploymentRequestBodyBuild - An object containing another object with information to be passed to the Build Process
+// Build - An object containing another object with information to be passed to the Build Process
 //
 // Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
-type CreateDeploymentRequestBodyBuild struct {
+type Build struct {
 	// An object containing the deployment's environment variable names and values to be passed to Builds. Secrets can be referenced by prefixing the value with `@`
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Env map[string]string `json:"env,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyBuild) GetEnv() map[string]string {
+func (o *Build) GetEnv() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Env
 }
 
-// CreateDeploymentRequestBodyBuildsConfig - Optionally, an object including arbitrary metadata to be passed to the Builder
-type CreateDeploymentRequestBodyBuildsConfig struct {
+// Config - Optionally, an object including arbitrary metadata to be passed to the Builder
+type Config struct {
 }
 
-type CreateDeploymentRequestBodyBuilds struct {
+type Builds struct {
 	// Optionally, an object including arbitrary metadata to be passed to the Builder
-	Config *CreateDeploymentRequestBodyBuildsConfig `json:"config,omitempty"`
+	Config *Config `json:"config,omitempty"`
 	// A glob expression or pathname. If more than one file is resolved, one build will be created per matched file. It can include `*` and `**`
 	Src *string `json:"src,omitempty"`
 	// An npm module to be installed by the build process. It can include a semver compatible version (e.g.: `@org/proj@1`)
 	Use string `json:"use"`
 }
 
-func (o *CreateDeploymentRequestBodyBuilds) GetConfig() *CreateDeploymentRequestBodyBuildsConfig {
+func (o *Builds) GetConfig() *Config {
 	if o == nil {
 		return nil
 	}
 	return o.Config
 }
 
-func (o *CreateDeploymentRequestBodyBuilds) GetSrc() *string {
+func (o *Builds) GetSrc() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Src
 }
 
-func (o *CreateDeploymentRequestBodyBuilds) GetUse() string {
+func (o *Builds) GetUse() string {
 	if o == nil {
 		return ""
 	}
 	return o.Use
 }
 
-type CreateDeploymentRequestBodyConnectionUris struct {
+type ConnectionUris struct {
 	ConnectionURI string `json:"connection_uri"`
 }
 
-func (o *CreateDeploymentRequestBodyConnectionUris) GetConnectionURI() string {
+func (o *ConnectionUris) GetConnectionURI() string {
 	if o == nil {
 		return ""
 	}
 	return o.ConnectionURI
 }
 
-type CreateDeploymentRequestBodyCrons struct {
+type Crons struct {
 	Path     string `json:"path"`
 	Schedule string `json:"schedule"`
 }
 
-func (o *CreateDeploymentRequestBodyCrons) GetPath() string {
+func (o *Crons) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *CreateDeploymentRequestBodyCrons) GetSchedule() string {
+func (o *Crons) GetSchedule() string {
 	if o == nil {
 		return ""
 	}
 	return o.Schedule
 }
 
-type CreateDeploymentRequestBodyDatabase struct {
+type Database struct {
 	BranchID  string `json:"branch_id"`
 	CreatedAt string `json:"created_at"`
 	ID        int64  `json:"id"`
@@ -194,49 +194,49 @@ type CreateDeploymentRequestBodyDatabase struct {
 	UpdatedAt string `json:"updated_at"`
 }
 
-func (o *CreateDeploymentRequestBodyDatabase) GetBranchID() string {
+func (o *Database) GetBranchID() string {
 	if o == nil {
 		return ""
 	}
 	return o.BranchID
 }
 
-func (o *CreateDeploymentRequestBodyDatabase) GetCreatedAt() string {
+func (o *Database) GetCreatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateDeploymentRequestBodyDatabase) GetID() int64 {
+func (o *Database) GetID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ID
 }
 
-func (o *CreateDeploymentRequestBodyDatabase) GetName() string {
+func (o *Database) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeploymentRequestBodyDatabase) GetOwnerName() string {
+func (o *Database) GetOwnerName() string {
 	if o == nil {
 		return ""
 	}
 	return o.OwnerName
 }
 
-func (o *CreateDeploymentRequestBodyDatabase) GetUpdatedAt() string {
+func (o *Database) GetUpdatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.UpdatedAt
 }
 
-type CreateDeploymentRequestBodyDatabases struct {
+type Databases struct {
 	BranchID  string `json:"branch_id"`
 	CreatedAt string `json:"created_at"`
 	ID        int64  `json:"id"`
@@ -245,49 +245,49 @@ type CreateDeploymentRequestBodyDatabases struct {
 	UpdatedAt string `json:"updated_at"`
 }
 
-func (o *CreateDeploymentRequestBodyDatabases) GetBranchID() string {
+func (o *Databases) GetBranchID() string {
 	if o == nil {
 		return ""
 	}
 	return o.BranchID
 }
 
-func (o *CreateDeploymentRequestBodyDatabases) GetCreatedAt() string {
+func (o *Databases) GetCreatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateDeploymentRequestBodyDatabases) GetID() int64 {
+func (o *Databases) GetID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ID
 }
 
-func (o *CreateDeploymentRequestBodyDatabases) GetName() string {
+func (o *Databases) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeploymentRequestBodyDatabases) GetOwnerName() string {
+func (o *Databases) GetOwnerName() string {
 	if o == nil {
 		return ""
 	}
 	return o.OwnerName
 }
 
-func (o *CreateDeploymentRequestBodyDatabases) GetUpdatedAt() string {
+func (o *Databases) GetUpdatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.UpdatedAt
 }
 
-type CreateDeploymentRequestBodyEndpoint struct {
+type Endpoint struct {
 	AutoscalingLimitMaxCu int64   `json:"autoscaling_limit_max_cu"`
 	AutoscalingLimitMinCu int64   `json:"autoscaling_limit_min_cu"`
 	BranchID              string  `json:"branch_id"`
@@ -307,126 +307,126 @@ type CreateDeploymentRequestBodyEndpoint struct {
 	UpdatedAt             string  `json:"updated_at"`
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetAutoscalingLimitMaxCu() int64 {
+func (o *Endpoint) GetAutoscalingLimitMaxCu() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.AutoscalingLimitMaxCu
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetAutoscalingLimitMinCu() int64 {
+func (o *Endpoint) GetAutoscalingLimitMinCu() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.AutoscalingLimitMinCu
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetBranchID() string {
+func (o *Endpoint) GetBranchID() string {
 	if o == nil {
 		return ""
 	}
 	return o.BranchID
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetCreatedAt() string {
+func (o *Endpoint) GetCreatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetCurrentState() string {
+func (o *Endpoint) GetCurrentState() string {
 	if o == nil {
 		return ""
 	}
 	return o.CurrentState
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetDisabled() bool {
+func (o *Endpoint) GetDisabled() bool {
 	if o == nil {
 		return false
 	}
 	return o.Disabled
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetHost() string {
+func (o *Endpoint) GetHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.Host
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetID() string {
+func (o *Endpoint) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetLastActive() *string {
+func (o *Endpoint) GetLastActive() *string {
 	if o == nil {
 		return nil
 	}
 	return o.LastActive
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetPasswordlessAccess() bool {
+func (o *Endpoint) GetPasswordlessAccess() bool {
 	if o == nil {
 		return false
 	}
 	return o.PasswordlessAccess
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetPoolerEnabled() bool {
+func (o *Endpoint) GetPoolerEnabled() bool {
 	if o == nil {
 		return false
 	}
 	return o.PoolerEnabled
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetPoolerMode() string {
+func (o *Endpoint) GetPoolerMode() string {
 	if o == nil {
 		return ""
 	}
 	return o.PoolerMode
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetProjectID() string {
+func (o *Endpoint) GetProjectID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ProjectID
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetRegionID() string {
+func (o *Endpoint) GetRegionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RegionID
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetSuspendTimeoutSeconds() int64 {
+func (o *Endpoint) GetSuspendTimeoutSeconds() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.SuspendTimeoutSeconds
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetType() string {
+func (o *Endpoint) GetType() string {
 	if o == nil {
 		return ""
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyEndpoint) GetUpdatedAt() string {
+func (o *Endpoint) GetUpdatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.UpdatedAt
 }
 
-type CreateDeploymentRequestBodyEndpoints struct {
+type Endpoints struct {
 	AutoscalingLimitMaxCu int64   `json:"autoscaling_limit_max_cu"`
 	AutoscalingLimitMinCu int64   `json:"autoscaling_limit_min_cu"`
 	BranchID              string  `json:"branch_id"`
@@ -446,127 +446,127 @@ type CreateDeploymentRequestBodyEndpoints struct {
 	UpdatedAt             string  `json:"updated_at"`
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetAutoscalingLimitMaxCu() int64 {
+func (o *Endpoints) GetAutoscalingLimitMaxCu() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.AutoscalingLimitMaxCu
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetAutoscalingLimitMinCu() int64 {
+func (o *Endpoints) GetAutoscalingLimitMinCu() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.AutoscalingLimitMinCu
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetBranchID() string {
+func (o *Endpoints) GetBranchID() string {
 	if o == nil {
 		return ""
 	}
 	return o.BranchID
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetCreatedAt() string {
+func (o *Endpoints) GetCreatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetCurrentState() string {
+func (o *Endpoints) GetCurrentState() string {
 	if o == nil {
 		return ""
 	}
 	return o.CurrentState
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetDisabled() bool {
+func (o *Endpoints) GetDisabled() bool {
 	if o == nil {
 		return false
 	}
 	return o.Disabled
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetHost() string {
+func (o *Endpoints) GetHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.Host
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetID() string {
+func (o *Endpoints) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetLastActive() *string {
+func (o *Endpoints) GetLastActive() *string {
 	if o == nil {
 		return nil
 	}
 	return o.LastActive
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetPasswordlessAccess() bool {
+func (o *Endpoints) GetPasswordlessAccess() bool {
 	if o == nil {
 		return false
 	}
 	return o.PasswordlessAccess
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetPoolerEnabled() bool {
+func (o *Endpoints) GetPoolerEnabled() bool {
 	if o == nil {
 		return false
 	}
 	return o.PoolerEnabled
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetPoolerMode() string {
+func (o *Endpoints) GetPoolerMode() string {
 	if o == nil {
 		return ""
 	}
 	return o.PoolerMode
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetProjectID() string {
+func (o *Endpoints) GetProjectID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ProjectID
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetRegionID() string {
+func (o *Endpoints) GetRegionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RegionID
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetSuspendTimeoutSeconds() int64 {
+func (o *Endpoints) GetSuspendTimeoutSeconds() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.SuspendTimeoutSeconds
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetType() string {
+func (o *Endpoints) GetType() string {
 	if o == nil {
 		return ""
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyEndpoints) GetUpdatedAt() string {
+func (o *Endpoints) GetUpdatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.UpdatedAt
 }
 
-// CreateDeploymentRequestBodyFilesUploadedFile - Used in the case you want to reference a file that was already uploaded
-type CreateDeploymentRequestBodyFilesUploadedFile struct {
+// UploadedFile - Used in the case you want to reference a file that was already uploaded
+type UploadedFile struct {
 	// The file path relative to the project root
 	File string `json:"file"`
 	// The file contents hashed with SHA1, used to check the integrity
@@ -575,40 +575,40 @@ type CreateDeploymentRequestBodyFilesUploadedFile struct {
 	Size *int64 `json:"size,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyFilesUploadedFile) GetFile() string {
+func (o *UploadedFile) GetFile() string {
 	if o == nil {
 		return ""
 	}
 	return o.File
 }
 
-func (o *CreateDeploymentRequestBodyFilesUploadedFile) GetSha() *string {
+func (o *UploadedFile) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentRequestBodyFilesUploadedFile) GetSize() *int64 {
+func (o *UploadedFile) GetSize() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Size
 }
 
-// CreateDeploymentRequestBodyFilesInlinedFileEncoding - The file content encoding, it could be either a base64 (useful for images, etc.) of the files or the plain text for source code.
-type CreateDeploymentRequestBodyFilesInlinedFileEncoding string
+// Encoding - The file content encoding, it could be either a base64 (useful for images, etc.) of the files or the plain text for source code.
+type Encoding string
 
 const (
-	CreateDeploymentRequestBodyFilesInlinedFileEncodingBase64 CreateDeploymentRequestBodyFilesInlinedFileEncoding = "base64"
-	CreateDeploymentRequestBodyFilesInlinedFileEncodingUTF8   CreateDeploymentRequestBodyFilesInlinedFileEncoding = "utf-8"
+	EncodingBase64 Encoding = "base64"
+	EncodingUTF8   Encoding = "utf-8"
 )
 
-func (e CreateDeploymentRequestBodyFilesInlinedFileEncoding) ToPointer() *CreateDeploymentRequestBodyFilesInlinedFileEncoding {
+func (e Encoding) ToPointer() *Encoding {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyFilesInlinedFileEncoding) UnmarshalJSON(data []byte) error {
+func (e *Encoding) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -617,161 +617,161 @@ func (e *CreateDeploymentRequestBodyFilesInlinedFileEncoding) UnmarshalJSON(data
 	case "base64":
 		fallthrough
 	case "utf-8":
-		*e = CreateDeploymentRequestBodyFilesInlinedFileEncoding(v)
+		*e = Encoding(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyFilesInlinedFileEncoding: %v", v)
+		return fmt.Errorf("invalid value for Encoding: %v", v)
 	}
 }
 
-// CreateDeploymentRequestBodyFilesInlinedFile - Used in the case you want to inline a file inside the request
-type CreateDeploymentRequestBodyFilesInlinedFile struct {
+// InlinedFile - Used in the case you want to inline a file inside the request
+type InlinedFile struct {
 	// The file content, it could be either a `base64` (useful for images, etc.) of the files or the plain content for source code
 	Data string `json:"data"`
 	// The file content encoding, it could be either a base64 (useful for images, etc.) of the files or the plain text for source code.
-	Encoding *CreateDeploymentRequestBodyFilesInlinedFileEncoding `json:"encoding,omitempty"`
+	Encoding *Encoding `json:"encoding,omitempty"`
 	// The file name including the whole path
 	File string `json:"file"`
 }
 
-func (o *CreateDeploymentRequestBodyFilesInlinedFile) GetData() string {
+func (o *InlinedFile) GetData() string {
 	if o == nil {
 		return ""
 	}
 	return o.Data
 }
 
-func (o *CreateDeploymentRequestBodyFilesInlinedFile) GetEncoding() *CreateDeploymentRequestBodyFilesInlinedFileEncoding {
+func (o *InlinedFile) GetEncoding() *Encoding {
 	if o == nil {
 		return nil
 	}
 	return o.Encoding
 }
 
-func (o *CreateDeploymentRequestBodyFilesInlinedFile) GetFile() string {
+func (o *InlinedFile) GetFile() string {
 	if o == nil {
 		return ""
 	}
 	return o.File
 }
 
-type CreateDeploymentRequestBodyFilesType string
+type FilesType string
 
 const (
-	CreateDeploymentRequestBodyFilesTypeCreateDeploymentRequestBodyFilesInlinedFile  CreateDeploymentRequestBodyFilesType = "createDeployment_requestBody_files_InlinedFile"
-	CreateDeploymentRequestBodyFilesTypeCreateDeploymentRequestBodyFilesUploadedFile CreateDeploymentRequestBodyFilesType = "createDeployment_requestBody_files_UploadedFile"
+	FilesTypeInlinedFile  FilesType = "InlinedFile"
+	FilesTypeUploadedFile FilesType = "UploadedFile"
 )
 
-type CreateDeploymentRequestBodyFiles struct {
-	CreateDeploymentRequestBodyFilesInlinedFile  *CreateDeploymentRequestBodyFilesInlinedFile
-	CreateDeploymentRequestBodyFilesUploadedFile *CreateDeploymentRequestBodyFilesUploadedFile
+type Files struct {
+	InlinedFile  *InlinedFile
+	UploadedFile *UploadedFile
 
-	Type CreateDeploymentRequestBodyFilesType
+	Type FilesType
 }
 
-func CreateCreateDeploymentRequestBodyFilesCreateDeploymentRequestBodyFilesInlinedFile(createDeploymentRequestBodyFilesInlinedFile CreateDeploymentRequestBodyFilesInlinedFile) CreateDeploymentRequestBodyFiles {
-	typ := CreateDeploymentRequestBodyFilesTypeCreateDeploymentRequestBodyFilesInlinedFile
+func CreateFilesInlinedFile(inlinedFile InlinedFile) Files {
+	typ := FilesTypeInlinedFile
 
-	return CreateDeploymentRequestBodyFiles{
-		CreateDeploymentRequestBodyFilesInlinedFile: &createDeploymentRequestBodyFilesInlinedFile,
-		Type: typ,
+	return Files{
+		InlinedFile: &inlinedFile,
+		Type:        typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyFilesCreateDeploymentRequestBodyFilesUploadedFile(createDeploymentRequestBodyFilesUploadedFile CreateDeploymentRequestBodyFilesUploadedFile) CreateDeploymentRequestBodyFiles {
-	typ := CreateDeploymentRequestBodyFilesTypeCreateDeploymentRequestBodyFilesUploadedFile
+func CreateFilesUploadedFile(uploadedFile UploadedFile) Files {
+	typ := FilesTypeUploadedFile
 
-	return CreateDeploymentRequestBodyFiles{
-		CreateDeploymentRequestBodyFilesUploadedFile: &createDeploymentRequestBodyFilesUploadedFile,
-		Type: typ,
+	return Files{
+		UploadedFile: &uploadedFile,
+		Type:         typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyFiles) UnmarshalJSON(data []byte) error {
+func (u *Files) UnmarshalJSON(data []byte) error {
 
-	createDeploymentRequestBodyFilesInlinedFile := new(CreateDeploymentRequestBodyFilesInlinedFile)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyFilesInlinedFile, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyFilesInlinedFile = createDeploymentRequestBodyFilesInlinedFile
-		u.Type = CreateDeploymentRequestBodyFilesTypeCreateDeploymentRequestBodyFilesInlinedFile
+	inlinedFile := new(InlinedFile)
+	if err := utils.UnmarshalJSON(data, &inlinedFile, "", true, true); err == nil {
+		u.InlinedFile = inlinedFile
+		u.Type = FilesTypeInlinedFile
 		return nil
 	}
 
-	createDeploymentRequestBodyFilesUploadedFile := new(CreateDeploymentRequestBodyFilesUploadedFile)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyFilesUploadedFile, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyFilesUploadedFile = createDeploymentRequestBodyFilesUploadedFile
-		u.Type = CreateDeploymentRequestBodyFilesTypeCreateDeploymentRequestBodyFilesUploadedFile
+	uploadedFile := new(UploadedFile)
+	if err := utils.UnmarshalJSON(data, &uploadedFile, "", true, true); err == nil {
+		u.UploadedFile = uploadedFile
+		u.Type = FilesTypeUploadedFile
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyFiles) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyFilesInlinedFile != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyFilesInlinedFile, "", true)
+func (u Files) MarshalJSON() ([]byte, error) {
+	if u.InlinedFile != nil {
+		return utils.MarshalJSON(u.InlinedFile, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyFilesUploadedFile != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyFilesUploadedFile, "", true)
+	if u.UploadedFile != nil {
+		return utils.MarshalJSON(u.UploadedFile, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// CreateDeploymentRequestBodyFramework - The framework that is being used for this project. When `null` is used no framework is selected
-type CreateDeploymentRequestBodyFramework string
+// Framework - The framework that is being used for this project. When `null` is used no framework is selected
+type Framework string
 
 const (
-	CreateDeploymentRequestBodyFrameworkLessThanNilGreaterThan CreateDeploymentRequestBodyFramework = "<nil>"
-	CreateDeploymentRequestBodyFrameworkBlitzjs                CreateDeploymentRequestBodyFramework = "blitzjs"
-	CreateDeploymentRequestBodyFrameworkNextjs                 CreateDeploymentRequestBodyFramework = "nextjs"
-	CreateDeploymentRequestBodyFrameworkGatsby                 CreateDeploymentRequestBodyFramework = "gatsby"
-	CreateDeploymentRequestBodyFrameworkRemix                  CreateDeploymentRequestBodyFramework = "remix"
-	CreateDeploymentRequestBodyFrameworkAstro                  CreateDeploymentRequestBodyFramework = "astro"
-	CreateDeploymentRequestBodyFrameworkHexo                   CreateDeploymentRequestBodyFramework = "hexo"
-	CreateDeploymentRequestBodyFrameworkEleventy               CreateDeploymentRequestBodyFramework = "eleventy"
-	CreateDeploymentRequestBodyFrameworkDocusaurus2            CreateDeploymentRequestBodyFramework = "docusaurus-2"
-	CreateDeploymentRequestBodyFrameworkDocusaurus             CreateDeploymentRequestBodyFramework = "docusaurus"
-	CreateDeploymentRequestBodyFrameworkPreact                 CreateDeploymentRequestBodyFramework = "preact"
-	CreateDeploymentRequestBodyFrameworkSolidstart             CreateDeploymentRequestBodyFramework = "solidstart"
-	CreateDeploymentRequestBodyFrameworkDojo                   CreateDeploymentRequestBodyFramework = "dojo"
-	CreateDeploymentRequestBodyFrameworkEmber                  CreateDeploymentRequestBodyFramework = "ember"
-	CreateDeploymentRequestBodyFrameworkVue                    CreateDeploymentRequestBodyFramework = "vue"
-	CreateDeploymentRequestBodyFrameworkScully                 CreateDeploymentRequestBodyFramework = "scully"
-	CreateDeploymentRequestBodyFrameworkIonicAngular           CreateDeploymentRequestBodyFramework = "ionic-angular"
-	CreateDeploymentRequestBodyFrameworkAngular                CreateDeploymentRequestBodyFramework = "angular"
-	CreateDeploymentRequestBodyFrameworkPolymer                CreateDeploymentRequestBodyFramework = "polymer"
-	CreateDeploymentRequestBodyFrameworkSvelte                 CreateDeploymentRequestBodyFramework = "svelte"
-	CreateDeploymentRequestBodyFrameworkSveltekit              CreateDeploymentRequestBodyFramework = "sveltekit"
-	CreateDeploymentRequestBodyFrameworkSveltekit1             CreateDeploymentRequestBodyFramework = "sveltekit-1"
-	CreateDeploymentRequestBodyFrameworkIonicReact             CreateDeploymentRequestBodyFramework = "ionic-react"
-	CreateDeploymentRequestBodyFrameworkCreateReactApp         CreateDeploymentRequestBodyFramework = "create-react-app"
-	CreateDeploymentRequestBodyFrameworkGridsome               CreateDeploymentRequestBodyFramework = "gridsome"
-	CreateDeploymentRequestBodyFrameworkUmijs                  CreateDeploymentRequestBodyFramework = "umijs"
-	CreateDeploymentRequestBodyFrameworkSapper                 CreateDeploymentRequestBodyFramework = "sapper"
-	CreateDeploymentRequestBodyFrameworkSaber                  CreateDeploymentRequestBodyFramework = "saber"
-	CreateDeploymentRequestBodyFrameworkStencil                CreateDeploymentRequestBodyFramework = "stencil"
-	CreateDeploymentRequestBodyFrameworkNuxtjs                 CreateDeploymentRequestBodyFramework = "nuxtjs"
-	CreateDeploymentRequestBodyFrameworkRedwoodjs              CreateDeploymentRequestBodyFramework = "redwoodjs"
-	CreateDeploymentRequestBodyFrameworkHugo                   CreateDeploymentRequestBodyFramework = "hugo"
-	CreateDeploymentRequestBodyFrameworkJekyll                 CreateDeploymentRequestBodyFramework = "jekyll"
-	CreateDeploymentRequestBodyFrameworkBrunch                 CreateDeploymentRequestBodyFramework = "brunch"
-	CreateDeploymentRequestBodyFrameworkMiddleman              CreateDeploymentRequestBodyFramework = "middleman"
-	CreateDeploymentRequestBodyFrameworkZola                   CreateDeploymentRequestBodyFramework = "zola"
-	CreateDeploymentRequestBodyFrameworkHydrogen               CreateDeploymentRequestBodyFramework = "hydrogen"
-	CreateDeploymentRequestBodyFrameworkVite                   CreateDeploymentRequestBodyFramework = "vite"
-	CreateDeploymentRequestBodyFrameworkVitepress              CreateDeploymentRequestBodyFramework = "vitepress"
-	CreateDeploymentRequestBodyFrameworkVuepress               CreateDeploymentRequestBodyFramework = "vuepress"
-	CreateDeploymentRequestBodyFrameworkParcel                 CreateDeploymentRequestBodyFramework = "parcel"
-	CreateDeploymentRequestBodyFrameworkSanity                 CreateDeploymentRequestBodyFramework = "sanity"
-	CreateDeploymentRequestBodyFrameworkStorybook              CreateDeploymentRequestBodyFramework = "storybook"
+	FrameworkLessThanNilGreaterThan Framework = "<nil>"
+	FrameworkBlitzjs                Framework = "blitzjs"
+	FrameworkNextjs                 Framework = "nextjs"
+	FrameworkGatsby                 Framework = "gatsby"
+	FrameworkRemix                  Framework = "remix"
+	FrameworkAstro                  Framework = "astro"
+	FrameworkHexo                   Framework = "hexo"
+	FrameworkEleventy               Framework = "eleventy"
+	FrameworkDocusaurus2            Framework = "docusaurus-2"
+	FrameworkDocusaurus             Framework = "docusaurus"
+	FrameworkPreact                 Framework = "preact"
+	FrameworkSolidstart             Framework = "solidstart"
+	FrameworkDojo                   Framework = "dojo"
+	FrameworkEmber                  Framework = "ember"
+	FrameworkVue                    Framework = "vue"
+	FrameworkScully                 Framework = "scully"
+	FrameworkIonicAngular           Framework = "ionic-angular"
+	FrameworkAngular                Framework = "angular"
+	FrameworkPolymer                Framework = "polymer"
+	FrameworkSvelte                 Framework = "svelte"
+	FrameworkSveltekit              Framework = "sveltekit"
+	FrameworkSveltekit1             Framework = "sveltekit-1"
+	FrameworkIonicReact             Framework = "ionic-react"
+	FrameworkCreateReactApp         Framework = "create-react-app"
+	FrameworkGridsome               Framework = "gridsome"
+	FrameworkUmijs                  Framework = "umijs"
+	FrameworkSapper                 Framework = "sapper"
+	FrameworkSaber                  Framework = "saber"
+	FrameworkStencil                Framework = "stencil"
+	FrameworkNuxtjs                 Framework = "nuxtjs"
+	FrameworkRedwoodjs              Framework = "redwoodjs"
+	FrameworkHugo                   Framework = "hugo"
+	FrameworkJekyll                 Framework = "jekyll"
+	FrameworkBrunch                 Framework = "brunch"
+	FrameworkMiddleman              Framework = "middleman"
+	FrameworkZola                   Framework = "zola"
+	FrameworkHydrogen               Framework = "hydrogen"
+	FrameworkVite                   Framework = "vite"
+	FrameworkVitepress              Framework = "vitepress"
+	FrameworkVuepress               Framework = "vuepress"
+	FrameworkParcel                 Framework = "parcel"
+	FrameworkSanity                 Framework = "sanity"
+	FrameworkStorybook              Framework = "storybook"
 )
 
-func (e CreateDeploymentRequestBodyFramework) ToPointer() *CreateDeploymentRequestBodyFramework {
+func (e Framework) ToPointer() *Framework {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyFramework) UnmarshalJSON(data []byte) error {
+func (e *Framework) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -862,14 +862,14 @@ func (e *CreateDeploymentRequestBodyFramework) UnmarshalJSON(data []byte) error 
 	case "sanity":
 		fallthrough
 	case "storybook":
-		*e = CreateDeploymentRequestBodyFramework(v)
+		*e = Framework(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyFramework: %v", v)
+		return fmt.Errorf("invalid value for Framework: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyFunctions struct {
+type Functions struct {
 	// A glob pattern to match files that should be excluded from your Serverless Function. If you’re using a Community Runtime, the behavior might vary.
 	ExcludeFiles *string `json:"excludeFiles,omitempty"`
 	// A glob pattern to match files that should be included in your Serverless Function. If you’re using a Community Runtime, the behavior might vary.
@@ -882,93 +882,93 @@ type CreateDeploymentRequestBodyFunctions struct {
 	Runtime *string `json:"runtime,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyFunctions) GetExcludeFiles() *string {
+func (o *Functions) GetExcludeFiles() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ExcludeFiles
 }
 
-func (o *CreateDeploymentRequestBodyFunctions) GetIncludeFiles() *string {
+func (o *Functions) GetIncludeFiles() *string {
 	if o == nil {
 		return nil
 	}
 	return o.IncludeFiles
 }
 
-func (o *CreateDeploymentRequestBodyFunctions) GetMaxDuration() *int64 {
+func (o *Functions) GetMaxDuration() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxDuration
 }
 
-func (o *CreateDeploymentRequestBodyFunctions) GetMemory() *int64 {
+func (o *Functions) GetMemory() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Memory
 }
 
-func (o *CreateDeploymentRequestBodyFunctions) GetRuntime() *string {
+func (o *Functions) GetRuntime() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Runtime
 }
 
-type CreateDeploymentRequestBodyGitDeploymentEnabledType string
+type DeploymentEnabledType string
 
 const (
-	CreateDeploymentRequestBodyGitDeploymentEnabledTypeBoolean      CreateDeploymentRequestBodyGitDeploymentEnabledType = "boolean"
-	CreateDeploymentRequestBodyGitDeploymentEnabledTypeMapOfboolean CreateDeploymentRequestBodyGitDeploymentEnabledType = "mapOfboolean"
+	DeploymentEnabledTypeBoolean      DeploymentEnabledType = "boolean"
+	DeploymentEnabledTypeMapOfboolean DeploymentEnabledType = "mapOfboolean"
 )
 
-type CreateDeploymentRequestBodyGitDeploymentEnabled struct {
+type DeploymentEnabled struct {
 	Boolean      *bool
 	MapOfboolean map[string]bool
 
-	Type CreateDeploymentRequestBodyGitDeploymentEnabledType
+	Type DeploymentEnabledType
 }
 
-func CreateCreateDeploymentRequestBodyGitDeploymentEnabledBoolean(boolean bool) CreateDeploymentRequestBodyGitDeploymentEnabled {
-	typ := CreateDeploymentRequestBodyGitDeploymentEnabledTypeBoolean
+func CreateDeploymentEnabledBoolean(boolean bool) DeploymentEnabled {
+	typ := DeploymentEnabledTypeBoolean
 
-	return CreateDeploymentRequestBodyGitDeploymentEnabled{
+	return DeploymentEnabled{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyGitDeploymentEnabledMapOfboolean(mapOfboolean map[string]bool) CreateDeploymentRequestBodyGitDeploymentEnabled {
-	typ := CreateDeploymentRequestBodyGitDeploymentEnabledTypeMapOfboolean
+func CreateDeploymentEnabledMapOfboolean(mapOfboolean map[string]bool) DeploymentEnabled {
+	typ := DeploymentEnabledTypeMapOfboolean
 
-	return CreateDeploymentRequestBodyGitDeploymentEnabled{
+	return DeploymentEnabled{
 		MapOfboolean: mapOfboolean,
 		Type:         typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyGitDeploymentEnabled) UnmarshalJSON(data []byte) error {
+func (u *DeploymentEnabled) UnmarshalJSON(data []byte) error {
 
 	boolean := new(bool)
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
-		u.Type = CreateDeploymentRequestBodyGitDeploymentEnabledTypeBoolean
+		u.Type = DeploymentEnabledTypeBoolean
 		return nil
 	}
 
 	mapOfboolean := map[string]bool{}
 	if err := utils.UnmarshalJSON(data, &mapOfboolean, "", true, true); err == nil {
 		u.MapOfboolean = mapOfboolean
-		u.Type = CreateDeploymentRequestBodyGitDeploymentEnabledTypeMapOfboolean
+		u.Type = DeploymentEnabledTypeMapOfboolean
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyGitDeploymentEnabled) MarshalJSON() ([]byte, error) {
+func (u DeploymentEnabled) MarshalJSON() ([]byte, error) {
 	if u.Boolean != nil {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
@@ -980,20 +980,20 @@ func (u CreateDeploymentRequestBodyGitDeploymentEnabled) MarshalJSON() ([]byte, 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeploymentRequestBodyGit struct {
+type Git struct {
 	// Specifies the branches that will not trigger an auto-deployment when committing to them. Any non specified branch is `true` by default.
-	DeploymentEnabled *CreateDeploymentRequestBodyGitDeploymentEnabled `json:"deploymentEnabled,omitempty"`
+	DeploymentEnabled *DeploymentEnabled `json:"deploymentEnabled,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyGit) GetDeploymentEnabled() *CreateDeploymentRequestBodyGitDeploymentEnabled {
+func (o *Git) GetDeploymentEnabled() *DeploymentEnabled {
 	if o == nil {
 		return nil
 	}
 	return o.DeploymentEnabled
 }
 
-// CreateDeploymentRequestBodyGitMetadata - Populates initial git metadata for different git providers.
-type CreateDeploymentRequestBodyGitMetadata struct {
+// GitMetadata - Populates initial git metadata for different git providers.
+type GitMetadata struct {
 	// The name of the author of the commit
 	CommitAuthorName *string `json:"commitAuthorName,omitempty"`
 	// The commit message
@@ -1008,236 +1008,236 @@ type CreateDeploymentRequestBodyGitMetadata struct {
 	RemoteURL *string `json:"remoteUrl,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyGitMetadata) GetCommitAuthorName() *string {
+func (o *GitMetadata) GetCommitAuthorName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CommitAuthorName
 }
 
-func (o *CreateDeploymentRequestBodyGitMetadata) GetCommitMessage() *string {
+func (o *GitMetadata) GetCommitMessage() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CommitMessage
 }
 
-func (o *CreateDeploymentRequestBodyGitMetadata) GetCommitRef() *string {
+func (o *GitMetadata) GetCommitRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CommitRef
 }
 
-func (o *CreateDeploymentRequestBodyGitMetadata) GetCommitSha() *string {
+func (o *GitMetadata) GetCommitSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CommitSha
 }
 
-func (o *CreateDeploymentRequestBodyGitMetadata) GetDirty() *bool {
+func (o *GitMetadata) GetDirty() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Dirty
 }
 
-func (o *CreateDeploymentRequestBodyGitMetadata) GetRemoteURL() *string {
+func (o *GitMetadata) GetRemoteURL() *string {
 	if o == nil {
 		return nil
 	}
 	return o.RemoteURL
 }
 
-type CreateDeploymentRequestBodyGitSource5Type string
+type CreateDeploymentDeploymentsRequestRequestBodyType string
 
 const (
-	CreateDeploymentRequestBodyGitSource5TypeBitbucket CreateDeploymentRequestBodyGitSource5Type = "bitbucket"
+	CreateDeploymentDeploymentsRequestRequestBodyTypeBitbucket CreateDeploymentDeploymentsRequestRequestBodyType = "bitbucket"
 )
 
-func (e CreateDeploymentRequestBodyGitSource5Type) ToPointer() *CreateDeploymentRequestBodyGitSource5Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyGitSource5Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = CreateDeploymentRequestBodyGitSource5Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyGitSource5Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyType: %v", v)
 	}
 }
 
-// CreateDeploymentRequestBodyGitSource5 - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
-type CreateDeploymentRequestBodyGitSource5 struct {
-	Owner string                                    `json:"owner"`
-	Ref   string                                    `json:"ref"`
-	Sha   *string                                   `json:"sha,omitempty"`
-	Slug  string                                    `json:"slug"`
-	Type  CreateDeploymentRequestBodyGitSource5Type `json:"type"`
+// Five - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
+type Five struct {
+	Owner string                                            `json:"owner"`
+	Ref   string                                            `json:"ref"`
+	Sha   *string                                           `json:"sha,omitempty"`
+	Slug  string                                            `json:"slug"`
+	Type  CreateDeploymentDeploymentsRequestRequestBodyType `json:"type"`
 }
 
-func (o *CreateDeploymentRequestBodyGitSource5) GetOwner() string {
+func (o *Five) GetOwner() string {
 	if o == nil {
 		return ""
 	}
 	return o.Owner
 }
 
-func (o *CreateDeploymentRequestBodyGitSource5) GetRef() string {
+func (o *Five) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeploymentRequestBodyGitSource5) GetSha() *string {
+func (o *Five) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentRequestBodyGitSource5) GetSlug() string {
+func (o *Five) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *CreateDeploymentRequestBodyGitSource5) GetType() CreateDeploymentRequestBodyGitSource5Type {
+func (o *Five) GetType() CreateDeploymentDeploymentsRequestRequestBodyType {
 	if o == nil {
-		return CreateDeploymentRequestBodyGitSource5Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyType("")
 	}
 	return o.Type
 }
 
-type CreateDeploymentRequestBodyGitSource4Type string
+type CreateDeploymentDeploymentsRequestType string
 
 const (
-	CreateDeploymentRequestBodyGitSource4TypeBitbucket CreateDeploymentRequestBodyGitSource4Type = "bitbucket"
+	CreateDeploymentDeploymentsRequestTypeBitbucket CreateDeploymentDeploymentsRequestType = "bitbucket"
 )
 
-func (e CreateDeploymentRequestBodyGitSource4Type) ToPointer() *CreateDeploymentRequestBodyGitSource4Type {
+func (e CreateDeploymentDeploymentsRequestType) ToPointer() *CreateDeploymentDeploymentsRequestType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyGitSource4Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = CreateDeploymentRequestBodyGitSource4Type(v)
+		*e = CreateDeploymentDeploymentsRequestType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyGitSource4Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestType: %v", v)
 	}
 }
 
-// CreateDeploymentRequestBodyGitSource4 - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
-type CreateDeploymentRequestBodyGitSource4 struct {
-	Ref           string                                    `json:"ref"`
-	RepoUUID      string                                    `json:"repoUuid"`
-	Sha           *string                                   `json:"sha,omitempty"`
-	Type          CreateDeploymentRequestBodyGitSource4Type `json:"type"`
-	WorkspaceUUID *string                                   `json:"workspaceUuid,omitempty"`
+// Four - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
+type Four struct {
+	Ref           string                                 `json:"ref"`
+	RepoUUID      string                                 `json:"repoUuid"`
+	Sha           *string                                `json:"sha,omitempty"`
+	Type          CreateDeploymentDeploymentsRequestType `json:"type"`
+	WorkspaceUUID *string                                `json:"workspaceUuid,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyGitSource4) GetRef() string {
+func (o *Four) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeploymentRequestBodyGitSource4) GetRepoUUID() string {
+func (o *Four) GetRepoUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoUUID
 }
 
-func (o *CreateDeploymentRequestBodyGitSource4) GetSha() *string {
+func (o *Four) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentRequestBodyGitSource4) GetType() CreateDeploymentRequestBodyGitSource4Type {
+func (o *Four) GetType() CreateDeploymentDeploymentsRequestType {
 	if o == nil {
-		return CreateDeploymentRequestBodyGitSource4Type("")
+		return CreateDeploymentDeploymentsRequestType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyGitSource4) GetWorkspaceUUID() *string {
+func (o *Four) GetWorkspaceUUID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.WorkspaceUUID
 }
 
-type CreateDeploymentRequestBodyGitSource3ProjectIDType string
+type ProjectIDType string
 
 const (
-	CreateDeploymentRequestBodyGitSource3ProjectIDTypeInteger CreateDeploymentRequestBodyGitSource3ProjectIDType = "integer"
-	CreateDeploymentRequestBodyGitSource3ProjectIDTypeStr     CreateDeploymentRequestBodyGitSource3ProjectIDType = "str"
+	ProjectIDTypeInteger ProjectIDType = "integer"
+	ProjectIDTypeStr     ProjectIDType = "str"
 )
 
-type CreateDeploymentRequestBodyGitSource3ProjectID struct {
+type ProjectID struct {
 	Integer *int64
 	Str     *string
 
-	Type CreateDeploymentRequestBodyGitSource3ProjectIDType
+	Type ProjectIDType
 }
 
-func CreateCreateDeploymentRequestBodyGitSource3ProjectIDInteger(integer int64) CreateDeploymentRequestBodyGitSource3ProjectID {
-	typ := CreateDeploymentRequestBodyGitSource3ProjectIDTypeInteger
+func CreateProjectIDInteger(integer int64) ProjectID {
+	typ := ProjectIDTypeInteger
 
-	return CreateDeploymentRequestBodyGitSource3ProjectID{
+	return ProjectID{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyGitSource3ProjectIDStr(str string) CreateDeploymentRequestBodyGitSource3ProjectID {
-	typ := CreateDeploymentRequestBodyGitSource3ProjectIDTypeStr
+func CreateProjectIDStr(str string) ProjectID {
+	typ := ProjectIDTypeStr
 
-	return CreateDeploymentRequestBodyGitSource3ProjectID{
+	return ProjectID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyGitSource3ProjectID) UnmarshalJSON(data []byte) error {
+func (u *ProjectID) UnmarshalJSON(data []byte) error {
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = CreateDeploymentRequestBodyGitSource3ProjectIDTypeInteger
+		u.Type = ProjectIDTypeInteger
 		return nil
 	}
 
 	str := new(string)
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = CreateDeploymentRequestBodyGitSource3ProjectIDTypeStr
+		u.Type = ProjectIDTypeStr
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyGitSource3ProjectID) MarshalJSON() ([]byte, error) {
+func (u ProjectID) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
@@ -1249,186 +1249,186 @@ func (u CreateDeploymentRequestBodyGitSource3ProjectID) MarshalJSON() ([]byte, e
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeploymentRequestBodyGitSource3Type string
+type CreateDeploymentDeploymentsType string
 
 const (
-	CreateDeploymentRequestBodyGitSource3TypeGitlab CreateDeploymentRequestBodyGitSource3Type = "gitlab"
+	CreateDeploymentDeploymentsTypeGitlab CreateDeploymentDeploymentsType = "gitlab"
 )
 
-func (e CreateDeploymentRequestBodyGitSource3Type) ToPointer() *CreateDeploymentRequestBodyGitSource3Type {
+func (e CreateDeploymentDeploymentsType) ToPointer() *CreateDeploymentDeploymentsType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyGitSource3Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = CreateDeploymentRequestBodyGitSource3Type(v)
+		*e = CreateDeploymentDeploymentsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyGitSource3Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsType: %v", v)
 	}
 }
 
-// CreateDeploymentRequestBodyGitSource3 - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
-type CreateDeploymentRequestBodyGitSource3 struct {
-	ProjectID CreateDeploymentRequestBodyGitSource3ProjectID `json:"projectId"`
-	Ref       string                                         `json:"ref"`
-	Sha       *string                                        `json:"sha,omitempty"`
-	Type      CreateDeploymentRequestBodyGitSource3Type      `json:"type"`
+// Three - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
+type Three struct {
+	ProjectID ProjectID                       `json:"projectId"`
+	Ref       string                          `json:"ref"`
+	Sha       *string                         `json:"sha,omitempty"`
+	Type      CreateDeploymentDeploymentsType `json:"type"`
 }
 
-func (o *CreateDeploymentRequestBodyGitSource3) GetProjectID() CreateDeploymentRequestBodyGitSource3ProjectID {
+func (o *Three) GetProjectID() ProjectID {
 	if o == nil {
-		return CreateDeploymentRequestBodyGitSource3ProjectID{}
+		return ProjectID{}
 	}
 	return o.ProjectID
 }
 
-func (o *CreateDeploymentRequestBodyGitSource3) GetRef() string {
+func (o *Three) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeploymentRequestBodyGitSource3) GetSha() *string {
+func (o *Three) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentRequestBodyGitSource3) GetType() CreateDeploymentRequestBodyGitSource3Type {
+func (o *Three) GetType() CreateDeploymentDeploymentsType {
 	if o == nil {
-		return CreateDeploymentRequestBodyGitSource3Type("")
+		return CreateDeploymentDeploymentsType("")
 	}
 	return o.Type
 }
 
-type CreateDeploymentRequestBodyGitSource2Type string
+type CreateDeploymentType string
 
 const (
-	CreateDeploymentRequestBodyGitSource2TypeGithub CreateDeploymentRequestBodyGitSource2Type = "github"
+	CreateDeploymentTypeGithub CreateDeploymentType = "github"
 )
 
-func (e CreateDeploymentRequestBodyGitSource2Type) ToPointer() *CreateDeploymentRequestBodyGitSource2Type {
+func (e CreateDeploymentType) ToPointer() *CreateDeploymentType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyGitSource2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = CreateDeploymentRequestBodyGitSource2Type(v)
+		*e = CreateDeploymentType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyGitSource2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentType: %v", v)
 	}
 }
 
-// CreateDeploymentRequestBodyGitSource2 - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
-type CreateDeploymentRequestBodyGitSource2 struct {
-	Org  string                                    `json:"org"`
-	Ref  string                                    `json:"ref"`
-	Repo string                                    `json:"repo"`
-	Sha  *string                                   `json:"sha,omitempty"`
-	Type CreateDeploymentRequestBodyGitSource2Type `json:"type"`
+// Two - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
+type Two struct {
+	Org  string               `json:"org"`
+	Ref  string               `json:"ref"`
+	Repo string               `json:"repo"`
+	Sha  *string              `json:"sha,omitempty"`
+	Type CreateDeploymentType `json:"type"`
 }
 
-func (o *CreateDeploymentRequestBodyGitSource2) GetOrg() string {
+func (o *Two) GetOrg() string {
 	if o == nil {
 		return ""
 	}
 	return o.Org
 }
 
-func (o *CreateDeploymentRequestBodyGitSource2) GetRef() string {
+func (o *Two) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeploymentRequestBodyGitSource2) GetRepo() string {
+func (o *Two) GetRepo() string {
 	if o == nil {
 		return ""
 	}
 	return o.Repo
 }
 
-func (o *CreateDeploymentRequestBodyGitSource2) GetSha() *string {
+func (o *Two) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentRequestBodyGitSource2) GetType() CreateDeploymentRequestBodyGitSource2Type {
+func (o *Two) GetType() CreateDeploymentType {
 	if o == nil {
-		return CreateDeploymentRequestBodyGitSource2Type("")
+		return CreateDeploymentType("")
 	}
 	return o.Type
 }
 
-type CreateDeploymentRequestBodyGitSource1RepoIDType string
+type RepoIDType string
 
 const (
-	CreateDeploymentRequestBodyGitSource1RepoIDTypeInteger CreateDeploymentRequestBodyGitSource1RepoIDType = "integer"
-	CreateDeploymentRequestBodyGitSource1RepoIDTypeStr     CreateDeploymentRequestBodyGitSource1RepoIDType = "str"
+	RepoIDTypeInteger RepoIDType = "integer"
+	RepoIDTypeStr     RepoIDType = "str"
 )
 
-type CreateDeploymentRequestBodyGitSource1RepoID struct {
+type RepoID struct {
 	Integer *int64
 	Str     *string
 
-	Type CreateDeploymentRequestBodyGitSource1RepoIDType
+	Type RepoIDType
 }
 
-func CreateCreateDeploymentRequestBodyGitSource1RepoIDInteger(integer int64) CreateDeploymentRequestBodyGitSource1RepoID {
-	typ := CreateDeploymentRequestBodyGitSource1RepoIDTypeInteger
+func CreateRepoIDInteger(integer int64) RepoID {
+	typ := RepoIDTypeInteger
 
-	return CreateDeploymentRequestBodyGitSource1RepoID{
+	return RepoID{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyGitSource1RepoIDStr(str string) CreateDeploymentRequestBodyGitSource1RepoID {
-	typ := CreateDeploymentRequestBodyGitSource1RepoIDTypeStr
+func CreateRepoIDStr(str string) RepoID {
+	typ := RepoIDTypeStr
 
-	return CreateDeploymentRequestBodyGitSource1RepoID{
+	return RepoID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyGitSource1RepoID) UnmarshalJSON(data []byte) error {
+func (u *RepoID) UnmarshalJSON(data []byte) error {
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = CreateDeploymentRequestBodyGitSource1RepoIDTypeInteger
+		u.Type = RepoIDTypeInteger
 		return nil
 	}
 
 	str := new(string)
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = CreateDeploymentRequestBodyGitSource1RepoIDTypeStr
+		u.Type = RepoIDTypeStr
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyGitSource1RepoID) MarshalJSON() ([]byte, error) {
+func (u RepoID) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
@@ -1440,209 +1440,209 @@ func (u CreateDeploymentRequestBodyGitSource1RepoID) MarshalJSON() ([]byte, erro
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeploymentRequestBodyGitSource1Type string
+type Type string
 
 const (
-	CreateDeploymentRequestBodyGitSource1TypeGithub CreateDeploymentRequestBodyGitSource1Type = "github"
+	TypeGithub Type = "github"
 )
 
-func (e CreateDeploymentRequestBodyGitSource1Type) ToPointer() *CreateDeploymentRequestBodyGitSource1Type {
+func (e Type) ToPointer() *Type {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyGitSource1Type) UnmarshalJSON(data []byte) error {
+func (e *Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = CreateDeploymentRequestBodyGitSource1Type(v)
+		*e = Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyGitSource1Type: %v", v)
+		return fmt.Errorf("invalid value for Type: %v", v)
 	}
 }
 
-// CreateDeploymentRequestBodyGitSource1 - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
-type CreateDeploymentRequestBodyGitSource1 struct {
-	Ref    string                                      `json:"ref"`
-	RepoID CreateDeploymentRequestBodyGitSource1RepoID `json:"repoId"`
-	Sha    *string                                     `json:"sha,omitempty"`
-	Type   CreateDeploymentRequestBodyGitSource1Type   `json:"type"`
+// One - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
+type One struct {
+	Ref    string  `json:"ref"`
+	RepoID RepoID  `json:"repoId"`
+	Sha    *string `json:"sha,omitempty"`
+	Type   Type    `json:"type"`
 }
 
-func (o *CreateDeploymentRequestBodyGitSource1) GetRef() string {
+func (o *One) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeploymentRequestBodyGitSource1) GetRepoID() CreateDeploymentRequestBodyGitSource1RepoID {
+func (o *One) GetRepoID() RepoID {
 	if o == nil {
-		return CreateDeploymentRequestBodyGitSource1RepoID{}
+		return RepoID{}
 	}
 	return o.RepoID
 }
 
-func (o *CreateDeploymentRequestBodyGitSource1) GetSha() *string {
+func (o *One) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentRequestBodyGitSource1) GetType() CreateDeploymentRequestBodyGitSource1Type {
+func (o *One) GetType() Type {
 	if o == nil {
-		return CreateDeploymentRequestBodyGitSource1Type("")
+		return Type("")
 	}
 	return o.Type
 }
 
-type CreateDeploymentRequestBodyGitSourceType string
+type GitSourceType string
 
 const (
-	CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource1 CreateDeploymentRequestBodyGitSourceType = "createDeployment_requestBody_gitSource_1"
-	CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource2 CreateDeploymentRequestBodyGitSourceType = "createDeployment_requestBody_gitSource_2"
-	CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource3 CreateDeploymentRequestBodyGitSourceType = "createDeployment_requestBody_gitSource_3"
-	CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource4 CreateDeploymentRequestBodyGitSourceType = "createDeployment_requestBody_gitSource_4"
-	CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource5 CreateDeploymentRequestBodyGitSourceType = "createDeployment_requestBody_gitSource_5"
+	GitSourceTypeOne   GitSourceType = "1"
+	GitSourceTypeTwo   GitSourceType = "2"
+	GitSourceTypeThree GitSourceType = "3"
+	GitSourceTypeFour  GitSourceType = "4"
+	GitSourceTypeFive  GitSourceType = "5"
 )
 
-type CreateDeploymentRequestBodyGitSource struct {
-	CreateDeploymentRequestBodyGitSource1 *CreateDeploymentRequestBodyGitSource1
-	CreateDeploymentRequestBodyGitSource2 *CreateDeploymentRequestBodyGitSource2
-	CreateDeploymentRequestBodyGitSource3 *CreateDeploymentRequestBodyGitSource3
-	CreateDeploymentRequestBodyGitSource4 *CreateDeploymentRequestBodyGitSource4
-	CreateDeploymentRequestBodyGitSource5 *CreateDeploymentRequestBodyGitSource5
+type GitSource struct {
+	One   *One
+	Two   *Two
+	Three *Three
+	Four  *Four
+	Five  *Five
 
-	Type CreateDeploymentRequestBodyGitSourceType
+	Type GitSourceType
 }
 
-func CreateCreateDeploymentRequestBodyGitSourceCreateDeploymentRequestBodyGitSource1(createDeploymentRequestBodyGitSource1 CreateDeploymentRequestBodyGitSource1) CreateDeploymentRequestBodyGitSource {
-	typ := CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource1
+func CreateGitSourceOne(one One) GitSource {
+	typ := GitSourceTypeOne
 
-	return CreateDeploymentRequestBodyGitSource{
-		CreateDeploymentRequestBodyGitSource1: &createDeploymentRequestBodyGitSource1,
-		Type:                                  typ,
+	return GitSource{
+		One:  &one,
+		Type: typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyGitSourceCreateDeploymentRequestBodyGitSource2(createDeploymentRequestBodyGitSource2 CreateDeploymentRequestBodyGitSource2) CreateDeploymentRequestBodyGitSource {
-	typ := CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource2
+func CreateGitSourceTwo(two Two) GitSource {
+	typ := GitSourceTypeTwo
 
-	return CreateDeploymentRequestBodyGitSource{
-		CreateDeploymentRequestBodyGitSource2: &createDeploymentRequestBodyGitSource2,
-		Type:                                  typ,
+	return GitSource{
+		Two:  &two,
+		Type: typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyGitSourceCreateDeploymentRequestBodyGitSource3(createDeploymentRequestBodyGitSource3 CreateDeploymentRequestBodyGitSource3) CreateDeploymentRequestBodyGitSource {
-	typ := CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource3
+func CreateGitSourceThree(three Three) GitSource {
+	typ := GitSourceTypeThree
 
-	return CreateDeploymentRequestBodyGitSource{
-		CreateDeploymentRequestBodyGitSource3: &createDeploymentRequestBodyGitSource3,
-		Type:                                  typ,
+	return GitSource{
+		Three: &three,
+		Type:  typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyGitSourceCreateDeploymentRequestBodyGitSource4(createDeploymentRequestBodyGitSource4 CreateDeploymentRequestBodyGitSource4) CreateDeploymentRequestBodyGitSource {
-	typ := CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource4
+func CreateGitSourceFour(four Four) GitSource {
+	typ := GitSourceTypeFour
 
-	return CreateDeploymentRequestBodyGitSource{
-		CreateDeploymentRequestBodyGitSource4: &createDeploymentRequestBodyGitSource4,
-		Type:                                  typ,
+	return GitSource{
+		Four: &four,
+		Type: typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyGitSourceCreateDeploymentRequestBodyGitSource5(createDeploymentRequestBodyGitSource5 CreateDeploymentRequestBodyGitSource5) CreateDeploymentRequestBodyGitSource {
-	typ := CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource5
+func CreateGitSourceFive(five Five) GitSource {
+	typ := GitSourceTypeFive
 
-	return CreateDeploymentRequestBodyGitSource{
-		CreateDeploymentRequestBodyGitSource5: &createDeploymentRequestBodyGitSource5,
-		Type:                                  typ,
+	return GitSource{
+		Five: &five,
+		Type: typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyGitSource) UnmarshalJSON(data []byte) error {
+func (u *GitSource) UnmarshalJSON(data []byte) error {
 
-	createDeploymentRequestBodyGitSource1 := new(CreateDeploymentRequestBodyGitSource1)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyGitSource1, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyGitSource1 = createDeploymentRequestBodyGitSource1
-		u.Type = CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource1
+	one := new(One)
+	if err := utils.UnmarshalJSON(data, &one, "", true, true); err == nil {
+		u.One = one
+		u.Type = GitSourceTypeOne
 		return nil
 	}
 
-	createDeploymentRequestBodyGitSource3 := new(CreateDeploymentRequestBodyGitSource3)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyGitSource3, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyGitSource3 = createDeploymentRequestBodyGitSource3
-		u.Type = CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource3
+	three := new(Three)
+	if err := utils.UnmarshalJSON(data, &three, "", true, true); err == nil {
+		u.Three = three
+		u.Type = GitSourceTypeThree
 		return nil
 	}
 
-	createDeploymentRequestBodyGitSource2 := new(CreateDeploymentRequestBodyGitSource2)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyGitSource2, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyGitSource2 = createDeploymentRequestBodyGitSource2
-		u.Type = CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource2
+	two := new(Two)
+	if err := utils.UnmarshalJSON(data, &two, "", true, true); err == nil {
+		u.Two = two
+		u.Type = GitSourceTypeTwo
 		return nil
 	}
 
-	createDeploymentRequestBodyGitSource4 := new(CreateDeploymentRequestBodyGitSource4)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyGitSource4, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyGitSource4 = createDeploymentRequestBodyGitSource4
-		u.Type = CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource4
+	four := new(Four)
+	if err := utils.UnmarshalJSON(data, &four, "", true, true); err == nil {
+		u.Four = four
+		u.Type = GitSourceTypeFour
 		return nil
 	}
 
-	createDeploymentRequestBodyGitSource5 := new(CreateDeploymentRequestBodyGitSource5)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyGitSource5, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyGitSource5 = createDeploymentRequestBodyGitSource5
-		u.Type = CreateDeploymentRequestBodyGitSourceTypeCreateDeploymentRequestBodyGitSource5
+	five := new(Five)
+	if err := utils.UnmarshalJSON(data, &five, "", true, true); err == nil {
+		u.Five = five
+		u.Type = GitSourceTypeFive
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyGitSource) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyGitSource1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyGitSource1, "", true)
+func (u GitSource) MarshalJSON() ([]byte, error) {
+	if u.One != nil {
+		return utils.MarshalJSON(u.One, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyGitSource2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyGitSource2, "", true)
+	if u.Two != nil {
+		return utils.MarshalJSON(u.Two, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyGitSource3 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyGitSource3, "", true)
+	if u.Three != nil {
+		return utils.MarshalJSON(u.Three, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyGitSource4 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyGitSource4, "", true)
+	if u.Four != nil {
+		return utils.MarshalJSON(u.Four, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyGitSource5 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyGitSource5, "", true)
+	if u.Five != nil {
+		return utils.MarshalJSON(u.Five, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// CreateDeploymentRequestBodyHeadersHas2Type - The type of request element to check
-type CreateDeploymentRequestBodyHeadersHas2Type string
+// CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType string
 
 const (
-	CreateDeploymentRequestBodyHeadersHas2TypeHeader CreateDeploymentRequestBodyHeadersHas2Type = "header"
-	CreateDeploymentRequestBodyHeadersHas2TypeCookie CreateDeploymentRequestBodyHeadersHas2Type = "cookie"
-	CreateDeploymentRequestBodyHeadersHas2TypeQuery  CreateDeploymentRequestBodyHeadersHas2Type = "query"
+	CreateDeploymentDeploymentsRequestRequestBodyHeadersHasTypeHeader CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType = "header"
+	CreateDeploymentDeploymentsRequestRequestBodyHeadersHasTypeCookie CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType = "cookie"
+	CreateDeploymentDeploymentsRequestRequestBodyHeadersHasTypeQuery  CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType = "query"
 )
 
-func (e CreateDeploymentRequestBodyHeadersHas2Type) ToPointer() *CreateDeploymentRequestBodyHeadersHas2Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyHeadersHas2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1653,185 +1653,185 @@ func (e *CreateDeploymentRequestBodyHeadersHas2Type) UnmarshalJSON(data []byte) 
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = CreateDeploymentRequestBodyHeadersHas2Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyHeadersHas2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyHeadersHas2 struct {
+type CreateDeploymentDeploymentsRequestRequestBody2 struct {
 	// The name of the element contained in the particular type
 	Key string `json:"key"`
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyHeadersHas2Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyHeadersHas2) GetKey() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBody2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeploymentRequestBodyHeadersHas2) GetType() CreateDeploymentRequestBodyHeadersHas2Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBody2) GetType() CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType {
 	if o == nil {
-		return CreateDeploymentRequestBodyHeadersHas2Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyHeadersHas2) GetValue() *string {
+func (o *CreateDeploymentDeploymentsRequestRequestBody2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-// CreateDeploymentRequestBodyHeadersHas1Type - The type of request element to check
-type CreateDeploymentRequestBodyHeadersHas1Type string
+// CreateDeploymentDeploymentsRequestRequestBodyHeadersType - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyHeadersType string
 
 const (
-	CreateDeploymentRequestBodyHeadersHas1TypeHost CreateDeploymentRequestBodyHeadersHas1Type = "host"
+	CreateDeploymentDeploymentsRequestRequestBodyHeadersTypeHost CreateDeploymentDeploymentsRequestRequestBodyHeadersType = "host"
 )
 
-func (e CreateDeploymentRequestBodyHeadersHas1Type) ToPointer() *CreateDeploymentRequestBodyHeadersHas1Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyHeadersType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyHeadersType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyHeadersHas1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyHeadersType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = CreateDeploymentRequestBodyHeadersHas1Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyHeadersType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyHeadersHas1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyHeadersType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyHeadersHas1 struct {
+type CreateDeploymentDeploymentsRequestRequestBody1 struct {
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyHeadersHas1Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyHeadersType `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
 }
 
-func (o *CreateDeploymentRequestBodyHeadersHas1) GetType() CreateDeploymentRequestBodyHeadersHas1Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBody1) GetType() CreateDeploymentDeploymentsRequestRequestBodyHeadersType {
 	if o == nil {
-		return CreateDeploymentRequestBodyHeadersHas1Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyHeadersType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyHeadersHas1) GetValue() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBody1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeploymentRequestBodyHeadersHasType string
+type CreateDeploymentHasType string
 
 const (
-	CreateDeploymentRequestBodyHeadersHasTypeCreateDeploymentRequestBodyHeadersHas1 CreateDeploymentRequestBodyHeadersHasType = "createDeployment_requestBody_headers_has_1"
-	CreateDeploymentRequestBodyHeadersHasTypeCreateDeploymentRequestBodyHeadersHas2 CreateDeploymentRequestBodyHeadersHasType = "createDeployment_requestBody_headers_has_2"
+	CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody1 CreateDeploymentHasType = "createDeployment_deployments_request_requestBody_1"
+	CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody2 CreateDeploymentHasType = "createDeployment_deployments_request_requestBody_2"
 )
 
-type CreateDeploymentRequestBodyHeadersHas struct {
-	CreateDeploymentRequestBodyHeadersHas1 *CreateDeploymentRequestBodyHeadersHas1
-	CreateDeploymentRequestBodyHeadersHas2 *CreateDeploymentRequestBodyHeadersHas2
+type CreateDeploymentHas struct {
+	CreateDeploymentDeploymentsRequestRequestBody1 *CreateDeploymentDeploymentsRequestRequestBody1
+	CreateDeploymentDeploymentsRequestRequestBody2 *CreateDeploymentDeploymentsRequestRequestBody2
 
-	Type CreateDeploymentRequestBodyHeadersHasType
+	Type CreateDeploymentHasType
 }
 
-func CreateCreateDeploymentRequestBodyHeadersHasCreateDeploymentRequestBodyHeadersHas1(createDeploymentRequestBodyHeadersHas1 CreateDeploymentRequestBodyHeadersHas1) CreateDeploymentRequestBodyHeadersHas {
-	typ := CreateDeploymentRequestBodyHeadersHasTypeCreateDeploymentRequestBodyHeadersHas1
+func CreateCreateDeploymentHasCreateDeploymentDeploymentsRequestRequestBody1(createDeploymentDeploymentsRequestRequestBody1 CreateDeploymentDeploymentsRequestRequestBody1) CreateDeploymentHas {
+	typ := CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody1
 
-	return CreateDeploymentRequestBodyHeadersHas{
-		CreateDeploymentRequestBodyHeadersHas1: &createDeploymentRequestBodyHeadersHas1,
-		Type:                                   typ,
+	return CreateDeploymentHas{
+		CreateDeploymentDeploymentsRequestRequestBody1: &createDeploymentDeploymentsRequestRequestBody1,
+		Type: typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyHeadersHasCreateDeploymentRequestBodyHeadersHas2(createDeploymentRequestBodyHeadersHas2 CreateDeploymentRequestBodyHeadersHas2) CreateDeploymentRequestBodyHeadersHas {
-	typ := CreateDeploymentRequestBodyHeadersHasTypeCreateDeploymentRequestBodyHeadersHas2
+func CreateCreateDeploymentHasCreateDeploymentDeploymentsRequestRequestBody2(createDeploymentDeploymentsRequestRequestBody2 CreateDeploymentDeploymentsRequestRequestBody2) CreateDeploymentHas {
+	typ := CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody2
 
-	return CreateDeploymentRequestBodyHeadersHas{
-		CreateDeploymentRequestBodyHeadersHas2: &createDeploymentRequestBodyHeadersHas2,
-		Type:                                   typ,
+	return CreateDeploymentHas{
+		CreateDeploymentDeploymentsRequestRequestBody2: &createDeploymentDeploymentsRequestRequestBody2,
+		Type: typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyHeadersHas) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentHas) UnmarshalJSON(data []byte) error {
 
-	createDeploymentRequestBodyHeadersHas1 := new(CreateDeploymentRequestBodyHeadersHas1)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyHeadersHas1, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyHeadersHas1 = createDeploymentRequestBodyHeadersHas1
-		u.Type = CreateDeploymentRequestBodyHeadersHasTypeCreateDeploymentRequestBodyHeadersHas1
+	createDeploymentDeploymentsRequestRequestBody1 := new(CreateDeploymentDeploymentsRequestRequestBody1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBody1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBody1 = createDeploymentDeploymentsRequestRequestBody1
+		u.Type = CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody1
 		return nil
 	}
 
-	createDeploymentRequestBodyHeadersHas2 := new(CreateDeploymentRequestBodyHeadersHas2)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyHeadersHas2, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyHeadersHas2 = createDeploymentRequestBodyHeadersHas2
-		u.Type = CreateDeploymentRequestBodyHeadersHasTypeCreateDeploymentRequestBodyHeadersHas2
+	createDeploymentDeploymentsRequestRequestBody2 := new(CreateDeploymentDeploymentsRequestRequestBody2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBody2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBody2 = createDeploymentDeploymentsRequestRequestBody2
+		u.Type = CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyHeadersHas) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyHeadersHas1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyHeadersHas1, "", true)
+func (u CreateDeploymentHas) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsRequestRequestBody1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBody1, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyHeadersHas2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyHeadersHas2, "", true)
+	if u.CreateDeploymentDeploymentsRequestRequestBody2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeploymentRequestBodyHeadersHeaders struct {
+type CreateDeploymentHeaders struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
 }
 
-func (o *CreateDeploymentRequestBodyHeadersHeaders) GetKey() string {
+func (o *CreateDeploymentHeaders) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeploymentRequestBodyHeadersHeaders) GetValue() string {
+func (o *CreateDeploymentHeaders) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-// CreateDeploymentRequestBodyHeadersMissing2Type - The type of request element to check
-type CreateDeploymentRequestBodyHeadersMissing2Type string
+// CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type string
 
 const (
-	CreateDeploymentRequestBodyHeadersMissing2TypeHeader CreateDeploymentRequestBodyHeadersMissing2Type = "header"
-	CreateDeploymentRequestBodyHeadersMissing2TypeCookie CreateDeploymentRequestBodyHeadersMissing2Type = "cookie"
-	CreateDeploymentRequestBodyHeadersMissing2TypeQuery  CreateDeploymentRequestBodyHeadersMissing2Type = "query"
+	CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2TypeHeader CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type = "header"
+	CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2TypeCookie CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type = "cookie"
+	CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2TypeQuery  CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type = "query"
 )
 
-func (e CreateDeploymentRequestBodyHeadersMissing2Type) ToPointer() *CreateDeploymentRequestBodyHeadersMissing2Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyHeadersMissing2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1842,203 +1842,203 @@ func (e *CreateDeploymentRequestBodyHeadersMissing2Type) UnmarshalJSON(data []by
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = CreateDeploymentRequestBodyHeadersMissing2Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyHeadersMissing2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyHeadersMissing2 struct {
+type CreateDeploymentDeploymentsRequestRequestBodyHeaders2 struct {
 	// The name of the element contained in the particular type
 	Key string `json:"key"`
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyHeadersMissing2Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyHeadersMissing2) GetKey() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyHeaders2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeploymentRequestBodyHeadersMissing2) GetType() CreateDeploymentRequestBodyHeadersMissing2Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyHeaders2) GetType() CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type {
 	if o == nil {
-		return CreateDeploymentRequestBodyHeadersMissing2Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyHeadersMissing2) GetValue() *string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyHeaders2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-// CreateDeploymentRequestBodyHeadersMissing1Type - The type of request element to check
-type CreateDeploymentRequestBodyHeadersMissing1Type string
+// CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType string
 
 const (
-	CreateDeploymentRequestBodyHeadersMissing1TypeHost CreateDeploymentRequestBodyHeadersMissing1Type = "host"
+	CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingTypeHost CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType = "host"
 )
 
-func (e CreateDeploymentRequestBodyHeadersMissing1Type) ToPointer() *CreateDeploymentRequestBodyHeadersMissing1Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyHeadersMissing1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = CreateDeploymentRequestBodyHeadersMissing1Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyHeadersMissing1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyHeadersMissing1 struct {
+type CreateDeploymentDeploymentsRequestRequestBodyHeaders1 struct {
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyHeadersMissing1Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
 }
 
-func (o *CreateDeploymentRequestBodyHeadersMissing1) GetType() CreateDeploymentRequestBodyHeadersMissing1Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyHeaders1) GetType() CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType {
 	if o == nil {
-		return CreateDeploymentRequestBodyHeadersMissing1Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyHeadersMissing1) GetValue() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyHeaders1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeploymentRequestBodyHeadersMissingType string
+type CreateDeploymentMissingType string
 
 const (
-	CreateDeploymentRequestBodyHeadersMissingTypeCreateDeploymentRequestBodyHeadersMissing1 CreateDeploymentRequestBodyHeadersMissingType = "createDeployment_requestBody_headers_missing_1"
-	CreateDeploymentRequestBodyHeadersMissingTypeCreateDeploymentRequestBodyHeadersMissing2 CreateDeploymentRequestBodyHeadersMissingType = "createDeployment_requestBody_headers_missing_2"
+	CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders1 CreateDeploymentMissingType = "createDeployment_deployments_request_requestBody_headers_1"
+	CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders2 CreateDeploymentMissingType = "createDeployment_deployments_request_requestBody_headers_2"
 )
 
-type CreateDeploymentRequestBodyHeadersMissing struct {
-	CreateDeploymentRequestBodyHeadersMissing1 *CreateDeploymentRequestBodyHeadersMissing1
-	CreateDeploymentRequestBodyHeadersMissing2 *CreateDeploymentRequestBodyHeadersMissing2
+type CreateDeploymentMissing struct {
+	CreateDeploymentDeploymentsRequestRequestBodyHeaders1 *CreateDeploymentDeploymentsRequestRequestBodyHeaders1
+	CreateDeploymentDeploymentsRequestRequestBodyHeaders2 *CreateDeploymentDeploymentsRequestRequestBodyHeaders2
 
-	Type CreateDeploymentRequestBodyHeadersMissingType
+	Type CreateDeploymentMissingType
 }
 
-func CreateCreateDeploymentRequestBodyHeadersMissingCreateDeploymentRequestBodyHeadersMissing1(createDeploymentRequestBodyHeadersMissing1 CreateDeploymentRequestBodyHeadersMissing1) CreateDeploymentRequestBodyHeadersMissing {
-	typ := CreateDeploymentRequestBodyHeadersMissingTypeCreateDeploymentRequestBodyHeadersMissing1
+func CreateCreateDeploymentMissingCreateDeploymentDeploymentsRequestRequestBodyHeaders1(createDeploymentDeploymentsRequestRequestBodyHeaders1 CreateDeploymentDeploymentsRequestRequestBodyHeaders1) CreateDeploymentMissing {
+	typ := CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders1
 
-	return CreateDeploymentRequestBodyHeadersMissing{
-		CreateDeploymentRequestBodyHeadersMissing1: &createDeploymentRequestBodyHeadersMissing1,
+	return CreateDeploymentMissing{
+		CreateDeploymentDeploymentsRequestRequestBodyHeaders1: &createDeploymentDeploymentsRequestRequestBodyHeaders1,
 		Type: typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyHeadersMissingCreateDeploymentRequestBodyHeadersMissing2(createDeploymentRequestBodyHeadersMissing2 CreateDeploymentRequestBodyHeadersMissing2) CreateDeploymentRequestBodyHeadersMissing {
-	typ := CreateDeploymentRequestBodyHeadersMissingTypeCreateDeploymentRequestBodyHeadersMissing2
+func CreateCreateDeploymentMissingCreateDeploymentDeploymentsRequestRequestBodyHeaders2(createDeploymentDeploymentsRequestRequestBodyHeaders2 CreateDeploymentDeploymentsRequestRequestBodyHeaders2) CreateDeploymentMissing {
+	typ := CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders2
 
-	return CreateDeploymentRequestBodyHeadersMissing{
-		CreateDeploymentRequestBodyHeadersMissing2: &createDeploymentRequestBodyHeadersMissing2,
+	return CreateDeploymentMissing{
+		CreateDeploymentDeploymentsRequestRequestBodyHeaders2: &createDeploymentDeploymentsRequestRequestBodyHeaders2,
 		Type: typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyHeadersMissing) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentMissing) UnmarshalJSON(data []byte) error {
 
-	createDeploymentRequestBodyHeadersMissing1 := new(CreateDeploymentRequestBodyHeadersMissing1)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyHeadersMissing1, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyHeadersMissing1 = createDeploymentRequestBodyHeadersMissing1
-		u.Type = CreateDeploymentRequestBodyHeadersMissingTypeCreateDeploymentRequestBodyHeadersMissing1
+	createDeploymentDeploymentsRequestRequestBodyHeaders1 := new(CreateDeploymentDeploymentsRequestRequestBodyHeaders1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyHeaders1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBodyHeaders1 = createDeploymentDeploymentsRequestRequestBodyHeaders1
+		u.Type = CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders1
 		return nil
 	}
 
-	createDeploymentRequestBodyHeadersMissing2 := new(CreateDeploymentRequestBodyHeadersMissing2)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyHeadersMissing2, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyHeadersMissing2 = createDeploymentRequestBodyHeadersMissing2
-		u.Type = CreateDeploymentRequestBodyHeadersMissingTypeCreateDeploymentRequestBodyHeadersMissing2
+	createDeploymentDeploymentsRequestRequestBodyHeaders2 := new(CreateDeploymentDeploymentsRequestRequestBodyHeaders2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyHeaders2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBodyHeaders2 = createDeploymentDeploymentsRequestRequestBodyHeaders2
+		u.Type = CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyHeadersMissing) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyHeadersMissing1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyHeadersMissing1, "", true)
+func (u CreateDeploymentMissing) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsRequestRequestBodyHeaders1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyHeaders1, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyHeadersMissing2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyHeadersMissing2, "", true)
+	if u.CreateDeploymentDeploymentsRequestRequestBodyHeaders2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyHeaders2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeploymentRequestBodyHeaders struct {
+type Headers struct {
 	// An array of requirements that are needed to match
-	Has []CreateDeploymentRequestBodyHeadersHas `json:"has,omitempty"`
+	Has []CreateDeploymentHas `json:"has,omitempty"`
 	// An array of key/value pairs representing each response header.
-	Headers []CreateDeploymentRequestBodyHeadersHeaders `json:"headers"`
+	Headers []CreateDeploymentHeaders `json:"headers"`
 	// An array of requirements that are needed to match
-	Missing []CreateDeploymentRequestBodyHeadersMissing `json:"missing,omitempty"`
+	Missing []CreateDeploymentMissing `json:"missing,omitempty"`
 	// A pattern that matches each incoming pathname (excluding querystring)
 	Source string `json:"source"`
 }
 
-func (o *CreateDeploymentRequestBodyHeaders) GetHas() []CreateDeploymentRequestBodyHeadersHas {
+func (o *Headers) GetHas() []CreateDeploymentHas {
 	if o == nil {
 		return nil
 	}
 	return o.Has
 }
 
-func (o *CreateDeploymentRequestBodyHeaders) GetHeaders() []CreateDeploymentRequestBodyHeadersHeaders {
+func (o *Headers) GetHeaders() []CreateDeploymentHeaders {
 	if o == nil {
-		return []CreateDeploymentRequestBodyHeadersHeaders{}
+		return []CreateDeploymentHeaders{}
 	}
 	return o.Headers
 }
 
-func (o *CreateDeploymentRequestBodyHeaders) GetMissing() []CreateDeploymentRequestBodyHeadersMissing {
+func (o *Headers) GetMissing() []CreateDeploymentMissing {
 	if o == nil {
 		return nil
 	}
 	return o.Missing
 }
 
-func (o *CreateDeploymentRequestBodyHeaders) GetSource() string {
+func (o *Headers) GetSource() string {
 	if o == nil {
 		return ""
 	}
 	return o.Source
 }
 
-type CreateDeploymentRequestBodyImagesContentDispositionType string
+type ContentDispositionType string
 
 const (
-	CreateDeploymentRequestBodyImagesContentDispositionTypeInline     CreateDeploymentRequestBodyImagesContentDispositionType = "inline"
-	CreateDeploymentRequestBodyImagesContentDispositionTypeAttachment CreateDeploymentRequestBodyImagesContentDispositionType = "attachment"
+	ContentDispositionTypeInline     ContentDispositionType = "inline"
+	ContentDispositionTypeAttachment ContentDispositionType = "attachment"
 )
 
-func (e CreateDeploymentRequestBodyImagesContentDispositionType) ToPointer() *CreateDeploymentRequestBodyImagesContentDispositionType {
+func (e ContentDispositionType) ToPointer() *ContentDispositionType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyImagesContentDispositionType) UnmarshalJSON(data []byte) error {
+func (e *ContentDispositionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2047,27 +2047,27 @@ func (e *CreateDeploymentRequestBodyImagesContentDispositionType) UnmarshalJSON(
 	case "inline":
 		fallthrough
 	case "attachment":
-		*e = CreateDeploymentRequestBodyImagesContentDispositionType(v)
+		*e = ContentDispositionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyImagesContentDispositionType: %v", v)
+		return fmt.Errorf("invalid value for ContentDispositionType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyImagesFormats string
+type Formats string
 
 const (
-	CreateDeploymentRequestBodyImagesFormatsImageAvif CreateDeploymentRequestBodyImagesFormats = "image/avif"
-	CreateDeploymentRequestBodyImagesFormatsImageWebp CreateDeploymentRequestBodyImagesFormats = "image/webp"
-	CreateDeploymentRequestBodyImagesFormatsImageJpeg CreateDeploymentRequestBodyImagesFormats = "image/jpeg"
-	CreateDeploymentRequestBodyImagesFormatsImagePng  CreateDeploymentRequestBodyImagesFormats = "image/png"
+	FormatsImageAvif Formats = "image/avif"
+	FormatsImageWebp Formats = "image/webp"
+	FormatsImageJpeg Formats = "image/jpeg"
+	FormatsImagePng  Formats = "image/png"
 )
 
-func (e CreateDeploymentRequestBodyImagesFormats) ToPointer() *CreateDeploymentRequestBodyImagesFormats {
+func (e Formats) ToPointer() *Formats {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyImagesFormats) UnmarshalJSON(data []byte) error {
+func (e *Formats) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2080,25 +2080,25 @@ func (e *CreateDeploymentRequestBodyImagesFormats) UnmarshalJSON(data []byte) er
 	case "image/jpeg":
 		fallthrough
 	case "image/png":
-		*e = CreateDeploymentRequestBodyImagesFormats(v)
+		*e = Formats(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyImagesFormats: %v", v)
+		return fmt.Errorf("invalid value for Formats: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyImagesRemotePatternsProtocol string
+type Protocol string
 
 const (
-	CreateDeploymentRequestBodyImagesRemotePatternsProtocolHTTP  CreateDeploymentRequestBodyImagesRemotePatternsProtocol = "http"
-	CreateDeploymentRequestBodyImagesRemotePatternsProtocolHTTPS CreateDeploymentRequestBodyImagesRemotePatternsProtocol = "https"
+	ProtocolHTTP  Protocol = "http"
+	ProtocolHTTPS Protocol = "https"
 )
 
-func (e CreateDeploymentRequestBodyImagesRemotePatternsProtocol) ToPointer() *CreateDeploymentRequestBodyImagesRemotePatternsProtocol {
+func (e Protocol) ToPointer() *Protocol {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyImagesRemotePatternsProtocol) UnmarshalJSON(data []byte) error {
+func (e *Protocol) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2107,127 +2107,127 @@ func (e *CreateDeploymentRequestBodyImagesRemotePatternsProtocol) UnmarshalJSON(
 	case "http":
 		fallthrough
 	case "https":
-		*e = CreateDeploymentRequestBodyImagesRemotePatternsProtocol(v)
+		*e = Protocol(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyImagesRemotePatternsProtocol: %v", v)
+		return fmt.Errorf("invalid value for Protocol: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyImagesRemotePatterns struct {
-	Hostname string                                                   `json:"hostname"`
-	Pathname *string                                                  `json:"pathname,omitempty"`
-	Port     *string                                                  `json:"port,omitempty"`
-	Protocol *CreateDeploymentRequestBodyImagesRemotePatternsProtocol `json:"protocol,omitempty"`
+type RemotePatterns struct {
+	Hostname string    `json:"hostname"`
+	Pathname *string   `json:"pathname,omitempty"`
+	Port     *string   `json:"port,omitempty"`
+	Protocol *Protocol `json:"protocol,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyImagesRemotePatterns) GetHostname() string {
+func (o *RemotePatterns) GetHostname() string {
 	if o == nil {
 		return ""
 	}
 	return o.Hostname
 }
 
-func (o *CreateDeploymentRequestBodyImagesRemotePatterns) GetPathname() *string {
+func (o *RemotePatterns) GetPathname() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Pathname
 }
 
-func (o *CreateDeploymentRequestBodyImagesRemotePatterns) GetPort() *string {
+func (o *RemotePatterns) GetPort() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Port
 }
 
-func (o *CreateDeploymentRequestBodyImagesRemotePatterns) GetProtocol() *CreateDeploymentRequestBodyImagesRemotePatternsProtocol {
+func (o *RemotePatterns) GetProtocol() *Protocol {
 	if o == nil {
 		return nil
 	}
 	return o.Protocol
 }
 
-type CreateDeploymentRequestBodyImages struct {
-	ContentDispositionType *CreateDeploymentRequestBodyImagesContentDispositionType `json:"contentDispositionType,omitempty"`
-	ContentSecurityPolicy  *string                                                  `json:"contentSecurityPolicy,omitempty"`
-	DangerouslyAllowSVG    *bool                                                    `json:"dangerouslyAllowSVG,omitempty"`
-	Domains                []string                                                 `json:"domains,omitempty"`
-	Formats                []CreateDeploymentRequestBodyImagesFormats               `json:"formats,omitempty"`
-	MinimumCacheTTL        *int64                                                   `json:"minimumCacheTTL,omitempty"`
-	RemotePatterns         []CreateDeploymentRequestBodyImagesRemotePatterns        `json:"remotePatterns,omitempty"`
-	Sizes                  []int64                                                  `json:"sizes"`
+type Images struct {
+	ContentDispositionType *ContentDispositionType `json:"contentDispositionType,omitempty"`
+	ContentSecurityPolicy  *string                 `json:"contentSecurityPolicy,omitempty"`
+	DangerouslyAllowSVG    *bool                   `json:"dangerouslyAllowSVG,omitempty"`
+	Domains                []string                `json:"domains,omitempty"`
+	Formats                []Formats               `json:"formats,omitempty"`
+	MinimumCacheTTL        *int64                  `json:"minimumCacheTTL,omitempty"`
+	RemotePatterns         []RemotePatterns        `json:"remotePatterns,omitempty"`
+	Sizes                  []int64                 `json:"sizes"`
 }
 
-func (o *CreateDeploymentRequestBodyImages) GetContentDispositionType() *CreateDeploymentRequestBodyImagesContentDispositionType {
+func (o *Images) GetContentDispositionType() *ContentDispositionType {
 	if o == nil {
 		return nil
 	}
 	return o.ContentDispositionType
 }
 
-func (o *CreateDeploymentRequestBodyImages) GetContentSecurityPolicy() *string {
+func (o *Images) GetContentSecurityPolicy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ContentSecurityPolicy
 }
 
-func (o *CreateDeploymentRequestBodyImages) GetDangerouslyAllowSVG() *bool {
+func (o *Images) GetDangerouslyAllowSVG() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DangerouslyAllowSVG
 }
 
-func (o *CreateDeploymentRequestBodyImages) GetDomains() []string {
+func (o *Images) GetDomains() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Domains
 }
 
-func (o *CreateDeploymentRequestBodyImages) GetFormats() []CreateDeploymentRequestBodyImagesFormats {
+func (o *Images) GetFormats() []Formats {
 	if o == nil {
 		return nil
 	}
 	return o.Formats
 }
 
-func (o *CreateDeploymentRequestBodyImages) GetMinimumCacheTTL() *int64 {
+func (o *Images) GetMinimumCacheTTL() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MinimumCacheTTL
 }
 
-func (o *CreateDeploymentRequestBodyImages) GetRemotePatterns() []CreateDeploymentRequestBodyImagesRemotePatterns {
+func (o *Images) GetRemotePatterns() []RemotePatterns {
 	if o == nil {
 		return nil
 	}
 	return o.RemotePatterns
 }
 
-func (o *CreateDeploymentRequestBodyImages) GetSizes() []int64 {
+func (o *Images) GetSizes() []int64 {
 	if o == nil {
 		return []int64{}
 	}
 	return o.Sizes
 }
 
-type CreateDeploymentRequestBodyPagination struct {
+type Pagination struct {
 	Cursor string `json:"cursor"`
 }
 
-func (o *CreateDeploymentRequestBodyPagination) GetCursor() string {
+func (o *Pagination) GetCursor() string {
 	if o == nil {
 		return ""
 	}
 	return o.Cursor
 }
 
-type CreateDeploymentRequestBodyProjectSettingsQuota struct {
+type Quota struct {
 	// The total amount of wall-clock time allowed to be spent by a project's compute endpoints.
 	ActiveTimeSeconds *int64 `json:"active_time_seconds,omitempty"`
 	// The total amount of CPU seconds allowed to be spent by a project's compute endpoints.
@@ -2240,264 +2240,264 @@ type CreateDeploymentRequestBodyProjectSettingsQuota struct {
 	WrittenDataBytes *int64 `json:"written_data_bytes,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettingsQuota) GetActiveTimeSeconds() *int64 {
+func (o *Quota) GetActiveTimeSeconds() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ActiveTimeSeconds
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettingsQuota) GetComputeTimeSeconds() *int64 {
+func (o *Quota) GetComputeTimeSeconds() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ComputeTimeSeconds
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettingsQuota) GetDataTransferBytes() *int64 {
+func (o *Quota) GetDataTransferBytes() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DataTransferBytes
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettingsQuota) GetLogicalSizeBytes() *int64 {
+func (o *Quota) GetLogicalSizeBytes() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LogicalSizeBytes
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettingsQuota) GetWrittenDataBytes() *int64 {
+func (o *Quota) GetWrittenDataBytes() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.WrittenDataBytes
 }
 
-type CreateDeploymentRequestBodyProjectSettings struct {
-	Quota *CreateDeploymentRequestBodyProjectSettingsQuota `json:"quota,omitempty"`
+type Settings struct {
+	Quota *Quota `json:"quota,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettings) GetQuota() *CreateDeploymentRequestBodyProjectSettingsQuota {
+func (o *Settings) GetQuota() *Quota {
 	if o == nil {
 		return nil
 	}
 	return o.Quota
 }
 
-type CreateDeploymentRequestBodyProject struct {
+type Project struct {
 	ActiveTimeSeconds *int64 `json:"active_time_seconds,omitempty"`
 	// The logical size limit for a branch in MiB.
 	BranchLogicalSizeLimit int64 `json:"branch_logical_size_limit"`
 	// The logical size limit for a branch in bytes.
-	BranchLogicalSizeLimitBytes int64                                       `json:"branch_logical_size_limit_bytes"`
-	ComputeTimeSeconds          *int64                                      `json:"compute_time_seconds,omitempty"`
-	CreatedAt                   string                                      `json:"created_at"`
-	DataStorageBytesHour        *int64                                      `json:"data_storage_bytes_hour,omitempty"`
-	DataTransferBytes           *int64                                      `json:"data_transfer_bytes,omitempty"`
-	ID                          string                                      `json:"id"`
-	Name                        string                                      `json:"name"`
-	OwnerID                     string                                      `json:"owner_id"`
-	PgVersion                   int64                                       `json:"pg_version"`
-	ProxyHost                   string                                      `json:"proxy_host"`
-	QuotaResetAt                *string                                     `json:"quota_reset_at,omitempty"`
-	RegionID                    string                                      `json:"region_id"`
-	Settings                    *CreateDeploymentRequestBodyProjectSettings `json:"settings,omitempty"`
-	StorePasswords              bool                                        `json:"store_passwords"`
+	BranchLogicalSizeLimitBytes int64     `json:"branch_logical_size_limit_bytes"`
+	ComputeTimeSeconds          *int64    `json:"compute_time_seconds,omitempty"`
+	CreatedAt                   string    `json:"created_at"`
+	DataStorageBytesHour        *int64    `json:"data_storage_bytes_hour,omitempty"`
+	DataTransferBytes           *int64    `json:"data_transfer_bytes,omitempty"`
+	ID                          string    `json:"id"`
+	Name                        string    `json:"name"`
+	OwnerID                     string    `json:"owner_id"`
+	PgVersion                   int64     `json:"pg_version"`
+	ProxyHost                   string    `json:"proxy_host"`
+	QuotaResetAt                *string   `json:"quota_reset_at,omitempty"`
+	RegionID                    string    `json:"region_id"`
+	Settings                    *Settings `json:"settings,omitempty"`
+	StorePasswords              bool      `json:"store_passwords"`
 	// The data storage size in bytes.
 	SyntheticStorageSize *int64 `json:"synthetic_storage_size,omitempty"`
 	UpdatedAt            string `json:"updated_at"`
 	WrittenDataBytes     *int64 `json:"written_data_bytes,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetActiveTimeSeconds() *int64 {
+func (o *Project) GetActiveTimeSeconds() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ActiveTimeSeconds
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetBranchLogicalSizeLimit() int64 {
+func (o *Project) GetBranchLogicalSizeLimit() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.BranchLogicalSizeLimit
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetBranchLogicalSizeLimitBytes() int64 {
+func (o *Project) GetBranchLogicalSizeLimitBytes() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.BranchLogicalSizeLimitBytes
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetComputeTimeSeconds() *int64 {
+func (o *Project) GetComputeTimeSeconds() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ComputeTimeSeconds
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetCreatedAt() string {
+func (o *Project) GetCreatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetDataStorageBytesHour() *int64 {
+func (o *Project) GetDataStorageBytesHour() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DataStorageBytesHour
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetDataTransferBytes() *int64 {
+func (o *Project) GetDataTransferBytes() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DataTransferBytes
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetID() string {
+func (o *Project) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetName() string {
+func (o *Project) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetOwnerID() string {
+func (o *Project) GetOwnerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.OwnerID
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetPgVersion() int64 {
+func (o *Project) GetPgVersion() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.PgVersion
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetProxyHost() string {
+func (o *Project) GetProxyHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.ProxyHost
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetQuotaResetAt() *string {
+func (o *Project) GetQuotaResetAt() *string {
 	if o == nil {
 		return nil
 	}
 	return o.QuotaResetAt
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetRegionID() string {
+func (o *Project) GetRegionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RegionID
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetSettings() *CreateDeploymentRequestBodyProjectSettings {
+func (o *Project) GetSettings() *Settings {
 	if o == nil {
 		return nil
 	}
 	return o.Settings
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetStorePasswords() bool {
+func (o *Project) GetStorePasswords() bool {
 	if o == nil {
 		return false
 	}
 	return o.StorePasswords
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetSyntheticStorageSize() *int64 {
+func (o *Project) GetSyntheticStorageSize() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.SyntheticStorageSize
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetUpdatedAt() string {
+func (o *Project) GetUpdatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.UpdatedAt
 }
 
-func (o *CreateDeploymentRequestBodyProject) GetWrittenDataBytes() *int64 {
+func (o *Project) GetWrittenDataBytes() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.WrittenDataBytes
 }
 
-// CreateDeploymentRequestBodyProjectSettingsFramework - The framework that is being used for this project. When `null` is used no framework is selected
-type CreateDeploymentRequestBodyProjectSettingsFramework string
+// CreateDeploymentFramework - The framework that is being used for this project. When `null` is used no framework is selected
+type CreateDeploymentFramework string
 
 const (
-	CreateDeploymentRequestBodyProjectSettingsFrameworkLessThanNilGreaterThan CreateDeploymentRequestBodyProjectSettingsFramework = "<nil>"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkBlitzjs                CreateDeploymentRequestBodyProjectSettingsFramework = "blitzjs"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkNextjs                 CreateDeploymentRequestBodyProjectSettingsFramework = "nextjs"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkGatsby                 CreateDeploymentRequestBodyProjectSettingsFramework = "gatsby"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkRemix                  CreateDeploymentRequestBodyProjectSettingsFramework = "remix"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkAstro                  CreateDeploymentRequestBodyProjectSettingsFramework = "astro"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkHexo                   CreateDeploymentRequestBodyProjectSettingsFramework = "hexo"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkEleventy               CreateDeploymentRequestBodyProjectSettingsFramework = "eleventy"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkDocusaurus2            CreateDeploymentRequestBodyProjectSettingsFramework = "docusaurus-2"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkDocusaurus             CreateDeploymentRequestBodyProjectSettingsFramework = "docusaurus"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkPreact                 CreateDeploymentRequestBodyProjectSettingsFramework = "preact"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkSolidstart             CreateDeploymentRequestBodyProjectSettingsFramework = "solidstart"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkDojo                   CreateDeploymentRequestBodyProjectSettingsFramework = "dojo"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkEmber                  CreateDeploymentRequestBodyProjectSettingsFramework = "ember"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkVue                    CreateDeploymentRequestBodyProjectSettingsFramework = "vue"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkScully                 CreateDeploymentRequestBodyProjectSettingsFramework = "scully"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkIonicAngular           CreateDeploymentRequestBodyProjectSettingsFramework = "ionic-angular"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkAngular                CreateDeploymentRequestBodyProjectSettingsFramework = "angular"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkPolymer                CreateDeploymentRequestBodyProjectSettingsFramework = "polymer"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkSvelte                 CreateDeploymentRequestBodyProjectSettingsFramework = "svelte"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkSveltekit              CreateDeploymentRequestBodyProjectSettingsFramework = "sveltekit"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkSveltekit1             CreateDeploymentRequestBodyProjectSettingsFramework = "sveltekit-1"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkIonicReact             CreateDeploymentRequestBodyProjectSettingsFramework = "ionic-react"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkCreateReactApp         CreateDeploymentRequestBodyProjectSettingsFramework = "create-react-app"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkGridsome               CreateDeploymentRequestBodyProjectSettingsFramework = "gridsome"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkUmijs                  CreateDeploymentRequestBodyProjectSettingsFramework = "umijs"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkSapper                 CreateDeploymentRequestBodyProjectSettingsFramework = "sapper"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkSaber                  CreateDeploymentRequestBodyProjectSettingsFramework = "saber"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkStencil                CreateDeploymentRequestBodyProjectSettingsFramework = "stencil"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkNuxtjs                 CreateDeploymentRequestBodyProjectSettingsFramework = "nuxtjs"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkRedwoodjs              CreateDeploymentRequestBodyProjectSettingsFramework = "redwoodjs"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkHugo                   CreateDeploymentRequestBodyProjectSettingsFramework = "hugo"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkJekyll                 CreateDeploymentRequestBodyProjectSettingsFramework = "jekyll"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkBrunch                 CreateDeploymentRequestBodyProjectSettingsFramework = "brunch"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkMiddleman              CreateDeploymentRequestBodyProjectSettingsFramework = "middleman"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkZola                   CreateDeploymentRequestBodyProjectSettingsFramework = "zola"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkHydrogen               CreateDeploymentRequestBodyProjectSettingsFramework = "hydrogen"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkVite                   CreateDeploymentRequestBodyProjectSettingsFramework = "vite"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkVitepress              CreateDeploymentRequestBodyProjectSettingsFramework = "vitepress"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkVuepress               CreateDeploymentRequestBodyProjectSettingsFramework = "vuepress"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkParcel                 CreateDeploymentRequestBodyProjectSettingsFramework = "parcel"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkSanity                 CreateDeploymentRequestBodyProjectSettingsFramework = "sanity"
-	CreateDeploymentRequestBodyProjectSettingsFrameworkStorybook              CreateDeploymentRequestBodyProjectSettingsFramework = "storybook"
+	CreateDeploymentFrameworkLessThanNilGreaterThan CreateDeploymentFramework = "<nil>"
+	CreateDeploymentFrameworkBlitzjs                CreateDeploymentFramework = "blitzjs"
+	CreateDeploymentFrameworkNextjs                 CreateDeploymentFramework = "nextjs"
+	CreateDeploymentFrameworkGatsby                 CreateDeploymentFramework = "gatsby"
+	CreateDeploymentFrameworkRemix                  CreateDeploymentFramework = "remix"
+	CreateDeploymentFrameworkAstro                  CreateDeploymentFramework = "astro"
+	CreateDeploymentFrameworkHexo                   CreateDeploymentFramework = "hexo"
+	CreateDeploymentFrameworkEleventy               CreateDeploymentFramework = "eleventy"
+	CreateDeploymentFrameworkDocusaurus2            CreateDeploymentFramework = "docusaurus-2"
+	CreateDeploymentFrameworkDocusaurus             CreateDeploymentFramework = "docusaurus"
+	CreateDeploymentFrameworkPreact                 CreateDeploymentFramework = "preact"
+	CreateDeploymentFrameworkSolidstart             CreateDeploymentFramework = "solidstart"
+	CreateDeploymentFrameworkDojo                   CreateDeploymentFramework = "dojo"
+	CreateDeploymentFrameworkEmber                  CreateDeploymentFramework = "ember"
+	CreateDeploymentFrameworkVue                    CreateDeploymentFramework = "vue"
+	CreateDeploymentFrameworkScully                 CreateDeploymentFramework = "scully"
+	CreateDeploymentFrameworkIonicAngular           CreateDeploymentFramework = "ionic-angular"
+	CreateDeploymentFrameworkAngular                CreateDeploymentFramework = "angular"
+	CreateDeploymentFrameworkPolymer                CreateDeploymentFramework = "polymer"
+	CreateDeploymentFrameworkSvelte                 CreateDeploymentFramework = "svelte"
+	CreateDeploymentFrameworkSveltekit              CreateDeploymentFramework = "sveltekit"
+	CreateDeploymentFrameworkSveltekit1             CreateDeploymentFramework = "sveltekit-1"
+	CreateDeploymentFrameworkIonicReact             CreateDeploymentFramework = "ionic-react"
+	CreateDeploymentFrameworkCreateReactApp         CreateDeploymentFramework = "create-react-app"
+	CreateDeploymentFrameworkGridsome               CreateDeploymentFramework = "gridsome"
+	CreateDeploymentFrameworkUmijs                  CreateDeploymentFramework = "umijs"
+	CreateDeploymentFrameworkSapper                 CreateDeploymentFramework = "sapper"
+	CreateDeploymentFrameworkSaber                  CreateDeploymentFramework = "saber"
+	CreateDeploymentFrameworkStencil                CreateDeploymentFramework = "stencil"
+	CreateDeploymentFrameworkNuxtjs                 CreateDeploymentFramework = "nuxtjs"
+	CreateDeploymentFrameworkRedwoodjs              CreateDeploymentFramework = "redwoodjs"
+	CreateDeploymentFrameworkHugo                   CreateDeploymentFramework = "hugo"
+	CreateDeploymentFrameworkJekyll                 CreateDeploymentFramework = "jekyll"
+	CreateDeploymentFrameworkBrunch                 CreateDeploymentFramework = "brunch"
+	CreateDeploymentFrameworkMiddleman              CreateDeploymentFramework = "middleman"
+	CreateDeploymentFrameworkZola                   CreateDeploymentFramework = "zola"
+	CreateDeploymentFrameworkHydrogen               CreateDeploymentFramework = "hydrogen"
+	CreateDeploymentFrameworkVite                   CreateDeploymentFramework = "vite"
+	CreateDeploymentFrameworkVitepress              CreateDeploymentFramework = "vitepress"
+	CreateDeploymentFrameworkVuepress               CreateDeploymentFramework = "vuepress"
+	CreateDeploymentFrameworkParcel                 CreateDeploymentFramework = "parcel"
+	CreateDeploymentFrameworkSanity                 CreateDeploymentFramework = "sanity"
+	CreateDeploymentFrameworkStorybook              CreateDeploymentFramework = "storybook"
 )
 
-func (e CreateDeploymentRequestBodyProjectSettingsFramework) ToPointer() *CreateDeploymentRequestBodyProjectSettingsFramework {
+func (e CreateDeploymentFramework) ToPointer() *CreateDeploymentFramework {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyProjectSettingsFramework) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentFramework) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2588,22 +2588,22 @@ func (e *CreateDeploymentRequestBodyProjectSettingsFramework) UnmarshalJSON(data
 	case "sanity":
 		fallthrough
 	case "storybook":
-		*e = CreateDeploymentRequestBodyProjectSettingsFramework(v)
+		*e = CreateDeploymentFramework(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyProjectSettingsFramework: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentFramework: %v", v)
 	}
 }
 
-// CreateDeploymentRequestBodyProjectSettings1 - Project settings that will be applied to the deployment. It is required for the first deployment of a project and will be saved for any following deployments
-type CreateDeploymentRequestBodyProjectSettings1 struct {
+// ProjectSettings - Project settings that will be applied to the deployment. It is required for the first deployment of a project and will be saved for any following deployments
+type ProjectSettings struct {
 	// The build command for this project. When `null` is used this value will be automatically detected
 	BuildCommand                *string `json:"buildCommand,omitempty"`
 	CommandForIgnoringBuildStep *string `json:"commandForIgnoringBuildStep,omitempty"`
 	// The dev command for this project. When `null` is used this value will be automatically detected
 	DevCommand *string `json:"devCommand,omitempty"`
 	// The framework that is being used for this project. When `null` is used no framework is selected
-	Framework *CreateDeploymentRequestBodyProjectSettingsFramework `json:"framework,omitempty"`
+	Framework *CreateDeploymentFramework `json:"framework,omitempty"`
 	// The install command for this project. When `null` is used this value will be automatically detected
 	InstallCommand *string `json:"installCommand,omitempty"`
 	// The output directory of the project. When `null` is used this value will be automatically detected
@@ -2620,77 +2620,77 @@ type CreateDeploymentRequestBodyProjectSettings1 struct {
 	SourceFilesOutsideRootDirectory *bool `json:"sourceFilesOutsideRootDirectory,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettings1) GetBuildCommand() *string {
+func (o *ProjectSettings) GetBuildCommand() *string {
 	if o == nil {
 		return nil
 	}
 	return o.BuildCommand
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettings1) GetCommandForIgnoringBuildStep() *string {
+func (o *ProjectSettings) GetCommandForIgnoringBuildStep() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CommandForIgnoringBuildStep
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettings1) GetDevCommand() *string {
+func (o *ProjectSettings) GetDevCommand() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DevCommand
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettings1) GetFramework() *CreateDeploymentRequestBodyProjectSettingsFramework {
+func (o *ProjectSettings) GetFramework() *CreateDeploymentFramework {
 	if o == nil {
 		return nil
 	}
 	return o.Framework
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettings1) GetInstallCommand() *string {
+func (o *ProjectSettings) GetInstallCommand() *string {
 	if o == nil {
 		return nil
 	}
 	return o.InstallCommand
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettings1) GetOutputDirectory() *string {
+func (o *ProjectSettings) GetOutputDirectory() *string {
 	if o == nil {
 		return nil
 	}
 	return o.OutputDirectory
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettings1) GetRootDirectory() *string {
+func (o *ProjectSettings) GetRootDirectory() *string {
 	if o == nil {
 		return nil
 	}
 	return o.RootDirectory
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettings1) GetServerlessFunctionRegion() *string {
+func (o *ProjectSettings) GetServerlessFunctionRegion() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ServerlessFunctionRegion
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettings1) GetSkipGitConnectDuringLink() *bool {
+func (o *ProjectSettings) GetSkipGitConnectDuringLink() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SkipGitConnectDuringLink
 }
 
-func (o *CreateDeploymentRequestBodyProjectSettings1) GetSourceFilesOutsideRootDirectory() *bool {
+func (o *ProjectSettings) GetSourceFilesOutsideRootDirectory() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SourceFilesOutsideRootDirectory
 }
 
-type CreateDeploymentRequestBodyProjects struct {
+type Projects struct {
 	ComputeTimeSeconds            int64   `json:"compute_time_seconds"`
 	ComputeTimeSecondsUpdatedAt   *string `json:"compute_time_seconds_updated_at,omitempty"`
 	DataStorageBytesHour          int64   `json:"data_storage_bytes_hour"`
@@ -2704,97 +2704,97 @@ type CreateDeploymentRequestBodyProjects struct {
 	WrittenDataBytesUpdatedAt     *string `json:"written_data_bytes_updated_at,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyProjects) GetComputeTimeSeconds() int64 {
+func (o *Projects) GetComputeTimeSeconds() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ComputeTimeSeconds
 }
 
-func (o *CreateDeploymentRequestBodyProjects) GetComputeTimeSecondsUpdatedAt() *string {
+func (o *Projects) GetComputeTimeSecondsUpdatedAt() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ComputeTimeSecondsUpdatedAt
 }
 
-func (o *CreateDeploymentRequestBodyProjects) GetDataStorageBytesHour() int64 {
+func (o *Projects) GetDataStorageBytesHour() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.DataStorageBytesHour
 }
 
-func (o *CreateDeploymentRequestBodyProjects) GetDataStorageBytesHourUpdatedAt() *string {
+func (o *Projects) GetDataStorageBytesHourUpdatedAt() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DataStorageBytesHourUpdatedAt
 }
 
-func (o *CreateDeploymentRequestBodyProjects) GetDataTransferBytes() int64 {
+func (o *Projects) GetDataTransferBytes() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.DataTransferBytes
 }
 
-func (o *CreateDeploymentRequestBodyProjects) GetDataTransferBytesUpdatedAt() *string {
+func (o *Projects) GetDataTransferBytesUpdatedAt() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DataTransferBytesUpdatedAt
 }
 
-func (o *CreateDeploymentRequestBodyProjects) GetID() string {
+func (o *Projects) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateDeploymentRequestBodyProjects) GetSyntheticStorageSize() int64 {
+func (o *Projects) GetSyntheticStorageSize() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.SyntheticStorageSize
 }
 
-func (o *CreateDeploymentRequestBodyProjects) GetSyntheticStorageSizeUpdatedAt() *string {
+func (o *Projects) GetSyntheticStorageSizeUpdatedAt() *string {
 	if o == nil {
 		return nil
 	}
 	return o.SyntheticStorageSizeUpdatedAt
 }
 
-func (o *CreateDeploymentRequestBodyProjects) GetWrittenDataBytes() int64 {
+func (o *Projects) GetWrittenDataBytes() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.WrittenDataBytes
 }
 
-func (o *CreateDeploymentRequestBodyProjects) GetWrittenDataBytesUpdatedAt() *string {
+func (o *Projects) GetWrittenDataBytesUpdatedAt() *string {
 	if o == nil {
 		return nil
 	}
 	return o.WrittenDataBytesUpdatedAt
 }
 
-// CreateDeploymentRequestBodyRedirectsHas2Type - The type of request element to check
-type CreateDeploymentRequestBodyRedirectsHas2Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType string
 
 const (
-	CreateDeploymentRequestBodyRedirectsHas2TypeHeader CreateDeploymentRequestBodyRedirectsHas2Type = "header"
-	CreateDeploymentRequestBodyRedirectsHas2TypeCookie CreateDeploymentRequestBodyRedirectsHas2Type = "cookie"
-	CreateDeploymentRequestBodyRedirectsHas2TypeQuery  CreateDeploymentRequestBodyRedirectsHas2Type = "query"
+	CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasTypeHeader CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType = "header"
+	CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasTypeCookie CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType = "cookie"
+	CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasTypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType = "query"
 )
 
-func (e CreateDeploymentRequestBodyRedirectsHas2Type) ToPointer() *CreateDeploymentRequestBodyRedirectsHas2Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRedirectsHas2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2805,166 +2805,166 @@ func (e *CreateDeploymentRequestBodyRedirectsHas2Type) UnmarshalJSON(data []byte
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = CreateDeploymentRequestBodyRedirectsHas2Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRedirectsHas2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRedirectsHas2 struct {
+type CreateDeploymentDeploymentsRequestRequestBodyRedirects2 struct {
 	// The name of the element contained in the particular type
 	Key string `json:"key"`
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRedirectsHas2Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyRedirectsHas2) GetKey() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirects2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeploymentRequestBodyRedirectsHas2) GetType() CreateDeploymentRequestBodyRedirectsHas2Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirects2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType {
 	if o == nil {
-		return CreateDeploymentRequestBodyRedirectsHas2Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRedirectsHas2) GetValue() *string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirects2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-// CreateDeploymentRequestBodyRedirectsHas1Type - The type of request element to check
-type CreateDeploymentRequestBodyRedirectsHas1Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRedirectsType - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRedirectsType string
 
 const (
-	CreateDeploymentRequestBodyRedirectsHas1TypeHost CreateDeploymentRequestBodyRedirectsHas1Type = "host"
+	CreateDeploymentDeploymentsRequestRequestBodyRedirectsTypeHost CreateDeploymentDeploymentsRequestRequestBodyRedirectsType = "host"
 )
 
-func (e CreateDeploymentRequestBodyRedirectsHas1Type) ToPointer() *CreateDeploymentRequestBodyRedirectsHas1Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRedirectsType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRedirectsType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRedirectsHas1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRedirectsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = CreateDeploymentRequestBodyRedirectsHas1Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRedirectsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRedirectsHas1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRedirectsType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRedirectsHas1 struct {
+type CreateDeploymentDeploymentsRequestRequestBodyRedirects1 struct {
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRedirectsHas1Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRedirectsType `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
 }
 
-func (o *CreateDeploymentRequestBodyRedirectsHas1) GetType() CreateDeploymentRequestBodyRedirectsHas1Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirects1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRedirectsType {
 	if o == nil {
-		return CreateDeploymentRequestBodyRedirectsHas1Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRedirectsType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRedirectsHas1) GetValue() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirects1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeploymentRequestBodyRedirectsHasType string
+type CreateDeploymentDeploymentsHasType string
 
 const (
-	CreateDeploymentRequestBodyRedirectsHasTypeCreateDeploymentRequestBodyRedirectsHas1 CreateDeploymentRequestBodyRedirectsHasType = "createDeployment_requestBody_redirects_has_1"
-	CreateDeploymentRequestBodyRedirectsHasTypeCreateDeploymentRequestBodyRedirectsHas2 CreateDeploymentRequestBodyRedirectsHasType = "createDeployment_requestBody_redirects_has_2"
+	CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects1 CreateDeploymentDeploymentsHasType = "createDeployment_deployments_request_requestBody_redirects_1"
+	CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects2 CreateDeploymentDeploymentsHasType = "createDeployment_deployments_request_requestBody_redirects_2"
 )
 
-type CreateDeploymentRequestBodyRedirectsHas struct {
-	CreateDeploymentRequestBodyRedirectsHas1 *CreateDeploymentRequestBodyRedirectsHas1
-	CreateDeploymentRequestBodyRedirectsHas2 *CreateDeploymentRequestBodyRedirectsHas2
+type CreateDeploymentDeploymentsHas struct {
+	CreateDeploymentDeploymentsRequestRequestBodyRedirects1 *CreateDeploymentDeploymentsRequestRequestBodyRedirects1
+	CreateDeploymentDeploymentsRequestRequestBodyRedirects2 *CreateDeploymentDeploymentsRequestRequestBodyRedirects2
 
-	Type CreateDeploymentRequestBodyRedirectsHasType
+	Type CreateDeploymentDeploymentsHasType
 }
 
-func CreateCreateDeploymentRequestBodyRedirectsHasCreateDeploymentRequestBodyRedirectsHas1(createDeploymentRequestBodyRedirectsHas1 CreateDeploymentRequestBodyRedirectsHas1) CreateDeploymentRequestBodyRedirectsHas {
-	typ := CreateDeploymentRequestBodyRedirectsHasTypeCreateDeploymentRequestBodyRedirectsHas1
+func CreateCreateDeploymentDeploymentsHasCreateDeploymentDeploymentsRequestRequestBodyRedirects1(createDeploymentDeploymentsRequestRequestBodyRedirects1 CreateDeploymentDeploymentsRequestRequestBodyRedirects1) CreateDeploymentDeploymentsHas {
+	typ := CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects1
 
-	return CreateDeploymentRequestBodyRedirectsHas{
-		CreateDeploymentRequestBodyRedirectsHas1: &createDeploymentRequestBodyRedirectsHas1,
-		Type:                                     typ,
+	return CreateDeploymentDeploymentsHas{
+		CreateDeploymentDeploymentsRequestRequestBodyRedirects1: &createDeploymentDeploymentsRequestRequestBodyRedirects1,
+		Type: typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyRedirectsHasCreateDeploymentRequestBodyRedirectsHas2(createDeploymentRequestBodyRedirectsHas2 CreateDeploymentRequestBodyRedirectsHas2) CreateDeploymentRequestBodyRedirectsHas {
-	typ := CreateDeploymentRequestBodyRedirectsHasTypeCreateDeploymentRequestBodyRedirectsHas2
+func CreateCreateDeploymentDeploymentsHasCreateDeploymentDeploymentsRequestRequestBodyRedirects2(createDeploymentDeploymentsRequestRequestBodyRedirects2 CreateDeploymentDeploymentsRequestRequestBodyRedirects2) CreateDeploymentDeploymentsHas {
+	typ := CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects2
 
-	return CreateDeploymentRequestBodyRedirectsHas{
-		CreateDeploymentRequestBodyRedirectsHas2: &createDeploymentRequestBodyRedirectsHas2,
-		Type:                                     typ,
+	return CreateDeploymentDeploymentsHas{
+		CreateDeploymentDeploymentsRequestRequestBodyRedirects2: &createDeploymentDeploymentsRequestRequestBodyRedirects2,
+		Type: typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyRedirectsHas) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentDeploymentsHas) UnmarshalJSON(data []byte) error {
 
-	createDeploymentRequestBodyRedirectsHas1 := new(CreateDeploymentRequestBodyRedirectsHas1)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRedirectsHas1, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRedirectsHas1 = createDeploymentRequestBodyRedirectsHas1
-		u.Type = CreateDeploymentRequestBodyRedirectsHasTypeCreateDeploymentRequestBodyRedirectsHas1
+	createDeploymentDeploymentsRequestRequestBodyRedirects1 := new(CreateDeploymentDeploymentsRequestRequestBodyRedirects1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRedirects1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBodyRedirects1 = createDeploymentDeploymentsRequestRequestBodyRedirects1
+		u.Type = CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects1
 		return nil
 	}
 
-	createDeploymentRequestBodyRedirectsHas2 := new(CreateDeploymentRequestBodyRedirectsHas2)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRedirectsHas2, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRedirectsHas2 = createDeploymentRequestBodyRedirectsHas2
-		u.Type = CreateDeploymentRequestBodyRedirectsHasTypeCreateDeploymentRequestBodyRedirectsHas2
+	createDeploymentDeploymentsRequestRequestBodyRedirects2 := new(CreateDeploymentDeploymentsRequestRequestBodyRedirects2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRedirects2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBodyRedirects2 = createDeploymentDeploymentsRequestRequestBodyRedirects2
+		u.Type = CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyRedirectsHas) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyRedirectsHas1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRedirectsHas1, "", true)
+func (u CreateDeploymentDeploymentsHas) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsRequestRequestBodyRedirects1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRedirects1, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyRedirectsHas2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRedirectsHas2, "", true)
+	if u.CreateDeploymentDeploymentsRequestRequestBodyRedirects2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRedirects2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// CreateDeploymentRequestBodyRedirectsMissing2Type - The type of request element to check
-type CreateDeploymentRequestBodyRedirectsMissing2Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type string
 
 const (
-	CreateDeploymentRequestBodyRedirectsMissing2TypeHeader CreateDeploymentRequestBodyRedirectsMissing2Type = "header"
-	CreateDeploymentRequestBodyRedirectsMissing2TypeCookie CreateDeploymentRequestBodyRedirectsMissing2Type = "cookie"
-	CreateDeploymentRequestBodyRedirectsMissing2TypeQuery  CreateDeploymentRequestBodyRedirectsMissing2Type = "query"
+	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2TypeHeader CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type = "header"
+	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2TypeCookie CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type = "cookie"
+	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2TypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type = "query"
 )
 
-func (e CreateDeploymentRequestBodyRedirectsMissing2Type) ToPointer() *CreateDeploymentRequestBodyRedirectsMissing2Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRedirectsMissing2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2975,214 +2975,214 @@ func (e *CreateDeploymentRequestBodyRedirectsMissing2Type) UnmarshalJSON(data []
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = CreateDeploymentRequestBodyRedirectsMissing2Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRedirectsMissing2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRedirectsMissing2 struct {
+type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 struct {
 	// The name of the element contained in the particular type
 	Key string `json:"key"`
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRedirectsMissing2Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyRedirectsMissing2) GetKey() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeploymentRequestBodyRedirectsMissing2) GetType() CreateDeploymentRequestBodyRedirectsMissing2Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type {
 	if o == nil {
-		return CreateDeploymentRequestBodyRedirectsMissing2Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRedirectsMissing2) GetValue() *string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-// CreateDeploymentRequestBodyRedirectsMissing1Type - The type of request element to check
-type CreateDeploymentRequestBodyRedirectsMissing1Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType string
 
 const (
-	CreateDeploymentRequestBodyRedirectsMissing1TypeHost CreateDeploymentRequestBodyRedirectsMissing1Type = "host"
+	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingTypeHost CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType = "host"
 )
 
-func (e CreateDeploymentRequestBodyRedirectsMissing1Type) ToPointer() *CreateDeploymentRequestBodyRedirectsMissing1Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRedirectsMissing1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = CreateDeploymentRequestBodyRedirectsMissing1Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRedirectsMissing1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRedirectsMissing1 struct {
+type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 struct {
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRedirectsMissing1Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
 }
 
-func (o *CreateDeploymentRequestBodyRedirectsMissing1) GetType() CreateDeploymentRequestBodyRedirectsMissing1Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType {
 	if o == nil {
-		return CreateDeploymentRequestBodyRedirectsMissing1Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRedirectsMissing1) GetValue() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeploymentRequestBodyRedirectsMissingType string
+type CreateDeploymentDeploymentsMissingType string
 
 const (
-	CreateDeploymentRequestBodyRedirectsMissingTypeCreateDeploymentRequestBodyRedirectsMissing1 CreateDeploymentRequestBodyRedirectsMissingType = "createDeployment_requestBody_redirects_missing_1"
-	CreateDeploymentRequestBodyRedirectsMissingTypeCreateDeploymentRequestBodyRedirectsMissing2 CreateDeploymentRequestBodyRedirectsMissingType = "createDeployment_requestBody_redirects_missing_2"
+	CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 CreateDeploymentDeploymentsMissingType = "createDeployment_deployments_request_requestBody_redirects_missing_1"
+	CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 CreateDeploymentDeploymentsMissingType = "createDeployment_deployments_request_requestBody_redirects_missing_2"
 )
 
-type CreateDeploymentRequestBodyRedirectsMissing struct {
-	CreateDeploymentRequestBodyRedirectsMissing1 *CreateDeploymentRequestBodyRedirectsMissing1
-	CreateDeploymentRequestBodyRedirectsMissing2 *CreateDeploymentRequestBodyRedirectsMissing2
+type CreateDeploymentDeploymentsMissing struct {
+	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1
+	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2
 
-	Type CreateDeploymentRequestBodyRedirectsMissingType
+	Type CreateDeploymentDeploymentsMissingType
 }
 
-func CreateCreateDeploymentRequestBodyRedirectsMissingCreateDeploymentRequestBodyRedirectsMissing1(createDeploymentRequestBodyRedirectsMissing1 CreateDeploymentRequestBodyRedirectsMissing1) CreateDeploymentRequestBodyRedirectsMissing {
-	typ := CreateDeploymentRequestBodyRedirectsMissingTypeCreateDeploymentRequestBodyRedirectsMissing1
+func CreateCreateDeploymentDeploymentsMissingCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1(createDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1) CreateDeploymentDeploymentsMissing {
+	typ := CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1
 
-	return CreateDeploymentRequestBodyRedirectsMissing{
-		CreateDeploymentRequestBodyRedirectsMissing1: &createDeploymentRequestBodyRedirectsMissing1,
+	return CreateDeploymentDeploymentsMissing{
+		CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1: &createDeploymentDeploymentsRequestRequestBodyRedirectsMissing1,
 		Type: typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyRedirectsMissingCreateDeploymentRequestBodyRedirectsMissing2(createDeploymentRequestBodyRedirectsMissing2 CreateDeploymentRequestBodyRedirectsMissing2) CreateDeploymentRequestBodyRedirectsMissing {
-	typ := CreateDeploymentRequestBodyRedirectsMissingTypeCreateDeploymentRequestBodyRedirectsMissing2
+func CreateCreateDeploymentDeploymentsMissingCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2(createDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2) CreateDeploymentDeploymentsMissing {
+	typ := CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2
 
-	return CreateDeploymentRequestBodyRedirectsMissing{
-		CreateDeploymentRequestBodyRedirectsMissing2: &createDeploymentRequestBodyRedirectsMissing2,
+	return CreateDeploymentDeploymentsMissing{
+		CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2: &createDeploymentDeploymentsRequestRequestBodyRedirectsMissing2,
 		Type: typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyRedirectsMissing) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentDeploymentsMissing) UnmarshalJSON(data []byte) error {
 
-	createDeploymentRequestBodyRedirectsMissing1 := new(CreateDeploymentRequestBodyRedirectsMissing1)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRedirectsMissing1, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRedirectsMissing1 = createDeploymentRequestBodyRedirectsMissing1
-		u.Type = CreateDeploymentRequestBodyRedirectsMissingTypeCreateDeploymentRequestBodyRedirectsMissing1
+	createDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 := new(CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRedirectsMissing1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 = createDeploymentDeploymentsRequestRequestBodyRedirectsMissing1
+		u.Type = CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1
 		return nil
 	}
 
-	createDeploymentRequestBodyRedirectsMissing2 := new(CreateDeploymentRequestBodyRedirectsMissing2)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRedirectsMissing2, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRedirectsMissing2 = createDeploymentRequestBodyRedirectsMissing2
-		u.Type = CreateDeploymentRequestBodyRedirectsMissingTypeCreateDeploymentRequestBodyRedirectsMissing2
+	createDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 := new(CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRedirectsMissing2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 = createDeploymentDeploymentsRequestRequestBodyRedirectsMissing2
+		u.Type = CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyRedirectsMissing) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyRedirectsMissing1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRedirectsMissing1, "", true)
+func (u CreateDeploymentDeploymentsMissing) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyRedirectsMissing2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRedirectsMissing2, "", true)
+	if u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeploymentRequestBodyRedirects struct {
+type Redirects struct {
 	// A location destination defined as an absolute pathname or external URL.
 	Destination string `json:"destination"`
 	// An array of requirements that are needed to match
-	Has []CreateDeploymentRequestBodyRedirectsHas `json:"has,omitempty"`
+	Has []CreateDeploymentDeploymentsHas `json:"has,omitempty"`
 	// An array of requirements that are needed to match
-	Missing []CreateDeploymentRequestBodyRedirectsMissing `json:"missing,omitempty"`
+	Missing []CreateDeploymentDeploymentsMissing `json:"missing,omitempty"`
 	// A boolean to toggle between permanent and temporary redirect. When `true`, the status code is `308`. When `false` the status code is `307`.
 	Permanent *bool `json:"permanent,omitempty"`
 	// A pattern that matches each incoming pathname (excluding querystring).
 	Source string `json:"source"`
 }
 
-func (o *CreateDeploymentRequestBodyRedirects) GetDestination() string {
+func (o *Redirects) GetDestination() string {
 	if o == nil {
 		return ""
 	}
 	return o.Destination
 }
 
-func (o *CreateDeploymentRequestBodyRedirects) GetHas() []CreateDeploymentRequestBodyRedirectsHas {
+func (o *Redirects) GetHas() []CreateDeploymentDeploymentsHas {
 	if o == nil {
 		return nil
 	}
 	return o.Has
 }
 
-func (o *CreateDeploymentRequestBodyRedirects) GetMissing() []CreateDeploymentRequestBodyRedirectsMissing {
+func (o *Redirects) GetMissing() []CreateDeploymentDeploymentsMissing {
 	if o == nil {
 		return nil
 	}
 	return o.Missing
 }
 
-func (o *CreateDeploymentRequestBodyRedirects) GetPermanent() *bool {
+func (o *Redirects) GetPermanent() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Permanent
 }
 
-func (o *CreateDeploymentRequestBodyRedirects) GetSource() string {
+func (o *Redirects) GetSource() string {
 	if o == nil {
 		return ""
 	}
 	return o.Source
 }
 
-// CreateDeploymentRequestBodyRewritesHas2Type - The type of request element to check
-type CreateDeploymentRequestBodyRewritesHas2Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType string
 
 const (
-	CreateDeploymentRequestBodyRewritesHas2TypeHeader CreateDeploymentRequestBodyRewritesHas2Type = "header"
-	CreateDeploymentRequestBodyRewritesHas2TypeCookie CreateDeploymentRequestBodyRewritesHas2Type = "cookie"
-	CreateDeploymentRequestBodyRewritesHas2TypeQuery  CreateDeploymentRequestBodyRewritesHas2Type = "query"
+	CreateDeploymentDeploymentsRequestRequestBodyRewritesHasTypeHeader CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType = "header"
+	CreateDeploymentDeploymentsRequestRequestBodyRewritesHasTypeCookie CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType = "cookie"
+	CreateDeploymentDeploymentsRequestRequestBodyRewritesHasTypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType = "query"
 )
 
-func (e CreateDeploymentRequestBodyRewritesHas2Type) ToPointer() *CreateDeploymentRequestBodyRewritesHas2Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRewritesHas2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3193,166 +3193,166 @@ func (e *CreateDeploymentRequestBodyRewritesHas2Type) UnmarshalJSON(data []byte)
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = CreateDeploymentRequestBodyRewritesHas2Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRewritesHas2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRewritesHas2 struct {
+type CreateDeploymentDeploymentsRequestRequestBodyRewrites2 struct {
 	// The name of the element contained in the particular type
 	Key string `json:"key"`
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRewritesHas2Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyRewritesHas2) GetKey() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRewrites2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeploymentRequestBodyRewritesHas2) GetType() CreateDeploymentRequestBodyRewritesHas2Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRewrites2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType {
 	if o == nil {
-		return CreateDeploymentRequestBodyRewritesHas2Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRewritesHas2) GetValue() *string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRewrites2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-// CreateDeploymentRequestBodyRewritesHas1Type - The type of request element to check
-type CreateDeploymentRequestBodyRewritesHas1Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRewritesType - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRewritesType string
 
 const (
-	CreateDeploymentRequestBodyRewritesHas1TypeHost CreateDeploymentRequestBodyRewritesHas1Type = "host"
+	CreateDeploymentDeploymentsRequestRequestBodyRewritesTypeHost CreateDeploymentDeploymentsRequestRequestBodyRewritesType = "host"
 )
 
-func (e CreateDeploymentRequestBodyRewritesHas1Type) ToPointer() *CreateDeploymentRequestBodyRewritesHas1Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRewritesType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRewritesType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRewritesHas1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRewritesType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = CreateDeploymentRequestBodyRewritesHas1Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRewritesType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRewritesHas1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRewritesType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRewritesHas1 struct {
+type CreateDeploymentDeploymentsRequestRequestBodyRewrites1 struct {
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRewritesHas1Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRewritesType `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
 }
 
-func (o *CreateDeploymentRequestBodyRewritesHas1) GetType() CreateDeploymentRequestBodyRewritesHas1Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRewrites1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRewritesType {
 	if o == nil {
-		return CreateDeploymentRequestBodyRewritesHas1Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRewritesType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRewritesHas1) GetValue() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRewrites1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeploymentRequestBodyRewritesHasType string
+type CreateDeploymentDeploymentsRequestHasType string
 
 const (
-	CreateDeploymentRequestBodyRewritesHasTypeCreateDeploymentRequestBodyRewritesHas1 CreateDeploymentRequestBodyRewritesHasType = "createDeployment_requestBody_rewrites_has_1"
-	CreateDeploymentRequestBodyRewritesHasTypeCreateDeploymentRequestBodyRewritesHas2 CreateDeploymentRequestBodyRewritesHasType = "createDeployment_requestBody_rewrites_has_2"
+	CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites1 CreateDeploymentDeploymentsRequestHasType = "createDeployment_deployments_request_requestBody_rewrites_1"
+	CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites2 CreateDeploymentDeploymentsRequestHasType = "createDeployment_deployments_request_requestBody_rewrites_2"
 )
 
-type CreateDeploymentRequestBodyRewritesHas struct {
-	CreateDeploymentRequestBodyRewritesHas1 *CreateDeploymentRequestBodyRewritesHas1
-	CreateDeploymentRequestBodyRewritesHas2 *CreateDeploymentRequestBodyRewritesHas2
+type CreateDeploymentDeploymentsRequestHas struct {
+	CreateDeploymentDeploymentsRequestRequestBodyRewrites1 *CreateDeploymentDeploymentsRequestRequestBodyRewrites1
+	CreateDeploymentDeploymentsRequestRequestBodyRewrites2 *CreateDeploymentDeploymentsRequestRequestBodyRewrites2
 
-	Type CreateDeploymentRequestBodyRewritesHasType
+	Type CreateDeploymentDeploymentsRequestHasType
 }
 
-func CreateCreateDeploymentRequestBodyRewritesHasCreateDeploymentRequestBodyRewritesHas1(createDeploymentRequestBodyRewritesHas1 CreateDeploymentRequestBodyRewritesHas1) CreateDeploymentRequestBodyRewritesHas {
-	typ := CreateDeploymentRequestBodyRewritesHasTypeCreateDeploymentRequestBodyRewritesHas1
+func CreateCreateDeploymentDeploymentsRequestHasCreateDeploymentDeploymentsRequestRequestBodyRewrites1(createDeploymentDeploymentsRequestRequestBodyRewrites1 CreateDeploymentDeploymentsRequestRequestBodyRewrites1) CreateDeploymentDeploymentsRequestHas {
+	typ := CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites1
 
-	return CreateDeploymentRequestBodyRewritesHas{
-		CreateDeploymentRequestBodyRewritesHas1: &createDeploymentRequestBodyRewritesHas1,
-		Type:                                    typ,
+	return CreateDeploymentDeploymentsRequestHas{
+		CreateDeploymentDeploymentsRequestRequestBodyRewrites1: &createDeploymentDeploymentsRequestRequestBodyRewrites1,
+		Type: typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyRewritesHasCreateDeploymentRequestBodyRewritesHas2(createDeploymentRequestBodyRewritesHas2 CreateDeploymentRequestBodyRewritesHas2) CreateDeploymentRequestBodyRewritesHas {
-	typ := CreateDeploymentRequestBodyRewritesHasTypeCreateDeploymentRequestBodyRewritesHas2
+func CreateCreateDeploymentDeploymentsRequestHasCreateDeploymentDeploymentsRequestRequestBodyRewrites2(createDeploymentDeploymentsRequestRequestBodyRewrites2 CreateDeploymentDeploymentsRequestRequestBodyRewrites2) CreateDeploymentDeploymentsRequestHas {
+	typ := CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites2
 
-	return CreateDeploymentRequestBodyRewritesHas{
-		CreateDeploymentRequestBodyRewritesHas2: &createDeploymentRequestBodyRewritesHas2,
-		Type:                                    typ,
+	return CreateDeploymentDeploymentsRequestHas{
+		CreateDeploymentDeploymentsRequestRequestBodyRewrites2: &createDeploymentDeploymentsRequestRequestBodyRewrites2,
+		Type: typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyRewritesHas) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentDeploymentsRequestHas) UnmarshalJSON(data []byte) error {
 
-	createDeploymentRequestBodyRewritesHas1 := new(CreateDeploymentRequestBodyRewritesHas1)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRewritesHas1, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRewritesHas1 = createDeploymentRequestBodyRewritesHas1
-		u.Type = CreateDeploymentRequestBodyRewritesHasTypeCreateDeploymentRequestBodyRewritesHas1
+	createDeploymentDeploymentsRequestRequestBodyRewrites1 := new(CreateDeploymentDeploymentsRequestRequestBodyRewrites1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRewrites1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBodyRewrites1 = createDeploymentDeploymentsRequestRequestBodyRewrites1
+		u.Type = CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites1
 		return nil
 	}
 
-	createDeploymentRequestBodyRewritesHas2 := new(CreateDeploymentRequestBodyRewritesHas2)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRewritesHas2, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRewritesHas2 = createDeploymentRequestBodyRewritesHas2
-		u.Type = CreateDeploymentRequestBodyRewritesHasTypeCreateDeploymentRequestBodyRewritesHas2
+	createDeploymentDeploymentsRequestRequestBodyRewrites2 := new(CreateDeploymentDeploymentsRequestRequestBodyRewrites2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRewrites2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBodyRewrites2 = createDeploymentDeploymentsRequestRequestBodyRewrites2
+		u.Type = CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyRewritesHas) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyRewritesHas1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRewritesHas1, "", true)
+func (u CreateDeploymentDeploymentsRequestHas) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsRequestRequestBodyRewrites1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRewrites1, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyRewritesHas2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRewritesHas2, "", true)
+	if u.CreateDeploymentDeploymentsRequestRequestBodyRewrites2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRewrites2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// CreateDeploymentRequestBodyRewritesMissing2Type - The type of request element to check
-type CreateDeploymentRequestBodyRewritesMissing2Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type string
 
 const (
-	CreateDeploymentRequestBodyRewritesMissing2TypeHeader CreateDeploymentRequestBodyRewritesMissing2Type = "header"
-	CreateDeploymentRequestBodyRewritesMissing2TypeCookie CreateDeploymentRequestBodyRewritesMissing2Type = "cookie"
-	CreateDeploymentRequestBodyRewritesMissing2TypeQuery  CreateDeploymentRequestBodyRewritesMissing2Type = "query"
+	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2TypeHeader CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type = "header"
+	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2TypeCookie CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type = "cookie"
+	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2TypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type = "query"
 )
 
-func (e CreateDeploymentRequestBodyRewritesMissing2Type) ToPointer() *CreateDeploymentRequestBodyRewritesMissing2Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRewritesMissing2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3363,192 +3363,192 @@ func (e *CreateDeploymentRequestBodyRewritesMissing2Type) UnmarshalJSON(data []b
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = CreateDeploymentRequestBodyRewritesMissing2Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRewritesMissing2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRewritesMissing2 struct {
+type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2 struct {
 	// The name of the element contained in the particular type
 	Key string `json:"key"`
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRewritesMissing2Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyRewritesMissing2) GetKey() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeploymentRequestBodyRewritesMissing2) GetType() CreateDeploymentRequestBodyRewritesMissing2Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type {
 	if o == nil {
-		return CreateDeploymentRequestBodyRewritesMissing2Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRewritesMissing2) GetValue() *string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-// CreateDeploymentRequestBodyRewritesMissing1Type - The type of request element to check
-type CreateDeploymentRequestBodyRewritesMissing1Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType string
 
 const (
-	CreateDeploymentRequestBodyRewritesMissing1TypeHost CreateDeploymentRequestBodyRewritesMissing1Type = "host"
+	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingTypeHost CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType = "host"
 )
 
-func (e CreateDeploymentRequestBodyRewritesMissing1Type) ToPointer() *CreateDeploymentRequestBodyRewritesMissing1Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRewritesMissing1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = CreateDeploymentRequestBodyRewritesMissing1Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRewritesMissing1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRewritesMissing1 struct {
+type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1 struct {
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRewritesMissing1Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
 }
 
-func (o *CreateDeploymentRequestBodyRewritesMissing1) GetType() CreateDeploymentRequestBodyRewritesMissing1Type {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType {
 	if o == nil {
-		return CreateDeploymentRequestBodyRewritesMissing1Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRewritesMissing1) GetValue() string {
+func (o *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeploymentRequestBodyRewritesMissingType string
+type CreateDeploymentDeploymentsRequestMissingType string
 
 const (
-	CreateDeploymentRequestBodyRewritesMissingTypeCreateDeploymentRequestBodyRewritesMissing1 CreateDeploymentRequestBodyRewritesMissingType = "createDeployment_requestBody_rewrites_missing_1"
-	CreateDeploymentRequestBodyRewritesMissingTypeCreateDeploymentRequestBodyRewritesMissing2 CreateDeploymentRequestBodyRewritesMissingType = "createDeployment_requestBody_rewrites_missing_2"
+	CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1 CreateDeploymentDeploymentsRequestMissingType = "createDeployment_deployments_request_requestBody_rewrites_missing_1"
+	CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2 CreateDeploymentDeploymentsRequestMissingType = "createDeployment_deployments_request_requestBody_rewrites_missing_2"
 )
 
-type CreateDeploymentRequestBodyRewritesMissing struct {
-	CreateDeploymentRequestBodyRewritesMissing1 *CreateDeploymentRequestBodyRewritesMissing1
-	CreateDeploymentRequestBodyRewritesMissing2 *CreateDeploymentRequestBodyRewritesMissing2
+type CreateDeploymentDeploymentsRequestMissing struct {
+	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1 *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1
+	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2 *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2
 
-	Type CreateDeploymentRequestBodyRewritesMissingType
+	Type CreateDeploymentDeploymentsRequestMissingType
 }
 
-func CreateCreateDeploymentRequestBodyRewritesMissingCreateDeploymentRequestBodyRewritesMissing1(createDeploymentRequestBodyRewritesMissing1 CreateDeploymentRequestBodyRewritesMissing1) CreateDeploymentRequestBodyRewritesMissing {
-	typ := CreateDeploymentRequestBodyRewritesMissingTypeCreateDeploymentRequestBodyRewritesMissing1
+func CreateCreateDeploymentDeploymentsRequestMissingCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1(createDeploymentDeploymentsRequestRequestBodyRewritesMissing1 CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1) CreateDeploymentDeploymentsRequestMissing {
+	typ := CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1
 
-	return CreateDeploymentRequestBodyRewritesMissing{
-		CreateDeploymentRequestBodyRewritesMissing1: &createDeploymentRequestBodyRewritesMissing1,
+	return CreateDeploymentDeploymentsRequestMissing{
+		CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1: &createDeploymentDeploymentsRequestRequestBodyRewritesMissing1,
 		Type: typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyRewritesMissingCreateDeploymentRequestBodyRewritesMissing2(createDeploymentRequestBodyRewritesMissing2 CreateDeploymentRequestBodyRewritesMissing2) CreateDeploymentRequestBodyRewritesMissing {
-	typ := CreateDeploymentRequestBodyRewritesMissingTypeCreateDeploymentRequestBodyRewritesMissing2
+func CreateCreateDeploymentDeploymentsRequestMissingCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2(createDeploymentDeploymentsRequestRequestBodyRewritesMissing2 CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2) CreateDeploymentDeploymentsRequestMissing {
+	typ := CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2
 
-	return CreateDeploymentRequestBodyRewritesMissing{
-		CreateDeploymentRequestBodyRewritesMissing2: &createDeploymentRequestBodyRewritesMissing2,
+	return CreateDeploymentDeploymentsRequestMissing{
+		CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2: &createDeploymentDeploymentsRequestRequestBodyRewritesMissing2,
 		Type: typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyRewritesMissing) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentDeploymentsRequestMissing) UnmarshalJSON(data []byte) error {
 
-	createDeploymentRequestBodyRewritesMissing1 := new(CreateDeploymentRequestBodyRewritesMissing1)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRewritesMissing1, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRewritesMissing1 = createDeploymentRequestBodyRewritesMissing1
-		u.Type = CreateDeploymentRequestBodyRewritesMissingTypeCreateDeploymentRequestBodyRewritesMissing1
+	createDeploymentDeploymentsRequestRequestBodyRewritesMissing1 := new(CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRewritesMissing1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1 = createDeploymentDeploymentsRequestRequestBodyRewritesMissing1
+		u.Type = CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1
 		return nil
 	}
 
-	createDeploymentRequestBodyRewritesMissing2 := new(CreateDeploymentRequestBodyRewritesMissing2)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRewritesMissing2, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRewritesMissing2 = createDeploymentRequestBodyRewritesMissing2
-		u.Type = CreateDeploymentRequestBodyRewritesMissingTypeCreateDeploymentRequestBodyRewritesMissing2
+	createDeploymentDeploymentsRequestRequestBodyRewritesMissing2 := new(CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRewritesMissing2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2 = createDeploymentDeploymentsRequestRequestBodyRewritesMissing2
+		u.Type = CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyRewritesMissing) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyRewritesMissing1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRewritesMissing1, "", true)
+func (u CreateDeploymentDeploymentsRequestMissing) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyRewritesMissing2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRewritesMissing2, "", true)
+	if u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeploymentRequestBodyRewrites struct {
+type Rewrites struct {
 	// An absolute pathname to an existing resource or an external URL.
 	Destination string `json:"destination"`
 	// An array of requirements that are needed to match
-	Has []CreateDeploymentRequestBodyRewritesHas `json:"has,omitempty"`
+	Has []CreateDeploymentDeploymentsRequestHas `json:"has,omitempty"`
 	// An array of requirements that are needed to match
-	Missing []CreateDeploymentRequestBodyRewritesMissing `json:"missing,omitempty"`
+	Missing []CreateDeploymentDeploymentsRequestMissing `json:"missing,omitempty"`
 	// A pattern that matches each incoming pathname (excluding querystring).
 	Source string `json:"source"`
 }
 
-func (o *CreateDeploymentRequestBodyRewrites) GetDestination() string {
+func (o *Rewrites) GetDestination() string {
 	if o == nil {
 		return ""
 	}
 	return o.Destination
 }
 
-func (o *CreateDeploymentRequestBodyRewrites) GetHas() []CreateDeploymentRequestBodyRewritesHas {
+func (o *Rewrites) GetHas() []CreateDeploymentDeploymentsRequestHas {
 	if o == nil {
 		return nil
 	}
 	return o.Has
 }
 
-func (o *CreateDeploymentRequestBodyRewrites) GetMissing() []CreateDeploymentRequestBodyRewritesMissing {
+func (o *Rewrites) GetMissing() []CreateDeploymentDeploymentsRequestMissing {
 	if o == nil {
 		return nil
 	}
 	return o.Missing
 }
 
-func (o *CreateDeploymentRequestBodyRewrites) GetSource() string {
+func (o *Rewrites) GetSource() string {
 	if o == nil {
 		return ""
 	}
 	return o.Source
 }
 
-type CreateDeploymentRequestBodyRole struct {
+type Role struct {
 	BranchID  string  `json:"branch_id"`
 	CreatedAt string  `json:"created_at"`
 	Name      string  `json:"name"`
@@ -3557,49 +3557,49 @@ type CreateDeploymentRequestBodyRole struct {
 	UpdatedAt string  `json:"updated_at"`
 }
 
-func (o *CreateDeploymentRequestBodyRole) GetBranchID() string {
+func (o *Role) GetBranchID() string {
 	if o == nil {
 		return ""
 	}
 	return o.BranchID
 }
 
-func (o *CreateDeploymentRequestBodyRole) GetCreatedAt() string {
+func (o *Role) GetCreatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateDeploymentRequestBodyRole) GetName() string {
+func (o *Role) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeploymentRequestBodyRole) GetPassword() *string {
+func (o *Role) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
 }
 
-func (o *CreateDeploymentRequestBodyRole) GetProtected() *bool {
+func (o *Role) GetProtected() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Protected
 }
 
-func (o *CreateDeploymentRequestBodyRole) GetUpdatedAt() string {
+func (o *Role) GetUpdatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.UpdatedAt
 }
 
-type CreateDeploymentRequestBodyRoles struct {
+type Roles struct {
 	BranchID  string  `json:"branch_id"`
 	CreatedAt string  `json:"created_at"`
 	Name      string  `json:"name"`
@@ -3608,64 +3608,64 @@ type CreateDeploymentRequestBodyRoles struct {
 	UpdatedAt string  `json:"updated_at"`
 }
 
-func (o *CreateDeploymentRequestBodyRoles) GetBranchID() string {
+func (o *Roles) GetBranchID() string {
 	if o == nil {
 		return ""
 	}
 	return o.BranchID
 }
 
-func (o *CreateDeploymentRequestBodyRoles) GetCreatedAt() string {
+func (o *Roles) GetCreatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateDeploymentRequestBodyRoles) GetName() string {
+func (o *Roles) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeploymentRequestBodyRoles) GetPassword() *string {
+func (o *Roles) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
 }
 
-func (o *CreateDeploymentRequestBodyRoles) GetProtected() *bool {
+func (o *Roles) GetProtected() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Protected
 }
 
-func (o *CreateDeploymentRequestBodyRoles) GetUpdatedAt() string {
+func (o *Roles) GetUpdatedAt() string {
 	if o == nil {
 		return ""
 	}
 	return o.UpdatedAt
 }
 
-type CreateDeploymentRequestBodyRoutes2Handle string
+type Handle string
 
 const (
-	CreateDeploymentRequestBodyRoutes2HandleError      CreateDeploymentRequestBodyRoutes2Handle = "error"
-	CreateDeploymentRequestBodyRoutes2HandleFilesystem CreateDeploymentRequestBodyRoutes2Handle = "filesystem"
-	CreateDeploymentRequestBodyRoutes2HandleHit        CreateDeploymentRequestBodyRoutes2Handle = "hit"
-	CreateDeploymentRequestBodyRoutes2HandleMiss       CreateDeploymentRequestBodyRoutes2Handle = "miss"
-	CreateDeploymentRequestBodyRoutes2HandleResource   CreateDeploymentRequestBodyRoutes2Handle = "resource"
-	CreateDeploymentRequestBodyRoutes2HandleRewrite    CreateDeploymentRequestBodyRoutes2Handle = "rewrite"
+	HandleError      Handle = "error"
+	HandleFilesystem Handle = "filesystem"
+	HandleHit        Handle = "hit"
+	HandleMiss       Handle = "miss"
+	HandleResource   Handle = "resource"
+	HandleRewrite    Handle = "rewrite"
 )
 
-func (e CreateDeploymentRequestBodyRoutes2Handle) ToPointer() *CreateDeploymentRequestBodyRoutes2Handle {
+func (e Handle) ToPointer() *Handle {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRoutes2Handle) UnmarshalJSON(data []byte) error {
+func (e *Handle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3682,38 +3682,38 @@ func (e *CreateDeploymentRequestBodyRoutes2Handle) UnmarshalJSON(data []byte) er
 	case "resource":
 		fallthrough
 	case "rewrite":
-		*e = CreateDeploymentRequestBodyRoutes2Handle(v)
+		*e = Handle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRoutes2Handle: %v", v)
+		return fmt.Errorf("invalid value for Handle: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRoutes2 struct {
-	Handle CreateDeploymentRequestBodyRoutes2Handle `json:"handle"`
+type CreateDeployment2 struct {
+	Handle Handle `json:"handle"`
 }
 
-func (o *CreateDeploymentRequestBodyRoutes2) GetHandle() CreateDeploymentRequestBodyRoutes2Handle {
+func (o *CreateDeployment2) GetHandle() Handle {
 	if o == nil {
-		return CreateDeploymentRequestBodyRoutes2Handle("")
+		return Handle("")
 	}
 	return o.Handle
 }
 
-// CreateDeploymentRequestBodyRoutes1Has2Type - The type of request element to check
-type CreateDeploymentRequestBodyRoutes1Has2Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type string
 
 const (
-	CreateDeploymentRequestBodyRoutes1Has2TypeHeader CreateDeploymentRequestBodyRoutes1Has2Type = "header"
-	CreateDeploymentRequestBodyRoutes1Has2TypeCookie CreateDeploymentRequestBodyRoutes1Has2Type = "cookie"
-	CreateDeploymentRequestBodyRoutes1Has2TypeQuery  CreateDeploymentRequestBodyRoutes1Has2Type = "query"
+	CreateDeploymentDeploymentsRequestRequestBodyRoutes1TypeHeader CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type = "header"
+	CreateDeploymentDeploymentsRequestRequestBodyRoutes1TypeCookie CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type = "cookie"
+	CreateDeploymentDeploymentsRequestRequestBodyRoutes1TypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type = "query"
 )
 
-func (e CreateDeploymentRequestBodyRoutes1Has2Type) ToPointer() *CreateDeploymentRequestBodyRoutes1Has2Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRoutes1Has2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3724,153 +3724,153 @@ func (e *CreateDeploymentRequestBodyRoutes1Has2Type) UnmarshalJSON(data []byte) 
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = CreateDeploymentRequestBodyRoutes1Has2Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRoutes1Has2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRoutes1Has2 struct {
+type CreateDeploymentDeployments2 struct {
 	// The name of the element contained in the particular type
 	Key string `json:"key"`
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRoutes1Has2Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Has2) GetKey() string {
+func (o *CreateDeploymentDeployments2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Has2) GetType() CreateDeploymentRequestBodyRoutes1Has2Type {
+func (o *CreateDeploymentDeployments2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type {
 	if o == nil {
-		return CreateDeploymentRequestBodyRoutes1Has2Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Has2) GetValue() *string {
+func (o *CreateDeploymentDeployments2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-// CreateDeploymentRequestBodyRoutes1Has1Type - The type of request element to check
-type CreateDeploymentRequestBodyRoutes1Has1Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRoutesType - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRoutesType string
 
 const (
-	CreateDeploymentRequestBodyRoutes1Has1TypeHost CreateDeploymentRequestBodyRoutes1Has1Type = "host"
+	CreateDeploymentDeploymentsRequestRequestBodyRoutesTypeHost CreateDeploymentDeploymentsRequestRequestBodyRoutesType = "host"
 )
 
-func (e CreateDeploymentRequestBodyRoutes1Has1Type) ToPointer() *CreateDeploymentRequestBodyRoutes1Has1Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRoutesType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRoutesType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRoutes1Has1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRoutesType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = CreateDeploymentRequestBodyRoutes1Has1Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRoutesType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRoutes1Has1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRoutesType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRoutes1Has1 struct {
+type CreateDeploymentDeployments1 struct {
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRoutes1Has1Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRoutesType `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Has1) GetType() CreateDeploymentRequestBodyRoutes1Has1Type {
+func (o *CreateDeploymentDeployments1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRoutesType {
 	if o == nil {
-		return CreateDeploymentRequestBodyRoutes1Has1Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRoutesType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Has1) GetValue() string {
+func (o *CreateDeploymentDeployments1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeploymentRequestBodyRoutes1HasType string
+type HasType string
 
 const (
-	CreateDeploymentRequestBodyRoutes1HasTypeCreateDeploymentRequestBodyRoutes1Has1 CreateDeploymentRequestBodyRoutes1HasType = "createDeployment_requestBody_routes_1_has_1"
-	CreateDeploymentRequestBodyRoutes1HasTypeCreateDeploymentRequestBodyRoutes1Has2 CreateDeploymentRequestBodyRoutes1HasType = "createDeployment_requestBody_routes_1_has_2"
+	HasTypeCreateDeploymentDeployments1 HasType = "createDeployment_deployments_1"
+	HasTypeCreateDeploymentDeployments2 HasType = "createDeployment_deployments_2"
 )
 
-type CreateDeploymentRequestBodyRoutes1Has struct {
-	CreateDeploymentRequestBodyRoutes1Has1 *CreateDeploymentRequestBodyRoutes1Has1
-	CreateDeploymentRequestBodyRoutes1Has2 *CreateDeploymentRequestBodyRoutes1Has2
+type Has struct {
+	CreateDeploymentDeployments1 *CreateDeploymentDeployments1
+	CreateDeploymentDeployments2 *CreateDeploymentDeployments2
 
-	Type CreateDeploymentRequestBodyRoutes1HasType
+	Type HasType
 }
 
-func CreateCreateDeploymentRequestBodyRoutes1HasCreateDeploymentRequestBodyRoutes1Has1(createDeploymentRequestBodyRoutes1Has1 CreateDeploymentRequestBodyRoutes1Has1) CreateDeploymentRequestBodyRoutes1Has {
-	typ := CreateDeploymentRequestBodyRoutes1HasTypeCreateDeploymentRequestBodyRoutes1Has1
+func CreateHasCreateDeploymentDeployments1(createDeploymentDeployments1 CreateDeploymentDeployments1) Has {
+	typ := HasTypeCreateDeploymentDeployments1
 
-	return CreateDeploymentRequestBodyRoutes1Has{
-		CreateDeploymentRequestBodyRoutes1Has1: &createDeploymentRequestBodyRoutes1Has1,
-		Type:                                   typ,
+	return Has{
+		CreateDeploymentDeployments1: &createDeploymentDeployments1,
+		Type:                         typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyRoutes1HasCreateDeploymentRequestBodyRoutes1Has2(createDeploymentRequestBodyRoutes1Has2 CreateDeploymentRequestBodyRoutes1Has2) CreateDeploymentRequestBodyRoutes1Has {
-	typ := CreateDeploymentRequestBodyRoutes1HasTypeCreateDeploymentRequestBodyRoutes1Has2
+func CreateHasCreateDeploymentDeployments2(createDeploymentDeployments2 CreateDeploymentDeployments2) Has {
+	typ := HasTypeCreateDeploymentDeployments2
 
-	return CreateDeploymentRequestBodyRoutes1Has{
-		CreateDeploymentRequestBodyRoutes1Has2: &createDeploymentRequestBodyRoutes1Has2,
-		Type:                                   typ,
+	return Has{
+		CreateDeploymentDeployments2: &createDeploymentDeployments2,
+		Type:                         typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyRoutes1Has) UnmarshalJSON(data []byte) error {
+func (u *Has) UnmarshalJSON(data []byte) error {
 
-	createDeploymentRequestBodyRoutes1Has1 := new(CreateDeploymentRequestBodyRoutes1Has1)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes1Has1, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRoutes1Has1 = createDeploymentRequestBodyRoutes1Has1
-		u.Type = CreateDeploymentRequestBodyRoutes1HasTypeCreateDeploymentRequestBodyRoutes1Has1
+	createDeploymentDeployments1 := new(CreateDeploymentDeployments1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeployments1, "", true, true); err == nil {
+		u.CreateDeploymentDeployments1 = createDeploymentDeployments1
+		u.Type = HasTypeCreateDeploymentDeployments1
 		return nil
 	}
 
-	createDeploymentRequestBodyRoutes1Has2 := new(CreateDeploymentRequestBodyRoutes1Has2)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes1Has2, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRoutes1Has2 = createDeploymentRequestBodyRoutes1Has2
-		u.Type = CreateDeploymentRequestBodyRoutes1HasTypeCreateDeploymentRequestBodyRoutes1Has2
+	createDeploymentDeployments2 := new(CreateDeploymentDeployments2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeployments2, "", true, true); err == nil {
+		u.CreateDeploymentDeployments2 = createDeploymentDeployments2
+		u.Type = HasTypeCreateDeploymentDeployments2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyRoutes1Has) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyRoutes1Has1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes1Has1, "", true)
+func (u Has) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeployments1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeployments1, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyRoutes1Has2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes1Has2, "", true)
+	if u.CreateDeploymentDeployments2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeployments2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeploymentRequestBodyRoutes1Locale struct {
+type Locale struct {
 	Cookie   *string           `json:"cookie,omitempty"`
 	Default  *string           `json:"default,omitempty"`
 	Path     *string           `json:"path,omitempty"`
@@ -3878,55 +3878,55 @@ type CreateDeploymentRequestBodyRoutes1Locale struct {
 	Value    *string           `json:"value,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Locale) GetCookie() *string {
+func (o *Locale) GetCookie() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Cookie
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Locale) GetDefault() *string {
+func (o *Locale) GetDefault() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Default
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Locale) GetPath() *string {
+func (o *Locale) GetPath() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Path
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Locale) GetRedirect() map[string]string {
+func (o *Locale) GetRedirect() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Redirect
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Locale) GetValue() *string {
+func (o *Locale) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-// CreateDeploymentRequestBodyRoutes1Missing2Type - The type of request element to check
-type CreateDeploymentRequestBodyRoutes1Missing2Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type string
 
 const (
-	CreateDeploymentRequestBodyRoutes1Missing2TypeHeader CreateDeploymentRequestBodyRoutes1Missing2Type = "header"
-	CreateDeploymentRequestBodyRoutes1Missing2TypeCookie CreateDeploymentRequestBodyRoutes1Missing2Type = "cookie"
-	CreateDeploymentRequestBodyRoutes1Missing2TypeQuery  CreateDeploymentRequestBodyRoutes1Missing2Type = "query"
+	CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2TypeHeader CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type = "header"
+	CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2TypeCookie CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type = "cookie"
+	CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2TypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type = "query"
 )
 
-func (e CreateDeploymentRequestBodyRoutes1Missing2Type) ToPointer() *CreateDeploymentRequestBodyRoutes1Missing2Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRoutes1Missing2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3937,377 +3937,377 @@ func (e *CreateDeploymentRequestBodyRoutes1Missing2Type) UnmarshalJSON(data []by
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = CreateDeploymentRequestBodyRoutes1Missing2Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRoutes1Missing2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRoutes1Missing2 struct {
+type CreateDeploymentDeploymentsRequest2 struct {
 	// The name of the element contained in the particular type
 	Key string `json:"key"`
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRoutes1Missing2Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value *string `json:"value,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Missing2) GetKey() string {
+func (o *CreateDeploymentDeploymentsRequest2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Missing2) GetType() CreateDeploymentRequestBodyRoutes1Missing2Type {
+func (o *CreateDeploymentDeploymentsRequest2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type {
 	if o == nil {
-		return CreateDeploymentRequestBodyRoutes1Missing2Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Missing2) GetValue() *string {
+func (o *CreateDeploymentDeploymentsRequest2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-// CreateDeploymentRequestBodyRoutes1Missing1Type - The type of request element to check
-type CreateDeploymentRequestBodyRoutes1Missing1Type string
+// CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType - The type of request element to check
+type CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType string
 
 const (
-	CreateDeploymentRequestBodyRoutes1Missing1TypeHost CreateDeploymentRequestBodyRoutes1Missing1Type = "host"
+	CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingTypeHost CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType = "host"
 )
 
-func (e CreateDeploymentRequestBodyRoutes1Missing1Type) ToPointer() *CreateDeploymentRequestBodyRoutes1Missing1Type {
+func (e CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyRoutes1Missing1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = CreateDeploymentRequestBodyRoutes1Missing1Type(v)
+		*e = CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyRoutes1Missing1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType: %v", v)
 	}
 }
 
-type CreateDeploymentRequestBodyRoutes1Missing1 struct {
+type CreateDeploymentDeploymentsRequest1 struct {
 	// The type of request element to check
-	Type CreateDeploymentRequestBodyRoutes1Missing1Type `json:"type"`
+	Type CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType `json:"type"`
 	// A regular expression used to match the value. Named groups can be used in the destination
 	Value string `json:"value"`
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Missing1) GetType() CreateDeploymentRequestBodyRoutes1Missing1Type {
+func (o *CreateDeploymentDeploymentsRequest1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType {
 	if o == nil {
-		return CreateDeploymentRequestBodyRoutes1Missing1Type("")
+		return CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1Missing1) GetValue() string {
+func (o *CreateDeploymentDeploymentsRequest1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeploymentRequestBodyRoutes1MissingType string
+type MissingType string
 
 const (
-	CreateDeploymentRequestBodyRoutes1MissingTypeCreateDeploymentRequestBodyRoutes1Missing1 CreateDeploymentRequestBodyRoutes1MissingType = "createDeployment_requestBody_routes_1_missing_1"
-	CreateDeploymentRequestBodyRoutes1MissingTypeCreateDeploymentRequestBodyRoutes1Missing2 CreateDeploymentRequestBodyRoutes1MissingType = "createDeployment_requestBody_routes_1_missing_2"
+	MissingTypeCreateDeploymentDeploymentsRequest1 MissingType = "createDeployment_deployments_request_1"
+	MissingTypeCreateDeploymentDeploymentsRequest2 MissingType = "createDeployment_deployments_request_2"
 )
 
-type CreateDeploymentRequestBodyRoutes1Missing struct {
-	CreateDeploymentRequestBodyRoutes1Missing1 *CreateDeploymentRequestBodyRoutes1Missing1
-	CreateDeploymentRequestBodyRoutes1Missing2 *CreateDeploymentRequestBodyRoutes1Missing2
+type Missing struct {
+	CreateDeploymentDeploymentsRequest1 *CreateDeploymentDeploymentsRequest1
+	CreateDeploymentDeploymentsRequest2 *CreateDeploymentDeploymentsRequest2
 
-	Type CreateDeploymentRequestBodyRoutes1MissingType
+	Type MissingType
 }
 
-func CreateCreateDeploymentRequestBodyRoutes1MissingCreateDeploymentRequestBodyRoutes1Missing1(createDeploymentRequestBodyRoutes1Missing1 CreateDeploymentRequestBodyRoutes1Missing1) CreateDeploymentRequestBodyRoutes1Missing {
-	typ := CreateDeploymentRequestBodyRoutes1MissingTypeCreateDeploymentRequestBodyRoutes1Missing1
+func CreateMissingCreateDeploymentDeploymentsRequest1(createDeploymentDeploymentsRequest1 CreateDeploymentDeploymentsRequest1) Missing {
+	typ := MissingTypeCreateDeploymentDeploymentsRequest1
 
-	return CreateDeploymentRequestBodyRoutes1Missing{
-		CreateDeploymentRequestBodyRoutes1Missing1: &createDeploymentRequestBodyRoutes1Missing1,
-		Type: typ,
+	return Missing{
+		CreateDeploymentDeploymentsRequest1: &createDeploymentDeploymentsRequest1,
+		Type:                                typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyRoutes1MissingCreateDeploymentRequestBodyRoutes1Missing2(createDeploymentRequestBodyRoutes1Missing2 CreateDeploymentRequestBodyRoutes1Missing2) CreateDeploymentRequestBodyRoutes1Missing {
-	typ := CreateDeploymentRequestBodyRoutes1MissingTypeCreateDeploymentRequestBodyRoutes1Missing2
+func CreateMissingCreateDeploymentDeploymentsRequest2(createDeploymentDeploymentsRequest2 CreateDeploymentDeploymentsRequest2) Missing {
+	typ := MissingTypeCreateDeploymentDeploymentsRequest2
 
-	return CreateDeploymentRequestBodyRoutes1Missing{
-		CreateDeploymentRequestBodyRoutes1Missing2: &createDeploymentRequestBodyRoutes1Missing2,
-		Type: typ,
+	return Missing{
+		CreateDeploymentDeploymentsRequest2: &createDeploymentDeploymentsRequest2,
+		Type:                                typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyRoutes1Missing) UnmarshalJSON(data []byte) error {
+func (u *Missing) UnmarshalJSON(data []byte) error {
 
-	createDeploymentRequestBodyRoutes1Missing1 := new(CreateDeploymentRequestBodyRoutes1Missing1)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes1Missing1, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRoutes1Missing1 = createDeploymentRequestBodyRoutes1Missing1
-		u.Type = CreateDeploymentRequestBodyRoutes1MissingTypeCreateDeploymentRequestBodyRoutes1Missing1
+	createDeploymentDeploymentsRequest1 := new(CreateDeploymentDeploymentsRequest1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequest1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequest1 = createDeploymentDeploymentsRequest1
+		u.Type = MissingTypeCreateDeploymentDeploymentsRequest1
 		return nil
 	}
 
-	createDeploymentRequestBodyRoutes1Missing2 := new(CreateDeploymentRequestBodyRoutes1Missing2)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes1Missing2, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRoutes1Missing2 = createDeploymentRequestBodyRoutes1Missing2
-		u.Type = CreateDeploymentRequestBodyRoutes1MissingTypeCreateDeploymentRequestBodyRoutes1Missing2
+	createDeploymentDeploymentsRequest2 := new(CreateDeploymentDeploymentsRequest2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequest2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsRequest2 = createDeploymentDeploymentsRequest2
+		u.Type = MissingTypeCreateDeploymentDeploymentsRequest2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyRoutes1Missing) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyRoutes1Missing1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes1Missing1, "", true)
+func (u Missing) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsRequest1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequest1, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyRoutes1Missing2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes1Missing2, "", true)
+	if u.CreateDeploymentDeploymentsRequest2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequest2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeploymentRequestBodyRoutes1 struct {
+type CreateDeployment1 struct {
 	CaseSensitive *bool   `json:"caseSensitive,omitempty"`
 	Check         *bool   `json:"check,omitempty"`
 	Continue      *bool   `json:"continue,omitempty"`
 	Dest          *string `json:"dest,omitempty"`
 	// An array of requirements that are needed to match
-	Has              []CreateDeploymentRequestBodyRoutes1Has   `json:"has,omitempty"`
-	Headers          map[string]string                         `json:"headers,omitempty"`
-	Important        *bool                                     `json:"important,omitempty"`
-	IsInternal       *bool                                     `json:"isInternal,omitempty"`
-	Locale           *CreateDeploymentRequestBodyRoutes1Locale `json:"locale,omitempty"`
-	Methods          []string                                  `json:"methods,omitempty"`
-	Middleware       *int64                                    `json:"middleware,omitempty"`
-	MiddlewarePath   *string                                   `json:"middlewarePath,omitempty"`
-	MiddlewareRawSrc []string                                  `json:"middlewareRawSrc,omitempty"`
+	Has              []Has             `json:"has,omitempty"`
+	Headers          map[string]string `json:"headers,omitempty"`
+	Important        *bool             `json:"important,omitempty"`
+	IsInternal       *bool             `json:"isInternal,omitempty"`
+	Locale           *Locale           `json:"locale,omitempty"`
+	Methods          []string          `json:"methods,omitempty"`
+	Middleware       *int64            `json:"middleware,omitempty"`
+	MiddlewarePath   *string           `json:"middlewarePath,omitempty"`
+	MiddlewareRawSrc []string          `json:"middlewareRawSrc,omitempty"`
 	// An array of requirements that are needed to match
-	Missing  []CreateDeploymentRequestBodyRoutes1Missing `json:"missing,omitempty"`
-	Override *bool                                       `json:"override,omitempty"`
-	Src      string                                      `json:"src"`
-	Status   *int64                                      `json:"status,omitempty"`
-	User     *bool                                       `json:"user,omitempty"`
+	Missing  []Missing `json:"missing,omitempty"`
+	Override *bool     `json:"override,omitempty"`
+	Src      string    `json:"src"`
+	Status   *int64    `json:"status,omitempty"`
+	User     *bool     `json:"user,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetCaseSensitive() *bool {
+func (o *CreateDeployment1) GetCaseSensitive() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.CaseSensitive
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetCheck() *bool {
+func (o *CreateDeployment1) GetCheck() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Check
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetContinue() *bool {
+func (o *CreateDeployment1) GetContinue() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Continue
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetDest() *string {
+func (o *CreateDeployment1) GetDest() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dest
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetHas() []CreateDeploymentRequestBodyRoutes1Has {
+func (o *CreateDeployment1) GetHas() []Has {
 	if o == nil {
 		return nil
 	}
 	return o.Has
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetHeaders() map[string]string {
+func (o *CreateDeployment1) GetHeaders() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Headers
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetImportant() *bool {
+func (o *CreateDeployment1) GetImportant() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Important
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetIsInternal() *bool {
+func (o *CreateDeployment1) GetIsInternal() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IsInternal
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetLocale() *CreateDeploymentRequestBodyRoutes1Locale {
+func (o *CreateDeployment1) GetLocale() *Locale {
 	if o == nil {
 		return nil
 	}
 	return o.Locale
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetMethods() []string {
+func (o *CreateDeployment1) GetMethods() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Methods
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetMiddleware() *int64 {
+func (o *CreateDeployment1) GetMiddleware() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Middleware
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetMiddlewarePath() *string {
+func (o *CreateDeployment1) GetMiddlewarePath() *string {
 	if o == nil {
 		return nil
 	}
 	return o.MiddlewarePath
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetMiddlewareRawSrc() []string {
+func (o *CreateDeployment1) GetMiddlewareRawSrc() []string {
 	if o == nil {
 		return nil
 	}
 	return o.MiddlewareRawSrc
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetMissing() []CreateDeploymentRequestBodyRoutes1Missing {
+func (o *CreateDeployment1) GetMissing() []Missing {
 	if o == nil {
 		return nil
 	}
 	return o.Missing
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetOverride() *bool {
+func (o *CreateDeployment1) GetOverride() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Override
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetSrc() string {
+func (o *CreateDeployment1) GetSrc() string {
 	if o == nil {
 		return ""
 	}
 	return o.Src
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetStatus() *int64 {
+func (o *CreateDeployment1) GetStatus() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Status
 }
 
-func (o *CreateDeploymentRequestBodyRoutes1) GetUser() *bool {
+func (o *CreateDeployment1) GetUser() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.User
 }
 
-type CreateDeploymentRequestBodyRoutesType string
+type RoutesType string
 
 const (
-	CreateDeploymentRequestBodyRoutesTypeCreateDeploymentRequestBodyRoutes1 CreateDeploymentRequestBodyRoutesType = "createDeployment_requestBody_routes_1"
-	CreateDeploymentRequestBodyRoutesTypeCreateDeploymentRequestBodyRoutes2 CreateDeploymentRequestBodyRoutesType = "createDeployment_requestBody_routes_2"
+	RoutesTypeCreateDeployment1 RoutesType = "createDeployment_1"
+	RoutesTypeCreateDeployment2 RoutesType = "createDeployment_2"
 )
 
-type CreateDeploymentRequestBodyRoutes struct {
-	CreateDeploymentRequestBodyRoutes1 *CreateDeploymentRequestBodyRoutes1
-	CreateDeploymentRequestBodyRoutes2 *CreateDeploymentRequestBodyRoutes2
+type Routes struct {
+	CreateDeployment1 *CreateDeployment1
+	CreateDeployment2 *CreateDeployment2
 
-	Type CreateDeploymentRequestBodyRoutesType
+	Type RoutesType
 }
 
-func CreateCreateDeploymentRequestBodyRoutesCreateDeploymentRequestBodyRoutes1(createDeploymentRequestBodyRoutes1 CreateDeploymentRequestBodyRoutes1) CreateDeploymentRequestBodyRoutes {
-	typ := CreateDeploymentRequestBodyRoutesTypeCreateDeploymentRequestBodyRoutes1
+func CreateRoutesCreateDeployment1(createDeployment1 CreateDeployment1) Routes {
+	typ := RoutesTypeCreateDeployment1
 
-	return CreateDeploymentRequestBodyRoutes{
-		CreateDeploymentRequestBodyRoutes1: &createDeploymentRequestBodyRoutes1,
-		Type:                               typ,
+	return Routes{
+		CreateDeployment1: &createDeployment1,
+		Type:              typ,
 	}
 }
 
-func CreateCreateDeploymentRequestBodyRoutesCreateDeploymentRequestBodyRoutes2(createDeploymentRequestBodyRoutes2 CreateDeploymentRequestBodyRoutes2) CreateDeploymentRequestBodyRoutes {
-	typ := CreateDeploymentRequestBodyRoutesTypeCreateDeploymentRequestBodyRoutes2
+func CreateRoutesCreateDeployment2(createDeployment2 CreateDeployment2) Routes {
+	typ := RoutesTypeCreateDeployment2
 
-	return CreateDeploymentRequestBodyRoutes{
-		CreateDeploymentRequestBodyRoutes2: &createDeploymentRequestBodyRoutes2,
-		Type:                               typ,
+	return Routes{
+		CreateDeployment2: &createDeployment2,
+		Type:              typ,
 	}
 }
 
-func (u *CreateDeploymentRequestBodyRoutes) UnmarshalJSON(data []byte) error {
+func (u *Routes) UnmarshalJSON(data []byte) error {
 
-	createDeploymentRequestBodyRoutes2 := new(CreateDeploymentRequestBodyRoutes2)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes2, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRoutes2 = createDeploymentRequestBodyRoutes2
-		u.Type = CreateDeploymentRequestBodyRoutesTypeCreateDeploymentRequestBodyRoutes2
+	createDeployment2 := new(CreateDeployment2)
+	if err := utils.UnmarshalJSON(data, &createDeployment2, "", true, true); err == nil {
+		u.CreateDeployment2 = createDeployment2
+		u.Type = RoutesTypeCreateDeployment2
 		return nil
 	}
 
-	createDeploymentRequestBodyRoutes1 := new(CreateDeploymentRequestBodyRoutes1)
-	if err := utils.UnmarshalJSON(data, &createDeploymentRequestBodyRoutes1, "", true, true); err == nil {
-		u.CreateDeploymentRequestBodyRoutes1 = createDeploymentRequestBodyRoutes1
-		u.Type = CreateDeploymentRequestBodyRoutesTypeCreateDeploymentRequestBodyRoutes1
+	createDeployment1 := new(CreateDeployment1)
+	if err := utils.UnmarshalJSON(data, &createDeployment1, "", true, true); err == nil {
+		u.CreateDeployment1 = createDeployment1
+		u.Type = RoutesTypeCreateDeployment1
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeploymentRequestBodyRoutes) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentRequestBodyRoutes1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes1, "", true)
+func (u Routes) MarshalJSON() ([]byte, error) {
+	if u.CreateDeployment1 != nil {
+		return utils.MarshalJSON(u.CreateDeployment1, "", true)
 	}
 
-	if u.CreateDeploymentRequestBodyRoutes2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentRequestBodyRoutes2, "", true)
+	if u.CreateDeployment2 != nil {
+		return utils.MarshalJSON(u.CreateDeployment2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// CreateDeploymentRequestBodyTarget - Either not defined, `staging`, or `production`. If `staging`, a staging alias in the format `<project>-<team>.vercel.app` will be assigned. If `production`, any aliases defined in `alias` will be assigned. If omitted, the target will be `preview`
-type CreateDeploymentRequestBodyTarget string
+// Target - Either not defined, `staging`, or `production`. If `staging`, a staging alias in the format `<project>-<team>.vercel.app` will be assigned. If `production`, any aliases defined in `alias` will be assigned. If omitted, the target will be `preview`
+type Target string
 
 const (
-	CreateDeploymentRequestBodyTargetStaging    CreateDeploymentRequestBodyTarget = "staging"
-	CreateDeploymentRequestBodyTargetProduction CreateDeploymentRequestBodyTarget = "production"
+	TargetStaging    Target = "staging"
+	TargetProduction Target = "production"
 )
 
-func (e CreateDeploymentRequestBodyTarget) ToPointer() *CreateDeploymentRequestBodyTarget {
+func (e Target) ToPointer() *Target {
 	return &e
 }
 
-func (e *CreateDeploymentRequestBodyTarget) UnmarshalJSON(data []byte) error {
+func (e *Target) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4316,10 +4316,10 @@ func (e *CreateDeploymentRequestBodyTarget) UnmarshalJSON(data []byte) error {
 	case "staging":
 		fallthrough
 	case "production":
-		*e = CreateDeploymentRequestBodyTarget(v)
+		*e = Target(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentRequestBodyTarget: %v", v)
+		return fmt.Errorf("invalid value for Target: %v", v)
 	}
 }
 
@@ -4327,50 +4327,50 @@ type CreateDeploymentRequestBody struct {
 	// Ignored. Can be set to get completions, validations and documentation in some editors.
 	DollarSchema *string `json:"$schema,omitempty"`
 	// Aliases that will get assigned when the deployment is `READY` and the target is `production`. The client needs to make a `GET` request to its API to ensure the assignment
-	Alias  []string                          `json:"alias,omitempty"`
-	Branch CreateDeploymentRequestBodyBranch `json:"branch"`
+	Alias  []string `json:"alias,omitempty"`
+	Branch Branch   `json:"branch"`
 	// An object containing another object with information to be passed to the Build Process
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Build *CreateDeploymentRequestBodyBuild `json:"build,omitempty"`
+	Build *Build `json:"build,omitempty"`
 	// The build command for this project. When `null` is used this value will be automatically detected
 	BuildCommand *string `json:"buildCommand,omitempty"`
 	// A list of build descriptions whose src references valid source files.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Builds []CreateDeploymentRequestBodyBuilds `json:"builds,omitempty"`
+	Builds []Builds `json:"builds,omitempty"`
 	// When set to `true`, all HTML files and Serverless Functions will have their extension removed. When visiting a path that ends with the extension, a 308 response will redirect the client to the extensionless path.
-	CleanUrls      *bool                                       `json:"cleanUrls,omitempty"`
-	ConnectionUris []CreateDeploymentRequestBodyConnectionUris `json:"connection_uris"`
+	CleanUrls      *bool            `json:"cleanUrls,omitempty"`
+	ConnectionUris []ConnectionUris `json:"connection_uris"`
 	// An array of cron jobs that should be created for production Deployments.
-	Crons     []CreateDeploymentRequestBodyCrons     `json:"crons,omitempty"`
-	Database  CreateDeploymentRequestBodyDatabase    `json:"database"`
-	Databases []CreateDeploymentRequestBodyDatabases `json:"databases"`
+	Crons     []Crons     `json:"crons,omitempty"`
+	Database  Database    `json:"database"`
+	Databases []Databases `json:"databases"`
 	// An deployment id for an existing deployment to redeploy
 	DeploymentID *string `json:"deploymentId,omitempty"`
 	// The dev command for this project. When `null` is used this value will be automatically detected
-	DevCommand *string                                `json:"devCommand,omitempty"`
-	Endpoint   CreateDeploymentRequestBodyEndpoint    `json:"endpoint"`
-	Endpoints  []CreateDeploymentRequestBodyEndpoints `json:"endpoints"`
+	DevCommand *string     `json:"devCommand,omitempty"`
+	Endpoint   Endpoint    `json:"endpoint"`
+	Endpoints  []Endpoints `json:"endpoints"`
 	// An object containing the deployment's environment variable names and values. Secrets can be referenced by prefixing the value with `@`
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Env map[string]string `json:"env,omitempty"`
 	// A list of objects with the files to be deployed
-	Files []CreateDeploymentRequestBodyFiles `json:"files,omitempty"`
+	Files []Files `json:"files,omitempty"`
 	// The framework that is being used for this project. When `null` is used no framework is selected
-	Framework *CreateDeploymentRequestBodyFramework `json:"framework,omitempty"`
+	Framework *Framework `json:"framework,omitempty"`
 	// An object describing custom options for your Serverless Functions. Each key must be glob pattern that matches the paths of the Serverless Functions you would like to customize (like `api/*.js` or `api/test.js`).
-	Functions map[string]CreateDeploymentRequestBodyFunctions `json:"functions,omitempty"`
-	Git       *CreateDeploymentRequestBodyGit                 `json:"git,omitempty"`
+	Functions map[string]Functions `json:"functions,omitempty"`
+	Git       *Git                 `json:"git,omitempty"`
 	// Populates initial git metadata for different git providers.
-	GitMetadata *CreateDeploymentRequestBodyGitMetadata `json:"gitMetadata,omitempty"`
+	GitMetadata *GitMetadata `json:"gitMetadata,omitempty"`
 	// Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
-	GitSource *CreateDeploymentRequestBodyGitSource `json:"gitSource,omitempty"`
+	GitSource *GitSource `json:"gitSource,omitempty"`
 	// A list of header definitions.
-	Headers       []CreateDeploymentRequestBodyHeaders `json:"headers,omitempty"`
-	IgnoreCommand *string                              `json:"ignoreCommand,omitempty"`
-	Images        *CreateDeploymentRequestBodyImages   `json:"images,omitempty"`
+	Headers       []Headers `json:"headers,omitempty"`
+	IgnoreCommand *string   `json:"ignoreCommand,omitempty"`
+	Images        *Images   `json:"images,omitempty"`
 	// The install command for this project. When `null` is used this value will be automatically detected
 	InstallCommand *string `json:"installCommand,omitempty"`
 	// An object containing the deployment's metadata. Multiple key-value pairs can be attached to a deployment
@@ -4380,29 +4380,29 @@ type CreateDeploymentRequestBody struct {
 	// A string with the project name used in the deployment URL
 	Name string `json:"name"`
 	// The output directory of the project. When `null` is used this value will be automatically detected
-	OutputDirectory *string                               `json:"outputDirectory,omitempty"`
-	Pagination      CreateDeploymentRequestBodyPagination `json:"pagination"`
-	Password        string                                `json:"password"`
-	Project         CreateDeploymentRequestBodyProject    `json:"project"`
+	OutputDirectory *string    `json:"outputDirectory,omitempty"`
+	Pagination      Pagination `json:"pagination"`
+	Password        string     `json:"password"`
+	Project         Project    `json:"project"`
 	// Project settings that will be applied to the deployment. It is required for the first deployment of a project and will be saved for any following deployments
-	ProjectSettings *CreateDeploymentRequestBodyProjectSettings1 `json:"projectSettings,omitempty"`
-	Projects        []CreateDeploymentRequestBodyProjects        `json:"projects"`
+	ProjectSettings *ProjectSettings `json:"projectSettings,omitempty"`
+	Projects        []Projects       `json:"projects"`
 	// Whether a deployment's source and logs are available publicly
 	Public *bool `json:"public,omitempty"`
 	// A list of redirect definitions.
-	Redirects []CreateDeploymentRequestBodyRedirects `json:"redirects,omitempty"`
+	Redirects []Redirects `json:"redirects,omitempty"`
 	// An array of the regions the deployment's Serverless Functions should be deployed to
 	Regions []string `json:"regions,omitempty"`
 	// A list of rewrite definitions.
-	Rewrites []CreateDeploymentRequestBodyRewrites `json:"rewrites,omitempty"`
-	Role     CreateDeploymentRequestBodyRole       `json:"role"`
-	Roles    []CreateDeploymentRequestBodyRoles    `json:"roles"`
+	Rewrites []Rewrites `json:"rewrites,omitempty"`
+	Role     Role       `json:"role"`
+	Roles    []Roles    `json:"roles"`
 	// A list of routes objects used to rewrite paths to point towards other internal or external paths
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Routes []CreateDeploymentRequestBodyRoutes `json:"routes,omitempty"`
+	Routes []Routes `json:"routes,omitempty"`
 	// Either not defined, `staging`, or `production`. If `staging`, a staging alias in the format `<project>-<team>.vercel.app` will be assigned. If `production`, any aliases defined in `alias` will be assigned. If omitted, the target will be `preview`
-	Target *CreateDeploymentRequestBodyTarget `json:"target,omitempty"`
+	Target *Target `json:"target,omitempty"`
 	// When `false`, visiting a path that ends with a forward slash will respond with a `308` status code and redirect to the path without the trailing slash.
 	TrailingSlash *bool `json:"trailingSlash,omitempty"`
 	// When `true` and `deploymentId` is passed in, the sha from the previous deployment's `gitSource` is removed forcing the latest commit to be used.
@@ -4423,14 +4423,14 @@ func (o *CreateDeploymentRequestBody) GetAlias() []string {
 	return o.Alias
 }
 
-func (o *CreateDeploymentRequestBody) GetBranch() CreateDeploymentRequestBodyBranch {
+func (o *CreateDeploymentRequestBody) GetBranch() Branch {
 	if o == nil {
-		return CreateDeploymentRequestBodyBranch{}
+		return Branch{}
 	}
 	return o.Branch
 }
 
-func (o *CreateDeploymentRequestBody) GetBuild() *CreateDeploymentRequestBodyBuild {
+func (o *CreateDeploymentRequestBody) GetBuild() *Build {
 	if o == nil {
 		return nil
 	}
@@ -4444,7 +4444,7 @@ func (o *CreateDeploymentRequestBody) GetBuildCommand() *string {
 	return o.BuildCommand
 }
 
-func (o *CreateDeploymentRequestBody) GetBuilds() []CreateDeploymentRequestBodyBuilds {
+func (o *CreateDeploymentRequestBody) GetBuilds() []Builds {
 	if o == nil {
 		return nil
 	}
@@ -4458,30 +4458,30 @@ func (o *CreateDeploymentRequestBody) GetCleanUrls() *bool {
 	return o.CleanUrls
 }
 
-func (o *CreateDeploymentRequestBody) GetConnectionUris() []CreateDeploymentRequestBodyConnectionUris {
+func (o *CreateDeploymentRequestBody) GetConnectionUris() []ConnectionUris {
 	if o == nil {
-		return []CreateDeploymentRequestBodyConnectionUris{}
+		return []ConnectionUris{}
 	}
 	return o.ConnectionUris
 }
 
-func (o *CreateDeploymentRequestBody) GetCrons() []CreateDeploymentRequestBodyCrons {
+func (o *CreateDeploymentRequestBody) GetCrons() []Crons {
 	if o == nil {
 		return nil
 	}
 	return o.Crons
 }
 
-func (o *CreateDeploymentRequestBody) GetDatabase() CreateDeploymentRequestBodyDatabase {
+func (o *CreateDeploymentRequestBody) GetDatabase() Database {
 	if o == nil {
-		return CreateDeploymentRequestBodyDatabase{}
+		return Database{}
 	}
 	return o.Database
 }
 
-func (o *CreateDeploymentRequestBody) GetDatabases() []CreateDeploymentRequestBodyDatabases {
+func (o *CreateDeploymentRequestBody) GetDatabases() []Databases {
 	if o == nil {
-		return []CreateDeploymentRequestBodyDatabases{}
+		return []Databases{}
 	}
 	return o.Databases
 }
@@ -4500,16 +4500,16 @@ func (o *CreateDeploymentRequestBody) GetDevCommand() *string {
 	return o.DevCommand
 }
 
-func (o *CreateDeploymentRequestBody) GetEndpoint() CreateDeploymentRequestBodyEndpoint {
+func (o *CreateDeploymentRequestBody) GetEndpoint() Endpoint {
 	if o == nil {
-		return CreateDeploymentRequestBodyEndpoint{}
+		return Endpoint{}
 	}
 	return o.Endpoint
 }
 
-func (o *CreateDeploymentRequestBody) GetEndpoints() []CreateDeploymentRequestBodyEndpoints {
+func (o *CreateDeploymentRequestBody) GetEndpoints() []Endpoints {
 	if o == nil {
-		return []CreateDeploymentRequestBodyEndpoints{}
+		return []Endpoints{}
 	}
 	return o.Endpoints
 }
@@ -4521,49 +4521,49 @@ func (o *CreateDeploymentRequestBody) GetEnv() map[string]string {
 	return o.Env
 }
 
-func (o *CreateDeploymentRequestBody) GetFiles() []CreateDeploymentRequestBodyFiles {
+func (o *CreateDeploymentRequestBody) GetFiles() []Files {
 	if o == nil {
 		return nil
 	}
 	return o.Files
 }
 
-func (o *CreateDeploymentRequestBody) GetFramework() *CreateDeploymentRequestBodyFramework {
+func (o *CreateDeploymentRequestBody) GetFramework() *Framework {
 	if o == nil {
 		return nil
 	}
 	return o.Framework
 }
 
-func (o *CreateDeploymentRequestBody) GetFunctions() map[string]CreateDeploymentRequestBodyFunctions {
+func (o *CreateDeploymentRequestBody) GetFunctions() map[string]Functions {
 	if o == nil {
 		return nil
 	}
 	return o.Functions
 }
 
-func (o *CreateDeploymentRequestBody) GetGit() *CreateDeploymentRequestBodyGit {
+func (o *CreateDeploymentRequestBody) GetGit() *Git {
 	if o == nil {
 		return nil
 	}
 	return o.Git
 }
 
-func (o *CreateDeploymentRequestBody) GetGitMetadata() *CreateDeploymentRequestBodyGitMetadata {
+func (o *CreateDeploymentRequestBody) GetGitMetadata() *GitMetadata {
 	if o == nil {
 		return nil
 	}
 	return o.GitMetadata
 }
 
-func (o *CreateDeploymentRequestBody) GetGitSource() *CreateDeploymentRequestBodyGitSource {
+func (o *CreateDeploymentRequestBody) GetGitSource() *GitSource {
 	if o == nil {
 		return nil
 	}
 	return o.GitSource
 }
 
-func (o *CreateDeploymentRequestBody) GetHeaders() []CreateDeploymentRequestBodyHeaders {
+func (o *CreateDeploymentRequestBody) GetHeaders() []Headers {
 	if o == nil {
 		return nil
 	}
@@ -4577,7 +4577,7 @@ func (o *CreateDeploymentRequestBody) GetIgnoreCommand() *string {
 	return o.IgnoreCommand
 }
 
-func (o *CreateDeploymentRequestBody) GetImages() *CreateDeploymentRequestBodyImages {
+func (o *CreateDeploymentRequestBody) GetImages() *Images {
 	if o == nil {
 		return nil
 	}
@@ -4619,9 +4619,9 @@ func (o *CreateDeploymentRequestBody) GetOutputDirectory() *string {
 	return o.OutputDirectory
 }
 
-func (o *CreateDeploymentRequestBody) GetPagination() CreateDeploymentRequestBodyPagination {
+func (o *CreateDeploymentRequestBody) GetPagination() Pagination {
 	if o == nil {
-		return CreateDeploymentRequestBodyPagination{}
+		return Pagination{}
 	}
 	return o.Pagination
 }
@@ -4633,23 +4633,23 @@ func (o *CreateDeploymentRequestBody) GetPassword() string {
 	return o.Password
 }
 
-func (o *CreateDeploymentRequestBody) GetProject() CreateDeploymentRequestBodyProject {
+func (o *CreateDeploymentRequestBody) GetProject() Project {
 	if o == nil {
-		return CreateDeploymentRequestBodyProject{}
+		return Project{}
 	}
 	return o.Project
 }
 
-func (o *CreateDeploymentRequestBody) GetProjectSettings() *CreateDeploymentRequestBodyProjectSettings1 {
+func (o *CreateDeploymentRequestBody) GetProjectSettings() *ProjectSettings {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectSettings
 }
 
-func (o *CreateDeploymentRequestBody) GetProjects() []CreateDeploymentRequestBodyProjects {
+func (o *CreateDeploymentRequestBody) GetProjects() []Projects {
 	if o == nil {
-		return []CreateDeploymentRequestBodyProjects{}
+		return []Projects{}
 	}
 	return o.Projects
 }
@@ -4661,7 +4661,7 @@ func (o *CreateDeploymentRequestBody) GetPublic() *bool {
 	return o.Public
 }
 
-func (o *CreateDeploymentRequestBody) GetRedirects() []CreateDeploymentRequestBodyRedirects {
+func (o *CreateDeploymentRequestBody) GetRedirects() []Redirects {
 	if o == nil {
 		return nil
 	}
@@ -4675,35 +4675,35 @@ func (o *CreateDeploymentRequestBody) GetRegions() []string {
 	return o.Regions
 }
 
-func (o *CreateDeploymentRequestBody) GetRewrites() []CreateDeploymentRequestBodyRewrites {
+func (o *CreateDeploymentRequestBody) GetRewrites() []Rewrites {
 	if o == nil {
 		return nil
 	}
 	return o.Rewrites
 }
 
-func (o *CreateDeploymentRequestBody) GetRole() CreateDeploymentRequestBodyRole {
+func (o *CreateDeploymentRequestBody) GetRole() Role {
 	if o == nil {
-		return CreateDeploymentRequestBodyRole{}
+		return Role{}
 	}
 	return o.Role
 }
 
-func (o *CreateDeploymentRequestBody) GetRoles() []CreateDeploymentRequestBodyRoles {
+func (o *CreateDeploymentRequestBody) GetRoles() []Roles {
 	if o == nil {
-		return []CreateDeploymentRequestBodyRoles{}
+		return []Roles{}
 	}
 	return o.Roles
 }
 
-func (o *CreateDeploymentRequestBody) GetRoutes() []CreateDeploymentRequestBodyRoutes {
+func (o *CreateDeploymentRequestBody) GetRoutes() []Routes {
 	if o == nil {
 		return nil
 	}
 	return o.Routes
 }
 
-func (o *CreateDeploymentRequestBody) GetTarget() *CreateDeploymentRequestBodyTarget {
+func (o *CreateDeploymentRequestBody) GetTarget() *Target {
 	if o == nil {
 		return nil
 	}
@@ -4724,58 +4724,58 @@ func (o *CreateDeploymentRequestBody) GetWithLatestCommit() *bool {
 	return o.WithLatestCommit
 }
 
-type CreateDeployment200ApplicationJSONAliasAssignedAtType string
+type CreateDeploymentAliasAssignedAtType string
 
 const (
-	CreateDeployment200ApplicationJSONAliasAssignedAtTypeInteger CreateDeployment200ApplicationJSONAliasAssignedAtType = "integer"
-	CreateDeployment200ApplicationJSONAliasAssignedAtTypeBoolean CreateDeployment200ApplicationJSONAliasAssignedAtType = "boolean"
+	CreateDeploymentAliasAssignedAtTypeInteger CreateDeploymentAliasAssignedAtType = "integer"
+	CreateDeploymentAliasAssignedAtTypeBoolean CreateDeploymentAliasAssignedAtType = "boolean"
 )
 
-type CreateDeployment200ApplicationJSONAliasAssignedAt struct {
+type CreateDeploymentAliasAssignedAt struct {
 	Integer *int64
 	Boolean *bool
 
-	Type CreateDeployment200ApplicationJSONAliasAssignedAtType
+	Type CreateDeploymentAliasAssignedAtType
 }
 
-func CreateCreateDeployment200ApplicationJSONAliasAssignedAtInteger(integer int64) CreateDeployment200ApplicationJSONAliasAssignedAt {
-	typ := CreateDeployment200ApplicationJSONAliasAssignedAtTypeInteger
+func CreateCreateDeploymentAliasAssignedAtInteger(integer int64) CreateDeploymentAliasAssignedAt {
+	typ := CreateDeploymentAliasAssignedAtTypeInteger
 
-	return CreateDeployment200ApplicationJSONAliasAssignedAt{
+	return CreateDeploymentAliasAssignedAt{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONAliasAssignedAtBoolean(boolean bool) CreateDeployment200ApplicationJSONAliasAssignedAt {
-	typ := CreateDeployment200ApplicationJSONAliasAssignedAtTypeBoolean
+func CreateCreateDeploymentAliasAssignedAtBoolean(boolean bool) CreateDeploymentAliasAssignedAt {
+	typ := CreateDeploymentAliasAssignedAtTypeBoolean
 
-	return CreateDeployment200ApplicationJSONAliasAssignedAt{
+	return CreateDeploymentAliasAssignedAt{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func (u *CreateDeployment200ApplicationJSONAliasAssignedAt) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentAliasAssignedAt) UnmarshalJSON(data []byte) error {
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = CreateDeployment200ApplicationJSONAliasAssignedAtTypeInteger
+		u.Type = CreateDeploymentAliasAssignedAtTypeInteger
 		return nil
 	}
 
 	boolean := new(bool)
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = boolean
-		u.Type = CreateDeployment200ApplicationJSONAliasAssignedAtTypeBoolean
+		u.Type = CreateDeploymentAliasAssignedAtTypeBoolean
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeployment200ApplicationJSONAliasAssignedAt) MarshalJSON() ([]byte, error) {
+func (u CreateDeploymentAliasAssignedAt) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
@@ -4787,90 +4787,90 @@ func (u CreateDeployment200ApplicationJSONAliasAssignedAt) MarshalJSON() ([]byte
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// CreateDeployment200ApplicationJSONAliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
-type CreateDeployment200ApplicationJSONAliasError struct {
+// CreateDeploymentAliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
+type CreateDeploymentAliasError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 
-func (o *CreateDeployment200ApplicationJSONAliasError) GetCode() string {
+func (o *CreateDeploymentAliasError) GetCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.Code
 }
 
-func (o *CreateDeployment200ApplicationJSONAliasError) GetMessage() string {
+func (o *CreateDeploymentAliasError) GetMessage() string {
 	if o == nil {
 		return ""
 	}
 	return o.Message
 }
 
-type CreateDeployment200ApplicationJSONAliasWarning struct {
+type CreateDeploymentAliasWarning struct {
 	Action  *string `json:"action,omitempty"`
 	Code    string  `json:"code"`
 	Link    *string `json:"link,omitempty"`
 	Message string  `json:"message"`
 }
 
-func (o *CreateDeployment200ApplicationJSONAliasWarning) GetAction() *string {
+func (o *CreateDeploymentAliasWarning) GetAction() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Action
 }
 
-func (o *CreateDeployment200ApplicationJSONAliasWarning) GetCode() string {
+func (o *CreateDeploymentAliasWarning) GetCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.Code
 }
 
-func (o *CreateDeployment200ApplicationJSONAliasWarning) GetLink() *string {
+func (o *CreateDeploymentAliasWarning) GetLink() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Link
 }
 
-func (o *CreateDeployment200ApplicationJSONAliasWarning) GetMessage() string {
+func (o *CreateDeploymentAliasWarning) GetMessage() string {
 	if o == nil {
 		return ""
 	}
 	return o.Message
 }
 
-type CreateDeployment200ApplicationJSONBuild struct {
+type CreateDeploymentBuild struct {
 	// The keys of the environment variables that were assigned during the build phase.
 	Env []string `json:"env"`
 }
 
-func (o *CreateDeployment200ApplicationJSONBuild) GetEnv() []string {
+func (o *CreateDeploymentBuild) GetEnv() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Env
 }
 
-type CreateDeployment200ApplicationJSONBuilds struct {
+type CreateDeploymentBuilds struct {
 }
 
-type CreateDeployment200ApplicationJSONChecksConclusion string
+type CreateDeploymentChecksConclusion string
 
 const (
-	CreateDeployment200ApplicationJSONChecksConclusionSucceeded CreateDeployment200ApplicationJSONChecksConclusion = "succeeded"
-	CreateDeployment200ApplicationJSONChecksConclusionFailed    CreateDeployment200ApplicationJSONChecksConclusion = "failed"
-	CreateDeployment200ApplicationJSONChecksConclusionSkipped   CreateDeployment200ApplicationJSONChecksConclusion = "skipped"
-	CreateDeployment200ApplicationJSONChecksConclusionCanceled  CreateDeployment200ApplicationJSONChecksConclusion = "canceled"
+	CreateDeploymentChecksConclusionSucceeded CreateDeploymentChecksConclusion = "succeeded"
+	CreateDeploymentChecksConclusionFailed    CreateDeploymentChecksConclusion = "failed"
+	CreateDeploymentChecksConclusionSkipped   CreateDeploymentChecksConclusion = "skipped"
+	CreateDeploymentChecksConclusionCanceled  CreateDeploymentChecksConclusion = "canceled"
 )
 
-func (e CreateDeployment200ApplicationJSONChecksConclusion) ToPointer() *CreateDeployment200ApplicationJSONChecksConclusion {
+func (e CreateDeploymentChecksConclusion) ToPointer() *CreateDeploymentChecksConclusion {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONChecksConclusion) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentChecksConclusion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4883,26 +4883,26 @@ func (e *CreateDeployment200ApplicationJSONChecksConclusion) UnmarshalJSON(data 
 	case "skipped":
 		fallthrough
 	case "canceled":
-		*e = CreateDeployment200ApplicationJSONChecksConclusion(v)
+		*e = CreateDeploymentChecksConclusion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONChecksConclusion: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentChecksConclusion: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONChecksState string
+type CreateDeploymentChecksState string
 
 const (
-	CreateDeployment200ApplicationJSONChecksStateRegistered CreateDeployment200ApplicationJSONChecksState = "registered"
-	CreateDeployment200ApplicationJSONChecksStateRunning    CreateDeployment200ApplicationJSONChecksState = "running"
-	CreateDeployment200ApplicationJSONChecksStateCompleted  CreateDeployment200ApplicationJSONChecksState = "completed"
+	CreateDeploymentChecksStateRegistered CreateDeploymentChecksState = "registered"
+	CreateDeploymentChecksStateRunning    CreateDeploymentChecksState = "running"
+	CreateDeploymentChecksStateCompleted  CreateDeploymentChecksState = "completed"
 )
 
-func (e CreateDeployment200ApplicationJSONChecksState) ToPointer() *CreateDeployment200ApplicationJSONChecksState {
+func (e CreateDeploymentChecksState) ToPointer() *CreateDeploymentChecksState {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONChecksState) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentChecksState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4913,37 +4913,37 @@ func (e *CreateDeployment200ApplicationJSONChecksState) UnmarshalJSON(data []byt
 	case "running":
 		fallthrough
 	case "completed":
-		*e = CreateDeployment200ApplicationJSONChecksState(v)
+		*e = CreateDeploymentChecksState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONChecksState: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentChecksState: %v", v)
 	}
 }
 
-// CreateDeployment200ApplicationJSONCreator - Information about the deployment creator
-type CreateDeployment200ApplicationJSONCreator struct {
+// CreateDeploymentCreator - Information about the deployment creator
+type CreateDeploymentCreator struct {
 	// The ID of the user that created the deployment
 	UID string `json:"uid"`
 	// The username of the user that created the deployment
 	Username *string `json:"username,omitempty"`
 }
 
-func (o *CreateDeployment200ApplicationJSONCreator) GetUID() string {
+func (o *CreateDeploymentCreator) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *CreateDeployment200ApplicationJSONCreator) GetUsername() *string {
+func (o *CreateDeploymentCreator) GetUsername() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Username
 }
 
-// CreateDeployment200ApplicationJSONFunctions - An object used to configure your Serverless Functions
-type CreateDeployment200ApplicationJSONFunctions struct {
+// CreateDeploymentFunctions - An object used to configure your Serverless Functions
+type CreateDeploymentFunctions struct {
 	ExcludeFiles *string `json:"excludeFiles,omitempty"`
 	IncludeFiles *string `json:"includeFiles,omitempty"`
 	MaxDuration  *int64  `json:"maxDuration,omitempty"`
@@ -4951,53 +4951,53 @@ type CreateDeployment200ApplicationJSONFunctions struct {
 	Runtime      *string `json:"runtime,omitempty"`
 }
 
-func (o *CreateDeployment200ApplicationJSONFunctions) GetExcludeFiles() *string {
+func (o *CreateDeploymentFunctions) GetExcludeFiles() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ExcludeFiles
 }
 
-func (o *CreateDeployment200ApplicationJSONFunctions) GetIncludeFiles() *string {
+func (o *CreateDeploymentFunctions) GetIncludeFiles() *string {
 	if o == nil {
 		return nil
 	}
 	return o.IncludeFiles
 }
 
-func (o *CreateDeployment200ApplicationJSONFunctions) GetMaxDuration() *int64 {
+func (o *CreateDeploymentFunctions) GetMaxDuration() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxDuration
 }
 
-func (o *CreateDeployment200ApplicationJSONFunctions) GetMemory() *int64 {
+func (o *CreateDeploymentFunctions) GetMemory() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Memory
 }
 
-func (o *CreateDeployment200ApplicationJSONFunctions) GetRuntime() *string {
+func (o *CreateDeploymentFunctions) GetRuntime() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Runtime
 }
 
-type CreateDeployment200ApplicationJSONGitRepo3OwnerType string
+type CreateDeploymentDeploymentsResponseOwnerType string
 
 const (
-	CreateDeployment200ApplicationJSONGitRepo3OwnerTypeTeam CreateDeployment200ApplicationJSONGitRepo3OwnerType = "team"
-	CreateDeployment200ApplicationJSONGitRepo3OwnerTypeUser CreateDeployment200ApplicationJSONGitRepo3OwnerType = "user"
+	CreateDeploymentDeploymentsResponseOwnerTypeTeam CreateDeploymentDeploymentsResponseOwnerType = "team"
+	CreateDeploymentDeploymentsResponseOwnerTypeUser CreateDeploymentDeploymentsResponseOwnerType = "user"
 )
 
-func (e CreateDeployment200ApplicationJSONGitRepo3OwnerType) ToPointer() *CreateDeployment200ApplicationJSONGitRepo3OwnerType {
+func (e CreateDeploymentDeploymentsResponseOwnerType) ToPointer() *CreateDeploymentDeploymentsResponseOwnerType {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitRepo3OwnerType) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponseOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -5006,132 +5006,132 @@ func (e *CreateDeployment200ApplicationJSONGitRepo3OwnerType) UnmarshalJSON(data
 	case "team":
 		fallthrough
 	case "user":
-		*e = CreateDeployment200ApplicationJSONGitRepo3OwnerType(v)
+		*e = CreateDeploymentDeploymentsResponseOwnerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitRepo3OwnerType: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponseOwnerType: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitRepo3Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONType string
 
 const (
-	CreateDeployment200ApplicationJSONGitRepo3TypeBitbucket CreateDeployment200ApplicationJSONGitRepo3Type = "bitbucket"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONTypeBitbucket CreateDeploymentDeploymentsResponse200ApplicationJSONType = "bitbucket"
 )
 
-func (e CreateDeployment200ApplicationJSONGitRepo3Type) ToPointer() *CreateDeployment200ApplicationJSONGitRepo3Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONType {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitRepo3Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = CreateDeployment200ApplicationJSONGitRepo3Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitRepo3Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONType: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitRepo3 struct {
-	DefaultBranch string                                              `json:"defaultBranch"`
-	Name          string                                              `json:"name"`
-	Owner         string                                              `json:"owner"`
-	OwnerType     CreateDeployment200ApplicationJSONGitRepo3OwnerType `json:"ownerType"`
-	Path          string                                              `json:"path"`
-	Private       bool                                                `json:"private"`
-	RepoUUID      string                                              `json:"repoUuid"`
-	Slug          string                                              `json:"slug"`
-	Type          CreateDeployment200ApplicationJSONGitRepo3Type      `json:"type"`
-	WorkspaceUUID string                                              `json:"workspaceUuid"`
+type CreateDeployment3 struct {
+	DefaultBranch string                                                    `json:"defaultBranch"`
+	Name          string                                                    `json:"name"`
+	Owner         string                                                    `json:"owner"`
+	OwnerType     CreateDeploymentDeploymentsResponseOwnerType              `json:"ownerType"`
+	Path          string                                                    `json:"path"`
+	Private       bool                                                      `json:"private"`
+	RepoUUID      string                                                    `json:"repoUuid"`
+	Slug          string                                                    `json:"slug"`
+	Type          CreateDeploymentDeploymentsResponse200ApplicationJSONType `json:"type"`
+	WorkspaceUUID string                                                    `json:"workspaceUuid"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo3) GetDefaultBranch() string {
+func (o *CreateDeployment3) GetDefaultBranch() string {
 	if o == nil {
 		return ""
 	}
 	return o.DefaultBranch
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo3) GetName() string {
+func (o *CreateDeployment3) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo3) GetOwner() string {
+func (o *CreateDeployment3) GetOwner() string {
 	if o == nil {
 		return ""
 	}
 	return o.Owner
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo3) GetOwnerType() CreateDeployment200ApplicationJSONGitRepo3OwnerType {
+func (o *CreateDeployment3) GetOwnerType() CreateDeploymentDeploymentsResponseOwnerType {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitRepo3OwnerType("")
+		return CreateDeploymentDeploymentsResponseOwnerType("")
 	}
 	return o.OwnerType
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo3) GetPath() string {
+func (o *CreateDeployment3) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo3) GetPrivate() bool {
+func (o *CreateDeployment3) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo3) GetRepoUUID() string {
+func (o *CreateDeployment3) GetRepoUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoUUID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo3) GetSlug() string {
+func (o *CreateDeployment3) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo3) GetType() CreateDeployment200ApplicationJSONGitRepo3Type {
+func (o *CreateDeployment3) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONType {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitRepo3Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo3) GetWorkspaceUUID() string {
+func (o *CreateDeployment3) GetWorkspaceUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.WorkspaceUUID
 }
 
-type CreateDeployment200ApplicationJSONGitRepo2OwnerType string
+type CreateDeploymentDeploymentsOwnerType string
 
 const (
-	CreateDeployment200ApplicationJSONGitRepo2OwnerTypeTeam CreateDeployment200ApplicationJSONGitRepo2OwnerType = "team"
-	CreateDeployment200ApplicationJSONGitRepo2OwnerTypeUser CreateDeployment200ApplicationJSONGitRepo2OwnerType = "user"
+	CreateDeploymentDeploymentsOwnerTypeTeam CreateDeploymentDeploymentsOwnerType = "team"
+	CreateDeploymentDeploymentsOwnerTypeUser CreateDeploymentDeploymentsOwnerType = "user"
 )
 
-func (e CreateDeployment200ApplicationJSONGitRepo2OwnerType) ToPointer() *CreateDeployment200ApplicationJSONGitRepo2OwnerType {
+func (e CreateDeploymentDeploymentsOwnerType) ToPointer() *CreateDeploymentDeploymentsOwnerType {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitRepo2OwnerType) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -5140,132 +5140,132 @@ func (e *CreateDeployment200ApplicationJSONGitRepo2OwnerType) UnmarshalJSON(data
 	case "team":
 		fallthrough
 	case "user":
-		*e = CreateDeployment200ApplicationJSONGitRepo2OwnerType(v)
+		*e = CreateDeploymentDeploymentsOwnerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitRepo2OwnerType: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsOwnerType: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitRepo2Type string
+type CreateDeploymentDeploymentsResponse200Type string
 
 const (
-	CreateDeployment200ApplicationJSONGitRepo2TypeGithub CreateDeployment200ApplicationJSONGitRepo2Type = "github"
+	CreateDeploymentDeploymentsResponse200TypeGithub CreateDeploymentDeploymentsResponse200Type = "github"
 )
 
-func (e CreateDeployment200ApplicationJSONGitRepo2Type) ToPointer() *CreateDeployment200ApplicationJSONGitRepo2Type {
+func (e CreateDeploymentDeploymentsResponse200Type) ToPointer() *CreateDeploymentDeploymentsResponse200Type {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitRepo2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = CreateDeployment200ApplicationJSONGitRepo2Type(v)
+		*e = CreateDeploymentDeploymentsResponse200Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitRepo2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200Type: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitRepo2 struct {
-	DefaultBranch string                                              `json:"defaultBranch"`
-	Name          string                                              `json:"name"`
-	Org           string                                              `json:"org"`
-	OwnerType     CreateDeployment200ApplicationJSONGitRepo2OwnerType `json:"ownerType"`
-	Path          string                                              `json:"path"`
-	Private       bool                                                `json:"private"`
-	Repo          string                                              `json:"repo"`
-	RepoID        int64                                               `json:"repoId"`
-	RepoOwnerID   string                                              `json:"repoOwnerId"`
-	Type          CreateDeployment200ApplicationJSONGitRepo2Type      `json:"type"`
+type CreateDeploymentDeploymentsResponse2 struct {
+	DefaultBranch string                                     `json:"defaultBranch"`
+	Name          string                                     `json:"name"`
+	Org           string                                     `json:"org"`
+	OwnerType     CreateDeploymentDeploymentsOwnerType       `json:"ownerType"`
+	Path          string                                     `json:"path"`
+	Private       bool                                       `json:"private"`
+	Repo          string                                     `json:"repo"`
+	RepoID        int64                                      `json:"repoId"`
+	RepoOwnerID   string                                     `json:"repoOwnerId"`
+	Type          CreateDeploymentDeploymentsResponse200Type `json:"type"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo2) GetDefaultBranch() string {
+func (o *CreateDeploymentDeploymentsResponse2) GetDefaultBranch() string {
 	if o == nil {
 		return ""
 	}
 	return o.DefaultBranch
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo2) GetName() string {
+func (o *CreateDeploymentDeploymentsResponse2) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo2) GetOrg() string {
+func (o *CreateDeploymentDeploymentsResponse2) GetOrg() string {
 	if o == nil {
 		return ""
 	}
 	return o.Org
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo2) GetOwnerType() CreateDeployment200ApplicationJSONGitRepo2OwnerType {
+func (o *CreateDeploymentDeploymentsResponse2) GetOwnerType() CreateDeploymentDeploymentsOwnerType {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitRepo2OwnerType("")
+		return CreateDeploymentDeploymentsOwnerType("")
 	}
 	return o.OwnerType
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo2) GetPath() string {
+func (o *CreateDeploymentDeploymentsResponse2) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo2) GetPrivate() bool {
+func (o *CreateDeploymentDeploymentsResponse2) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo2) GetRepo() string {
+func (o *CreateDeploymentDeploymentsResponse2) GetRepo() string {
 	if o == nil {
 		return ""
 	}
 	return o.Repo
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo2) GetRepoID() int64 {
+func (o *CreateDeploymentDeploymentsResponse2) GetRepoID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.RepoID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo2) GetRepoOwnerID() string {
+func (o *CreateDeploymentDeploymentsResponse2) GetRepoOwnerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoOwnerID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo2) GetType() CreateDeployment200ApplicationJSONGitRepo2Type {
+func (o *CreateDeploymentDeploymentsResponse2) GetType() CreateDeploymentDeploymentsResponse200Type {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitRepo2Type("")
+		return CreateDeploymentDeploymentsResponse200Type("")
 	}
 	return o.Type
 }
 
-type CreateDeployment200ApplicationJSONGitRepo1OwnerType string
+type CreateDeploymentOwnerType string
 
 const (
-	CreateDeployment200ApplicationJSONGitRepo1OwnerTypeTeam CreateDeployment200ApplicationJSONGitRepo1OwnerType = "team"
-	CreateDeployment200ApplicationJSONGitRepo1OwnerTypeUser CreateDeployment200ApplicationJSONGitRepo1OwnerType = "user"
+	CreateDeploymentOwnerTypeTeam CreateDeploymentOwnerType = "team"
+	CreateDeploymentOwnerTypeUser CreateDeploymentOwnerType = "user"
 )
 
-func (e CreateDeployment200ApplicationJSONGitRepo1OwnerType) ToPointer() *CreateDeployment200ApplicationJSONGitRepo1OwnerType {
+func (e CreateDeploymentOwnerType) ToPointer() *CreateDeploymentOwnerType {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitRepo1OwnerType) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -5274,675 +5274,675 @@ func (e *CreateDeployment200ApplicationJSONGitRepo1OwnerType) UnmarshalJSON(data
 	case "team":
 		fallthrough
 	case "user":
-		*e = CreateDeployment200ApplicationJSONGitRepo1OwnerType(v)
+		*e = CreateDeploymentOwnerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitRepo1OwnerType: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentOwnerType: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitRepo1Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType string
 
 const (
-	CreateDeployment200ApplicationJSONGitRepo1TypeGitlab CreateDeployment200ApplicationJSONGitRepo1Type = "gitlab"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoTypeGitlab CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType = "gitlab"
 )
 
-func (e CreateDeployment200ApplicationJSONGitRepo1Type) ToPointer() *CreateDeployment200ApplicationJSONGitRepo1Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitRepo1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = CreateDeployment200ApplicationJSONGitRepo1Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitRepo1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitRepo1 struct {
-	DefaultBranch string                                              `json:"defaultBranch"`
-	Name          string                                              `json:"name"`
-	Namespace     string                                              `json:"namespace"`
-	OwnerType     CreateDeployment200ApplicationJSONGitRepo1OwnerType `json:"ownerType"`
-	Path          string                                              `json:"path"`
-	Private       bool                                                `json:"private"`
-	ProjectID     int64                                               `json:"projectId"`
-	Type          CreateDeployment200ApplicationJSONGitRepo1Type      `json:"type"`
-	URL           string                                              `json:"url"`
+type CreateDeploymentDeploymentsResponse1 struct {
+	DefaultBranch string                                                                       `json:"defaultBranch"`
+	Name          string                                                                       `json:"name"`
+	Namespace     string                                                                       `json:"namespace"`
+	OwnerType     CreateDeploymentOwnerType                                                    `json:"ownerType"`
+	Path          string                                                                       `json:"path"`
+	Private       bool                                                                         `json:"private"`
+	ProjectID     int64                                                                        `json:"projectId"`
+	Type          CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType `json:"type"`
+	URL           string                                                                       `json:"url"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo1) GetDefaultBranch() string {
+func (o *CreateDeploymentDeploymentsResponse1) GetDefaultBranch() string {
 	if o == nil {
 		return ""
 	}
 	return o.DefaultBranch
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo1) GetName() string {
+func (o *CreateDeploymentDeploymentsResponse1) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo1) GetNamespace() string {
+func (o *CreateDeploymentDeploymentsResponse1) GetNamespace() string {
 	if o == nil {
 		return ""
 	}
 	return o.Namespace
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo1) GetOwnerType() CreateDeployment200ApplicationJSONGitRepo1OwnerType {
+func (o *CreateDeploymentDeploymentsResponse1) GetOwnerType() CreateDeploymentOwnerType {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitRepo1OwnerType("")
+		return CreateDeploymentOwnerType("")
 	}
 	return o.OwnerType
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo1) GetPath() string {
+func (o *CreateDeploymentDeploymentsResponse1) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo1) GetPrivate() bool {
+func (o *CreateDeploymentDeploymentsResponse1) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo1) GetProjectID() int64 {
+func (o *CreateDeploymentDeploymentsResponse1) GetProjectID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ProjectID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo1) GetType() CreateDeployment200ApplicationJSONGitRepo1Type {
+func (o *CreateDeploymentDeploymentsResponse1) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitRepo1Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeployment200ApplicationJSONGitRepo1) GetURL() string {
+func (o *CreateDeploymentDeploymentsResponse1) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-type CreateDeployment200ApplicationJSONGitRepoType string
+type CreateDeploymentGitRepoType string
 
 const (
-	CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo1 CreateDeployment200ApplicationJSONGitRepoType = "createDeployment_200ApplicationJSON_gitRepo_1"
-	CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo2 CreateDeployment200ApplicationJSONGitRepoType = "createDeployment_200ApplicationJSON_gitRepo_2"
-	CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo3 CreateDeployment200ApplicationJSONGitRepoType = "createDeployment_200ApplicationJSON_gitRepo_3"
+	CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse1 CreateDeploymentGitRepoType = "createDeployment_deployments_response_1"
+	CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse2 CreateDeploymentGitRepoType = "createDeployment_deployments_response_2"
+	CreateDeploymentGitRepoTypeCreateDeployment3                    CreateDeploymentGitRepoType = "createDeployment_3"
 )
 
-type CreateDeployment200ApplicationJSONGitRepo struct {
-	CreateDeployment200ApplicationJSONGitRepo1 *CreateDeployment200ApplicationJSONGitRepo1
-	CreateDeployment200ApplicationJSONGitRepo2 *CreateDeployment200ApplicationJSONGitRepo2
-	CreateDeployment200ApplicationJSONGitRepo3 *CreateDeployment200ApplicationJSONGitRepo3
+type CreateDeploymentGitRepo struct {
+	CreateDeploymentDeploymentsResponse1 *CreateDeploymentDeploymentsResponse1
+	CreateDeploymentDeploymentsResponse2 *CreateDeploymentDeploymentsResponse2
+	CreateDeployment3                    *CreateDeployment3
 
-	Type CreateDeployment200ApplicationJSONGitRepoType
+	Type CreateDeploymentGitRepoType
 }
 
-func CreateCreateDeployment200ApplicationJSONGitRepoCreateDeployment200ApplicationJSONGitRepo1(createDeployment200ApplicationJSONGitRepo1 CreateDeployment200ApplicationJSONGitRepo1) CreateDeployment200ApplicationJSONGitRepo {
-	typ := CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo1
+func CreateCreateDeploymentGitRepoCreateDeploymentDeploymentsResponse1(createDeploymentDeploymentsResponse1 CreateDeploymentDeploymentsResponse1) CreateDeploymentGitRepo {
+	typ := CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse1
 
-	return CreateDeployment200ApplicationJSONGitRepo{
-		CreateDeployment200ApplicationJSONGitRepo1: &createDeployment200ApplicationJSONGitRepo1,
-		Type: typ,
+	return CreateDeploymentGitRepo{
+		CreateDeploymentDeploymentsResponse1: &createDeploymentDeploymentsResponse1,
+		Type:                                 typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitRepoCreateDeployment200ApplicationJSONGitRepo2(createDeployment200ApplicationJSONGitRepo2 CreateDeployment200ApplicationJSONGitRepo2) CreateDeployment200ApplicationJSONGitRepo {
-	typ := CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo2
+func CreateCreateDeploymentGitRepoCreateDeploymentDeploymentsResponse2(createDeploymentDeploymentsResponse2 CreateDeploymentDeploymentsResponse2) CreateDeploymentGitRepo {
+	typ := CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse2
 
-	return CreateDeployment200ApplicationJSONGitRepo{
-		CreateDeployment200ApplicationJSONGitRepo2: &createDeployment200ApplicationJSONGitRepo2,
-		Type: typ,
+	return CreateDeploymentGitRepo{
+		CreateDeploymentDeploymentsResponse2: &createDeploymentDeploymentsResponse2,
+		Type:                                 typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitRepoCreateDeployment200ApplicationJSONGitRepo3(createDeployment200ApplicationJSONGitRepo3 CreateDeployment200ApplicationJSONGitRepo3) CreateDeployment200ApplicationJSONGitRepo {
-	typ := CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo3
+func CreateCreateDeploymentGitRepoCreateDeployment3(createDeployment3 CreateDeployment3) CreateDeploymentGitRepo {
+	typ := CreateDeploymentGitRepoTypeCreateDeployment3
 
-	return CreateDeployment200ApplicationJSONGitRepo{
-		CreateDeployment200ApplicationJSONGitRepo3: &createDeployment200ApplicationJSONGitRepo3,
-		Type: typ,
+	return CreateDeploymentGitRepo{
+		CreateDeployment3: &createDeployment3,
+		Type:              typ,
 	}
 }
 
-func (u *CreateDeployment200ApplicationJSONGitRepo) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentGitRepo) UnmarshalJSON(data []byte) error {
 
-	createDeployment200ApplicationJSONGitRepo1 := new(CreateDeployment200ApplicationJSONGitRepo1)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitRepo1, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitRepo1 = createDeployment200ApplicationJSONGitRepo1
-		u.Type = CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo1
+	createDeploymentDeploymentsResponse1 := new(CreateDeploymentDeploymentsResponse1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse1 = createDeploymentDeploymentsResponse1
+		u.Type = CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse1
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitRepo2 := new(CreateDeployment200ApplicationJSONGitRepo2)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitRepo2, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitRepo2 = createDeployment200ApplicationJSONGitRepo2
-		u.Type = CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo2
+	createDeploymentDeploymentsResponse2 := new(CreateDeploymentDeploymentsResponse2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse2 = createDeploymentDeploymentsResponse2
+		u.Type = CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse2
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitRepo3 := new(CreateDeployment200ApplicationJSONGitRepo3)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitRepo3, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitRepo3 = createDeployment200ApplicationJSONGitRepo3
-		u.Type = CreateDeployment200ApplicationJSONGitRepoTypeCreateDeployment200ApplicationJSONGitRepo3
+	createDeployment3 := new(CreateDeployment3)
+	if err := utils.UnmarshalJSON(data, &createDeployment3, "", true, true); err == nil {
+		u.CreateDeployment3 = createDeployment3
+		u.Type = CreateDeploymentGitRepoTypeCreateDeployment3
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeployment200ApplicationJSONGitRepo) MarshalJSON() ([]byte, error) {
-	if u.CreateDeployment200ApplicationJSONGitRepo1 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitRepo1, "", true)
+func (u CreateDeploymentGitRepo) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsResponse1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse1, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONGitRepo2 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitRepo2, "", true)
+	if u.CreateDeploymentDeploymentsResponse2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse2, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONGitRepo3 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitRepo3, "", true)
+	if u.CreateDeployment3 != nil {
+		return utils.MarshalJSON(u.CreateDeployment3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeployment200ApplicationJSONGitSource9Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type string
 
 const (
-	CreateDeployment200ApplicationJSONGitSource9TypeBitbucket CreateDeployment200ApplicationJSONGitSource9Type = "bitbucket"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9TypeBitbucket CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type = "bitbucket"
 )
 
-func (e CreateDeployment200ApplicationJSONGitSource9Type) ToPointer() *CreateDeployment200ApplicationJSONGitSource9Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitSource9Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = CreateDeployment200ApplicationJSONGitSource9Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitSource9Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitSource9 struct {
-	Owner         *string                                          `json:"owner,omitempty"`
-	Ref           string                                           `json:"ref"`
-	RepoUUID      string                                           `json:"repoUuid"`
-	Sha           string                                           `json:"sha"`
-	Slug          *string                                          `json:"slug,omitempty"`
-	Type          CreateDeployment200ApplicationJSONGitSource9Type `json:"type"`
-	WorkspaceUUID string                                           `json:"workspaceUuid"`
+type CreateDeployment9 struct {
+	Owner         *string                                                                         `json:"owner,omitempty"`
+	Ref           string                                                                          `json:"ref"`
+	RepoUUID      string                                                                          `json:"repoUuid"`
+	Sha           string                                                                          `json:"sha"`
+	Slug          *string                                                                         `json:"slug,omitempty"`
+	Type          CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type `json:"type"`
+	WorkspaceUUID string                                                                          `json:"workspaceUuid"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource9) GetOwner() *string {
+func (o *CreateDeployment9) GetOwner() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Owner
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource9) GetRef() string {
+func (o *CreateDeployment9) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource9) GetRepoUUID() string {
+func (o *CreateDeployment9) GetRepoUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoUUID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource9) GetSha() string {
+func (o *CreateDeployment9) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource9) GetSlug() *string {
+func (o *CreateDeployment9) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Slug
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource9) GetType() CreateDeployment200ApplicationJSONGitSource9Type {
+func (o *CreateDeployment9) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitSource9Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource9) GetWorkspaceUUID() string {
+func (o *CreateDeployment9) GetWorkspaceUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.WorkspaceUUID
 }
 
-type CreateDeployment200ApplicationJSONGitSource8Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type string
 
 const (
-	CreateDeployment200ApplicationJSONGitSource8TypeGitlab CreateDeployment200ApplicationJSONGitSource8Type = "gitlab"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8TypeGitlab CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type = "gitlab"
 )
 
-func (e CreateDeployment200ApplicationJSONGitSource8Type) ToPointer() *CreateDeployment200ApplicationJSONGitSource8Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitSource8Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = CreateDeployment200ApplicationJSONGitSource8Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitSource8Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitSource8 struct {
-	ProjectID int64                                            `json:"projectId"`
-	Ref       string                                           `json:"ref"`
-	Sha       string                                           `json:"sha"`
-	Type      CreateDeployment200ApplicationJSONGitSource8Type `json:"type"`
+type CreateDeployment8 struct {
+	ProjectID int64                                                                           `json:"projectId"`
+	Ref       string                                                                          `json:"ref"`
+	Sha       string                                                                          `json:"sha"`
+	Type      CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type `json:"type"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource8) GetProjectID() int64 {
+func (o *CreateDeployment8) GetProjectID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ProjectID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource8) GetRef() string {
+func (o *CreateDeployment8) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource8) GetSha() string {
+func (o *CreateDeployment8) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource8) GetType() CreateDeployment200ApplicationJSONGitSource8Type {
+func (o *CreateDeployment8) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitSource8Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type("")
 	}
 	return o.Type
 }
 
-type CreateDeployment200ApplicationJSONGitSource7Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type string
 
 const (
-	CreateDeployment200ApplicationJSONGitSource7TypeGithub CreateDeployment200ApplicationJSONGitSource7Type = "github"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7TypeGithub CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type = "github"
 )
 
-func (e CreateDeployment200ApplicationJSONGitSource7Type) ToPointer() *CreateDeployment200ApplicationJSONGitSource7Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitSource7Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = CreateDeployment200ApplicationJSONGitSource7Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitSource7Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitSource7 struct {
-	Org    *string                                          `json:"org,omitempty"`
-	Ref    string                                           `json:"ref"`
-	Repo   *string                                          `json:"repo,omitempty"`
-	RepoID int64                                            `json:"repoId"`
-	Sha    string                                           `json:"sha"`
-	Type   CreateDeployment200ApplicationJSONGitSource7Type `json:"type"`
+type CreateDeployment7 struct {
+	Org    *string                                                                         `json:"org,omitempty"`
+	Ref    string                                                                          `json:"ref"`
+	Repo   *string                                                                         `json:"repo,omitempty"`
+	RepoID int64                                                                           `json:"repoId"`
+	Sha    string                                                                          `json:"sha"`
+	Type   CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type `json:"type"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource7) GetOrg() *string {
+func (o *CreateDeployment7) GetOrg() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Org
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource7) GetRef() string {
+func (o *CreateDeployment7) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource7) GetRepo() *string {
+func (o *CreateDeployment7) GetRepo() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Repo
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource7) GetRepoID() int64 {
+func (o *CreateDeployment7) GetRepoID() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.RepoID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource7) GetSha() string {
+func (o *CreateDeployment7) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource7) GetType() CreateDeployment200ApplicationJSONGitSource7Type {
+func (o *CreateDeployment7) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitSource7Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type("")
 	}
 	return o.Type
 }
 
-type CreateDeployment200ApplicationJSONGitSource6Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type string
 
 const (
-	CreateDeployment200ApplicationJSONGitSource6TypeCustom CreateDeployment200ApplicationJSONGitSource6Type = "custom"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6TypeCustom CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type = "custom"
 )
 
-func (e CreateDeployment200ApplicationJSONGitSource6Type) ToPointer() *CreateDeployment200ApplicationJSONGitSource6Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitSource6Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "custom":
-		*e = CreateDeployment200ApplicationJSONGitSource6Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitSource6Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitSource6 struct {
-	GitURL string                                           `json:"gitUrl"`
-	Ref    string                                           `json:"ref"`
-	Sha    string                                           `json:"sha"`
-	Type   CreateDeployment200ApplicationJSONGitSource6Type `json:"type"`
+type CreateDeployment6 struct {
+	GitURL string                                                                          `json:"gitUrl"`
+	Ref    string                                                                          `json:"ref"`
+	Sha    string                                                                          `json:"sha"`
+	Type   CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type `json:"type"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource6) GetGitURL() string {
+func (o *CreateDeployment6) GetGitURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.GitURL
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource6) GetRef() string {
+func (o *CreateDeployment6) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource6) GetSha() string {
+func (o *CreateDeployment6) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource6) GetType() CreateDeployment200ApplicationJSONGitSource6Type {
+func (o *CreateDeployment6) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitSource6Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type("")
 	}
 	return o.Type
 }
 
-type CreateDeployment200ApplicationJSONGitSource5Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type string
 
 const (
-	CreateDeployment200ApplicationJSONGitSource5TypeBitbucket CreateDeployment200ApplicationJSONGitSource5Type = "bitbucket"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5TypeBitbucket CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type = "bitbucket"
 )
 
-func (e CreateDeployment200ApplicationJSONGitSource5Type) ToPointer() *CreateDeployment200ApplicationJSONGitSource5Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitSource5Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = CreateDeployment200ApplicationJSONGitSource5Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitSource5Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitSource5 struct {
-	Owner string                                           `json:"owner"`
-	PrID  *int64                                           `json:"prId,omitempty"`
-	Ref   *string                                          `json:"ref,omitempty"`
-	Sha   *string                                          `json:"sha,omitempty"`
-	Slug  string                                           `json:"slug"`
-	Type  CreateDeployment200ApplicationJSONGitSource5Type `json:"type"`
+type CreateDeployment5 struct {
+	Owner string                                                                          `json:"owner"`
+	PrID  *int64                                                                          `json:"prId,omitempty"`
+	Ref   *string                                                                         `json:"ref,omitempty"`
+	Sha   *string                                                                         `json:"sha,omitempty"`
+	Slug  string                                                                          `json:"slug"`
+	Type  CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type `json:"type"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource5) GetOwner() string {
+func (o *CreateDeployment5) GetOwner() string {
 	if o == nil {
 		return ""
 	}
 	return o.Owner
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource5) GetPrID() *int64 {
+func (o *CreateDeployment5) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource5) GetRef() *string {
+func (o *CreateDeployment5) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource5) GetSha() *string {
+func (o *CreateDeployment5) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource5) GetSlug() string {
+func (o *CreateDeployment5) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource5) GetType() CreateDeployment200ApplicationJSONGitSource5Type {
+func (o *CreateDeployment5) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitSource5Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type("")
 	}
 	return o.Type
 }
 
-type CreateDeployment200ApplicationJSONGitSource4Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type string
 
 const (
-	CreateDeployment200ApplicationJSONGitSource4TypeBitbucket CreateDeployment200ApplicationJSONGitSource4Type = "bitbucket"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4TypeBitbucket CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type = "bitbucket"
 )
 
-func (e CreateDeployment200ApplicationJSONGitSource4Type) ToPointer() *CreateDeployment200ApplicationJSONGitSource4Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitSource4Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = CreateDeployment200ApplicationJSONGitSource4Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitSource4Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitSource4 struct {
-	PrID          *int64                                           `json:"prId,omitempty"`
-	Ref           *string                                          `json:"ref,omitempty"`
-	RepoUUID      string                                           `json:"repoUuid"`
-	Sha           *string                                          `json:"sha,omitempty"`
-	Type          CreateDeployment200ApplicationJSONGitSource4Type `json:"type"`
-	WorkspaceUUID *string                                          `json:"workspaceUuid,omitempty"`
+type CreateDeployment4 struct {
+	PrID          *int64                                                                          `json:"prId,omitempty"`
+	Ref           *string                                                                         `json:"ref,omitempty"`
+	RepoUUID      string                                                                          `json:"repoUuid"`
+	Sha           *string                                                                         `json:"sha,omitempty"`
+	Type          CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type `json:"type"`
+	WorkspaceUUID *string                                                                         `json:"workspaceUuid,omitempty"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource4) GetPrID() *int64 {
+func (o *CreateDeployment4) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource4) GetRef() *string {
+func (o *CreateDeployment4) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource4) GetRepoUUID() string {
+func (o *CreateDeployment4) GetRepoUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoUUID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource4) GetSha() *string {
+func (o *CreateDeployment4) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource4) GetType() CreateDeployment200ApplicationJSONGitSource4Type {
+func (o *CreateDeployment4) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitSource4Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource4) GetWorkspaceUUID() *string {
+func (o *CreateDeployment4) GetWorkspaceUUID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.WorkspaceUUID
 }
 
-type CreateDeployment200ApplicationJSONGitSource3ProjectIDType string
+type CreateDeploymentProjectIDType string
 
 const (
-	CreateDeployment200ApplicationJSONGitSource3ProjectIDTypeStr     CreateDeployment200ApplicationJSONGitSource3ProjectIDType = "str"
-	CreateDeployment200ApplicationJSONGitSource3ProjectIDTypeInteger CreateDeployment200ApplicationJSONGitSource3ProjectIDType = "integer"
+	CreateDeploymentProjectIDTypeStr     CreateDeploymentProjectIDType = "str"
+	CreateDeploymentProjectIDTypeInteger CreateDeploymentProjectIDType = "integer"
 )
 
-type CreateDeployment200ApplicationJSONGitSource3ProjectID struct {
+type CreateDeploymentProjectID struct {
 	Str     *string
 	Integer *int64
 
-	Type CreateDeployment200ApplicationJSONGitSource3ProjectIDType
+	Type CreateDeploymentProjectIDType
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSource3ProjectIDStr(str string) CreateDeployment200ApplicationJSONGitSource3ProjectID {
-	typ := CreateDeployment200ApplicationJSONGitSource3ProjectIDTypeStr
+func CreateCreateDeploymentProjectIDStr(str string) CreateDeploymentProjectID {
+	typ := CreateDeploymentProjectIDTypeStr
 
-	return CreateDeployment200ApplicationJSONGitSource3ProjectID{
+	return CreateDeploymentProjectID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSource3ProjectIDInteger(integer int64) CreateDeployment200ApplicationJSONGitSource3ProjectID {
-	typ := CreateDeployment200ApplicationJSONGitSource3ProjectIDTypeInteger
+func CreateCreateDeploymentProjectIDInteger(integer int64) CreateDeploymentProjectID {
+	typ := CreateDeploymentProjectIDTypeInteger
 
-	return CreateDeployment200ApplicationJSONGitSource3ProjectID{
+	return CreateDeploymentProjectID{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func (u *CreateDeployment200ApplicationJSONGitSource3ProjectID) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentProjectID) UnmarshalJSON(data []byte) error {
 
 	str := new(string)
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = CreateDeployment200ApplicationJSONGitSource3ProjectIDTypeStr
+		u.Type = CreateDeploymentProjectIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = CreateDeployment200ApplicationJSONGitSource3ProjectIDTypeInteger
+		u.Type = CreateDeploymentProjectIDTypeInteger
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeployment200ApplicationJSONGitSource3ProjectID) MarshalJSON() ([]byte, error) {
+func (u CreateDeploymentProjectID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -5954,200 +5954,200 @@ func (u CreateDeployment200ApplicationJSONGitSource3ProjectID) MarshalJSON() ([]
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeployment200ApplicationJSONGitSource3Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type string
 
 const (
-	CreateDeployment200ApplicationJSONGitSource3TypeGitlab CreateDeployment200ApplicationJSONGitSource3Type = "gitlab"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3TypeGitlab CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type = "gitlab"
 )
 
-func (e CreateDeployment200ApplicationJSONGitSource3Type) ToPointer() *CreateDeployment200ApplicationJSONGitSource3Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitSource3Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = CreateDeployment200ApplicationJSONGitSource3Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitSource3Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitSource3 struct {
-	PrID      *int64                                                `json:"prId,omitempty"`
-	ProjectID CreateDeployment200ApplicationJSONGitSource3ProjectID `json:"projectId"`
-	Ref       *string                                               `json:"ref,omitempty"`
-	Sha       *string                                               `json:"sha,omitempty"`
-	Type      CreateDeployment200ApplicationJSONGitSource3Type      `json:"type"`
+type CreateDeploymentDeployments3 struct {
+	PrID      *int64                                                                          `json:"prId,omitempty"`
+	ProjectID CreateDeploymentProjectID                                                       `json:"projectId"`
+	Ref       *string                                                                         `json:"ref,omitempty"`
+	Sha       *string                                                                         `json:"sha,omitempty"`
+	Type      CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type `json:"type"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource3) GetPrID() *int64 {
+func (o *CreateDeploymentDeployments3) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource3) GetProjectID() CreateDeployment200ApplicationJSONGitSource3ProjectID {
+func (o *CreateDeploymentDeployments3) GetProjectID() CreateDeploymentProjectID {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitSource3ProjectID{}
+		return CreateDeploymentProjectID{}
 	}
 	return o.ProjectID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource3) GetRef() *string {
+func (o *CreateDeploymentDeployments3) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource3) GetSha() *string {
+func (o *CreateDeploymentDeployments3) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource3) GetType() CreateDeployment200ApplicationJSONGitSource3Type {
+func (o *CreateDeploymentDeployments3) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitSource3Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type("")
 	}
 	return o.Type
 }
 
-type CreateDeployment200ApplicationJSONGitSource2Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType string
 
 const (
-	CreateDeployment200ApplicationJSONGitSource2TypeGithub CreateDeployment200ApplicationJSONGitSource2Type = "github"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceTypeGithub CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType = "github"
 )
 
-func (e CreateDeployment200ApplicationJSONGitSource2Type) ToPointer() *CreateDeployment200ApplicationJSONGitSource2Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitSource2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = CreateDeployment200ApplicationJSONGitSource2Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitSource2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitSource2 struct {
-	Org  string                                           `json:"org"`
-	PrID *int64                                           `json:"prId,omitempty"`
-	Ref  *string                                          `json:"ref,omitempty"`
-	Repo string                                           `json:"repo"`
-	Sha  *string                                          `json:"sha,omitempty"`
-	Type CreateDeployment200ApplicationJSONGitSource2Type `json:"type"`
+type CreateDeploymentDeploymentsResponse2002 struct {
+	Org  string                                                                         `json:"org"`
+	PrID *int64                                                                         `json:"prId,omitempty"`
+	Ref  *string                                                                        `json:"ref,omitempty"`
+	Repo string                                                                         `json:"repo"`
+	Sha  *string                                                                        `json:"sha,omitempty"`
+	Type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType `json:"type"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource2) GetOrg() string {
+func (o *CreateDeploymentDeploymentsResponse2002) GetOrg() string {
 	if o == nil {
 		return ""
 	}
 	return o.Org
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource2) GetPrID() *int64 {
+func (o *CreateDeploymentDeploymentsResponse2002) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource2) GetRef() *string {
+func (o *CreateDeploymentDeploymentsResponse2002) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource2) GetRepo() string {
+func (o *CreateDeploymentDeploymentsResponse2002) GetRepo() string {
 	if o == nil {
 		return ""
 	}
 	return o.Repo
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource2) GetSha() *string {
+func (o *CreateDeploymentDeploymentsResponse2002) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource2) GetType() CreateDeployment200ApplicationJSONGitSource2Type {
+func (o *CreateDeploymentDeploymentsResponse2002) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitSource2Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType("")
 	}
 	return o.Type
 }
 
-type CreateDeployment200ApplicationJSONGitSource1RepoIDType string
+type CreateDeploymentRepoIDType string
 
 const (
-	CreateDeployment200ApplicationJSONGitSource1RepoIDTypeStr     CreateDeployment200ApplicationJSONGitSource1RepoIDType = "str"
-	CreateDeployment200ApplicationJSONGitSource1RepoIDTypeInteger CreateDeployment200ApplicationJSONGitSource1RepoIDType = "integer"
+	CreateDeploymentRepoIDTypeStr     CreateDeploymentRepoIDType = "str"
+	CreateDeploymentRepoIDTypeInteger CreateDeploymentRepoIDType = "integer"
 )
 
-type CreateDeployment200ApplicationJSONGitSource1RepoID struct {
+type CreateDeploymentRepoID struct {
 	Str     *string
 	Integer *int64
 
-	Type CreateDeployment200ApplicationJSONGitSource1RepoIDType
+	Type CreateDeploymentRepoIDType
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSource1RepoIDStr(str string) CreateDeployment200ApplicationJSONGitSource1RepoID {
-	typ := CreateDeployment200ApplicationJSONGitSource1RepoIDTypeStr
+func CreateCreateDeploymentRepoIDStr(str string) CreateDeploymentRepoID {
+	typ := CreateDeploymentRepoIDTypeStr
 
-	return CreateDeployment200ApplicationJSONGitSource1RepoID{
+	return CreateDeploymentRepoID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSource1RepoIDInteger(integer int64) CreateDeployment200ApplicationJSONGitSource1RepoID {
-	typ := CreateDeployment200ApplicationJSONGitSource1RepoIDTypeInteger
+func CreateCreateDeploymentRepoIDInteger(integer int64) CreateDeploymentRepoID {
+	typ := CreateDeploymentRepoIDTypeInteger
 
-	return CreateDeployment200ApplicationJSONGitSource1RepoID{
+	return CreateDeploymentRepoID{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func (u *CreateDeployment200ApplicationJSONGitSource1RepoID) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentRepoID) UnmarshalJSON(data []byte) error {
 
 	str := new(string)
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = str
-		u.Type = CreateDeployment200ApplicationJSONGitSource1RepoIDTypeStr
+		u.Type = CreateDeploymentRepoIDTypeStr
 		return nil
 	}
 
 	integer := new(int64)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = integer
-		u.Type = CreateDeployment200ApplicationJSONGitSource1RepoIDTypeInteger
+		u.Type = CreateDeploymentRepoIDTypeInteger
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeployment200ApplicationJSONGitSource1RepoID) MarshalJSON() ([]byte, error) {
+func (u CreateDeploymentRepoID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -6159,323 +6159,323 @@ func (u CreateDeployment200ApplicationJSONGitSource1RepoID) MarshalJSON() ([]byt
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeployment200ApplicationJSONGitSource1Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType string
 
 const (
-	CreateDeployment200ApplicationJSONGitSource1TypeGithub CreateDeployment200ApplicationJSONGitSource1Type = "github"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyTypeGithub CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType = "github"
 )
 
-func (e CreateDeployment200ApplicationJSONGitSource1Type) ToPointer() *CreateDeployment200ApplicationJSONGitSource1Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONGitSource1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "github":
-		*e = CreateDeployment200ApplicationJSONGitSource1Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONGitSource1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONGitSource1 struct {
-	PrID   *int64                                             `json:"prId,omitempty"`
-	Ref    *string                                            `json:"ref,omitempty"`
-	RepoID CreateDeployment200ApplicationJSONGitSource1RepoID `json:"repoId"`
-	Sha    *string                                            `json:"sha,omitempty"`
-	Type   CreateDeployment200ApplicationJSONGitSource1Type   `json:"type"`
+type CreateDeploymentDeploymentsResponse2001 struct {
+	PrID   *int64                                                                `json:"prId,omitempty"`
+	Ref    *string                                                               `json:"ref,omitempty"`
+	RepoID CreateDeploymentRepoID                                                `json:"repoId"`
+	Sha    *string                                                               `json:"sha,omitempty"`
+	Type   CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType `json:"type"`
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource1) GetPrID() *int64 {
+func (o *CreateDeploymentDeploymentsResponse2001) GetPrID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource1) GetRef() *string {
+func (o *CreateDeploymentDeploymentsResponse2001) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource1) GetRepoID() CreateDeployment200ApplicationJSONGitSource1RepoID {
+func (o *CreateDeploymentDeploymentsResponse2001) GetRepoID() CreateDeploymentRepoID {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitSource1RepoID{}
+		return CreateDeploymentRepoID{}
 	}
 	return o.RepoID
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource1) GetSha() *string {
+func (o *CreateDeploymentDeploymentsResponse2001) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeployment200ApplicationJSONGitSource1) GetType() CreateDeployment200ApplicationJSONGitSource1Type {
+func (o *CreateDeploymentDeploymentsResponse2001) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONGitSource1Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType("")
 	}
 	return o.Type
 }
 
-type CreateDeployment200ApplicationJSONGitSourceType string
+type CreateDeploymentGitSourceType string
 
 const (
-	CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource1 CreateDeployment200ApplicationJSONGitSourceType = "createDeployment_200ApplicationJSON_gitSource_1"
-	CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource2 CreateDeployment200ApplicationJSONGitSourceType = "createDeployment_200ApplicationJSON_gitSource_2"
-	CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource3 CreateDeployment200ApplicationJSONGitSourceType = "createDeployment_200ApplicationJSON_gitSource_3"
-	CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource4 CreateDeployment200ApplicationJSONGitSourceType = "createDeployment_200ApplicationJSON_gitSource_4"
-	CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource5 CreateDeployment200ApplicationJSONGitSourceType = "createDeployment_200ApplicationJSON_gitSource_5"
-	CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource6 CreateDeployment200ApplicationJSONGitSourceType = "createDeployment_200ApplicationJSON_gitSource_6"
-	CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource7 CreateDeployment200ApplicationJSONGitSourceType = "createDeployment_200ApplicationJSON_gitSource_7"
-	CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource8 CreateDeployment200ApplicationJSONGitSourceType = "createDeployment_200ApplicationJSON_gitSource_8"
-	CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource9 CreateDeployment200ApplicationJSONGitSourceType = "createDeployment_200ApplicationJSON_gitSource_9"
+	CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2001 CreateDeploymentGitSourceType = "createDeployment_deployments_response_200_1"
+	CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2002 CreateDeploymentGitSourceType = "createDeployment_deployments_response_200_2"
+	CreateDeploymentGitSourceTypeCreateDeploymentDeployments3            CreateDeploymentGitSourceType = "createDeployment_deployments_3"
+	CreateDeploymentGitSourceTypeCreateDeployment4                       CreateDeploymentGitSourceType = "createDeployment_4"
+	CreateDeploymentGitSourceTypeCreateDeployment5                       CreateDeploymentGitSourceType = "createDeployment_5"
+	CreateDeploymentGitSourceTypeCreateDeployment6                       CreateDeploymentGitSourceType = "createDeployment_6"
+	CreateDeploymentGitSourceTypeCreateDeployment7                       CreateDeploymentGitSourceType = "createDeployment_7"
+	CreateDeploymentGitSourceTypeCreateDeployment8                       CreateDeploymentGitSourceType = "createDeployment_8"
+	CreateDeploymentGitSourceTypeCreateDeployment9                       CreateDeploymentGitSourceType = "createDeployment_9"
 )
 
-type CreateDeployment200ApplicationJSONGitSource struct {
-	CreateDeployment200ApplicationJSONGitSource1 *CreateDeployment200ApplicationJSONGitSource1
-	CreateDeployment200ApplicationJSONGitSource2 *CreateDeployment200ApplicationJSONGitSource2
-	CreateDeployment200ApplicationJSONGitSource3 *CreateDeployment200ApplicationJSONGitSource3
-	CreateDeployment200ApplicationJSONGitSource4 *CreateDeployment200ApplicationJSONGitSource4
-	CreateDeployment200ApplicationJSONGitSource5 *CreateDeployment200ApplicationJSONGitSource5
-	CreateDeployment200ApplicationJSONGitSource6 *CreateDeployment200ApplicationJSONGitSource6
-	CreateDeployment200ApplicationJSONGitSource7 *CreateDeployment200ApplicationJSONGitSource7
-	CreateDeployment200ApplicationJSONGitSource8 *CreateDeployment200ApplicationJSONGitSource8
-	CreateDeployment200ApplicationJSONGitSource9 *CreateDeployment200ApplicationJSONGitSource9
+type CreateDeploymentGitSource struct {
+	CreateDeploymentDeploymentsResponse2001 *CreateDeploymentDeploymentsResponse2001
+	CreateDeploymentDeploymentsResponse2002 *CreateDeploymentDeploymentsResponse2002
+	CreateDeploymentDeployments3            *CreateDeploymentDeployments3
+	CreateDeployment4                       *CreateDeployment4
+	CreateDeployment5                       *CreateDeployment5
+	CreateDeployment6                       *CreateDeployment6
+	CreateDeployment7                       *CreateDeployment7
+	CreateDeployment8                       *CreateDeployment8
+	CreateDeployment9                       *CreateDeployment9
 
-	Type CreateDeployment200ApplicationJSONGitSourceType
+	Type CreateDeploymentGitSourceType
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSourceCreateDeployment200ApplicationJSONGitSource1(createDeployment200ApplicationJSONGitSource1 CreateDeployment200ApplicationJSONGitSource1) CreateDeployment200ApplicationJSONGitSource {
-	typ := CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource1
+func CreateCreateDeploymentGitSourceCreateDeploymentDeploymentsResponse2001(createDeploymentDeploymentsResponse2001 CreateDeploymentDeploymentsResponse2001) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2001
 
-	return CreateDeployment200ApplicationJSONGitSource{
-		CreateDeployment200ApplicationJSONGitSource1: &createDeployment200ApplicationJSONGitSource1,
-		Type: typ,
+	return CreateDeploymentGitSource{
+		CreateDeploymentDeploymentsResponse2001: &createDeploymentDeploymentsResponse2001,
+		Type:                                    typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSourceCreateDeployment200ApplicationJSONGitSource2(createDeployment200ApplicationJSONGitSource2 CreateDeployment200ApplicationJSONGitSource2) CreateDeployment200ApplicationJSONGitSource {
-	typ := CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource2
+func CreateCreateDeploymentGitSourceCreateDeploymentDeploymentsResponse2002(createDeploymentDeploymentsResponse2002 CreateDeploymentDeploymentsResponse2002) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2002
 
-	return CreateDeployment200ApplicationJSONGitSource{
-		CreateDeployment200ApplicationJSONGitSource2: &createDeployment200ApplicationJSONGitSource2,
-		Type: typ,
+	return CreateDeploymentGitSource{
+		CreateDeploymentDeploymentsResponse2002: &createDeploymentDeploymentsResponse2002,
+		Type:                                    typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSourceCreateDeployment200ApplicationJSONGitSource3(createDeployment200ApplicationJSONGitSource3 CreateDeployment200ApplicationJSONGitSource3) CreateDeployment200ApplicationJSONGitSource {
-	typ := CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource3
+func CreateCreateDeploymentGitSourceCreateDeploymentDeployments3(createDeploymentDeployments3 CreateDeploymentDeployments3) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceTypeCreateDeploymentDeployments3
 
-	return CreateDeployment200ApplicationJSONGitSource{
-		CreateDeployment200ApplicationJSONGitSource3: &createDeployment200ApplicationJSONGitSource3,
-		Type: typ,
+	return CreateDeploymentGitSource{
+		CreateDeploymentDeployments3: &createDeploymentDeployments3,
+		Type:                         typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSourceCreateDeployment200ApplicationJSONGitSource4(createDeployment200ApplicationJSONGitSource4 CreateDeployment200ApplicationJSONGitSource4) CreateDeployment200ApplicationJSONGitSource {
-	typ := CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource4
+func CreateCreateDeploymentGitSourceCreateDeployment4(createDeployment4 CreateDeployment4) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceTypeCreateDeployment4
 
-	return CreateDeployment200ApplicationJSONGitSource{
-		CreateDeployment200ApplicationJSONGitSource4: &createDeployment200ApplicationJSONGitSource4,
-		Type: typ,
+	return CreateDeploymentGitSource{
+		CreateDeployment4: &createDeployment4,
+		Type:              typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSourceCreateDeployment200ApplicationJSONGitSource5(createDeployment200ApplicationJSONGitSource5 CreateDeployment200ApplicationJSONGitSource5) CreateDeployment200ApplicationJSONGitSource {
-	typ := CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource5
+func CreateCreateDeploymentGitSourceCreateDeployment5(createDeployment5 CreateDeployment5) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceTypeCreateDeployment5
 
-	return CreateDeployment200ApplicationJSONGitSource{
-		CreateDeployment200ApplicationJSONGitSource5: &createDeployment200ApplicationJSONGitSource5,
-		Type: typ,
+	return CreateDeploymentGitSource{
+		CreateDeployment5: &createDeployment5,
+		Type:              typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSourceCreateDeployment200ApplicationJSONGitSource6(createDeployment200ApplicationJSONGitSource6 CreateDeployment200ApplicationJSONGitSource6) CreateDeployment200ApplicationJSONGitSource {
-	typ := CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource6
+func CreateCreateDeploymentGitSourceCreateDeployment6(createDeployment6 CreateDeployment6) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceTypeCreateDeployment6
 
-	return CreateDeployment200ApplicationJSONGitSource{
-		CreateDeployment200ApplicationJSONGitSource6: &createDeployment200ApplicationJSONGitSource6,
-		Type: typ,
+	return CreateDeploymentGitSource{
+		CreateDeployment6: &createDeployment6,
+		Type:              typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSourceCreateDeployment200ApplicationJSONGitSource7(createDeployment200ApplicationJSONGitSource7 CreateDeployment200ApplicationJSONGitSource7) CreateDeployment200ApplicationJSONGitSource {
-	typ := CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource7
+func CreateCreateDeploymentGitSourceCreateDeployment7(createDeployment7 CreateDeployment7) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceTypeCreateDeployment7
 
-	return CreateDeployment200ApplicationJSONGitSource{
-		CreateDeployment200ApplicationJSONGitSource7: &createDeployment200ApplicationJSONGitSource7,
-		Type: typ,
+	return CreateDeploymentGitSource{
+		CreateDeployment7: &createDeployment7,
+		Type:              typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSourceCreateDeployment200ApplicationJSONGitSource8(createDeployment200ApplicationJSONGitSource8 CreateDeployment200ApplicationJSONGitSource8) CreateDeployment200ApplicationJSONGitSource {
-	typ := CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource8
+func CreateCreateDeploymentGitSourceCreateDeployment8(createDeployment8 CreateDeployment8) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceTypeCreateDeployment8
 
-	return CreateDeployment200ApplicationJSONGitSource{
-		CreateDeployment200ApplicationJSONGitSource8: &createDeployment200ApplicationJSONGitSource8,
-		Type: typ,
+	return CreateDeploymentGitSource{
+		CreateDeployment8: &createDeployment8,
+		Type:              typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONGitSourceCreateDeployment200ApplicationJSONGitSource9(createDeployment200ApplicationJSONGitSource9 CreateDeployment200ApplicationJSONGitSource9) CreateDeployment200ApplicationJSONGitSource {
-	typ := CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource9
+func CreateCreateDeploymentGitSourceCreateDeployment9(createDeployment9 CreateDeployment9) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceTypeCreateDeployment9
 
-	return CreateDeployment200ApplicationJSONGitSource{
-		CreateDeployment200ApplicationJSONGitSource9: &createDeployment200ApplicationJSONGitSource9,
-		Type: typ,
+	return CreateDeploymentGitSource{
+		CreateDeployment9: &createDeployment9,
+		Type:              typ,
 	}
 }
 
-func (u *CreateDeployment200ApplicationJSONGitSource) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentGitSource) UnmarshalJSON(data []byte) error {
 
-	createDeployment200ApplicationJSONGitSource6 := new(CreateDeployment200ApplicationJSONGitSource6)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource6, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitSource6 = createDeployment200ApplicationJSONGitSource6
-		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource6
+	createDeployment6 := new(CreateDeployment6)
+	if err := utils.UnmarshalJSON(data, &createDeployment6, "", true, true); err == nil {
+		u.CreateDeployment6 = createDeployment6
+		u.Type = CreateDeploymentGitSourceTypeCreateDeployment6
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitSource8 := new(CreateDeployment200ApplicationJSONGitSource8)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource8, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitSource8 = createDeployment200ApplicationJSONGitSource8
-		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource8
+	createDeployment8 := new(CreateDeployment8)
+	if err := utils.UnmarshalJSON(data, &createDeployment8, "", true, true); err == nil {
+		u.CreateDeployment8 = createDeployment8
+		u.Type = CreateDeploymentGitSourceTypeCreateDeployment8
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitSource1 := new(CreateDeployment200ApplicationJSONGitSource1)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource1, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitSource1 = createDeployment200ApplicationJSONGitSource1
-		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource1
+	createDeploymentDeploymentsResponse2001 := new(CreateDeploymentDeploymentsResponse2001)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse2001, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse2001 = createDeploymentDeploymentsResponse2001
+		u.Type = CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2001
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitSource3 := new(CreateDeployment200ApplicationJSONGitSource3)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource3, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitSource3 = createDeployment200ApplicationJSONGitSource3
-		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource3
+	createDeploymentDeployments3 := new(CreateDeploymentDeployments3)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeployments3, "", true, true); err == nil {
+		u.CreateDeploymentDeployments3 = createDeploymentDeployments3
+		u.Type = CreateDeploymentGitSourceTypeCreateDeploymentDeployments3
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitSource2 := new(CreateDeployment200ApplicationJSONGitSource2)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource2, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitSource2 = createDeployment200ApplicationJSONGitSource2
-		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource2
+	createDeploymentDeploymentsResponse2002 := new(CreateDeploymentDeploymentsResponse2002)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse2002, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse2002 = createDeploymentDeploymentsResponse2002
+		u.Type = CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2002
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitSource4 := new(CreateDeployment200ApplicationJSONGitSource4)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource4, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitSource4 = createDeployment200ApplicationJSONGitSource4
-		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource4
+	createDeployment4 := new(CreateDeployment4)
+	if err := utils.UnmarshalJSON(data, &createDeployment4, "", true, true); err == nil {
+		u.CreateDeployment4 = createDeployment4
+		u.Type = CreateDeploymentGitSourceTypeCreateDeployment4
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitSource5 := new(CreateDeployment200ApplicationJSONGitSource5)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource5, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitSource5 = createDeployment200ApplicationJSONGitSource5
-		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource5
+	createDeployment5 := new(CreateDeployment5)
+	if err := utils.UnmarshalJSON(data, &createDeployment5, "", true, true); err == nil {
+		u.CreateDeployment5 = createDeployment5
+		u.Type = CreateDeploymentGitSourceTypeCreateDeployment5
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitSource7 := new(CreateDeployment200ApplicationJSONGitSource7)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource7, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitSource7 = createDeployment200ApplicationJSONGitSource7
-		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource7
+	createDeployment7 := new(CreateDeployment7)
+	if err := utils.UnmarshalJSON(data, &createDeployment7, "", true, true); err == nil {
+		u.CreateDeployment7 = createDeployment7
+		u.Type = CreateDeploymentGitSourceTypeCreateDeployment7
 		return nil
 	}
 
-	createDeployment200ApplicationJSONGitSource9 := new(CreateDeployment200ApplicationJSONGitSource9)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONGitSource9, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONGitSource9 = createDeployment200ApplicationJSONGitSource9
-		u.Type = CreateDeployment200ApplicationJSONGitSourceTypeCreateDeployment200ApplicationJSONGitSource9
+	createDeployment9 := new(CreateDeployment9)
+	if err := utils.UnmarshalJSON(data, &createDeployment9, "", true, true); err == nil {
+		u.CreateDeployment9 = createDeployment9
+		u.Type = CreateDeploymentGitSourceTypeCreateDeployment9
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeployment200ApplicationJSONGitSource) MarshalJSON() ([]byte, error) {
-	if u.CreateDeployment200ApplicationJSONGitSource1 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource1, "", true)
+func (u CreateDeploymentGitSource) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsResponse2001 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse2001, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONGitSource2 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource2, "", true)
+	if u.CreateDeploymentDeploymentsResponse2002 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse2002, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONGitSource3 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource3, "", true)
+	if u.CreateDeploymentDeployments3 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeployments3, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONGitSource4 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource4, "", true)
+	if u.CreateDeployment4 != nil {
+		return utils.MarshalJSON(u.CreateDeployment4, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONGitSource5 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource5, "", true)
+	if u.CreateDeployment5 != nil {
+		return utils.MarshalJSON(u.CreateDeployment5, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONGitSource6 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource6, "", true)
+	if u.CreateDeployment6 != nil {
+		return utils.MarshalJSON(u.CreateDeployment6, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONGitSource7 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource7, "", true)
+	if u.CreateDeployment7 != nil {
+		return utils.MarshalJSON(u.CreateDeployment7, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONGitSource8 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource8, "", true)
+	if u.CreateDeployment8 != nil {
+		return utils.MarshalJSON(u.CreateDeployment8, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONGitSource9 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONGitSource9, "", true)
+	if u.CreateDeployment9 != nil {
+		return utils.MarshalJSON(u.CreateDeployment9, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeployment200ApplicationJSONLambdasOutput struct {
+type CreateDeploymentOutput struct {
 	FunctionName string `json:"functionName"`
 	Path         string `json:"path"`
 }
 
-func (o *CreateDeployment200ApplicationJSONLambdasOutput) GetFunctionName() string {
+func (o *CreateDeploymentOutput) GetFunctionName() string {
 	if o == nil {
 		return ""
 	}
 	return o.FunctionName
 }
 
-func (o *CreateDeployment200ApplicationJSONLambdasOutput) GetPath() string {
+func (o *CreateDeploymentOutput) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-type CreateDeployment200ApplicationJSONLambdasReadyState string
+type CreateDeploymentDeploymentsReadyState string
 
 const (
-	CreateDeployment200ApplicationJSONLambdasReadyStateBuilding     CreateDeployment200ApplicationJSONLambdasReadyState = "BUILDING"
-	CreateDeployment200ApplicationJSONLambdasReadyStateError        CreateDeployment200ApplicationJSONLambdasReadyState = "ERROR"
-	CreateDeployment200ApplicationJSONLambdasReadyStateInitializing CreateDeployment200ApplicationJSONLambdasReadyState = "INITIALIZING"
-	CreateDeployment200ApplicationJSONLambdasReadyStateReady        CreateDeployment200ApplicationJSONLambdasReadyState = "READY"
+	CreateDeploymentDeploymentsReadyStateBuilding     CreateDeploymentDeploymentsReadyState = "BUILDING"
+	CreateDeploymentDeploymentsReadyStateError        CreateDeploymentDeploymentsReadyState = "ERROR"
+	CreateDeploymentDeploymentsReadyStateInitializing CreateDeploymentDeploymentsReadyState = "INITIALIZING"
+	CreateDeploymentDeploymentsReadyStateReady        CreateDeploymentDeploymentsReadyState = "READY"
 )
 
-func (e CreateDeployment200ApplicationJSONLambdasReadyState) ToPointer() *CreateDeployment200ApplicationJSONLambdasReadyState {
+func (e CreateDeploymentDeploymentsReadyState) ToPointer() *CreateDeploymentDeploymentsReadyState {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONLambdasReadyState) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -6488,79 +6488,79 @@ func (e *CreateDeployment200ApplicationJSONLambdasReadyState) UnmarshalJSON(data
 	case "INITIALIZING":
 		fallthrough
 	case "READY":
-		*e = CreateDeployment200ApplicationJSONLambdasReadyState(v)
+		*e = CreateDeploymentDeploymentsReadyState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONLambdasReadyState: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsReadyState: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONLambdas struct {
-	CreatedAt    *int64                                               `json:"createdAt,omitempty"`
-	Entrypoint   *string                                              `json:"entrypoint,omitempty"`
-	ID           string                                               `json:"id"`
-	Output       []CreateDeployment200ApplicationJSONLambdasOutput    `json:"output"`
-	ReadyState   *CreateDeployment200ApplicationJSONLambdasReadyState `json:"readyState,omitempty"`
-	ReadyStateAt *int64                                               `json:"readyStateAt,omitempty"`
+type CreateDeploymentLambdas struct {
+	CreatedAt    *int64                                 `json:"createdAt,omitempty"`
+	Entrypoint   *string                                `json:"entrypoint,omitempty"`
+	ID           string                                 `json:"id"`
+	Output       []CreateDeploymentOutput               `json:"output"`
+	ReadyState   *CreateDeploymentDeploymentsReadyState `json:"readyState,omitempty"`
+	ReadyStateAt *int64                                 `json:"readyStateAt,omitempty"`
 }
 
-func (o *CreateDeployment200ApplicationJSONLambdas) GetCreatedAt() *int64 {
+func (o *CreateDeploymentLambdas) GetCreatedAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateDeployment200ApplicationJSONLambdas) GetEntrypoint() *string {
+func (o *CreateDeploymentLambdas) GetEntrypoint() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Entrypoint
 }
 
-func (o *CreateDeployment200ApplicationJSONLambdas) GetID() string {
+func (o *CreateDeploymentLambdas) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateDeployment200ApplicationJSONLambdas) GetOutput() []CreateDeployment200ApplicationJSONLambdasOutput {
+func (o *CreateDeploymentLambdas) GetOutput() []CreateDeploymentOutput {
 	if o == nil {
-		return []CreateDeployment200ApplicationJSONLambdasOutput{}
+		return []CreateDeploymentOutput{}
 	}
 	return o.Output
 }
 
-func (o *CreateDeployment200ApplicationJSONLambdas) GetReadyState() *CreateDeployment200ApplicationJSONLambdasReadyState {
+func (o *CreateDeploymentLambdas) GetReadyState() *CreateDeploymentDeploymentsReadyState {
 	if o == nil {
 		return nil
 	}
 	return o.ReadyState
 }
 
-func (o *CreateDeployment200ApplicationJSONLambdas) GetReadyStateAt() *int64 {
+func (o *CreateDeploymentLambdas) GetReadyStateAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ReadyStateAt
 }
 
-// CreateDeployment200ApplicationJSONPlan - The pricing plan the deployment was made under
-type CreateDeployment200ApplicationJSONPlan string
+// CreateDeploymentPlan - The pricing plan the deployment was made under
+type CreateDeploymentPlan string
 
 const (
-	CreateDeployment200ApplicationJSONPlanPro        CreateDeployment200ApplicationJSONPlan = "pro"
-	CreateDeployment200ApplicationJSONPlanEnterprise CreateDeployment200ApplicationJSONPlan = "enterprise"
-	CreateDeployment200ApplicationJSONPlanHobby      CreateDeployment200ApplicationJSONPlan = "hobby"
-	CreateDeployment200ApplicationJSONPlanOss        CreateDeployment200ApplicationJSONPlan = "oss"
+	CreateDeploymentPlanPro        CreateDeploymentPlan = "pro"
+	CreateDeploymentPlanEnterprise CreateDeploymentPlan = "enterprise"
+	CreateDeploymentPlanHobby      CreateDeploymentPlan = "hobby"
+	CreateDeploymentPlanOss        CreateDeploymentPlan = "oss"
 )
 
-func (e CreateDeployment200ApplicationJSONPlan) ToPointer() *CreateDeployment200ApplicationJSONPlan {
+func (e CreateDeploymentPlan) ToPointer() *CreateDeploymentPlan {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONPlan) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentPlan) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -6573,30 +6573,30 @@ func (e *CreateDeployment200ApplicationJSONPlan) UnmarshalJSON(data []byte) erro
 	case "hobby":
 		fallthrough
 	case "oss":
-		*e = CreateDeployment200ApplicationJSONPlan(v)
+		*e = CreateDeploymentPlan(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONPlan: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentPlan: %v", v)
 	}
 }
 
-// CreateDeployment200ApplicationJSONReadyState - The state of the deployment depending on the process of deploying, or if it is ready or in an error state
-type CreateDeployment200ApplicationJSONReadyState string
+// CreateDeploymentReadyState - The state of the deployment depending on the process of deploying, or if it is ready or in an error state
+type CreateDeploymentReadyState string
 
 const (
-	CreateDeployment200ApplicationJSONReadyStateQueued       CreateDeployment200ApplicationJSONReadyState = "QUEUED"
-	CreateDeployment200ApplicationJSONReadyStateBuilding     CreateDeployment200ApplicationJSONReadyState = "BUILDING"
-	CreateDeployment200ApplicationJSONReadyStateError        CreateDeployment200ApplicationJSONReadyState = "ERROR"
-	CreateDeployment200ApplicationJSONReadyStateInitializing CreateDeployment200ApplicationJSONReadyState = "INITIALIZING"
-	CreateDeployment200ApplicationJSONReadyStateReady        CreateDeployment200ApplicationJSONReadyState = "READY"
-	CreateDeployment200ApplicationJSONReadyStateCanceled     CreateDeployment200ApplicationJSONReadyState = "CANCELED"
+	CreateDeploymentReadyStateQueued       CreateDeploymentReadyState = "QUEUED"
+	CreateDeploymentReadyStateBuilding     CreateDeploymentReadyState = "BUILDING"
+	CreateDeploymentReadyStateError        CreateDeploymentReadyState = "ERROR"
+	CreateDeploymentReadyStateInitializing CreateDeploymentReadyState = "INITIALIZING"
+	CreateDeploymentReadyStateReady        CreateDeploymentReadyState = "READY"
+	CreateDeploymentReadyStateCanceled     CreateDeploymentReadyState = "CANCELED"
 )
 
-func (e CreateDeployment200ApplicationJSONReadyState) ToPointer() *CreateDeployment200ApplicationJSONReadyState {
+func (e CreateDeploymentReadyState) ToPointer() *CreateDeploymentReadyState {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONReadyState) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -6613,26 +6613,26 @@ func (e *CreateDeployment200ApplicationJSONReadyState) UnmarshalJSON(data []byte
 	case "READY":
 		fallthrough
 	case "CANCELED":
-		*e = CreateDeployment200ApplicationJSONReadyState(v)
+		*e = CreateDeploymentReadyState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONReadyState: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentReadyState: %v", v)
 	}
 }
 
-// CreateDeployment200ApplicationJSONReadySubstate - The substate of the deployment when the state is "READY"
-type CreateDeployment200ApplicationJSONReadySubstate string
+// CreateDeploymentReadySubstate - The substate of the deployment when the state is "READY"
+type CreateDeploymentReadySubstate string
 
 const (
-	CreateDeployment200ApplicationJSONReadySubstateStaged   CreateDeployment200ApplicationJSONReadySubstate = "STAGED"
-	CreateDeployment200ApplicationJSONReadySubstatePromoted CreateDeployment200ApplicationJSONReadySubstate = "PROMOTED"
+	CreateDeploymentReadySubstateStaged   CreateDeploymentReadySubstate = "STAGED"
+	CreateDeploymentReadySubstatePromoted CreateDeploymentReadySubstate = "PROMOTED"
 )
 
-func (e CreateDeployment200ApplicationJSONReadySubstate) ToPointer() *CreateDeployment200ApplicationJSONReadySubstate {
+func (e CreateDeploymentReadySubstate) ToPointer() *CreateDeploymentReadySubstate {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONReadySubstate) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentReadySubstate) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -6641,81 +6641,81 @@ func (e *CreateDeployment200ApplicationJSONReadySubstate) UnmarshalJSON(data []b
 	case "STAGED":
 		fallthrough
 	case "PROMOTED":
-		*e = CreateDeployment200ApplicationJSONReadySubstate(v)
+		*e = CreateDeploymentReadySubstate(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONReadySubstate: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentReadySubstate: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONRoutes3Middleware int64
+type CreateDeploymentMiddleware int64
 
 const (
-	CreateDeployment200ApplicationJSONRoutes3MiddlewareZero CreateDeployment200ApplicationJSONRoutes3Middleware = 0
+	CreateDeploymentMiddlewareZero CreateDeploymentMiddleware = 0
 )
 
-func (e CreateDeployment200ApplicationJSONRoutes3Middleware) ToPointer() *CreateDeployment200ApplicationJSONRoutes3Middleware {
+func (e CreateDeploymentMiddleware) ToPointer() *CreateDeploymentMiddleware {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONRoutes3Middleware) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentMiddleware) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case 0:
-		*e = CreateDeployment200ApplicationJSONRoutes3Middleware(v)
+		*e = CreateDeploymentMiddleware(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONRoutes3Middleware: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentMiddleware: %v", v)
 	}
 }
 
-// CreateDeployment200ApplicationJSONRoutes3 - A list of routes objects used to rewrite paths to point towards other internal or external paths
-type CreateDeployment200ApplicationJSONRoutes3 struct {
-	Continue   bool                                                `json:"continue"`
-	Middleware CreateDeployment200ApplicationJSONRoutes3Middleware `json:"middleware"`
-	Src        string                                              `json:"src"`
+// CreateDeploymentDeploymentsResponse3 - A list of routes objects used to rewrite paths to point towards other internal or external paths
+type CreateDeploymentDeploymentsResponse3 struct {
+	Continue   bool                       `json:"continue"`
+	Middleware CreateDeploymentMiddleware `json:"middleware"`
+	Src        string                     `json:"src"`
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes3) GetContinue() bool {
+func (o *CreateDeploymentDeploymentsResponse3) GetContinue() bool {
 	if o == nil {
 		return false
 	}
 	return o.Continue
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes3) GetMiddleware() CreateDeployment200ApplicationJSONRoutes3Middleware {
+func (o *CreateDeploymentDeploymentsResponse3) GetMiddleware() CreateDeploymentMiddleware {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONRoutes3Middleware(0)
+		return CreateDeploymentMiddleware(0)
 	}
 	return o.Middleware
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes3) GetSrc() string {
+func (o *CreateDeploymentDeploymentsResponse3) GetSrc() string {
 	if o == nil {
 		return ""
 	}
 	return o.Src
 }
 
-type CreateDeployment200ApplicationJSONRoutes2Handle string
+type CreateDeploymentHandle string
 
 const (
-	CreateDeployment200ApplicationJSONRoutes2HandleError      CreateDeployment200ApplicationJSONRoutes2Handle = "error"
-	CreateDeployment200ApplicationJSONRoutes2HandleFilesystem CreateDeployment200ApplicationJSONRoutes2Handle = "filesystem"
-	CreateDeployment200ApplicationJSONRoutes2HandleHit        CreateDeployment200ApplicationJSONRoutes2Handle = "hit"
-	CreateDeployment200ApplicationJSONRoutes2HandleMiss       CreateDeployment200ApplicationJSONRoutes2Handle = "miss"
-	CreateDeployment200ApplicationJSONRoutes2HandleRewrite    CreateDeployment200ApplicationJSONRoutes2Handle = "rewrite"
-	CreateDeployment200ApplicationJSONRoutes2HandleResource   CreateDeployment200ApplicationJSONRoutes2Handle = "resource"
+	CreateDeploymentHandleError      CreateDeploymentHandle = "error"
+	CreateDeploymentHandleFilesystem CreateDeploymentHandle = "filesystem"
+	CreateDeploymentHandleHit        CreateDeploymentHandle = "hit"
+	CreateDeploymentHandleMiss       CreateDeploymentHandle = "miss"
+	CreateDeploymentHandleRewrite    CreateDeploymentHandle = "rewrite"
+	CreateDeploymentHandleResource   CreateDeploymentHandle = "resource"
 )
 
-func (e CreateDeployment200ApplicationJSONRoutes2Handle) ToPointer() *CreateDeployment200ApplicationJSONRoutes2Handle {
+func (e CreateDeploymentHandle) ToPointer() *CreateDeploymentHandle {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONRoutes2Handle) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentHandle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -6732,62 +6732,62 @@ func (e *CreateDeployment200ApplicationJSONRoutes2Handle) UnmarshalJSON(data []b
 	case "rewrite":
 		fallthrough
 	case "resource":
-		*e = CreateDeployment200ApplicationJSONRoutes2Handle(v)
+		*e = CreateDeploymentHandle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONRoutes2Handle: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentHandle: %v", v)
 	}
 }
 
-// CreateDeployment200ApplicationJSONRoutes2 - A list of routes objects used to rewrite paths to point towards other internal or external paths
-type CreateDeployment200ApplicationJSONRoutes2 struct {
-	Dest   *string                                         `json:"dest,omitempty"`
-	Handle CreateDeployment200ApplicationJSONRoutes2Handle `json:"handle"`
-	Src    *string                                         `json:"src,omitempty"`
-	Status *int64                                          `json:"status,omitempty"`
+// CreateDeploymentDeploymentsResponse200ApplicationJSON2 - A list of routes objects used to rewrite paths to point towards other internal or external paths
+type CreateDeploymentDeploymentsResponse200ApplicationJSON2 struct {
+	Dest   *string                `json:"dest,omitempty"`
+	Handle CreateDeploymentHandle `json:"handle"`
+	Src    *string                `json:"src,omitempty"`
+	Status *int64                 `json:"status,omitempty"`
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes2) GetDest() *string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON2) GetDest() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dest
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes2) GetHandle() CreateDeployment200ApplicationJSONRoutes2Handle {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON2) GetHandle() CreateDeploymentHandle {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONRoutes2Handle("")
+		return CreateDeploymentHandle("")
 	}
 	return o.Handle
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes2) GetSrc() *string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON2) GetSrc() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Src
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes2) GetStatus() *int64 {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON2) GetStatus() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Status
 }
 
-type CreateDeployment200ApplicationJSONRoutes1Has2Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type string
 
 const (
-	CreateDeployment200ApplicationJSONRoutes1Has2TypeHeader CreateDeployment200ApplicationJSONRoutes1Has2Type = "header"
-	CreateDeployment200ApplicationJSONRoutes1Has2TypeCookie CreateDeployment200ApplicationJSONRoutes1Has2Type = "cookie"
-	CreateDeployment200ApplicationJSONRoutes1Has2TypeQuery  CreateDeployment200ApplicationJSONRoutes1Has2Type = "query"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1TypeHeader CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type = "header"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1TypeCookie CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type = "cookie"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1TypeQuery  CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type = "query"
 )
 
-func (e CreateDeployment200ApplicationJSONRoutes1Has2Type) ToPointer() *CreateDeployment200ApplicationJSONRoutes1Has2Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONRoutes1Has2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -6798,178 +6798,178 @@ func (e *CreateDeployment200ApplicationJSONRoutes1Has2Type) UnmarshalJSON(data [
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = CreateDeployment200ApplicationJSONRoutes1Has2Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONRoutes1Has2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONRoutes1Has2 struct {
-	Key   string                                            `json:"key"`
-	Type  CreateDeployment200ApplicationJSONRoutes1Has2Type `json:"type"`
-	Value *string                                           `json:"value,omitempty"`
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 struct {
+	Key   string                                                                       `json:"key"`
+	Type  CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type `json:"type"`
+	Value *string                                                                      `json:"value,omitempty"`
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Has2) GetKey() string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Has2) GetType() CreateDeployment200ApplicationJSONRoutes1Has2Type {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONRoutes1Has2Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Has2) GetValue() *string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type CreateDeployment200ApplicationJSONRoutes1Has1Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType string
 
 const (
-	CreateDeployment200ApplicationJSONRoutes1Has1TypeHost CreateDeployment200ApplicationJSONRoutes1Has1Type = "host"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesTypeHost CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType = "host"
 )
 
-func (e CreateDeployment200ApplicationJSONRoutes1Has1Type) ToPointer() *CreateDeployment200ApplicationJSONRoutes1Has1Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONRoutes1Has1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = CreateDeployment200ApplicationJSONRoutes1Has1Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONRoutes1Has1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONRoutes1Has1 struct {
-	Type  CreateDeployment200ApplicationJSONRoutes1Has1Type `json:"type"`
-	Value string                                            `json:"value"`
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 struct {
+	Type  CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType `json:"type"`
+	Value string                                                                      `json:"value"`
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Has1) GetType() CreateDeployment200ApplicationJSONRoutes1Has1Type {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONRoutes1Has1Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Has1) GetValue() string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeployment200ApplicationJSONRoutes1HasType string
+type CreateDeploymentDeploymentsResponseHasType string
 
 const (
-	CreateDeployment200ApplicationJSONRoutes1HasTypeCreateDeployment200ApplicationJSONRoutes1Has1 CreateDeployment200ApplicationJSONRoutes1HasType = "createDeployment_200ApplicationJSON_routes_1_has_1"
-	CreateDeployment200ApplicationJSONRoutes1HasTypeCreateDeployment200ApplicationJSONRoutes1Has2 CreateDeployment200ApplicationJSONRoutes1HasType = "createDeployment_200ApplicationJSON_routes_1_has_2"
+	CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 CreateDeploymentDeploymentsResponseHasType = "createDeployment_deployments_response_200_ApplicationJSON_responseBody_1"
+	CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 CreateDeploymentDeploymentsResponseHasType = "createDeployment_deployments_response_200_ApplicationJSON_responseBody_2"
 )
 
-type CreateDeployment200ApplicationJSONRoutes1Has struct {
-	CreateDeployment200ApplicationJSONRoutes1Has1 *CreateDeployment200ApplicationJSONRoutes1Has1
-	CreateDeployment200ApplicationJSONRoutes1Has2 *CreateDeployment200ApplicationJSONRoutes1Has2
+type CreateDeploymentDeploymentsResponseHas struct {
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
 
-	Type CreateDeployment200ApplicationJSONRoutes1HasType
+	Type CreateDeploymentDeploymentsResponseHasType
 }
 
-func CreateCreateDeployment200ApplicationJSONRoutes1HasCreateDeployment200ApplicationJSONRoutes1Has1(createDeployment200ApplicationJSONRoutes1Has1 CreateDeployment200ApplicationJSONRoutes1Has1) CreateDeployment200ApplicationJSONRoutes1Has {
-	typ := CreateDeployment200ApplicationJSONRoutes1HasTypeCreateDeployment200ApplicationJSONRoutes1Has1
+func CreateCreateDeploymentDeploymentsResponseHasCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1(createDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1) CreateDeploymentDeploymentsResponseHas {
+	typ := CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
 
-	return CreateDeployment200ApplicationJSONRoutes1Has{
-		CreateDeployment200ApplicationJSONRoutes1Has1: &createDeployment200ApplicationJSONRoutes1Has1,
+	return CreateDeploymentDeploymentsResponseHas{
+		CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1: &createDeploymentDeploymentsResponse200ApplicationJSONResponseBody1,
 		Type: typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONRoutes1HasCreateDeployment200ApplicationJSONRoutes1Has2(createDeployment200ApplicationJSONRoutes1Has2 CreateDeployment200ApplicationJSONRoutes1Has2) CreateDeployment200ApplicationJSONRoutes1Has {
-	typ := CreateDeployment200ApplicationJSONRoutes1HasTypeCreateDeployment200ApplicationJSONRoutes1Has2
+func CreateCreateDeploymentDeploymentsResponseHasCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2(createDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) CreateDeploymentDeploymentsResponseHas {
+	typ := CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
 
-	return CreateDeployment200ApplicationJSONRoutes1Has{
-		CreateDeployment200ApplicationJSONRoutes1Has2: &createDeployment200ApplicationJSONRoutes1Has2,
+	return CreateDeploymentDeploymentsResponseHas{
+		CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2: &createDeploymentDeploymentsResponse200ApplicationJSONResponseBody2,
 		Type: typ,
 	}
 }
 
-func (u *CreateDeployment200ApplicationJSONRoutes1Has) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentDeploymentsResponseHas) UnmarshalJSON(data []byte) error {
 
-	createDeployment200ApplicationJSONRoutes1Has1 := new(CreateDeployment200ApplicationJSONRoutes1Has1)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes1Has1, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONRoutes1Has1 = createDeployment200ApplicationJSONRoutes1Has1
-		u.Type = CreateDeployment200ApplicationJSONRoutes1HasTypeCreateDeployment200ApplicationJSONRoutes1Has1
+	createDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 := new(CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSONResponseBody1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 = createDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
+		u.Type = CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
 		return nil
 	}
 
-	createDeployment200ApplicationJSONRoutes1Has2 := new(CreateDeployment200ApplicationJSONRoutes1Has2)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes1Has2, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONRoutes1Has2 = createDeployment200ApplicationJSONRoutes1Has2
-		u.Type = CreateDeployment200ApplicationJSONRoutes1HasTypeCreateDeployment200ApplicationJSONRoutes1Has2
+	createDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 := new(CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSONResponseBody2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 = createDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
+		u.Type = CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeployment200ApplicationJSONRoutes1Has) MarshalJSON() ([]byte, error) {
-	if u.CreateDeployment200ApplicationJSONRoutes1Has1 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes1Has1, "", true)
+func (u CreateDeploymentDeploymentsResponseHas) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONRoutes1Has2 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes1Has2, "", true)
+	if u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-type CreateDeployment200ApplicationJSONRoutes1Locale struct {
+type CreateDeploymentLocale struct {
 	Cookie   *string           `json:"cookie,omitempty"`
 	Redirect map[string]string `json:"redirect,omitempty"`
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Locale) GetCookie() *string {
+func (o *CreateDeploymentLocale) GetCookie() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Cookie
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Locale) GetRedirect() map[string]string {
+func (o *CreateDeploymentLocale) GetRedirect() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Redirect
 }
 
-type CreateDeployment200ApplicationJSONRoutes1Missing2Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type string
 
 const (
-	CreateDeployment200ApplicationJSONRoutes1Missing2TypeHeader CreateDeployment200ApplicationJSONRoutes1Missing2Type = "header"
-	CreateDeployment200ApplicationJSONRoutes1Missing2TypeCookie CreateDeployment200ApplicationJSONRoutes1Missing2Type = "cookie"
-	CreateDeployment200ApplicationJSONRoutes1Missing2TypeQuery  CreateDeployment200ApplicationJSONRoutes1Missing2Type = "query"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2TypeHeader CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type = "header"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2TypeCookie CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type = "cookie"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2TypeQuery  CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type = "query"
 )
 
-func (e CreateDeployment200ApplicationJSONRoutes1Missing2Type) ToPointer() *CreateDeployment200ApplicationJSONRoutes1Missing2Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONRoutes1Missing2Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -6980,382 +6980,382 @@ func (e *CreateDeployment200ApplicationJSONRoutes1Missing2Type) UnmarshalJSON(da
 	case "cookie":
 		fallthrough
 	case "query":
-		*e = CreateDeployment200ApplicationJSONRoutes1Missing2Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONRoutes1Missing2Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONRoutes1Missing2 struct {
-	Key   string                                                `json:"key"`
-	Type  CreateDeployment200ApplicationJSONRoutes1Missing2Type `json:"type"`
-	Value *string                                               `json:"value,omitempty"`
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 struct {
+	Key   string                                                                               `json:"key"`
+	Type  CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type `json:"type"`
+	Value *string                                                                              `json:"value,omitempty"`
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Missing2) GetKey() string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Missing2) GetType() CreateDeployment200ApplicationJSONRoutes1Missing2Type {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONRoutes1Missing2Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Missing2) GetValue() *string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-type CreateDeployment200ApplicationJSONRoutes1Missing1Type string
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType string
 
 const (
-	CreateDeployment200ApplicationJSONRoutes1Missing1TypeHost CreateDeployment200ApplicationJSONRoutes1Missing1Type = "host"
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingTypeHost CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType = "host"
 )
 
-func (e CreateDeployment200ApplicationJSONRoutes1Missing1Type) ToPointer() *CreateDeployment200ApplicationJSONRoutes1Missing1Type {
+func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONRoutes1Missing1Type) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "host":
-		*e = CreateDeployment200ApplicationJSONRoutes1Missing1Type(v)
+		*e = CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONRoutes1Missing1Type: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType: %v", v)
 	}
 }
 
-type CreateDeployment200ApplicationJSONRoutes1Missing1 struct {
-	Type  CreateDeployment200ApplicationJSONRoutes1Missing1Type `json:"type"`
-	Value string                                                `json:"value"`
+type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 struct {
+	Type  CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType `json:"type"`
+	Value string                                                                              `json:"value"`
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Missing1) GetType() CreateDeployment200ApplicationJSONRoutes1Missing1Type {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONRoutes1Missing1Type("")
+		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1Missing1) GetValue() string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeployment200ApplicationJSONRoutes1MissingType string
+type CreateDeploymentDeploymentsResponseMissingType string
 
 const (
-	CreateDeployment200ApplicationJSONRoutes1MissingTypeCreateDeployment200ApplicationJSONRoutes1Missing1 CreateDeployment200ApplicationJSONRoutes1MissingType = "createDeployment_200ApplicationJSON_routes_1_missing_1"
-	CreateDeployment200ApplicationJSONRoutes1MissingTypeCreateDeployment200ApplicationJSONRoutes1Missing2 CreateDeployment200ApplicationJSONRoutes1MissingType = "createDeployment_200ApplicationJSON_routes_1_missing_2"
+	CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 CreateDeploymentDeploymentsResponseMissingType = "createDeployment_deployments_response_200_ApplicationJSON_responseBody_routes_1"
+	CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 CreateDeploymentDeploymentsResponseMissingType = "createDeployment_deployments_response_200_ApplicationJSON_responseBody_routes_2"
 )
 
-type CreateDeployment200ApplicationJSONRoutes1Missing struct {
-	CreateDeployment200ApplicationJSONRoutes1Missing1 *CreateDeployment200ApplicationJSONRoutes1Missing1
-	CreateDeployment200ApplicationJSONRoutes1Missing2 *CreateDeployment200ApplicationJSONRoutes1Missing2
+type CreateDeploymentDeploymentsResponseMissing struct {
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1
+	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2
 
-	Type CreateDeployment200ApplicationJSONRoutes1MissingType
+	Type CreateDeploymentDeploymentsResponseMissingType
 }
 
-func CreateCreateDeployment200ApplicationJSONRoutes1MissingCreateDeployment200ApplicationJSONRoutes1Missing1(createDeployment200ApplicationJSONRoutes1Missing1 CreateDeployment200ApplicationJSONRoutes1Missing1) CreateDeployment200ApplicationJSONRoutes1Missing {
-	typ := CreateDeployment200ApplicationJSONRoutes1MissingTypeCreateDeployment200ApplicationJSONRoutes1Missing1
+func CreateCreateDeploymentDeploymentsResponseMissingCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1(createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1) CreateDeploymentDeploymentsResponseMissing {
+	typ := CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1
 
-	return CreateDeployment200ApplicationJSONRoutes1Missing{
-		CreateDeployment200ApplicationJSONRoutes1Missing1: &createDeployment200ApplicationJSONRoutes1Missing1,
+	return CreateDeploymentDeploymentsResponseMissing{
+		CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1: &createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1,
 		Type: typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONRoutes1MissingCreateDeployment200ApplicationJSONRoutes1Missing2(createDeployment200ApplicationJSONRoutes1Missing2 CreateDeployment200ApplicationJSONRoutes1Missing2) CreateDeployment200ApplicationJSONRoutes1Missing {
-	typ := CreateDeployment200ApplicationJSONRoutes1MissingTypeCreateDeployment200ApplicationJSONRoutes1Missing2
+func CreateCreateDeploymentDeploymentsResponseMissingCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2(createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2) CreateDeploymentDeploymentsResponseMissing {
+	typ := CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2
 
-	return CreateDeployment200ApplicationJSONRoutes1Missing{
-		CreateDeployment200ApplicationJSONRoutes1Missing2: &createDeployment200ApplicationJSONRoutes1Missing2,
+	return CreateDeploymentDeploymentsResponseMissing{
+		CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2: &createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2,
 		Type: typ,
 	}
 }
 
-func (u *CreateDeployment200ApplicationJSONRoutes1Missing) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentDeploymentsResponseMissing) UnmarshalJSON(data []byte) error {
 
-	createDeployment200ApplicationJSONRoutes1Missing1 := new(CreateDeployment200ApplicationJSONRoutes1Missing1)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes1Missing1, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONRoutes1Missing1 = createDeployment200ApplicationJSONRoutes1Missing1
-		u.Type = CreateDeployment200ApplicationJSONRoutes1MissingTypeCreateDeployment200ApplicationJSONRoutes1Missing1
+	createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 := new(CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 = createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1
+		u.Type = CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1
 		return nil
 	}
 
-	createDeployment200ApplicationJSONRoutes1Missing2 := new(CreateDeployment200ApplicationJSONRoutes1Missing2)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes1Missing2, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONRoutes1Missing2 = createDeployment200ApplicationJSONRoutes1Missing2
-		u.Type = CreateDeployment200ApplicationJSONRoutes1MissingTypeCreateDeployment200ApplicationJSONRoutes1Missing2
+	createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 := new(CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 = createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2
+		u.Type = CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeployment200ApplicationJSONRoutes1Missing) MarshalJSON() ([]byte, error) {
-	if u.CreateDeployment200ApplicationJSONRoutes1Missing1 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes1Missing1, "", true)
+func (u CreateDeploymentDeploymentsResponseMissing) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONRoutes1Missing2 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes1Missing2, "", true)
+	if u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// CreateDeployment200ApplicationJSONRoutes1 - A list of routes objects used to rewrite paths to point towards other internal or external paths
-type CreateDeployment200ApplicationJSONRoutes1 struct {
-	CaseSensitive *bool                                            `json:"caseSensitive,omitempty"`
-	Check         *bool                                            `json:"check,omitempty"`
-	Continue      *bool                                            `json:"continue,omitempty"`
-	Dest          *string                                          `json:"dest,omitempty"`
-	Has           []CreateDeployment200ApplicationJSONRoutes1Has   `json:"has,omitempty"`
-	Headers       map[string]string                                `json:"headers,omitempty"`
-	Important     *bool                                            `json:"important,omitempty"`
-	Locale        *CreateDeployment200ApplicationJSONRoutes1Locale `json:"locale,omitempty"`
-	Methods       []string                                         `json:"methods,omitempty"`
+// CreateDeploymentDeploymentsResponse200ApplicationJSON1 - A list of routes objects used to rewrite paths to point towards other internal or external paths
+type CreateDeploymentDeploymentsResponse200ApplicationJSON1 struct {
+	CaseSensitive *bool                                    `json:"caseSensitive,omitempty"`
+	Check         *bool                                    `json:"check,omitempty"`
+	Continue      *bool                                    `json:"continue,omitempty"`
+	Dest          *string                                  `json:"dest,omitempty"`
+	Has           []CreateDeploymentDeploymentsResponseHas `json:"has,omitempty"`
+	Headers       map[string]string                        `json:"headers,omitempty"`
+	Important     *bool                                    `json:"important,omitempty"`
+	Locale        *CreateDeploymentLocale                  `json:"locale,omitempty"`
+	Methods       []string                                 `json:"methods,omitempty"`
 	// A middleware index in the `middleware` key under the build result
 	Middleware *int64 `json:"middleware,omitempty"`
 	// A middleware key within the `output` key under the build result. Overrides a `middleware` definition.
 	MiddlewarePath *string `json:"middlewarePath,omitempty"`
 	// The original middleware matchers.
-	MiddlewareRawSrc []string                                           `json:"middlewareRawSrc,omitempty"`
-	Missing          []CreateDeployment200ApplicationJSONRoutes1Missing `json:"missing,omitempty"`
-	Override         *bool                                              `json:"override,omitempty"`
-	Src              string                                             `json:"src"`
-	Status           *int64                                             `json:"status,omitempty"`
+	MiddlewareRawSrc []string                                     `json:"middlewareRawSrc,omitempty"`
+	Missing          []CreateDeploymentDeploymentsResponseMissing `json:"missing,omitempty"`
+	Override         *bool                                        `json:"override,omitempty"`
+	Src              string                                       `json:"src"`
+	Status           *int64                                       `json:"status,omitempty"`
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetCaseSensitive() *bool {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetCaseSensitive() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.CaseSensitive
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetCheck() *bool {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetCheck() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Check
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetContinue() *bool {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetContinue() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Continue
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetDest() *string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetDest() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dest
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetHas() []CreateDeployment200ApplicationJSONRoutes1Has {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetHas() []CreateDeploymentDeploymentsResponseHas {
 	if o == nil {
 		return nil
 	}
 	return o.Has
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetHeaders() map[string]string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetHeaders() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Headers
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetImportant() *bool {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetImportant() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Important
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetLocale() *CreateDeployment200ApplicationJSONRoutes1Locale {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetLocale() *CreateDeploymentLocale {
 	if o == nil {
 		return nil
 	}
 	return o.Locale
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetMethods() []string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetMethods() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Methods
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetMiddleware() *int64 {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetMiddleware() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Middleware
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetMiddlewarePath() *string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetMiddlewarePath() *string {
 	if o == nil {
 		return nil
 	}
 	return o.MiddlewarePath
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetMiddlewareRawSrc() []string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetMiddlewareRawSrc() []string {
 	if o == nil {
 		return nil
 	}
 	return o.MiddlewareRawSrc
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetMissing() []CreateDeployment200ApplicationJSONRoutes1Missing {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetMissing() []CreateDeploymentDeploymentsResponseMissing {
 	if o == nil {
 		return nil
 	}
 	return o.Missing
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetOverride() *bool {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetOverride() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Override
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetSrc() string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetSrc() string {
 	if o == nil {
 		return ""
 	}
 	return o.Src
 }
 
-func (o *CreateDeployment200ApplicationJSONRoutes1) GetStatus() *int64 {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetStatus() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Status
 }
 
-type CreateDeployment200ApplicationJSONRoutesType string
+type CreateDeploymentRoutesType string
 
 const (
-	CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes1 CreateDeployment200ApplicationJSONRoutesType = "createDeployment_200ApplicationJSON_routes_1"
-	CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes2 CreateDeployment200ApplicationJSONRoutesType = "createDeployment_200ApplicationJSON_routes_2"
-	CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes3 CreateDeployment200ApplicationJSONRoutesType = "createDeployment_200ApplicationJSON_routes_3"
+	CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON1 CreateDeploymentRoutesType = "createDeployment_deployments_response_200_ApplicationJSON_1"
+	CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON2 CreateDeploymentRoutesType = "createDeployment_deployments_response_200_ApplicationJSON_2"
+	CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse3                   CreateDeploymentRoutesType = "createDeployment_deployments_response_3"
 )
 
-type CreateDeployment200ApplicationJSONRoutes struct {
-	CreateDeployment200ApplicationJSONRoutes1 *CreateDeployment200ApplicationJSONRoutes1
-	CreateDeployment200ApplicationJSONRoutes2 *CreateDeployment200ApplicationJSONRoutes2
-	CreateDeployment200ApplicationJSONRoutes3 *CreateDeployment200ApplicationJSONRoutes3
+type CreateDeploymentRoutes struct {
+	CreateDeploymentDeploymentsResponse200ApplicationJSON1 *CreateDeploymentDeploymentsResponse200ApplicationJSON1
+	CreateDeploymentDeploymentsResponse200ApplicationJSON2 *CreateDeploymentDeploymentsResponse200ApplicationJSON2
+	CreateDeploymentDeploymentsResponse3                   *CreateDeploymentDeploymentsResponse3
 
-	Type CreateDeployment200ApplicationJSONRoutesType
+	Type CreateDeploymentRoutesType
 }
 
-func CreateCreateDeployment200ApplicationJSONRoutesCreateDeployment200ApplicationJSONRoutes1(createDeployment200ApplicationJSONRoutes1 CreateDeployment200ApplicationJSONRoutes1) CreateDeployment200ApplicationJSONRoutes {
-	typ := CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes1
+func CreateCreateDeploymentRoutesCreateDeploymentDeploymentsResponse200ApplicationJSON1(createDeploymentDeploymentsResponse200ApplicationJSON1 CreateDeploymentDeploymentsResponse200ApplicationJSON1) CreateDeploymentRoutes {
+	typ := CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON1
 
-	return CreateDeployment200ApplicationJSONRoutes{
-		CreateDeployment200ApplicationJSONRoutes1: &createDeployment200ApplicationJSONRoutes1,
+	return CreateDeploymentRoutes{
+		CreateDeploymentDeploymentsResponse200ApplicationJSON1: &createDeploymentDeploymentsResponse200ApplicationJSON1,
 		Type: typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONRoutesCreateDeployment200ApplicationJSONRoutes2(createDeployment200ApplicationJSONRoutes2 CreateDeployment200ApplicationJSONRoutes2) CreateDeployment200ApplicationJSONRoutes {
-	typ := CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes2
+func CreateCreateDeploymentRoutesCreateDeploymentDeploymentsResponse200ApplicationJSON2(createDeploymentDeploymentsResponse200ApplicationJSON2 CreateDeploymentDeploymentsResponse200ApplicationJSON2) CreateDeploymentRoutes {
+	typ := CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON2
 
-	return CreateDeployment200ApplicationJSONRoutes{
-		CreateDeployment200ApplicationJSONRoutes2: &createDeployment200ApplicationJSONRoutes2,
+	return CreateDeploymentRoutes{
+		CreateDeploymentDeploymentsResponse200ApplicationJSON2: &createDeploymentDeploymentsResponse200ApplicationJSON2,
 		Type: typ,
 	}
 }
 
-func CreateCreateDeployment200ApplicationJSONRoutesCreateDeployment200ApplicationJSONRoutes3(createDeployment200ApplicationJSONRoutes3 CreateDeployment200ApplicationJSONRoutes3) CreateDeployment200ApplicationJSONRoutes {
-	typ := CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes3
+func CreateCreateDeploymentRoutesCreateDeploymentDeploymentsResponse3(createDeploymentDeploymentsResponse3 CreateDeploymentDeploymentsResponse3) CreateDeploymentRoutes {
+	typ := CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse3
 
-	return CreateDeployment200ApplicationJSONRoutes{
-		CreateDeployment200ApplicationJSONRoutes3: &createDeployment200ApplicationJSONRoutes3,
-		Type: typ,
+	return CreateDeploymentRoutes{
+		CreateDeploymentDeploymentsResponse3: &createDeploymentDeploymentsResponse3,
+		Type:                                 typ,
 	}
 }
 
-func (u *CreateDeployment200ApplicationJSONRoutes) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentRoutes) UnmarshalJSON(data []byte) error {
 
-	createDeployment200ApplicationJSONRoutes3 := new(CreateDeployment200ApplicationJSONRoutes3)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes3, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONRoutes3 = createDeployment200ApplicationJSONRoutes3
-		u.Type = CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes3
+	createDeploymentDeploymentsResponse3 := new(CreateDeploymentDeploymentsResponse3)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse3, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse3 = createDeploymentDeploymentsResponse3
+		u.Type = CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse3
 		return nil
 	}
 
-	createDeployment200ApplicationJSONRoutes2 := new(CreateDeployment200ApplicationJSONRoutes2)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes2, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONRoutes2 = createDeployment200ApplicationJSONRoutes2
-		u.Type = CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes2
+	createDeploymentDeploymentsResponse200ApplicationJSON2 := new(CreateDeploymentDeploymentsResponse200ApplicationJSON2)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSON2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse200ApplicationJSON2 = createDeploymentDeploymentsResponse200ApplicationJSON2
+		u.Type = CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON2
 		return nil
 	}
 
-	createDeployment200ApplicationJSONRoutes1 := new(CreateDeployment200ApplicationJSONRoutes1)
-	if err := utils.UnmarshalJSON(data, &createDeployment200ApplicationJSONRoutes1, "", true, true); err == nil {
-		u.CreateDeployment200ApplicationJSONRoutes1 = createDeployment200ApplicationJSONRoutes1
-		u.Type = CreateDeployment200ApplicationJSONRoutesTypeCreateDeployment200ApplicationJSONRoutes1
+	createDeploymentDeploymentsResponse200ApplicationJSON1 := new(CreateDeploymentDeploymentsResponse200ApplicationJSON1)
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSON1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse200ApplicationJSON1 = createDeploymentDeploymentsResponse200ApplicationJSON1
+		u.Type = CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON1
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u CreateDeployment200ApplicationJSONRoutes) MarshalJSON() ([]byte, error) {
-	if u.CreateDeployment200ApplicationJSONRoutes1 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes1, "", true)
+func (u CreateDeploymentRoutes) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsResponse200ApplicationJSON1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSON1, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONRoutes2 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes2, "", true)
+	if u.CreateDeploymentDeploymentsResponse200ApplicationJSON2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSON2, "", true)
 	}
 
-	if u.CreateDeployment200ApplicationJSONRoutes3 != nil {
-		return utils.MarshalJSON(u.CreateDeployment200ApplicationJSONRoutes3, "", true)
+	if u.CreateDeploymentDeploymentsResponse3 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// CreateDeployment200ApplicationJSONSource - Where was the deployment created from
-type CreateDeployment200ApplicationJSONSource string
+// CreateDeploymentSource - Where was the deployment created from
+type CreateDeploymentSource string
 
 const (
-	CreateDeployment200ApplicationJSONSourceCli        CreateDeployment200ApplicationJSONSource = "cli"
-	CreateDeployment200ApplicationJSONSourceGit        CreateDeployment200ApplicationJSONSource = "git"
-	CreateDeployment200ApplicationJSONSourceImport     CreateDeployment200ApplicationJSONSource = "import"
-	CreateDeployment200ApplicationJSONSourceImportRepo CreateDeployment200ApplicationJSONSource = "import/repo"
-	CreateDeployment200ApplicationJSONSourceCloneRepo  CreateDeployment200ApplicationJSONSource = "clone/repo"
+	CreateDeploymentSourceCli        CreateDeploymentSource = "cli"
+	CreateDeploymentSourceGit        CreateDeploymentSource = "git"
+	CreateDeploymentSourceImport     CreateDeploymentSource = "import"
+	CreateDeploymentSourceImportRepo CreateDeploymentSource = "import/repo"
+	CreateDeploymentSourceCloneRepo  CreateDeploymentSource = "clone/repo"
 )
 
-func (e CreateDeployment200ApplicationJSONSource) ToPointer() *CreateDeployment200ApplicationJSONSource {
+func (e CreateDeploymentSource) ToPointer() *CreateDeploymentSource {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONSource) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -7370,26 +7370,26 @@ func (e *CreateDeployment200ApplicationJSONSource) UnmarshalJSON(data []byte) er
 	case "import/repo":
 		fallthrough
 	case "clone/repo":
-		*e = CreateDeployment200ApplicationJSONSource(v)
+		*e = CreateDeploymentSource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONSource: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentSource: %v", v)
 	}
 }
 
-// CreateDeployment200ApplicationJSONTarget - If defined, either `staging` if a staging alias in the format `<project>.<team>.now.sh` was assigned upon creation, or `production` if the aliases from `alias` were assigned
-type CreateDeployment200ApplicationJSONTarget string
+// CreateDeploymentTarget - If defined, either `staging` if a staging alias in the format `<project>.<team>.now.sh` was assigned upon creation, or `production` if the aliases from `alias` were assigned
+type CreateDeploymentTarget string
 
 const (
-	CreateDeployment200ApplicationJSONTargetStaging    CreateDeployment200ApplicationJSONTarget = "staging"
-	CreateDeployment200ApplicationJSONTargetProduction CreateDeployment200ApplicationJSONTarget = "production"
+	CreateDeploymentTargetStaging    CreateDeploymentTarget = "staging"
+	CreateDeploymentTargetProduction CreateDeploymentTarget = "production"
 )
 
-func (e CreateDeployment200ApplicationJSONTarget) ToPointer() *CreateDeployment200ApplicationJSONTarget {
+func (e CreateDeploymentTarget) ToPointer() *CreateDeploymentTarget {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONTarget) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -7398,15 +7398,15 @@ func (e *CreateDeployment200ApplicationJSONTarget) UnmarshalJSON(data []byte) er
 	case "staging":
 		fallthrough
 	case "production":
-		*e = CreateDeployment200ApplicationJSONTarget(v)
+		*e = CreateDeploymentTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONTarget: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentTarget: %v", v)
 	}
 }
 
-// CreateDeployment200ApplicationJSONTeam - The team that owns the deployment if any
-type CreateDeployment200ApplicationJSONTeam struct {
+// CreateDeploymentTeam - The team that owns the deployment if any
+type CreateDeploymentTeam struct {
 	// The ID of the team owner
 	ID string `json:"id"`
 	// The name of the team owner
@@ -7415,97 +7415,97 @@ type CreateDeployment200ApplicationJSONTeam struct {
 	Slug string `json:"slug"`
 }
 
-func (o *CreateDeployment200ApplicationJSONTeam) GetID() string {
+func (o *CreateDeploymentTeam) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateDeployment200ApplicationJSONTeam) GetName() string {
+func (o *CreateDeploymentTeam) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeployment200ApplicationJSONTeam) GetSlug() string {
+func (o *CreateDeploymentTeam) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-type CreateDeployment200ApplicationJSONType string
+type CreateDeploymentDeploymentsResponseType string
 
 const (
-	CreateDeployment200ApplicationJSONTypeLambdas CreateDeployment200ApplicationJSONType = "LAMBDAS"
+	CreateDeploymentDeploymentsResponseTypeLambdas CreateDeploymentDeploymentsResponseType = "LAMBDAS"
 )
 
-func (e CreateDeployment200ApplicationJSONType) ToPointer() *CreateDeployment200ApplicationJSONType {
+func (e CreateDeploymentDeploymentsResponseType) ToPointer() *CreateDeploymentDeploymentsResponseType {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONType) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentDeploymentsResponseType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "LAMBDAS":
-		*e = CreateDeployment200ApplicationJSONType(v)
+		*e = CreateDeploymentDeploymentsResponseType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONType: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsResponseType: %v", v)
 	}
 }
 
-// CreateDeployment200ApplicationJSONVersion - The platform version that was used to create the deployment.
-type CreateDeployment200ApplicationJSONVersion int64
+// CreateDeploymentVersion - The platform version that was used to create the deployment.
+type CreateDeploymentVersion int64
 
 const (
-	CreateDeployment200ApplicationJSONVersionTwo CreateDeployment200ApplicationJSONVersion = 2
+	CreateDeploymentVersionTwo CreateDeploymentVersion = 2
 )
 
-func (e CreateDeployment200ApplicationJSONVersion) ToPointer() *CreateDeployment200ApplicationJSONVersion {
+func (e CreateDeploymentVersion) ToPointer() *CreateDeploymentVersion {
 	return &e
 }
 
-func (e *CreateDeployment200ApplicationJSONVersion) UnmarshalJSON(data []byte) error {
+func (e *CreateDeploymentVersion) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case 2:
-		*e = CreateDeployment200ApplicationJSONVersion(v)
+		*e = CreateDeploymentVersion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeployment200ApplicationJSONVersion: %v", v)
+		return fmt.Errorf("invalid value for CreateDeploymentVersion: %v", v)
 	}
 }
 
-// CreateDeployment200ApplicationJSON - The successfully created deployment
-type CreateDeployment200ApplicationJSON struct {
+// CreateDeploymentResponseBody - The successfully created deployment
+type CreateDeploymentResponseBody struct {
 	// A list of all the aliases (default aliases, staging aliases and production aliases) that were assigned upon deployment creation
 	Alias []string `json:"alias"`
 	// A boolean that will be true when the aliases from the alias property were assigned successfully
-	AliasAssigned   bool                                               `json:"aliasAssigned"`
-	AliasAssignedAt *CreateDeployment200ApplicationJSONAliasAssignedAt `json:"aliasAssignedAt,omitempty"`
+	AliasAssigned   bool                             `json:"aliasAssigned"`
+	AliasAssignedAt *CreateDeploymentAliasAssignedAt `json:"aliasAssignedAt,omitempty"`
 	// An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
-	AliasError              *CreateDeployment200ApplicationJSONAliasError       `json:"aliasError,omitempty"`
-	AliasFinal              *string                                             `json:"aliasFinal,omitempty"`
-	AliasWarning            *CreateDeployment200ApplicationJSONAliasWarning     `json:"aliasWarning,omitempty"`
-	AutoAssignCustomDomains *bool                                               `json:"autoAssignCustomDomains,omitempty"`
-	AutomaticAliases        []string                                            `json:"automaticAliases,omitempty"`
-	BootedAt                int64                                               `json:"bootedAt"`
-	Build                   CreateDeployment200ApplicationJSONBuild             `json:"build"`
-	BuildErrorAt            *int64                                              `json:"buildErrorAt,omitempty"`
-	BuildingAt              int64                                               `json:"buildingAt"`
-	Builds                  []CreateDeployment200ApplicationJSONBuilds          `json:"builds,omitempty"`
-	CanceledAt              *int64                                              `json:"canceledAt,omitempty"`
-	ChecksConclusion        *CreateDeployment200ApplicationJSONChecksConclusion `json:"checksConclusion,omitempty"`
-	ChecksState             *CreateDeployment200ApplicationJSONChecksState      `json:"checksState,omitempty"`
+	AliasError              *CreateDeploymentAliasError       `json:"aliasError,omitempty"`
+	AliasFinal              *string                           `json:"aliasFinal,omitempty"`
+	AliasWarning            *CreateDeploymentAliasWarning     `json:"aliasWarning,omitempty"`
+	AutoAssignCustomDomains *bool                             `json:"autoAssignCustomDomains,omitempty"`
+	AutomaticAliases        []string                          `json:"automaticAliases,omitempty"`
+	BootedAt                int64                             `json:"bootedAt"`
+	Build                   CreateDeploymentBuild             `json:"build"`
+	BuildErrorAt            *int64                            `json:"buildErrorAt,omitempty"`
+	BuildingAt              int64                             `json:"buildingAt"`
+	Builds                  []CreateDeploymentBuilds          `json:"builds,omitempty"`
+	CanceledAt              *int64                            `json:"canceledAt,omitempty"`
+	ChecksConclusion        *CreateDeploymentChecksConclusion `json:"checksConclusion,omitempty"`
+	ChecksState             *CreateDeploymentChecksState      `json:"checksState,omitempty"`
 	// The flag saying if Vercel Connect configuration is used for builds
 	ConnectBuildsEnabled *bool `json:"connectBuildsEnabled,omitempty"`
 	// The ID of Vercel Connect configuration used for this deployment
@@ -7515,7 +7515,7 @@ type CreateDeployment200ApplicationJSON struct {
 	// The region where the deployment was first created
 	CreatedIn string `json:"createdIn"`
 	// Information about the deployment creator
-	Creator CreateDeployment200ApplicationJSONCreator `json:"creator"`
+	Creator CreateDeploymentCreator `json:"creator"`
 	// The keys of the environment variables that were assigned during runtime
 	Env          []string `json:"env"`
 	ErrorCode    *string  `json:"errorCode,omitempty"`
@@ -7523,16 +7523,16 @@ type CreateDeployment200ApplicationJSON struct {
 	ErrorMessage *string  `json:"errorMessage,omitempty"`
 	ErrorStep    *string  `json:"errorStep,omitempty"`
 	// An object used to configure your Serverless Functions
-	Functions map[string]CreateDeployment200ApplicationJSONFunctions `json:"functions,omitempty"`
-	GitRepo   *CreateDeployment200ApplicationJSONGitRepo             `json:"gitRepo,omitempty"`
-	GitSource *CreateDeployment200ApplicationJSONGitSource           `json:"gitSource,omitempty"`
+	Functions map[string]CreateDeploymentFunctions `json:"functions,omitempty"`
+	GitRepo   *CreateDeploymentGitRepo             `json:"gitRepo,omitempty"`
+	GitSource *CreateDeploymentGitSource           `json:"gitSource,omitempty"`
 	// A string holding the unique ID of the deployment
 	ID string `json:"id"`
 	// Vercel URL to inspect the deployment.
 	InspectorURL *string `json:"inspectorUrl"`
 	// Is the deployment currently queued waiting for a Concurrent Build Slot to be available
-	IsInConcurrentBuildsQueue bool                                        `json:"isInConcurrentBuildsQueue"`
-	Lambdas                   []CreateDeployment200ApplicationJSONLambdas `json:"lambdas,omitempty"`
+	IsInConcurrentBuildsQueue bool                      `json:"isInConcurrentBuildsQueue"`
+	Lambdas                   []CreateDeploymentLambdas `json:"lambdas,omitempty"`
 	// An object containing the deployment's metadata
 	Meta map[string]string `json:"meta"`
 	// An monorepo manager that was used for the deployment
@@ -7542,7 +7542,7 @@ type CreateDeployment200ApplicationJSON struct {
 	// The unique ID of the user or team the deployment belongs to
 	OwnerID string `json:"ownerId"`
 	// The pricing plan the deployment was made under
-	Plan CreateDeployment200ApplicationJSONPlan `json:"plan"`
+	Plan CreateDeploymentPlan `json:"plan"`
 	// Whether or not preview comments are enabled for the deployment
 	PreviewCommentsEnabled *bool `json:"previewCommentsEnabled,omitempty"`
 	// The ID of the project the deployment is associated with
@@ -7550,388 +7550,388 @@ type CreateDeployment200ApplicationJSON struct {
 	// A boolean representing if the deployment is public or not. By default this is `false`
 	Public bool `json:"public"`
 	// The state of the deployment depending on the process of deploying, or if it is ready or in an error state
-	ReadyState CreateDeployment200ApplicationJSONReadyState `json:"readyState"`
+	ReadyState CreateDeploymentReadyState `json:"readyState"`
 	// The substate of the deployment when the state is "READY"
-	ReadySubstate *CreateDeployment200ApplicationJSONReadySubstate `json:"readySubstate,omitempty"`
+	ReadySubstate *CreateDeploymentReadySubstate `json:"readySubstate,omitempty"`
 	// The regions the deployment exists in
 	Regions []string `json:"regions"`
 	// A list of routes objects used to rewrite paths to point towards other internal or external paths
-	Routes []CreateDeployment200ApplicationJSONRoutes `json:"routes"`
+	Routes []CreateDeploymentRoutes `json:"routes"`
 	// Where was the deployment created from
-	Source *CreateDeployment200ApplicationJSONSource `json:"source,omitempty"`
+	Source *CreateDeploymentSource `json:"source,omitempty"`
 	// If defined, either `staging` if a staging alias in the format `<project>.<team>.now.sh` was assigned upon creation, or `production` if the aliases from `alias` were assigned
-	Target *CreateDeployment200ApplicationJSONTarget `json:"target,omitempty"`
+	Target *CreateDeploymentTarget `json:"target,omitempty"`
 	// The team that owns the deployment if any
-	Team *CreateDeployment200ApplicationJSONTeam `json:"team,omitempty"`
-	Type CreateDeployment200ApplicationJSONType  `json:"type"`
+	Team *CreateDeploymentTeam                   `json:"team,omitempty"`
+	Type CreateDeploymentDeploymentsResponseType `json:"type"`
 	// A string with the unique URL of the deployment
 	URL string `json:"url"`
 	// An array of domains that were provided by the user when creating the Deployment.
 	UserAliases []string `json:"userAliases,omitempty"`
 	// The platform version that was used to create the deployment.
-	Version CreateDeployment200ApplicationJSONVersion `json:"version"`
+	Version CreateDeploymentVersion `json:"version"`
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetAlias() []string {
+func (o *CreateDeploymentResponseBody) GetAlias() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Alias
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetAliasAssigned() bool {
+func (o *CreateDeploymentResponseBody) GetAliasAssigned() bool {
 	if o == nil {
 		return false
 	}
 	return o.AliasAssigned
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetAliasAssignedAt() *CreateDeployment200ApplicationJSONAliasAssignedAt {
+func (o *CreateDeploymentResponseBody) GetAliasAssignedAt() *CreateDeploymentAliasAssignedAt {
 	if o == nil {
 		return nil
 	}
 	return o.AliasAssignedAt
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetAliasError() *CreateDeployment200ApplicationJSONAliasError {
+func (o *CreateDeploymentResponseBody) GetAliasError() *CreateDeploymentAliasError {
 	if o == nil {
 		return nil
 	}
 	return o.AliasError
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetAliasFinal() *string {
+func (o *CreateDeploymentResponseBody) GetAliasFinal() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AliasFinal
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetAliasWarning() *CreateDeployment200ApplicationJSONAliasWarning {
+func (o *CreateDeploymentResponseBody) GetAliasWarning() *CreateDeploymentAliasWarning {
 	if o == nil {
 		return nil
 	}
 	return o.AliasWarning
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetAutoAssignCustomDomains() *bool {
+func (o *CreateDeploymentResponseBody) GetAutoAssignCustomDomains() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.AutoAssignCustomDomains
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetAutomaticAliases() []string {
+func (o *CreateDeploymentResponseBody) GetAutomaticAliases() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AutomaticAliases
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetBootedAt() int64 {
+func (o *CreateDeploymentResponseBody) GetBootedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.BootedAt
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetBuild() CreateDeployment200ApplicationJSONBuild {
+func (o *CreateDeploymentResponseBody) GetBuild() CreateDeploymentBuild {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONBuild{}
+		return CreateDeploymentBuild{}
 	}
 	return o.Build
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetBuildErrorAt() *int64 {
+func (o *CreateDeploymentResponseBody) GetBuildErrorAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.BuildErrorAt
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetBuildingAt() int64 {
+func (o *CreateDeploymentResponseBody) GetBuildingAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.BuildingAt
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetBuilds() []CreateDeployment200ApplicationJSONBuilds {
+func (o *CreateDeploymentResponseBody) GetBuilds() []CreateDeploymentBuilds {
 	if o == nil {
 		return nil
 	}
 	return o.Builds
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetCanceledAt() *int64 {
+func (o *CreateDeploymentResponseBody) GetCanceledAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.CanceledAt
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetChecksConclusion() *CreateDeployment200ApplicationJSONChecksConclusion {
+func (o *CreateDeploymentResponseBody) GetChecksConclusion() *CreateDeploymentChecksConclusion {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksConclusion
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetChecksState() *CreateDeployment200ApplicationJSONChecksState {
+func (o *CreateDeploymentResponseBody) GetChecksState() *CreateDeploymentChecksState {
 	if o == nil {
 		return nil
 	}
 	return o.ChecksState
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetConnectBuildsEnabled() *bool {
+func (o *CreateDeploymentResponseBody) GetConnectBuildsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectBuildsEnabled
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetConnectConfigurationID() *string {
+func (o *CreateDeploymentResponseBody) GetConnectConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectConfigurationID
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetCreatedAt() int64 {
+func (o *CreateDeploymentResponseBody) GetCreatedAt() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetCreatedIn() string {
+func (o *CreateDeploymentResponseBody) GetCreatedIn() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedIn
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetCreator() CreateDeployment200ApplicationJSONCreator {
+func (o *CreateDeploymentResponseBody) GetCreator() CreateDeploymentCreator {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONCreator{}
+		return CreateDeploymentCreator{}
 	}
 	return o.Creator
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetEnv() []string {
+func (o *CreateDeploymentResponseBody) GetEnv() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Env
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetErrorCode() *string {
+func (o *CreateDeploymentResponseBody) GetErrorCode() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorCode
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetErrorLink() *string {
+func (o *CreateDeploymentResponseBody) GetErrorLink() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorLink
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetErrorMessage() *string {
+func (o *CreateDeploymentResponseBody) GetErrorMessage() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorMessage
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetErrorStep() *string {
+func (o *CreateDeploymentResponseBody) GetErrorStep() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ErrorStep
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetFunctions() map[string]CreateDeployment200ApplicationJSONFunctions {
+func (o *CreateDeploymentResponseBody) GetFunctions() map[string]CreateDeploymentFunctions {
 	if o == nil {
 		return nil
 	}
 	return o.Functions
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetGitRepo() *CreateDeployment200ApplicationJSONGitRepo {
+func (o *CreateDeploymentResponseBody) GetGitRepo() *CreateDeploymentGitRepo {
 	if o == nil {
 		return nil
 	}
 	return o.GitRepo
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetGitSource() *CreateDeployment200ApplicationJSONGitSource {
+func (o *CreateDeploymentResponseBody) GetGitSource() *CreateDeploymentGitSource {
 	if o == nil {
 		return nil
 	}
 	return o.GitSource
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetID() string {
+func (o *CreateDeploymentResponseBody) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetInspectorURL() *string {
+func (o *CreateDeploymentResponseBody) GetInspectorURL() *string {
 	if o == nil {
 		return nil
 	}
 	return o.InspectorURL
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetIsInConcurrentBuildsQueue() bool {
+func (o *CreateDeploymentResponseBody) GetIsInConcurrentBuildsQueue() bool {
 	if o == nil {
 		return false
 	}
 	return o.IsInConcurrentBuildsQueue
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetLambdas() []CreateDeployment200ApplicationJSONLambdas {
+func (o *CreateDeploymentResponseBody) GetLambdas() []CreateDeploymentLambdas {
 	if o == nil {
 		return nil
 	}
 	return o.Lambdas
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetMeta() map[string]string {
+func (o *CreateDeploymentResponseBody) GetMeta() map[string]string {
 	if o == nil {
 		return map[string]string{}
 	}
 	return o.Meta
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetMonorepoManager() *string {
+func (o *CreateDeploymentResponseBody) GetMonorepoManager() *string {
 	if o == nil {
 		return nil
 	}
 	return o.MonorepoManager
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetName() string {
+func (o *CreateDeploymentResponseBody) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetOwnerID() string {
+func (o *CreateDeploymentResponseBody) GetOwnerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.OwnerID
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetPlan() CreateDeployment200ApplicationJSONPlan {
+func (o *CreateDeploymentResponseBody) GetPlan() CreateDeploymentPlan {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONPlan("")
+		return CreateDeploymentPlan("")
 	}
 	return o.Plan
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetPreviewCommentsEnabled() *bool {
+func (o *CreateDeploymentResponseBody) GetPreviewCommentsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.PreviewCommentsEnabled
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetProjectID() string {
+func (o *CreateDeploymentResponseBody) GetProjectID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ProjectID
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetPublic() bool {
+func (o *CreateDeploymentResponseBody) GetPublic() bool {
 	if o == nil {
 		return false
 	}
 	return o.Public
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetReadyState() CreateDeployment200ApplicationJSONReadyState {
+func (o *CreateDeploymentResponseBody) GetReadyState() CreateDeploymentReadyState {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONReadyState("")
+		return CreateDeploymentReadyState("")
 	}
 	return o.ReadyState
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetReadySubstate() *CreateDeployment200ApplicationJSONReadySubstate {
+func (o *CreateDeploymentResponseBody) GetReadySubstate() *CreateDeploymentReadySubstate {
 	if o == nil {
 		return nil
 	}
 	return o.ReadySubstate
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetRegions() []string {
+func (o *CreateDeploymentResponseBody) GetRegions() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Regions
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetRoutes() []CreateDeployment200ApplicationJSONRoutes {
+func (o *CreateDeploymentResponseBody) GetRoutes() []CreateDeploymentRoutes {
 	if o == nil {
 		return nil
 	}
 	return o.Routes
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetSource() *CreateDeployment200ApplicationJSONSource {
+func (o *CreateDeploymentResponseBody) GetSource() *CreateDeploymentSource {
 	if o == nil {
 		return nil
 	}
 	return o.Source
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetTarget() *CreateDeployment200ApplicationJSONTarget {
+func (o *CreateDeploymentResponseBody) GetTarget() *CreateDeploymentTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetTeam() *CreateDeployment200ApplicationJSONTeam {
+func (o *CreateDeploymentResponseBody) GetTeam() *CreateDeploymentTeam {
 	if o == nil {
 		return nil
 	}
 	return o.Team
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetType() CreateDeployment200ApplicationJSONType {
+func (o *CreateDeploymentResponseBody) GetType() CreateDeploymentDeploymentsResponseType {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONType("")
+		return CreateDeploymentDeploymentsResponseType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetURL() string {
+func (o *CreateDeploymentResponseBody) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetUserAliases() []string {
+func (o *CreateDeploymentResponseBody) GetUserAliases() []string {
 	if o == nil {
 		return nil
 	}
 	return o.UserAliases
 }
 
-func (o *CreateDeployment200ApplicationJSON) GetVersion() CreateDeployment200ApplicationJSONVersion {
+func (o *CreateDeploymentResponseBody) GetVersion() CreateDeploymentVersion {
 	if o == nil {
-		return CreateDeployment200ApplicationJSONVersion(0)
+		return CreateDeploymentVersion(0)
 	}
 	return o.Version
 }
@@ -7944,7 +7944,7 @@ type CreateDeploymentResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The successfully created deployment
-	CreateDeployment200ApplicationJSONObject *CreateDeployment200ApplicationJSON
+	Object *CreateDeploymentResponseBody
 }
 
 func (o *CreateDeploymentResponse) GetContentType() string {
@@ -7968,9 +7968,9 @@ func (o *CreateDeploymentResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateDeploymentResponse) GetCreateDeployment200ApplicationJSONObject() *CreateDeployment200ApplicationJSON {
+func (o *CreateDeploymentResponse) GetObject() *CreateDeploymentResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.CreateDeployment200ApplicationJSONObject
+	return o.Object
 }

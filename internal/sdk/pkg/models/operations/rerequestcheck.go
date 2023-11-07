@@ -36,7 +36,7 @@ func (o *RerequestCheckRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type RerequestCheck200ApplicationJSON struct {
+type RerequestCheckResponseBody struct {
 }
 
 type RerequestCheckResponse struct {
@@ -45,8 +45,8 @@ type RerequestCheckResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse                            *http.Response
-	RerequestCheck200ApplicationJSONObject *RerequestCheck200ApplicationJSON
+	RawResponse *http.Response
+	Object      *RerequestCheckResponseBody
 }
 
 func (o *RerequestCheckResponse) GetContentType() string {
@@ -70,9 +70,9 @@ func (o *RerequestCheckResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *RerequestCheckResponse) GetRerequestCheck200ApplicationJSONObject() *RerequestCheck200ApplicationJSON {
+func (o *RerequestCheckResponse) GetObject() *RerequestCheckResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.RerequestCheck200ApplicationJSONObject
+	return o.Object
 }
