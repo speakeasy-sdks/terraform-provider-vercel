@@ -6,14 +6,14 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/operations"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/sdkerrors"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/shared"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 	"io"
 	"net/http"
 	"strings"
 	"time"
-	"vercel/internal/sdk/pkg/models/operations"
-	"vercel/internal/sdk/pkg/models/sdkerrors"
-	"vercel/internal/sdk/pkg/models/shared"
-	"vercel/internal/sdk/pkg/utils"
 )
 
 // ServerList contains the list of servers available to the SDK
@@ -161,9 +161,9 @@ func New(opts ...SDKOption) *Vercel {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.0.1",
-			SDKVersion:        "0.5.0",
-			GenVersion:        "2.181.1",
-			UserAgent:         "speakeasy-sdk/go 0.5.0 2.181.1 0.0.1 vercel",
+			SDKVersion:        "0.6.0",
+			GenVersion:        "2.183.0",
+			UserAgent:         "speakeasy-sdk/go 0.6.0 2.183.0 0.0.1 vercel",
 		},
 	}
 	for _, opt := range opts {

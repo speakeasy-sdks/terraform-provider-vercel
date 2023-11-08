@@ -4,7 +4,7 @@ package shared
 
 import (
 	"errors"
-	"vercel/internal/sdk/pkg/utils"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 )
 
 type EdgeConfigItemValueType string

@@ -6,9 +6,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/shared"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 	"net/http"
-	"vercel/internal/sdk/pkg/models/shared"
-	"vercel/internal/sdk/pkg/utils"
 )
 
 type GetRecordsRequest struct {

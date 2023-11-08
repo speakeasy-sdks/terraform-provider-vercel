@@ -6,13 +6,13 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/operations"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/sdkerrors"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/shared"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 	"io"
 	"net/http"
 	"strings"
-	"vercel/internal/sdk/pkg/models/operations"
-	"vercel/internal/sdk/pkg/models/sdkerrors"
-	"vercel/internal/sdk/pkg/models/shared"
-	"vercel/internal/sdk/pkg/utils"
 )
 
 type Deployments struct {

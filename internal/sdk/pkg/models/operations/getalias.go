@@ -6,9 +6,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 	"net/http"
 	"time"
-	"vercel/internal/sdk/pkg/utils"
 )
 
 type GetAliasRequest struct {

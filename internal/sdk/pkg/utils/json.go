@@ -12,7 +12,7 @@ import (
 	"time"
 	"unsafe"
 
-	"vercel/internal/sdk/pkg/types"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/types"
 
 	"github.com/ericlagergren/decimal"
 )

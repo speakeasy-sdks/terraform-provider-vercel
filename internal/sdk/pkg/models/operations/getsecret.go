@@ -5,9 +5,9 @@ package operations
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 	"net/http"
 	"time"
-	"vercel/internal/sdk/pkg/utils"
 )
 
 // QueryParamDecrypt - Whether to try to decrypt the value of the secret. Only works if `decryptable` has been set to `true` when the secret was created.

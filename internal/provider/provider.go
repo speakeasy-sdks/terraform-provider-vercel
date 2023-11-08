@@ -4,8 +4,8 @@ package provider
 
 import (
 	"context"
-	"vercel/internal/sdk"
-	"vercel/internal/sdk/pkg/models/shared"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/shared"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"

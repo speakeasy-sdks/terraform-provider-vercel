@@ -5,8 +5,8 @@ package operations
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 	"net/http"
-	"vercel/internal/sdk/pkg/utils"
 )
 
 type UpdateTeamMemberJoinedFrom struct {

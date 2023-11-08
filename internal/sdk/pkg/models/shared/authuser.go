@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"vercel/internal/sdk/pkg/utils"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 )
 
 type ViewPreference string

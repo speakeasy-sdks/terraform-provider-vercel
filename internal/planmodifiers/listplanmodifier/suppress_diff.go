@@ -4,7 +4,7 @@ package listplanmodifier
 
 import (
 	"context"
-	"vercel/internal/planmodifiers/utils"
+	"github.com/zchee/terraform-provider-vercel/internal/planmodifiers/utils"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 )

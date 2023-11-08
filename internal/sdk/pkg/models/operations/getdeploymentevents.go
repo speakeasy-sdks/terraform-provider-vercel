@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 	"net/http"
-	"vercel/internal/sdk/pkg/utils"
 )
 
 type QueryParamBuilds int64

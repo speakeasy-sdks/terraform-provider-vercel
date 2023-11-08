@@ -11,10 +11,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
+	tfReflect "github.com/zchee/terraform-provider-vercel/internal/provider/reflect"
 	"net/http"
 	"net/http/httputil"
 	"reflect"
-	tfReflect "vercel/internal/provider/reflect"
 )
 
 func debugResponse(response *http.Response) string {

@@ -6,11 +6,11 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/operations"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/sdkerrors"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 	"io"
 	"net/http"
-	"vercel/internal/sdk/pkg/models/operations"
-	"vercel/internal/sdk/pkg/models/sdkerrors"
-	"vercel/internal/sdk/pkg/utils"
 )
 
 type DNS struct {

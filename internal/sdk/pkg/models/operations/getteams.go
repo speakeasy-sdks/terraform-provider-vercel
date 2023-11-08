@@ -4,9 +4,9 @@ package operations
 
 import (
 	"errors"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/shared"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 	"net/http"
-	"vercel/internal/sdk/pkg/models/shared"
-	"vercel/internal/sdk/pkg/utils"
 )
 
 type GetTeamsRequest struct {

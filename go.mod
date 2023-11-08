@@ -1,4 +1,4 @@
-module vercel
+module github.com/zchee/terraform-provider-vercel
 
 go 1.18
 

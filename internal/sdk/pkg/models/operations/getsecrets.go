@@ -3,10 +3,10 @@
 package operations
 
 import (
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/shared"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/utils"
 	"net/http"
 	"time"
-	"vercel/internal/sdk/pkg/models/shared"
-	"vercel/internal/sdk/pkg/utils"
 )
 
 type GetSecretsRequest struct {

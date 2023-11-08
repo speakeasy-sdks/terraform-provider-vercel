@@ -5,8 +5,8 @@ package operations
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/shared"
 	"net/http"
-	"vercel/internal/sdk/pkg/models/shared"
 )
 
 // RemoteCaching - Whether or not remote caching is enabled for the team
