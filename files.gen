@@ -66,6 +66,9 @@ internal/validators/RFC3339Validator.go
 main.go
 terraform-registry-manifest.json
 tools/tools.go
+internal/sdk/pkg/models/operations/deletedatacachepurgeall.go
+internal/sdk/pkg/models/operations/getdeploymentsdeploymentidbuilds.go
+internal/sdk/pkg/models/operations/patchdatacachebillingsettings.go
 internal/sdk/pkg/models/operations/createauthtoken.go
 internal/sdk/pkg/models/operations/deleteauthtoken.go
 internal/sdk/pkg/models/operations/emaillogin.go
@@ -171,9 +174,6 @@ internal/sdk/pkg/models/operations/downloadartifact.go
 internal/sdk/pkg/models/operations/recordevents.go
 internal/sdk/pkg/models/operations/status.go
 internal/sdk/pkg/models/operations/uploadartifact.go
-internal/sdk/pkg/models/operations/deletedatacachepurgeall.go
-internal/sdk/pkg/models/operations/getdeploymentsdeploymentidbuilds.go
-internal/sdk/pkg/models/operations/patchdatacachebillingsettings.go
 internal/sdk/pkg/models/shared/authtoken.go
 internal/sdk/pkg/models/shared/pagination.go
 internal/sdk/pkg/models/shared/aclaction.go
