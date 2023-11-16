@@ -52,7 +52,7 @@ func (s *Aliases) AssignAlias(ctx context.Context, request operations.AssignAlia
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -126,7 +126,7 @@ func (s *Aliases) DeleteAlias(ctx context.Context, request operations.DeleteAlia
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -195,7 +195,7 @@ func (s *Aliases) GetAlias(ctx context.Context, request operations.GetAliasReque
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -264,7 +264,7 @@ func (s *Aliases) ListDeploymentAliases(ctx context.Context, request operations.
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

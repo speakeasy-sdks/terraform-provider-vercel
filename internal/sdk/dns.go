@@ -52,7 +52,7 @@ func (s *DNS) CreateRecord(ctx context.Context, request operations.CreateRecordR
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -126,7 +126,7 @@ func (s *DNS) GetRecords(ctx context.Context, request operations.GetRecordsReque
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -195,7 +195,7 @@ func (s *DNS) RemoveRecord(ctx context.Context, request operations.RemoveRecordR
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -273,7 +273,7 @@ func (s *DNS) UpdateRecord(ctx context.Context, request operations.UpdateRecordR
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

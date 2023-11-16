@@ -44,7 +44,7 @@ func (s *Secrets) DeleteSecret(ctx context.Context, request operations.DeleteSec
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -111,7 +111,7 @@ func (s *Secrets) GetSecret(ctx context.Context, request operations.GetSecretReq
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -177,7 +177,7 @@ func (s *Secrets) GetSecrets(ctx context.Context, request operations.GetSecretsR
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
