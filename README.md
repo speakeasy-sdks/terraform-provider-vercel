@@ -16,7 +16,7 @@ terraform {
   required_providers {
     vercel = {
       source  = "zchee/vercel"
-      version = "0.8.1"
+      version = "0.8.2"
     }
   }
 }
@@ -50,6 +50,8 @@ TF_REATTACH_PROVIDERS=... terraform apply
 
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
+
+
 <!-- End Available Resources and Operations [operations] -->
 
 
