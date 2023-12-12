@@ -66,7 +66,12 @@ func (p *VercelProvider) Configure(ctx context.Context, req provider.ConfigureRe
 		ServerURL = "https://api.vercel.com"
 	}
 
-	bearerToken := data.BearerToken.ValueString()
+	bearerToken := new(string)
+	if !data.BearerToken.IsUnknown() && !data.BearerToken.IsNull() {
+		*bearerToken = data.BearerToken.ValueString()
+	} else {
+		bearerToken = nil
+	}
 	security := shared.Security{
 		BearerToken: bearerToken,
 	}

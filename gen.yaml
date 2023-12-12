@@ -2,8 +2,8 @@ configVersion: 1.0.0
 management:
   docChecksum: 8ecc10127cd4d51cceddbc01756b40f4
   docVersion: 0.0.1
-  speakeasyVersion: 1.125.1
-  generationVersion: 2.210.3
+  speakeasyVersion: 1.126.0
+  generationVersion: 2.213.3
 generation:
   comments: {}
   sdkClassName: vercel
@@ -13,13 +13,13 @@ generation:
 features:
   terraform:
     constsAndDefaults: 0.1.2
-    core: 3.5.1
+    core: 3.6.0
     deprecations: 2.81.1
-    globalSecurity: 2.81.1
+    globalSecurity: 2.81.2
     globalServerURLs: 2.82.1
     unions: 2.81.5
 terraform:
-  version: 0.8.2
+  version: 0.9.0
   author: zchee
   imports:
     option: openapi
