@@ -323,6 +323,7 @@ const (
 	InviteUserToTeamResponseBodyTypeInviteUserToTeam2 InviteUserToTeamResponseBodyType = "inviteUserToTeam_2"
 )
 
+// InviteUserToTeamResponseBody - The member was successfully added to the team
 type InviteUserToTeamResponseBody struct {
 	InviteUserToTeam1 *InviteUserToTeam1
 	InviteUserToTeam2 *InviteUserToTeam2

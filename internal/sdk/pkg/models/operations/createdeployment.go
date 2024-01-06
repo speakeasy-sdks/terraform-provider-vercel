@@ -924,6 +924,7 @@ const (
 	DeploymentEnabledTypeMapOfboolean DeploymentEnabledType = "mapOfboolean"
 )
 
+// DeploymentEnabled - Specifies the branches that will not trigger an auto-deployment when committing to them. Any non specified branch is `true` by default.
 type DeploymentEnabled struct {
 	Boolean      *bool
 	MapOfboolean map[string]bool
@@ -1074,7 +1075,6 @@ func (e *CreateDeploymentDeploymentsRequestRequestBodyType) UnmarshalJSON(data [
 	}
 }
 
-// Five - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
 type Five struct {
 	Owner string                                            `json:"owner"`
 	Ref   string                                            `json:"ref"`
@@ -1142,7 +1142,6 @@ func (e *CreateDeploymentDeploymentsRequestType) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// Four - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
 type Four struct {
 	Ref           string                                 `json:"ref"`
 	RepoUUID      string                                 `json:"repoUuid"`
@@ -1273,7 +1272,6 @@ func (e *CreateDeploymentDeploymentsType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Three - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
 type Three struct {
 	ProjectID ProjectID                       `json:"projectId"`
 	Ref       string                          `json:"ref"`
@@ -1333,7 +1331,6 @@ func (e *CreateDeploymentType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Two - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
 type Two struct {
 	Org  string               `json:"org"`
 	Ref  string               `json:"ref"`
@@ -1464,7 +1461,6 @@ func (e *Type) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// One - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
 type One struct {
 	Ref    string  `json:"ref"`
 	RepoID RepoID  `json:"repoId"`
@@ -1510,6 +1506,7 @@ const (
 	GitSourceTypeFive  GitSourceType = "5"
 )
 
+// GitSource - Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
 type GitSource struct {
 	One   *One
 	Two   *Two

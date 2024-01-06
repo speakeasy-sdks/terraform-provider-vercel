@@ -4,14 +4,13 @@ package provider
 
 import (
 	"context"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/shared"
-
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk"
+	"github.com/zchee/terraform-provider-vercel/internal/sdk/pkg/models/shared"
 )
 
 var _ provider.Provider = &VercelProvider{}

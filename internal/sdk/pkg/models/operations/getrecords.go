@@ -392,6 +392,7 @@ const (
 	GetRecordsResponseBodyTypeGetRecords3 GetRecordsResponseBodyType = "getRecords_3"
 )
 
+// GetRecordsResponseBody - Successful response retrieving a list of paginated DNS records.
 type GetRecordsResponseBody struct {
 	Str         *string
 	GetRecords2 *GetRecords2

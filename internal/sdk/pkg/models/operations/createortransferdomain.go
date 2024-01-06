@@ -16,7 +16,7 @@ type CreateOrTransferDomain3 struct {
 	AuthCode *string `json:"authCode,omitempty"`
 	// The price you expect to be charged for the required 1 year renewal.
 	ExpectedPrice *int64 `json:"expectedPrice,omitempty"`
-	// The domain operation to perform.
+	// The domain operation to perform. It can be either `add` or `transfer-in`.
 	Method string `json:"method"`
 	// The domain name you want to add.
 	Name string `json:"name"`
@@ -52,7 +52,7 @@ func (o *CreateOrTransferDomain3) GetName() string {
 
 // CreateOrTransferDomain2 - move-in
 type CreateOrTransferDomain2 struct {
-	// The domain operation to perform.
+	// The domain operation to perform. It can be either `add` or `transfer-in`.
 	Method string `json:"method"`
 	// The domain name you want to add.
 	Name string `json:"name"`
@@ -85,7 +85,7 @@ func (o *CreateOrTransferDomain2) GetToken() *string {
 type CreateOrTransferDomain1 struct {
 	// Whether the domain has the Vercel Edge Network enabled or not.
 	CdnEnabled *bool `json:"cdnEnabled,omitempty"`
-	// The domain operation to perform.
+	// The domain operation to perform. It can be either `add` or `transfer-in`.
 	Method *string `json:"method,omitempty"`
 	// The domain name you want to add.
 	Name string `json:"name"`

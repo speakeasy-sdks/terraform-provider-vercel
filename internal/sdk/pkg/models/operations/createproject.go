@@ -41,7 +41,6 @@ func (e *CreateProject2) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// CreateProject1 - Deployment Target or Targets in which the ENV variable will be used
 type CreateProject1 string
 
 const (
@@ -79,6 +78,7 @@ const (
 	CreateProjectTargetTypeArrayOfcreateProject2 CreateProjectTargetType = "arrayOfcreateProject_2"
 )
 
+// CreateProjectTarget - Deployment Target or Targets in which the ENV variable will be used
 type CreateProjectTarget struct {
 	CreateProject1        *CreateProject1
 	ArrayOfcreateProject2 []CreateProject2

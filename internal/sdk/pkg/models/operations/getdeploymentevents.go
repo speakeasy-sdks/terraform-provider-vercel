@@ -127,6 +127,7 @@ const (
 	StatusCodeTypeStr     StatusCodeType = "str"
 )
 
+// StatusCode - HTTP status code range to filter events by.
 type StatusCode struct {
 	Integer *int64
 	Str     *string
@@ -2104,6 +2105,8 @@ const (
 	GetDeploymentEventsResponseBodyTypeGetDeploymentEvents7            GetDeploymentEventsResponseBodyType = "getDeploymentEvents_7"
 )
 
+// GetDeploymentEventsResponseBody - A stream of jsonlines where each line is a deployment log item.
+// Array of deployment logs for the provided query.
 type GetDeploymentEventsResponseBody struct {
 	GetDeploymentEventsDeployments1 *GetDeploymentEventsDeployments1
 	GetDeploymentEventsDeployments2 *GetDeploymentEventsDeployments2

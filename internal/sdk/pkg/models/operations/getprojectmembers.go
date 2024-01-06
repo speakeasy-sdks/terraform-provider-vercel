@@ -232,6 +232,7 @@ const (
 	GetProjectMembersResponseBodyTypeGetProjectMembers2 GetProjectMembersResponseBodyType = "getProjectMembers_2"
 )
 
+// GetProjectMembersResponseBody - Paginated list of members for the project.
 type GetProjectMembersResponseBody struct {
 	GetProjectMembers1 *GetProjectMembers1
 	GetProjectMembers2 *GetProjectMembers2

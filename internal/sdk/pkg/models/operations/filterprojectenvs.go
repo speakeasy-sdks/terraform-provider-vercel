@@ -3399,6 +3399,7 @@ const (
 	FilterProjectEnvsResponseBodyTypeFilterProjectEnvs3 FilterProjectEnvsResponseBodyType = "filterProjectEnvs_3"
 )
 
+// FilterProjectEnvsResponseBody - The list of environment variables for the given project
 type FilterProjectEnvsResponseBody struct {
 	FilterProjectEnvs1 *FilterProjectEnvs1
 	FilterProjectEnvs2 *FilterProjectEnvs2

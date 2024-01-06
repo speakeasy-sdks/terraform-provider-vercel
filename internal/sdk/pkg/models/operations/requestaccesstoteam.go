@@ -17,6 +17,7 @@ const (
 	GitUserIDTypeInteger GitUserIDType = "integer"
 )
 
+// GitUserID - The ID of the Git account of the user who requests access.
 type GitUserID struct {
 	Str     *string
 	Integer *int64

@@ -5004,6 +5004,8 @@ const (
 	GetDeploymentResponseBodyTypeGetDeployment2 GetDeploymentResponseBodyType = "getDeployment_2"
 )
 
+// GetDeploymentResponseBody - The deployment including only public information
+// The deployment including both public and private information
 type GetDeploymentResponseBody struct {
 	GetDeployment1 *GetDeployment1
 	GetDeployment2 *GetDeployment2

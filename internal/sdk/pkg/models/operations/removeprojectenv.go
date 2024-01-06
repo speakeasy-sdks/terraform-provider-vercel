@@ -3302,6 +3302,7 @@ const (
 	RemoveProjectEnvResponseBodyTypeRemoveProjectEnv3        RemoveProjectEnvResponseBodyType = "removeProjectEnv_3"
 )
 
+// RemoveProjectEnvResponseBody - The environment variable was successfully removed
 type RemoveProjectEnvResponseBody struct {
 	ArrayOfremoveProjectEnv1 []RemoveProjectEnv1
 	RemoveProjectEnv2        *RemoveProjectEnv2

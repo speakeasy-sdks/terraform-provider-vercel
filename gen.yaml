@@ -1,25 +1,12 @@
-configVersion: 1.0.0
-management:
-  docChecksum: 8ecc10127cd4d51cceddbc01756b40f4
-  docVersion: 0.0.1
-  speakeasyVersion: 1.126.0
-  generationVersion: 2.213.3
+configVersion: 2.0.0
 generation:
-  comments: {}
   sdkClassName: vercel
-  repoURL: https://github.com/speakeasy-sdks/terraform-provider-vercel.git
   usageSnippets:
     optionalPropertyRendering: withExample
-features:
-  terraform:
-    constsAndDefaults: 0.1.2
-    core: 3.6.0
-    deprecations: 2.81.1
-    globalSecurity: 2.81.2
-    globalServerURLs: 2.82.1
-    unions: 2.81.5
+  fixes:
+    nameResolutionDec2023: false
 terraform:
-  version: 0.9.0
+  version: 0.10.0
   author: zchee
   imports:
     option: openapi
@@ -32,5 +19,3 @@ terraform:
   inputModelSuffix: input
   outputModelSuffix: output
   packageName: vercel
-  published: true
-  repoSubDirectory: .

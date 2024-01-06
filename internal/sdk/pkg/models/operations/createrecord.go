@@ -10,11 +10,19 @@ import (
 	"net/http"
 )
 
-// CreateRecordDNSRequestRequestBody9Type - Must be of type `NS`.
+// CreateRecordDNSRequestRequestBody9Type - The type of record, it could be one of the valid DNS records.
 type CreateRecordDNSRequestRequestBody9Type string
 
 const (
-	CreateRecordDNSRequestRequestBody9TypeNs CreateRecordDNSRequestRequestBody9Type = "NS"
+	CreateRecordDNSRequestRequestBody9TypeA     CreateRecordDNSRequestRequestBody9Type = "A"
+	CreateRecordDNSRequestRequestBody9TypeAaaa  CreateRecordDNSRequestRequestBody9Type = "AAAA"
+	CreateRecordDNSRequestRequestBody9TypeAlias CreateRecordDNSRequestRequestBody9Type = "ALIAS"
+	CreateRecordDNSRequestRequestBody9TypeCaa   CreateRecordDNSRequestRequestBody9Type = "CAA"
+	CreateRecordDNSRequestRequestBody9TypeCname CreateRecordDNSRequestRequestBody9Type = "CNAME"
+	CreateRecordDNSRequestRequestBody9TypeMx    CreateRecordDNSRequestRequestBody9Type = "MX"
+	CreateRecordDNSRequestRequestBody9TypeSrv   CreateRecordDNSRequestRequestBody9Type = "SRV"
+	CreateRecordDNSRequestRequestBody9TypeTxt   CreateRecordDNSRequestRequestBody9Type = "TXT"
+	CreateRecordDNSRequestRequestBody9TypeNs    CreateRecordDNSRequestRequestBody9Type = "NS"
 )
 
 func (e CreateRecordDNSRequestRequestBody9Type) ToPointer() *CreateRecordDNSRequestRequestBody9Type {
@@ -27,6 +35,22 @@ func (e *CreateRecordDNSRequestRequestBody9Type) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	switch v {
+	case "A":
+		fallthrough
+	case "AAAA":
+		fallthrough
+	case "ALIAS":
+		fallthrough
+	case "CAA":
+		fallthrough
+	case "CNAME":
+		fallthrough
+	case "MX":
+		fallthrough
+	case "SRV":
+		fallthrough
+	case "TXT":
+		fallthrough
 	case "NS":
 		*e = CreateRecordDNSRequestRequestBody9Type(v)
 		return nil
@@ -42,7 +66,7 @@ type Nine struct {
 	Name string `json:"name"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *int64 `json:"ttl,omitempty"`
-	// Must be of type `NS`.
+	// The type of record, it could be one of the valid DNS records.
 	Type CreateRecordDNSRequestRequestBody9Type `json:"type"`
 	// An NS domain value.
 	Value *string `json:"value,omitempty"`
@@ -83,11 +107,19 @@ func (o *Nine) GetValue() *string {
 	return o.Value
 }
 
-// CreateRecordDNSRequestRequestBody8Type - Must be of type `TXT`.
+// CreateRecordDNSRequestRequestBody8Type - The type of record, it could be one of the valid DNS records.
 type CreateRecordDNSRequestRequestBody8Type string
 
 const (
-	CreateRecordDNSRequestRequestBody8TypeTxt CreateRecordDNSRequestRequestBody8Type = "TXT"
+	CreateRecordDNSRequestRequestBody8TypeA     CreateRecordDNSRequestRequestBody8Type = "A"
+	CreateRecordDNSRequestRequestBody8TypeAaaa  CreateRecordDNSRequestRequestBody8Type = "AAAA"
+	CreateRecordDNSRequestRequestBody8TypeAlias CreateRecordDNSRequestRequestBody8Type = "ALIAS"
+	CreateRecordDNSRequestRequestBody8TypeCaa   CreateRecordDNSRequestRequestBody8Type = "CAA"
+	CreateRecordDNSRequestRequestBody8TypeCname CreateRecordDNSRequestRequestBody8Type = "CNAME"
+	CreateRecordDNSRequestRequestBody8TypeMx    CreateRecordDNSRequestRequestBody8Type = "MX"
+	CreateRecordDNSRequestRequestBody8TypeSrv   CreateRecordDNSRequestRequestBody8Type = "SRV"
+	CreateRecordDNSRequestRequestBody8TypeTxt   CreateRecordDNSRequestRequestBody8Type = "TXT"
+	CreateRecordDNSRequestRequestBody8TypeNs    CreateRecordDNSRequestRequestBody8Type = "NS"
 )
 
 func (e CreateRecordDNSRequestRequestBody8Type) ToPointer() *CreateRecordDNSRequestRequestBody8Type {
@@ -100,7 +132,23 @@ func (e *CreateRecordDNSRequestRequestBody8Type) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	switch v {
+	case "A":
+		fallthrough
+	case "AAAA":
+		fallthrough
+	case "ALIAS":
+		fallthrough
+	case "CAA":
+		fallthrough
+	case "CNAME":
+		fallthrough
+	case "MX":
+		fallthrough
+	case "SRV":
+		fallthrough
 	case "TXT":
+		fallthrough
+	case "NS":
 		*e = CreateRecordDNSRequestRequestBody8Type(v)
 		return nil
 	default:
@@ -113,7 +161,7 @@ type Eight struct {
 	Comment *string `json:"comment,omitempty"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *int64 `json:"ttl,omitempty"`
-	// Must be of type `TXT`.
+	// The type of record, it could be one of the valid DNS records.
 	Type CreateRecordDNSRequestRequestBody8Type `json:"type"`
 	// A TXT record containing arbitrary text.
 	Value string `json:"value"`
@@ -182,11 +230,19 @@ func (o *CreateRecordSrv) GetWeight() int64 {
 	return o.Weight
 }
 
-// CreateRecordDNSRequestRequestBody7Type - Must be of type `SRV`.
+// CreateRecordDNSRequestRequestBody7Type - The type of record, it could be one of the valid DNS records.
 type CreateRecordDNSRequestRequestBody7Type string
 
 const (
-	CreateRecordDNSRequestRequestBody7TypeSrv CreateRecordDNSRequestRequestBody7Type = "SRV"
+	CreateRecordDNSRequestRequestBody7TypeA     CreateRecordDNSRequestRequestBody7Type = "A"
+	CreateRecordDNSRequestRequestBody7TypeAaaa  CreateRecordDNSRequestRequestBody7Type = "AAAA"
+	CreateRecordDNSRequestRequestBody7TypeAlias CreateRecordDNSRequestRequestBody7Type = "ALIAS"
+	CreateRecordDNSRequestRequestBody7TypeCaa   CreateRecordDNSRequestRequestBody7Type = "CAA"
+	CreateRecordDNSRequestRequestBody7TypeCname CreateRecordDNSRequestRequestBody7Type = "CNAME"
+	CreateRecordDNSRequestRequestBody7TypeMx    CreateRecordDNSRequestRequestBody7Type = "MX"
+	CreateRecordDNSRequestRequestBody7TypeSrv   CreateRecordDNSRequestRequestBody7Type = "SRV"
+	CreateRecordDNSRequestRequestBody7TypeTxt   CreateRecordDNSRequestRequestBody7Type = "TXT"
+	CreateRecordDNSRequestRequestBody7TypeNs    CreateRecordDNSRequestRequestBody7Type = "NS"
 )
 
 func (e CreateRecordDNSRequestRequestBody7Type) ToPointer() *CreateRecordDNSRequestRequestBody7Type {
@@ -199,7 +255,23 @@ func (e *CreateRecordDNSRequestRequestBody7Type) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	switch v {
+	case "A":
+		fallthrough
+	case "AAAA":
+		fallthrough
+	case "ALIAS":
+		fallthrough
+	case "CAA":
+		fallthrough
+	case "CNAME":
+		fallthrough
+	case "MX":
+		fallthrough
 	case "SRV":
+		fallthrough
+	case "TXT":
+		fallthrough
+	case "NS":
 		*e = CreateRecordDNSRequestRequestBody7Type(v)
 		return nil
 	default:
@@ -213,7 +285,7 @@ type Seven struct {
 	Srv     CreateRecordSrv `json:"srv"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *int64 `json:"ttl,omitempty"`
-	// Must be of type `SRV`.
+	// The type of record, it could be one of the valid DNS records.
 	Type CreateRecordDNSRequestRequestBody7Type `json:"type"`
 }
 
@@ -245,11 +317,19 @@ func (o *Seven) GetType() CreateRecordDNSRequestRequestBody7Type {
 	return o.Type
 }
 
-// CreateRecordDNSRequestRequestBody6Type - Must be of type `MX`.
+// CreateRecordDNSRequestRequestBody6Type - The type of record, it could be one of the valid DNS records.
 type CreateRecordDNSRequestRequestBody6Type string
 
 const (
-	CreateRecordDNSRequestRequestBody6TypeMx CreateRecordDNSRequestRequestBody6Type = "MX"
+	CreateRecordDNSRequestRequestBody6TypeA     CreateRecordDNSRequestRequestBody6Type = "A"
+	CreateRecordDNSRequestRequestBody6TypeAaaa  CreateRecordDNSRequestRequestBody6Type = "AAAA"
+	CreateRecordDNSRequestRequestBody6TypeAlias CreateRecordDNSRequestRequestBody6Type = "ALIAS"
+	CreateRecordDNSRequestRequestBody6TypeCaa   CreateRecordDNSRequestRequestBody6Type = "CAA"
+	CreateRecordDNSRequestRequestBody6TypeCname CreateRecordDNSRequestRequestBody6Type = "CNAME"
+	CreateRecordDNSRequestRequestBody6TypeMx    CreateRecordDNSRequestRequestBody6Type = "MX"
+	CreateRecordDNSRequestRequestBody6TypeSrv   CreateRecordDNSRequestRequestBody6Type = "SRV"
+	CreateRecordDNSRequestRequestBody6TypeTxt   CreateRecordDNSRequestRequestBody6Type = "TXT"
+	CreateRecordDNSRequestRequestBody6TypeNs    CreateRecordDNSRequestRequestBody6Type = "NS"
 )
 
 func (e CreateRecordDNSRequestRequestBody6Type) ToPointer() *CreateRecordDNSRequestRequestBody6Type {
@@ -262,7 +342,23 @@ func (e *CreateRecordDNSRequestRequestBody6Type) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	switch v {
+	case "A":
+		fallthrough
+	case "AAAA":
+		fallthrough
+	case "ALIAS":
+		fallthrough
+	case "CAA":
+		fallthrough
+	case "CNAME":
+		fallthrough
 	case "MX":
+		fallthrough
+	case "SRV":
+		fallthrough
+	case "TXT":
+		fallthrough
+	case "NS":
 		*e = CreateRecordDNSRequestRequestBody6Type(v)
 		return nil
 	default:
@@ -278,7 +374,7 @@ type Six struct {
 	Name string `json:"name"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *int64 `json:"ttl,omitempty"`
-	// Must be of type `MX`.
+	// The type of record, it could be one of the valid DNS records.
 	Type CreateRecordDNSRequestRequestBody6Type `json:"type"`
 	// An MX record specifying the mail server responsible for accepting messages on behalf of the domain name.
 	Value string `json:"value"`
@@ -326,11 +422,19 @@ func (o *Six) GetValue() string {
 	return o.Value
 }
 
-// CreateRecordDNSRequestRequestBody5Type - Must be of type `CNAME`.
+// CreateRecordDNSRequestRequestBody5Type - The type of record, it could be one of the valid DNS records.
 type CreateRecordDNSRequestRequestBody5Type string
 
 const (
+	CreateRecordDNSRequestRequestBody5TypeA     CreateRecordDNSRequestRequestBody5Type = "A"
+	CreateRecordDNSRequestRequestBody5TypeAaaa  CreateRecordDNSRequestRequestBody5Type = "AAAA"
+	CreateRecordDNSRequestRequestBody5TypeAlias CreateRecordDNSRequestRequestBody5Type = "ALIAS"
+	CreateRecordDNSRequestRequestBody5TypeCaa   CreateRecordDNSRequestRequestBody5Type = "CAA"
 	CreateRecordDNSRequestRequestBody5TypeCname CreateRecordDNSRequestRequestBody5Type = "CNAME"
+	CreateRecordDNSRequestRequestBody5TypeMx    CreateRecordDNSRequestRequestBody5Type = "MX"
+	CreateRecordDNSRequestRequestBody5TypeSrv   CreateRecordDNSRequestRequestBody5Type = "SRV"
+	CreateRecordDNSRequestRequestBody5TypeTxt   CreateRecordDNSRequestRequestBody5Type = "TXT"
+	CreateRecordDNSRequestRequestBody5TypeNs    CreateRecordDNSRequestRequestBody5Type = "NS"
 )
 
 func (e CreateRecordDNSRequestRequestBody5Type) ToPointer() *CreateRecordDNSRequestRequestBody5Type {
@@ -343,7 +447,23 @@ func (e *CreateRecordDNSRequestRequestBody5Type) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	switch v {
+	case "A":
+		fallthrough
+	case "AAAA":
+		fallthrough
+	case "ALIAS":
+		fallthrough
+	case "CAA":
+		fallthrough
 	case "CNAME":
+		fallthrough
+	case "MX":
+		fallthrough
+	case "SRV":
+		fallthrough
+	case "TXT":
+		fallthrough
+	case "NS":
 		*e = CreateRecordDNSRequestRequestBody5Type(v)
 		return nil
 	default:
@@ -358,7 +478,7 @@ type CreateRecord5 struct {
 	Name string `json:"name"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *int64 `json:"ttl,omitempty"`
-	// Must be of type `CNAME`.
+	// The type of record, it could be one of the valid DNS records.
 	Type CreateRecordDNSRequestRequestBody5Type `json:"type"`
 	// A CNAME record mapping to another domain name.
 	Value *string `json:"value,omitempty"`
@@ -399,11 +519,19 @@ func (o *CreateRecord5) GetValue() *string {
 	return o.Value
 }
 
-// CreateRecordDNSRequestRequestBodyType - Must be of type `CAA`.
+// CreateRecordDNSRequestRequestBodyType - The type of record, it could be one of the valid DNS records.
 type CreateRecordDNSRequestRequestBodyType string
 
 const (
-	CreateRecordDNSRequestRequestBodyTypeCaa CreateRecordDNSRequestRequestBodyType = "CAA"
+	CreateRecordDNSRequestRequestBodyTypeA     CreateRecordDNSRequestRequestBodyType = "A"
+	CreateRecordDNSRequestRequestBodyTypeAaaa  CreateRecordDNSRequestRequestBodyType = "AAAA"
+	CreateRecordDNSRequestRequestBodyTypeAlias CreateRecordDNSRequestRequestBodyType = "ALIAS"
+	CreateRecordDNSRequestRequestBodyTypeCaa   CreateRecordDNSRequestRequestBodyType = "CAA"
+	CreateRecordDNSRequestRequestBodyTypeCname CreateRecordDNSRequestRequestBodyType = "CNAME"
+	CreateRecordDNSRequestRequestBodyTypeMx    CreateRecordDNSRequestRequestBodyType = "MX"
+	CreateRecordDNSRequestRequestBodyTypeSrv   CreateRecordDNSRequestRequestBodyType = "SRV"
+	CreateRecordDNSRequestRequestBodyTypeTxt   CreateRecordDNSRequestRequestBodyType = "TXT"
+	CreateRecordDNSRequestRequestBodyTypeNs    CreateRecordDNSRequestRequestBodyType = "NS"
 )
 
 func (e CreateRecordDNSRequestRequestBodyType) ToPointer() *CreateRecordDNSRequestRequestBodyType {
@@ -416,7 +544,23 @@ func (e *CreateRecordDNSRequestRequestBodyType) UnmarshalJSON(data []byte) error
 		return err
 	}
 	switch v {
+	case "A":
+		fallthrough
+	case "AAAA":
+		fallthrough
+	case "ALIAS":
+		fallthrough
 	case "CAA":
+		fallthrough
+	case "CNAME":
+		fallthrough
+	case "MX":
+		fallthrough
+	case "SRV":
+		fallthrough
+	case "TXT":
+		fallthrough
+	case "NS":
 		*e = CreateRecordDNSRequestRequestBodyType(v)
 		return nil
 	default:
@@ -431,7 +575,7 @@ type CreateRecord4 struct {
 	Name string `json:"name"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *int64 `json:"ttl,omitempty"`
-	// Must be of type `CAA`.
+	// The type of record, it could be one of the valid DNS records.
 	Type CreateRecordDNSRequestRequestBodyType `json:"type"`
 	// A CAA record to specify which Certificate Authorities (CAs) are allowed to issue certificates for the domain.
 	Value string `json:"value"`
@@ -472,11 +616,19 @@ func (o *CreateRecord4) GetValue() string {
 	return o.Value
 }
 
-// CreateRecordDNSRequestType - Must be of type `ALIAS`.
+// CreateRecordDNSRequestType - The type of record, it could be one of the valid DNS records.
 type CreateRecordDNSRequestType string
 
 const (
+	CreateRecordDNSRequestTypeA     CreateRecordDNSRequestType = "A"
+	CreateRecordDNSRequestTypeAaaa  CreateRecordDNSRequestType = "AAAA"
 	CreateRecordDNSRequestTypeAlias CreateRecordDNSRequestType = "ALIAS"
+	CreateRecordDNSRequestTypeCaa   CreateRecordDNSRequestType = "CAA"
+	CreateRecordDNSRequestTypeCname CreateRecordDNSRequestType = "CNAME"
+	CreateRecordDNSRequestTypeMx    CreateRecordDNSRequestType = "MX"
+	CreateRecordDNSRequestTypeSrv   CreateRecordDNSRequestType = "SRV"
+	CreateRecordDNSRequestTypeTxt   CreateRecordDNSRequestType = "TXT"
+	CreateRecordDNSRequestTypeNs    CreateRecordDNSRequestType = "NS"
 )
 
 func (e CreateRecordDNSRequestType) ToPointer() *CreateRecordDNSRequestType {
@@ -489,7 +641,23 @@ func (e *CreateRecordDNSRequestType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
+	case "A":
+		fallthrough
+	case "AAAA":
+		fallthrough
 	case "ALIAS":
+		fallthrough
+	case "CAA":
+		fallthrough
+	case "CNAME":
+		fallthrough
+	case "MX":
+		fallthrough
+	case "SRV":
+		fallthrough
+	case "TXT":
+		fallthrough
+	case "NS":
 		*e = CreateRecordDNSRequestType(v)
 		return nil
 	default:
@@ -504,7 +672,7 @@ type CreateRecord3 struct {
 	Name string `json:"name"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *int64 `json:"ttl,omitempty"`
-	// Must be of type `ALIAS`.
+	// The type of record, it could be one of the valid DNS records.
 	Type CreateRecordDNSRequestType `json:"type"`
 	// An ALIAS virtual record pointing to a hostname resolved to an A record on server side.
 	Value string `json:"value"`
@@ -545,11 +713,19 @@ func (o *CreateRecord3) GetValue() string {
 	return o.Value
 }
 
-// CreateRecordDNSType - Must be of type `AAAA`.
+// CreateRecordDNSType - The type of record, it could be one of the valid DNS records.
 type CreateRecordDNSType string
 
 const (
-	CreateRecordDNSTypeAaaa CreateRecordDNSType = "AAAA"
+	CreateRecordDNSTypeA     CreateRecordDNSType = "A"
+	CreateRecordDNSTypeAaaa  CreateRecordDNSType = "AAAA"
+	CreateRecordDNSTypeAlias CreateRecordDNSType = "ALIAS"
+	CreateRecordDNSTypeCaa   CreateRecordDNSType = "CAA"
+	CreateRecordDNSTypeCname CreateRecordDNSType = "CNAME"
+	CreateRecordDNSTypeMx    CreateRecordDNSType = "MX"
+	CreateRecordDNSTypeSrv   CreateRecordDNSType = "SRV"
+	CreateRecordDNSTypeTxt   CreateRecordDNSType = "TXT"
+	CreateRecordDNSTypeNs    CreateRecordDNSType = "NS"
 )
 
 func (e CreateRecordDNSType) ToPointer() *CreateRecordDNSType {
@@ -562,7 +738,23 @@ func (e *CreateRecordDNSType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
+	case "A":
+		fallthrough
 	case "AAAA":
+		fallthrough
+	case "ALIAS":
+		fallthrough
+	case "CAA":
+		fallthrough
+	case "CNAME":
+		fallthrough
+	case "MX":
+		fallthrough
+	case "SRV":
+		fallthrough
+	case "TXT":
+		fallthrough
+	case "NS":
 		*e = CreateRecordDNSType(v)
 		return nil
 	default:
@@ -577,7 +769,7 @@ type CreateRecord2 struct {
 	Name string `json:"name"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *int64 `json:"ttl,omitempty"`
-	// Must be of type `AAAA`.
+	// The type of record, it could be one of the valid DNS records.
 	Type CreateRecordDNSType `json:"type"`
 	// An AAAA record pointing to an IPv6 address.
 	Value string `json:"value"`
@@ -618,11 +810,19 @@ func (o *CreateRecord2) GetValue() string {
 	return o.Value
 }
 
-// CreateRecordType - Must be of type `A`.
+// CreateRecordType - The type of record, it could be one of the valid DNS records.
 type CreateRecordType string
 
 const (
-	CreateRecordTypeA CreateRecordType = "A"
+	CreateRecordTypeA     CreateRecordType = "A"
+	CreateRecordTypeAaaa  CreateRecordType = "AAAA"
+	CreateRecordTypeAlias CreateRecordType = "ALIAS"
+	CreateRecordTypeCaa   CreateRecordType = "CAA"
+	CreateRecordTypeCname CreateRecordType = "CNAME"
+	CreateRecordTypeMx    CreateRecordType = "MX"
+	CreateRecordTypeSrv   CreateRecordType = "SRV"
+	CreateRecordTypeTxt   CreateRecordType = "TXT"
+	CreateRecordTypeNs    CreateRecordType = "NS"
 )
 
 func (e CreateRecordType) ToPointer() *CreateRecordType {
@@ -636,6 +836,22 @@ func (e *CreateRecordType) UnmarshalJSON(data []byte) error {
 	}
 	switch v {
 	case "A":
+		fallthrough
+	case "AAAA":
+		fallthrough
+	case "ALIAS":
+		fallthrough
+	case "CAA":
+		fallthrough
+	case "CNAME":
+		fallthrough
+	case "MX":
+		fallthrough
+	case "SRV":
+		fallthrough
+	case "TXT":
+		fallthrough
+	case "NS":
 		*e = CreateRecordType(v)
 		return nil
 	default:
@@ -650,7 +866,7 @@ type CreateRecord1 struct {
 	Name string `json:"name"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *int64 `json:"ttl,omitempty"`
-	// Must be of type `A`.
+	// The type of record, it could be one of the valid DNS records.
 	Type CreateRecordType `json:"type"`
 	// The record value must be a valid IPv4 address.
 	Value string `json:"value"`
@@ -975,6 +1191,7 @@ const (
 	CreateRecordResponseBodyTypeCreateRecordDNS2 CreateRecordResponseBodyType = "createRecord_dns_2"
 )
 
+// CreateRecordResponseBody - Successful response showing the uid of the newly created DNS record.
 type CreateRecordResponseBody struct {
 	CreateRecordDNS1 *CreateRecordDNS1
 	CreateRecordDNS2 *CreateRecordDNS2

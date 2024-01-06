@@ -78,6 +78,8 @@ const (
 	UploadFileResponseBodyTypeUploadFile2 UploadFileResponseBodyType = "uploadFile_2"
 )
 
+// UploadFileResponseBody - File already uploaded
+// File successfully uploaded
 type UploadFileResponseBody struct {
 	UploadFile1 *UploadFile1
 	UploadFile2 *UploadFile2
