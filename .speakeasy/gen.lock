@@ -4,16 +4,16 @@ management:
   docChecksum: 8ecc10127cd4d51cceddbc01756b40f4
   docVersion: 0.0.1
   speakeasyVersion: internal
-  generationVersion: 2.228.1
-  releaseVersion: 0.10.0
-  configChecksum: ae6aa247f4cac41bb380d4ba72d51037
+  generationVersion: 2.230.1
+  releaseVersion: 0.10.1
+  configChecksum: a6920bc98759320d71d4dc35f7d80c54
   repoURL: https://github.com/speakeasy-sdks/terraform-provider-vercel.git
   repoSubDirectory: .
   published: true
 features:
   terraform:
     constsAndDefaults: 0.1.2
-    core: 3.8.0
+    core: 3.8.1
     deprecations: 2.81.1
     globalSecurity: 2.81.2
     globalServerURLs: 2.82.1
@@ -84,6 +84,15 @@ generatedFiles:
   - internal/validators/ExactlyOneChild.go
   - internal/validators/JSONParseValidator.go
   - internal/validators/RFC3339Validator.go
+  - internal/validators/boolvalidators/not_null.go
+  - internal/validators/float64validators/not_null.go
+  - internal/validators/int64validators/not_null.go
+  - internal/validators/listvalidators/not_null.go
+  - internal/validators/mapvalidators/not_null.go
+  - internal/validators/numbervalidators/not_null.go
+  - internal/validators/objectvalidators/not_null.go
+  - internal/validators/setvalidators/not_null.go
+  - internal/validators/stringvalidators/not_null.go
   - main.go
   - terraform-registry-manifest.json
   - tools/tools.go
