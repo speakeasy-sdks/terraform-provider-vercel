@@ -161,9 +161,9 @@ func New(opts ...SDKOption) *Vercel {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.0.1",
-			SDKVersion:        "0.10.1",
-			GenVersion:        "2.230.1",
-			UserAgent:         "speakeasy-sdk/go 0.10.1 2.230.1 0.0.1 vercel",
+			SDKVersion:        "0.10.2",
+			GenVersion:        "2.233.2",
+			UserAgent:         "speakeasy-sdk/go 0.10.2 2.233.2 0.0.1 vercel",
 		},
 	}
 	for _, opt := range opts {
