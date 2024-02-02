@@ -921,13 +921,13 @@ type DeploymentEnabledType string
 
 const (
 	DeploymentEnabledTypeBoolean      DeploymentEnabledType = "boolean"
-	DeploymentEnabledTypeMapOfboolean DeploymentEnabledType = "mapOfboolean"
+	DeploymentEnabledTypeMapOfBoolean DeploymentEnabledType = "map_Of_boolean"
 )
 
 // DeploymentEnabled - Specifies the branches that will not trigger an auto-deployment when committing to them. Any non specified branch is `true` by default.
 type DeploymentEnabled struct {
 	Boolean      *bool
-	MapOfboolean map[string]bool
+	MapOfBoolean map[string]bool
 
 	Type DeploymentEnabledType
 }
@@ -941,11 +941,11 @@ func CreateDeploymentEnabledBoolean(boolean bool) DeploymentEnabled {
 	}
 }
 
-func CreateDeploymentEnabledMapOfboolean(mapOfboolean map[string]bool) DeploymentEnabled {
-	typ := DeploymentEnabledTypeMapOfboolean
+func CreateDeploymentEnabledMapOfBoolean(mapOfBoolean map[string]bool) DeploymentEnabled {
+	typ := DeploymentEnabledTypeMapOfBoolean
 
 	return DeploymentEnabled{
-		MapOfboolean: mapOfboolean,
+		MapOfBoolean: mapOfBoolean,
 		Type:         typ,
 	}
 }
@@ -959,10 +959,10 @@ func (u *DeploymentEnabled) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	mapOfboolean := map[string]bool{}
-	if err := utils.UnmarshalJSON(data, &mapOfboolean, "", true, true); err == nil {
-		u.MapOfboolean = mapOfboolean
-		u.Type = DeploymentEnabledTypeMapOfboolean
+	mapOfBoolean := map[string]bool{}
+	if err := utils.UnmarshalJSON(data, &mapOfBoolean, "", true, true); err == nil {
+		u.MapOfBoolean = mapOfBoolean
+		u.Type = DeploymentEnabledTypeMapOfBoolean
 		return nil
 	}
 
@@ -974,8 +974,8 @@ func (u DeploymentEnabled) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	if u.MapOfboolean != nil {
-		return utils.MarshalJSON(u.MapOfboolean, "", true)
+	if u.MapOfBoolean != nil {
+		return utils.MarshalJSON(u.MapOfBoolean, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

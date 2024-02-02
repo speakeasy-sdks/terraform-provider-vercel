@@ -75,13 +75,13 @@ type CreateProjectTargetType string
 
 const (
 	CreateProjectTargetTypeCreateProject1        CreateProjectTargetType = "createProject_1"
-	CreateProjectTargetTypeArrayOfcreateProject2 CreateProjectTargetType = "arrayOfcreateProject_2"
+	CreateProjectTargetTypeArrayOfCreateProject2 CreateProjectTargetType = "array_Of_createProject_2"
 )
 
 // CreateProjectTarget - Deployment Target or Targets in which the ENV variable will be used
 type CreateProjectTarget struct {
 	CreateProject1        *CreateProject1
-	ArrayOfcreateProject2 []CreateProject2
+	ArrayOfCreateProject2 []CreateProject2
 
 	Type CreateProjectTargetType
 }
@@ -95,11 +95,11 @@ func CreateCreateProjectTargetCreateProject1(createProject1 CreateProject1) Crea
 	}
 }
 
-func CreateCreateProjectTargetArrayOfcreateProject2(arrayOfcreateProject2 []CreateProject2) CreateProjectTarget {
-	typ := CreateProjectTargetTypeArrayOfcreateProject2
+func CreateCreateProjectTargetArrayOfCreateProject2(arrayOfCreateProject2 []CreateProject2) CreateProjectTarget {
+	typ := CreateProjectTargetTypeArrayOfCreateProject2
 
 	return CreateProjectTarget{
-		ArrayOfcreateProject2: arrayOfcreateProject2,
+		ArrayOfCreateProject2: arrayOfCreateProject2,
 		Type:                  typ,
 	}
 }
@@ -113,10 +113,10 @@ func (u *CreateProjectTarget) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	arrayOfcreateProject2 := []CreateProject2{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProject2, "", true, true); err == nil {
-		u.ArrayOfcreateProject2 = arrayOfcreateProject2
-		u.Type = CreateProjectTargetTypeArrayOfcreateProject2
+	arrayOfCreateProject2 := []CreateProject2{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCreateProject2, "", true, true); err == nil {
+		u.ArrayOfCreateProject2 = arrayOfCreateProject2
+		u.Type = CreateProjectTargetTypeArrayOfCreateProject2
 		return nil
 	}
 
@@ -128,8 +128,8 @@ func (u CreateProjectTarget) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CreateProject1, "", true)
 	}
 
-	if u.ArrayOfcreateProject2 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProject2, "", true)
+	if u.ArrayOfCreateProject2 != nil {
+		return utils.MarshalJSON(u.ArrayOfCreateProject2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -1586,22 +1586,22 @@ func (e *CreateProjectProjectsResponse200ApplicationJSONResponseBody1) Unmarshal
 type CreateProjectProjectsTargetType string
 
 const (
-	CreateProjectProjectsTargetTypeArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 CreateProjectProjectsTargetType = "arrayOfcreateProject_projects_response_200_ApplicationJSON_responseBody_1"
+	CreateProjectProjectsTargetTypeArrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1 CreateProjectProjectsTargetType = "array_Of_createProject_projects_response_200_ApplicationJSON_responseBody_1"
 	CreateProjectProjectsTargetTypeCreateProjectProjectsResponse200ApplicationJSONResponseBody2        CreateProjectProjectsTargetType = "createProject_projects_response_200_ApplicationJSON_responseBody_2"
 )
 
 type CreateProjectProjectsTarget struct {
-	ArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 []CreateProjectProjectsResponse200ApplicationJSONResponseBody1
+	ArrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1 []CreateProjectProjectsResponse200ApplicationJSONResponseBody1
 	CreateProjectProjectsResponse200ApplicationJSONResponseBody2        *CreateProjectProjectsResponse200ApplicationJSONResponseBody2
 
 	Type CreateProjectProjectsTargetType
 }
 
-func CreateCreateProjectProjectsTargetArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1(arrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 []CreateProjectProjectsResponse200ApplicationJSONResponseBody1) CreateProjectProjectsTarget {
-	typ := CreateProjectProjectsTargetTypeArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1
+func CreateCreateProjectProjectsTargetArrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1(arrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1 []CreateProjectProjectsResponse200ApplicationJSONResponseBody1) CreateProjectProjectsTarget {
+	typ := CreateProjectProjectsTargetTypeArrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1
 
 	return CreateProjectProjectsTarget{
-		ArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1: arrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1,
+		ArrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1: arrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1,
 		Type: typ,
 	}
 }
@@ -1617,10 +1617,10 @@ func CreateCreateProjectProjectsTargetCreateProjectProjectsResponse200Applicatio
 
 func (u *CreateProjectProjectsTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 := []CreateProjectProjectsResponse200ApplicationJSONResponseBody1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1, "", true, true); err == nil {
-		u.ArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 = arrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1
-		u.Type = CreateProjectProjectsTargetTypeArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1
+	arrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1 := []CreateProjectProjectsResponse200ApplicationJSONResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1, "", true, true); err == nil {
+		u.ArrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1 = arrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1
+		u.Type = CreateProjectProjectsTargetTypeArrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1
 		return nil
 	}
 
@@ -1635,8 +1635,8 @@ func (u *CreateProjectProjectsTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateProjectProjectsTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectProjectsResponse200ApplicationJSONResponseBody1, "", true)
+	if u.ArrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1 != nil {
+		return utils.MarshalJSON(u.ArrayOfCreateProjectProjectsResponse200ApplicationJSONResponseBody1, "", true)
 	}
 
 	if u.CreateProjectProjectsResponse200ApplicationJSONResponseBody2 != nil {

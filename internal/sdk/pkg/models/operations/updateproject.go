@@ -1687,22 +1687,22 @@ func (e *UpdateProjectProjectsResponse200ApplicationJSON1) UnmarshalJSON(data []
 type UpdateProjectTargetType string
 
 const (
-	UpdateProjectTargetTypeArrayOfupdateProjectProjectsResponse200ApplicationJSON1 UpdateProjectTargetType = "arrayOfupdateProject_projects_response_200_ApplicationJSON_1"
+	UpdateProjectTargetTypeArrayOfUpdateProjectProjectsResponse200ApplicationJSON1 UpdateProjectTargetType = "array_Of_updateProject_projects_response_200_ApplicationJSON_1"
 	UpdateProjectTargetTypeUpdateProjectProjectsResponse200ApplicationJSON2        UpdateProjectTargetType = "updateProject_projects_response_200_ApplicationJSON_2"
 )
 
 type UpdateProjectTarget struct {
-	ArrayOfupdateProjectProjectsResponse200ApplicationJSON1 []UpdateProjectProjectsResponse200ApplicationJSON1
+	ArrayOfUpdateProjectProjectsResponse200ApplicationJSON1 []UpdateProjectProjectsResponse200ApplicationJSON1
 	UpdateProjectProjectsResponse200ApplicationJSON2        *UpdateProjectProjectsResponse200ApplicationJSON2
 
 	Type UpdateProjectTargetType
 }
 
-func CreateUpdateProjectTargetArrayOfupdateProjectProjectsResponse200ApplicationJSON1(arrayOfupdateProjectProjectsResponse200ApplicationJSON1 []UpdateProjectProjectsResponse200ApplicationJSON1) UpdateProjectTarget {
-	typ := UpdateProjectTargetTypeArrayOfupdateProjectProjectsResponse200ApplicationJSON1
+func CreateUpdateProjectTargetArrayOfUpdateProjectProjectsResponse200ApplicationJSON1(arrayOfUpdateProjectProjectsResponse200ApplicationJSON1 []UpdateProjectProjectsResponse200ApplicationJSON1) UpdateProjectTarget {
+	typ := UpdateProjectTargetTypeArrayOfUpdateProjectProjectsResponse200ApplicationJSON1
 
 	return UpdateProjectTarget{
-		ArrayOfupdateProjectProjectsResponse200ApplicationJSON1: arrayOfupdateProjectProjectsResponse200ApplicationJSON1,
+		ArrayOfUpdateProjectProjectsResponse200ApplicationJSON1: arrayOfUpdateProjectProjectsResponse200ApplicationJSON1,
 		Type: typ,
 	}
 }
@@ -1718,10 +1718,10 @@ func CreateUpdateProjectTargetUpdateProjectProjectsResponse200ApplicationJSON2(u
 
 func (u *UpdateProjectTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfupdateProjectProjectsResponse200ApplicationJSON1 := []UpdateProjectProjectsResponse200ApplicationJSON1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfupdateProjectProjectsResponse200ApplicationJSON1, "", true, true); err == nil {
-		u.ArrayOfupdateProjectProjectsResponse200ApplicationJSON1 = arrayOfupdateProjectProjectsResponse200ApplicationJSON1
-		u.Type = UpdateProjectTargetTypeArrayOfupdateProjectProjectsResponse200ApplicationJSON1
+	arrayOfUpdateProjectProjectsResponse200ApplicationJSON1 := []UpdateProjectProjectsResponse200ApplicationJSON1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfUpdateProjectProjectsResponse200ApplicationJSON1, "", true, true); err == nil {
+		u.ArrayOfUpdateProjectProjectsResponse200ApplicationJSON1 = arrayOfUpdateProjectProjectsResponse200ApplicationJSON1
+		u.Type = UpdateProjectTargetTypeArrayOfUpdateProjectProjectsResponse200ApplicationJSON1
 		return nil
 	}
 
@@ -1736,8 +1736,8 @@ func (u *UpdateProjectTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u UpdateProjectTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfupdateProjectProjectsResponse200ApplicationJSON1 != nil {
-		return utils.MarshalJSON(u.ArrayOfupdateProjectProjectsResponse200ApplicationJSON1, "", true)
+	if u.ArrayOfUpdateProjectProjectsResponse200ApplicationJSON1 != nil {
+		return utils.MarshalJSON(u.ArrayOfUpdateProjectProjectsResponse200ApplicationJSON1, "", true)
 	}
 
 	if u.UpdateProjectProjectsResponse200ApplicationJSON2 != nil {

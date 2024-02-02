@@ -244,12 +244,12 @@ type CreateProjectEnvRequestBodyType string
 
 const (
 	CreateProjectEnvRequestBodyTypeCreateProjectEnv1        CreateProjectEnvRequestBodyType = "createProjectEnv_1"
-	CreateProjectEnvRequestBodyTypeArrayOfcreateProjectEnv2 CreateProjectEnvRequestBodyType = "arrayOfcreateProjectEnv_2"
+	CreateProjectEnvRequestBodyTypeArrayOfCreateProjectEnv2 CreateProjectEnvRequestBodyType = "array_Of_createProjectEnv_2"
 )
 
 type CreateProjectEnvRequestBody struct {
 	CreateProjectEnv1        *CreateProjectEnv1
-	ArrayOfcreateProjectEnv2 []CreateProjectEnv2
+	ArrayOfCreateProjectEnv2 []CreateProjectEnv2
 
 	Type CreateProjectEnvRequestBodyType
 }
@@ -263,11 +263,11 @@ func CreateCreateProjectEnvRequestBodyCreateProjectEnv1(createProjectEnv1 Create
 	}
 }
 
-func CreateCreateProjectEnvRequestBodyArrayOfcreateProjectEnv2(arrayOfcreateProjectEnv2 []CreateProjectEnv2) CreateProjectEnvRequestBody {
-	typ := CreateProjectEnvRequestBodyTypeArrayOfcreateProjectEnv2
+func CreateCreateProjectEnvRequestBodyArrayOfCreateProjectEnv2(arrayOfCreateProjectEnv2 []CreateProjectEnv2) CreateProjectEnvRequestBody {
+	typ := CreateProjectEnvRequestBodyTypeArrayOfCreateProjectEnv2
 
 	return CreateProjectEnvRequestBody{
-		ArrayOfcreateProjectEnv2: arrayOfcreateProjectEnv2,
+		ArrayOfCreateProjectEnv2: arrayOfCreateProjectEnv2,
 		Type:                     typ,
 	}
 }
@@ -281,10 +281,10 @@ func (u *CreateProjectEnvRequestBody) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	arrayOfcreateProjectEnv2 := []CreateProjectEnv2{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnv2, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnv2 = arrayOfcreateProjectEnv2
-		u.Type = CreateProjectEnvRequestBodyTypeArrayOfcreateProjectEnv2
+	arrayOfCreateProjectEnv2 := []CreateProjectEnv2{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectEnv2, "", true, true); err == nil {
+		u.ArrayOfCreateProjectEnv2 = arrayOfCreateProjectEnv2
+		u.Type = CreateProjectEnvRequestBodyTypeArrayOfCreateProjectEnv2
 		return nil
 	}
 
@@ -296,8 +296,8 @@ func (u CreateProjectEnvRequestBody) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CreateProjectEnv1, "", true)
 	}
 
-	if u.ArrayOfcreateProjectEnv2 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnv2, "", true)
+	if u.ArrayOfCreateProjectEnv2 != nil {
+		return utils.MarshalJSON(u.ArrayOfCreateProjectEnv2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -1203,22 +1203,22 @@ func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1) Unmars
 type CreateProjectEnvProjectsResponse201TargetType string
 
 const (
-	CreateProjectEnvProjectsResponse201TargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 CreateProjectEnvProjectsResponse201TargetType = "arrayOfcreateProjectEnv_projects_response_201_ApplicationJSON_responseBody_1"
+	CreateProjectEnvProjectsResponse201TargetTypeArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 CreateProjectEnvProjectsResponse201TargetType = "array_Of_createProjectEnv_projects_response_201_ApplicationJSON_responseBody_1"
 	CreateProjectEnvProjectsResponse201TargetTypeCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2        CreateProjectEnvProjectsResponse201TargetType = "createProjectEnv_projects_response_201_ApplicationJSON_responseBody_2"
 )
 
 type CreateProjectEnvProjectsResponse201Target struct {
-	ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
+	ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
 	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2        *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2
 
 	Type CreateProjectEnvProjectsResponse201TargetType
 }
 
-func CreateCreateProjectEnvProjectsResponse201TargetArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1(arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1) CreateProjectEnvProjectsResponse201Target {
-	typ := CreateProjectEnvProjectsResponse201TargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
+func CreateCreateProjectEnvProjectsResponse201TargetArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1(arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1) CreateProjectEnvProjectsResponse201Target {
+	typ := CreateProjectEnvProjectsResponse201TargetTypeArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
 
 	return CreateProjectEnvProjectsResponse201Target{
-		ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1: arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1,
+		ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1: arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1,
 		Type: typ,
 	}
 }
@@ -1234,10 +1234,10 @@ func CreateCreateProjectEnvProjectsResponse201TargetCreateProjectEnvProjectsResp
 
 func (u *CreateProjectEnvProjectsResponse201Target) UnmarshalJSON(data []byte) error {
 
-	arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 := []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 = arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
-		u.Type = CreateProjectEnvProjectsResponse201TargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
+	arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 := []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1, "", true, true); err == nil {
+		u.ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 = arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
+		u.Type = CreateProjectEnvProjectsResponse201TargetTypeArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1
 		return nil
 	}
 
@@ -1252,8 +1252,8 @@ func (u *CreateProjectEnvProjectsResponse201Target) UnmarshalJSON(data []byte) e
 }
 
 func (u CreateProjectEnvProjectsResponse201Target) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1, "", true)
+	if u.ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1 != nil {
+		return utils.MarshalJSON(u.ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBody1, "", true)
 	}
 
 	if u.CreateProjectEnvProjectsResponse201ApplicationJSONResponseBody2 != nil {
@@ -2293,22 +2293,22 @@ func (e *CreateProjectEnvProjectsResponse2011) UnmarshalJSON(data []byte) error 
 type CreateProjectEnvProjectsResponseTargetType string
 
 const (
-	CreateProjectEnvProjectsResponseTargetTypeArrayOfcreateProjectEnvProjectsResponse2011 CreateProjectEnvProjectsResponseTargetType = "arrayOfcreateProjectEnv_projects_response_201_1"
+	CreateProjectEnvProjectsResponseTargetTypeArrayOfCreateProjectEnvProjectsResponse2011 CreateProjectEnvProjectsResponseTargetType = "array_Of_createProjectEnv_projects_response_201_1"
 	CreateProjectEnvProjectsResponseTargetTypeCreateProjectEnvProjectsResponse2012        CreateProjectEnvProjectsResponseTargetType = "createProjectEnv_projects_response_201_2"
 )
 
 type CreateProjectEnvProjectsResponseTarget struct {
-	ArrayOfcreateProjectEnvProjectsResponse2011 []CreateProjectEnvProjectsResponse2011
+	ArrayOfCreateProjectEnvProjectsResponse2011 []CreateProjectEnvProjectsResponse2011
 	CreateProjectEnvProjectsResponse2012        *CreateProjectEnvProjectsResponse2012
 
 	Type CreateProjectEnvProjectsResponseTargetType
 }
 
-func CreateCreateProjectEnvProjectsResponseTargetArrayOfcreateProjectEnvProjectsResponse2011(arrayOfcreateProjectEnvProjectsResponse2011 []CreateProjectEnvProjectsResponse2011) CreateProjectEnvProjectsResponseTarget {
-	typ := CreateProjectEnvProjectsResponseTargetTypeArrayOfcreateProjectEnvProjectsResponse2011
+func CreateCreateProjectEnvProjectsResponseTargetArrayOfCreateProjectEnvProjectsResponse2011(arrayOfCreateProjectEnvProjectsResponse2011 []CreateProjectEnvProjectsResponse2011) CreateProjectEnvProjectsResponseTarget {
+	typ := CreateProjectEnvProjectsResponseTargetTypeArrayOfCreateProjectEnvProjectsResponse2011
 
 	return CreateProjectEnvProjectsResponseTarget{
-		ArrayOfcreateProjectEnvProjectsResponse2011: arrayOfcreateProjectEnvProjectsResponse2011,
+		ArrayOfCreateProjectEnvProjectsResponse2011: arrayOfCreateProjectEnvProjectsResponse2011,
 		Type: typ,
 	}
 }
@@ -2324,10 +2324,10 @@ func CreateCreateProjectEnvProjectsResponseTargetCreateProjectEnvProjectsRespons
 
 func (u *CreateProjectEnvProjectsResponseTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfcreateProjectEnvProjectsResponse2011 := []CreateProjectEnvProjectsResponse2011{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvProjectsResponse2011, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnvProjectsResponse2011 = arrayOfcreateProjectEnvProjectsResponse2011
-		u.Type = CreateProjectEnvProjectsResponseTargetTypeArrayOfcreateProjectEnvProjectsResponse2011
+	arrayOfCreateProjectEnvProjectsResponse2011 := []CreateProjectEnvProjectsResponse2011{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectEnvProjectsResponse2011, "", true, true); err == nil {
+		u.ArrayOfCreateProjectEnvProjectsResponse2011 = arrayOfCreateProjectEnvProjectsResponse2011
+		u.Type = CreateProjectEnvProjectsResponseTargetTypeArrayOfCreateProjectEnvProjectsResponse2011
 		return nil
 	}
 
@@ -2342,8 +2342,8 @@ func (u *CreateProjectEnvProjectsResponseTarget) UnmarshalJSON(data []byte) erro
 }
 
 func (u CreateProjectEnvProjectsResponseTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfcreateProjectEnvProjectsResponse2011 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvProjectsResponse2011, "", true)
+	if u.ArrayOfCreateProjectEnvProjectsResponse2011 != nil {
+		return utils.MarshalJSON(u.ArrayOfCreateProjectEnvProjectsResponse2011, "", true)
 	}
 
 	if u.CreateProjectEnvProjectsResponse2012 != nil {
@@ -2525,12 +2525,12 @@ type CreatedType string
 
 const (
 	CreatedTypeCreateProjectEnvProjects1        CreatedType = "createProjectEnv_projects_1"
-	CreatedTypeArrayOfcreateProjectEnvProjects2 CreatedType = "arrayOfcreateProjectEnv_projects_2"
+	CreatedTypeArrayOfCreateProjectEnvProjects2 CreatedType = "array_Of_createProjectEnv_projects_2"
 )
 
 type Created struct {
 	CreateProjectEnvProjects1        *CreateProjectEnvProjects1
-	ArrayOfcreateProjectEnvProjects2 []CreateProjectEnvProjects2
+	ArrayOfCreateProjectEnvProjects2 []CreateProjectEnvProjects2
 
 	Type CreatedType
 }
@@ -2544,11 +2544,11 @@ func CreateCreatedCreateProjectEnvProjects1(createProjectEnvProjects1 CreateProj
 	}
 }
 
-func CreateCreatedArrayOfcreateProjectEnvProjects2(arrayOfcreateProjectEnvProjects2 []CreateProjectEnvProjects2) Created {
-	typ := CreatedTypeArrayOfcreateProjectEnvProjects2
+func CreateCreatedArrayOfCreateProjectEnvProjects2(arrayOfCreateProjectEnvProjects2 []CreateProjectEnvProjects2) Created {
+	typ := CreatedTypeArrayOfCreateProjectEnvProjects2
 
 	return Created{
-		ArrayOfcreateProjectEnvProjects2: arrayOfcreateProjectEnvProjects2,
+		ArrayOfCreateProjectEnvProjects2: arrayOfCreateProjectEnvProjects2,
 		Type:                             typ,
 	}
 }
@@ -2562,10 +2562,10 @@ func (u *Created) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	arrayOfcreateProjectEnvProjects2 := []CreateProjectEnvProjects2{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvProjects2, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnvProjects2 = arrayOfcreateProjectEnvProjects2
-		u.Type = CreatedTypeArrayOfcreateProjectEnvProjects2
+	arrayOfCreateProjectEnvProjects2 := []CreateProjectEnvProjects2{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectEnvProjects2, "", true, true); err == nil {
+		u.ArrayOfCreateProjectEnvProjects2 = arrayOfCreateProjectEnvProjects2
+		u.Type = CreatedTypeArrayOfCreateProjectEnvProjects2
 		return nil
 	}
 
@@ -2577,8 +2577,8 @@ func (u Created) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CreateProjectEnvProjects1, "", true)
 	}
 
-	if u.ArrayOfcreateProjectEnvProjects2 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvProjects2, "", true)
+	if u.ArrayOfCreateProjectEnvProjects2 != nil {
+		return utils.MarshalJSON(u.ArrayOfCreateProjectEnvProjects2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -2647,22 +2647,22 @@ func (e *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1) 
 type CreateProjectEnvProjectsResponse201ApplicationJSONTargetType string
 
 const (
-	CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 CreateProjectEnvProjectsResponse201ApplicationJSONTargetType = "arrayOfcreateProjectEnv_projects_response_201_ApplicationJSON_responseBody_failed_1"
+	CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 CreateProjectEnvProjectsResponse201ApplicationJSONTargetType = "array_Of_createProjectEnv_projects_response_201_ApplicationJSON_responseBody_failed_1"
 	CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2        CreateProjectEnvProjectsResponse201ApplicationJSONTargetType = "createProjectEnv_projects_response_201_ApplicationJSON_responseBody_failed_2"
 )
 
 type CreateProjectEnvProjectsResponse201ApplicationJSONTarget struct {
-	ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
+	ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
 	CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2        *CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2
 
 	Type CreateProjectEnvProjectsResponse201ApplicationJSONTargetType
 }
 
-func CreateCreateProjectEnvProjectsResponse201ApplicationJSONTargetArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1(arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1) CreateProjectEnvProjectsResponse201ApplicationJSONTarget {
-	typ := CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
+func CreateCreateProjectEnvProjectsResponse201ApplicationJSONTargetArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1(arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1) CreateProjectEnvProjectsResponse201ApplicationJSONTarget {
+	typ := CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
 
 	return CreateProjectEnvProjectsResponse201ApplicationJSONTarget{
-		ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1: arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1,
+		ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1: arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1,
 		Type: typ,
 	}
 }
@@ -2678,10 +2678,10 @@ func CreateCreateProjectEnvProjectsResponse201ApplicationJSONTargetCreateProject
 
 func (u *CreateProjectEnvProjectsResponse201ApplicationJSONTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 := []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 = arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
-		u.Type = CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
+	arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 := []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1, "", true, true); err == nil {
+		u.ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 = arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
+		u.Type = CreateProjectEnvProjectsResponse201ApplicationJSONTargetTypeArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1
 		return nil
 	}
 
@@ -2696,8 +2696,8 @@ func (u *CreateProjectEnvProjectsResponse201ApplicationJSONTarget) UnmarshalJSON
 }
 
 func (u CreateProjectEnvProjectsResponse201ApplicationJSONTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1, "", true)
+	if u.ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1 != nil {
+		return utils.MarshalJSON(u.ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed1, "", true)
 	}
 
 	if u.CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailed2 != nil {
@@ -2741,12 +2741,12 @@ type ValueType string
 
 const (
 	ValueTypeStr                                                                               ValueType = "str"
-	ValueTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 ValueType = "arrayOfcreateProjectEnv_projects_response_201_ApplicationJSON_responseBody_failed_error_2"
+	ValueTypeArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 ValueType = "array_Of_createProjectEnv_projects_response_201_ApplicationJSON_responseBody_failed_error_2"
 )
 
 type Value struct {
 	Str                                                                               *string
-	ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
+	ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
 
 	Type ValueType
 }
@@ -2760,11 +2760,11 @@ func CreateValueStr(str string) Value {
 	}
 }
 
-func CreateValueArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2(arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2) Value {
-	typ := ValueTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
+func CreateValueArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2(arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2) Value {
+	typ := ValueTypeArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
 
 	return Value{
-		ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2: arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2,
+		ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2: arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2,
 		Type: typ,
 	}
 }
@@ -2778,10 +2778,10 @@ func (u *Value) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 := []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2{}
-	if err := utils.UnmarshalJSON(data, &arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2, "", true, true); err == nil {
-		u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 = arrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
-		u.Type = ValueTypeArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
+	arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 := []CreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2, "", true, true); err == nil {
+		u.ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 = arrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
+		u.Type = ValueTypeArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2
 		return nil
 	}
 
@@ -2793,8 +2793,8 @@ func (u Value) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 != nil {
-		return utils.MarshalJSON(u.ArrayOfcreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2, "", true)
+	if u.ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2 != nil {
+		return utils.MarshalJSON(u.ArrayOfCreateProjectEnvProjectsResponse201ApplicationJSONResponseBodyFailedError2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

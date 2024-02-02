@@ -1165,22 +1165,22 @@ func (e *GetProjectsProjectsResponse200ApplicationJSON1) UnmarshalJSON(data []by
 type GetProjectsTargetType string
 
 const (
-	GetProjectsTargetTypeArrayOfgetProjectsProjectsResponse200ApplicationJSON1 GetProjectsTargetType = "arrayOfgetProjects_projects_response_200_ApplicationJSON_1"
+	GetProjectsTargetTypeArrayOfGetProjectsProjectsResponse200ApplicationJSON1 GetProjectsTargetType = "array_Of_getProjects_projects_response_200_ApplicationJSON_1"
 	GetProjectsTargetTypeGetProjectsProjectsResponse200ApplicationJSON2        GetProjectsTargetType = "getProjects_projects_response_200_ApplicationJSON_2"
 )
 
 type GetProjectsTarget struct {
-	ArrayOfgetProjectsProjectsResponse200ApplicationJSON1 []GetProjectsProjectsResponse200ApplicationJSON1
+	ArrayOfGetProjectsProjectsResponse200ApplicationJSON1 []GetProjectsProjectsResponse200ApplicationJSON1
 	GetProjectsProjectsResponse200ApplicationJSON2        *GetProjectsProjectsResponse200ApplicationJSON2
 
 	Type GetProjectsTargetType
 }
 
-func CreateGetProjectsTargetArrayOfgetProjectsProjectsResponse200ApplicationJSON1(arrayOfgetProjectsProjectsResponse200ApplicationJSON1 []GetProjectsProjectsResponse200ApplicationJSON1) GetProjectsTarget {
-	typ := GetProjectsTargetTypeArrayOfgetProjectsProjectsResponse200ApplicationJSON1
+func CreateGetProjectsTargetArrayOfGetProjectsProjectsResponse200ApplicationJSON1(arrayOfGetProjectsProjectsResponse200ApplicationJSON1 []GetProjectsProjectsResponse200ApplicationJSON1) GetProjectsTarget {
+	typ := GetProjectsTargetTypeArrayOfGetProjectsProjectsResponse200ApplicationJSON1
 
 	return GetProjectsTarget{
-		ArrayOfgetProjectsProjectsResponse200ApplicationJSON1: arrayOfgetProjectsProjectsResponse200ApplicationJSON1,
+		ArrayOfGetProjectsProjectsResponse200ApplicationJSON1: arrayOfGetProjectsProjectsResponse200ApplicationJSON1,
 		Type: typ,
 	}
 }
@@ -1196,10 +1196,10 @@ func CreateGetProjectsTargetGetProjectsProjectsResponse200ApplicationJSON2(getPr
 
 func (u *GetProjectsTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfgetProjectsProjectsResponse200ApplicationJSON1 := []GetProjectsProjectsResponse200ApplicationJSON1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfgetProjectsProjectsResponse200ApplicationJSON1, "", true, true); err == nil {
-		u.ArrayOfgetProjectsProjectsResponse200ApplicationJSON1 = arrayOfgetProjectsProjectsResponse200ApplicationJSON1
-		u.Type = GetProjectsTargetTypeArrayOfgetProjectsProjectsResponse200ApplicationJSON1
+	arrayOfGetProjectsProjectsResponse200ApplicationJSON1 := []GetProjectsProjectsResponse200ApplicationJSON1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfGetProjectsProjectsResponse200ApplicationJSON1, "", true, true); err == nil {
+		u.ArrayOfGetProjectsProjectsResponse200ApplicationJSON1 = arrayOfGetProjectsProjectsResponse200ApplicationJSON1
+		u.Type = GetProjectsTargetTypeArrayOfGetProjectsProjectsResponse200ApplicationJSON1
 		return nil
 	}
 
@@ -1214,8 +1214,8 @@ func (u *GetProjectsTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u GetProjectsTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfgetProjectsProjectsResponse200ApplicationJSON1 != nil {
-		return utils.MarshalJSON(u.ArrayOfgetProjectsProjectsResponse200ApplicationJSON1, "", true)
+	if u.ArrayOfGetProjectsProjectsResponse200ApplicationJSON1 != nil {
+		return utils.MarshalJSON(u.ArrayOfGetProjectsProjectsResponse200ApplicationJSON1, "", true)
 	}
 
 	if u.GetProjectsProjectsResponse200ApplicationJSON2 != nil {

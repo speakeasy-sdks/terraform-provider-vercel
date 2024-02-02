@@ -1076,22 +1076,22 @@ func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSON1) UnmarshalJSO
 type UpdateProjectDataCacheTargetType string
 
 const (
-	UpdateProjectDataCacheTargetTypeArrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1 UpdateProjectDataCacheTargetType = "arrayOfupdateProjectDataCache_projects_response_200_ApplicationJSON_1"
+	UpdateProjectDataCacheTargetTypeArrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1 UpdateProjectDataCacheTargetType = "array_Of_updateProjectDataCache_projects_response_200_ApplicationJSON_1"
 	UpdateProjectDataCacheTargetTypeUpdateProjectDataCacheProjectsResponse200ApplicationJSON2        UpdateProjectDataCacheTargetType = "updateProjectDataCache_projects_response_200_ApplicationJSON_2"
 )
 
 type UpdateProjectDataCacheTarget struct {
-	ArrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1 []UpdateProjectDataCacheProjectsResponse200ApplicationJSON1
+	ArrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1 []UpdateProjectDataCacheProjectsResponse200ApplicationJSON1
 	UpdateProjectDataCacheProjectsResponse200ApplicationJSON2        *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2
 
 	Type UpdateProjectDataCacheTargetType
 }
 
-func CreateUpdateProjectDataCacheTargetArrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1(arrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1 []UpdateProjectDataCacheProjectsResponse200ApplicationJSON1) UpdateProjectDataCacheTarget {
-	typ := UpdateProjectDataCacheTargetTypeArrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1
+func CreateUpdateProjectDataCacheTargetArrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1(arrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1 []UpdateProjectDataCacheProjectsResponse200ApplicationJSON1) UpdateProjectDataCacheTarget {
+	typ := UpdateProjectDataCacheTargetTypeArrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1
 
 	return UpdateProjectDataCacheTarget{
-		ArrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1: arrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1,
+		ArrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1: arrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1,
 		Type: typ,
 	}
 }
@@ -1107,10 +1107,10 @@ func CreateUpdateProjectDataCacheTargetUpdateProjectDataCacheProjectsResponse200
 
 func (u *UpdateProjectDataCacheTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1 := []UpdateProjectDataCacheProjectsResponse200ApplicationJSON1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1, "", true, true); err == nil {
-		u.ArrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1 = arrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1
-		u.Type = UpdateProjectDataCacheTargetTypeArrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1
+	arrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1 := []UpdateProjectDataCacheProjectsResponse200ApplicationJSON1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1, "", true, true); err == nil {
+		u.ArrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1 = arrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1
+		u.Type = UpdateProjectDataCacheTargetTypeArrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1
 		return nil
 	}
 
@@ -1125,8 +1125,8 @@ func (u *UpdateProjectDataCacheTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u UpdateProjectDataCacheTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1 != nil {
-		return utils.MarshalJSON(u.ArrayOfupdateProjectDataCacheProjectsResponse200ApplicationJSON1, "", true)
+	if u.ArrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1 != nil {
+		return utils.MarshalJSON(u.ArrayOfUpdateProjectDataCacheProjectsResponse200ApplicationJSON1, "", true)
 	}
 
 	if u.UpdateProjectDataCacheProjectsResponse200ApplicationJSON2 != nil {

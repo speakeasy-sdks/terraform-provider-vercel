@@ -1025,22 +1025,22 @@ func (e *EditProjectEnvProjects1) UnmarshalJSON(data []byte) error {
 type EditProjectEnvProjectsTargetType string
 
 const (
-	EditProjectEnvProjectsTargetTypeArrayOfeditProjectEnvProjects1 EditProjectEnvProjectsTargetType = "arrayOfeditProjectEnv_projects_1"
+	EditProjectEnvProjectsTargetTypeArrayOfEditProjectEnvProjects1 EditProjectEnvProjectsTargetType = "array_Of_editProjectEnv_projects_1"
 	EditProjectEnvProjectsTargetTypeEditProjectEnvProjects2        EditProjectEnvProjectsTargetType = "editProjectEnv_projects_2"
 )
 
 type EditProjectEnvProjectsTarget struct {
-	ArrayOfeditProjectEnvProjects1 []EditProjectEnvProjects1
+	ArrayOfEditProjectEnvProjects1 []EditProjectEnvProjects1
 	EditProjectEnvProjects2        *EditProjectEnvProjects2
 
 	Type EditProjectEnvProjectsTargetType
 }
 
-func CreateEditProjectEnvProjectsTargetArrayOfeditProjectEnvProjects1(arrayOfeditProjectEnvProjects1 []EditProjectEnvProjects1) EditProjectEnvProjectsTarget {
-	typ := EditProjectEnvProjectsTargetTypeArrayOfeditProjectEnvProjects1
+func CreateEditProjectEnvProjectsTargetArrayOfEditProjectEnvProjects1(arrayOfEditProjectEnvProjects1 []EditProjectEnvProjects1) EditProjectEnvProjectsTarget {
+	typ := EditProjectEnvProjectsTargetTypeArrayOfEditProjectEnvProjects1
 
 	return EditProjectEnvProjectsTarget{
-		ArrayOfeditProjectEnvProjects1: arrayOfeditProjectEnvProjects1,
+		ArrayOfEditProjectEnvProjects1: arrayOfEditProjectEnvProjects1,
 		Type:                           typ,
 	}
 }
@@ -1056,10 +1056,10 @@ func CreateEditProjectEnvProjectsTargetEditProjectEnvProjects2(editProjectEnvPro
 
 func (u *EditProjectEnvProjectsTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfeditProjectEnvProjects1 := []EditProjectEnvProjects1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfeditProjectEnvProjects1, "", true, true); err == nil {
-		u.ArrayOfeditProjectEnvProjects1 = arrayOfeditProjectEnvProjects1
-		u.Type = EditProjectEnvProjectsTargetTypeArrayOfeditProjectEnvProjects1
+	arrayOfEditProjectEnvProjects1 := []EditProjectEnvProjects1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfEditProjectEnvProjects1, "", true, true); err == nil {
+		u.ArrayOfEditProjectEnvProjects1 = arrayOfEditProjectEnvProjects1
+		u.Type = EditProjectEnvProjectsTargetTypeArrayOfEditProjectEnvProjects1
 		return nil
 	}
 
@@ -1074,8 +1074,8 @@ func (u *EditProjectEnvProjectsTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u EditProjectEnvProjectsTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfeditProjectEnvProjects1 != nil {
-		return utils.MarshalJSON(u.ArrayOfeditProjectEnvProjects1, "", true)
+	if u.ArrayOfEditProjectEnvProjects1 != nil {
+		return utils.MarshalJSON(u.ArrayOfEditProjectEnvProjects1, "", true)
 	}
 
 	if u.EditProjectEnvProjects2 != nil {

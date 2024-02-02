@@ -902,22 +902,22 @@ func (e *GetProjectEnvProjects1) UnmarshalJSON(data []byte) error {
 type GetProjectEnvTargetType string
 
 const (
-	GetProjectEnvTargetTypeArrayOfgetProjectEnvProjects1 GetProjectEnvTargetType = "arrayOfgetProjectEnv_projects_1"
+	GetProjectEnvTargetTypeArrayOfGetProjectEnvProjects1 GetProjectEnvTargetType = "array_Of_getProjectEnv_projects_1"
 	GetProjectEnvTargetTypeGetProjectEnvProjects2        GetProjectEnvTargetType = "getProjectEnv_projects_2"
 )
 
 type GetProjectEnvTarget struct {
-	ArrayOfgetProjectEnvProjects1 []GetProjectEnvProjects1
+	ArrayOfGetProjectEnvProjects1 []GetProjectEnvProjects1
 	GetProjectEnvProjects2        *GetProjectEnvProjects2
 
 	Type GetProjectEnvTargetType
 }
 
-func CreateGetProjectEnvTargetArrayOfgetProjectEnvProjects1(arrayOfgetProjectEnvProjects1 []GetProjectEnvProjects1) GetProjectEnvTarget {
-	typ := GetProjectEnvTargetTypeArrayOfgetProjectEnvProjects1
+func CreateGetProjectEnvTargetArrayOfGetProjectEnvProjects1(arrayOfGetProjectEnvProjects1 []GetProjectEnvProjects1) GetProjectEnvTarget {
+	typ := GetProjectEnvTargetTypeArrayOfGetProjectEnvProjects1
 
 	return GetProjectEnvTarget{
-		ArrayOfgetProjectEnvProjects1: arrayOfgetProjectEnvProjects1,
+		ArrayOfGetProjectEnvProjects1: arrayOfGetProjectEnvProjects1,
 		Type:                          typ,
 	}
 }
@@ -933,10 +933,10 @@ func CreateGetProjectEnvTargetGetProjectEnvProjects2(getProjectEnvProjects2 GetP
 
 func (u *GetProjectEnvTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfgetProjectEnvProjects1 := []GetProjectEnvProjects1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfgetProjectEnvProjects1, "", true, true); err == nil {
-		u.ArrayOfgetProjectEnvProjects1 = arrayOfgetProjectEnvProjects1
-		u.Type = GetProjectEnvTargetTypeArrayOfgetProjectEnvProjects1
+	arrayOfGetProjectEnvProjects1 := []GetProjectEnvProjects1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfGetProjectEnvProjects1, "", true, true); err == nil {
+		u.ArrayOfGetProjectEnvProjects1 = arrayOfGetProjectEnvProjects1
+		u.Type = GetProjectEnvTargetTypeArrayOfGetProjectEnvProjects1
 		return nil
 	}
 
@@ -951,8 +951,8 @@ func (u *GetProjectEnvTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u GetProjectEnvTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfgetProjectEnvProjects1 != nil {
-		return utils.MarshalJSON(u.ArrayOfgetProjectEnvProjects1, "", true)
+	if u.ArrayOfGetProjectEnvProjects1 != nil {
+		return utils.MarshalJSON(u.ArrayOfGetProjectEnvProjects1, "", true)
 	}
 
 	if u.GetProjectEnvProjects2 != nil {

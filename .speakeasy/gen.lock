@@ -4,16 +4,16 @@ management:
   docChecksum: 8ecc10127cd4d51cceddbc01756b40f4
   docVersion: 0.0.1
   speakeasyVersion: internal
-  generationVersion: 2.237.2
-  releaseVersion: 0.10.4
-  configChecksum: 9c4513058b263c08540bbb8d65d0644d
+  generationVersion: 2.248.1
+  releaseVersion: 0.11.0
+  configChecksum: c149337736fd3df19ddaf8c925f62126
   repoURL: https://github.com/speakeasy-sdks/terraform-provider-vercel.git
   repoSubDirectory: .
   published: true
 features:
   terraform:
     constsAndDefaults: 0.1.2
-    core: 3.8.4
+    core: 3.9.3
     deprecations: 2.81.1
     globalSecurity: 2.81.3
     globalServerURLs: 2.82.1

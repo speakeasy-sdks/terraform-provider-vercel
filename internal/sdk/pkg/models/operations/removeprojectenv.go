@@ -902,22 +902,22 @@ func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31) Unmar
 type RemoveProjectEnvProjectsResponseTargetType string
 
 const (
-	RemoveProjectEnvProjectsResponseTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 RemoveProjectEnvProjectsResponseTargetType = "arrayOfremoveProjectEnv_projects_response_200_ApplicationJSON_responseBody_3_1"
+	RemoveProjectEnvProjectsResponseTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 RemoveProjectEnvProjectsResponseTargetType = "array_Of_removeProjectEnv_projects_response_200_ApplicationJSON_responseBody_3_1"
 	RemoveProjectEnvProjectsResponseTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32        RemoveProjectEnvProjectsResponseTargetType = "removeProjectEnv_projects_response_200_ApplicationJSON_responseBody_3_2"
 )
 
 type RemoveProjectEnvProjectsResponseTarget struct {
-	ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
+	ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
 	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32        *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32
 
 	Type RemoveProjectEnvProjectsResponseTargetType
 }
 
-func CreateRemoveProjectEnvProjectsResponseTargetArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31(arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31) RemoveProjectEnvProjectsResponseTarget {
-	typ := RemoveProjectEnvProjectsResponseTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
+func CreateRemoveProjectEnvProjectsResponseTargetArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31(arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31) RemoveProjectEnvProjectsResponseTarget {
+	typ := RemoveProjectEnvProjectsResponseTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
 
 	return RemoveProjectEnvProjectsResponseTarget{
-		ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31: arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31,
+		ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31: arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31,
 		Type: typ,
 	}
 }
@@ -933,10 +933,10 @@ func CreateRemoveProjectEnvProjectsResponseTargetRemoveProjectEnvProjectsRespons
 
 func (u *RemoveProjectEnvProjectsResponseTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 := []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 = arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
-		u.Type = RemoveProjectEnvProjectsResponseTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
+	arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 := []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31{}
+	if err := utils.UnmarshalJSON(data, &arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31, "", true, true); err == nil {
+		u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 = arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
+		u.Type = RemoveProjectEnvProjectsResponseTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
 		return nil
 	}
 
@@ -951,8 +951,8 @@ func (u *RemoveProjectEnvProjectsResponseTarget) UnmarshalJSON(data []byte) erro
 }
 
 func (u RemoveProjectEnvProjectsResponseTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31, "", true)
+	if u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 != nil {
+		return utils.MarshalJSON(u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31, "", true)
 	}
 
 	if u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 != nil {
@@ -1984,22 +1984,22 @@ func (e *RemoveProjectEnvProjectsResponse200ApplicationJSON1) UnmarshalJSON(data
 type RemoveProjectEnvProjectsTargetType string
 
 const (
-	RemoveProjectEnvProjectsTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 RemoveProjectEnvProjectsTargetType = "arrayOfremoveProjectEnv_projects_response_200_ApplicationJSON_1"
+	RemoveProjectEnvProjectsTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1 RemoveProjectEnvProjectsTargetType = "array_Of_removeProjectEnv_projects_response_200_ApplicationJSON_1"
 	RemoveProjectEnvProjectsTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSON2        RemoveProjectEnvProjectsTargetType = "removeProjectEnv_projects_response_200_ApplicationJSON_2"
 )
 
 type RemoveProjectEnvProjectsTarget struct {
-	ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 []RemoveProjectEnvProjectsResponse200ApplicationJSON1
+	ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1 []RemoveProjectEnvProjectsResponse200ApplicationJSON1
 	RemoveProjectEnvProjectsResponse200ApplicationJSON2        *RemoveProjectEnvProjectsResponse200ApplicationJSON2
 
 	Type RemoveProjectEnvProjectsTargetType
 }
 
-func CreateRemoveProjectEnvProjectsTargetArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1(arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 []RemoveProjectEnvProjectsResponse200ApplicationJSON1) RemoveProjectEnvProjectsTarget {
-	typ := RemoveProjectEnvProjectsTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1
+func CreateRemoveProjectEnvProjectsTargetArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1(arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1 []RemoveProjectEnvProjectsResponse200ApplicationJSON1) RemoveProjectEnvProjectsTarget {
+	typ := RemoveProjectEnvProjectsTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1
 
 	return RemoveProjectEnvProjectsTarget{
-		ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1: arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1,
+		ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1: arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1,
 		Type: typ,
 	}
 }
@@ -2015,10 +2015,10 @@ func CreateRemoveProjectEnvProjectsTargetRemoveProjectEnvProjectsResponse200Appl
 
 func (u *RemoveProjectEnvProjectsTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 := []RemoveProjectEnvProjectsResponse200ApplicationJSON1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 = arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1
-		u.Type = RemoveProjectEnvProjectsTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1
+	arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1 := []RemoveProjectEnvProjectsResponse200ApplicationJSON1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1, "", true, true); err == nil {
+		u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1 = arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1
+		u.Type = RemoveProjectEnvProjectsTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1
 		return nil
 	}
 
@@ -2033,8 +2033,8 @@ func (u *RemoveProjectEnvProjectsTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u RemoveProjectEnvProjectsTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1, "", true)
+	if u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1 != nil {
+		return utils.MarshalJSON(u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1, "", true)
 	}
 
 	if u.RemoveProjectEnvProjectsResponse200ApplicationJSON2 != nil {
@@ -3074,22 +3074,22 @@ func (e *RemoveProjectEnvProjectsResponse1) UnmarshalJSON(data []byte) error {
 type RemoveProjectEnvTargetType string
 
 const (
-	RemoveProjectEnvTargetTypeArrayOfremoveProjectEnvProjectsResponse1 RemoveProjectEnvTargetType = "arrayOfremoveProjectEnv_projects_response_1"
+	RemoveProjectEnvTargetTypeArrayOfRemoveProjectEnvProjectsResponse1 RemoveProjectEnvTargetType = "array_Of_removeProjectEnv_projects_response_1"
 	RemoveProjectEnvTargetTypeRemoveProjectEnvProjectsResponse2        RemoveProjectEnvTargetType = "removeProjectEnv_projects_response_2"
 )
 
 type RemoveProjectEnvTarget struct {
-	ArrayOfremoveProjectEnvProjectsResponse1 []RemoveProjectEnvProjectsResponse1
+	ArrayOfRemoveProjectEnvProjectsResponse1 []RemoveProjectEnvProjectsResponse1
 	RemoveProjectEnvProjectsResponse2        *RemoveProjectEnvProjectsResponse2
 
 	Type RemoveProjectEnvTargetType
 }
 
-func CreateRemoveProjectEnvTargetArrayOfremoveProjectEnvProjectsResponse1(arrayOfremoveProjectEnvProjectsResponse1 []RemoveProjectEnvProjectsResponse1) RemoveProjectEnvTarget {
-	typ := RemoveProjectEnvTargetTypeArrayOfremoveProjectEnvProjectsResponse1
+func CreateRemoveProjectEnvTargetArrayOfRemoveProjectEnvProjectsResponse1(arrayOfRemoveProjectEnvProjectsResponse1 []RemoveProjectEnvProjectsResponse1) RemoveProjectEnvTarget {
+	typ := RemoveProjectEnvTargetTypeArrayOfRemoveProjectEnvProjectsResponse1
 
 	return RemoveProjectEnvTarget{
-		ArrayOfremoveProjectEnvProjectsResponse1: arrayOfremoveProjectEnvProjectsResponse1,
+		ArrayOfRemoveProjectEnvProjectsResponse1: arrayOfRemoveProjectEnvProjectsResponse1,
 		Type:                                     typ,
 	}
 }
@@ -3105,10 +3105,10 @@ func CreateRemoveProjectEnvTargetRemoveProjectEnvProjectsResponse2(removeProject
 
 func (u *RemoveProjectEnvTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfremoveProjectEnvProjectsResponse1 := []RemoveProjectEnvProjectsResponse1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnvProjectsResponse1, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnvProjectsResponse1 = arrayOfremoveProjectEnvProjectsResponse1
-		u.Type = RemoveProjectEnvTargetTypeArrayOfremoveProjectEnvProjectsResponse1
+	arrayOfRemoveProjectEnvProjectsResponse1 := []RemoveProjectEnvProjectsResponse1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfRemoveProjectEnvProjectsResponse1, "", true, true); err == nil {
+		u.ArrayOfRemoveProjectEnvProjectsResponse1 = arrayOfRemoveProjectEnvProjectsResponse1
+		u.Type = RemoveProjectEnvTargetTypeArrayOfRemoveProjectEnvProjectsResponse1
 		return nil
 	}
 
@@ -3123,8 +3123,8 @@ func (u *RemoveProjectEnvTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u RemoveProjectEnvTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnvProjectsResponse1 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnvProjectsResponse1, "", true)
+	if u.ArrayOfRemoveProjectEnvProjectsResponse1 != nil {
+		return utils.MarshalJSON(u.ArrayOfRemoveProjectEnvProjectsResponse1, "", true)
 	}
 
 	if u.RemoveProjectEnvProjectsResponse2 != nil {
@@ -3297,25 +3297,25 @@ func (o *RemoveProjectEnv1) GetValue() string {
 type RemoveProjectEnvResponseBodyType string
 
 const (
-	RemoveProjectEnvResponseBodyTypeArrayOfremoveProjectEnv1 RemoveProjectEnvResponseBodyType = "arrayOfremoveProjectEnv_1"
+	RemoveProjectEnvResponseBodyTypeArrayOfRemoveProjectEnv1 RemoveProjectEnvResponseBodyType = "array_Of_removeProjectEnv_1"
 	RemoveProjectEnvResponseBodyTypeRemoveProjectEnv2        RemoveProjectEnvResponseBodyType = "removeProjectEnv_2"
 	RemoveProjectEnvResponseBodyTypeRemoveProjectEnv3        RemoveProjectEnvResponseBodyType = "removeProjectEnv_3"
 )
 
 // RemoveProjectEnvResponseBody - The environment variable was successfully removed
 type RemoveProjectEnvResponseBody struct {
-	ArrayOfremoveProjectEnv1 []RemoveProjectEnv1
+	ArrayOfRemoveProjectEnv1 []RemoveProjectEnv1
 	RemoveProjectEnv2        *RemoveProjectEnv2
 	RemoveProjectEnv3        *RemoveProjectEnv3
 
 	Type RemoveProjectEnvResponseBodyType
 }
 
-func CreateRemoveProjectEnvResponseBodyArrayOfremoveProjectEnv1(arrayOfremoveProjectEnv1 []RemoveProjectEnv1) RemoveProjectEnvResponseBody {
-	typ := RemoveProjectEnvResponseBodyTypeArrayOfremoveProjectEnv1
+func CreateRemoveProjectEnvResponseBodyArrayOfRemoveProjectEnv1(arrayOfRemoveProjectEnv1 []RemoveProjectEnv1) RemoveProjectEnvResponseBody {
+	typ := RemoveProjectEnvResponseBodyTypeArrayOfRemoveProjectEnv1
 
 	return RemoveProjectEnvResponseBody{
-		ArrayOfremoveProjectEnv1: arrayOfremoveProjectEnv1,
+		ArrayOfRemoveProjectEnv1: arrayOfRemoveProjectEnv1,
 		Type:                     typ,
 	}
 }
@@ -3354,10 +3354,10 @@ func (u *RemoveProjectEnvResponseBody) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	arrayOfremoveProjectEnv1 := []RemoveProjectEnv1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnv1, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnv1 = arrayOfremoveProjectEnv1
-		u.Type = RemoveProjectEnvResponseBodyTypeArrayOfremoveProjectEnv1
+	arrayOfRemoveProjectEnv1 := []RemoveProjectEnv1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfRemoveProjectEnv1, "", true, true); err == nil {
+		u.ArrayOfRemoveProjectEnv1 = arrayOfRemoveProjectEnv1
+		u.Type = RemoveProjectEnvResponseBodyTypeArrayOfRemoveProjectEnv1
 		return nil
 	}
 
@@ -3365,8 +3365,8 @@ func (u *RemoveProjectEnvResponseBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u RemoveProjectEnvResponseBody) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnv1 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnv1, "", true)
+	if u.ArrayOfRemoveProjectEnv1 != nil {
+		return utils.MarshalJSON(u.ArrayOfRemoveProjectEnv1, "", true)
 	}
 
 	if u.RemoveProjectEnv2 != nil {
