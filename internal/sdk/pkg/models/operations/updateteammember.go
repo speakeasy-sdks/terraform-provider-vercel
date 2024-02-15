@@ -24,10 +24,9 @@ func (o *UpdateTeamMemberJoinedFrom) GetSsoUserID() *string {
 type UpdateTeamMemberRole string
 
 const (
-	UpdateTeamMemberRoleAdmin                  UpdateTeamMemberRole = "ADMIN"
-	UpdateTeamMemberRoleProjectViewer          UpdateTeamMemberRole = "PROJECT_VIEWER"
-	UpdateTeamMemberRoleProjectDeveloper       UpdateTeamMemberRole = "PROJECT_DEVELOPER"
-	UpdateTeamMemberRoleLessThanNilGreaterThan UpdateTeamMemberRole = "<nil>"
+	UpdateTeamMemberRoleAdmin            UpdateTeamMemberRole = "ADMIN"
+	UpdateTeamMemberRoleProjectViewer    UpdateTeamMemberRole = "PROJECT_VIEWER"
+	UpdateTeamMemberRoleProjectDeveloper UpdateTeamMemberRole = "PROJECT_DEVELOPER"
 )
 
 func (e UpdateTeamMemberRole) ToPointer() *UpdateTeamMemberRole {
@@ -45,8 +44,6 @@ func (e *UpdateTeamMemberRole) UnmarshalJSON(data []byte) error {
 	case "PROJECT_VIEWER":
 		fallthrough
 	case "PROJECT_DEVELOPER":
-		fallthrough
-	case "<nil>":
 		*e = UpdateTeamMemberRole(v)
 		return nil
 	default:
