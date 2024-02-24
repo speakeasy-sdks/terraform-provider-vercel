@@ -187,7 +187,7 @@ func (s *Authentication) EmailLogin(ctx context.Context, request *operations.Ema
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.SecurityClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -371,7 +371,7 @@ func (s *Authentication) VerifyToken(ctx context.Context, request operations.Ver
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.SecurityClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

@@ -161,9 +161,9 @@ func New(opts ...SDKOption) *Vercel {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.0.1",
-			SDKVersion:        "0.11.2",
-			GenVersion:        "2.258.2",
-			UserAgent:         "speakeasy-sdk/go 0.11.2 2.258.2 0.0.1 vercel",
+			SDKVersion:        "0.12.0",
+			GenVersion:        "2.272.4",
+			UserAgent:         "speakeasy-sdk/go 0.12.0 2.272.4 0.0.1 vercel",
 		},
 	}
 	for _, opt := range opts {
@@ -232,7 +232,7 @@ func (s *Vercel) DeleteDataCachePurgeAll(ctx context.Context, request operations
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.SecurityClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -286,7 +286,7 @@ func (s *Vercel) GetDeploymentsDeploymentIDBuilds(ctx context.Context, request o
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
-	client := s.sdkConfiguration.SecurityClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -355,7 +355,7 @@ func (s *Vercel) PatchDataCacheBillingSettings(ctx context.Context, request *ope
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.SecurityClient
+	client := s.sdkConfiguration.DefaultClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
