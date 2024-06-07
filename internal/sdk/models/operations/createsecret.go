@@ -5,29 +5,22 @@ package operations
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 	"time"
 )
 
 type CreateSecretRequestBody struct {
-	// Whether the secret value can be decrypted after it has been created.
-	Decryptable *bool `json:"decryptable,omitempty"`
 	// The name of the secret (max 100 characters).
 	Name string `json:"name"`
+	// The value of the new secret.
+	Value string `json:"value"`
+	// Whether the secret value can be decrypted after it has been created.
+	Decryptable *bool `json:"decryptable,omitempty"`
 	// Associate a secret to a project.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	ProjectID *string `json:"projectId,omitempty"`
-	// The value of the new secret.
-	Value string `json:"value"`
-}
-
-func (o *CreateSecretRequestBody) GetDecryptable() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Decryptable
 }
 
 func (o *CreateSecretRequestBody) GetName() string {
@@ -37,13 +30,6 @@ func (o *CreateSecretRequestBody) GetName() string {
 	return o.Name
 }
 
-func (o *CreateSecretRequestBody) GetProjectID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectID
-}
-
 func (o *CreateSecretRequestBody) GetValue() string {
 	if o == nil {
 		return ""
@@ -51,21 +37,28 @@ func (o *CreateSecretRequestBody) GetValue() string {
 	return o.Value
 }
 
-type CreateSecretRequest struct {
-	RequestBody *CreateSecretRequestBody `request:"mediaType=application/json"`
-	// The name of the secret.
-	Name string `pathParam:"style=simple,explode=false,name=name"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *CreateSecretRequest) GetRequestBody() *CreateSecretRequestBody {
+func (o *CreateSecretRequestBody) GetDecryptable() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.RequestBody
+	return o.Decryptable
+}
+
+func (o *CreateSecretRequestBody) GetProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+type CreateSecretRequest struct {
+	// The name of the secret.
+	Name string `pathParam:"style=simple,explode=false,name=name"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                  `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *CreateSecretRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *CreateSecretRequest) GetName() string {
@@ -75,6 +68,13 @@ func (o *CreateSecretRequest) GetName() string {
 	return o.Name
 }
 
+func (o *CreateSecretRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 func (o *CreateSecretRequest) GetSlug() *string {
 	if o == nil {
 		return nil
@@ -82,11 +82,11 @@ func (o *CreateSecretRequest) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *CreateSecretRequest) GetTeamID() *string {
+func (o *CreateSecretRequest) GetRequestBody() *CreateSecretRequestBody {
 	if o == nil {
 		return nil
 	}
-	return o.TeamID
+	return o.RequestBody
 }
 
 type CreateSecretType string
@@ -113,15 +113,8 @@ func (e *CreateSecretType) UnmarshalJSON(data []byte) error {
 }
 
 type Value struct {
-	Data []float64         `json:"data,omitempty"`
 	Type *CreateSecretType `json:"type,omitempty"`
-}
-
-func (o *Value) GetData() []float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Data
+	Data []float64         `json:"data,omitempty"`
 }
 
 func (o *Value) GetType() *CreateSecretType {
@@ -131,25 +124,32 @@ func (o *Value) GetType() *CreateSecretType {
 	return o.Type
 }
 
+func (o *Value) GetData() []float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Data
+}
+
 // CreateSecretResponseBody - Successful response showing the created secret.
 type CreateSecretResponseBody struct {
+	Value Value `json:"value"`
 	// The date when the secret was created.
 	Created time.Time `json:"created"`
-	// Timestamp for when the secret was created.
-	CreatedAt *float64 `json:"createdAt,omitempty"`
-	// Indicates whether the secret value can be decrypted after it has been created.
-	Decryptable *bool `json:"decryptable,omitempty"`
 	// The name of the secret.
 	Name string `json:"name"`
-	// The unique identifier of the project which the secret belongs to.
-	ProjectID *string `json:"projectId,omitempty"`
 	// The unique identifier of the team the secret was created for.
 	TeamID *string `json:"teamId,omitempty"`
 	// The unique identifier of the secret.
 	UID string `json:"uid"`
 	// The unique identifier of the user who created the secret.
 	UserID *string `json:"userId,omitempty"`
-	Value  Value   `json:"value"`
+	// Timestamp for when the secret was created.
+	CreatedAt *float64 `json:"createdAt,omitempty"`
+	// The unique identifier of the project which the secret belongs to.
+	ProjectID *string `json:"projectId,omitempty"`
+	// Indicates whether the secret value can be decrypted after it has been created.
+	Decryptable *bool `json:"decryptable,omitempty"`
 }
 
 func (c CreateSecretResponseBody) MarshalJSON() ([]byte, error) {
@@ -163,6 +163,13 @@ func (c *CreateSecretResponseBody) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *CreateSecretResponseBody) GetValue() Value {
+	if o == nil {
+		return Value{}
+	}
+	return o.Value
+}
+
 func (o *CreateSecretResponseBody) GetCreated() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -170,32 +177,11 @@ func (o *CreateSecretResponseBody) GetCreated() time.Time {
 	return o.Created
 }
 
-func (o *CreateSecretResponseBody) GetCreatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedAt
-}
-
-func (o *CreateSecretResponseBody) GetDecryptable() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Decryptable
-}
-
 func (o *CreateSecretResponseBody) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
-}
-
-func (o *CreateSecretResponseBody) GetProjectID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectID
 }
 
 func (o *CreateSecretResponseBody) GetTeamID() *string {
@@ -219,11 +205,25 @@ func (o *CreateSecretResponseBody) GetUserID() *string {
 	return o.UserID
 }
 
-func (o *CreateSecretResponseBody) GetValue() Value {
+func (o *CreateSecretResponseBody) GetCreatedAt() *float64 {
 	if o == nil {
-		return Value{}
+		return nil
 	}
-	return o.Value
+	return o.CreatedAt
+}
+
+func (o *CreateSecretResponseBody) GetProjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *CreateSecretResponseBody) GetDecryptable() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Decryptable
 }
 
 type CreateSecretResponse struct {

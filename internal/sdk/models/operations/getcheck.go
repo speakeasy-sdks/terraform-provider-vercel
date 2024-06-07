@@ -9,21 +9,14 @@ import (
 )
 
 type GetCheckRequest struct {
-	// The check to fetch
-	CheckID string `pathParam:"style=simple,explode=false,name=checkId"`
 	// The deployment to get the check for.
 	DeploymentID string `pathParam:"style=simple,explode=false,name=deploymentId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The check to fetch
+	CheckID string `pathParam:"style=simple,explode=false,name=checkId"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *GetCheckRequest) GetCheckID() string {
-	if o == nil {
-		return ""
-	}
-	return o.CheckID
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetCheckRequest) GetDeploymentID() string {
@@ -33,11 +26,11 @@ func (o *GetCheckRequest) GetDeploymentID() string {
 	return o.DeploymentID
 }
 
-func (o *GetCheckRequest) GetSlug() *string {
+func (o *GetCheckRequest) GetCheckID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Slug
+	return o.CheckID
 }
 
 func (o *GetCheckRequest) GetTeamID() *string {
@@ -45,6 +38,42 @@ func (o *GetCheckRequest) GetTeamID() *string {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *GetCheckRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+type GetCheckStatus string
+
+const (
+	GetCheckStatusRegistered GetCheckStatus = "registered"
+	GetCheckStatusRunning    GetCheckStatus = "running"
+	GetCheckStatusCompleted  GetCheckStatus = "completed"
+)
+
+func (e GetCheckStatus) ToPointer() *GetCheckStatus {
+	return &e
+}
+func (e *GetCheckStatus) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "registered":
+		fallthrough
+	case "running":
+		fallthrough
+	case "completed":
+		*e = GetCheckStatus(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetCheckStatus: %v", v)
+	}
 }
 
 type GetCheckConclusion string
@@ -108,31 +137,31 @@ func (e *GetCheckSource) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type GetCheckCLS struct {
+type GetCheckFCP struct {
+	Value         *float64       `json:"value"`
 	PreviousValue *float64       `json:"previousValue,omitempty"`
 	Source        GetCheckSource `json:"source"`
-	Value         *float64       `json:"value"`
 }
 
-func (o *GetCheckCLS) GetPreviousValue() *float64 {
+func (o *GetCheckFCP) GetValue() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
+func (o *GetCheckFCP) GetPreviousValue() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.PreviousValue
 }
 
-func (o *GetCheckCLS) GetSource() GetCheckSource {
+func (o *GetCheckFCP) GetSource() GetCheckSource {
 	if o == nil {
 		return GetCheckSource("")
 	}
 	return o.Source
-}
-
-func (o *GetCheckCLS) GetValue() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Value
 }
 
 type GetCheckChecksSource string
@@ -158,31 +187,31 @@ func (e *GetCheckChecksSource) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type GetCheckFCP struct {
+type GetCheckLCP struct {
+	Value         *float64             `json:"value"`
 	PreviousValue *float64             `json:"previousValue,omitempty"`
 	Source        GetCheckChecksSource `json:"source"`
-	Value         *float64             `json:"value"`
 }
 
-func (o *GetCheckFCP) GetPreviousValue() *float64 {
+func (o *GetCheckLCP) GetValue() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
+func (o *GetCheckLCP) GetPreviousValue() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.PreviousValue
 }
 
-func (o *GetCheckFCP) GetSource() GetCheckChecksSource {
+func (o *GetCheckLCP) GetSource() GetCheckChecksSource {
 	if o == nil {
 		return GetCheckChecksSource("")
 	}
 	return o.Source
-}
-
-func (o *GetCheckFCP) GetValue() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Value
 }
 
 type GetCheckChecksResponseSource string
@@ -208,31 +237,31 @@ func (e *GetCheckChecksResponseSource) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type GetCheckLCP struct {
+type GetCheckCLS struct {
+	Value         *float64                     `json:"value"`
 	PreviousValue *float64                     `json:"previousValue,omitempty"`
 	Source        GetCheckChecksResponseSource `json:"source"`
-	Value         *float64                     `json:"value"`
 }
 
-func (o *GetCheckLCP) GetPreviousValue() *float64 {
+func (o *GetCheckCLS) GetValue() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
+func (o *GetCheckCLS) GetPreviousValue() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.PreviousValue
 }
 
-func (o *GetCheckLCP) GetSource() GetCheckChecksResponseSource {
+func (o *GetCheckCLS) GetSource() GetCheckChecksResponseSource {
 	if o == nil {
 		return GetCheckChecksResponseSource("")
 	}
 	return o.Source
-}
-
-func (o *GetCheckLCP) GetValue() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Value
 }
 
 type GetCheckChecksResponse200Source string
@@ -259,9 +288,16 @@ func (e *GetCheckChecksResponse200Source) UnmarshalJSON(data []byte) error {
 }
 
 type GetCheckTBT struct {
+	Value         *float64                        `json:"value"`
 	PreviousValue *float64                        `json:"previousValue,omitempty"`
 	Source        GetCheckChecksResponse200Source `json:"source"`
-	Value         *float64                        `json:"value"`
+}
+
+func (o *GetCheckTBT) GetValue() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
 }
 
 func (o *GetCheckTBT) GetPreviousValue() *float64 {
@@ -276,13 +312,6 @@ func (o *GetCheckTBT) GetSource() GetCheckChecksResponse200Source {
 		return GetCheckChecksResponse200Source("")
 	}
 	return o.Source
-}
-
-func (o *GetCheckTBT) GetValue() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Value
 }
 
 type GetCheckChecksResponse200ApplicationJSONSource string
@@ -309,9 +338,16 @@ func (e *GetCheckChecksResponse200ApplicationJSONSource) UnmarshalJSON(data []by
 }
 
 type GetCheckVirtualExperienceScore struct {
+	Value         *float64                                       `json:"value"`
 	PreviousValue *float64                                       `json:"previousValue,omitempty"`
 	Source        GetCheckChecksResponse200ApplicationJSONSource `json:"source"`
-	Value         *float64                                       `json:"value"`
+}
+
+func (o *GetCheckVirtualExperienceScore) GetValue() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Value
 }
 
 func (o *GetCheckVirtualExperienceScore) GetPreviousValue() *float64 {
@@ -328,26 +364,12 @@ func (o *GetCheckVirtualExperienceScore) GetSource() GetCheckChecksResponse200Ap
 	return o.Source
 }
 
-func (o *GetCheckVirtualExperienceScore) GetValue() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
 type GetCheckMetrics struct {
-	Cls                    GetCheckCLS                     `json:"CLS"`
 	Fcp                    GetCheckFCP                     `json:"FCP"`
 	Lcp                    GetCheckLCP                     `json:"LCP"`
+	Cls                    GetCheckCLS                     `json:"CLS"`
 	Tbt                    GetCheckTBT                     `json:"TBT"`
 	VirtualExperienceScore *GetCheckVirtualExperienceScore `json:"virtualExperienceScore,omitempty"`
-}
-
-func (o *GetCheckMetrics) GetCls() GetCheckCLS {
-	if o == nil {
-		return GetCheckCLS{}
-	}
-	return o.Cls
 }
 
 func (o *GetCheckMetrics) GetFcp() GetCheckFCP {
@@ -362,6 +384,13 @@ func (o *GetCheckMetrics) GetLcp() GetCheckLCP {
 		return GetCheckLCP{}
 	}
 	return o.Lcp
+}
+
+func (o *GetCheckMetrics) GetCls() GetCheckCLS {
+	if o == nil {
+		return GetCheckCLS{}
+	}
+	return o.Cls
 }
 
 func (o *GetCheckMetrics) GetTbt() GetCheckTBT {
@@ -389,101 +418,23 @@ func (o *GetCheckOutput) GetMetrics() *GetCheckMetrics {
 	return o.Metrics
 }
 
-type GetCheckStatus string
-
-const (
-	GetCheckStatusRegistered GetCheckStatus = "registered"
-	GetCheckStatusRunning    GetCheckStatus = "running"
-	GetCheckStatusCompleted  GetCheckStatus = "completed"
-)
-
-func (e GetCheckStatus) ToPointer() *GetCheckStatus {
-	return &e
-}
-func (e *GetCheckStatus) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "registered":
-		fallthrough
-	case "running":
-		fallthrough
-	case "completed":
-		*e = GetCheckStatus(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetCheckStatus: %v", v)
-	}
-}
-
 type GetCheckResponseBody struct {
-	Blocking      bool                `json:"blocking"`
-	CompletedAt   *float64            `json:"completedAt,omitempty"`
-	Conclusion    *GetCheckConclusion `json:"conclusion,omitempty"`
-	CreatedAt     float64             `json:"createdAt"`
-	DeploymentID  string              `json:"deploymentId"`
-	DetailsURL    *string             `json:"detailsUrl,omitempty"`
-	ExternalID    *string             `json:"externalId,omitempty"`
 	ID            string              `json:"id"`
-	IntegrationID string              `json:"integrationId"`
 	Name          string              `json:"name"`
-	Output        *GetCheckOutput     `json:"output,omitempty"`
 	Path          *string             `json:"path,omitempty"`
-	Rerequestable *bool               `json:"rerequestable,omitempty"`
-	StartedAt     *float64            `json:"startedAt,omitempty"`
 	Status        GetCheckStatus      `json:"status"`
+	Conclusion    *GetCheckConclusion `json:"conclusion,omitempty"`
+	Blocking      bool                `json:"blocking"`
+	Output        *GetCheckOutput     `json:"output,omitempty"`
+	DetailsURL    *string             `json:"detailsUrl,omitempty"`
+	IntegrationID string              `json:"integrationId"`
+	DeploymentID  string              `json:"deploymentId"`
+	ExternalID    *string             `json:"externalId,omitempty"`
+	CreatedAt     float64             `json:"createdAt"`
 	UpdatedAt     float64             `json:"updatedAt"`
-}
-
-func (o *GetCheckResponseBody) GetBlocking() bool {
-	if o == nil {
-		return false
-	}
-	return o.Blocking
-}
-
-func (o *GetCheckResponseBody) GetCompletedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CompletedAt
-}
-
-func (o *GetCheckResponseBody) GetConclusion() *GetCheckConclusion {
-	if o == nil {
-		return nil
-	}
-	return o.Conclusion
-}
-
-func (o *GetCheckResponseBody) GetCreatedAt() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.CreatedAt
-}
-
-func (o *GetCheckResponseBody) GetDeploymentID() string {
-	if o == nil {
-		return ""
-	}
-	return o.DeploymentID
-}
-
-func (o *GetCheckResponseBody) GetDetailsURL() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DetailsURL
-}
-
-func (o *GetCheckResponseBody) GetExternalID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ExternalID
+	StartedAt     *float64            `json:"startedAt,omitempty"`
+	CompletedAt   *float64            `json:"completedAt,omitempty"`
+	Rerequestable *bool               `json:"rerequestable,omitempty"`
 }
 
 func (o *GetCheckResponseBody) GetID() string {
@@ -493,25 +444,11 @@ func (o *GetCheckResponseBody) GetID() string {
 	return o.ID
 }
 
-func (o *GetCheckResponseBody) GetIntegrationID() string {
-	if o == nil {
-		return ""
-	}
-	return o.IntegrationID
-}
-
 func (o *GetCheckResponseBody) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
-}
-
-func (o *GetCheckResponseBody) GetOutput() *GetCheckOutput {
-	if o == nil {
-		return nil
-	}
-	return o.Output
 }
 
 func (o *GetCheckResponseBody) GetPath() *string {
@@ -521,11 +458,74 @@ func (o *GetCheckResponseBody) GetPath() *string {
 	return o.Path
 }
 
-func (o *GetCheckResponseBody) GetRerequestable() *bool {
+func (o *GetCheckResponseBody) GetStatus() GetCheckStatus {
+	if o == nil {
+		return GetCheckStatus("")
+	}
+	return o.Status
+}
+
+func (o *GetCheckResponseBody) GetConclusion() *GetCheckConclusion {
 	if o == nil {
 		return nil
 	}
-	return o.Rerequestable
+	return o.Conclusion
+}
+
+func (o *GetCheckResponseBody) GetBlocking() bool {
+	if o == nil {
+		return false
+	}
+	return o.Blocking
+}
+
+func (o *GetCheckResponseBody) GetOutput() *GetCheckOutput {
+	if o == nil {
+		return nil
+	}
+	return o.Output
+}
+
+func (o *GetCheckResponseBody) GetDetailsURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DetailsURL
+}
+
+func (o *GetCheckResponseBody) GetIntegrationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.IntegrationID
+}
+
+func (o *GetCheckResponseBody) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetCheckResponseBody) GetExternalID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalID
+}
+
+func (o *GetCheckResponseBody) GetCreatedAt() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.CreatedAt
+}
+
+func (o *GetCheckResponseBody) GetUpdatedAt() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.UpdatedAt
 }
 
 func (o *GetCheckResponseBody) GetStartedAt() *float64 {
@@ -535,18 +535,18 @@ func (o *GetCheckResponseBody) GetStartedAt() *float64 {
 	return o.StartedAt
 }
 
-func (o *GetCheckResponseBody) GetStatus() GetCheckStatus {
+func (o *GetCheckResponseBody) GetCompletedAt() *float64 {
 	if o == nil {
-		return GetCheckStatus("")
+		return nil
 	}
-	return o.Status
+	return o.CompletedAt
 }
 
-func (o *GetCheckResponseBody) GetUpdatedAt() float64 {
+func (o *GetCheckResponseBody) GetRerequestable() *bool {
 	if o == nil {
-		return 0.0
+		return nil
 	}
-	return o.UpdatedAt
+	return o.Rerequestable
 }
 
 type GetCheckResponse struct {

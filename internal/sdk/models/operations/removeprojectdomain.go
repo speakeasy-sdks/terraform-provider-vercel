@@ -7,21 +7,14 @@ import (
 )
 
 type RemoveProjectDomainRequest struct {
-	// The project domain name
-	Domain string `pathParam:"style=simple,explode=false,name=domain"`
 	// The unique project identifier or the project name
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The project domain name
+	Domain string `pathParam:"style=simple,explode=false,name=domain"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *RemoveProjectDomainRequest) GetDomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Domain
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *RemoveProjectDomainRequest) GetIDOrName() string {
@@ -31,11 +24,11 @@ func (o *RemoveProjectDomainRequest) GetIDOrName() string {
 	return o.IDOrName
 }
 
-func (o *RemoveProjectDomainRequest) GetSlug() *string {
+func (o *RemoveProjectDomainRequest) GetDomain() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Slug
+	return o.Domain
 }
 
 func (o *RemoveProjectDomainRequest) GetTeamID() *string {
@@ -43,6 +36,13 @@ func (o *RemoveProjectDomainRequest) GetTeamID() *string {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *RemoveProjectDomainRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 // RemoveProjectDomainResponseBody - The domain was succesfully removed from the project

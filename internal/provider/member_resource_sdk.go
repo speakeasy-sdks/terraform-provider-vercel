@@ -4,21 +4,14 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 )
 
 func (r *MemberResourceModel) ToOperationsAddProjectMemberRequestBody() *operations.AddProjectMemberRequestBody {
 	var out operations.AddProjectMemberRequestBody
-	var addProjectMember1 *operations.AddProjectMember1
+	var addProjectMemberRequestBody1 *operations.AddProjectMemberRequestBody1
 	if r.One != nil {
-		email := new(string)
-		if !r.One.Email.IsUnknown() && !r.One.Email.IsNull() {
-			*email = r.One.Email.ValueString()
-		} else {
-			email = nil
-		}
-		role := operations.AddProjectMemberProjectMembersRequestRole(r.One.Role.ValueString())
 		uid := r.One.UID.ValueString()
 		username := new(string)
 		if !r.One.Username.IsUnknown() && !r.One.Username.IsNull() {
@@ -26,27 +19,27 @@ func (r *MemberResourceModel) ToOperationsAddProjectMemberRequestBody() *operati
 		} else {
 			username = nil
 		}
-		addProjectMember1 = &operations.AddProjectMember1{
-			Email:    email,
-			Role:     role,
+		email := new(string)
+		if !r.One.Email.IsUnknown() && !r.One.Email.IsNull() {
+			*email = r.One.Email.ValueString()
+		} else {
+			email = nil
+		}
+		role := operations.AddProjectMemberRequestBodyProjectMembersRole(r.One.Role.ValueString())
+		addProjectMemberRequestBody1 = &operations.AddProjectMemberRequestBody1{
 			UID:      uid,
 			Username: username,
+			Email:    email,
+			Role:     role,
 		}
 	}
-	if addProjectMember1 != nil {
+	if addProjectMemberRequestBody1 != nil {
 		out = operations.AddProjectMemberRequestBody{
-			AddProjectMember1: addProjectMember1,
+			AddProjectMemberRequestBody1: addProjectMemberRequestBody1,
 		}
 	}
-	var addProjectMember2 *operations.AddProjectMember2
+	var addProjectMemberRequestBody2 *operations.AddProjectMemberRequestBody2
 	if r.Two != nil {
-		email1 := new(string)
-		if !r.Two.Email.IsUnknown() && !r.Two.Email.IsNull() {
-			*email1 = r.Two.Email.ValueString()
-		} else {
-			email1 = nil
-		}
-		role1 := operations.AddProjectMemberRole(r.Two.Role.ValueString())
 		uid1 := new(string)
 		if !r.Two.UID.IsUnknown() && !r.Two.UID.IsNull() {
 			*uid1 = r.Two.UID.ValueString()
@@ -54,22 +47,27 @@ func (r *MemberResourceModel) ToOperationsAddProjectMemberRequestBody() *operati
 			uid1 = nil
 		}
 		username1 := r.Two.Username.ValueString()
-		addProjectMember2 = &operations.AddProjectMember2{
-			Email:    email1,
-			Role:     role1,
+		email1 := new(string)
+		if !r.Two.Email.IsUnknown() && !r.Two.Email.IsNull() {
+			*email1 = r.Two.Email.ValueString()
+		} else {
+			email1 = nil
+		}
+		role1 := operations.RequestBodyRole(r.Two.Role.ValueString())
+		addProjectMemberRequestBody2 = &operations.AddProjectMemberRequestBody2{
 			UID:      uid1,
 			Username: username1,
+			Email:    email1,
+			Role:     role1,
 		}
 	}
-	if addProjectMember2 != nil {
+	if addProjectMemberRequestBody2 != nil {
 		out = operations.AddProjectMemberRequestBody{
-			AddProjectMember2: addProjectMember2,
+			AddProjectMemberRequestBody2: addProjectMemberRequestBody2,
 		}
 	}
-	var addProjectMember3 *operations.AddProjectMember3
+	var addProjectMemberRequestBody3 *operations.AddProjectMemberRequestBody3
 	if r.Three != nil {
-		email2 := r.Three.Email.ValueString()
-		role2 := operations.AddProjectMemberProjectMembersRole(r.Three.Role.ValueString())
 		uid2 := new(string)
 		if !r.Three.UID.IsUnknown() && !r.Three.UID.IsNull() {
 			*uid2 = r.Three.UID.ValueString()
@@ -82,16 +80,18 @@ func (r *MemberResourceModel) ToOperationsAddProjectMemberRequestBody() *operati
 		} else {
 			username2 = nil
 		}
-		addProjectMember3 = &operations.AddProjectMember3{
-			Email:    email2,
-			Role:     role2,
+		email2 := r.Three.Email.ValueString()
+		role2 := operations.AddProjectMemberRequestBodyRole(r.Three.Role.ValueString())
+		addProjectMemberRequestBody3 = &operations.AddProjectMemberRequestBody3{
 			UID:      uid2,
 			Username: username2,
+			Email:    email2,
+			Role:     role2,
 		}
 	}
-	if addProjectMember3 != nil {
+	if addProjectMemberRequestBody3 != nil {
 		out = operations.AddProjectMemberRequestBody{
-			AddProjectMember3: addProjectMember3,
+			AddProjectMemberRequestBody3: addProjectMemberRequestBody3,
 		}
 	}
 	return &out
@@ -101,13 +101,13 @@ func (r *MemberResourceModel) RefreshFromOperationsAddProjectMemberResponseBody(
 	if resp != nil {
 		r.ID = types.StringValue(resp.ID)
 		if resp.AddProjectMemberResponseBody != nil {
-			r.One = &tfTypes.AddProjectMember1{}
+			r.One = &tfTypes.AddProjectMemberRequestBody1{}
 		}
 		if resp.AddProjectMemberResponseBody != nil {
-			r.Two = &tfTypes.AddProjectMember2{}
+			r.Two = &tfTypes.AddProjectMemberRequestBody2{}
 		}
 		if resp.AddProjectMemberResponseBody != nil {
-			r.Three = &tfTypes.AddProjectMember3{}
+			r.Three = &tfTypes.AddProjectMemberRequestBody3{}
 		}
 	}
 }

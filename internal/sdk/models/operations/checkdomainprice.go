@@ -38,12 +38,12 @@ func (e *QueryParamType) UnmarshalJSON(data []byte) error {
 type CheckDomainPriceRequest struct {
 	// The name of the domain for which the price needs to be checked.
 	Name string `queryParam:"style=form,explode=true,name=name"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// In which status of the domain the price needs to be checked.
 	Type *QueryParamType `queryParam:"style=form,explode=true,name=type"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *CheckDomainPriceRequest) GetName() string {
@@ -53,11 +53,11 @@ func (o *CheckDomainPriceRequest) GetName() string {
 	return o.Name
 }
 
-func (o *CheckDomainPriceRequest) GetSlug() *string {
+func (o *CheckDomainPriceRequest) GetType() *QueryParamType {
 	if o == nil {
 		return nil
 	}
-	return o.Slug
+	return o.Type
 }
 
 func (o *CheckDomainPriceRequest) GetTeamID() *string {
@@ -67,26 +67,19 @@ func (o *CheckDomainPriceRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-func (o *CheckDomainPriceRequest) GetType() *QueryParamType {
+func (o *CheckDomainPriceRequest) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Type
+	return o.Slug
 }
 
 // CheckDomainPriceResponseBody - Successful response which returns the price of the domain and the period.
 type CheckDomainPriceResponseBody struct {
-	// The number of years the domain could be held before paying again.
-	Period float64 `json:"period"`
 	// The domain price in USD.
 	Price float64 `json:"price"`
-}
-
-func (o *CheckDomainPriceResponseBody) GetPeriod() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Period
+	// The number of years the domain could be held before paying again.
+	Period float64 `json:"period"`
 }
 
 func (o *CheckDomainPriceResponseBody) GetPrice() float64 {
@@ -94,6 +87,13 @@ func (o *CheckDomainPriceResponseBody) GetPrice() float64 {
 		return 0.0
 	}
 	return o.Price
+}
+
+func (o *CheckDomainPriceResponseBody) GetPeriod() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Period
 }
 
 type CheckDomainPriceResponse struct {

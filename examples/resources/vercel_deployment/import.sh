@@ -1,1 +1,0 @@
-terraform import vercel_deployment.my_vercel_deployment "dpl_89qyp1cskzkLrVicDaZoDbjyHuDJ"

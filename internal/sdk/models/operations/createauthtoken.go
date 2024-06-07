@@ -6,141 +6,141 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
 
-type CreateAuthTokenType string
+type CreateAuthTokenRequestBodyType string
 
 const (
-	CreateAuthTokenTypeOauth2Token CreateAuthTokenType = "oauth2-token"
+	CreateAuthTokenRequestBodyTypeOauth2Token CreateAuthTokenRequestBodyType = "oauth2-token"
 )
 
-func (e CreateAuthTokenType) ToPointer() *CreateAuthTokenType {
+func (e CreateAuthTokenRequestBodyType) ToPointer() *CreateAuthTokenRequestBodyType {
 	return &e
 }
-func (e *CreateAuthTokenType) UnmarshalJSON(data []byte) error {
+func (e *CreateAuthTokenRequestBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2-token":
-		*e = CreateAuthTokenType(v)
+		*e = CreateAuthTokenRequestBodyType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateAuthTokenType: %v", v)
+		return fmt.Errorf("invalid value for CreateAuthTokenRequestBodyType: %v", v)
 	}
 }
 
-type CreateAuthToken2 struct {
-	ClientID       *string             `json:"clientId,omitempty"`
-	ExpiresAt      *float64            `json:"expiresAt,omitempty"`
-	InstallationID *string             `json:"installationId,omitempty"`
-	Name           string              `json:"name"`
-	Type           CreateAuthTokenType `json:"type"`
+type CreateAuthTokenRequestBody2 struct {
+	Type           CreateAuthTokenRequestBodyType `json:"type"`
+	Name           string                         `json:"name"`
+	ClientID       *string                        `json:"clientId,omitempty"`
+	InstallationID *string                        `json:"installationId,omitempty"`
+	ExpiresAt      *float64                       `json:"expiresAt,omitempty"`
 }
 
-func (o *CreateAuthToken2) GetClientID() *string {
+func (o *CreateAuthTokenRequestBody2) GetType() CreateAuthTokenRequestBodyType {
+	if o == nil {
+		return CreateAuthTokenRequestBodyType("")
+	}
+	return o.Type
+}
+
+func (o *CreateAuthTokenRequestBody2) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *CreateAuthTokenRequestBody2) GetClientID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ClientID
 }
 
-func (o *CreateAuthToken2) GetExpiresAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.ExpiresAt
-}
-
-func (o *CreateAuthToken2) GetInstallationID() *string {
+func (o *CreateAuthTokenRequestBody2) GetInstallationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.InstallationID
 }
 
-func (o *CreateAuthToken2) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *CreateAuthToken2) GetType() CreateAuthTokenType {
-	if o == nil {
-		return CreateAuthTokenType("")
-	}
-	return o.Type
-}
-
-type CreateAuthToken1 struct {
-	ExpiresAt *float64 `json:"expiresAt,omitempty"`
-	Name      string   `json:"name"`
-}
-
-func (o *CreateAuthToken1) GetExpiresAt() *float64 {
+func (o *CreateAuthTokenRequestBody2) GetExpiresAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.ExpiresAt
 }
 
-func (o *CreateAuthToken1) GetName() string {
+type CreateAuthTokenRequestBody1 struct {
+	Name      string   `json:"name"`
+	ExpiresAt *float64 `json:"expiresAt,omitempty"`
+}
+
+func (o *CreateAuthTokenRequestBody1) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-type CreateAuthTokenRequestBodyType string
+func (o *CreateAuthTokenRequestBody1) GetExpiresAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresAt
+}
+
+type CreateAuthTokenRequestBodyUnionType string
 
 const (
-	CreateAuthTokenRequestBodyTypeCreateAuthToken1 CreateAuthTokenRequestBodyType = "createAuthToken_1"
-	CreateAuthTokenRequestBodyTypeCreateAuthToken2 CreateAuthTokenRequestBodyType = "createAuthToken_2"
+	CreateAuthTokenRequestBodyUnionTypeCreateAuthTokenRequestBody1 CreateAuthTokenRequestBodyUnionType = "createAuthToken_requestBody_1"
+	CreateAuthTokenRequestBodyUnionTypeCreateAuthTokenRequestBody2 CreateAuthTokenRequestBodyUnionType = "createAuthToken_requestBody_2"
 )
 
 type CreateAuthTokenRequestBody struct {
-	CreateAuthToken1 *CreateAuthToken1
-	CreateAuthToken2 *CreateAuthToken2
+	CreateAuthTokenRequestBody1 *CreateAuthTokenRequestBody1
+	CreateAuthTokenRequestBody2 *CreateAuthTokenRequestBody2
 
-	Type CreateAuthTokenRequestBodyType
+	Type CreateAuthTokenRequestBodyUnionType
 }
 
-func CreateCreateAuthTokenRequestBodyCreateAuthToken1(createAuthToken1 CreateAuthToken1) CreateAuthTokenRequestBody {
-	typ := CreateAuthTokenRequestBodyTypeCreateAuthToken1
+func CreateCreateAuthTokenRequestBodyCreateAuthTokenRequestBody1(createAuthTokenRequestBody1 CreateAuthTokenRequestBody1) CreateAuthTokenRequestBody {
+	typ := CreateAuthTokenRequestBodyUnionTypeCreateAuthTokenRequestBody1
 
 	return CreateAuthTokenRequestBody{
-		CreateAuthToken1: &createAuthToken1,
-		Type:             typ,
+		CreateAuthTokenRequestBody1: &createAuthTokenRequestBody1,
+		Type:                        typ,
 	}
 }
 
-func CreateCreateAuthTokenRequestBodyCreateAuthToken2(createAuthToken2 CreateAuthToken2) CreateAuthTokenRequestBody {
-	typ := CreateAuthTokenRequestBodyTypeCreateAuthToken2
+func CreateCreateAuthTokenRequestBodyCreateAuthTokenRequestBody2(createAuthTokenRequestBody2 CreateAuthTokenRequestBody2) CreateAuthTokenRequestBody {
+	typ := CreateAuthTokenRequestBodyUnionTypeCreateAuthTokenRequestBody2
 
 	return CreateAuthTokenRequestBody{
-		CreateAuthToken2: &createAuthToken2,
-		Type:             typ,
+		CreateAuthTokenRequestBody2: &createAuthTokenRequestBody2,
+		Type:                        typ,
 	}
 }
 
 func (u *CreateAuthTokenRequestBody) UnmarshalJSON(data []byte) error {
 
-	var createAuthToken1 CreateAuthToken1 = CreateAuthToken1{}
-	if err := utils.UnmarshalJSON(data, &createAuthToken1, "", true, true); err == nil {
-		u.CreateAuthToken1 = &createAuthToken1
-		u.Type = CreateAuthTokenRequestBodyTypeCreateAuthToken1
+	var createAuthTokenRequestBody1 CreateAuthTokenRequestBody1 = CreateAuthTokenRequestBody1{}
+	if err := utils.UnmarshalJSON(data, &createAuthTokenRequestBody1, "", true, true); err == nil {
+		u.CreateAuthTokenRequestBody1 = &createAuthTokenRequestBody1
+		u.Type = CreateAuthTokenRequestBodyUnionTypeCreateAuthTokenRequestBody1
 		return nil
 	}
 
-	var createAuthToken2 CreateAuthToken2 = CreateAuthToken2{}
-	if err := utils.UnmarshalJSON(data, &createAuthToken2, "", true, true); err == nil {
-		u.CreateAuthToken2 = &createAuthToken2
-		u.Type = CreateAuthTokenRequestBodyTypeCreateAuthToken2
+	var createAuthTokenRequestBody2 CreateAuthTokenRequestBody2 = CreateAuthTokenRequestBody2{}
+	if err := utils.UnmarshalJSON(data, &createAuthTokenRequestBody2, "", true, true); err == nil {
+		u.CreateAuthTokenRequestBody2 = &createAuthTokenRequestBody2
+		u.Type = CreateAuthTokenRequestBodyUnionTypeCreateAuthTokenRequestBody2
 		return nil
 	}
 
@@ -148,37 +148,23 @@ func (u *CreateAuthTokenRequestBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateAuthTokenRequestBody) MarshalJSON() ([]byte, error) {
-	if u.CreateAuthToken1 != nil {
-		return utils.MarshalJSON(u.CreateAuthToken1, "", true)
+	if u.CreateAuthTokenRequestBody1 != nil {
+		return utils.MarshalJSON(u.CreateAuthTokenRequestBody1, "", true)
 	}
 
-	if u.CreateAuthToken2 != nil {
-		return utils.MarshalJSON(u.CreateAuthToken2, "", true)
+	if u.CreateAuthTokenRequestBody2 != nil {
+		return utils.MarshalJSON(u.CreateAuthTokenRequestBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CreateAuthTokenRequestBody: all fields are null")
 }
 
 type CreateAuthTokenRequest struct {
-	RequestBody *CreateAuthTokenRequestBody `request:"mediaType=application/json"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *CreateAuthTokenRequest) GetRequestBody() *CreateAuthTokenRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
-}
-
-func (o *CreateAuthTokenRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                     `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *CreateAuthTokenRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *CreateAuthTokenRequest) GetTeamID() *string {
@@ -188,19 +174,26 @@ func (o *CreateAuthTokenRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// CreateAuthTokenResponseBody - Successful response.
-type CreateAuthTokenResponseBody struct {
-	// The authentication token's actual value. This token is only provided in this response, and can never be retrieved again in the future. Be sure to save it somewhere safe!
-	BearerToken string `json:"bearerToken"`
-	// Authentication token metadata.
-	Token shared.AuthToken `json:"token"`
+func (o *CreateAuthTokenRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
-func (o *CreateAuthTokenResponseBody) GetBearerToken() string {
+func (o *CreateAuthTokenRequest) GetRequestBody() *CreateAuthTokenRequestBody {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.BearerToken
+	return o.RequestBody
+}
+
+// CreateAuthTokenResponseBody - Successful response.
+type CreateAuthTokenResponseBody struct {
+	// Authentication token metadata.
+	Token shared.AuthToken `json:"token"`
+	// The authentication token's actual value. This token is only provided in this response, and can never be retrieved again in the future. Be sure to save it somewhere safe!
+	BearerToken string `json:"bearerToken"`
 }
 
 func (o *CreateAuthTokenResponseBody) GetToken() shared.AuthToken {
@@ -208,6 +201,13 @@ func (o *CreateAuthTokenResponseBody) GetToken() shared.AuthToken {
 		return shared.AuthToken{}
 	}
 	return o.Token
+}
+
+func (o *CreateAuthTokenResponseBody) GetBearerToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.BearerToken
 }
 
 type CreateAuthTokenResponse struct {

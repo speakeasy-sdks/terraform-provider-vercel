@@ -6,17 +6,17 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 )
 
 type GetConfigurationRequest struct {
 	// ID of the configuration to check
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetConfigurationRequest) GetID() string {
@@ -26,13 +26,6 @@ func (o *GetConfigurationRequest) GetID() string {
 	return o.ID
 }
 
-func (o *GetConfigurationRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *GetConfigurationRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -40,63 +33,11 @@ func (o *GetConfigurationRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type GetConfigurationDisabledReason string
-
-const (
-	GetConfigurationDisabledReasonDisabledByOwner          GetConfigurationDisabledReason = "disabled-by-owner"
-	GetConfigurationDisabledReasonFeatureNotAvailable      GetConfigurationDisabledReason = "feature-not-available"
-	GetConfigurationDisabledReasonDisabledByAdmin          GetConfigurationDisabledReason = "disabled-by-admin"
-	GetConfigurationDisabledReasonOriginalOwnerLeftTheTeam GetConfigurationDisabledReason = "original-owner-left-the-team"
-)
-
-func (e GetConfigurationDisabledReason) ToPointer() *GetConfigurationDisabledReason {
-	return &e
-}
-func (e *GetConfigurationDisabledReason) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "disabled-by-owner":
-		fallthrough
-	case "feature-not-available":
-		fallthrough
-	case "disabled-by-admin":
-		fallthrough
-	case "original-owner-left-the-team":
-		*e = GetConfigurationDisabledReason(v)
+func (o *GetConfigurationRequest) GetSlug() *string {
+	if o == nil {
 		return nil
-	default:
-		return fmt.Errorf("invalid value for GetConfigurationDisabledReason: %v", v)
 	}
-}
-
-// GetConfigurationInstallationType - Defines the installation type. - 'external' integrations are installed via the existing integrations flow - 'marketplace' integrations are natively installed: - when accepting the TOS of a partner during the store creation process - if undefined, assume 'external'
-type GetConfigurationInstallationType string
-
-const (
-	GetConfigurationInstallationTypeMarketplace GetConfigurationInstallationType = "marketplace"
-	GetConfigurationInstallationTypeExternal    GetConfigurationInstallationType = "external"
-)
-
-func (e GetConfigurationInstallationType) ToPointer() *GetConfigurationInstallationType {
-	return &e
-}
-func (e *GetConfigurationInstallationType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "marketplace":
-		fallthrough
-	case "external":
-		*e = GetConfigurationInstallationType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetConfigurationInstallationType: %v", v)
-	}
+	return o.Slug
 }
 
 // ProjectSelection - A string representing the permission for projects. Possible values are `all` or `selected`.
@@ -126,221 +67,19 @@ func (e *ProjectSelection) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type GetConfigurationAdded string
+// GetConfigurationResponseBodyIntegrationsSource - Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
+type GetConfigurationResponseBodyIntegrationsSource string
 
 const (
-	GetConfigurationAddedReadIntegrationConfiguration      GetConfigurationAdded = "read:integration-configuration"
-	GetConfigurationAddedReadWriteIntegrationConfiguration GetConfigurationAdded = "read-write:integration-configuration"
-	GetConfigurationAddedReadDeployment                    GetConfigurationAdded = "read:deployment"
-	GetConfigurationAddedReadWriteDeployment               GetConfigurationAdded = "read-write:deployment"
-	GetConfigurationAddedReadWriteDeploymentCheck          GetConfigurationAdded = "read-write:deployment-check"
-	GetConfigurationAddedReadProject                       GetConfigurationAdded = "read:project"
-	GetConfigurationAddedReadWriteProject                  GetConfigurationAdded = "read-write:project"
-	GetConfigurationAddedReadWriteProjectEnvVars           GetConfigurationAdded = "read-write:project-env-vars"
-	GetConfigurationAddedReadWriteGlobalProjectEnvVars     GetConfigurationAdded = "read-write:global-project-env-vars"
-	GetConfigurationAddedReadTeam                          GetConfigurationAdded = "read:team"
-	GetConfigurationAddedReadUser                          GetConfigurationAdded = "read:user"
-	GetConfigurationAddedReadWriteLogDrain                 GetConfigurationAdded = "read-write:log-drain"
-	GetConfigurationAddedReadDomain                        GetConfigurationAdded = "read:domain"
-	GetConfigurationAddedReadWriteDomain                   GetConfigurationAdded = "read-write:domain"
-	GetConfigurationAddedReadWriteEdgeConfig               GetConfigurationAdded = "read-write:edge-config"
-	GetConfigurationAddedReadWriteOtelEndpoint             GetConfigurationAdded = "read-write:otel-endpoint"
-	GetConfigurationAddedReadMonitoring                    GetConfigurationAdded = "read:monitoring"
-	GetConfigurationAddedReadWriteIntegrationResource      GetConfigurationAdded = "read-write:integration-resource"
+	GetConfigurationResponseBodyIntegrationsSourceMarketplace  GetConfigurationResponseBodyIntegrationsSource = "marketplace"
+	GetConfigurationResponseBodyIntegrationsSourceDeployButton GetConfigurationResponseBodyIntegrationsSource = "deploy-button"
+	GetConfigurationResponseBodyIntegrationsSourceExternal     GetConfigurationResponseBodyIntegrationsSource = "external"
 )
 
-func (e GetConfigurationAdded) ToPointer() *GetConfigurationAdded {
+func (e GetConfigurationResponseBodyIntegrationsSource) ToPointer() *GetConfigurationResponseBodyIntegrationsSource {
 	return &e
 }
-func (e *GetConfigurationAdded) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "read:integration-configuration":
-		fallthrough
-	case "read-write:integration-configuration":
-		fallthrough
-	case "read:deployment":
-		fallthrough
-	case "read-write:deployment":
-		fallthrough
-	case "read-write:deployment-check":
-		fallthrough
-	case "read:project":
-		fallthrough
-	case "read-write:project":
-		fallthrough
-	case "read-write:project-env-vars":
-		fallthrough
-	case "read-write:global-project-env-vars":
-		fallthrough
-	case "read:team":
-		fallthrough
-	case "read:user":
-		fallthrough
-	case "read-write:log-drain":
-		fallthrough
-	case "read:domain":
-		fallthrough
-	case "read-write:domain":
-		fallthrough
-	case "read-write:edge-config":
-		fallthrough
-	case "read-write:otel-endpoint":
-		fallthrough
-	case "read:monitoring":
-		fallthrough
-	case "read-write:integration-resource":
-		*e = GetConfigurationAdded(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetConfigurationAdded: %v", v)
-	}
-}
-
-type GetConfigurationUpgraded string
-
-const (
-	GetConfigurationUpgradedReadIntegrationConfiguration      GetConfigurationUpgraded = "read:integration-configuration"
-	GetConfigurationUpgradedReadWriteIntegrationConfiguration GetConfigurationUpgraded = "read-write:integration-configuration"
-	GetConfigurationUpgradedReadDeployment                    GetConfigurationUpgraded = "read:deployment"
-	GetConfigurationUpgradedReadWriteDeployment               GetConfigurationUpgraded = "read-write:deployment"
-	GetConfigurationUpgradedReadWriteDeploymentCheck          GetConfigurationUpgraded = "read-write:deployment-check"
-	GetConfigurationUpgradedReadProject                       GetConfigurationUpgraded = "read:project"
-	GetConfigurationUpgradedReadWriteProject                  GetConfigurationUpgraded = "read-write:project"
-	GetConfigurationUpgradedReadWriteProjectEnvVars           GetConfigurationUpgraded = "read-write:project-env-vars"
-	GetConfigurationUpgradedReadWriteGlobalProjectEnvVars     GetConfigurationUpgraded = "read-write:global-project-env-vars"
-	GetConfigurationUpgradedReadTeam                          GetConfigurationUpgraded = "read:team"
-	GetConfigurationUpgradedReadUser                          GetConfigurationUpgraded = "read:user"
-	GetConfigurationUpgradedReadWriteLogDrain                 GetConfigurationUpgraded = "read-write:log-drain"
-	GetConfigurationUpgradedReadDomain                        GetConfigurationUpgraded = "read:domain"
-	GetConfigurationUpgradedReadWriteDomain                   GetConfigurationUpgraded = "read-write:domain"
-	GetConfigurationUpgradedReadWriteEdgeConfig               GetConfigurationUpgraded = "read-write:edge-config"
-	GetConfigurationUpgradedReadWriteOtelEndpoint             GetConfigurationUpgraded = "read-write:otel-endpoint"
-	GetConfigurationUpgradedReadMonitoring                    GetConfigurationUpgraded = "read:monitoring"
-	GetConfigurationUpgradedReadWriteIntegrationResource      GetConfigurationUpgraded = "read-write:integration-resource"
-)
-
-func (e GetConfigurationUpgraded) ToPointer() *GetConfigurationUpgraded {
-	return &e
-}
-func (e *GetConfigurationUpgraded) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "read:integration-configuration":
-		fallthrough
-	case "read-write:integration-configuration":
-		fallthrough
-	case "read:deployment":
-		fallthrough
-	case "read-write:deployment":
-		fallthrough
-	case "read-write:deployment-check":
-		fallthrough
-	case "read:project":
-		fallthrough
-	case "read-write:project":
-		fallthrough
-	case "read-write:project-env-vars":
-		fallthrough
-	case "read-write:global-project-env-vars":
-		fallthrough
-	case "read:team":
-		fallthrough
-	case "read:user":
-		fallthrough
-	case "read-write:log-drain":
-		fallthrough
-	case "read:domain":
-		fallthrough
-	case "read-write:domain":
-		fallthrough
-	case "read-write:edge-config":
-		fallthrough
-	case "read-write:otel-endpoint":
-		fallthrough
-	case "read:monitoring":
-		fallthrough
-	case "read-write:integration-resource":
-		*e = GetConfigurationUpgraded(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetConfigurationUpgraded: %v", v)
-	}
-}
-
-type GetConfigurationScopes struct {
-	Added    []GetConfigurationAdded    `json:"added"`
-	Upgraded []GetConfigurationUpgraded `json:"upgraded"`
-}
-
-func (o *GetConfigurationScopes) GetAdded() []GetConfigurationAdded {
-	if o == nil {
-		return []GetConfigurationAdded{}
-	}
-	return o.Added
-}
-
-func (o *GetConfigurationScopes) GetUpgraded() []GetConfigurationUpgraded {
-	if o == nil {
-		return []GetConfigurationUpgraded{}
-	}
-	return o.Upgraded
-}
-
-type GetConfigurationScopesQueue struct {
-	ConfirmedAt *float64               `json:"confirmedAt,omitempty"`
-	Note        string                 `json:"note"`
-	RequestedAt float64                `json:"requestedAt"`
-	Scopes      GetConfigurationScopes `json:"scopes"`
-}
-
-func (o *GetConfigurationScopesQueue) GetConfirmedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.ConfirmedAt
-}
-
-func (o *GetConfigurationScopesQueue) GetNote() string {
-	if o == nil {
-		return ""
-	}
-	return o.Note
-}
-
-func (o *GetConfigurationScopesQueue) GetRequestedAt() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.RequestedAt
-}
-
-func (o *GetConfigurationScopesQueue) GetScopes() GetConfigurationScopes {
-	if o == nil {
-		return GetConfigurationScopes{}
-	}
-	return o.Scopes
-}
-
-// GetConfigurationIntegrationsSource - Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
-type GetConfigurationIntegrationsSource string
-
-const (
-	GetConfigurationIntegrationsSourceMarketplace  GetConfigurationIntegrationsSource = "marketplace"
-	GetConfigurationIntegrationsSourceDeployButton GetConfigurationIntegrationsSource = "deploy-button"
-	GetConfigurationIntegrationsSourceExternal     GetConfigurationIntegrationsSource = "external"
-)
-
-func (e GetConfigurationIntegrationsSource) ToPointer() *GetConfigurationIntegrationsSource {
-	return &e
-}
-func (e *GetConfigurationIntegrationsSource) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationResponseBodyIntegrationsSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -351,269 +90,251 @@ func (e *GetConfigurationIntegrationsSource) UnmarshalJSON(data []byte) error {
 	case "deploy-button":
 		fallthrough
 	case "external":
-		*e = GetConfigurationIntegrationsSource(v)
+		*e = GetConfigurationResponseBodyIntegrationsSource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfigurationIntegrationsSource: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodyIntegrationsSource: %v", v)
 	}
 }
 
-type GetConfigurationIntegrationsType string
+type GetConfigurationResponseBodyIntegrationsType string
 
 const (
-	GetConfigurationIntegrationsTypeIntegrationConfiguration GetConfigurationIntegrationsType = "integration-configuration"
+	GetConfigurationResponseBodyIntegrationsTypeIntegrationConfiguration GetConfigurationResponseBodyIntegrationsType = "integration-configuration"
 )
 
-func (e GetConfigurationIntegrationsType) ToPointer() *GetConfigurationIntegrationsType {
+func (e GetConfigurationResponseBodyIntegrationsType) ToPointer() *GetConfigurationResponseBodyIntegrationsType {
 	return &e
 }
-func (e *GetConfigurationIntegrationsType) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationResponseBodyIntegrationsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "integration-configuration":
-		*e = GetConfigurationIntegrationsType(v)
+		*e = GetConfigurationResponseBodyIntegrationsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfigurationIntegrationsType: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodyIntegrationsType: %v", v)
 	}
 }
 
-type GetConfiguration2 struct {
-	CanConfigureOpenTelemetry *bool `json:"canConfigureOpenTelemetry,omitempty"`
-	// A timestamp that tells you when the configuration was installed successfully
-	CompletedAt *float64 `json:"completedAt,omitempty"`
-	// A timestamp that tells you when the configuration was created
-	CreatedAt float64 `json:"createdAt"`
-	// A timestamp that tells you when the configuration was updated.
-	DeletedAt *float64 `json:"deletedAt,omitempty"`
-	// A timestamp that tells you when the configuration was disabled. Note: Configurations can be disabled when the associated user loses access to a team. They do not function during this time until the configuration is 'transferred', meaning the associated user is changed to one with access to the team.
-	DisabledAt     *float64                        `json:"disabledAt,omitempty"`
-	DisabledReason *GetConfigurationDisabledReason `json:"disabledReason,omitempty"`
-	// The unique identifier of the configuration
-	ID string `json:"id"`
-	// Defines the installation type. - 'external' integrations are installed via the existing integrations flow - 'marketplace' integrations are natively installed: - when accepting the TOS of a partner during the store creation process - if undefined, assume 'external'
-	InstallationType *GetConfigurationInstallationType `json:"installationType,omitempty"`
-	// The unique identifier of the app the configuration was created for
-	IntegrationID string `json:"integrationId"`
-	// A timestamp that tells you when the configuration was migrated as part of the Northstar migration. In the future, if we allow integration configurations to be transferred between teams, this field should be cleared upon transfer.
-	NorthstarMigratedAt *float64 `json:"northstarMigratedAt,omitempty"`
-	// The user or team ID that owns the configuration
-	OwnerID string `json:"ownerId"`
-	// A string representing the permission for projects. Possible values are `all` or `selected`.
-	ProjectSelection ProjectSelection `json:"projectSelection"`
-	// When a configuration is limited to access certain projects, this will contain each of the project ID it is allowed to access. If it is not defined, the configuration has full access.
-	Projects             []string `json:"projects,omitempty"`
-	RemovedLogDrainsAt   *float64 `json:"removedLogDrainsAt,omitempty"`
-	RemovedProjectEnvsAt *float64 `json:"removedProjectEnvsAt,omitempty"`
-	RemovedTokensAt      *float64 `json:"removedTokensAt,omitempty"`
-	RemovedWebhooksAt    *float64 `json:"removedWebhooksAt,omitempty"`
-	// The resources that are allowed to be accessed by the configuration.
-	Scopes      []string                      `json:"scopes"`
-	ScopesQueue []GetConfigurationScopesQueue `json:"scopesQueue,omitempty"`
-	// The slug of the integration the configuration is created for.
-	Slug string `json:"slug"`
-	// Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
-	Source *GetConfigurationIntegrationsSource `json:"source,omitempty"`
-	// When the configuration was created for a team, this will show the ID of the team.
-	TeamID *string                          `json:"teamId,omitempty"`
-	Type   GetConfigurationIntegrationsType `json:"type"`
-	// A timestamp that tells you when the configuration was updated.
-	UpdatedAt float64 `json:"updatedAt"`
-	// The ID of the user that created the configuration.
-	UserID string `json:"userId"`
-}
+type GetConfigurationResponseBodyIntegrationsAdded string
 
-func (o *GetConfiguration2) GetCanConfigureOpenTelemetry() *bool {
-	if o == nil {
+const (
+	GetConfigurationResponseBodyIntegrationsAddedReadIntegrationConfiguration      GetConfigurationResponseBodyIntegrationsAdded = "read:integration-configuration"
+	GetConfigurationResponseBodyIntegrationsAddedReadWriteIntegrationConfiguration GetConfigurationResponseBodyIntegrationsAdded = "read-write:integration-configuration"
+	GetConfigurationResponseBodyIntegrationsAddedReadDeployment                    GetConfigurationResponseBodyIntegrationsAdded = "read:deployment"
+	GetConfigurationResponseBodyIntegrationsAddedReadWriteDeployment               GetConfigurationResponseBodyIntegrationsAdded = "read-write:deployment"
+	GetConfigurationResponseBodyIntegrationsAddedReadWriteDeploymentCheck          GetConfigurationResponseBodyIntegrationsAdded = "read-write:deployment-check"
+	GetConfigurationResponseBodyIntegrationsAddedReadProject                       GetConfigurationResponseBodyIntegrationsAdded = "read:project"
+	GetConfigurationResponseBodyIntegrationsAddedReadWriteProject                  GetConfigurationResponseBodyIntegrationsAdded = "read-write:project"
+	GetConfigurationResponseBodyIntegrationsAddedReadWriteProjectEnvVars           GetConfigurationResponseBodyIntegrationsAdded = "read-write:project-env-vars"
+	GetConfigurationResponseBodyIntegrationsAddedReadWriteGlobalProjectEnvVars     GetConfigurationResponseBodyIntegrationsAdded = "read-write:global-project-env-vars"
+	GetConfigurationResponseBodyIntegrationsAddedReadTeam                          GetConfigurationResponseBodyIntegrationsAdded = "read:team"
+	GetConfigurationResponseBodyIntegrationsAddedReadUser                          GetConfigurationResponseBodyIntegrationsAdded = "read:user"
+	GetConfigurationResponseBodyIntegrationsAddedReadWriteLogDrain                 GetConfigurationResponseBodyIntegrationsAdded = "read-write:log-drain"
+	GetConfigurationResponseBodyIntegrationsAddedReadDomain                        GetConfigurationResponseBodyIntegrationsAdded = "read:domain"
+	GetConfigurationResponseBodyIntegrationsAddedReadWriteDomain                   GetConfigurationResponseBodyIntegrationsAdded = "read-write:domain"
+	GetConfigurationResponseBodyIntegrationsAddedReadWriteEdgeConfig               GetConfigurationResponseBodyIntegrationsAdded = "read-write:edge-config"
+	GetConfigurationResponseBodyIntegrationsAddedReadWriteOtelEndpoint             GetConfigurationResponseBodyIntegrationsAdded = "read-write:otel-endpoint"
+	GetConfigurationResponseBodyIntegrationsAddedReadMonitoring                    GetConfigurationResponseBodyIntegrationsAdded = "read:monitoring"
+	GetConfigurationResponseBodyIntegrationsAddedReadWriteIntegrationResource      GetConfigurationResponseBodyIntegrationsAdded = "read-write:integration-resource"
+)
+
+func (e GetConfigurationResponseBodyIntegrationsAdded) ToPointer() *GetConfigurationResponseBodyIntegrationsAdded {
+	return &e
+}
+func (e *GetConfigurationResponseBodyIntegrationsAdded) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "read:integration-configuration":
+		fallthrough
+	case "read-write:integration-configuration":
+		fallthrough
+	case "read:deployment":
+		fallthrough
+	case "read-write:deployment":
+		fallthrough
+	case "read-write:deployment-check":
+		fallthrough
+	case "read:project":
+		fallthrough
+	case "read-write:project":
+		fallthrough
+	case "read-write:project-env-vars":
+		fallthrough
+	case "read-write:global-project-env-vars":
+		fallthrough
+	case "read:team":
+		fallthrough
+	case "read:user":
+		fallthrough
+	case "read-write:log-drain":
+		fallthrough
+	case "read:domain":
+		fallthrough
+	case "read-write:domain":
+		fallthrough
+	case "read-write:edge-config":
+		fallthrough
+	case "read-write:otel-endpoint":
+		fallthrough
+	case "read:monitoring":
+		fallthrough
+	case "read-write:integration-resource":
+		*e = GetConfigurationResponseBodyIntegrationsAdded(v)
 		return nil
+	default:
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodyIntegrationsAdded: %v", v)
 	}
-	return o.CanConfigureOpenTelemetry
 }
 
-func (o *GetConfiguration2) GetCompletedAt() *float64 {
-	if o == nil {
+type GetConfigurationResponseBodyIntegrationsUpgraded string
+
+const (
+	GetConfigurationResponseBodyIntegrationsUpgradedReadIntegrationConfiguration      GetConfigurationResponseBodyIntegrationsUpgraded = "read:integration-configuration"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadWriteIntegrationConfiguration GetConfigurationResponseBodyIntegrationsUpgraded = "read-write:integration-configuration"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadDeployment                    GetConfigurationResponseBodyIntegrationsUpgraded = "read:deployment"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadWriteDeployment               GetConfigurationResponseBodyIntegrationsUpgraded = "read-write:deployment"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadWriteDeploymentCheck          GetConfigurationResponseBodyIntegrationsUpgraded = "read-write:deployment-check"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadProject                       GetConfigurationResponseBodyIntegrationsUpgraded = "read:project"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadWriteProject                  GetConfigurationResponseBodyIntegrationsUpgraded = "read-write:project"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadWriteProjectEnvVars           GetConfigurationResponseBodyIntegrationsUpgraded = "read-write:project-env-vars"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadWriteGlobalProjectEnvVars     GetConfigurationResponseBodyIntegrationsUpgraded = "read-write:global-project-env-vars"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadTeam                          GetConfigurationResponseBodyIntegrationsUpgraded = "read:team"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadUser                          GetConfigurationResponseBodyIntegrationsUpgraded = "read:user"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadWriteLogDrain                 GetConfigurationResponseBodyIntegrationsUpgraded = "read-write:log-drain"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadDomain                        GetConfigurationResponseBodyIntegrationsUpgraded = "read:domain"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadWriteDomain                   GetConfigurationResponseBodyIntegrationsUpgraded = "read-write:domain"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadWriteEdgeConfig               GetConfigurationResponseBodyIntegrationsUpgraded = "read-write:edge-config"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadWriteOtelEndpoint             GetConfigurationResponseBodyIntegrationsUpgraded = "read-write:otel-endpoint"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadMonitoring                    GetConfigurationResponseBodyIntegrationsUpgraded = "read:monitoring"
+	GetConfigurationResponseBodyIntegrationsUpgradedReadWriteIntegrationResource      GetConfigurationResponseBodyIntegrationsUpgraded = "read-write:integration-resource"
+)
+
+func (e GetConfigurationResponseBodyIntegrationsUpgraded) ToPointer() *GetConfigurationResponseBodyIntegrationsUpgraded {
+	return &e
+}
+func (e *GetConfigurationResponseBodyIntegrationsUpgraded) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "read:integration-configuration":
+		fallthrough
+	case "read-write:integration-configuration":
+		fallthrough
+	case "read:deployment":
+		fallthrough
+	case "read-write:deployment":
+		fallthrough
+	case "read-write:deployment-check":
+		fallthrough
+	case "read:project":
+		fallthrough
+	case "read-write:project":
+		fallthrough
+	case "read-write:project-env-vars":
+		fallthrough
+	case "read-write:global-project-env-vars":
+		fallthrough
+	case "read:team":
+		fallthrough
+	case "read:user":
+		fallthrough
+	case "read-write:log-drain":
+		fallthrough
+	case "read:domain":
+		fallthrough
+	case "read-write:domain":
+		fallthrough
+	case "read-write:edge-config":
+		fallthrough
+	case "read-write:otel-endpoint":
+		fallthrough
+	case "read:monitoring":
+		fallthrough
+	case "read-write:integration-resource":
+		*e = GetConfigurationResponseBodyIntegrationsUpgraded(v)
 		return nil
+	default:
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodyIntegrationsUpgraded: %v", v)
 	}
-	return o.CompletedAt
 }
 
-func (o *GetConfiguration2) GetCreatedAt() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.CreatedAt
+type GetConfigurationResponseBodyIntegrationsScopes struct {
+	Added    []GetConfigurationResponseBodyIntegrationsAdded    `json:"added"`
+	Upgraded []GetConfigurationResponseBodyIntegrationsUpgraded `json:"upgraded"`
 }
 
-func (o *GetConfiguration2) GetDeletedAt() *float64 {
+func (o *GetConfigurationResponseBodyIntegrationsScopes) GetAdded() []GetConfigurationResponseBodyIntegrationsAdded {
 	if o == nil {
-		return nil
+		return []GetConfigurationResponseBodyIntegrationsAdded{}
 	}
-	return o.DeletedAt
+	return o.Added
 }
 
-func (o *GetConfiguration2) GetDisabledAt() *float64 {
+func (o *GetConfigurationResponseBodyIntegrationsScopes) GetUpgraded() []GetConfigurationResponseBodyIntegrationsUpgraded {
 	if o == nil {
-		return nil
+		return []GetConfigurationResponseBodyIntegrationsUpgraded{}
 	}
-	return o.DisabledAt
+	return o.Upgraded
 }
 
-func (o *GetConfiguration2) GetDisabledReason() *GetConfigurationDisabledReason {
-	if o == nil {
-		return nil
-	}
-	return o.DisabledReason
+type GetConfigurationResponseBodyIntegrationsScopesQueue struct {
+	Scopes      GetConfigurationResponseBodyIntegrationsScopes `json:"scopes"`
+	Note        string                                         `json:"note"`
+	RequestedAt float64                                        `json:"requestedAt"`
+	ConfirmedAt *float64                                       `json:"confirmedAt,omitempty"`
 }
 
-func (o *GetConfiguration2) GetID() string {
+func (o *GetConfigurationResponseBodyIntegrationsScopesQueue) GetScopes() GetConfigurationResponseBodyIntegrationsScopes {
 	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *GetConfiguration2) GetInstallationType() *GetConfigurationInstallationType {
-	if o == nil {
-		return nil
-	}
-	return o.InstallationType
-}
-
-func (o *GetConfiguration2) GetIntegrationID() string {
-	if o == nil {
-		return ""
-	}
-	return o.IntegrationID
-}
-
-func (o *GetConfiguration2) GetNorthstarMigratedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.NorthstarMigratedAt
-}
-
-func (o *GetConfiguration2) GetOwnerID() string {
-	if o == nil {
-		return ""
-	}
-	return o.OwnerID
-}
-
-func (o *GetConfiguration2) GetProjectSelection() ProjectSelection {
-	if o == nil {
-		return ProjectSelection("")
-	}
-	return o.ProjectSelection
-}
-
-func (o *GetConfiguration2) GetProjects() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Projects
-}
-
-func (o *GetConfiguration2) GetRemovedLogDrainsAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.RemovedLogDrainsAt
-}
-
-func (o *GetConfiguration2) GetRemovedProjectEnvsAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.RemovedProjectEnvsAt
-}
-
-func (o *GetConfiguration2) GetRemovedTokensAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.RemovedTokensAt
-}
-
-func (o *GetConfiguration2) GetRemovedWebhooksAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.RemovedWebhooksAt
-}
-
-func (o *GetConfiguration2) GetScopes() []string {
-	if o == nil {
-		return []string{}
+		return GetConfigurationResponseBodyIntegrationsScopes{}
 	}
 	return o.Scopes
 }
 
-func (o *GetConfiguration2) GetScopesQueue() []GetConfigurationScopesQueue {
-	if o == nil {
-		return nil
-	}
-	return o.ScopesQueue
-}
-
-func (o *GetConfiguration2) GetSlug() string {
+func (o *GetConfigurationResponseBodyIntegrationsScopesQueue) GetNote() string {
 	if o == nil {
 		return ""
 	}
-	return o.Slug
+	return o.Note
 }
 
-func (o *GetConfiguration2) GetSource() *GetConfigurationIntegrationsSource {
-	if o == nil {
-		return nil
-	}
-	return o.Source
-}
-
-func (o *GetConfiguration2) GetTeamID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TeamID
-}
-
-func (o *GetConfiguration2) GetType() GetConfigurationIntegrationsType {
-	if o == nil {
-		return GetConfigurationIntegrationsType("")
-	}
-	return o.Type
-}
-
-func (o *GetConfiguration2) GetUpdatedAt() float64 {
+func (o *GetConfigurationResponseBodyIntegrationsScopesQueue) GetRequestedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
-	return o.UpdatedAt
+	return o.RequestedAt
 }
 
-func (o *GetConfiguration2) GetUserID() string {
+func (o *GetConfigurationResponseBodyIntegrationsScopesQueue) GetConfirmedAt() *float64 {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.UserID
+	return o.ConfirmedAt
 }
 
-type GetConfigurationIntegrationsDisabledReason string
+type GetConfigurationResponseBodyIntegrationsDisabledReason string
 
 const (
-	GetConfigurationIntegrationsDisabledReasonDisabledByOwner          GetConfigurationIntegrationsDisabledReason = "disabled-by-owner"
-	GetConfigurationIntegrationsDisabledReasonFeatureNotAvailable      GetConfigurationIntegrationsDisabledReason = "feature-not-available"
-	GetConfigurationIntegrationsDisabledReasonDisabledByAdmin          GetConfigurationIntegrationsDisabledReason = "disabled-by-admin"
-	GetConfigurationIntegrationsDisabledReasonOriginalOwnerLeftTheTeam GetConfigurationIntegrationsDisabledReason = "original-owner-left-the-team"
+	GetConfigurationResponseBodyIntegrationsDisabledReasonDisabledByOwner          GetConfigurationResponseBodyIntegrationsDisabledReason = "disabled-by-owner"
+	GetConfigurationResponseBodyIntegrationsDisabledReasonFeatureNotAvailable      GetConfigurationResponseBodyIntegrationsDisabledReason = "feature-not-available"
+	GetConfigurationResponseBodyIntegrationsDisabledReasonDisabledByAdmin          GetConfigurationResponseBodyIntegrationsDisabledReason = "disabled-by-admin"
+	GetConfigurationResponseBodyIntegrationsDisabledReasonOriginalOwnerLeftTheTeam GetConfigurationResponseBodyIntegrationsDisabledReason = "original-owner-left-the-team"
 )
 
-func (e GetConfigurationIntegrationsDisabledReason) ToPointer() *GetConfigurationIntegrationsDisabledReason {
+func (e GetConfigurationResponseBodyIntegrationsDisabledReason) ToPointer() *GetConfigurationResponseBodyIntegrationsDisabledReason {
 	return &e
 }
-func (e *GetConfigurationIntegrationsDisabledReason) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationResponseBodyIntegrationsDisabledReason) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -626,25 +347,25 @@ func (e *GetConfigurationIntegrationsDisabledReason) UnmarshalJSON(data []byte) 
 	case "disabled-by-admin":
 		fallthrough
 	case "original-owner-left-the-team":
-		*e = GetConfigurationIntegrationsDisabledReason(v)
+		*e = GetConfigurationResponseBodyIntegrationsDisabledReason(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfigurationIntegrationsDisabledReason: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodyIntegrationsDisabledReason: %v", v)
 	}
 }
 
-// InstallationType - Defines the installation type. - 'external' integrations are installed via the existing integrations flow - 'marketplace' integrations are natively installed: - when accepting the TOS of a partner during the store creation process - if undefined, assume 'external'
-type InstallationType string
+// GetConfigurationResponseBodyIntegrationsInstallationType - Defines the installation type. - 'external' integrations are installed via the existing integrations flow - 'marketplace' integrations are natively installed: - when accepting the TOS of a partner during the store creation process - if undefined, assume 'external'
+type GetConfigurationResponseBodyIntegrationsInstallationType string
 
 const (
-	InstallationTypeMarketplace InstallationType = "marketplace"
-	InstallationTypeExternal    InstallationType = "external"
+	GetConfigurationResponseBodyIntegrationsInstallationTypeMarketplace GetConfigurationResponseBodyIntegrationsInstallationType = "marketplace"
+	GetConfigurationResponseBodyIntegrationsInstallationTypeExternal    GetConfigurationResponseBodyIntegrationsInstallationType = "external"
 )
 
-func (e InstallationType) ToPointer() *InstallationType {
+func (e GetConfigurationResponseBodyIntegrationsInstallationType) ToPointer() *GetConfigurationResponseBodyIntegrationsInstallationType {
 	return &e
 }
-func (e *InstallationType) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationResponseBodyIntegrationsInstallationType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -653,228 +374,246 @@ func (e *InstallationType) UnmarshalJSON(data []byte) error {
 	case "marketplace":
 		fallthrough
 	case "external":
-		*e = InstallationType(v)
+		*e = GetConfigurationResponseBodyIntegrationsInstallationType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for InstallationType: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodyIntegrationsInstallationType: %v", v)
 	}
 }
 
-type Added string
-
-const (
-	AddedReadIntegrationConfiguration      Added = "read:integration-configuration"
-	AddedReadWriteIntegrationConfiguration Added = "read-write:integration-configuration"
-	AddedReadDeployment                    Added = "read:deployment"
-	AddedReadWriteDeployment               Added = "read-write:deployment"
-	AddedReadWriteDeploymentCheck          Added = "read-write:deployment-check"
-	AddedReadProject                       Added = "read:project"
-	AddedReadWriteProject                  Added = "read-write:project"
-	AddedReadWriteProjectEnvVars           Added = "read-write:project-env-vars"
-	AddedReadWriteGlobalProjectEnvVars     Added = "read-write:global-project-env-vars"
-	AddedReadTeam                          Added = "read:team"
-	AddedReadUser                          Added = "read:user"
-	AddedReadWriteLogDrain                 Added = "read-write:log-drain"
-	AddedReadDomain                        Added = "read:domain"
-	AddedReadWriteDomain                   Added = "read-write:domain"
-	AddedReadWriteEdgeConfig               Added = "read-write:edge-config"
-	AddedReadWriteOtelEndpoint             Added = "read-write:otel-endpoint"
-	AddedReadMonitoring                    Added = "read:monitoring"
-	AddedReadWriteIntegrationResource      Added = "read-write:integration-resource"
-)
-
-func (e Added) ToPointer() *Added {
-	return &e
-}
-func (e *Added) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "read:integration-configuration":
-		fallthrough
-	case "read-write:integration-configuration":
-		fallthrough
-	case "read:deployment":
-		fallthrough
-	case "read-write:deployment":
-		fallthrough
-	case "read-write:deployment-check":
-		fallthrough
-	case "read:project":
-		fallthrough
-	case "read-write:project":
-		fallthrough
-	case "read-write:project-env-vars":
-		fallthrough
-	case "read-write:global-project-env-vars":
-		fallthrough
-	case "read:team":
-		fallthrough
-	case "read:user":
-		fallthrough
-	case "read-write:log-drain":
-		fallthrough
-	case "read:domain":
-		fallthrough
-	case "read-write:domain":
-		fallthrough
-	case "read-write:edge-config":
-		fallthrough
-	case "read-write:otel-endpoint":
-		fallthrough
-	case "read:monitoring":
-		fallthrough
-	case "read-write:integration-resource":
-		*e = Added(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Added: %v", v)
-	}
+type GetConfigurationResponseBody2 struct {
+	// A string representing the permission for projects. Possible values are `all` or `selected`.
+	ProjectSelection ProjectSelection `json:"projectSelection"`
+	// When a configuration is limited to access certain projects, this will contain each of the project ID it is allowed to access. If it is not defined, the configuration has full access.
+	Projects []string `json:"projects,omitempty"`
+	// A timestamp that tells you when the configuration was installed successfully
+	CompletedAt *float64 `json:"completedAt,omitempty"`
+	// A timestamp that tells you when the configuration was created
+	CreatedAt float64 `json:"createdAt"`
+	// The unique identifier of the configuration
+	ID string `json:"id"`
+	// The unique identifier of the app the configuration was created for
+	IntegrationID string `json:"integrationId"`
+	// The user or team ID that owns the configuration
+	OwnerID string `json:"ownerId"`
+	// Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
+	Source               *GetConfigurationResponseBodyIntegrationsSource `json:"source,omitempty"`
+	RemovedLogDrainsAt   *float64                                        `json:"removedLogDrainsAt,omitempty"`
+	RemovedProjectEnvsAt *float64                                        `json:"removedProjectEnvsAt,omitempty"`
+	RemovedTokensAt      *float64                                        `json:"removedTokensAt,omitempty"`
+	RemovedWebhooksAt    *float64                                        `json:"removedWebhooksAt,omitempty"`
+	// The slug of the integration the configuration is created for.
+	Slug string `json:"slug"`
+	// When the configuration was created for a team, this will show the ID of the team.
+	TeamID *string                                      `json:"teamId,omitempty"`
+	Type   GetConfigurationResponseBodyIntegrationsType `json:"type"`
+	// A timestamp that tells you when the configuration was updated.
+	UpdatedAt float64 `json:"updatedAt"`
+	// The ID of the user that created the configuration.
+	UserID string `json:"userId"`
+	// The resources that are allowed to be accessed by the configuration.
+	Scopes      []string                                              `json:"scopes"`
+	ScopesQueue []GetConfigurationResponseBodyIntegrationsScopesQueue `json:"scopesQueue,omitempty"`
+	// A timestamp that tells you when the configuration was disabled. Note: Configurations can be disabled when the associated user loses access to a team. They do not function during this time until the configuration is 'transferred', meaning the associated user is changed to one with access to the team.
+	DisabledAt *float64 `json:"disabledAt,omitempty"`
+	// A timestamp that tells you when the configuration was updated.
+	DeletedAt      *float64                                                `json:"deletedAt,omitempty"`
+	DisabledReason *GetConfigurationResponseBodyIntegrationsDisabledReason `json:"disabledReason,omitempty"`
+	// A timestamp that tells you when the configuration was migrated as part of the Northstar migration. In the future, if we allow integration configurations to be transferred between teams, this field should be cleared upon transfer.
+	NorthstarMigratedAt *float64 `json:"northstarMigratedAt,omitempty"`
+	// Defines the installation type. - 'external' integrations are installed via the existing integrations flow - 'marketplace' integrations are natively installed: - when accepting the TOS of a partner during the store creation process - if undefined, assume 'external'
+	InstallationType          *GetConfigurationResponseBodyIntegrationsInstallationType `json:"installationType,omitempty"`
+	CanConfigureOpenTelemetry *bool                                                     `json:"canConfigureOpenTelemetry,omitempty"`
 }
 
-type Upgraded string
-
-const (
-	UpgradedReadIntegrationConfiguration      Upgraded = "read:integration-configuration"
-	UpgradedReadWriteIntegrationConfiguration Upgraded = "read-write:integration-configuration"
-	UpgradedReadDeployment                    Upgraded = "read:deployment"
-	UpgradedReadWriteDeployment               Upgraded = "read-write:deployment"
-	UpgradedReadWriteDeploymentCheck          Upgraded = "read-write:deployment-check"
-	UpgradedReadProject                       Upgraded = "read:project"
-	UpgradedReadWriteProject                  Upgraded = "read-write:project"
-	UpgradedReadWriteProjectEnvVars           Upgraded = "read-write:project-env-vars"
-	UpgradedReadWriteGlobalProjectEnvVars     Upgraded = "read-write:global-project-env-vars"
-	UpgradedReadTeam                          Upgraded = "read:team"
-	UpgradedReadUser                          Upgraded = "read:user"
-	UpgradedReadWriteLogDrain                 Upgraded = "read-write:log-drain"
-	UpgradedReadDomain                        Upgraded = "read:domain"
-	UpgradedReadWriteDomain                   Upgraded = "read-write:domain"
-	UpgradedReadWriteEdgeConfig               Upgraded = "read-write:edge-config"
-	UpgradedReadWriteOtelEndpoint             Upgraded = "read-write:otel-endpoint"
-	UpgradedReadMonitoring                    Upgraded = "read:monitoring"
-	UpgradedReadWriteIntegrationResource      Upgraded = "read-write:integration-resource"
-)
-
-func (e Upgraded) ToPointer() *Upgraded {
-	return &e
-}
-func (e *Upgraded) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "read:integration-configuration":
-		fallthrough
-	case "read-write:integration-configuration":
-		fallthrough
-	case "read:deployment":
-		fallthrough
-	case "read-write:deployment":
-		fallthrough
-	case "read-write:deployment-check":
-		fallthrough
-	case "read:project":
-		fallthrough
-	case "read-write:project":
-		fallthrough
-	case "read-write:project-env-vars":
-		fallthrough
-	case "read-write:global-project-env-vars":
-		fallthrough
-	case "read:team":
-		fallthrough
-	case "read:user":
-		fallthrough
-	case "read-write:log-drain":
-		fallthrough
-	case "read:domain":
-		fallthrough
-	case "read-write:domain":
-		fallthrough
-	case "read-write:edge-config":
-		fallthrough
-	case "read-write:otel-endpoint":
-		fallthrough
-	case "read:monitoring":
-		fallthrough
-	case "read-write:integration-resource":
-		*e = Upgraded(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Upgraded: %v", v)
-	}
-}
-
-type Scopes struct {
-	Added    []Added    `json:"added"`
-	Upgraded []Upgraded `json:"upgraded"`
-}
-
-func (o *Scopes) GetAdded() []Added {
+func (o *GetConfigurationResponseBody2) GetProjectSelection() ProjectSelection {
 	if o == nil {
-		return []Added{}
+		return ProjectSelection("")
 	}
-	return o.Added
+	return o.ProjectSelection
 }
 
-func (o *Scopes) GetUpgraded() []Upgraded {
-	if o == nil {
-		return []Upgraded{}
-	}
-	return o.Upgraded
-}
-
-type ScopesQueue struct {
-	ConfirmedAt *float64 `json:"confirmedAt,omitempty"`
-	Note        string   `json:"note"`
-	RequestedAt float64  `json:"requestedAt"`
-	Scopes      Scopes   `json:"scopes"`
-}
-
-func (o *ScopesQueue) GetConfirmedAt() *float64 {
+func (o *GetConfigurationResponseBody2) GetProjects() []string {
 	if o == nil {
 		return nil
 	}
-	return o.ConfirmedAt
+	return o.Projects
 }
 
-func (o *ScopesQueue) GetNote() string {
+func (o *GetConfigurationResponseBody2) GetCompletedAt() *float64 {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Note
+	return o.CompletedAt
 }
 
-func (o *ScopesQueue) GetRequestedAt() float64 {
+func (o *GetConfigurationResponseBody2) GetCreatedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
-	return o.RequestedAt
+	return o.CreatedAt
 }
 
-func (o *ScopesQueue) GetScopes() Scopes {
+func (o *GetConfigurationResponseBody2) GetID() string {
 	if o == nil {
-		return Scopes{}
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetConfigurationResponseBody2) GetIntegrationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.IntegrationID
+}
+
+func (o *GetConfigurationResponseBody2) GetOwnerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerID
+}
+
+func (o *GetConfigurationResponseBody2) GetSource() *GetConfigurationResponseBodyIntegrationsSource {
+	if o == nil {
+		return nil
+	}
+	return o.Source
+}
+
+func (o *GetConfigurationResponseBody2) GetRemovedLogDrainsAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedLogDrainsAt
+}
+
+func (o *GetConfigurationResponseBody2) GetRemovedProjectEnvsAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedProjectEnvsAt
+}
+
+func (o *GetConfigurationResponseBody2) GetRemovedTokensAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedTokensAt
+}
+
+func (o *GetConfigurationResponseBody2) GetRemovedWebhooksAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedWebhooksAt
+}
+
+func (o *GetConfigurationResponseBody2) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *GetConfigurationResponseBody2) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetConfigurationResponseBody2) GetType() GetConfigurationResponseBodyIntegrationsType {
+	if o == nil {
+		return GetConfigurationResponseBodyIntegrationsType("")
+	}
+	return o.Type
+}
+
+func (o *GetConfigurationResponseBody2) GetUpdatedAt() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.UpdatedAt
+}
+
+func (o *GetConfigurationResponseBody2) GetUserID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserID
+}
+
+func (o *GetConfigurationResponseBody2) GetScopes() []string {
+	if o == nil {
+		return []string{}
 	}
 	return o.Scopes
 }
 
-// GetConfigurationSource - Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
-type GetConfigurationSource string
+func (o *GetConfigurationResponseBody2) GetScopesQueue() []GetConfigurationResponseBodyIntegrationsScopesQueue {
+	if o == nil {
+		return nil
+	}
+	return o.ScopesQueue
+}
+
+func (o *GetConfigurationResponseBody2) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *GetConfigurationResponseBody2) GetDeletedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *GetConfigurationResponseBody2) GetDisabledReason() *GetConfigurationResponseBodyIntegrationsDisabledReason {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledReason
+}
+
+func (o *GetConfigurationResponseBody2) GetNorthstarMigratedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.NorthstarMigratedAt
+}
+
+func (o *GetConfigurationResponseBody2) GetInstallationType() *GetConfigurationResponseBodyIntegrationsInstallationType {
+	if o == nil {
+		return nil
+	}
+	return o.InstallationType
+}
+
+func (o *GetConfigurationResponseBody2) GetCanConfigureOpenTelemetry() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CanConfigureOpenTelemetry
+}
+
+// GetConfigurationResponseBodySource - Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
+type GetConfigurationResponseBodySource string
 
 const (
-	GetConfigurationSourceMarketplace  GetConfigurationSource = "marketplace"
-	GetConfigurationSourceDeployButton GetConfigurationSource = "deploy-button"
-	GetConfigurationSourceExternal     GetConfigurationSource = "external"
+	GetConfigurationResponseBodySourceMarketplace  GetConfigurationResponseBodySource = "marketplace"
+	GetConfigurationResponseBodySourceDeployButton GetConfigurationResponseBodySource = "deploy-button"
+	GetConfigurationResponseBodySourceExternal     GetConfigurationResponseBodySource = "external"
 )
 
-func (e GetConfigurationSource) ToPointer() *GetConfigurationSource {
+func (e GetConfigurationResponseBodySource) ToPointer() *GetConfigurationResponseBodySource {
 	return &e
 }
-func (e *GetConfigurationSource) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationResponseBodySource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -885,286 +624,547 @@ func (e *GetConfigurationSource) UnmarshalJSON(data []byte) error {
 	case "deploy-button":
 		fallthrough
 	case "external":
-		*e = GetConfigurationSource(v)
+		*e = GetConfigurationResponseBodySource(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfigurationSource: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodySource: %v", v)
 	}
 }
 
-type GetConfigurationType string
+type GetConfigurationResponseBodyType string
 
 const (
-	GetConfigurationTypeIntegrationConfiguration GetConfigurationType = "integration-configuration"
+	GetConfigurationResponseBodyTypeIntegrationConfiguration GetConfigurationResponseBodyType = "integration-configuration"
 )
 
-func (e GetConfigurationType) ToPointer() *GetConfigurationType {
+func (e GetConfigurationResponseBodyType) ToPointer() *GetConfigurationResponseBodyType {
 	return &e
 }
-func (e *GetConfigurationType) UnmarshalJSON(data []byte) error {
+func (e *GetConfigurationResponseBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "integration-configuration":
-		*e = GetConfigurationType(v)
+		*e = GetConfigurationResponseBodyType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetConfigurationType: %v", v)
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodyType: %v", v)
 	}
 }
 
-// GetConfiguration1 - The configuration with the provided id
-type GetConfiguration1 struct {
+type GetConfigurationResponseBodyAdded string
+
+const (
+	GetConfigurationResponseBodyAddedReadIntegrationConfiguration      GetConfigurationResponseBodyAdded = "read:integration-configuration"
+	GetConfigurationResponseBodyAddedReadWriteIntegrationConfiguration GetConfigurationResponseBodyAdded = "read-write:integration-configuration"
+	GetConfigurationResponseBodyAddedReadDeployment                    GetConfigurationResponseBodyAdded = "read:deployment"
+	GetConfigurationResponseBodyAddedReadWriteDeployment               GetConfigurationResponseBodyAdded = "read-write:deployment"
+	GetConfigurationResponseBodyAddedReadWriteDeploymentCheck          GetConfigurationResponseBodyAdded = "read-write:deployment-check"
+	GetConfigurationResponseBodyAddedReadProject                       GetConfigurationResponseBodyAdded = "read:project"
+	GetConfigurationResponseBodyAddedReadWriteProject                  GetConfigurationResponseBodyAdded = "read-write:project"
+	GetConfigurationResponseBodyAddedReadWriteProjectEnvVars           GetConfigurationResponseBodyAdded = "read-write:project-env-vars"
+	GetConfigurationResponseBodyAddedReadWriteGlobalProjectEnvVars     GetConfigurationResponseBodyAdded = "read-write:global-project-env-vars"
+	GetConfigurationResponseBodyAddedReadTeam                          GetConfigurationResponseBodyAdded = "read:team"
+	GetConfigurationResponseBodyAddedReadUser                          GetConfigurationResponseBodyAdded = "read:user"
+	GetConfigurationResponseBodyAddedReadWriteLogDrain                 GetConfigurationResponseBodyAdded = "read-write:log-drain"
+	GetConfigurationResponseBodyAddedReadDomain                        GetConfigurationResponseBodyAdded = "read:domain"
+	GetConfigurationResponseBodyAddedReadWriteDomain                   GetConfigurationResponseBodyAdded = "read-write:domain"
+	GetConfigurationResponseBodyAddedReadWriteEdgeConfig               GetConfigurationResponseBodyAdded = "read-write:edge-config"
+	GetConfigurationResponseBodyAddedReadWriteOtelEndpoint             GetConfigurationResponseBodyAdded = "read-write:otel-endpoint"
+	GetConfigurationResponseBodyAddedReadMonitoring                    GetConfigurationResponseBodyAdded = "read:monitoring"
+	GetConfigurationResponseBodyAddedReadWriteIntegrationResource      GetConfigurationResponseBodyAdded = "read-write:integration-resource"
+)
+
+func (e GetConfigurationResponseBodyAdded) ToPointer() *GetConfigurationResponseBodyAdded {
+	return &e
+}
+func (e *GetConfigurationResponseBodyAdded) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "read:integration-configuration":
+		fallthrough
+	case "read-write:integration-configuration":
+		fallthrough
+	case "read:deployment":
+		fallthrough
+	case "read-write:deployment":
+		fallthrough
+	case "read-write:deployment-check":
+		fallthrough
+	case "read:project":
+		fallthrough
+	case "read-write:project":
+		fallthrough
+	case "read-write:project-env-vars":
+		fallthrough
+	case "read-write:global-project-env-vars":
+		fallthrough
+	case "read:team":
+		fallthrough
+	case "read:user":
+		fallthrough
+	case "read-write:log-drain":
+		fallthrough
+	case "read:domain":
+		fallthrough
+	case "read-write:domain":
+		fallthrough
+	case "read-write:edge-config":
+		fallthrough
+	case "read-write:otel-endpoint":
+		fallthrough
+	case "read:monitoring":
+		fallthrough
+	case "read-write:integration-resource":
+		*e = GetConfigurationResponseBodyAdded(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodyAdded: %v", v)
+	}
+}
+
+type GetConfigurationResponseBodyUpgraded string
+
+const (
+	GetConfigurationResponseBodyUpgradedReadIntegrationConfiguration      GetConfigurationResponseBodyUpgraded = "read:integration-configuration"
+	GetConfigurationResponseBodyUpgradedReadWriteIntegrationConfiguration GetConfigurationResponseBodyUpgraded = "read-write:integration-configuration"
+	GetConfigurationResponseBodyUpgradedReadDeployment                    GetConfigurationResponseBodyUpgraded = "read:deployment"
+	GetConfigurationResponseBodyUpgradedReadWriteDeployment               GetConfigurationResponseBodyUpgraded = "read-write:deployment"
+	GetConfigurationResponseBodyUpgradedReadWriteDeploymentCheck          GetConfigurationResponseBodyUpgraded = "read-write:deployment-check"
+	GetConfigurationResponseBodyUpgradedReadProject                       GetConfigurationResponseBodyUpgraded = "read:project"
+	GetConfigurationResponseBodyUpgradedReadWriteProject                  GetConfigurationResponseBodyUpgraded = "read-write:project"
+	GetConfigurationResponseBodyUpgradedReadWriteProjectEnvVars           GetConfigurationResponseBodyUpgraded = "read-write:project-env-vars"
+	GetConfigurationResponseBodyUpgradedReadWriteGlobalProjectEnvVars     GetConfigurationResponseBodyUpgraded = "read-write:global-project-env-vars"
+	GetConfigurationResponseBodyUpgradedReadTeam                          GetConfigurationResponseBodyUpgraded = "read:team"
+	GetConfigurationResponseBodyUpgradedReadUser                          GetConfigurationResponseBodyUpgraded = "read:user"
+	GetConfigurationResponseBodyUpgradedReadWriteLogDrain                 GetConfigurationResponseBodyUpgraded = "read-write:log-drain"
+	GetConfigurationResponseBodyUpgradedReadDomain                        GetConfigurationResponseBodyUpgraded = "read:domain"
+	GetConfigurationResponseBodyUpgradedReadWriteDomain                   GetConfigurationResponseBodyUpgraded = "read-write:domain"
+	GetConfigurationResponseBodyUpgradedReadWriteEdgeConfig               GetConfigurationResponseBodyUpgraded = "read-write:edge-config"
+	GetConfigurationResponseBodyUpgradedReadWriteOtelEndpoint             GetConfigurationResponseBodyUpgraded = "read-write:otel-endpoint"
+	GetConfigurationResponseBodyUpgradedReadMonitoring                    GetConfigurationResponseBodyUpgraded = "read:monitoring"
+	GetConfigurationResponseBodyUpgradedReadWriteIntegrationResource      GetConfigurationResponseBodyUpgraded = "read-write:integration-resource"
+)
+
+func (e GetConfigurationResponseBodyUpgraded) ToPointer() *GetConfigurationResponseBodyUpgraded {
+	return &e
+}
+func (e *GetConfigurationResponseBodyUpgraded) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "read:integration-configuration":
+		fallthrough
+	case "read-write:integration-configuration":
+		fallthrough
+	case "read:deployment":
+		fallthrough
+	case "read-write:deployment":
+		fallthrough
+	case "read-write:deployment-check":
+		fallthrough
+	case "read:project":
+		fallthrough
+	case "read-write:project":
+		fallthrough
+	case "read-write:project-env-vars":
+		fallthrough
+	case "read-write:global-project-env-vars":
+		fallthrough
+	case "read:team":
+		fallthrough
+	case "read:user":
+		fallthrough
+	case "read-write:log-drain":
+		fallthrough
+	case "read:domain":
+		fallthrough
+	case "read-write:domain":
+		fallthrough
+	case "read-write:edge-config":
+		fallthrough
+	case "read-write:otel-endpoint":
+		fallthrough
+	case "read:monitoring":
+		fallthrough
+	case "read-write:integration-resource":
+		*e = GetConfigurationResponseBodyUpgraded(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodyUpgraded: %v", v)
+	}
+}
+
+type GetConfigurationResponseBodyScopes struct {
+	Added    []GetConfigurationResponseBodyAdded    `json:"added"`
+	Upgraded []GetConfigurationResponseBodyUpgraded `json:"upgraded"`
+}
+
+func (o *GetConfigurationResponseBodyScopes) GetAdded() []GetConfigurationResponseBodyAdded {
+	if o == nil {
+		return []GetConfigurationResponseBodyAdded{}
+	}
+	return o.Added
+}
+
+func (o *GetConfigurationResponseBodyScopes) GetUpgraded() []GetConfigurationResponseBodyUpgraded {
+	if o == nil {
+		return []GetConfigurationResponseBodyUpgraded{}
+	}
+	return o.Upgraded
+}
+
+type GetConfigurationResponseBodyScopesQueue struct {
+	Scopes      GetConfigurationResponseBodyScopes `json:"scopes"`
+	Note        string                             `json:"note"`
+	RequestedAt float64                            `json:"requestedAt"`
+	ConfirmedAt *float64                           `json:"confirmedAt,omitempty"`
+}
+
+func (o *GetConfigurationResponseBodyScopesQueue) GetScopes() GetConfigurationResponseBodyScopes {
+	if o == nil {
+		return GetConfigurationResponseBodyScopes{}
+	}
+	return o.Scopes
+}
+
+func (o *GetConfigurationResponseBodyScopesQueue) GetNote() string {
+	if o == nil {
+		return ""
+	}
+	return o.Note
+}
+
+func (o *GetConfigurationResponseBodyScopesQueue) GetRequestedAt() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.RequestedAt
+}
+
+func (o *GetConfigurationResponseBodyScopesQueue) GetConfirmedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.ConfirmedAt
+}
+
+type GetConfigurationResponseBodyDisabledReason string
+
+const (
+	GetConfigurationResponseBodyDisabledReasonDisabledByOwner          GetConfigurationResponseBodyDisabledReason = "disabled-by-owner"
+	GetConfigurationResponseBodyDisabledReasonFeatureNotAvailable      GetConfigurationResponseBodyDisabledReason = "feature-not-available"
+	GetConfigurationResponseBodyDisabledReasonDisabledByAdmin          GetConfigurationResponseBodyDisabledReason = "disabled-by-admin"
+	GetConfigurationResponseBodyDisabledReasonOriginalOwnerLeftTheTeam GetConfigurationResponseBodyDisabledReason = "original-owner-left-the-team"
+)
+
+func (e GetConfigurationResponseBodyDisabledReason) ToPointer() *GetConfigurationResponseBodyDisabledReason {
+	return &e
+}
+func (e *GetConfigurationResponseBodyDisabledReason) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "disabled-by-owner":
+		fallthrough
+	case "feature-not-available":
+		fallthrough
+	case "disabled-by-admin":
+		fallthrough
+	case "original-owner-left-the-team":
+		*e = GetConfigurationResponseBodyDisabledReason(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodyDisabledReason: %v", v)
+	}
+}
+
+// GetConfigurationResponseBodyInstallationType - Defines the installation type. - 'external' integrations are installed via the existing integrations flow - 'marketplace' integrations are natively installed: - when accepting the TOS of a partner during the store creation process - if undefined, assume 'external'
+type GetConfigurationResponseBodyInstallationType string
+
+const (
+	GetConfigurationResponseBodyInstallationTypeMarketplace GetConfigurationResponseBodyInstallationType = "marketplace"
+	GetConfigurationResponseBodyInstallationTypeExternal    GetConfigurationResponseBodyInstallationType = "external"
+)
+
+func (e GetConfigurationResponseBodyInstallationType) ToPointer() *GetConfigurationResponseBodyInstallationType {
+	return &e
+}
+func (e *GetConfigurationResponseBodyInstallationType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "marketplace":
+		fallthrough
+	case "external":
+		*e = GetConfigurationResponseBodyInstallationType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetConfigurationResponseBodyInstallationType: %v", v)
+	}
+}
+
+// GetConfigurationResponseBody1 - The configuration with the provided id
+type GetConfigurationResponseBody1 struct {
 	// A timestamp that tells you when the configuration was installed successfully
 	CompletedAt *float64 `json:"completedAt,omitempty"`
 	// A timestamp that tells you when the configuration was created
 	CreatedAt float64 `json:"createdAt"`
-	// A timestamp that tells you when the configuration was updated.
-	DeletedAt *float64 `json:"deletedAt,omitempty"`
-	// A timestamp that tells you when the configuration was disabled. Note: Configurations can be disabled when the associated user loses access to a team. They do not function during this time until the configuration is 'transferred', meaning the associated user is changed to one with access to the team.
-	DisabledAt     *float64                                    `json:"disabledAt,omitempty"`
-	DisabledReason *GetConfigurationIntegrationsDisabledReason `json:"disabledReason,omitempty"`
 	// The unique identifier of the configuration
 	ID string `json:"id"`
-	// Defines the installation type. - 'external' integrations are installed via the existing integrations flow - 'marketplace' integrations are natively installed: - when accepting the TOS of a partner during the store creation process - if undefined, assume 'external'
-	InstallationType *InstallationType `json:"installationType,omitempty"`
 	// The unique identifier of the app the configuration was created for
 	IntegrationID string `json:"integrationId"`
-	// A timestamp that tells you when the configuration was migrated as part of the Northstar migration. In the future, if we allow integration configurations to be transferred between teams, this field should be cleared upon transfer.
-	NorthstarMigratedAt *float64 `json:"northstarMigratedAt,omitempty"`
 	// The user or team ID that owns the configuration
 	OwnerID string `json:"ownerId"`
 	// When a configuration is limited to access certain projects, this will contain each of the project ID it is allowed to access. If it is not defined, the configuration has full access.
-	Projects             []string `json:"projects,omitempty"`
-	RemovedLogDrainsAt   *float64 `json:"removedLogDrainsAt,omitempty"`
-	RemovedProjectEnvsAt *float64 `json:"removedProjectEnvsAt,omitempty"`
-	RemovedTokensAt      *float64 `json:"removedTokensAt,omitempty"`
-	RemovedWebhooksAt    *float64 `json:"removedWebhooksAt,omitempty"`
-	// The resources that are allowed to be accessed by the configuration.
-	Scopes      []string      `json:"scopes"`
-	ScopesQueue []ScopesQueue `json:"scopesQueue,omitempty"`
+	Projects []string `json:"projects,omitempty"`
+	// Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
+	Source               *GetConfigurationResponseBodySource `json:"source,omitempty"`
+	RemovedLogDrainsAt   *float64                            `json:"removedLogDrainsAt,omitempty"`
+	RemovedProjectEnvsAt *float64                            `json:"removedProjectEnvsAt,omitempty"`
+	RemovedTokensAt      *float64                            `json:"removedTokensAt,omitempty"`
+	RemovedWebhooksAt    *float64                            `json:"removedWebhooksAt,omitempty"`
 	// The slug of the integration the configuration is created for.
 	Slug string `json:"slug"`
-	// Source defines where the configuration was installed from. It is used to analyze user engagement for integration installations in product metrics.
-	Source *GetConfigurationSource `json:"source,omitempty"`
 	// When the configuration was created for a team, this will show the ID of the team.
-	TeamID *string              `json:"teamId,omitempty"`
-	Type   GetConfigurationType `json:"type"`
+	TeamID *string                          `json:"teamId,omitempty"`
+	Type   GetConfigurationResponseBodyType `json:"type"`
 	// A timestamp that tells you when the configuration was updated.
 	UpdatedAt float64 `json:"updatedAt"`
 	// The ID of the user that created the configuration.
 	UserID string `json:"userId"`
+	// The resources that are allowed to be accessed by the configuration.
+	Scopes      []string                                  `json:"scopes"`
+	ScopesQueue []GetConfigurationResponseBodyScopesQueue `json:"scopesQueue,omitempty"`
+	// A timestamp that tells you when the configuration was disabled. Note: Configurations can be disabled when the associated user loses access to a team. They do not function during this time until the configuration is 'transferred', meaning the associated user is changed to one with access to the team.
+	DisabledAt *float64 `json:"disabledAt,omitempty"`
+	// A timestamp that tells you when the configuration was updated.
+	DeletedAt      *float64                                    `json:"deletedAt,omitempty"`
+	DisabledReason *GetConfigurationResponseBodyDisabledReason `json:"disabledReason,omitempty"`
+	// A timestamp that tells you when the configuration was migrated as part of the Northstar migration. In the future, if we allow integration configurations to be transferred between teams, this field should be cleared upon transfer.
+	NorthstarMigratedAt *float64 `json:"northstarMigratedAt,omitempty"`
+	// Defines the installation type. - 'external' integrations are installed via the existing integrations flow - 'marketplace' integrations are natively installed: - when accepting the TOS of a partner during the store creation process - if undefined, assume 'external'
+	InstallationType *GetConfigurationResponseBodyInstallationType `json:"installationType,omitempty"`
 }
 
-func (o *GetConfiguration1) GetCompletedAt() *float64 {
+func (o *GetConfigurationResponseBody1) GetCompletedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CompletedAt
 }
 
-func (o *GetConfiguration1) GetCreatedAt() float64 {
+func (o *GetConfigurationResponseBody1) GetCreatedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetConfiguration1) GetDeletedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.DeletedAt
-}
-
-func (o *GetConfiguration1) GetDisabledAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.DisabledAt
-}
-
-func (o *GetConfiguration1) GetDisabledReason() *GetConfigurationIntegrationsDisabledReason {
-	if o == nil {
-		return nil
-	}
-	return o.DisabledReason
-}
-
-func (o *GetConfiguration1) GetID() string {
+func (o *GetConfigurationResponseBody1) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetConfiguration1) GetInstallationType() *InstallationType {
-	if o == nil {
-		return nil
-	}
-	return o.InstallationType
-}
-
-func (o *GetConfiguration1) GetIntegrationID() string {
+func (o *GetConfigurationResponseBody1) GetIntegrationID() string {
 	if o == nil {
 		return ""
 	}
 	return o.IntegrationID
 }
 
-func (o *GetConfiguration1) GetNorthstarMigratedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.NorthstarMigratedAt
-}
-
-func (o *GetConfiguration1) GetOwnerID() string {
+func (o *GetConfigurationResponseBody1) GetOwnerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.OwnerID
 }
 
-func (o *GetConfiguration1) GetProjects() []string {
+func (o *GetConfigurationResponseBody1) GetProjects() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Projects
 }
 
-func (o *GetConfiguration1) GetRemovedLogDrainsAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.RemovedLogDrainsAt
-}
-
-func (o *GetConfiguration1) GetRemovedProjectEnvsAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.RemovedProjectEnvsAt
-}
-
-func (o *GetConfiguration1) GetRemovedTokensAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.RemovedTokensAt
-}
-
-func (o *GetConfiguration1) GetRemovedWebhooksAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.RemovedWebhooksAt
-}
-
-func (o *GetConfiguration1) GetScopes() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.Scopes
-}
-
-func (o *GetConfiguration1) GetScopesQueue() []ScopesQueue {
-	if o == nil {
-		return nil
-	}
-	return o.ScopesQueue
-}
-
-func (o *GetConfiguration1) GetSlug() string {
-	if o == nil {
-		return ""
-	}
-	return o.Slug
-}
-
-func (o *GetConfiguration1) GetSource() *GetConfigurationSource {
+func (o *GetConfigurationResponseBody1) GetSource() *GetConfigurationResponseBodySource {
 	if o == nil {
 		return nil
 	}
 	return o.Source
 }
 
-func (o *GetConfiguration1) GetTeamID() *string {
+func (o *GetConfigurationResponseBody1) GetRemovedLogDrainsAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedLogDrainsAt
+}
+
+func (o *GetConfigurationResponseBody1) GetRemovedProjectEnvsAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedProjectEnvsAt
+}
+
+func (o *GetConfigurationResponseBody1) GetRemovedTokensAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedTokensAt
+}
+
+func (o *GetConfigurationResponseBody1) GetRemovedWebhooksAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.RemovedWebhooksAt
+}
+
+func (o *GetConfigurationResponseBody1) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
+}
+
+func (o *GetConfigurationResponseBody1) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
 }
 
-func (o *GetConfiguration1) GetType() GetConfigurationType {
+func (o *GetConfigurationResponseBody1) GetType() GetConfigurationResponseBodyType {
 	if o == nil {
-		return GetConfigurationType("")
+		return GetConfigurationResponseBodyType("")
 	}
 	return o.Type
 }
 
-func (o *GetConfiguration1) GetUpdatedAt() float64 {
+func (o *GetConfigurationResponseBody1) GetUpdatedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.UpdatedAt
 }
 
-func (o *GetConfiguration1) GetUserID() string {
+func (o *GetConfigurationResponseBody1) GetUserID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UserID
 }
 
-type GetConfigurationResponseBodyType string
+func (o *GetConfigurationResponseBody1) GetScopes() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Scopes
+}
+
+func (o *GetConfigurationResponseBody1) GetScopesQueue() []GetConfigurationResponseBodyScopesQueue {
+	if o == nil {
+		return nil
+	}
+	return o.ScopesQueue
+}
+
+func (o *GetConfigurationResponseBody1) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *GetConfigurationResponseBody1) GetDeletedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *GetConfigurationResponseBody1) GetDisabledReason() *GetConfigurationResponseBodyDisabledReason {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledReason
+}
+
+func (o *GetConfigurationResponseBody1) GetNorthstarMigratedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.NorthstarMigratedAt
+}
+
+func (o *GetConfigurationResponseBody1) GetInstallationType() *GetConfigurationResponseBodyInstallationType {
+	if o == nil {
+		return nil
+	}
+	return o.InstallationType
+}
+
+type GetConfigurationResponseBodyUnionType string
 
 const (
-	GetConfigurationResponseBodyTypeGetConfiguration1 GetConfigurationResponseBodyType = "getConfiguration_1"
-	GetConfigurationResponseBodyTypeGetConfiguration2 GetConfigurationResponseBodyType = "getConfiguration_2"
+	GetConfigurationResponseBodyUnionTypeGetConfigurationResponseBody1 GetConfigurationResponseBodyUnionType = "getConfiguration_responseBody_1"
+	GetConfigurationResponseBodyUnionTypeGetConfigurationResponseBody2 GetConfigurationResponseBodyUnionType = "getConfiguration_responseBody_2"
 )
 
 // GetConfigurationResponseBody - The configuration with the provided id
 type GetConfigurationResponseBody struct {
-	GetConfiguration1 *GetConfiguration1
-	GetConfiguration2 *GetConfiguration2
+	GetConfigurationResponseBody1 *GetConfigurationResponseBody1
+	GetConfigurationResponseBody2 *GetConfigurationResponseBody2
 
-	Type GetConfigurationResponseBodyType
+	Type GetConfigurationResponseBodyUnionType
 }
 
-func CreateGetConfigurationResponseBodyGetConfiguration1(getConfiguration1 GetConfiguration1) GetConfigurationResponseBody {
-	typ := GetConfigurationResponseBodyTypeGetConfiguration1
+func CreateGetConfigurationResponseBodyGetConfigurationResponseBody1(getConfigurationResponseBody1 GetConfigurationResponseBody1) GetConfigurationResponseBody {
+	typ := GetConfigurationResponseBodyUnionTypeGetConfigurationResponseBody1
 
 	return GetConfigurationResponseBody{
-		GetConfiguration1: &getConfiguration1,
-		Type:              typ,
+		GetConfigurationResponseBody1: &getConfigurationResponseBody1,
+		Type:                          typ,
 	}
 }
 
-func CreateGetConfigurationResponseBodyGetConfiguration2(getConfiguration2 GetConfiguration2) GetConfigurationResponseBody {
-	typ := GetConfigurationResponseBodyTypeGetConfiguration2
+func CreateGetConfigurationResponseBodyGetConfigurationResponseBody2(getConfigurationResponseBody2 GetConfigurationResponseBody2) GetConfigurationResponseBody {
+	typ := GetConfigurationResponseBodyUnionTypeGetConfigurationResponseBody2
 
 	return GetConfigurationResponseBody{
-		GetConfiguration2: &getConfiguration2,
-		Type:              typ,
+		GetConfigurationResponseBody2: &getConfigurationResponseBody2,
+		Type:                          typ,
 	}
 }
 
 func (u *GetConfigurationResponseBody) UnmarshalJSON(data []byte) error {
 
-	var getConfiguration1 GetConfiguration1 = GetConfiguration1{}
-	if err := utils.UnmarshalJSON(data, &getConfiguration1, "", true, true); err == nil {
-		u.GetConfiguration1 = &getConfiguration1
-		u.Type = GetConfigurationResponseBodyTypeGetConfiguration1
+	var getConfigurationResponseBody1 GetConfigurationResponseBody1 = GetConfigurationResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &getConfigurationResponseBody1, "", true, true); err == nil {
+		u.GetConfigurationResponseBody1 = &getConfigurationResponseBody1
+		u.Type = GetConfigurationResponseBodyUnionTypeGetConfigurationResponseBody1
 		return nil
 	}
 
-	var getConfiguration2 GetConfiguration2 = GetConfiguration2{}
-	if err := utils.UnmarshalJSON(data, &getConfiguration2, "", true, true); err == nil {
-		u.GetConfiguration2 = &getConfiguration2
-		u.Type = GetConfigurationResponseBodyTypeGetConfiguration2
+	var getConfigurationResponseBody2 GetConfigurationResponseBody2 = GetConfigurationResponseBody2{}
+	if err := utils.UnmarshalJSON(data, &getConfigurationResponseBody2, "", true, true); err == nil {
+		u.GetConfigurationResponseBody2 = &getConfigurationResponseBody2
+		u.Type = GetConfigurationResponseBodyUnionTypeGetConfigurationResponseBody2
 		return nil
 	}
 
@@ -1172,12 +1172,12 @@ func (u *GetConfigurationResponseBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u GetConfigurationResponseBody) MarshalJSON() ([]byte, error) {
-	if u.GetConfiguration1 != nil {
-		return utils.MarshalJSON(u.GetConfiguration1, "", true)
+	if u.GetConfigurationResponseBody1 != nil {
+		return utils.MarshalJSON(u.GetConfigurationResponseBody1, "", true)
 	}
 
-	if u.GetConfiguration2 != nil {
-		return utils.MarshalJSON(u.GetConfiguration2, "", true)
+	if u.GetConfigurationResponseBody2 != nil {
+		return utils.MarshalJSON(u.GetConfigurationResponseBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type GetConfigurationResponseBody: all fields are null")

@@ -15,10 +15,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	speakeasy_listplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/listplanmodifier"
-	speakeasy_stringplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/stringplanmodifier"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	speakeasy_listplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/listplanmodifier"
+	speakeasy_stringplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -31,7 +31,7 @@ func NewWebhookResource() resource.Resource {
 
 // WebhookResource defines the resource implementation.
 type WebhookResource struct {
-	client *sdk.Vercel
+	client *sdk.SDK
 }
 
 // WebhookResourceModel describes the resource data model.
@@ -133,12 +133,12 @@ func (r *WebhookResource) Configure(ctx context.Context, req resource.ConfigureR
 		return
 	}
 
-	client, ok := req.ProviderData.(*sdk.Vercel)
+	client, ok := req.ProviderData.(*sdk.SDK)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *sdk.Vercel, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -165,23 +165,23 @@ func (r *WebhookResource) Create(ctx context.Context, req resource.CreateRequest
 		return
 	}
 
-	requestBody := data.ToOperationsCreateWebhookRequestBody()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
+	requestBody := data.ToOperationsCreateWebhookRequestBody()
 	request := operations.CreateWebhookRequest{
-		RequestBody: requestBody,
-		Slug:        slug,
 		TeamID:      teamID,
+		Slug:        slug,
+		RequestBody: requestBody,
 	}
 	res, err := r.client.Webhooks.Create(ctx, request)
 	if err != nil {
@@ -206,22 +206,22 @@ func (r *WebhookResource) Create(ctx context.Context, req resource.CreateRequest
 	data.RefreshFromOperationsCreateWebhookResponseBody(res.Object)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
-	slug1 := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug1 = data.Slug.ValueString()
-	} else {
-		slug1 = nil
-	}
 	teamId1 := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamId1 = data.TeamID.ValueString()
 	} else {
 		teamId1 = nil
 	}
+	slug1 := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug1 = data.Slug.ValueString()
+	} else {
+		slug1 = nil
+	}
 	request1 := operations.GetWebhookRequest{
 		ID:     id,
-		Slug:   slug1,
 		TeamID: teamId1,
+		Slug:   slug1,
 	}
 	res1, err := r.client.Webhooks.Get(ctx, request1)
 	if err != nil {
@@ -269,22 +269,22 @@ func (r *WebhookResource) Read(ctx context.Context, req resource.ReadRequest, re
 	}
 
 	id := data.ID.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
 	request := operations.GetWebhookRequest{
 		ID:     id,
-		Slug:   slug,
 		TeamID: teamID,
+		Slug:   slug,
 	}
 	res, err := r.client.Webhooks.Get(ctx, request)
 	if err != nil {
@@ -355,22 +355,22 @@ func (r *WebhookResource) Delete(ctx context.Context, req resource.DeleteRequest
 	}
 
 	id := data.ID.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
 	request := operations.DeleteWebhookRequest{
 		ID:     id,
-		Slug:   slug,
 		TeamID: teamID,
+		Slug:   slug,
 	}
 	res, err := r.client.Webhooks.Delete(ctx, request)
 	if err != nil {

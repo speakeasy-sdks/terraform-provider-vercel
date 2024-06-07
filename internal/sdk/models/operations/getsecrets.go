@@ -3,8 +3,8 @@
 package operations
 
 import (
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 	"time"
 )
@@ -14,10 +14,10 @@ type GetSecretsRequest struct {
 	ID *string `queryParam:"style=form,explode=true,name=id"`
 	// Filter out secrets that belong to a project.
 	ProjectID *string `queryParam:"style=form,explode=true,name=projectId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetSecretsRequest) GetID() *string {
@@ -34,13 +34,6 @@ func (o *GetSecretsRequest) GetProjectID() *string {
 	return o.ProjectID
 }
 
-func (o *GetSecretsRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *GetSecretsRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -48,18 +41,19 @@ func (o *GetSecretsRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
+func (o *GetSecretsRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 // Secrets - Data representing a secret.
 type Secrets struct {
 	// The date when the secret was created.
 	Created time.Time `json:"created"`
-	// Timestamp for when the secret was created.
-	CreatedAt *float64 `json:"createdAt,omitempty"`
-	// Indicates whether the secret value can be decrypted after it has been created.
-	Decryptable *bool `json:"decryptable,omitempty"`
 	// The name of the secret.
 	Name string `json:"name"`
-	// The unique identifier of the project which the secret belongs to.
-	ProjectID *string `json:"projectId,omitempty"`
 	// The unique identifier of the team the secret was created for.
 	TeamID *string `json:"teamId,omitempty"`
 	// The unique identifier of the secret.
@@ -68,6 +62,12 @@ type Secrets struct {
 	UserID *string `json:"userId,omitempty"`
 	// The value of the secret.
 	Value *string `json:"value,omitempty"`
+	// Timestamp for when the secret was created.
+	CreatedAt *float64 `json:"createdAt,omitempty"`
+	// The unique identifier of the project which the secret belongs to.
+	ProjectID *string `json:"projectId,omitempty"`
+	// Indicates whether the secret value can be decrypted after it has been created.
+	Decryptable *bool `json:"decryptable,omitempty"`
 }
 
 func (s Secrets) MarshalJSON() ([]byte, error) {
@@ -88,32 +88,11 @@ func (o *Secrets) GetCreated() time.Time {
 	return o.Created
 }
 
-func (o *Secrets) GetCreatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedAt
-}
-
-func (o *Secrets) GetDecryptable() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Decryptable
-}
-
 func (o *Secrets) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
-}
-
-func (o *Secrets) GetProjectID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectID
 }
 
 func (o *Secrets) GetTeamID() *string {
@@ -144,18 +123,32 @@ func (o *Secrets) GetValue() *string {
 	return o.Value
 }
 
-// GetSecretsResponseBody - Successful response retrieving a list of secrets.
-type GetSecretsResponseBody struct {
-	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
-	Pagination shared.Pagination `json:"pagination"`
-	Secrets    []Secrets         `json:"secrets"`
+func (o *Secrets) GetCreatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
 }
 
-func (o *GetSecretsResponseBody) GetPagination() shared.Pagination {
+func (o *Secrets) GetProjectID() *string {
 	if o == nil {
-		return shared.Pagination{}
+		return nil
 	}
-	return o.Pagination
+	return o.ProjectID
+}
+
+func (o *Secrets) GetDecryptable() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Decryptable
+}
+
+// GetSecretsResponseBody - Successful response retrieving a list of secrets.
+type GetSecretsResponseBody struct {
+	Secrets []Secrets `json:"secrets"`
+	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
+	Pagination shared.Pagination `json:"pagination"`
 }
 
 func (o *GetSecretsResponseBody) GetSecrets() []Secrets {
@@ -163,6 +156,13 @@ func (o *GetSecretsResponseBody) GetSecrets() []Secrets {
 		return []Secrets{}
 	}
 	return o.Secrets
+}
+
+func (o *GetSecretsResponseBody) GetPagination() shared.Pagination {
+	if o == nil {
+		return shared.Pagination{}
+	}
+	return o.Pagination
 }
 
 type GetSecretsResponse struct {

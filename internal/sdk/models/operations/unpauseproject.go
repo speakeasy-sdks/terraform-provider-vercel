@@ -9,10 +9,10 @@ import (
 type UnpauseProjectRequest struct {
 	// The unique project identifier
 	ProjectID string `pathParam:"style=simple,explode=false,name=projectId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *UnpauseProjectRequest) GetProjectID() string {
@@ -22,18 +22,18 @@ func (o *UnpauseProjectRequest) GetProjectID() string {
 	return o.ProjectID
 }
 
-func (o *UnpauseProjectRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *UnpauseProjectRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *UnpauseProjectRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 type UnpauseProjectResponse struct {

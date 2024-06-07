@@ -5,22 +5,9 @@ package operations
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
-
-// RemoteCaching - Whether or not remote caching is enabled for the team
-type RemoteCaching struct {
-	// Enable or disable remote caching for the team.
-	Enabled *bool `json:"enabled,omitempty"`
-}
-
-func (o *RemoteCaching) GetEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Enabled
-}
 
 type Roles string
 
@@ -80,29 +67,42 @@ func (o *Saml) GetRoles() map[string]Roles {
 	return o.Roles
 }
 
+// RemoteCaching - Whether or not remote caching is enabled for the team
+type RemoteCaching struct {
+	// Enable or disable remote caching for the team.
+	Enabled *bool `json:"enabled,omitempty"`
+}
+
+func (o *RemoteCaching) GetEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Enabled
+}
+
 type PatchTeamRequestBody struct {
 	// The hash value of an uploaded image.
 	Avatar *string `json:"avatar,omitempty"`
 	// A short text that describes the team.
 	Description *string `json:"description,omitempty"`
 	EmailDomain *string `json:"emailDomain,omitempty"`
-	// Enable preview comments: one of on, off or default.
-	EnablePreviewFeedback *string `json:"enablePreviewFeedback,omitempty"`
-	// Display or hide IP addresses in Monitoring queries.
-	HideIPAddresses *bool `json:"hideIpAddresses,omitempty"`
 	// The name of the team.
 	Name *string `json:"name,omitempty"`
 	// Suffix that will be used for all preview deployments.
 	PreviewDeploymentSuffix *string `json:"previewDeploymentSuffix,omitempty"`
 	// Create a new invite code and replace the current one.
 	RegenerateInviteCode *bool `json:"regenerateInviteCode,omitempty"`
-	// Whether or not remote caching is enabled for the team
-	RemoteCaching *RemoteCaching `json:"remoteCaching,omitempty"`
-	Saml          *Saml          `json:"saml,omitempty"`
-	// Sensitive environment variable policy: one of on, off or default.
-	SensitiveEnvironmentVariablePolicy *string `json:"sensitiveEnvironmentVariablePolicy,omitempty"`
+	Saml                 *Saml `json:"saml,omitempty"`
 	// A new slug for the team.
 	Slug *string `json:"slug,omitempty"`
+	// Enable preview comments: one of on, off or default.
+	EnablePreviewFeedback *string `json:"enablePreviewFeedback,omitempty"`
+	// Sensitive environment variable policy: one of on, off or default.
+	SensitiveEnvironmentVariablePolicy *string `json:"sensitiveEnvironmentVariablePolicy,omitempty"`
+	// Whether or not remote caching is enabled for the team
+	RemoteCaching *RemoteCaching `json:"remoteCaching,omitempty"`
+	// Display or hide IP addresses in Monitoring queries.
+	HideIPAddresses *bool `json:"hideIpAddresses,omitempty"`
 }
 
 func (o *PatchTeamRequestBody) GetAvatar() *string {
@@ -126,20 +126,6 @@ func (o *PatchTeamRequestBody) GetEmailDomain() *string {
 	return o.EmailDomain
 }
 
-func (o *PatchTeamRequestBody) GetEnablePreviewFeedback() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EnablePreviewFeedback
-}
-
-func (o *PatchTeamRequestBody) GetHideIPAddresses() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.HideIPAddresses
-}
-
 func (o *PatchTeamRequestBody) GetName() *string {
 	if o == nil {
 		return nil
@@ -161,25 +147,11 @@ func (o *PatchTeamRequestBody) GetRegenerateInviteCode() *bool {
 	return o.RegenerateInviteCode
 }
 
-func (o *PatchTeamRequestBody) GetRemoteCaching() *RemoteCaching {
-	if o == nil {
-		return nil
-	}
-	return o.RemoteCaching
-}
-
 func (o *PatchTeamRequestBody) GetSaml() *Saml {
 	if o == nil {
 		return nil
 	}
 	return o.Saml
-}
-
-func (o *PatchTeamRequestBody) GetSensitiveEnvironmentVariablePolicy() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SensitiveEnvironmentVariablePolicy
 }
 
 func (o *PatchTeamRequestBody) GetSlug() *string {
@@ -189,19 +161,47 @@ func (o *PatchTeamRequestBody) GetSlug() *string {
 	return o.Slug
 }
 
-type PatchTeamRequest struct {
-	RequestBody *PatchTeamRequestBody `request:"mediaType=application/json"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
-}
-
-func (o *PatchTeamRequest) GetRequestBody() *PatchTeamRequestBody {
+func (o *PatchTeamRequestBody) GetEnablePreviewFeedback() *string {
 	if o == nil {
 		return nil
 	}
-	return o.RequestBody
+	return o.EnablePreviewFeedback
+}
+
+func (o *PatchTeamRequestBody) GetSensitiveEnvironmentVariablePolicy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SensitiveEnvironmentVariablePolicy
+}
+
+func (o *PatchTeamRequestBody) GetRemoteCaching() *RemoteCaching {
+	if o == nil {
+		return nil
+	}
+	return o.RemoteCaching
+}
+
+func (o *PatchTeamRequestBody) GetHideIPAddresses() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.HideIPAddresses
+}
+
+type PatchTeamRequest struct {
+	// The Team identifier to perform the request on behalf of.
+	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug        *string               `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *PatchTeamRequestBody `request:"mediaType=application/json"`
+}
+
+func (o *PatchTeamRequest) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
 }
 
 func (o *PatchTeamRequest) GetSlug() *string {
@@ -211,11 +211,11 @@ func (o *PatchTeamRequest) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *PatchTeamRequest) GetTeamID() string {
+func (o *PatchTeamRequest) GetRequestBody() *PatchTeamRequestBody {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.TeamID
+	return o.RequestBody
 }
 
 type PatchTeamResponse struct {

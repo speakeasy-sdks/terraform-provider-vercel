@@ -9,9 +9,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -24,23 +24,23 @@ func NewEdgeConfigDataSource() datasource.DataSource {
 
 // EdgeConfigDataSource is the data source implementation.
 type EdgeConfigDataSource struct {
-	client *sdk.Vercel
+	client *sdk.SDK
 }
 
 // EdgeConfigDataSourceModel describes the data model.
 type EdgeConfigDataSourceModel struct {
-	CreatedAt    types.Number      `tfsdk:"created_at"`
-	Digest       types.String      `tfsdk:"digest"`
-	EdgeConfigID types.String      `tfsdk:"edge_config_id"`
-	ID           types.String      `tfsdk:"id"`
-	ItemCount    types.Number      `tfsdk:"item_count"`
-	OwnerID      types.String      `tfsdk:"owner_id"`
-	Schema       *tfTypes.Schema   `tfsdk:"schema"`
-	SizeInBytes  types.Number      `tfsdk:"size_in_bytes"`
-	Slug         types.String      `tfsdk:"slug"`
-	TeamID       types.String      `tfsdk:"team_id"`
-	Transfer     *tfTypes.Transfer `tfsdk:"transfer"`
-	UpdatedAt    types.Number      `tfsdk:"updated_at"`
+	CreatedAt    types.Number                   `tfsdk:"created_at"`
+	Digest       types.String                   `tfsdk:"digest"`
+	EdgeConfigID types.String                   `tfsdk:"edge_config_id"`
+	ID           types.String                   `tfsdk:"id"`
+	ItemCount    types.Number                   `tfsdk:"item_count"`
+	OwnerID      types.String                   `tfsdk:"owner_id"`
+	Schema       *tfTypes.GetEdgeConfigSchema   `tfsdk:"schema"`
+	SizeInBytes  types.Number                   `tfsdk:"size_in_bytes"`
+	Slug         types.String                   `tfsdk:"slug"`
+	TeamID       types.String                   `tfsdk:"team_id"`
+	Transfer     *tfTypes.GetEdgeConfigTransfer `tfsdk:"transfer"`
+	UpdatedAt    types.Number                   `tfsdk:"updated_at"`
 }
 
 // Metadata returns the data source type name.
@@ -116,12 +116,12 @@ func (r *EdgeConfigDataSource) Configure(ctx context.Context, req datasource.Con
 		return
 	}
 
-	client, ok := req.ProviderData.(*sdk.Vercel)
+	client, ok := req.ProviderData.(*sdk.SDK)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected DataSource Configure Type",
-			fmt.Sprintf("Expected *sdk.Vercel, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -149,22 +149,22 @@ func (r *EdgeConfigDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	}
 
 	edgeConfigID := data.EdgeConfigID.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
 	request := operations.GetEdgeConfigRequest{
 		EdgeConfigID: edgeConfigID,
-		Slug:         slug,
 		TeamID:       teamID,
+		Slug:         slug,
 	}
 	res, err := r.client.EdgeConfig.Get(ctx, request)
 	if err != nil {

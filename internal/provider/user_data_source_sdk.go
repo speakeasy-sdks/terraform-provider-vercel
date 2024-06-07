@@ -4,8 +4,8 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 	"math/big"
 )
 
@@ -114,7 +114,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 						if resp.User.AuthUser.Billing.InvoiceItems.Analytics.Frequency == nil {
 							r.User.AuthUser.Billing.InvoiceItems.Analytics.Frequency = nil
 						} else {
-							r.User.AuthUser.Billing.InvoiceItems.Analytics.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+							r.User.AuthUser.Billing.InvoiceItems.Analytics.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 							r.User.AuthUser.Billing.InvoiceItems.Analytics.Frequency.Interval = types.StringValue(string(resp.User.AuthUser.Billing.InvoiceItems.Analytics.Frequency.Interval))
 							r.User.AuthUser.Billing.InvoiceItems.Analytics.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.User.AuthUser.Billing.InvoiceItems.Analytics.Frequency.IntervalCount)))
 						}
@@ -488,7 +488,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 						if resp.User.AuthUser.Billing.InvoiceItems.ConcurrentBuilds.Frequency == nil {
 							r.User.AuthUser.Billing.InvoiceItems.ConcurrentBuilds.Frequency = nil
 						} else {
-							r.User.AuthUser.Billing.InvoiceItems.ConcurrentBuilds.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+							r.User.AuthUser.Billing.InvoiceItems.ConcurrentBuilds.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 							r.User.AuthUser.Billing.InvoiceItems.ConcurrentBuilds.Frequency.Interval = types.StringValue(string(resp.User.AuthUser.Billing.InvoiceItems.ConcurrentBuilds.Frequency.Interval))
 							r.User.AuthUser.Billing.InvoiceItems.ConcurrentBuilds.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.User.AuthUser.Billing.InvoiceItems.ConcurrentBuilds.Frequency.IntervalCount)))
 						}
@@ -862,7 +862,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 						if resp.User.AuthUser.Billing.InvoiceItems.Enterprise.Frequency == nil {
 							r.User.AuthUser.Billing.InvoiceItems.Enterprise.Frequency = nil
 						} else {
-							r.User.AuthUser.Billing.InvoiceItems.Enterprise.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+							r.User.AuthUser.Billing.InvoiceItems.Enterprise.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 							r.User.AuthUser.Billing.InvoiceItems.Enterprise.Frequency.Interval = types.StringValue(string(resp.User.AuthUser.Billing.InvoiceItems.Enterprise.Frequency.Interval))
 							r.User.AuthUser.Billing.InvoiceItems.Enterprise.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.User.AuthUser.Billing.InvoiceItems.Enterprise.Frequency.IntervalCount)))
 						}
@@ -1088,7 +1088,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 						if resp.User.AuthUser.Billing.InvoiceItems.Monitoring.Frequency == nil {
 							r.User.AuthUser.Billing.InvoiceItems.Monitoring.Frequency = nil
 						} else {
-							r.User.AuthUser.Billing.InvoiceItems.Monitoring.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+							r.User.AuthUser.Billing.InvoiceItems.Monitoring.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 							r.User.AuthUser.Billing.InvoiceItems.Monitoring.Frequency.Interval = types.StringValue(string(resp.User.AuthUser.Billing.InvoiceItems.Monitoring.Frequency.Interval))
 							r.User.AuthUser.Billing.InvoiceItems.Monitoring.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.User.AuthUser.Billing.InvoiceItems.Monitoring.Frequency.IntervalCount)))
 						}
@@ -1166,7 +1166,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 						if resp.User.AuthUser.Billing.InvoiceItems.PasswordProtection.Frequency == nil {
 							r.User.AuthUser.Billing.InvoiceItems.PasswordProtection.Frequency = nil
 						} else {
-							r.User.AuthUser.Billing.InvoiceItems.PasswordProtection.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+							r.User.AuthUser.Billing.InvoiceItems.PasswordProtection.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 							r.User.AuthUser.Billing.InvoiceItems.PasswordProtection.Frequency.Interval = types.StringValue(string(resp.User.AuthUser.Billing.InvoiceItems.PasswordProtection.Frequency.Interval))
 							r.User.AuthUser.Billing.InvoiceItems.PasswordProtection.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.User.AuthUser.Billing.InvoiceItems.PasswordProtection.Frequency.IntervalCount)))
 						}
@@ -1392,7 +1392,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 						if resp.User.AuthUser.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency == nil {
 							r.User.AuthUser.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency = nil
 						} else {
-							r.User.AuthUser.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+							r.User.AuthUser.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 							r.User.AuthUser.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency.Interval = types.StringValue(string(resp.User.AuthUser.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency.Interval))
 							r.User.AuthUser.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.User.AuthUser.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency.IntervalCount)))
 						}
@@ -1433,7 +1433,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 						if resp.User.AuthUser.Billing.InvoiceItems.Pro.Frequency == nil {
 							r.User.AuthUser.Billing.InvoiceItems.Pro.Frequency = nil
 						} else {
-							r.User.AuthUser.Billing.InvoiceItems.Pro.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+							r.User.AuthUser.Billing.InvoiceItems.Pro.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 							r.User.AuthUser.Billing.InvoiceItems.Pro.Frequency.Interval = types.StringValue(string(resp.User.AuthUser.Billing.InvoiceItems.Pro.Frequency.Interval))
 							r.User.AuthUser.Billing.InvoiceItems.Pro.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.User.AuthUser.Billing.InvoiceItems.Pro.Frequency.IntervalCount)))
 						}
@@ -1474,7 +1474,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 						if resp.User.AuthUser.Billing.InvoiceItems.Saml.Frequency == nil {
 							r.User.AuthUser.Billing.InvoiceItems.Saml.Frequency = nil
 						} else {
-							r.User.AuthUser.Billing.InvoiceItems.Saml.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+							r.User.AuthUser.Billing.InvoiceItems.Saml.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 							r.User.AuthUser.Billing.InvoiceItems.Saml.Frequency.Interval = types.StringValue(string(resp.User.AuthUser.Billing.InvoiceItems.Saml.Frequency.Interval))
 							r.User.AuthUser.Billing.InvoiceItems.Saml.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.User.AuthUser.Billing.InvoiceItems.Saml.Frequency.IntervalCount)))
 						}
@@ -1737,7 +1737,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 						if resp.User.AuthUser.Billing.InvoiceItems.TeamSeats.Frequency == nil {
 							r.User.AuthUser.Billing.InvoiceItems.TeamSeats.Frequency = nil
 						} else {
-							r.User.AuthUser.Billing.InvoiceItems.TeamSeats.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+							r.User.AuthUser.Billing.InvoiceItems.TeamSeats.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 							r.User.AuthUser.Billing.InvoiceItems.TeamSeats.Frequency.Interval = types.StringValue(string(resp.User.AuthUser.Billing.InvoiceItems.TeamSeats.Frequency.Interval))
 							r.User.AuthUser.Billing.InvoiceItems.TeamSeats.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.User.AuthUser.Billing.InvoiceItems.TeamSeats.Frequency.IntervalCount)))
 						}
@@ -1852,7 +1852,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 						if resp.User.AuthUser.Billing.InvoiceItems.WebAnalytics.Frequency == nil {
 							r.User.AuthUser.Billing.InvoiceItems.WebAnalytics.Frequency = nil
 						} else {
-							r.User.AuthUser.Billing.InvoiceItems.WebAnalytics.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+							r.User.AuthUser.Billing.InvoiceItems.WebAnalytics.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 							r.User.AuthUser.Billing.InvoiceItems.WebAnalytics.Frequency.Interval = types.StringValue(string(resp.User.AuthUser.Billing.InvoiceItems.WebAnalytics.Frequency.Interval))
 							r.User.AuthUser.Billing.InvoiceItems.WebAnalytics.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.User.AuthUser.Billing.InvoiceItems.WebAnalytics.Frequency.IntervalCount)))
 						}
@@ -2053,7 +2053,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 			if resp.User.AuthUser.DataCache == nil {
 				r.User.AuthUser.DataCache = nil
 			} else {
-				r.User.AuthUser.DataCache = &tfTypes.DataCache1{}
+				r.User.AuthUser.DataCache = &tfTypes.DataCache{}
 				r.User.AuthUser.DataCache.ExcessBillingEnabled = types.BoolPointerValue(resp.User.AuthUser.DataCache.ExcessBillingEnabled)
 			}
 			r.User.AuthUser.DefaultTeamID = types.StringPointerValue(resp.User.AuthUser.DefaultTeamID)
@@ -2090,17 +2090,17 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 			}
 			for favoriteProjectsAndSpacesCount, favoriteProjectsAndSpacesItem := range resp.User.AuthUser.FavoriteProjectsAndSpaces {
 				var favoriteProjectsAndSpaces1 tfTypes.FavoriteProjectsAndSpaces
-				if favoriteProjectsAndSpacesItem.AuthUser1 != nil {
-					favoriteProjectsAndSpaces1.One = &tfTypes.AuthUser1{}
-					favoriteProjectsAndSpaces1.One.ProjectID = types.StringValue(favoriteProjectsAndSpacesItem.AuthUser1.ProjectID)
-					favoriteProjectsAndSpaces1.One.ScopeID = types.StringValue(favoriteProjectsAndSpacesItem.AuthUser1.ScopeID)
-					favoriteProjectsAndSpaces1.One.ScopeSlug = types.StringValue(favoriteProjectsAndSpacesItem.AuthUser1.ScopeSlug)
+				if favoriteProjectsAndSpacesItem.FavoriteProjectsAndSpaces1 != nil {
+					favoriteProjectsAndSpaces1.One = &tfTypes.FavoriteProjectsAndSpaces1{}
+					favoriteProjectsAndSpaces1.One.ProjectID = types.StringValue(favoriteProjectsAndSpacesItem.FavoriteProjectsAndSpaces1.ProjectID)
+					favoriteProjectsAndSpaces1.One.ScopeID = types.StringValue(favoriteProjectsAndSpacesItem.FavoriteProjectsAndSpaces1.ScopeID)
+					favoriteProjectsAndSpaces1.One.ScopeSlug = types.StringValue(favoriteProjectsAndSpacesItem.FavoriteProjectsAndSpaces1.ScopeSlug)
 				}
-				if favoriteProjectsAndSpacesItem.AuthUser2 != nil {
-					favoriteProjectsAndSpaces1.Two = &tfTypes.AuthUser2{}
-					favoriteProjectsAndSpaces1.Two.ScopeID = types.StringValue(favoriteProjectsAndSpacesItem.AuthUser2.ScopeID)
-					favoriteProjectsAndSpaces1.Two.ScopeSlug = types.StringValue(favoriteProjectsAndSpacesItem.AuthUser2.ScopeSlug)
-					favoriteProjectsAndSpaces1.Two.SpaceID = types.StringValue(favoriteProjectsAndSpacesItem.AuthUser2.SpaceID)
+				if favoriteProjectsAndSpacesItem.FavoriteProjectsAndSpaces2 != nil {
+					favoriteProjectsAndSpaces1.Two = &tfTypes.FavoriteProjectsAndSpaces2{}
+					favoriteProjectsAndSpaces1.Two.ScopeID = types.StringValue(favoriteProjectsAndSpacesItem.FavoriteProjectsAndSpaces2.ScopeID)
+					favoriteProjectsAndSpaces1.Two.ScopeSlug = types.StringValue(favoriteProjectsAndSpacesItem.FavoriteProjectsAndSpaces2.ScopeSlug)
+					favoriteProjectsAndSpaces1.Two.SpaceID = types.StringValue(favoriteProjectsAndSpacesItem.FavoriteProjectsAndSpaces2.SpaceID)
 				}
 				if favoriteProjectsAndSpacesCount+1 > len(r.User.AuthUser.FavoriteProjectsAndSpaces) {
 					r.User.AuthUser.FavoriteProjectsAndSpaces = append(r.User.AuthUser.FavoriteProjectsAndSpaces, favoriteProjectsAndSpaces1)
@@ -2116,7 +2116,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 				if resp.User.AuthUser.FeatureBlocks.WebAnalytics == nil {
 					r.User.AuthUser.FeatureBlocks.WebAnalytics = nil
 				} else {
-					r.User.AuthUser.FeatureBlocks.WebAnalytics = &tfTypes.WebAnalytics1{}
+					r.User.AuthUser.FeatureBlocks.WebAnalytics = &tfTypes.WebAnalytics{}
 					if resp.User.AuthUser.FeatureBlocks.WebAnalytics.BlockedFrom != nil {
 						r.User.AuthUser.FeatureBlocks.WebAnalytics.BlockedFrom = types.NumberValue(big.NewFloat(float64(*resp.User.AuthUser.FeatureBlocks.WebAnalytics.BlockedFrom)))
 					} else {

@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 )
 
@@ -15,16 +15,16 @@ type GetProjectMembersRequest struct {
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
 	// Limit how many project members should be returned
 	Limit *int64 `queryParam:"style=form,explode=true,name=limit"`
-	// Search project members by their name, username, and email.
-	Search *string `queryParam:"style=form,explode=true,name=search"`
 	// Timestamp in milliseconds to only include members added since then.
 	Since *int64 `queryParam:"style=form,explode=true,name=since"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Timestamp in milliseconds to only include members added until then.
 	Until *int64 `queryParam:"style=form,explode=true,name=until"`
+	// Search project members by their name, username, and email.
+	Search *string `queryParam:"style=form,explode=true,name=search"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetProjectMembersRequest) GetIDOrName() string {
@@ -41,13 +41,6 @@ func (o *GetProjectMembersRequest) GetLimit() *int64 {
 	return o.Limit
 }
 
-func (o *GetProjectMembersRequest) GetSearch() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Search
-}
-
 func (o *GetProjectMembersRequest) GetSince() *int64 {
 	if o == nil {
 		return nil
@@ -55,11 +48,18 @@ func (o *GetProjectMembersRequest) GetSince() *int64 {
 	return o.Since
 }
 
-func (o *GetProjectMembersRequest) GetSlug() *string {
+func (o *GetProjectMembersRequest) GetUntil() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.Slug
+	return o.Until
+}
+
+func (o *GetProjectMembersRequest) GetSearch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Search
 }
 
 func (o *GetProjectMembersRequest) GetTeamID() *string {
@@ -69,11 +69,41 @@ func (o *GetProjectMembersRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-func (o *GetProjectMembersRequest) GetUntil() *int64 {
+func (o *GetProjectMembersRequest) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Until
+	return o.Slug
+}
+
+// GetProjectMembersResponseBodyRole - Role of this user in the project.
+type GetProjectMembersResponseBodyRole string
+
+const (
+	GetProjectMembersResponseBodyRoleAdmin            GetProjectMembersResponseBodyRole = "ADMIN"
+	GetProjectMembersResponseBodyRoleProjectDeveloper GetProjectMembersResponseBodyRole = "PROJECT_DEVELOPER"
+	GetProjectMembersResponseBodyRoleProjectViewer    GetProjectMembersResponseBodyRole = "PROJECT_VIEWER"
+)
+
+func (e GetProjectMembersResponseBodyRole) ToPointer() *GetProjectMembersResponseBodyRole {
+	return &e
+}
+func (e *GetProjectMembersResponseBodyRole) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ADMIN":
+		fallthrough
+	case "PROJECT_DEVELOPER":
+		fallthrough
+	case "PROJECT_VIEWER":
+		*e = GetProjectMembersResponseBodyRole(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetProjectMembersResponseBodyRole: %v", v)
+	}
 }
 
 // ComputedProjectRole - Role of this user in the project.
@@ -103,36 +133,6 @@ func (e *ComputedProjectRole) UnmarshalJSON(data []byte) error {
 		return nil
 	default:
 		return fmt.Errorf("invalid value for ComputedProjectRole: %v", v)
-	}
-}
-
-// GetProjectMembersRole - Role of this user in the project.
-type GetProjectMembersRole string
-
-const (
-	GetProjectMembersRoleAdmin            GetProjectMembersRole = "ADMIN"
-	GetProjectMembersRoleProjectDeveloper GetProjectMembersRole = "PROJECT_DEVELOPER"
-	GetProjectMembersRoleProjectViewer    GetProjectMembersRole = "PROJECT_VIEWER"
-)
-
-func (e GetProjectMembersRole) ToPointer() *GetProjectMembersRole {
-	return &e
-}
-func (e *GetProjectMembersRole) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ADMIN":
-		fallthrough
-	case "PROJECT_DEVELOPER":
-		fallthrough
-	case "PROJECT_VIEWER":
-		*e = GetProjectMembersRole(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetProjectMembersRole: %v", v)
 	}
 }
 
@@ -175,197 +175,197 @@ func (e *TeamRole) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type GetProjectMembersMembers struct {
+type ResponseBodyMembers struct {
 	// ID of the file for the Avatar of this member.
 	Avatar *string `json:"avatar,omitempty"`
-	// Role of this user in the project.
-	ComputedProjectRole ComputedProjectRole `json:"computedProjectRole"`
-	// Timestamp in milliseconds when this member was added.
-	CreatedAt float64 `json:"createdAt"`
 	// The email of this member.
 	Email string `json:"email"`
-	// The name of this user.
-	Name *string `json:"name,omitempty"`
 	// Role of this user in the project.
-	Role GetProjectMembersRole `json:"role"`
-	// The role of this user in the team.
-	TeamRole TeamRole `json:"teamRole"`
+	Role GetProjectMembersResponseBodyRole `json:"role"`
+	// Role of this user in the project.
+	ComputedProjectRole ComputedProjectRole `json:"computedProjectRole"`
 	// The ID of this user.
 	UID string `json:"uid"`
 	// The unique username of this user.
 	Username string `json:"username"`
+	// The name of this user.
+	Name *string `json:"name,omitempty"`
+	// Timestamp in milliseconds when this member was added.
+	CreatedAt float64 `json:"createdAt"`
+	// The role of this user in the team.
+	TeamRole TeamRole `json:"teamRole"`
 }
 
-func (o *GetProjectMembersMembers) GetAvatar() *string {
+func (o *ResponseBodyMembers) GetAvatar() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Avatar
 }
 
-func (o *GetProjectMembersMembers) GetComputedProjectRole() ComputedProjectRole {
-	if o == nil {
-		return ComputedProjectRole("")
-	}
-	return o.ComputedProjectRole
-}
-
-func (o *GetProjectMembersMembers) GetCreatedAt() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.CreatedAt
-}
-
-func (o *GetProjectMembersMembers) GetEmail() string {
+func (o *ResponseBodyMembers) GetEmail() string {
 	if o == nil {
 		return ""
 	}
 	return o.Email
 }
 
-func (o *GetProjectMembersMembers) GetName() *string {
+func (o *ResponseBodyMembers) GetRole() GetProjectMembersResponseBodyRole {
 	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *GetProjectMembersMembers) GetRole() GetProjectMembersRole {
-	if o == nil {
-		return GetProjectMembersRole("")
+		return GetProjectMembersResponseBodyRole("")
 	}
 	return o.Role
 }
 
-func (o *GetProjectMembersMembers) GetTeamRole() TeamRole {
+func (o *ResponseBodyMembers) GetComputedProjectRole() ComputedProjectRole {
 	if o == nil {
-		return TeamRole("")
+		return ComputedProjectRole("")
 	}
-	return o.TeamRole
+	return o.ComputedProjectRole
 }
 
-func (o *GetProjectMembersMembers) GetUID() string {
+func (o *ResponseBodyMembers) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *GetProjectMembersMembers) GetUsername() string {
+func (o *ResponseBodyMembers) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
 }
 
-type GetProjectMembersPagination struct {
+func (o *ResponseBodyMembers) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *ResponseBodyMembers) GetCreatedAt() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.CreatedAt
+}
+
+func (o *ResponseBodyMembers) GetTeamRole() TeamRole {
+	if o == nil {
+		return TeamRole("")
+	}
+	return o.TeamRole
+}
+
+type ResponseBodyPagination struct {
+	HasNext bool `json:"hasNext"`
 	// Amount of items in the current page.
-	Count   float64 `json:"count"`
-	HasNext bool    `json:"hasNext"`
+	Count float64 `json:"count"`
 	// Timestamp that must be used to request the next page.
 	Next *float64 `json:"next"`
 	// Timestamp that must be used to request the previous page.
 	Prev *float64 `json:"prev"`
 }
 
-func (o *GetProjectMembersPagination) GetCount() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Count
-}
-
-func (o *GetProjectMembersPagination) GetHasNext() bool {
+func (o *ResponseBodyPagination) GetHasNext() bool {
 	if o == nil {
 		return false
 	}
 	return o.HasNext
 }
 
-func (o *GetProjectMembersPagination) GetNext() *float64 {
+func (o *ResponseBodyPagination) GetCount() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Count
+}
+
+func (o *ResponseBodyPagination) GetNext() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Next
 }
 
-func (o *GetProjectMembersPagination) GetPrev() *float64 {
+func (o *ResponseBodyPagination) GetPrev() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Prev
 }
 
-// GetProjectMembers2 - Paginated list of members for the project.
-type GetProjectMembers2 struct {
-	Members    []GetProjectMembersMembers  `json:"members"`
-	Pagination GetProjectMembersPagination `json:"pagination"`
+// GetProjectMembersResponseBody2 - Paginated list of members for the project.
+type GetProjectMembersResponseBody2 struct {
+	Members    []ResponseBodyMembers  `json:"members"`
+	Pagination ResponseBodyPagination `json:"pagination"`
 }
 
-func (o *GetProjectMembers2) GetMembers() []GetProjectMembersMembers {
+func (o *GetProjectMembersResponseBody2) GetMembers() []ResponseBodyMembers {
 	if o == nil {
-		return []GetProjectMembersMembers{}
+		return []ResponseBodyMembers{}
 	}
 	return o.Members
 }
 
-func (o *GetProjectMembers2) GetPagination() GetProjectMembersPagination {
+func (o *GetProjectMembersResponseBody2) GetPagination() ResponseBodyPagination {
 	if o == nil {
-		return GetProjectMembersPagination{}
+		return ResponseBodyPagination{}
 	}
 	return o.Pagination
 }
 
-type GetProjectMembers1 struct {
+type GetProjectMembersResponseBody1 struct {
 }
 
 type GetProjectMembersResponseBodyType string
 
 const (
-	GetProjectMembersResponseBodyTypeGetProjectMembers1 GetProjectMembersResponseBodyType = "getProjectMembers_1"
-	GetProjectMembersResponseBodyTypeGetProjectMembers2 GetProjectMembersResponseBodyType = "getProjectMembers_2"
+	GetProjectMembersResponseBodyTypeGetProjectMembersResponseBody1 GetProjectMembersResponseBodyType = "getProjectMembers_responseBody_1"
+	GetProjectMembersResponseBodyTypeGetProjectMembersResponseBody2 GetProjectMembersResponseBodyType = "getProjectMembers_responseBody_2"
 )
 
 // GetProjectMembersResponseBody - Paginated list of members for the project.
 type GetProjectMembersResponseBody struct {
-	GetProjectMembers1 *GetProjectMembers1
-	GetProjectMembers2 *GetProjectMembers2
+	GetProjectMembersResponseBody1 *GetProjectMembersResponseBody1
+	GetProjectMembersResponseBody2 *GetProjectMembersResponseBody2
 
 	Type GetProjectMembersResponseBodyType
 }
 
-func CreateGetProjectMembersResponseBodyGetProjectMembers1(getProjectMembers1 GetProjectMembers1) GetProjectMembersResponseBody {
-	typ := GetProjectMembersResponseBodyTypeGetProjectMembers1
+func CreateGetProjectMembersResponseBodyGetProjectMembersResponseBody1(getProjectMembersResponseBody1 GetProjectMembersResponseBody1) GetProjectMembersResponseBody {
+	typ := GetProjectMembersResponseBodyTypeGetProjectMembersResponseBody1
 
 	return GetProjectMembersResponseBody{
-		GetProjectMembers1: &getProjectMembers1,
-		Type:               typ,
+		GetProjectMembersResponseBody1: &getProjectMembersResponseBody1,
+		Type:                           typ,
 	}
 }
 
-func CreateGetProjectMembersResponseBodyGetProjectMembers2(getProjectMembers2 GetProjectMembers2) GetProjectMembersResponseBody {
-	typ := GetProjectMembersResponseBodyTypeGetProjectMembers2
+func CreateGetProjectMembersResponseBodyGetProjectMembersResponseBody2(getProjectMembersResponseBody2 GetProjectMembersResponseBody2) GetProjectMembersResponseBody {
+	typ := GetProjectMembersResponseBodyTypeGetProjectMembersResponseBody2
 
 	return GetProjectMembersResponseBody{
-		GetProjectMembers2: &getProjectMembers2,
-		Type:               typ,
+		GetProjectMembersResponseBody2: &getProjectMembersResponseBody2,
+		Type:                           typ,
 	}
 }
 
 func (u *GetProjectMembersResponseBody) UnmarshalJSON(data []byte) error {
 
-	var getProjectMembers1 GetProjectMembers1 = GetProjectMembers1{}
-	if err := utils.UnmarshalJSON(data, &getProjectMembers1, "", true, true); err == nil {
-		u.GetProjectMembers1 = &getProjectMembers1
-		u.Type = GetProjectMembersResponseBodyTypeGetProjectMembers1
+	var getProjectMembersResponseBody1 GetProjectMembersResponseBody1 = GetProjectMembersResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &getProjectMembersResponseBody1, "", true, true); err == nil {
+		u.GetProjectMembersResponseBody1 = &getProjectMembersResponseBody1
+		u.Type = GetProjectMembersResponseBodyTypeGetProjectMembersResponseBody1
 		return nil
 	}
 
-	var getProjectMembers2 GetProjectMembers2 = GetProjectMembers2{}
-	if err := utils.UnmarshalJSON(data, &getProjectMembers2, "", true, true); err == nil {
-		u.GetProjectMembers2 = &getProjectMembers2
-		u.Type = GetProjectMembersResponseBodyTypeGetProjectMembers2
+	var getProjectMembersResponseBody2 GetProjectMembersResponseBody2 = GetProjectMembersResponseBody2{}
+	if err := utils.UnmarshalJSON(data, &getProjectMembersResponseBody2, "", true, true); err == nil {
+		u.GetProjectMembersResponseBody2 = &getProjectMembersResponseBody2
+		u.Type = GetProjectMembersResponseBodyTypeGetProjectMembersResponseBody2
 		return nil
 	}
 
@@ -373,12 +373,12 @@ func (u *GetProjectMembersResponseBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u GetProjectMembersResponseBody) MarshalJSON() ([]byte, error) {
-	if u.GetProjectMembers1 != nil {
-		return utils.MarshalJSON(u.GetProjectMembers1, "", true)
+	if u.GetProjectMembersResponseBody1 != nil {
+		return utils.MarshalJSON(u.GetProjectMembersResponseBody1, "", true)
 	}
 
-	if u.GetProjectMembers2 != nil {
-		return utils.MarshalJSON(u.GetProjectMembers2, "", true)
+	if u.GetProjectMembersResponseBody2 != nil {
+		return utils.MarshalJSON(u.GetProjectMembersResponseBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type GetProjectMembersResponseBody: all fields are null")

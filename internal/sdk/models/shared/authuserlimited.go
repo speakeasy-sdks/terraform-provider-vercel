@@ -33,43 +33,29 @@ func (e *AuthUserLimitedVersion) UnmarshalJSON(data []byte) error {
 
 // AuthUserLimited - A limited form of data for the currently authenticated User, due to the authentication token missing privileges to read the full User data.
 type AuthUserLimited struct {
-	// SHA1 hash of the avatar for the User account. Can be used in conjuction with the ... endpoint to retrieve the avatar image.
-	Avatar *string `json:"avatar"`
-	// The user's default team. Only applies if the user's `version` is `'northstar'`.
-	DefaultTeamID *string `json:"defaultTeamId"`
-	// Email address associated with the User account.
-	Email string `json:"email"`
-	// The User's unique identifier.
-	ID string `json:"id"`
 	// Property indicating that this User data contains only limited information, due to the authentication token missing privileges to read the full User data. Re-login with email, GitHub, GitLab or Bitbucket in order to upgrade the authentication token with the necessary privileges.
 	Limited bool `json:"limited"`
+	// The User's unique identifier.
+	ID string `json:"id"`
+	// Email address associated with the User account.
+	Email string `json:"email"`
 	// Name associated with the User account, or `null` if none has been provided.
 	Name *string `json:"name"`
 	// Unique username associated with the User account.
 	Username string `json:"username"`
+	// SHA1 hash of the avatar for the User account. Can be used in conjuction with the ... endpoint to retrieve the avatar image.
+	Avatar *string `json:"avatar"`
+	// The user's default team. Only applies if the user's `version` is `'northstar'`.
+	DefaultTeamID *string `json:"defaultTeamId"`
 	// The user's version. Will either be unset or `northstar`.
 	Version *AuthUserLimitedVersion `json:"version"`
 }
 
-func (o *AuthUserLimited) GetAvatar() *string {
+func (o *AuthUserLimited) GetLimited() bool {
 	if o == nil {
-		return nil
+		return false
 	}
-	return o.Avatar
-}
-
-func (o *AuthUserLimited) GetDefaultTeamID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DefaultTeamID
-}
-
-func (o *AuthUserLimited) GetEmail() string {
-	if o == nil {
-		return ""
-	}
-	return o.Email
+	return o.Limited
 }
 
 func (o *AuthUserLimited) GetID() string {
@@ -79,11 +65,11 @@ func (o *AuthUserLimited) GetID() string {
 	return o.ID
 }
 
-func (o *AuthUserLimited) GetLimited() bool {
+func (o *AuthUserLimited) GetEmail() string {
 	if o == nil {
-		return false
+		return ""
 	}
-	return o.Limited
+	return o.Email
 }
 
 func (o *AuthUserLimited) GetName() *string {
@@ -98,6 +84,20 @@ func (o *AuthUserLimited) GetUsername() string {
 		return ""
 	}
 	return o.Username
+}
+
+func (o *AuthUserLimited) GetAvatar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Avatar
+}
+
+func (o *AuthUserLimited) GetDefaultTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultTeamID
 }
 
 func (o *AuthUserLimited) GetVersion() *AuthUserLimitedVersion {

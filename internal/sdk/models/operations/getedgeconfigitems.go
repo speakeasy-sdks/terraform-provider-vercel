@@ -8,10 +8,10 @@ import (
 
 type GetEdgeConfigItemsRequest struct {
 	EdgeConfigID string `pathParam:"style=simple,explode=false,name=edgeConfigId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetEdgeConfigItemsRequest) GetEdgeConfigID() string {
@@ -21,18 +21,18 @@ func (o *GetEdgeConfigItemsRequest) GetEdgeConfigID() string {
 	return o.EdgeConfigID
 }
 
-func (o *GetEdgeConfigItemsRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *GetEdgeConfigItemsRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *GetEdgeConfigItemsRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 type GetEdgeConfigItemsResponse struct {

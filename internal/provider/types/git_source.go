@@ -3,13 +3,13 @@
 package types
 
 type GitSource struct {
-	One   *One               `tfsdk:"one" tfPlanOnly:"true"`
-	Two   *Two               `tfsdk:"two" tfPlanOnly:"true"`
-	Three *Three             `tfsdk:"three" tfPlanOnly:"true"`
-	Four  *Four              `tfsdk:"four" tfPlanOnly:"true"`
-	Five  *Five              `tfsdk:"five" tfPlanOnly:"true"`
-	Six   *CreateDeployment6 `tfsdk:"six" tfPlanOnly:"true"`
-	Seven *CreateDeployment7 `tfsdk:"seven" tfPlanOnly:"true"`
-	Eight *CreateDeployment8 `tfsdk:"eight" tfPlanOnly:"true"`
-	Nine  *CreateDeployment9 `tfsdk:"nine" tfPlanOnly:"true"`
+	One   *One                        `tfsdk:"one" tfPlanOnly:"true"`
+	Two   *Two                        `tfsdk:"two" tfPlanOnly:"true"`
+	Three *Three                      `tfsdk:"three" tfPlanOnly:"true"`
+	Four  *Four                       `tfsdk:"four" tfPlanOnly:"true"`
+	Five  *Five                       `tfsdk:"five" tfPlanOnly:"true"`
+	Six   *CreateDeploymentGitSource6 `tfsdk:"six" tfPlanOnly:"true"`
+	Seven *CreateDeploymentGitSource7 `tfsdk:"seven" tfPlanOnly:"true"`
+	Eight *CreateDeploymentGitSource8 `tfsdk:"eight" tfPlanOnly:"true"`
+	Nine  *CreateDeploymentGitSource9 `tfsdk:"nine" tfPlanOnly:"true"`
 }

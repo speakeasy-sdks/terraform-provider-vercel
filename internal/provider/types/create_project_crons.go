@@ -5,9 +5,9 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type CreateProjectCrons struct {
-	Definitions  []Definitions `tfsdk:"definitions"`
-	DeploymentID types.String  `tfsdk:"deployment_id"`
-	DisabledAt   types.Number  `tfsdk:"disabled_at"`
-	EnabledAt    types.Number  `tfsdk:"enabled_at"`
-	UpdatedAt    types.Number  `tfsdk:"updated_at"`
+	Definitions  []CreateProjectDefinitions `tfsdk:"definitions"`
+	DeploymentID types.String               `tfsdk:"deployment_id"`
+	DisabledAt   types.Number               `tfsdk:"disabled_at"`
+	EnabledAt    types.Number               `tfsdk:"enabled_at"`
+	UpdatedAt    types.Number               `tfsdk:"updated_at"`
 }

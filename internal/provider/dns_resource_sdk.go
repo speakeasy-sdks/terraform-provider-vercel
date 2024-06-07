@@ -4,193 +4,193 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 	"math/big"
 )
 
 func (r *DNSResourceModel) ToOperationsCreateRecordRequestBody() *operations.CreateRecordRequestBody {
 	var out operations.CreateRecordRequestBody
-	var createRecord1 *operations.CreateRecord1
+	var requestBody1 *operations.RequestBody1
 	if r.One != nil {
-		comment := new(string)
-		if !r.One.Comment.IsUnknown() && !r.One.Comment.IsNull() {
-			*comment = r.One.Comment.ValueString()
-		} else {
-			comment = nil
-		}
 		name := r.One.Name.ValueString()
+		typeVar := operations.RequestBodyType(r.One.Type.ValueString())
 		ttl := new(float64)
 		if !r.One.TTL.IsUnknown() && !r.One.TTL.IsNull() {
 			*ttl, _ = r.One.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl = nil
 		}
-		typeVar := operations.CreateRecordDNSType(r.One.Type.ValueString())
 		value := r.One.Value.ValueString()
-		createRecord1 = &operations.CreateRecord1{
-			Comment: comment,
-			Name:    name,
-			TTL:     ttl,
-			Type:    typeVar,
-			Value:   value,
-		}
-	}
-	if createRecord1 != nil {
-		out = operations.CreateRecordRequestBody{
-			CreateRecord1: createRecord1,
-		}
-	}
-	var createRecord2 *operations.CreateRecord2
-	if r.Two != nil {
-		comment1 := new(string)
-		if !r.Two.Comment.IsUnknown() && !r.Two.Comment.IsNull() {
-			*comment1 = r.Two.Comment.ValueString()
+		comment := new(string)
+		if !r.One.Comment.IsUnknown() && !r.One.Comment.IsNull() {
+			*comment = r.One.Comment.ValueString()
 		} else {
-			comment1 = nil
+			comment = nil
 		}
+		requestBody1 = &operations.RequestBody1{
+			Name:    name,
+			Type:    typeVar,
+			TTL:     ttl,
+			Value:   value,
+			Comment: comment,
+		}
+	}
+	if requestBody1 != nil {
+		out = operations.CreateRecordRequestBody{
+			RequestBody1: requestBody1,
+		}
+	}
+	var requestBody2 *operations.RequestBody2
+	if r.Two != nil {
 		name1 := r.Two.Name.ValueString()
+		typeVar1 := operations.CreateRecordRequestBodyType(r.Two.Type.ValueString())
 		ttl1 := new(float64)
 		if !r.Two.TTL.IsUnknown() && !r.Two.TTL.IsNull() {
 			*ttl1, _ = r.Two.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl1 = nil
 		}
-		typeVar1 := operations.CreateRecordDNSRequestType(r.Two.Type.ValueString())
 		value1 := r.Two.Value.ValueString()
-		createRecord2 = &operations.CreateRecord2{
-			Comment: comment1,
-			Name:    name1,
-			TTL:     ttl1,
-			Type:    typeVar1,
-			Value:   value1,
-		}
-	}
-	if createRecord2 != nil {
-		out = operations.CreateRecordRequestBody{
-			CreateRecord2: createRecord2,
-		}
-	}
-	var createRecord3 *operations.CreateRecord3
-	if r.Three != nil {
-		comment2 := new(string)
-		if !r.Three.Comment.IsUnknown() && !r.Three.Comment.IsNull() {
-			*comment2 = r.Three.Comment.ValueString()
+		comment1 := new(string)
+		if !r.Two.Comment.IsUnknown() && !r.Two.Comment.IsNull() {
+			*comment1 = r.Two.Comment.ValueString()
 		} else {
-			comment2 = nil
+			comment1 = nil
 		}
+		requestBody2 = &operations.RequestBody2{
+			Name:    name1,
+			Type:    typeVar1,
+			TTL:     ttl1,
+			Value:   value1,
+			Comment: comment1,
+		}
+	}
+	if requestBody2 != nil {
+		out = operations.CreateRecordRequestBody{
+			RequestBody2: requestBody2,
+		}
+	}
+	var requestBody3 *operations.RequestBody3
+	if r.Three != nil {
 		name2 := r.Three.Name.ValueString()
+		typeVar2 := operations.CreateRecordRequestBodyDNSType(r.Three.Type.ValueString())
 		ttl2 := new(float64)
 		if !r.Three.TTL.IsUnknown() && !r.Three.TTL.IsNull() {
 			*ttl2, _ = r.Three.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl2 = nil
 		}
-		typeVar2 := operations.CreateRecordDNSRequestRequestBodyType(r.Three.Type.ValueString())
 		value2 := r.Three.Value.ValueString()
-		createRecord3 = &operations.CreateRecord3{
-			Comment: comment2,
-			Name:    name2,
-			TTL:     ttl2,
-			Type:    typeVar2,
-			Value:   value2,
-		}
-	}
-	if createRecord3 != nil {
-		out = operations.CreateRecordRequestBody{
-			CreateRecord3: createRecord3,
-		}
-	}
-	var createRecord4 *operations.CreateRecord4
-	if r.Four != nil {
-		comment3 := new(string)
-		if !r.Four.Comment.IsUnknown() && !r.Four.Comment.IsNull() {
-			*comment3 = r.Four.Comment.ValueString()
+		comment2 := new(string)
+		if !r.Three.Comment.IsUnknown() && !r.Three.Comment.IsNull() {
+			*comment2 = r.Three.Comment.ValueString()
 		} else {
-			comment3 = nil
+			comment2 = nil
 		}
+		requestBody3 = &operations.RequestBody3{
+			Name:    name2,
+			Type:    typeVar2,
+			TTL:     ttl2,
+			Value:   value2,
+			Comment: comment2,
+		}
+	}
+	if requestBody3 != nil {
+		out = operations.CreateRecordRequestBody{
+			RequestBody3: requestBody3,
+		}
+	}
+	var requestBody4 *operations.RequestBody4
+	if r.Four != nil {
 		name3 := r.Four.Name.ValueString()
+		typeVar3 := operations.CreateRecordRequestBodyDNSRequestType(r.Four.Type.ValueString())
 		ttl3 := new(float64)
 		if !r.Four.TTL.IsUnknown() && !r.Four.TTL.IsNull() {
 			*ttl3, _ = r.Four.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl3 = nil
 		}
-		typeVar3 := operations.CreateRecordDNSRequestRequestBody4Type(r.Four.Type.ValueString())
 		value3 := r.Four.Value.ValueString()
-		createRecord4 = &operations.CreateRecord4{
-			Comment: comment3,
-			Name:    name3,
-			TTL:     ttl3,
-			Type:    typeVar3,
-			Value:   value3,
-		}
-	}
-	if createRecord4 != nil {
-		out = operations.CreateRecordRequestBody{
-			CreateRecord4: createRecord4,
-		}
-	}
-	var createRecord5 *operations.CreateRecord5
-	if r.Five != nil {
-		comment4 := new(string)
-		if !r.Five.Comment.IsUnknown() && !r.Five.Comment.IsNull() {
-			*comment4 = r.Five.Comment.ValueString()
+		comment3 := new(string)
+		if !r.Four.Comment.IsUnknown() && !r.Four.Comment.IsNull() {
+			*comment3 = r.Four.Comment.ValueString()
 		} else {
-			comment4 = nil
+			comment3 = nil
 		}
+		requestBody4 = &operations.RequestBody4{
+			Name:    name3,
+			Type:    typeVar3,
+			TTL:     ttl3,
+			Value:   value3,
+			Comment: comment3,
+		}
+	}
+	if requestBody4 != nil {
+		out = operations.CreateRecordRequestBody{
+			RequestBody4: requestBody4,
+		}
+	}
+	var requestBody5 *operations.RequestBody5
+	if r.Five != nil {
 		name4 := r.Five.Name.ValueString()
+		typeVar4 := operations.CreateRecordRequestBodyDNSRequest5Type(r.Five.Type.ValueString())
 		ttl4 := new(float64)
 		if !r.Five.TTL.IsUnknown() && !r.Five.TTL.IsNull() {
 			*ttl4, _ = r.Five.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl4 = nil
 		}
-		typeVar4 := operations.CreateRecordDNSRequestRequestBody5Type(r.Five.Type.ValueString())
 		value4 := new(string)
 		if !r.Five.Value.IsUnknown() && !r.Five.Value.IsNull() {
 			*value4 = r.Five.Value.ValueString()
 		} else {
 			value4 = nil
 		}
-		createRecord5 = &operations.CreateRecord5{
-			Comment: comment4,
+		comment4 := new(string)
+		if !r.Five.Comment.IsUnknown() && !r.Five.Comment.IsNull() {
+			*comment4 = r.Five.Comment.ValueString()
+		} else {
+			comment4 = nil
+		}
+		requestBody5 = &operations.RequestBody5{
 			Name:    name4,
-			TTL:     ttl4,
 			Type:    typeVar4,
+			TTL:     ttl4,
 			Value:   value4,
+			Comment: comment4,
 		}
 	}
-	if createRecord5 != nil {
+	if requestBody5 != nil {
 		out = operations.CreateRecordRequestBody{
-			CreateRecord5: createRecord5,
+			RequestBody5: requestBody5,
 		}
 	}
 	var six *operations.Six
 	if r.Six != nil {
-		comment5 := new(string)
-		if !r.Six.Comment.IsUnknown() && !r.Six.Comment.IsNull() {
-			*comment5 = r.Six.Comment.ValueString()
-		} else {
-			comment5 = nil
-		}
-		mxPriority, _ := r.Six.MxPriority.ValueBigFloat().Float64()
 		name5 := r.Six.Name.ValueString()
+		typeVar5 := operations.CreateRecordRequestBodyDNSRequest6Type(r.Six.Type.ValueString())
 		ttl5 := new(float64)
 		if !r.Six.TTL.IsUnknown() && !r.Six.TTL.IsNull() {
 			*ttl5, _ = r.Six.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl5 = nil
 		}
-		typeVar5 := operations.CreateRecordDNSRequestRequestBody6Type(r.Six.Type.ValueString())
 		value5 := r.Six.Value.ValueString()
+		mxPriority, _ := r.Six.MxPriority.ValueBigFloat().Float64()
+		comment5 := new(string)
+		if !r.Six.Comment.IsUnknown() && !r.Six.Comment.IsNull() {
+			*comment5 = r.Six.Comment.ValueString()
+		} else {
+			comment5 = nil
+		}
 		six = &operations.Six{
-			Comment:    comment5,
-			MxPriority: mxPriority,
 			Name:       name5,
-			TTL:        ttl5,
 			Type:       typeVar5,
+			TTL:        ttl5,
 			Value:      value5,
+			MxPriority: mxPriority,
+			Comment:    comment5,
 		}
 	}
 	if six != nil {
@@ -200,18 +200,13 @@ func (r *DNSResourceModel) ToOperationsCreateRecordRequestBody() *operations.Cre
 	}
 	var seven *operations.Seven
 	if r.Seven != nil {
-		comment6 := new(string)
-		if !r.Seven.Comment.IsUnknown() && !r.Seven.Comment.IsNull() {
-			*comment6 = r.Seven.Comment.ValueString()
-		} else {
-			comment6 = nil
-		}
 		name6 := r.Seven.Name.ValueString()
-		port := new(float64)
-		if !r.Seven.Srv.Port.IsUnknown() && !r.Seven.Srv.Port.IsNull() {
-			*port, _ = r.Seven.Srv.Port.ValueBigFloat().Float64()
+		typeVar6 := operations.CreateRecordRequestBodyDNSRequest7Type(r.Seven.Type.ValueString())
+		ttl6 := new(float64)
+		if !r.Seven.TTL.IsUnknown() && !r.Seven.TTL.IsNull() {
+			*ttl6, _ = r.Seven.TTL.ValueBigFloat().Float64()
 		} else {
-			port = nil
+			ttl6 = nil
 		}
 		priority := new(float64)
 		if !r.Seven.Srv.Priority.IsUnknown() && !r.Seven.Srv.Priority.IsNull() {
@@ -219,32 +214,37 @@ func (r *DNSResourceModel) ToOperationsCreateRecordRequestBody() *operations.Cre
 		} else {
 			priority = nil
 		}
-		target := r.Seven.Srv.Target.ValueString()
 		weight := new(float64)
 		if !r.Seven.Srv.Weight.IsUnknown() && !r.Seven.Srv.Weight.IsNull() {
 			*weight, _ = r.Seven.Srv.Weight.ValueBigFloat().Float64()
 		} else {
 			weight = nil
 		}
-		srv := operations.CreateRecordSrv{
-			Port:     port,
-			Priority: priority,
-			Target:   target,
-			Weight:   weight,
-		}
-		ttl6 := new(float64)
-		if !r.Seven.TTL.IsUnknown() && !r.Seven.TTL.IsNull() {
-			*ttl6, _ = r.Seven.TTL.ValueBigFloat().Float64()
+		port := new(float64)
+		if !r.Seven.Srv.Port.IsUnknown() && !r.Seven.Srv.Port.IsNull() {
+			*port, _ = r.Seven.Srv.Port.ValueBigFloat().Float64()
 		} else {
-			ttl6 = nil
+			port = nil
 		}
-		typeVar6 := operations.CreateRecordDNSRequestRequestBody7Type(r.Seven.Type.ValueString())
+		target := r.Seven.Srv.Target.ValueString()
+		srv := operations.RequestBodySrv{
+			Priority: priority,
+			Weight:   weight,
+			Port:     port,
+			Target:   target,
+		}
+		comment6 := new(string)
+		if !r.Seven.Comment.IsUnknown() && !r.Seven.Comment.IsNull() {
+			*comment6 = r.Seven.Comment.ValueString()
+		} else {
+			comment6 = nil
+		}
 		seven = &operations.Seven{
-			Comment: comment6,
 			Name:    name6,
-			Srv:     srv,
-			TTL:     ttl6,
 			Type:    typeVar6,
+			TTL:     ttl6,
+			Srv:     srv,
+			Comment: comment6,
 		}
 	}
 	if seven != nil {
@@ -254,27 +254,27 @@ func (r *DNSResourceModel) ToOperationsCreateRecordRequestBody() *operations.Cre
 	}
 	var eight *operations.Eight
 	if r.Eight != nil {
-		comment7 := new(string)
-		if !r.Eight.Comment.IsUnknown() && !r.Eight.Comment.IsNull() {
-			*comment7 = r.Eight.Comment.ValueString()
-		} else {
-			comment7 = nil
-		}
 		name7 := r.Eight.Name.ValueString()
+		typeVar7 := operations.CreateRecordRequestBodyDNSRequest8Type(r.Eight.Type.ValueString())
 		ttl7 := new(float64)
 		if !r.Eight.TTL.IsUnknown() && !r.Eight.TTL.IsNull() {
 			*ttl7, _ = r.Eight.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl7 = nil
 		}
-		typeVar7 := operations.CreateRecordDNSRequestRequestBody8Type(r.Eight.Type.ValueString())
 		value6 := r.Eight.Value.ValueString()
+		comment7 := new(string)
+		if !r.Eight.Comment.IsUnknown() && !r.Eight.Comment.IsNull() {
+			*comment7 = r.Eight.Comment.ValueString()
+		} else {
+			comment7 = nil
+		}
 		eight = &operations.Eight{
-			Comment: comment7,
 			Name:    name7,
-			TTL:     ttl7,
 			Type:    typeVar7,
+			TTL:     ttl7,
 			Value:   value6,
+			Comment: comment7,
 		}
 	}
 	if eight != nil {
@@ -284,32 +284,32 @@ func (r *DNSResourceModel) ToOperationsCreateRecordRequestBody() *operations.Cre
 	}
 	var nine *operations.Nine
 	if r.Nine != nil {
-		comment8 := new(string)
-		if !r.Nine.Comment.IsUnknown() && !r.Nine.Comment.IsNull() {
-			*comment8 = r.Nine.Comment.ValueString()
-		} else {
-			comment8 = nil
-		}
 		name8 := r.Nine.Name.ValueString()
+		typeVar8 := operations.CreateRecordRequestBodyDNSRequest9Type(r.Nine.Type.ValueString())
 		ttl8 := new(float64)
 		if !r.Nine.TTL.IsUnknown() && !r.Nine.TTL.IsNull() {
 			*ttl8, _ = r.Nine.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl8 = nil
 		}
-		typeVar8 := operations.CreateRecordDNSRequestRequestBody9Type(r.Nine.Type.ValueString())
 		value7 := new(string)
 		if !r.Nine.Value.IsUnknown() && !r.Nine.Value.IsNull() {
 			*value7 = r.Nine.Value.ValueString()
 		} else {
 			value7 = nil
 		}
+		comment8 := new(string)
+		if !r.Nine.Comment.IsUnknown() && !r.Nine.Comment.IsNull() {
+			*comment8 = r.Nine.Comment.ValueString()
+		} else {
+			comment8 = nil
+		}
 		nine = &operations.Nine{
-			Comment: comment8,
 			Name:    name8,
-			TTL:     ttl8,
 			Type:    typeVar8,
+			TTL:     ttl8,
 			Value:   value7,
+			Comment: comment8,
 		}
 	}
 	if nine != nil {
@@ -319,17 +319,13 @@ func (r *DNSResourceModel) ToOperationsCreateRecordRequestBody() *operations.Cre
 	}
 	var ten *operations.Ten
 	if r.Ten != nil {
-		comment9 := new(string)
-		if !r.Ten.Comment.IsUnknown() && !r.Ten.Comment.IsNull() {
-			*comment9 = r.Ten.Comment.ValueString()
+		name9 := r.Ten.Name.ValueString()
+		typeVar9 := operations.CreateRecordRequestBodyDNSRequest10Type(r.Ten.Type.ValueString())
+		ttl9 := new(float64)
+		if !r.Ten.TTL.IsUnknown() && !r.Ten.TTL.IsNull() {
+			*ttl9, _ = r.Ten.TTL.ValueBigFloat().Float64()
 		} else {
-			comment9 = nil
-		}
-		params := new(string)
-		if !r.Ten.HTTPS.Params.IsUnknown() && !r.Ten.HTTPS.Params.IsNull() {
-			*params = r.Ten.HTTPS.Params.ValueString()
-		} else {
-			params = nil
+			ttl9 = nil
 		}
 		priority1 := new(float64)
 		if !r.Ten.HTTPS.Priority.IsUnknown() && !r.Ten.HTTPS.Priority.IsNull() {
@@ -338,25 +334,29 @@ func (r *DNSResourceModel) ToOperationsCreateRecordRequestBody() *operations.Cre
 			priority1 = nil
 		}
 		target1 := r.Ten.HTTPS.Target.ValueString()
-		https := operations.CreateRecordHTTPS{
-			Params:   params,
+		params := new(string)
+		if !r.Ten.HTTPS.Params.IsUnknown() && !r.Ten.HTTPS.Params.IsNull() {
+			*params = r.Ten.HTTPS.Params.ValueString()
+		} else {
+			params = nil
+		}
+		https := operations.RequestBodyHTTPS{
 			Priority: priority1,
 			Target:   target1,
+			Params:   params,
 		}
-		name9 := r.Ten.Name.ValueString()
-		ttl9 := new(float64)
-		if !r.Ten.TTL.IsUnknown() && !r.Ten.TTL.IsNull() {
-			*ttl9, _ = r.Ten.TTL.ValueBigFloat().Float64()
+		comment9 := new(string)
+		if !r.Ten.Comment.IsUnknown() && !r.Ten.Comment.IsNull() {
+			*comment9 = r.Ten.Comment.ValueString()
 		} else {
-			ttl9 = nil
+			comment9 = nil
 		}
-		typeVar9 := operations.CreateRecordType(r.Ten.Type.ValueString())
 		ten = &operations.Ten{
-			Comment: comment9,
-			HTTPS:   https,
 			Name:    name9,
-			TTL:     ttl9,
 			Type:    typeVar9,
+			TTL:     ttl9,
+			HTTPS:   https,
+			Comment: comment9,
 		}
 	}
 	if ten != nil {
@@ -369,18 +369,18 @@ func (r *DNSResourceModel) ToOperationsCreateRecordRequestBody() *operations.Cre
 
 func (r *DNSResourceModel) RefreshFromOperationsCreateRecordResponseBody(resp *operations.CreateRecordResponseBody) {
 	if resp != nil {
-		if resp.CreateRecordDNS1 != nil {
-			r.One = &tfTypes.CreateRecord1{}
-			r.One.UID = types.StringValue(resp.CreateRecordDNS1.UID)
+		if resp.CreateRecordResponseBody1 != nil {
+			r.One = &tfTypes.RequestBody1{}
+			r.One.UID = types.StringValue(resp.CreateRecordResponseBody1.UID)
 			r.UID = r.One.UID
-			r.One.Updated = types.NumberValue(big.NewFloat(float64(resp.CreateRecordDNS1.Updated)))
+			r.One.Updated = types.NumberValue(big.NewFloat(float64(resp.CreateRecordResponseBody1.Updated)))
 		}
 		if resp.CreateRecordResponseBody != nil {
 			r.Ten = &tfTypes.Ten{}
 		}
-		if resp.CreateRecordDNS2 != nil {
-			r.Two = &tfTypes.CreateRecord2{}
-			r.Two.UID = types.StringValue(resp.CreateRecordDNS2.UID)
+		if resp.CreateRecordResponseBody2 != nil {
+			r.Two = &tfTypes.RequestBody2{}
+			r.Two.UID = types.StringValue(resp.CreateRecordResponseBody2.UID)
 			r.UID = r.Two.UID
 		}
 		if resp.CreateRecordResponseBody != nil {
@@ -390,7 +390,7 @@ func (r *DNSResourceModel) RefreshFromOperationsCreateRecordResponseBody(resp *o
 			r.Four = &tfTypes.Eight{}
 		}
 		if resp.CreateRecordResponseBody != nil {
-			r.Five = &tfTypes.CreateRecord5{}
+			r.Five = &tfTypes.RequestBody5{}
 		}
 		if resp.CreateRecordResponseBody != nil {
 			r.Six = &tfTypes.Six{}
@@ -402,7 +402,7 @@ func (r *DNSResourceModel) RefreshFromOperationsCreateRecordResponseBody(resp *o
 			r.Eight = &tfTypes.Eight{}
 		}
 		if resp.CreateRecordResponseBody != nil {
-			r.Nine = &tfTypes.CreateRecord5{}
+			r.Nine = &tfTypes.RequestBody5{}
 		}
 	}
 }

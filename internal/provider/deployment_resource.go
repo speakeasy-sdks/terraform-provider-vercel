@@ -23,16 +23,16 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	speakeasy_mapplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/mapplanmodifier"
-	speakeasy_numberplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/numberplanmodifier"
-	speakeasy_objectplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/objectplanmodifier"
-	speakeasy_stringplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/stringplanmodifier"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
-	"github.com/zchee/terraform-provider-vercel/internal/validators"
-	speakeasy_objectvalidators "github.com/zchee/terraform-provider-vercel/internal/validators/objectvalidators"
-	speakeasy_stringvalidators "github.com/zchee/terraform-provider-vercel/internal/validators/stringvalidators"
+	speakeasy_mapplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/mapplanmodifier"
+	speakeasy_numberplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/numberplanmodifier"
+	speakeasy_objectplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
+	"github.com/speakeasy/terraform-provider-terraform/internal/validators"
+	speakeasy_objectvalidators "github.com/speakeasy/terraform-provider-terraform/internal/validators/objectvalidators"
+	speakeasy_stringvalidators "github.com/speakeasy/terraform-provider-terraform/internal/validators/stringvalidators"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -45,79 +45,79 @@ func NewDeploymentResource() resource.Resource {
 
 // DeploymentResource defines the resource implementation.
 type DeploymentResource struct {
-	client *sdk.Vercel
+	client *sdk.SDK
 }
 
 // DeploymentResourceModel describes the resource data model.
 type DeploymentResourceModel struct {
-	Alias                         []types.String                               `tfsdk:"alias"`
-	AliasAssigned                 types.Bool                                   `tfsdk:"alias_assigned"`
-	AliasAssignedAt               *tfTypes.CreateDeploymentAliasAssignedAt     `tfsdk:"alias_assigned_at"`
-	AliasError                    *tfTypes.CreateDeploymentAliasError          `tfsdk:"alias_error"`
-	AliasFinal                    types.String                                 `tfsdk:"alias_final"`
-	AliasWarning                  *tfTypes.CreateDeploymentAliasWarning        `tfsdk:"alias_warning"`
-	AutoAssignCustomDomains       types.Bool                                   `tfsdk:"auto_assign_custom_domains"`
-	AutomaticAliases              []types.String                               `tfsdk:"automatic_aliases"`
-	BootedAt                      types.Number                                 `tfsdk:"booted_at"`
-	Build                         tfTypes.CreateDeploymentBuild                `tfsdk:"build"`
-	BuildErrorAt                  types.Number                                 `tfsdk:"build_error_at"`
-	BuildingAt                    types.Number                                 `tfsdk:"building_at"`
-	CanceledAt                    types.Number                                 `tfsdk:"canceled_at"`
-	ChecksConclusion              types.String                                 `tfsdk:"checks_conclusion"`
-	ChecksState                   types.String                                 `tfsdk:"checks_state"`
-	ConnectBuildsEnabled          types.Bool                                   `tfsdk:"connect_builds_enabled"`
-	ConnectConfigurationID        types.String                                 `tfsdk:"connect_configuration_id"`
-	CreatedAt                     types.Number                                 `tfsdk:"created_at"`
-	CreatedIn                     types.String                                 `tfsdk:"created_in"`
-	Creator                       tfTypes.CreateDeploymentCreator              `tfsdk:"creator"`
-	Crons                         []tfTypes.CreateDeploymentCrons              `tfsdk:"crons"`
-	CustomEnvironmentSlugOrID     types.String                                 `tfsdk:"custom_environment_slug_or_id"`
-	DeploymentID                  types.String                                 `tfsdk:"deployment_id"`
-	Env                           []types.String                               `tfsdk:"env"`
-	ErrorCode                     types.String                                 `tfsdk:"error_code"`
-	ErrorLink                     types.String                                 `tfsdk:"error_link"`
-	ErrorMessage                  types.String                                 `tfsdk:"error_message"`
-	ErrorStep                     types.String                                 `tfsdk:"error_step"`
-	Files                         []tfTypes.Files                              `tfsdk:"files"`
-	ForceNew                      types.String                                 `tfsdk:"force_new"`
-	Functions                     map[string]tfTypes.CreateDeploymentFunctions `tfsdk:"functions"`
-	GitMetadata                   *tfTypes.GitMetadata                         `tfsdk:"git_metadata"`
-	GitRepo                       *tfTypes.CreateDeploymentGitRepo             `tfsdk:"git_repo"`
-	GitSource                     *tfTypes.GitSource                           `tfsdk:"git_source"`
-	ID                            types.String                                 `tfsdk:"id"`
-	InspectorURL                  types.String                                 `tfsdk:"inspector_url"`
-	IsInConcurrentBuildsQueue     types.Bool                                   `tfsdk:"is_in_concurrent_builds_queue"`
-	Lambdas                       []tfTypes.CreateDeploymentLambdas            `tfsdk:"lambdas"`
-	Meta                          map[string]types.String                      `tfsdk:"meta"`
-	MonorepoManager               types.String                                 `tfsdk:"monorepo_manager"`
-	Name                          types.String                                 `tfsdk:"name"`
-	One                           *tfTypes.GetDeployment1                      `tfsdk:"one" tfPlanOnly:"true"`
-	OwnerID                       types.String                                 `tfsdk:"owner_id"`
-	PassiveConnectConfigurationID types.String                                 `tfsdk:"passive_connect_configuration_id"`
-	PassiveRegions                []types.String                               `tfsdk:"passive_regions"`
-	Plan                          types.String                                 `tfsdk:"plan"`
-	PreviewCommentsEnabled        types.Bool                                   `tfsdk:"preview_comments_enabled"`
-	Project                       types.String                                 `tfsdk:"project"`
-	ProjectID                     types.String                                 `tfsdk:"project_id"`
-	ProjectObj                    *tfTypes.GetDeploymentProject                `tfsdk:"project_obj"`
-	ProjectSettings               *tfTypes.ProjectSettings                     `tfsdk:"project_settings"`
-	Public                        types.Bool                                   `tfsdk:"public"`
-	ReadyState                    types.String                                 `tfsdk:"ready_state"`
-	ReadySubstate                 types.String                                 `tfsdk:"ready_substate"`
-	Regions                       []types.String                               `tfsdk:"regions"`
-	Routes                        []tfTypes.GetDeploymentRoutes                `tfsdk:"routes"`
-	SkipAutoDetectionConfirmation types.String                                 `tfsdk:"skip_auto_detection_confirmation"`
-	Slug                          types.String                                 `tfsdk:"slug"`
-	Source                        types.String                                 `tfsdk:"source"`
-	Target                        types.String                                 `tfsdk:"target"`
-	Team                          *tfTypes.GetDeploymentTeam                   `tfsdk:"team"`
-	TeamID                        types.String                                 `tfsdk:"team_id"`
-	Two                           *tfTypes.GetDeployment2                      `tfsdk:"two" tfPlanOnly:"true"`
-	Type                          types.String                                 `tfsdk:"type"`
-	URL                           types.String                                 `tfsdk:"url"`
-	UserAliases                   []types.String                               `tfsdk:"user_aliases"`
-	Version                       types.Number                                 `tfsdk:"version"`
-	WithLatestCommit              types.Bool                                   `tfsdk:"with_latest_commit"`
+	Alias                         []types.String                            `tfsdk:"alias"`
+	AliasAssigned                 types.Bool                                `tfsdk:"alias_assigned"`
+	AliasAssignedAt               *tfTypes.AliasAssignedAt                  `tfsdk:"alias_assigned_at"`
+	AliasError                    *tfTypes.AliasError                       `tfsdk:"alias_error"`
+	AliasFinal                    types.String                              `tfsdk:"alias_final"`
+	AliasWarning                  *tfTypes.AliasWarning                     `tfsdk:"alias_warning"`
+	AutoAssignCustomDomains       types.Bool                                `tfsdk:"auto_assign_custom_domains"`
+	AutomaticAliases              []types.String                            `tfsdk:"automatic_aliases"`
+	BootedAt                      types.Number                              `tfsdk:"booted_at"`
+	Build                         tfTypes.Build                             `tfsdk:"build"`
+	BuildErrorAt                  types.Number                              `tfsdk:"build_error_at"`
+	BuildingAt                    types.Number                              `tfsdk:"building_at"`
+	CanceledAt                    types.Number                              `tfsdk:"canceled_at"`
+	ChecksConclusion              types.String                              `tfsdk:"checks_conclusion"`
+	ChecksState                   types.String                              `tfsdk:"checks_state"`
+	ConnectBuildsEnabled          types.Bool                                `tfsdk:"connect_builds_enabled"`
+	ConnectConfigurationID        types.String                              `tfsdk:"connect_configuration_id"`
+	CreatedAt                     types.Number                              `tfsdk:"created_at"`
+	CreatedIn                     types.String                              `tfsdk:"created_in"`
+	Creator                       tfTypes.Creator                           `tfsdk:"creator"`
+	Crons                         []tfTypes.CreateDeploymentCrons           `tfsdk:"crons"`
+	CustomEnvironmentSlugOrID     types.String                              `tfsdk:"custom_environment_slug_or_id"`
+	DeploymentID                  types.String                              `tfsdk:"deployment_id"`
+	Env                           []types.String                            `tfsdk:"env"`
+	ErrorCode                     types.String                              `tfsdk:"error_code"`
+	ErrorLink                     types.String                              `tfsdk:"error_link"`
+	ErrorMessage                  types.String                              `tfsdk:"error_message"`
+	ErrorStep                     types.String                              `tfsdk:"error_step"`
+	Files                         []tfTypes.Files                           `tfsdk:"files"`
+	ForceNew                      types.String                              `tfsdk:"force_new"`
+	Functions                     map[string]tfTypes.Functions              `tfsdk:"functions"`
+	GitMetadata                   *tfTypes.GitMetadata                      `tfsdk:"git_metadata"`
+	GitRepo                       *tfTypes.GitRepo                          `tfsdk:"git_repo"`
+	GitSource                     *tfTypes.GitSource                        `tfsdk:"git_source"`
+	ID                            types.String                              `tfsdk:"id"`
+	InspectorURL                  types.String                              `tfsdk:"inspector_url"`
+	IsInConcurrentBuildsQueue     types.Bool                                `tfsdk:"is_in_concurrent_builds_queue"`
+	Lambdas                       []tfTypes.Lambdas                         `tfsdk:"lambdas"`
+	Meta                          map[string]types.String                   `tfsdk:"meta"`
+	MonorepoManager               types.String                              `tfsdk:"monorepo_manager"`
+	Name                          types.String                              `tfsdk:"name"`
+	One                           *tfTypes.GetDeploymentResponseBody1       `tfsdk:"one" tfPlanOnly:"true"`
+	OwnerID                       types.String                              `tfsdk:"owner_id"`
+	PassiveConnectConfigurationID types.String                              `tfsdk:"passive_connect_configuration_id"`
+	PassiveRegions                []types.String                            `tfsdk:"passive_regions"`
+	Plan                          types.String                              `tfsdk:"plan"`
+	PreviewCommentsEnabled        types.Bool                                `tfsdk:"preview_comments_enabled"`
+	Project                       types.String                              `tfsdk:"project"`
+	ProjectID                     types.String                              `tfsdk:"project_id"`
+	ProjectObj                    *tfTypes.GetDeploymentResponseBodyProject `tfsdk:"project_obj"`
+	ProjectSettings               *tfTypes.ProjectSettings                  `tfsdk:"project_settings"`
+	Public                        types.Bool                                `tfsdk:"public"`
+	ReadyState                    types.String                              `tfsdk:"ready_state"`
+	ReadySubstate                 types.String                              `tfsdk:"ready_substate"`
+	Regions                       []types.String                            `tfsdk:"regions"`
+	Routes                        []tfTypes.ResponseBodyRoutes              `tfsdk:"routes"`
+	SkipAutoDetectionConfirmation types.String                              `tfsdk:"skip_auto_detection_confirmation"`
+	Slug                          types.String                              `tfsdk:"slug"`
+	Source                        types.String                              `tfsdk:"source"`
+	Target                        types.String                              `tfsdk:"target"`
+	Team                          *tfTypes.GetDeploymentResponseBodyTeam    `tfsdk:"team"`
+	TeamID                        types.String                              `tfsdk:"team_id"`
+	Two                           *tfTypes.GetDeploymentResponseBody2       `tfsdk:"two" tfPlanOnly:"true"`
+	Type                          types.String                              `tfsdk:"type"`
+	URL                           types.String                              `tfsdk:"url"`
+	UserAliases                   []types.String                            `tfsdk:"user_aliases"`
+	Version                       types.Number                              `tfsdk:"version"`
+	WithLatestCommit              types.Bool                                `tfsdk:"with_latest_commit"`
 }
 
 func (r *DeploymentResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -1388,14 +1388,534 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"one": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"alias": schema.ListAttribute{
+					"build": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"env": schema.ListAttribute{
+								Computed:    true,
+								ElementType: types.StringType,
+								Description: `The keys of the environment variables that were assigned during the build phase.`,
+							},
+						},
+					},
+					"connect_builds_enabled": schema.BoolAttribute{
+						Computed:    true,
+						Description: `The flag saying if Vercel Connect configuration is used for builds`,
+					},
+					"connect_configuration_id": schema.StringAttribute{
+						Computed:    true,
+						Description: `The ID of Vercel Connect configuration used for this deployment`,
+					},
+					"created_in": schema.StringAttribute{
+						Computed:    true,
+						Description: `The region where the deployment was first created`,
+					},
+					"crons": schema.ListNestedAttribute{
+						Computed: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"schedule": schema.StringAttribute{
+									Computed: true,
+								},
+								"path": schema.StringAttribute{
+									Computed: true,
+								},
+							},
+						},
+						Description: `The cron jobs associated with this deployment. Note that preview deployments are also allowed to have this property, but only production deployments create cron jobs. If a preview deployment is promoted to production, only then they'll take effect.`,
+					},
+					"env": schema.ListAttribute{
 						Computed:    true,
 						ElementType: types.StringType,
-						Description: `A list of all the aliases (default aliases, staging aliases and production aliases) that were assigned upon deployment creation`,
+						Description: `The keys of the environment variables that were assigned during runtime`,
 					},
-					"alias_assigned": schema.BoolAttribute{
+					"functions": schema.MapNestedAttribute{
+						Computed: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"memory": schema.NumberAttribute{
+									Computed: true,
+								},
+								"max_duration": schema.NumberAttribute{
+									Computed: true,
+								},
+								"runtime": schema.StringAttribute{
+									Computed: true,
+								},
+								"include_files": schema.StringAttribute{
+									Computed: true,
+								},
+								"exclude_files": schema.StringAttribute{
+									Computed: true,
+								},
+							},
+						},
+						Description: `An object used to configure your Serverless Functions`,
+					},
+					"inspector_url": schema.StringAttribute{
 						Computed:    true,
-						Description: `A boolean that will be true when the aliases from the alias property were assigned successfully`,
+						Description: `Vercel URL to inspect the deployment.`,
+					},
+					"is_in_concurrent_builds_queue": schema.BoolAttribute{
+						Computed:    true,
+						Description: `Is the deployment currently queued waiting for a Concurrent Build Slot to be available`,
+					},
+					"meta": schema.MapAttribute{
+						Computed:    true,
+						ElementType: types.StringType,
+						Description: `An object containing the deployment's metadata`,
+					},
+					"monorepo_manager": schema.StringAttribute{
+						Computed:    true,
+						Description: `An monorepo manager that was used for the deployment`,
+					},
+					"name": schema.StringAttribute{
+						Computed:    true,
+						Description: `The name of the project associated with the deployment at the time that the deployment was created`,
+					},
+					"owner_id": schema.StringAttribute{
+						Computed:    true,
+						Description: `The unique ID of the user or team the deployment belongs to`,
+					},
+					"passive_connect_configuration_id": schema.StringAttribute{
+						Computed:    true,
+						Description: `The connect configuration ID used to deploy passive lambdas into for secure compute enabled deployments.`,
+					},
+					"plan": schema.StringAttribute{
+						Computed:    true,
+						Description: `The pricing plan the deployment was made under. must be one of ["pro", "enterprise", "hobby"]`,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"pro",
+								"enterprise",
+								"hobby",
+							),
+						},
+					},
+					"project_id": schema.StringAttribute{
+						Computed:    true,
+						Description: `The ID of the project the deployment is associated with`,
+					},
+					"routes": schema.ListNestedAttribute{
+						Computed: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"one": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"src": schema.StringAttribute{
+											Computed: true,
+										},
+										"dest": schema.StringAttribute{
+											Computed: true,
+										},
+										"headers": schema.MapAttribute{
+											Computed:    true,
+											ElementType: types.StringType,
+										},
+										"methods": schema.ListAttribute{
+											Computed:    true,
+											ElementType: types.StringType,
+										},
+										"continue": schema.BoolAttribute{
+											Computed: true,
+										},
+										"override": schema.BoolAttribute{
+											Computed: true,
+										},
+										"case_sensitive": schema.BoolAttribute{
+											Computed: true,
+										},
+										"check": schema.BoolAttribute{
+											Computed: true,
+										},
+										"important": schema.BoolAttribute{
+											Computed: true,
+										},
+										"status": schema.NumberAttribute{
+											Computed: true,
+										},
+										"has": schema.ListNestedAttribute{
+											Computed: true,
+											NestedObject: schema.NestedAttributeObject{
+												Attributes: map[string]schema.Attribute{
+													"one": schema.SingleNestedAttribute{
+														Computed: true,
+														Attributes: map[string]schema.Attribute{
+															"type": schema.StringAttribute{
+																Computed:    true,
+																Description: `must be one of ["host"]`,
+																Validators: []validator.String{
+																	stringvalidator.OneOf(
+																		"host",
+																	),
+																},
+															},
+															"value": schema.StringAttribute{
+																Computed: true,
+															},
+														},
+														Validators: []validator.Object{
+															objectvalidator.ConflictsWith(path.Expressions{
+																path.MatchRelative().AtParent().AtName("two"),
+															}...),
+														},
+													},
+													"two": schema.SingleNestedAttribute{
+														Computed: true,
+														Attributes: map[string]schema.Attribute{
+															"type": schema.StringAttribute{
+																Computed:    true,
+																Description: `must be one of ["header", "cookie", "query"]`,
+																Validators: []validator.String{
+																	stringvalidator.OneOf(
+																		"header",
+																		"cookie",
+																		"query",
+																	),
+																},
+															},
+															"key": schema.StringAttribute{
+																Computed: true,
+															},
+															"value": schema.StringAttribute{
+																Computed: true,
+															},
+														},
+														Validators: []validator.Object{
+															objectvalidator.ConflictsWith(path.Expressions{
+																path.MatchRelative().AtParent().AtName("one"),
+															}...),
+														},
+													},
+												},
+												Validators: []validator.Object{
+													validators.ExactlyOneChild(),
+												},
+											},
+										},
+										"missing": schema.ListNestedAttribute{
+											Computed: true,
+											NestedObject: schema.NestedAttributeObject{
+												Attributes: map[string]schema.Attribute{
+													"one": schema.SingleNestedAttribute{
+														Computed: true,
+														Attributes: map[string]schema.Attribute{
+															"type": schema.StringAttribute{
+																Computed:    true,
+																Description: `must be one of ["host"]`,
+																Validators: []validator.String{
+																	stringvalidator.OneOf(
+																		"host",
+																	),
+																},
+															},
+															"value": schema.StringAttribute{
+																Computed: true,
+															},
+														},
+														Validators: []validator.Object{
+															objectvalidator.ConflictsWith(path.Expressions{
+																path.MatchRelative().AtParent().AtName("two"),
+															}...),
+														},
+													},
+													"two": schema.SingleNestedAttribute{
+														Computed: true,
+														Attributes: map[string]schema.Attribute{
+															"type": schema.StringAttribute{
+																Computed:    true,
+																Description: `must be one of ["header", "cookie", "query"]`,
+																Validators: []validator.String{
+																	stringvalidator.OneOf(
+																		"header",
+																		"cookie",
+																		"query",
+																	),
+																},
+															},
+															"key": schema.StringAttribute{
+																Computed: true,
+															},
+															"value": schema.StringAttribute{
+																Computed: true,
+															},
+														},
+														Validators: []validator.Object{
+															objectvalidator.ConflictsWith(path.Expressions{
+																path.MatchRelative().AtParent().AtName("one"),
+															}...),
+														},
+													},
+												},
+												Validators: []validator.Object{
+													validators.ExactlyOneChild(),
+												},
+											},
+										},
+										"locale": schema.SingleNestedAttribute{
+											Computed: true,
+											Attributes: map[string]schema.Attribute{
+												"redirect": schema.MapAttribute{
+													Computed:    true,
+													ElementType: types.StringType,
+												},
+												"cookie": schema.StringAttribute{
+													Computed: true,
+												},
+											},
+										},
+										"middleware_path": schema.StringAttribute{
+											Computed:    true,
+											Description: `A middleware key within the ` + "`" + `output` + "`" + ` key under the build result. Overrides a ` + "`" + `middleware` + "`" + ` definition.`,
+										},
+										"middleware_raw_src": schema.ListAttribute{
+											Computed:    true,
+											ElementType: types.StringType,
+											Description: `The original middleware matchers.`,
+										},
+										"middleware": schema.NumberAttribute{
+											Computed:    true,
+											Description: `A middleware index in the ` + "`" + `middleware` + "`" + ` key under the build result`,
+										},
+									},
+									Description: `A list of routes objects used to rewrite paths to point towards other internal or external paths`,
+									Validators: []validator.Object{
+										objectvalidator.ConflictsWith(path.Expressions{
+											path.MatchRelative().AtParent().AtName("two"),
+											path.MatchRelative().AtParent().AtName("three"),
+										}...),
+									},
+								},
+								"two": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"handle": schema.StringAttribute{
+											Computed:    true,
+											Description: `must be one of ["error", "filesystem", "hit", "miss", "rewrite", "resource"]`,
+											Validators: []validator.String{
+												stringvalidator.OneOf(
+													"error",
+													"filesystem",
+													"hit",
+													"miss",
+													"rewrite",
+													"resource",
+												),
+											},
+										},
+										"src": schema.StringAttribute{
+											Computed: true,
+										},
+										"dest": schema.StringAttribute{
+											Computed: true,
+										},
+										"status": schema.NumberAttribute{
+											Computed: true,
+										},
+									},
+									Description: `A list of routes objects used to rewrite paths to point towards other internal or external paths`,
+									Validators: []validator.Object{
+										objectvalidator.ConflictsWith(path.Expressions{
+											path.MatchRelative().AtParent().AtName("one"),
+											path.MatchRelative().AtParent().AtName("three"),
+										}...),
+									},
+								},
+								"three": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"src": schema.StringAttribute{
+											Computed: true,
+										},
+										"continue": schema.BoolAttribute{
+											Computed: true,
+										},
+										"middleware": schema.NumberAttribute{
+											Computed: true,
+										},
+									},
+									Description: `A list of routes objects used to rewrite paths to point towards other internal or external paths`,
+									Validators: []validator.Object{
+										objectvalidator.ConflictsWith(path.Expressions{
+											path.MatchRelative().AtParent().AtName("one"),
+											path.MatchRelative().AtParent().AtName("two"),
+										}...),
+									},
+								},
+							},
+							Validators: []validator.Object{
+								validators.ExactlyOneChild(),
+							},
+						},
+						Description: `A list of routes objects used to rewrite paths to point towards other internal or external paths`,
+					},
+					"git_repo": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"one": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"namespace": schema.StringAttribute{
+										Computed: true,
+									},
+									"project_id": schema.NumberAttribute{
+										Computed: true,
+									},
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["gitlab"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"gitlab",
+											),
+										},
+									},
+									"url": schema.StringAttribute{
+										Computed: true,
+									},
+									"path": schema.StringAttribute{
+										Computed: true,
+									},
+									"default_branch": schema.StringAttribute{
+										Computed: true,
+									},
+									"name": schema.StringAttribute{
+										Computed: true,
+									},
+									"private": schema.BoolAttribute{
+										Computed: true,
+									},
+									"owner_type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["team", "user"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"team",
+												"user",
+											),
+										},
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+									}...),
+								},
+							},
+							"two": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"org": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo_id": schema.NumberAttribute{
+										Computed: true,
+									},
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["github"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"github",
+											),
+										},
+									},
+									"repo_owner_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"path": schema.StringAttribute{
+										Computed: true,
+									},
+									"default_branch": schema.StringAttribute{
+										Computed: true,
+									},
+									"name": schema.StringAttribute{
+										Computed: true,
+									},
+									"private": schema.BoolAttribute{
+										Computed: true,
+									},
+									"owner_type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["team", "user"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"team",
+												"user",
+											),
+										},
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("three"),
+									}...),
+								},
+							},
+							"three": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"owner": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo_uuid": schema.StringAttribute{
+										Computed: true,
+									},
+									"slug": schema.StringAttribute{
+										Computed: true,
+									},
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["bitbucket"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"bitbucket",
+											),
+										},
+									},
+									"workspace_uuid": schema.StringAttribute{
+										Computed: true,
+									},
+									"path": schema.StringAttribute{
+										Computed: true,
+									},
+									"default_branch": schema.StringAttribute{
+										Computed: true,
+									},
+									"name": schema.StringAttribute{
+										Computed: true,
+									},
+									"private": schema.BoolAttribute{
+										Computed: true,
+									},
+									"owner_type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["team", "user"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"team",
+												"user",
+											),
+										},
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+									}...),
+								},
+							},
+						},
+						Validators: []validator.Object{
+							validators.ExactlyOneChild(),
+						},
 					},
 					"alias_assigned_at": schema.SingleNestedAttribute{
 						Computed: true,
@@ -1421,786 +1941,18 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 							validators.ExactlyOneChild(),
 						},
 					},
-					"alias_error": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"code": schema.StringAttribute{
-								Computed: true,
-							},
-							"message": schema.StringAttribute{
-								Computed: true,
-							},
-						},
-						Description: `An object that will contain a ` + "`" + `code` + "`" + ` and a ` + "`" + `message` + "`" + ` when the aliasing fails, otherwise the value will be ` + "`" + `null` + "`" + ``,
-					},
-					"alias_final": schema.StringAttribute{
-						Computed: true,
-					},
-					"alias_warning": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"action": schema.StringAttribute{
-								Computed: true,
-							},
-							"code": schema.StringAttribute{
-								Computed: true,
-							},
-							"link": schema.StringAttribute{
-								Computed: true,
-							},
-							"message": schema.StringAttribute{
-								Computed: true,
-							},
-						},
-					},
-					"auto_assign_custom_domains": schema.BoolAttribute{
-						Computed: true,
-					},
-					"automatic_aliases": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-					},
-					"booted_at": schema.NumberAttribute{
-						Computed: true,
-					},
-					"build": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"env": schema.ListAttribute{
-								Computed:    true,
-								ElementType: types.StringType,
-								Description: `The keys of the environment variables that were assigned during the build phase.`,
-							},
-						},
-					},
-					"build_error_at": schema.NumberAttribute{
-						Computed: true,
-					},
-					"building_at": schema.NumberAttribute{
-						Computed: true,
-					},
-					"canceled_at": schema.NumberAttribute{
-						Computed: true,
-					},
-					"checks_conclusion": schema.StringAttribute{
-						Computed:    true,
-						Description: `must be one of ["succeeded", "failed", "skipped", "canceled"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"succeeded",
-								"failed",
-								"skipped",
-								"canceled",
-							),
-						},
-					},
-					"checks_state": schema.StringAttribute{
-						Computed:    true,
-						Description: `must be one of ["registered", "running", "completed"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"registered",
-								"running",
-								"completed",
-							),
-						},
-					},
-					"connect_builds_enabled": schema.BoolAttribute{
-						Computed:    true,
-						Description: `The flag saying if Vercel Connect configuration is used for builds`,
-					},
-					"connect_configuration_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The ID of Vercel Connect configuration used for this deployment`,
-					},
-					"created_at": schema.NumberAttribute{
-						Computed:    true,
-						Description: `A number containing the date when the deployment was created in milliseconds`,
-					},
-					"created_in": schema.StringAttribute{
-						Computed:    true,
-						Description: `The region where the deployment was first created`,
-					},
-					"creator": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"avatar": schema.StringAttribute{
-								Computed:    true,
-								Description: `The avatar of the user that created the deployment`,
-							},
-							"uid": schema.StringAttribute{
-								Computed:    true,
-								Description: `The ID of the user that created the deployment`,
-							},
-							"username": schema.StringAttribute{
-								Computed:    true,
-								Description: `The username of the user that created the deployment`,
-							},
-						},
-						Description: `Information about the deployment creator`,
-					},
-					"crons": schema.ListNestedAttribute{
-						Computed: true,
-						NestedObject: schema.NestedAttributeObject{
-							Attributes: map[string]schema.Attribute{
-								"path": schema.StringAttribute{
-									Computed: true,
-								},
-								"schedule": schema.StringAttribute{
-									Computed: true,
-								},
-							},
-						},
-						Description: `The cron jobs associated with this deployment. Note that preview deployments are also allowed to have this property, but only production deployments create cron jobs. If a preview deployment is promoted to production, only then they'll take effect.`,
-					},
-					"env": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `The keys of the environment variables that were assigned during runtime`,
-					},
-					"error_code": schema.StringAttribute{
-						Computed: true,
-					},
-					"error_link": schema.StringAttribute{
-						Computed: true,
-					},
-					"error_message": schema.StringAttribute{
-						Computed: true,
-					},
-					"error_step": schema.StringAttribute{
-						Computed: true,
-					},
-					"functions": schema.MapNestedAttribute{
-						Computed: true,
-						NestedObject: schema.NestedAttributeObject{
-							Attributes: map[string]schema.Attribute{
-								"exclude_files": schema.StringAttribute{
-									Computed: true,
-								},
-								"include_files": schema.StringAttribute{
-									Computed: true,
-								},
-								"max_duration": schema.NumberAttribute{
-									Computed: true,
-								},
-								"memory": schema.NumberAttribute{
-									Computed: true,
-								},
-								"runtime": schema.StringAttribute{
-									Computed: true,
-								},
-							},
-						},
-						Description: `An object used to configure your Serverless Functions`,
-					},
-					"git_repo": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"one": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"default_branch": schema.StringAttribute{
-										Computed: true,
-									},
-									"name": schema.StringAttribute{
-										Computed: true,
-									},
-									"namespace": schema.StringAttribute{
-										Computed: true,
-									},
-									"owner_type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["team", "user"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"team",
-												"user",
-											),
-										},
-									},
-									"path": schema.StringAttribute{
-										Computed: true,
-									},
-									"private": schema.BoolAttribute{
-										Computed: true,
-									},
-									"project_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["gitlab"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"gitlab",
-											),
-										},
-									},
-									"url": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-									}...),
-								},
-							},
-							"two": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"default_branch": schema.StringAttribute{
-										Computed: true,
-									},
-									"name": schema.StringAttribute{
-										Computed: true,
-									},
-									"org": schema.StringAttribute{
-										Computed: true,
-									},
-									"owner_type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["team", "user"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"team",
-												"user",
-											),
-										},
-									},
-									"path": schema.StringAttribute{
-										Computed: true,
-									},
-									"private": schema.BoolAttribute{
-										Computed: true,
-									},
-									"repo": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"repo_owner_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["github"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"github",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("three"),
-									}...),
-								},
-							},
-							"three": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"default_branch": schema.StringAttribute{
-										Computed: true,
-									},
-									"name": schema.StringAttribute{
-										Computed: true,
-									},
-									"owner": schema.StringAttribute{
-										Computed: true,
-									},
-									"owner_type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["team", "user"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"team",
-												"user",
-											),
-										},
-									},
-									"path": schema.StringAttribute{
-										Computed: true,
-									},
-									"private": schema.BoolAttribute{
-										Computed: true,
-									},
-									"repo_uuid": schema.StringAttribute{
-										Computed: true,
-									},
-									"slug": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["bitbucket"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"bitbucket",
-											),
-										},
-									},
-									"workspace_uuid": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-									}...),
-								},
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-					},
-					"git_source": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"one": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"pr_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo_id": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"str": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("number"),
-													}...),
-												},
-											},
-											"number": schema.NumberAttribute{
-												Computed: true,
-												Validators: []validator.Number{
-													numbervalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("str"),
-													}...),
-												},
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["github"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"github",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"two": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"org": schema.StringAttribute{
-										Computed: true,
-									},
-									"pr_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["github"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"github",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"three": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"pr_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"project_id": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"str": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("number"),
-													}...),
-												},
-											},
-											"number": schema.NumberAttribute{
-												Computed: true,
-												Validators: []validator.Number{
-													numbervalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("str"),
-													}...),
-												},
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["gitlab"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"gitlab",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"four": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"pr_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo_uuid": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["bitbucket"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"bitbucket",
-											),
-										},
-									},
-									"workspace_uuid": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"five": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"owner": schema.StringAttribute{
-										Computed: true,
-									},
-									"pr_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"slug": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["bitbucket"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"bitbucket",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"six": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"git_url": schema.StringAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["custom"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"custom",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"seven": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"org": schema.StringAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["github"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"github",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"eight": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"project_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["gitlab"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"gitlab",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"nine": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"owner": schema.StringAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo_uuid": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"slug": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["bitbucket"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"bitbucket",
-											),
-										},
-									},
-									"workspace_uuid": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-									}...),
-								},
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-					},
-					"id": schema.StringAttribute{
-						Computed:    true,
-						Description: `A string holding the unique ID of the deployment`,
-					},
-					"inspector_url": schema.StringAttribute{
-						Computed:    true,
-						Description: `Vercel URL to inspect the deployment.`,
-					},
-					"is_in_concurrent_builds_queue": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Is the deployment currently queued waiting for a Concurrent Build Slot to be available`,
-					},
 					"lambdas": schema.ListNestedAttribute{
 						Computed: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
 								"created_at": schema.NumberAttribute{
 									Computed: true,
 								},
 								"entrypoint": schema.StringAttribute{
 									Computed: true,
-								},
-								"id": schema.StringAttribute{
-									Computed: true,
-								},
-								"output": schema.ListNestedAttribute{
-									Computed: true,
-									NestedObject: schema.NestedAttributeObject{
-										Attributes: map[string]schema.Attribute{
-											"function_name": schema.StringAttribute{
-												Computed: true,
-											},
-											"path": schema.StringAttribute{
-												Computed: true,
-											},
-										},
-									},
 								},
 								"ready_state": schema.StringAttribute{
 									Computed:    true,
@@ -2217,67 +1969,36 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"ready_state_at": schema.NumberAttribute{
 									Computed: true,
 								},
+								"output": schema.ListNestedAttribute{
+									Computed: true,
+									NestedObject: schema.NestedAttributeObject{
+										Attributes: map[string]schema.Attribute{
+											"path": schema.StringAttribute{
+												Computed: true,
+											},
+											"function_name": schema.StringAttribute{
+												Computed: true,
+											},
+										},
+									},
+								},
 							},
 						},
-					},
-					"meta": schema.MapAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `An object containing the deployment's metadata`,
-					},
-					"monorepo_manager": schema.StringAttribute{
-						Computed:    true,
-						Description: `An monorepo manager that was used for the deployment`,
-					},
-					"name": schema.StringAttribute{
-						Computed:    true,
-						Description: `The name of the project associated with the deployment at the time that the deployment was created`,
-					},
-					"owner_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The unique ID of the user or team the deployment belongs to`,
-					},
-					"passive_connect_configuration_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The connect configuration ID used to deploy passive lambdas into for secure compute enabled deployments.`,
-					},
-					"passive_regions": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-					},
-					"plan": schema.StringAttribute{
-						Computed:    true,
-						Description: `The pricing plan the deployment was made under. must be one of ["pro", "enterprise", "hobby"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pro",
-								"enterprise",
-								"hobby",
-							),
-						},
-					},
-					"preview_comments_enabled": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Whether or not preview comments are enabled for the deployment`,
 					},
 					"project": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
-							"framework": schema.StringAttribute{
-								Computed: true,
-							},
 							"id": schema.StringAttribute{
 								Computed: true,
 							},
 							"name": schema.StringAttribute{
 								Computed: true,
 							},
+							"framework": schema.StringAttribute{
+								Computed: true,
+							},
 						},
 						Description: `The public project information associated with the deployment.`,
-					},
-					"project_id": schema.StringAttribute{
-						Computed:    true,
-						Description: `The ID of the project the deployment is associated with`,
 					},
 					"public": schema.BoolAttribute{
 						Computed:    true,
@@ -2312,260 +2033,6 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 						ElementType: types.StringType,
 						Description: `The regions the deployment exists in`,
 					},
-					"routes": schema.ListNestedAttribute{
-						Computed: true,
-						NestedObject: schema.NestedAttributeObject{
-							Attributes: map[string]schema.Attribute{
-								"one": schema.SingleNestedAttribute{
-									Computed: true,
-									Attributes: map[string]schema.Attribute{
-										"case_sensitive": schema.BoolAttribute{
-											Computed: true,
-										},
-										"check": schema.BoolAttribute{
-											Computed: true,
-										},
-										"continue": schema.BoolAttribute{
-											Computed: true,
-										},
-										"dest": schema.StringAttribute{
-											Computed: true,
-										},
-										"has": schema.ListNestedAttribute{
-											Computed: true,
-											NestedObject: schema.NestedAttributeObject{
-												Attributes: map[string]schema.Attribute{
-													"one": schema.SingleNestedAttribute{
-														Computed: true,
-														Attributes: map[string]schema.Attribute{
-															"type": schema.StringAttribute{
-																Computed:    true,
-																Description: `must be one of ["host"]`,
-																Validators: []validator.String{
-																	stringvalidator.OneOf(
-																		"host",
-																	),
-																},
-															},
-															"value": schema.StringAttribute{
-																Computed: true,
-															},
-														},
-														Validators: []validator.Object{
-															objectvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("two"),
-															}...),
-														},
-													},
-													"two": schema.SingleNestedAttribute{
-														Computed: true,
-														Attributes: map[string]schema.Attribute{
-															"key": schema.StringAttribute{
-																Computed: true,
-															},
-															"type": schema.StringAttribute{
-																Computed:    true,
-																Description: `must be one of ["header", "cookie", "query"]`,
-																Validators: []validator.String{
-																	stringvalidator.OneOf(
-																		"header",
-																		"cookie",
-																		"query",
-																	),
-																},
-															},
-															"value": schema.StringAttribute{
-																Computed: true,
-															},
-														},
-														Validators: []validator.Object{
-															objectvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("one"),
-															}...),
-														},
-													},
-												},
-												Validators: []validator.Object{
-													validators.ExactlyOneChild(),
-												},
-											},
-										},
-										"headers": schema.MapAttribute{
-											Computed:    true,
-											ElementType: types.StringType,
-										},
-										"important": schema.BoolAttribute{
-											Computed: true,
-										},
-										"locale": schema.SingleNestedAttribute{
-											Computed: true,
-											Attributes: map[string]schema.Attribute{
-												"cookie": schema.StringAttribute{
-													Computed: true,
-												},
-												"redirect": schema.MapAttribute{
-													Computed:    true,
-													ElementType: types.StringType,
-												},
-											},
-										},
-										"methods": schema.ListAttribute{
-											Computed:    true,
-											ElementType: types.StringType,
-										},
-										"middleware": schema.NumberAttribute{
-											Computed:    true,
-											Description: `A middleware index in the ` + "`" + `middleware` + "`" + ` key under the build result`,
-										},
-										"middleware_path": schema.StringAttribute{
-											Computed:    true,
-											Description: `A middleware key within the ` + "`" + `output` + "`" + ` key under the build result. Overrides a ` + "`" + `middleware` + "`" + ` definition.`,
-										},
-										"middleware_raw_src": schema.ListAttribute{
-											Computed:    true,
-											ElementType: types.StringType,
-											Description: `The original middleware matchers.`,
-										},
-										"missing": schema.ListNestedAttribute{
-											Computed: true,
-											NestedObject: schema.NestedAttributeObject{
-												Attributes: map[string]schema.Attribute{
-													"one": schema.SingleNestedAttribute{
-														Computed: true,
-														Attributes: map[string]schema.Attribute{
-															"type": schema.StringAttribute{
-																Computed:    true,
-																Description: `must be one of ["host"]`,
-																Validators: []validator.String{
-																	stringvalidator.OneOf(
-																		"host",
-																	),
-																},
-															},
-															"value": schema.StringAttribute{
-																Computed: true,
-															},
-														},
-														Validators: []validator.Object{
-															objectvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("two"),
-															}...),
-														},
-													},
-													"two": schema.SingleNestedAttribute{
-														Computed: true,
-														Attributes: map[string]schema.Attribute{
-															"key": schema.StringAttribute{
-																Computed: true,
-															},
-															"type": schema.StringAttribute{
-																Computed:    true,
-																Description: `must be one of ["header", "cookie", "query"]`,
-																Validators: []validator.String{
-																	stringvalidator.OneOf(
-																		"header",
-																		"cookie",
-																		"query",
-																	),
-																},
-															},
-															"value": schema.StringAttribute{
-																Computed: true,
-															},
-														},
-														Validators: []validator.Object{
-															objectvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("one"),
-															}...),
-														},
-													},
-												},
-												Validators: []validator.Object{
-													validators.ExactlyOneChild(),
-												},
-											},
-										},
-										"override": schema.BoolAttribute{
-											Computed: true,
-										},
-										"src": schema.StringAttribute{
-											Computed: true,
-										},
-										"status": schema.NumberAttribute{
-											Computed: true,
-										},
-									},
-									Description: `A list of routes objects used to rewrite paths to point towards other internal or external paths`,
-									Validators: []validator.Object{
-										objectvalidator.ConflictsWith(path.Expressions{
-											path.MatchRelative().AtParent().AtName("two"),
-											path.MatchRelative().AtParent().AtName("three"),
-										}...),
-									},
-								},
-								"two": schema.SingleNestedAttribute{
-									Computed: true,
-									Attributes: map[string]schema.Attribute{
-										"dest": schema.StringAttribute{
-											Computed: true,
-										},
-										"handle": schema.StringAttribute{
-											Computed:    true,
-											Description: `must be one of ["error", "filesystem", "hit", "miss", "rewrite", "resource"]`,
-											Validators: []validator.String{
-												stringvalidator.OneOf(
-													"error",
-													"filesystem",
-													"hit",
-													"miss",
-													"rewrite",
-													"resource",
-												),
-											},
-										},
-										"src": schema.StringAttribute{
-											Computed: true,
-										},
-										"status": schema.NumberAttribute{
-											Computed: true,
-										},
-									},
-									Description: `A list of routes objects used to rewrite paths to point towards other internal or external paths`,
-									Validators: []validator.Object{
-										objectvalidator.ConflictsWith(path.Expressions{
-											path.MatchRelative().AtParent().AtName("one"),
-											path.MatchRelative().AtParent().AtName("three"),
-										}...),
-									},
-								},
-								"three": schema.SingleNestedAttribute{
-									Computed: true,
-									Attributes: map[string]schema.Attribute{
-										"continue": schema.BoolAttribute{
-											Computed: true,
-										},
-										"middleware": schema.NumberAttribute{
-											Computed: true,
-										},
-										"src": schema.StringAttribute{
-											Computed: true,
-										},
-									},
-									Description: `A list of routes objects used to rewrite paths to point towards other internal or external paths`,
-									Validators: []validator.Object{
-										objectvalidator.ConflictsWith(path.Expressions{
-											path.MatchRelative().AtParent().AtName("one"),
-											path.MatchRelative().AtParent().AtName("two"),
-										}...),
-									},
-								},
-							},
-							Validators: []validator.Object{
-								validators.ExactlyOneChild(),
-							},
-						},
-						Description: `A list of routes objects used to rewrite paths to point towards other internal or external paths`,
-					},
 					"source": schema.StringAttribute{
 						Computed:    true,
 						Description: `Where was the deployment created from. must be one of ["api-trigger-git-deploy", "cli", "clone/repo", "git", "import", "import/repo"]`,
@@ -2593,10 +2060,6 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"team": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
-							"avatar": schema.StringAttribute{
-								Computed:    true,
-								Description: `The avatar of the team owner`,
-							},
 							"id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The ID of the team owner`,
@@ -2608,6 +2071,10 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 							"slug": schema.StringAttribute{
 								Computed:    true,
 								Description: `The slug of the team owner`,
+							},
+							"avatar": schema.StringAttribute{
+								Computed:    true,
+								Description: `The avatar of the team owner`,
 							},
 						},
 						Description: `The team that owns the deployment if any`,
@@ -2633,6 +2100,539 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"version": schema.NumberAttribute{
 						Computed:    true,
 						Description: `The platform version that was used to create the deployment.`,
+					},
+					"preview_comments_enabled": schema.BoolAttribute{
+						Computed:    true,
+						Description: `Whether or not preview comments are enabled for the deployment`,
+					},
+					"alias": schema.ListAttribute{
+						Computed:    true,
+						ElementType: types.StringType,
+						Description: `A list of all the aliases (default aliases, staging aliases and production aliases) that were assigned upon deployment creation`,
+					},
+					"alias_assigned": schema.BoolAttribute{
+						Computed:    true,
+						Description: `A boolean that will be true when the aliases from the alias property were assigned successfully`,
+					},
+					"alias_error": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"code": schema.StringAttribute{
+								Computed: true,
+							},
+							"message": schema.StringAttribute{
+								Computed: true,
+							},
+						},
+						Description: `An object that will contain a ` + "`" + `code` + "`" + ` and a ` + "`" + `message` + "`" + ` when the aliasing fails, otherwise the value will be ` + "`" + `null` + "`" + ``,
+					},
+					"alias_final": schema.StringAttribute{
+						Computed: true,
+					},
+					"alias_warning": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"code": schema.StringAttribute{
+								Computed: true,
+							},
+							"message": schema.StringAttribute{
+								Computed: true,
+							},
+							"link": schema.StringAttribute{
+								Computed: true,
+							},
+							"action": schema.StringAttribute{
+								Computed: true,
+							},
+						},
+					},
+					"auto_assign_custom_domains": schema.BoolAttribute{
+						Computed: true,
+					},
+					"automatic_aliases": schema.ListAttribute{
+						Computed:    true,
+						ElementType: types.StringType,
+					},
+					"booted_at": schema.NumberAttribute{
+						Computed: true,
+					},
+					"build_error_at": schema.NumberAttribute{
+						Computed: true,
+					},
+					"building_at": schema.NumberAttribute{
+						Computed: true,
+					},
+					"canceled_at": schema.NumberAttribute{
+						Computed: true,
+					},
+					"checks_state": schema.StringAttribute{
+						Computed:    true,
+						Description: `must be one of ["registered", "running", "completed"]`,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"registered",
+								"running",
+								"completed",
+							),
+						},
+					},
+					"checks_conclusion": schema.StringAttribute{
+						Computed:    true,
+						Description: `must be one of ["succeeded", "failed", "skipped", "canceled"]`,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"succeeded",
+								"failed",
+								"skipped",
+								"canceled",
+							),
+						},
+					},
+					"created_at": schema.NumberAttribute{
+						Computed:    true,
+						Description: `A number containing the date when the deployment was created in milliseconds`,
+					},
+					"creator": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"uid": schema.StringAttribute{
+								Computed:    true,
+								Description: `The ID of the user that created the deployment`,
+							},
+							"username": schema.StringAttribute{
+								Computed:    true,
+								Description: `The username of the user that created the deployment`,
+							},
+							"avatar": schema.StringAttribute{
+								Computed:    true,
+								Description: `The avatar of the user that created the deployment`,
+							},
+						},
+						Description: `Information about the deployment creator`,
+					},
+					"error_code": schema.StringAttribute{
+						Computed: true,
+					},
+					"error_link": schema.StringAttribute{
+						Computed: true,
+					},
+					"error_message": schema.StringAttribute{
+						Computed: true,
+					},
+					"error_step": schema.StringAttribute{
+						Computed: true,
+					},
+					"passive_regions": schema.ListAttribute{
+						Computed:    true,
+						ElementType: types.StringType,
+					},
+					"git_source": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"one": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["github"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"github",
+											),
+										},
+									},
+									"repo_id": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"str": schema.StringAttribute{
+												Computed: true,
+												Validators: []validator.String{
+													stringvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("number"),
+													}...),
+												},
+											},
+											"number": schema.NumberAttribute{
+												Computed: true,
+												Validators: []validator.Number{
+													numbervalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("str"),
+													}...),
+												},
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"pr_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"two": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["github"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"github",
+											),
+										},
+									},
+									"org": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo": schema.StringAttribute{
+										Computed: true,
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"pr_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"three": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["gitlab"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"gitlab",
+											),
+										},
+									},
+									"project_id": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"str": schema.StringAttribute{
+												Computed: true,
+												Validators: []validator.String{
+													stringvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("number"),
+													}...),
+												},
+											},
+											"number": schema.NumberAttribute{
+												Computed: true,
+												Validators: []validator.Number{
+													numbervalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("str"),
+													}...),
+												},
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"pr_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"four": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["bitbucket"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"bitbucket",
+											),
+										},
+									},
+									"workspace_uuid": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo_uuid": schema.StringAttribute{
+										Computed: true,
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"pr_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"five": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["bitbucket"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"bitbucket",
+											),
+										},
+									},
+									"owner": schema.StringAttribute{
+										Computed: true,
+									},
+									"slug": schema.StringAttribute{
+										Computed: true,
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"pr_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"six": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["custom"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"custom",
+											),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"git_url": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"seven": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["github"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"github",
+											),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo_id": schema.NumberAttribute{
+										Computed: true,
+									},
+									"org": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"eight": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["gitlab"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"gitlab",
+											),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"project_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"nine": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["bitbucket"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"bitbucket",
+											),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"owner": schema.StringAttribute{
+										Computed: true,
+									},
+									"slug": schema.StringAttribute{
+										Computed: true,
+									},
+									"workspace_uuid": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo_uuid": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+									}...),
+								},
+							},
+						},
+						Validators: []validator.Object{
+							validators.ExactlyOneChild(),
+						},
+					},
+					"id": schema.StringAttribute{
+						Computed:    true,
+						Description: `A string holding the unique ID of the deployment`,
 					},
 				},
 				Description: `The deployment including both public and private information`,
@@ -3203,556 +3203,18 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"two": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"alias": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-						Description: `A list of all the aliases (default aliases, staging aliases and production aliases) that were assigned upon deployment creation`,
-					},
-					"alias_assigned": schema.BoolAttribute{
-						Computed:    true,
-						Description: `A boolean that will be true when the aliases from the alias property were assigned successfully`,
-					},
-					"alias_error": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"code": schema.StringAttribute{
-								Computed: true,
-							},
-							"message": schema.StringAttribute{
-								Computed: true,
-							},
-						},
-						Description: `An object that will contain a ` + "`" + `code` + "`" + ` and a ` + "`" + `message` + "`" + ` when the aliasing fails, otherwise the value will be ` + "`" + `null` + "`" + ``,
-					},
-					"alias_final": schema.StringAttribute{
-						Computed: true,
-					},
-					"alias_warning": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"action": schema.StringAttribute{
-								Computed: true,
-							},
-							"code": schema.StringAttribute{
-								Computed: true,
-							},
-							"link": schema.StringAttribute{
-								Computed: true,
-							},
-							"message": schema.StringAttribute{
-								Computed: true,
-							},
-						},
-					},
-					"auto_assign_custom_domains": schema.BoolAttribute{
-						Computed: true,
-					},
-					"automatic_aliases": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-					},
-					"booted_at": schema.NumberAttribute{
-						Computed: true,
-					},
-					"build_error_at": schema.NumberAttribute{
-						Computed: true,
-					},
-					"building_at": schema.NumberAttribute{
-						Computed: true,
-					},
-					"canceled_at": schema.NumberAttribute{
-						Computed: true,
-					},
-					"checks_conclusion": schema.StringAttribute{
-						Computed:    true,
-						Description: `must be one of ["succeeded", "failed", "skipped", "canceled"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"succeeded",
-								"failed",
-								"skipped",
-								"canceled",
-							),
-						},
-					},
-					"checks_state": schema.StringAttribute{
-						Computed:    true,
-						Description: `must be one of ["registered", "running", "completed"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"registered",
-								"running",
-								"completed",
-							),
-						},
-					},
-					"created_at": schema.NumberAttribute{
-						Computed:    true,
-						Description: `A number containing the date when the deployment was created in milliseconds`,
-					},
-					"creator": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"avatar": schema.StringAttribute{
-								Computed:    true,
-								Description: `The avatar of the user that created the deployment`,
-							},
-							"uid": schema.StringAttribute{
-								Computed:    true,
-								Description: `The ID of the user that created the deployment`,
-							},
-							"username": schema.StringAttribute{
-								Computed:    true,
-								Description: `The username of the user that created the deployment`,
-							},
-						},
-						Description: `Information about the deployment creator`,
-					},
-					"error_code": schema.StringAttribute{
-						Computed: true,
-					},
-					"error_link": schema.StringAttribute{
-						Computed: true,
-					},
-					"error_message": schema.StringAttribute{
-						Computed: true,
-					},
-					"error_step": schema.StringAttribute{
-						Computed: true,
-					},
-					"git_source": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"one": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"pr_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo_id": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"str": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("number"),
-													}...),
-												},
-											},
-											"number": schema.NumberAttribute{
-												Computed: true,
-												Validators: []validator.Number{
-													numbervalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("str"),
-													}...),
-												},
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["github"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"github",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"two": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"org": schema.StringAttribute{
-										Computed: true,
-									},
-									"pr_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["github"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"github",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"three": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"pr_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"project_id": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"str": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("number"),
-													}...),
-												},
-											},
-											"number": schema.NumberAttribute{
-												Computed: true,
-												Validators: []validator.Number{
-													numbervalidator.ConflictsWith(path.Expressions{
-														path.MatchRelative().AtParent().AtName("str"),
-													}...),
-												},
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["gitlab"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"gitlab",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"four": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"pr_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo_uuid": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["bitbucket"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"bitbucket",
-											),
-										},
-									},
-									"workspace_uuid": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"five": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"owner": schema.StringAttribute{
-										Computed: true,
-									},
-									"pr_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"slug": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["bitbucket"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"bitbucket",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"six": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"git_url": schema.StringAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["custom"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"custom",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"seven": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"org": schema.StringAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["github"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"github",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("eight"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"eight": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"project_id": schema.NumberAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["gitlab"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"gitlab",
-											),
-										},
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("nine"),
-									}...),
-								},
-							},
-							"nine": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"owner": schema.StringAttribute{
-										Computed: true,
-									},
-									"ref": schema.StringAttribute{
-										Computed: true,
-									},
-									"repo_uuid": schema.StringAttribute{
-										Computed: true,
-									},
-									"sha": schema.StringAttribute{
-										Computed: true,
-									},
-									"slug": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed:    true,
-										Description: `must be one of ["bitbucket"]`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"bitbucket",
-											),
-										},
-									},
-									"workspace_uuid": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("one"),
-										path.MatchRelative().AtParent().AtName("two"),
-										path.MatchRelative().AtParent().AtName("three"),
-										path.MatchRelative().AtParent().AtName("four"),
-										path.MatchRelative().AtParent().AtName("five"),
-										path.MatchRelative().AtParent().AtName("six"),
-										path.MatchRelative().AtParent().AtName("seven"),
-										path.MatchRelative().AtParent().AtName("eight"),
-									}...),
-								},
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-					},
-					"id": schema.StringAttribute{
-						Computed:    true,
-						Description: `A string holding the unique ID of the deployment`,
-					},
 					"lambdas": schema.ListNestedAttribute{
 						Computed: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
+								"id": schema.StringAttribute{
+									Computed: true,
+								},
 								"created_at": schema.NumberAttribute{
 									Computed: true,
 								},
 								"entrypoint": schema.StringAttribute{
 									Computed: true,
-								},
-								"id": schema.StringAttribute{
-									Computed: true,
-								},
-								"output": schema.ListNestedAttribute{
-									Computed: true,
-									NestedObject: schema.NestedAttributeObject{
-										Attributes: map[string]schema.Attribute{
-											"function_name": schema.StringAttribute{
-												Computed: true,
-											},
-											"path": schema.StringAttribute{
-												Computed: true,
-											},
-										},
-									},
 								},
 								"ready_state": schema.StringAttribute{
 									Computed:    true,
@@ -3769,36 +3231,41 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"ready_state_at": schema.NumberAttribute{
 									Computed: true,
 								},
+								"output": schema.ListNestedAttribute{
+									Computed: true,
+									NestedObject: schema.NestedAttributeObject{
+										Attributes: map[string]schema.Attribute{
+											"path": schema.StringAttribute{
+												Computed: true,
+											},
+											"function_name": schema.StringAttribute{
+												Computed: true,
+											},
+										},
+									},
+								},
 							},
 						},
+					},
+					"name": schema.StringAttribute{
+						Computed:    true,
+						Description: `The name of the project associated with the deployment at the time that the deployment was created`,
 					},
 					"meta": schema.MapAttribute{
 						Computed:    true,
 						ElementType: types.StringType,
 						Description: `An object containing the deployment's metadata`,
 					},
-					"name": schema.StringAttribute{
-						Computed:    true,
-						Description: `The name of the project associated with the deployment at the time that the deployment was created`,
-					},
-					"passive_regions": schema.ListAttribute{
-						Computed:    true,
-						ElementType: types.StringType,
-					},
-					"preview_comments_enabled": schema.BoolAttribute{
-						Computed:    true,
-						Description: `Whether or not preview comments are enabled for the deployment`,
-					},
 					"project": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
-							"framework": schema.StringAttribute{
-								Computed: true,
-							},
 							"id": schema.StringAttribute{
 								Computed: true,
 							},
 							"name": schema.StringAttribute{
+								Computed: true,
+							},
+							"framework": schema.StringAttribute{
 								Computed: true,
 							},
 						},
@@ -3864,10 +3331,6 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"team": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
-							"avatar": schema.StringAttribute{
-								Computed:    true,
-								Description: `The avatar of the team owner`,
-							},
 							"id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The ID of the team owner`,
@@ -3879,6 +3342,10 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 							"slug": schema.StringAttribute{
 								Computed:    true,
 								Description: `The slug of the team owner`,
+							},
+							"avatar": schema.StringAttribute{
+								Computed:    true,
+								Description: `The avatar of the team owner`,
 							},
 						},
 						Description: `The team that owns the deployment if any`,
@@ -3904,6 +3371,539 @@ func (r *DeploymentResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"version": schema.NumberAttribute{
 						Computed:    true,
 						Description: `The platform version that was used to create the deployment.`,
+					},
+					"preview_comments_enabled": schema.BoolAttribute{
+						Computed:    true,
+						Description: `Whether or not preview comments are enabled for the deployment`,
+					},
+					"alias": schema.ListAttribute{
+						Computed:    true,
+						ElementType: types.StringType,
+						Description: `A list of all the aliases (default aliases, staging aliases and production aliases) that were assigned upon deployment creation`,
+					},
+					"alias_assigned": schema.BoolAttribute{
+						Computed:    true,
+						Description: `A boolean that will be true when the aliases from the alias property were assigned successfully`,
+					},
+					"alias_error": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"code": schema.StringAttribute{
+								Computed: true,
+							},
+							"message": schema.StringAttribute{
+								Computed: true,
+							},
+						},
+						Description: `An object that will contain a ` + "`" + `code` + "`" + ` and a ` + "`" + `message` + "`" + ` when the aliasing fails, otherwise the value will be ` + "`" + `null` + "`" + ``,
+					},
+					"alias_final": schema.StringAttribute{
+						Computed: true,
+					},
+					"alias_warning": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"code": schema.StringAttribute{
+								Computed: true,
+							},
+							"message": schema.StringAttribute{
+								Computed: true,
+							},
+							"link": schema.StringAttribute{
+								Computed: true,
+							},
+							"action": schema.StringAttribute{
+								Computed: true,
+							},
+						},
+					},
+					"auto_assign_custom_domains": schema.BoolAttribute{
+						Computed: true,
+					},
+					"automatic_aliases": schema.ListAttribute{
+						Computed:    true,
+						ElementType: types.StringType,
+					},
+					"booted_at": schema.NumberAttribute{
+						Computed: true,
+					},
+					"build_error_at": schema.NumberAttribute{
+						Computed: true,
+					},
+					"building_at": schema.NumberAttribute{
+						Computed: true,
+					},
+					"canceled_at": schema.NumberAttribute{
+						Computed: true,
+					},
+					"checks_state": schema.StringAttribute{
+						Computed:    true,
+						Description: `must be one of ["registered", "running", "completed"]`,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"registered",
+								"running",
+								"completed",
+							),
+						},
+					},
+					"checks_conclusion": schema.StringAttribute{
+						Computed:    true,
+						Description: `must be one of ["succeeded", "failed", "skipped", "canceled"]`,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"succeeded",
+								"failed",
+								"skipped",
+								"canceled",
+							),
+						},
+					},
+					"created_at": schema.NumberAttribute{
+						Computed:    true,
+						Description: `A number containing the date when the deployment was created in milliseconds`,
+					},
+					"creator": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"uid": schema.StringAttribute{
+								Computed:    true,
+								Description: `The ID of the user that created the deployment`,
+							},
+							"username": schema.StringAttribute{
+								Computed:    true,
+								Description: `The username of the user that created the deployment`,
+							},
+							"avatar": schema.StringAttribute{
+								Computed:    true,
+								Description: `The avatar of the user that created the deployment`,
+							},
+						},
+						Description: `Information about the deployment creator`,
+					},
+					"error_code": schema.StringAttribute{
+						Computed: true,
+					},
+					"error_link": schema.StringAttribute{
+						Computed: true,
+					},
+					"error_message": schema.StringAttribute{
+						Computed: true,
+					},
+					"error_step": schema.StringAttribute{
+						Computed: true,
+					},
+					"passive_regions": schema.ListAttribute{
+						Computed:    true,
+						ElementType: types.StringType,
+					},
+					"git_source": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"one": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["github"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"github",
+											),
+										},
+									},
+									"repo_id": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"str": schema.StringAttribute{
+												Computed: true,
+												Validators: []validator.String{
+													stringvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("number"),
+													}...),
+												},
+											},
+											"number": schema.NumberAttribute{
+												Computed: true,
+												Validators: []validator.Number{
+													numbervalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("str"),
+													}...),
+												},
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"pr_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"two": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["github"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"github",
+											),
+										},
+									},
+									"org": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo": schema.StringAttribute{
+										Computed: true,
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"pr_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"three": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["gitlab"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"gitlab",
+											),
+										},
+									},
+									"project_id": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"str": schema.StringAttribute{
+												Computed: true,
+												Validators: []validator.String{
+													stringvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("number"),
+													}...),
+												},
+											},
+											"number": schema.NumberAttribute{
+												Computed: true,
+												Validators: []validator.Number{
+													numbervalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("str"),
+													}...),
+												},
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"pr_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"four": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["bitbucket"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"bitbucket",
+											),
+										},
+									},
+									"workspace_uuid": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo_uuid": schema.StringAttribute{
+										Computed: true,
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"pr_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"five": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["bitbucket"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"bitbucket",
+											),
+										},
+									},
+									"owner": schema.StringAttribute{
+										Computed: true,
+									},
+									"slug": schema.StringAttribute{
+										Computed: true,
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"pr_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"six": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["custom"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"custom",
+											),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"git_url": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"seven": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["github"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"github",
+											),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo_id": schema.NumberAttribute{
+										Computed: true,
+									},
+									"org": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("eight"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"eight": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["gitlab"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"gitlab",
+											),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"project_id": schema.NumberAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("nine"),
+									}...),
+								},
+							},
+							"nine": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"type": schema.StringAttribute{
+										Computed:    true,
+										Description: `must be one of ["bitbucket"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"bitbucket",
+											),
+										},
+									},
+									"ref": schema.StringAttribute{
+										Computed: true,
+									},
+									"sha": schema.StringAttribute{
+										Computed: true,
+									},
+									"owner": schema.StringAttribute{
+										Computed: true,
+									},
+									"slug": schema.StringAttribute{
+										Computed: true,
+									},
+									"workspace_uuid": schema.StringAttribute{
+										Computed: true,
+									},
+									"repo_uuid": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("one"),
+										path.MatchRelative().AtParent().AtName("two"),
+										path.MatchRelative().AtParent().AtName("three"),
+										path.MatchRelative().AtParent().AtName("four"),
+										path.MatchRelative().AtParent().AtName("five"),
+										path.MatchRelative().AtParent().AtName("six"),
+										path.MatchRelative().AtParent().AtName("seven"),
+										path.MatchRelative().AtParent().AtName("eight"),
+									}...),
+								},
+							},
+						},
+						Validators: []validator.Object{
+							validators.ExactlyOneChild(),
+						},
+					},
+					"id": schema.StringAttribute{
+						Computed:    true,
+						Description: `A string holding the unique ID of the deployment`,
 					},
 				},
 				Description: `The deployment including only public information`,
@@ -3952,12 +3952,12 @@ func (r *DeploymentResource) Configure(ctx context.Context, req resource.Configu
 		return
 	}
 
-	client, ok := req.ProviderData.(*sdk.Vercel)
+	client, ok := req.ProviderData.(*sdk.SDK)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *sdk.Vercel, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -3984,7 +3984,6 @@ func (r *DeploymentResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	requestBody := data.ToOperationsCreateDeploymentRequestBody()
 	forceNew := new(operations.ForceNew)
 	if !data.ForceNew.IsUnknown() && !data.ForceNew.IsNull() {
 		*forceNew = operations.ForceNew(data.ForceNew.ValueString())
@@ -3997,24 +3996,25 @@ func (r *DeploymentResource) Create(ctx context.Context, req resource.CreateRequ
 	} else {
 		skipAutoDetectionConfirmation = nil
 	}
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
+	requestBody := data.ToOperationsCreateDeploymentRequestBody()
 	request := operations.CreateDeploymentRequest{
-		RequestBody:                   requestBody,
 		ForceNew:                      forceNew,
 		SkipAutoDetectionConfirmation: skipAutoDetectionConfirmation,
-		Slug:                          slug,
 		TeamID:                        teamID,
+		Slug:                          slug,
+		RequestBody:                   requestBody,
 	}
 	res, err := r.client.Deployments.Create(ctx, request)
 	if err != nil {
@@ -4039,24 +4039,24 @@ func (r *DeploymentResource) Create(ctx context.Context, req resource.CreateRequ
 	data.RefreshFromOperationsCreateDeploymentResponseBody(res.Object)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	idOrURL := data.ProjectID.ValueString()
-	slug1 := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug1 = data.Slug.ValueString()
-	} else {
-		slug1 = nil
-	}
+	var withGitRepoInfo *string
 	teamId1 := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamId1 = data.TeamID.ValueString()
 	} else {
 		teamId1 = nil
 	}
-	var withGitRepoInfo *string
+	slug1 := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug1 = data.Slug.ValueString()
+	} else {
+		slug1 = nil
+	}
 	request1 := operations.GetDeploymentRequest{
 		IDOrURL:         idOrURL,
-		Slug:            slug1,
-		TeamID:          teamId1,
 		WithGitRepoInfo: withGitRepoInfo,
+		TeamID:          teamId1,
+		Slug:            slug1,
 	}
 	res1, err := r.client.Deployments.GetDeployment(ctx, request1)
 	if err != nil {
@@ -4104,24 +4104,24 @@ func (r *DeploymentResource) Read(ctx context.Context, req resource.ReadRequest,
 	}
 
 	idOrURL := data.ProjectID.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
+	var withGitRepoInfo *string
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
-	var withGitRepoInfo *string
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
 	request := operations.GetDeploymentRequest{
 		IDOrURL:         idOrURL,
-		Slug:            slug,
-		TeamID:          teamID,
 		WithGitRepoInfo: withGitRepoInfo,
+		TeamID:          teamID,
+		Slug:            slug,
 	}
 	res, err := r.client.Deployments.GetDeployment(ctx, request)
 	if err != nil {

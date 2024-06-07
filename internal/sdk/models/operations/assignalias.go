@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 	"time"
 )
@@ -30,20 +30,13 @@ func (o *AssignAliasRequestBody) GetRedirect() *string {
 }
 
 type AssignAliasRequest struct {
-	RequestBody *AssignAliasRequestBody `request:"mediaType=application/json"`
 	// The ID of the deployment the aliases should be listed for
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *AssignAliasRequest) GetRequestBody() *AssignAliasRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                 `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *AssignAliasRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *AssignAliasRequest) GetID() string {
@@ -53,13 +46,6 @@ func (o *AssignAliasRequest) GetID() string {
 	return o.ID
 }
 
-func (o *AssignAliasRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *AssignAliasRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -67,16 +53,30 @@ func (o *AssignAliasRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
+func (o *AssignAliasRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *AssignAliasRequest) GetRequestBody() *AssignAliasRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
 // AssignAliasResponseBody - The alias was successfully assigned to the deployment
 type AssignAliasResponseBody struct {
+	// The unique identifier of the alias
+	UID string `json:"uid"`
 	// The assigned alias name
 	Alias string `json:"alias"`
 	// The date when the alias was created
 	Created time.Time `json:"created"`
 	// The unique identifier of the previously aliased deployment, only received when the alias was used before
 	OldDeploymentID *string `json:"oldDeploymentId,omitempty"`
-	// The unique identifier of the alias
-	UID string `json:"uid"`
 }
 
 func (a AssignAliasResponseBody) MarshalJSON() ([]byte, error) {
@@ -88,6 +88,13 @@ func (a *AssignAliasResponseBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *AssignAliasResponseBody) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
 }
 
 func (o *AssignAliasResponseBody) GetAlias() string {
@@ -109,13 +116,6 @@ func (o *AssignAliasResponseBody) GetOldDeploymentID() *string {
 		return nil
 	}
 	return o.OldDeploymentID
-}
-
-func (o *AssignAliasResponseBody) GetUID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UID
 }
 
 type AssignAliasResponse struct {

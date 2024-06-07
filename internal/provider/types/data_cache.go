@@ -5,7 +5,5 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DataCache struct {
-	StorageSizeBytes types.Number `tfsdk:"storage_size_bytes"`
-	Unlimited        types.Bool   `tfsdk:"unlimited"`
-	UserDisabled     types.Bool   `tfsdk:"user_disabled"`
+	ExcessBillingEnabled types.Bool `tfsdk:"excess_billing_enabled"`
 }

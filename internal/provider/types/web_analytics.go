@@ -5,9 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type WebAnalytics struct {
-	CanceledAt types.Number `tfsdk:"canceled_at"`
-	DisabledAt types.Number `tfsdk:"disabled_at"`
-	EnabledAt  types.Number `tfsdk:"enabled_at"`
-	HasData    types.Bool   `tfsdk:"has_data"`
-	ID         types.String `tfsdk:"id"`
+	BlockedFrom        types.Number `tfsdk:"blocked_from"`
+	BlockedUntil       types.Number `tfsdk:"blocked_until"`
+	IsCurrentlyBlocked types.Bool   `tfsdk:"is_currently_blocked"`
 }

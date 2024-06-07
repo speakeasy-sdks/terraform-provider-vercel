@@ -9,10 +9,10 @@ import (
 type DeleteProjectRequest struct {
 	// The unique project identifier or the project name
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *DeleteProjectRequest) GetIDOrName() string {
@@ -22,18 +22,18 @@ func (o *DeleteProjectRequest) GetIDOrName() string {
 	return o.IDOrName
 }
 
-func (o *DeleteProjectRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *DeleteProjectRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *DeleteProjectRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 type DeleteProjectResponse struct {

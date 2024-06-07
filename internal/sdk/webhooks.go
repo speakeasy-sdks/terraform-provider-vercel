@@ -6,10 +6,10 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/hooks"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/errors"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/hooks"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/errors"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 	"io"
 	"net/http"
 	"net/url"
@@ -130,27 +130,27 @@ func (s *Webhooks) Create(ctx context.Context, request operations.CreateWebhookR
 
 }
 
-// Delete - Deletes a webhook
-// Deletes a webhook
-func (s *Webhooks) Delete(ctx context.Context, request operations.DeleteWebhookRequest) (*operations.DeleteWebhookResponse, error) {
+// List - Get a list of webhooks
+// Get a list of webhooks
+func (s *Webhooks) List(ctx context.Context, request operations.GetWebhooksRequest) (*operations.GetWebhooksResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "deleteWebhook",
+		OperationID:    "getWebhooks",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/webhooks/{id}", request, nil)
+	opURL, err := url.JoinPath(baseURL, "/v1/webhooks")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "DELETE", opURL, nil)
+	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
-	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
@@ -190,7 +190,7 @@ func (s *Webhooks) Delete(ctx context.Context, request operations.DeleteWebhookR
 		}
 	}
 
-	res := &operations.DeleteWebhookResponse{
+	res := &operations.GetWebhooksResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -204,8 +204,18 @@ func (s *Webhooks) Delete(ctx context.Context, request operations.DeleteWebhookR
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	switch {
-	case httpRes.StatusCode == 204:
-		fallthrough
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			var out []operations.GetWebhooksResponseBody
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ResponseBodies = out
+		default:
+			return nil, errors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
 	case httpRes.StatusCode == 400:
 		fallthrough
 	case httpRes.StatusCode == 401:
@@ -318,27 +328,27 @@ func (s *Webhooks) Get(ctx context.Context, request operations.GetWebhookRequest
 
 }
 
-// List - Get a list of webhooks
-// Get a list of webhooks
-func (s *Webhooks) List(ctx context.Context, request operations.GetWebhooksRequest) (*operations.GetWebhooksResponse, error) {
+// Delete - Deletes a webhook
+// Deletes a webhook
+func (s *Webhooks) Delete(ctx context.Context, request operations.DeleteWebhookRequest) (*operations.DeleteWebhookResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "getWebhooks",
+		OperationID:    "deleteWebhook",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	opURL, err := url.JoinPath(baseURL, "/v1/webhooks")
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/webhooks/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
+	req, err := http.NewRequestWithContext(ctx, "DELETE", opURL, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Accept", "*/*")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
 	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
@@ -378,7 +388,7 @@ func (s *Webhooks) List(ctx context.Context, request operations.GetWebhooksReque
 		}
 	}
 
-	res := &operations.GetWebhooksResponse{
+	res := &operations.DeleteWebhookResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -392,18 +402,8 @@ func (s *Webhooks) List(ctx context.Context, request operations.GetWebhooksReque
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
 	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			var out []operations.GetWebhooksResponseBody
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Classes = out
-		default:
-			return nil, errors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
+	case httpRes.StatusCode == 204:
+		fallthrough
 	case httpRes.StatusCode == 400:
 		fallthrough
 	case httpRes.StatusCode == 401:

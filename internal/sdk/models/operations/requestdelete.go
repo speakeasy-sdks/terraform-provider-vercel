@@ -8,17 +8,10 @@ import (
 
 // RequestDeleteReasons - An object describing the reason why the User account is being deleted.
 type RequestDeleteReasons struct {
-	// Description of the reason why the User account is being deleted.
-	Description string `json:"description"`
 	// Idenitifier slug of the reason why the User account is being deleted.
 	Slug string `json:"slug"`
-}
-
-func (o *RequestDeleteReasons) GetDescription() string {
-	if o == nil {
-		return ""
-	}
-	return o.Description
+	// Description of the reason why the User account is being deleted.
+	Description string `json:"description"`
 }
 
 func (o *RequestDeleteReasons) GetSlug() string {
@@ -26,6 +19,13 @@ func (o *RequestDeleteReasons) GetSlug() string {
 		return ""
 	}
 	return o.Slug
+}
+
+func (o *RequestDeleteReasons) GetDescription() string {
+	if o == nil {
+		return ""
+	}
+	return o.Description
 }
 
 type RequestDeleteRequestBody struct {
@@ -42,19 +42,12 @@ func (o *RequestDeleteRequestBody) GetReasons() []RequestDeleteReasons {
 
 // RequestDeleteResponseBody - Response indicating that the User deletion process has been initiated, and a confirmation email has been sent.
 type RequestDeleteResponseBody struct {
-	// Email address of the User who has initiated deletion.
-	Email string `json:"email"`
 	// Unique identifier of the User who has initiated deletion.
 	ID string `json:"id"`
+	// Email address of the User who has initiated deletion.
+	Email string `json:"email"`
 	// User deletion progress status.
 	Message string `json:"message"`
-}
-
-func (o *RequestDeleteResponseBody) GetEmail() string {
-	if o == nil {
-		return ""
-	}
-	return o.Email
 }
 
 func (o *RequestDeleteResponseBody) GetID() string {
@@ -62,6 +55,13 @@ func (o *RequestDeleteResponseBody) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *RequestDeleteResponseBody) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
 }
 
 func (o *RequestDeleteResponseBody) GetMessage() string {

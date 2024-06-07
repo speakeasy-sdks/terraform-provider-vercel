@@ -9,10 +9,10 @@ import (
 type GetCertByIDRequest struct {
 	// The cert id
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetCertByIDRequest) GetID() string {
@@ -22,13 +22,6 @@ func (o *GetCertByIDRequest) GetID() string {
 	return o.ID
 }
 
-func (o *GetCertByIDRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *GetCertByIDRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -36,26 +29,26 @@ func (o *GetCertByIDRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
+func (o *GetCertByIDRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 type GetCertByIDResponseBody struct {
-	AutoRenew bool     `json:"autoRenew"`
-	Cns       []string `json:"cns"`
+	ID        string   `json:"id"`
 	CreatedAt float64  `json:"createdAt"`
 	ExpiresAt float64  `json:"expiresAt"`
-	ID        string   `json:"id"`
+	AutoRenew bool     `json:"autoRenew"`
+	Cns       []string `json:"cns"`
 }
 
-func (o *GetCertByIDResponseBody) GetAutoRenew() bool {
+func (o *GetCertByIDResponseBody) GetID() string {
 	if o == nil {
-		return false
+		return ""
 	}
-	return o.AutoRenew
-}
-
-func (o *GetCertByIDResponseBody) GetCns() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.Cns
+	return o.ID
 }
 
 func (o *GetCertByIDResponseBody) GetCreatedAt() float64 {
@@ -72,11 +65,18 @@ func (o *GetCertByIDResponseBody) GetExpiresAt() float64 {
 	return o.ExpiresAt
 }
 
-func (o *GetCertByIDResponseBody) GetID() string {
+func (o *GetCertByIDResponseBody) GetAutoRenew() bool {
 	if o == nil {
-		return ""
+		return false
 	}
-	return o.ID
+	return o.AutoRenew
+}
+
+func (o *GetCertByIDResponseBody) GetCns() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Cns
 }
 
 type GetCertByIDResponse struct {

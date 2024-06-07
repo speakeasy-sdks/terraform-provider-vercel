@@ -5,39 +5,25 @@ package operations
 import (
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
 
 type GetEequestPromoteAliasesRequest struct {
-	// Filter results down to aliases that failed to map to the requested deployment
-	FailedOnly *bool `queryParam:"style=form,explode=true,name=failedOnly"`
+	ProjectID string `pathParam:"style=simple,explode=false,name=projectId"`
 	// Maximum number of aliases to list from a request (max 100).
-	Limit     *float64 `queryParam:"style=form,explode=true,name=limit"`
-	ProjectID string   `pathParam:"style=simple,explode=false,name=projectId"`
+	Limit *float64 `queryParam:"style=form,explode=true,name=limit"`
 	// Get aliases created after this epoch timestamp.
 	Since *float64 `queryParam:"style=form,explode=true,name=since"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Get aliases created before this epoch timestamp.
 	Until *float64 `queryParam:"style=form,explode=true,name=until"`
-}
-
-func (o *GetEequestPromoteAliasesRequest) GetFailedOnly() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.FailedOnly
-}
-
-func (o *GetEequestPromoteAliasesRequest) GetLimit() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Limit
+	// Filter results down to aliases that failed to map to the requested deployment
+	FailedOnly *bool `queryParam:"style=form,explode=true,name=failedOnly"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetEequestPromoteAliasesRequest) GetProjectID() string {
@@ -47,25 +33,18 @@ func (o *GetEequestPromoteAliasesRequest) GetProjectID() string {
 	return o.ProjectID
 }
 
+func (o *GetEequestPromoteAliasesRequest) GetLimit() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Limit
+}
+
 func (o *GetEequestPromoteAliasesRequest) GetSince() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Since
-}
-
-func (o *GetEequestPromoteAliasesRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
-func (o *GetEequestPromoteAliasesRequest) GetTeamID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TeamID
 }
 
 func (o *GetEequestPromoteAliasesRequest) GetUntil() *float64 {
@@ -75,101 +54,122 @@ func (o *GetEequestPromoteAliasesRequest) GetUntil() *float64 {
 	return o.Until
 }
 
-type GetEequestPromoteAliasesAliases struct {
+func (o *GetEequestPromoteAliasesRequest) GetFailedOnly() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.FailedOnly
+}
+
+func (o *GetEequestPromoteAliasesRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetEequestPromoteAliasesRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+type ResponseBodyAliases struct {
+	Status string `json:"status"`
 	Alias  string `json:"alias"`
 	ID     string `json:"id"`
-	Status string `json:"status"`
 }
 
-func (o *GetEequestPromoteAliasesAliases) GetAlias() string {
-	if o == nil {
-		return ""
-	}
-	return o.Alias
-}
-
-func (o *GetEequestPromoteAliasesAliases) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *GetEequestPromoteAliasesAliases) GetStatus() string {
+func (o *ResponseBodyAliases) GetStatus() string {
 	if o == nil {
 		return ""
 	}
 	return o.Status
 }
 
-type GetEequestPromoteAliases2 struct {
-	Aliases []GetEequestPromoteAliasesAliases `json:"aliases"`
+func (o *ResponseBodyAliases) GetAlias() string {
+	if o == nil {
+		return ""
+	}
+	return o.Alias
+}
+
+func (o *ResponseBodyAliases) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+type GetEequestPromoteAliasesResponseBody2 struct {
+	Aliases []ResponseBodyAliases `json:"aliases"`
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 	Pagination shared.Pagination `json:"pagination"`
 }
 
-func (o *GetEequestPromoteAliases2) GetAliases() []GetEequestPromoteAliasesAliases {
+func (o *GetEequestPromoteAliasesResponseBody2) GetAliases() []ResponseBodyAliases {
 	if o == nil {
-		return []GetEequestPromoteAliasesAliases{}
+		return []ResponseBodyAliases{}
 	}
 	return o.Aliases
 }
 
-func (o *GetEequestPromoteAliases2) GetPagination() shared.Pagination {
+func (o *GetEequestPromoteAliasesResponseBody2) GetPagination() shared.Pagination {
 	if o == nil {
 		return shared.Pagination{}
 	}
 	return o.Pagination
 }
 
-type GetEequestPromoteAliases1 struct {
+type GetEequestPromoteAliasesResponseBody1 struct {
 }
 
 type GetEequestPromoteAliasesResponseBodyType string
 
 const (
-	GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliases1 GetEequestPromoteAliasesResponseBodyType = "getEequestPromoteAliases_1"
-	GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliases2 GetEequestPromoteAliasesResponseBodyType = "getEequestPromoteAliases_2"
+	GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliasesResponseBody1 GetEequestPromoteAliasesResponseBodyType = "getEequestPromoteAliases_responseBody_1"
+	GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliasesResponseBody2 GetEequestPromoteAliasesResponseBodyType = "getEequestPromoteAliases_responseBody_2"
 )
 
 type GetEequestPromoteAliasesResponseBody struct {
-	GetEequestPromoteAliases1 *GetEequestPromoteAliases1
-	GetEequestPromoteAliases2 *GetEequestPromoteAliases2
+	GetEequestPromoteAliasesResponseBody1 *GetEequestPromoteAliasesResponseBody1
+	GetEequestPromoteAliasesResponseBody2 *GetEequestPromoteAliasesResponseBody2
 
 	Type GetEequestPromoteAliasesResponseBodyType
 }
 
-func CreateGetEequestPromoteAliasesResponseBodyGetEequestPromoteAliases1(getEequestPromoteAliases1 GetEequestPromoteAliases1) GetEequestPromoteAliasesResponseBody {
-	typ := GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliases1
+func CreateGetEequestPromoteAliasesResponseBodyGetEequestPromoteAliasesResponseBody1(getEequestPromoteAliasesResponseBody1 GetEequestPromoteAliasesResponseBody1) GetEequestPromoteAliasesResponseBody {
+	typ := GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliasesResponseBody1
 
 	return GetEequestPromoteAliasesResponseBody{
-		GetEequestPromoteAliases1: &getEequestPromoteAliases1,
-		Type:                      typ,
+		GetEequestPromoteAliasesResponseBody1: &getEequestPromoteAliasesResponseBody1,
+		Type:                                  typ,
 	}
 }
 
-func CreateGetEequestPromoteAliasesResponseBodyGetEequestPromoteAliases2(getEequestPromoteAliases2 GetEequestPromoteAliases2) GetEequestPromoteAliasesResponseBody {
-	typ := GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliases2
+func CreateGetEequestPromoteAliasesResponseBodyGetEequestPromoteAliasesResponseBody2(getEequestPromoteAliasesResponseBody2 GetEequestPromoteAliasesResponseBody2) GetEequestPromoteAliasesResponseBody {
+	typ := GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliasesResponseBody2
 
 	return GetEequestPromoteAliasesResponseBody{
-		GetEequestPromoteAliases2: &getEequestPromoteAliases2,
-		Type:                      typ,
+		GetEequestPromoteAliasesResponseBody2: &getEequestPromoteAliasesResponseBody2,
+		Type:                                  typ,
 	}
 }
 
 func (u *GetEequestPromoteAliasesResponseBody) UnmarshalJSON(data []byte) error {
 
-	var getEequestPromoteAliases1 GetEequestPromoteAliases1 = GetEequestPromoteAliases1{}
-	if err := utils.UnmarshalJSON(data, &getEequestPromoteAliases1, "", true, true); err == nil {
-		u.GetEequestPromoteAliases1 = &getEequestPromoteAliases1
-		u.Type = GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliases1
+	var getEequestPromoteAliasesResponseBody1 GetEequestPromoteAliasesResponseBody1 = GetEequestPromoteAliasesResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &getEequestPromoteAliasesResponseBody1, "", true, true); err == nil {
+		u.GetEequestPromoteAliasesResponseBody1 = &getEequestPromoteAliasesResponseBody1
+		u.Type = GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliasesResponseBody1
 		return nil
 	}
 
-	var getEequestPromoteAliases2 GetEequestPromoteAliases2 = GetEequestPromoteAliases2{}
-	if err := utils.UnmarshalJSON(data, &getEequestPromoteAliases2, "", true, true); err == nil {
-		u.GetEequestPromoteAliases2 = &getEequestPromoteAliases2
-		u.Type = GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliases2
+	var getEequestPromoteAliasesResponseBody2 GetEequestPromoteAliasesResponseBody2 = GetEequestPromoteAliasesResponseBody2{}
+	if err := utils.UnmarshalJSON(data, &getEequestPromoteAliasesResponseBody2, "", true, true); err == nil {
+		u.GetEequestPromoteAliasesResponseBody2 = &getEequestPromoteAliasesResponseBody2
+		u.Type = GetEequestPromoteAliasesResponseBodyTypeGetEequestPromoteAliasesResponseBody2
 		return nil
 	}
 
@@ -177,12 +177,12 @@ func (u *GetEequestPromoteAliasesResponseBody) UnmarshalJSON(data []byte) error 
 }
 
 func (u GetEequestPromoteAliasesResponseBody) MarshalJSON() ([]byte, error) {
-	if u.GetEequestPromoteAliases1 != nil {
-		return utils.MarshalJSON(u.GetEequestPromoteAliases1, "", true)
+	if u.GetEequestPromoteAliasesResponseBody1 != nil {
+		return utils.MarshalJSON(u.GetEequestPromoteAliasesResponseBody1, "", true)
 	}
 
-	if u.GetEequestPromoteAliases2 != nil {
-		return utils.MarshalJSON(u.GetEequestPromoteAliases2, "", true)
+	if u.GetEequestPromoteAliasesResponseBody2 != nil {
+		return utils.MarshalJSON(u.GetEequestPromoteAliasesResponseBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type GetEequestPromoteAliasesResponseBody: all fields are null")

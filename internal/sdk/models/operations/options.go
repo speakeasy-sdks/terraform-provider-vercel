@@ -4,7 +4,7 @@ package operations
 
 import (
 	"errors"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 )
 
 var ErrUnsupportedOption = errors.New("unsupported option")

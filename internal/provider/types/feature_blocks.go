@@ -3,5 +3,5 @@
 package types
 
 type FeatureBlocks struct {
-	WebAnalytics *WebAnalytics1 `tfsdk:"web_analytics"`
+	WebAnalytics *WebAnalytics `tfsdk:"web_analytics"`
 }

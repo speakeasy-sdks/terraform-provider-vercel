@@ -17,13 +17,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	speakeasy_numberplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/numberplanmodifier"
-	speakeasy_objectplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/objectplanmodifier"
-	speakeasy_stringplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/stringplanmodifier"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
-	speakeasy_stringvalidators "github.com/zchee/terraform-provider-vercel/internal/validators/stringvalidators"
+	speakeasy_numberplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/numberplanmodifier"
+	speakeasy_objectplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
+	speakeasy_stringvalidators "github.com/speakeasy/terraform-provider-terraform/internal/validators/stringvalidators"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -36,26 +36,26 @@ func NewDNSResource() resource.Resource {
 
 // DNSResource defines the resource implementation.
 type DNSResource struct {
-	client *sdk.Vercel
+	client *sdk.SDK
 }
 
 // DNSResourceModel describes the resource data model.
 type DNSResourceModel struct {
-	Domain   types.String           `tfsdk:"domain"`
-	Eight    *tfTypes.Eight         `tfsdk:"eight" tfPlanOnly:"true"`
-	Five     *tfTypes.CreateRecord5 `tfsdk:"five" tfPlanOnly:"true"`
-	Four     *tfTypes.Eight         `tfsdk:"four" tfPlanOnly:"true"`
-	Nine     *tfTypes.CreateRecord5 `tfsdk:"nine" tfPlanOnly:"true"`
-	One      *tfTypes.CreateRecord1 `tfsdk:"one" tfPlanOnly:"true"`
-	RecordID types.String           `tfsdk:"record_id"`
-	Seven    *tfTypes.Seven         `tfsdk:"seven" tfPlanOnly:"true"`
-	Six      *tfTypes.Six           `tfsdk:"six" tfPlanOnly:"true"`
-	Slug     types.String           `tfsdk:"slug"`
-	TeamID   types.String           `tfsdk:"team_id"`
-	Ten      *tfTypes.Ten           `tfsdk:"ten" tfPlanOnly:"true"`
-	Three    *tfTypes.Eight         `tfsdk:"three" tfPlanOnly:"true"`
-	Two      *tfTypes.CreateRecord2 `tfsdk:"two" tfPlanOnly:"true"`
-	UID      types.String           `tfsdk:"uid"`
+	Domain   types.String          `tfsdk:"domain"`
+	Eight    *tfTypes.Eight        `tfsdk:"eight" tfPlanOnly:"true"`
+	Five     *tfTypes.RequestBody5 `tfsdk:"five" tfPlanOnly:"true"`
+	Four     *tfTypes.Eight        `tfsdk:"four" tfPlanOnly:"true"`
+	Nine     *tfTypes.RequestBody5 `tfsdk:"nine" tfPlanOnly:"true"`
+	One      *tfTypes.RequestBody1 `tfsdk:"one" tfPlanOnly:"true"`
+	RecordID types.String          `tfsdk:"record_id"`
+	Seven    *tfTypes.Seven        `tfsdk:"seven" tfPlanOnly:"true"`
+	Six      *tfTypes.Six          `tfsdk:"six" tfPlanOnly:"true"`
+	Slug     types.String          `tfsdk:"slug"`
+	TeamID   types.String          `tfsdk:"team_id"`
+	Ten      *tfTypes.Ten          `tfsdk:"ten" tfPlanOnly:"true"`
+	Three    *tfTypes.Eight        `tfsdk:"three" tfPlanOnly:"true"`
+	Two      *tfTypes.RequestBody2 `tfsdk:"two" tfPlanOnly:"true"`
+	UID      types.String          `tfsdk:"uid"`
 }
 
 func (r *DNSResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -921,12 +921,12 @@ func (r *DNSResource) Configure(ctx context.Context, req resource.ConfigureReque
 		return
 	}
 
-	client, ok := req.ProviderData.(*sdk.Vercel)
+	client, ok := req.ProviderData.(*sdk.SDK)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *sdk.Vercel, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -953,25 +953,25 @@ func (r *DNSResource) Create(ctx context.Context, req resource.CreateRequest, re
 		return
 	}
 
-	requestBody := data.ToOperationsCreateRecordRequestBody()
 	domain := data.Domain.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
+	requestBody := data.ToOperationsCreateRecordRequestBody()
 	request := operations.CreateRecordRequest{
-		RequestBody: requestBody,
 		Domain:      domain,
-		Slug:        slug,
 		TeamID:      teamID,
+		Slug:        slug,
+		RequestBody: requestBody,
 	}
 	res, err := r.client.DNS.Create(ctx, request)
 	if err != nil {
@@ -1064,23 +1064,23 @@ func (r *DNSResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 
 	domain := data.Domain.ValueString()
 	recordID := data.RecordID.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
 	request := operations.RemoveRecordRequest{
 		Domain:   domain,
 		RecordID: recordID,
-		Slug:     slug,
 		TeamID:   teamID,
+		Slug:     slug,
 	}
 	res, err := r.client.DNS.Remove(ctx, request)
 	if err != nil {

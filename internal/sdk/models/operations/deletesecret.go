@@ -9,10 +9,10 @@ import (
 type DeleteSecretRequest struct {
 	// The name or the unique identifier to which the secret belongs to.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *DeleteSecretRequest) GetIDOrName() string {
@@ -22,13 +22,6 @@ func (o *DeleteSecretRequest) GetIDOrName() string {
 	return o.IDOrName
 }
 
-func (o *DeleteSecretRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *DeleteSecretRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -36,20 +29,27 @@ func (o *DeleteSecretRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type DeleteSecretResponseBody struct {
-	// The date when the secret was created.
-	Created float64 `json:"created"`
-	// The name of the deleted secret.
-	Name string `json:"name"`
-	// The unique identifier of the deleted secret.
-	UID string `json:"uid"`
+func (o *DeleteSecretRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
-func (o *DeleteSecretResponseBody) GetCreated() float64 {
+type DeleteSecretResponseBody struct {
+	// The unique identifier of the deleted secret.
+	UID string `json:"uid"`
+	// The name of the deleted secret.
+	Name string `json:"name"`
+	// The date when the secret was created.
+	Created float64 `json:"created"`
+}
+
+func (o *DeleteSecretResponseBody) GetUID() string {
 	if o == nil {
-		return 0.0
+		return ""
 	}
-	return o.Created
+	return o.UID
 }
 
 func (o *DeleteSecretResponseBody) GetName() string {
@@ -59,11 +59,11 @@ func (o *DeleteSecretResponseBody) GetName() string {
 	return o.Name
 }
 
-func (o *DeleteSecretResponseBody) GetUID() string {
+func (o *DeleteSecretResponseBody) GetCreated() float64 {
 	if o == nil {
-		return ""
+		return 0.0
 	}
-	return o.UID
+	return o.Created
 }
 
 type DeleteSecretResponse struct {

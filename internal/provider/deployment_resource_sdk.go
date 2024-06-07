@@ -4,8 +4,8 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 	"math/big"
 )
 
@@ -68,6 +68,12 @@ func (r *DeploymentResourceModel) ToOperationsCreateDeploymentRequestBody() *ope
 	}
 	var gitMetadata *operations.GitMetadata
 	if r.GitMetadata != nil {
+		remoteURL := new(string)
+		if !r.GitMetadata.RemoteURL.IsUnknown() && !r.GitMetadata.RemoteURL.IsNull() {
+			*remoteURL = r.GitMetadata.RemoteURL.ValueString()
+		} else {
+			remoteURL = nil
+		}
 		commitAuthorName := new(string)
 		if !r.GitMetadata.CommitAuthorName.IsUnknown() && !r.GitMetadata.CommitAuthorName.IsNull() {
 			*commitAuthorName = r.GitMetadata.CommitAuthorName.ValueString()
@@ -98,19 +104,13 @@ func (r *DeploymentResourceModel) ToOperationsCreateDeploymentRequestBody() *ope
 		} else {
 			dirty = nil
 		}
-		remoteURL := new(string)
-		if !r.GitMetadata.RemoteURL.IsUnknown() && !r.GitMetadata.RemoteURL.IsNull() {
-			*remoteURL = r.GitMetadata.RemoteURL.ValueString()
-		} else {
-			remoteURL = nil
-		}
 		gitMetadata = &operations.GitMetadata{
+			RemoteURL:        remoteURL,
 			CommitAuthorName: commitAuthorName,
 			CommitMessage:    commitMessage,
 			CommitRef:        commitRef,
 			CommitSha:        commitSha,
 			Dirty:            dirty,
-			RemoteURL:        remoteURL,
 		}
 	}
 	var gitSource *operations.GitSource
@@ -171,7 +171,7 @@ func (r *DeploymentResourceModel) ToOperationsCreateDeploymentRequestBody() *ope
 			} else {
 				sha2 = nil
 			}
-			typeVar1 := operations.CreateDeploymentType(r.GitSource.Two.Type.ValueString())
+			typeVar1 := operations.GitSourceType(r.GitSource.Two.Type.ValueString())
 			two = &operations.Two{
 				Org:  org,
 				Ref:  ref1,
@@ -217,7 +217,7 @@ func (r *DeploymentResourceModel) ToOperationsCreateDeploymentRequestBody() *ope
 			} else {
 				sha3 = nil
 			}
-			typeVar2 := operations.CreateDeploymentDeploymentsType(r.GitSource.Three.Type.ValueString())
+			typeVar2 := operations.CreateDeploymentGitSourceType(r.GitSource.Three.Type.ValueString())
 			three = &operations.Three{
 				ProjectID: projectID,
 				Ref:       ref2,
@@ -240,7 +240,7 @@ func (r *DeploymentResourceModel) ToOperationsCreateDeploymentRequestBody() *ope
 			} else {
 				sha4 = nil
 			}
-			typeVar3 := operations.CreateDeploymentDeploymentsRequestType(r.GitSource.Four.Type.ValueString())
+			typeVar3 := operations.CreateDeploymentGitSourceDeploymentsType(r.GitSource.Four.Type.ValueString())
 			workspaceUUID := new(string)
 			if !r.GitSource.Four.WorkspaceUUID.IsUnknown() && !r.GitSource.Four.WorkspaceUUID.IsNull() {
 				*workspaceUUID = r.GitSource.Four.WorkspaceUUID.ValueString()
@@ -271,7 +271,7 @@ func (r *DeploymentResourceModel) ToOperationsCreateDeploymentRequestBody() *ope
 				sha5 = nil
 			}
 			slug := r.GitSource.Five.Slug.ValueString()
-			typeVar4 := operations.CreateDeploymentDeploymentsRequestRequestBodyType(r.GitSource.Five.Type.ValueString())
+			typeVar4 := operations.CreateDeploymentGitSourceDeploymentsRequestType(r.GitSource.Five.Type.ValueString())
 			five = &operations.Five{
 				Owner: owner,
 				Ref:   ref4,
@@ -425,7 +425,7 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 		if resp.AliasAssignedAt == nil {
 			r.AliasAssignedAt = nil
 		} else {
-			r.AliasAssignedAt = &tfTypes.CreateDeploymentAliasAssignedAt{}
+			r.AliasAssignedAt = &tfTypes.AliasAssignedAt{}
 			if resp.AliasAssignedAt.Number != nil {
 				if resp.AliasAssignedAt.Number != nil {
 					r.AliasAssignedAt.Number = types.NumberValue(big.NewFloat(float64(*resp.AliasAssignedAt.Number)))
@@ -440,7 +440,7 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 		if resp.AliasError == nil {
 			r.AliasError = nil
 		} else {
-			r.AliasError = &tfTypes.CreateDeploymentAliasError{}
+			r.AliasError = &tfTypes.AliasError{}
 			r.AliasError.Code = types.StringValue(resp.AliasError.Code)
 			r.AliasError.Message = types.StringValue(resp.AliasError.Message)
 		}
@@ -448,7 +448,7 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 		if resp.AliasWarning == nil {
 			r.AliasWarning = nil
 		} else {
-			r.AliasWarning = &tfTypes.CreateDeploymentAliasWarning{}
+			r.AliasWarning = &tfTypes.AliasWarning{}
 			r.AliasWarning.Action = types.StringPointerValue(resp.AliasWarning.Action)
 			r.AliasWarning.Code = types.StringValue(resp.AliasWarning.Code)
 			r.AliasWarning.Link = types.StringPointerValue(resp.AliasWarning.Link)
@@ -516,196 +516,196 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 		r.ErrorMessage = types.StringPointerValue(resp.ErrorMessage)
 		r.ErrorStep = types.StringPointerValue(resp.ErrorStep)
 		if len(resp.Functions) > 0 {
-			r.Functions = make(map[string]tfTypes.CreateDeploymentFunctions)
-			for createDeploymentFunctionsKey, createDeploymentFunctionsValue := range resp.Functions {
-				var createDeploymentFunctionsResult tfTypes.CreateDeploymentFunctions
-				createDeploymentFunctionsResult.ExcludeFiles = types.StringPointerValue(createDeploymentFunctionsValue.ExcludeFiles)
-				createDeploymentFunctionsResult.IncludeFiles = types.StringPointerValue(createDeploymentFunctionsValue.IncludeFiles)
-				if createDeploymentFunctionsValue.MaxDuration != nil {
-					createDeploymentFunctionsResult.MaxDuration = types.NumberValue(big.NewFloat(float64(*createDeploymentFunctionsValue.MaxDuration)))
+			r.Functions = make(map[string]tfTypes.Functions)
+			for functionsKey, functionsValue := range resp.Functions {
+				var functionsResult tfTypes.Functions
+				functionsResult.ExcludeFiles = types.StringPointerValue(functionsValue.ExcludeFiles)
+				functionsResult.IncludeFiles = types.StringPointerValue(functionsValue.IncludeFiles)
+				if functionsValue.MaxDuration != nil {
+					functionsResult.MaxDuration = types.NumberValue(big.NewFloat(float64(*functionsValue.MaxDuration)))
 				} else {
-					createDeploymentFunctionsResult.MaxDuration = types.NumberNull()
+					functionsResult.MaxDuration = types.NumberNull()
 				}
-				if createDeploymentFunctionsValue.Memory != nil {
-					createDeploymentFunctionsResult.Memory = types.NumberValue(big.NewFloat(float64(*createDeploymentFunctionsValue.Memory)))
+				if functionsValue.Memory != nil {
+					functionsResult.Memory = types.NumberValue(big.NewFloat(float64(*functionsValue.Memory)))
 				} else {
-					createDeploymentFunctionsResult.Memory = types.NumberNull()
+					functionsResult.Memory = types.NumberNull()
 				}
-				createDeploymentFunctionsResult.Runtime = types.StringPointerValue(createDeploymentFunctionsValue.Runtime)
-				r.Functions[createDeploymentFunctionsKey] = createDeploymentFunctionsResult
+				functionsResult.Runtime = types.StringPointerValue(functionsValue.Runtime)
+				r.Functions[functionsKey] = functionsResult
 			}
 		}
 		if resp.GitRepo == nil {
 			r.GitRepo = nil
 		} else {
-			r.GitRepo = &tfTypes.CreateDeploymentGitRepo{}
-			if resp.GitRepo.CreateDeployment1 != nil {
-				r.GitRepo.One = &tfTypes.CreateDeployment1{}
-				r.GitRepo.One.DefaultBranch = types.StringValue(resp.GitRepo.CreateDeployment1.DefaultBranch)
-				r.GitRepo.One.Name = types.StringValue(resp.GitRepo.CreateDeployment1.Name)
-				r.GitRepo.One.Namespace = types.StringValue(resp.GitRepo.CreateDeployment1.Namespace)
-				r.GitRepo.One.OwnerType = types.StringValue(string(resp.GitRepo.CreateDeployment1.OwnerType))
-				r.GitRepo.One.Path = types.StringValue(resp.GitRepo.CreateDeployment1.Path)
-				r.GitRepo.One.Private = types.BoolValue(resp.GitRepo.CreateDeployment1.Private)
-				r.GitRepo.One.ProjectID = types.NumberValue(big.NewFloat(float64(resp.GitRepo.CreateDeployment1.ProjectID)))
-				r.GitRepo.One.Type = types.StringValue(string(resp.GitRepo.CreateDeployment1.Type))
-				r.GitRepo.One.URL = types.StringValue(resp.GitRepo.CreateDeployment1.URL)
+			r.GitRepo = &tfTypes.GitRepo{}
+			if resp.GitRepo.GitRepo1 != nil {
+				r.GitRepo.One = &tfTypes.GitRepo1{}
+				r.GitRepo.One.DefaultBranch = types.StringValue(resp.GitRepo.GitRepo1.DefaultBranch)
+				r.GitRepo.One.Name = types.StringValue(resp.GitRepo.GitRepo1.Name)
+				r.GitRepo.One.Namespace = types.StringValue(resp.GitRepo.GitRepo1.Namespace)
+				r.GitRepo.One.OwnerType = types.StringValue(string(resp.GitRepo.GitRepo1.OwnerType))
+				r.GitRepo.One.Path = types.StringValue(resp.GitRepo.GitRepo1.Path)
+				r.GitRepo.One.Private = types.BoolValue(resp.GitRepo.GitRepo1.Private)
+				r.GitRepo.One.ProjectID = types.NumberValue(big.NewFloat(float64(resp.GitRepo.GitRepo1.ProjectID)))
+				r.GitRepo.One.Type = types.StringValue(string(resp.GitRepo.GitRepo1.Type))
+				r.GitRepo.One.URL = types.StringValue(resp.GitRepo.GitRepo1.URL)
 			}
-			if resp.GitRepo.CreateDeployment2 != nil {
-				r.GitRepo.Two = &tfTypes.CreateDeployment2{}
-				r.GitRepo.Two.DefaultBranch = types.StringValue(resp.GitRepo.CreateDeployment2.DefaultBranch)
-				r.GitRepo.Two.Name = types.StringValue(resp.GitRepo.CreateDeployment2.Name)
-				r.GitRepo.Two.Org = types.StringValue(resp.GitRepo.CreateDeployment2.Org)
-				r.GitRepo.Two.OwnerType = types.StringValue(string(resp.GitRepo.CreateDeployment2.OwnerType))
-				r.GitRepo.Two.Path = types.StringValue(resp.GitRepo.CreateDeployment2.Path)
-				r.GitRepo.Two.Private = types.BoolValue(resp.GitRepo.CreateDeployment2.Private)
-				r.GitRepo.Two.Repo = types.StringValue(resp.GitRepo.CreateDeployment2.Repo)
-				r.GitRepo.Two.RepoID = types.NumberValue(big.NewFloat(float64(resp.GitRepo.CreateDeployment2.RepoID)))
-				r.GitRepo.Two.RepoOwnerID = types.StringValue(resp.GitRepo.CreateDeployment2.RepoOwnerID)
-				r.GitRepo.Two.Type = types.StringValue(string(resp.GitRepo.CreateDeployment2.Type))
+			if resp.GitRepo.GitRepo2 != nil {
+				r.GitRepo.Two = &tfTypes.GitRepo2{}
+				r.GitRepo.Two.DefaultBranch = types.StringValue(resp.GitRepo.GitRepo2.DefaultBranch)
+				r.GitRepo.Two.Name = types.StringValue(resp.GitRepo.GitRepo2.Name)
+				r.GitRepo.Two.Org = types.StringValue(resp.GitRepo.GitRepo2.Org)
+				r.GitRepo.Two.OwnerType = types.StringValue(string(resp.GitRepo.GitRepo2.OwnerType))
+				r.GitRepo.Two.Path = types.StringValue(resp.GitRepo.GitRepo2.Path)
+				r.GitRepo.Two.Private = types.BoolValue(resp.GitRepo.GitRepo2.Private)
+				r.GitRepo.Two.Repo = types.StringValue(resp.GitRepo.GitRepo2.Repo)
+				r.GitRepo.Two.RepoID = types.NumberValue(big.NewFloat(float64(resp.GitRepo.GitRepo2.RepoID)))
+				r.GitRepo.Two.RepoOwnerID = types.StringValue(resp.GitRepo.GitRepo2.RepoOwnerID)
+				r.GitRepo.Two.Type = types.StringValue(string(resp.GitRepo.GitRepo2.Type))
 			}
-			if resp.GitRepo.CreateDeployment3 != nil {
-				r.GitRepo.Three = &tfTypes.CreateDeployment3{}
-				r.GitRepo.Three.DefaultBranch = types.StringValue(resp.GitRepo.CreateDeployment3.DefaultBranch)
-				r.GitRepo.Three.Name = types.StringValue(resp.GitRepo.CreateDeployment3.Name)
-				r.GitRepo.Three.Owner = types.StringValue(resp.GitRepo.CreateDeployment3.Owner)
-				r.GitRepo.Three.OwnerType = types.StringValue(string(resp.GitRepo.CreateDeployment3.OwnerType))
-				r.GitRepo.Three.Path = types.StringValue(resp.GitRepo.CreateDeployment3.Path)
-				r.GitRepo.Three.Private = types.BoolValue(resp.GitRepo.CreateDeployment3.Private)
-				r.GitRepo.Three.RepoUUID = types.StringValue(resp.GitRepo.CreateDeployment3.RepoUUID)
-				r.GitRepo.Three.Slug = types.StringValue(resp.GitRepo.CreateDeployment3.Slug)
-				r.GitRepo.Three.Type = types.StringValue(string(resp.GitRepo.CreateDeployment3.Type))
-				r.GitRepo.Three.WorkspaceUUID = types.StringValue(resp.GitRepo.CreateDeployment3.WorkspaceUUID)
+			if resp.GitRepo.GitRepo3 != nil {
+				r.GitRepo.Three = &tfTypes.GitRepo3{}
+				r.GitRepo.Three.DefaultBranch = types.StringValue(resp.GitRepo.GitRepo3.DefaultBranch)
+				r.GitRepo.Three.Name = types.StringValue(resp.GitRepo.GitRepo3.Name)
+				r.GitRepo.Three.Owner = types.StringValue(resp.GitRepo.GitRepo3.Owner)
+				r.GitRepo.Three.OwnerType = types.StringValue(string(resp.GitRepo.GitRepo3.OwnerType))
+				r.GitRepo.Three.Path = types.StringValue(resp.GitRepo.GitRepo3.Path)
+				r.GitRepo.Three.Private = types.BoolValue(resp.GitRepo.GitRepo3.Private)
+				r.GitRepo.Three.RepoUUID = types.StringValue(resp.GitRepo.GitRepo3.RepoUUID)
+				r.GitRepo.Three.Slug = types.StringValue(resp.GitRepo.GitRepo3.Slug)
+				r.GitRepo.Three.Type = types.StringValue(string(resp.GitRepo.GitRepo3.Type))
+				r.GitRepo.Three.WorkspaceUUID = types.StringValue(resp.GitRepo.GitRepo3.WorkspaceUUID)
 			}
 		}
 		if resp.GitSource == nil {
 			r.GitSource = nil
 		} else {
 			r.GitSource = &tfTypes.GitSource{}
-			if resp.GitSource.CreateDeploymentDeployments1 != nil {
+			if resp.GitSource.GitSource1 != nil {
 				r.GitSource.One = &tfTypes.One{}
-				if resp.GitSource.CreateDeploymentDeployments1.PrID != nil {
-					r.GitSource.One.PrID = types.NumberValue(big.NewFloat(float64(*resp.GitSource.CreateDeploymentDeployments1.PrID)))
+				if resp.GitSource.GitSource1.PrID != nil {
+					r.GitSource.One.PrID = types.NumberValue(big.NewFloat(float64(*resp.GitSource.GitSource1.PrID)))
 				} else {
 					r.GitSource.One.PrID = types.NumberNull()
 				}
-				r.GitSource.One.Ref = types.StringPointerValue(resp.GitSource.CreateDeploymentDeployments1.Ref)
-				if resp.GitSource.CreateDeploymentDeployments1.RepoID.Number != nil {
-					if resp.GitSource.CreateDeploymentDeployments1.RepoID.Number != nil {
-						r.GitSource.One.RepoID.Number = types.NumberValue(big.NewFloat(float64(*resp.GitSource.CreateDeploymentDeployments1.RepoID.Number)))
+				r.GitSource.One.Ref = types.StringPointerValue(resp.GitSource.GitSource1.Ref)
+				if resp.GitSource.GitSource1.RepoID.Number != nil {
+					if resp.GitSource.GitSource1.RepoID.Number != nil {
+						r.GitSource.One.RepoID.Number = types.NumberValue(big.NewFloat(float64(*resp.GitSource.GitSource1.RepoID.Number)))
 					} else {
 						r.GitSource.One.RepoID.Number = types.NumberNull()
 					}
 				}
-				if resp.GitSource.CreateDeploymentDeployments1.RepoID.Str != nil {
-					r.GitSource.One.RepoID.Str = types.StringPointerValue(resp.GitSource.CreateDeploymentDeployments1.RepoID.Str)
+				if resp.GitSource.GitSource1.RepoID.Str != nil {
+					r.GitSource.One.RepoID.Str = types.StringPointerValue(resp.GitSource.GitSource1.RepoID.Str)
 				}
-				r.GitSource.One.Sha = types.StringPointerValue(resp.GitSource.CreateDeploymentDeployments1.Sha)
-				r.GitSource.One.Type = types.StringValue(string(resp.GitSource.CreateDeploymentDeployments1.Type))
+				r.GitSource.One.Sha = types.StringPointerValue(resp.GitSource.GitSource1.Sha)
+				r.GitSource.One.Type = types.StringValue(string(resp.GitSource.GitSource1.Type))
 			}
-			if resp.GitSource.CreateDeploymentDeployments2 != nil {
+			if resp.GitSource.GitSource2 != nil {
 				r.GitSource.Two = &tfTypes.Two{}
-				r.GitSource.Two.Org = types.StringValue(resp.GitSource.CreateDeploymentDeployments2.Org)
-				if resp.GitSource.CreateDeploymentDeployments2.PrID != nil {
-					r.GitSource.Two.PrID = types.NumberValue(big.NewFloat(float64(*resp.GitSource.CreateDeploymentDeployments2.PrID)))
+				r.GitSource.Two.Org = types.StringValue(resp.GitSource.GitSource2.Org)
+				if resp.GitSource.GitSource2.PrID != nil {
+					r.GitSource.Two.PrID = types.NumberValue(big.NewFloat(float64(*resp.GitSource.GitSource2.PrID)))
 				} else {
 					r.GitSource.Two.PrID = types.NumberNull()
 				}
-				r.GitSource.Two.Ref = types.StringPointerValue(resp.GitSource.CreateDeploymentDeployments2.Ref)
-				r.GitSource.Two.Repo = types.StringValue(resp.GitSource.CreateDeploymentDeployments2.Repo)
-				r.GitSource.Two.Sha = types.StringPointerValue(resp.GitSource.CreateDeploymentDeployments2.Sha)
-				r.GitSource.Two.Type = types.StringValue(string(resp.GitSource.CreateDeploymentDeployments2.Type))
+				r.GitSource.Two.Ref = types.StringPointerValue(resp.GitSource.GitSource2.Ref)
+				r.GitSource.Two.Repo = types.StringValue(resp.GitSource.GitSource2.Repo)
+				r.GitSource.Two.Sha = types.StringPointerValue(resp.GitSource.GitSource2.Sha)
+				r.GitSource.Two.Type = types.StringValue(string(resp.GitSource.GitSource2.Type))
 			}
-			if resp.GitSource.CreateDeploymentDeployments3 != nil {
+			if resp.GitSource.GitSource3 != nil {
 				r.GitSource.Three = &tfTypes.Three{}
-				if resp.GitSource.CreateDeploymentDeployments3.PrID != nil {
-					r.GitSource.Three.PrID = types.NumberValue(big.NewFloat(float64(*resp.GitSource.CreateDeploymentDeployments3.PrID)))
+				if resp.GitSource.GitSource3.PrID != nil {
+					r.GitSource.Three.PrID = types.NumberValue(big.NewFloat(float64(*resp.GitSource.GitSource3.PrID)))
 				} else {
 					r.GitSource.Three.PrID = types.NumberNull()
 				}
-				if resp.GitSource.CreateDeploymentDeployments3.ProjectID.Number != nil {
-					if resp.GitSource.CreateDeploymentDeployments3.ProjectID.Number != nil {
-						r.GitSource.Three.ProjectID.Number = types.NumberValue(big.NewFloat(float64(*resp.GitSource.CreateDeploymentDeployments3.ProjectID.Number)))
+				if resp.GitSource.GitSource3.ProjectID.Number != nil {
+					if resp.GitSource.GitSource3.ProjectID.Number != nil {
+						r.GitSource.Three.ProjectID.Number = types.NumberValue(big.NewFloat(float64(*resp.GitSource.GitSource3.ProjectID.Number)))
 					} else {
 						r.GitSource.Three.ProjectID.Number = types.NumberNull()
 					}
 				}
-				if resp.GitSource.CreateDeploymentDeployments3.ProjectID.Str != nil {
-					r.GitSource.Three.ProjectID.Str = types.StringPointerValue(resp.GitSource.CreateDeploymentDeployments3.ProjectID.Str)
+				if resp.GitSource.GitSource3.ProjectID.Str != nil {
+					r.GitSource.Three.ProjectID.Str = types.StringPointerValue(resp.GitSource.GitSource3.ProjectID.Str)
 				}
-				r.GitSource.Three.Ref = types.StringPointerValue(resp.GitSource.CreateDeploymentDeployments3.Ref)
-				r.GitSource.Three.Sha = types.StringPointerValue(resp.GitSource.CreateDeploymentDeployments3.Sha)
-				r.GitSource.Three.Type = types.StringValue(string(resp.GitSource.CreateDeploymentDeployments3.Type))
+				r.GitSource.Three.Ref = types.StringPointerValue(resp.GitSource.GitSource3.Ref)
+				r.GitSource.Three.Sha = types.StringPointerValue(resp.GitSource.GitSource3.Sha)
+				r.GitSource.Three.Type = types.StringValue(string(resp.GitSource.GitSource3.Type))
 			}
-			if resp.GitSource.CreateDeployment4 != nil {
+			if resp.GitSource.GitSource4 != nil {
 				r.GitSource.Four = &tfTypes.Four{}
-				if resp.GitSource.CreateDeployment4.PrID != nil {
-					r.GitSource.Four.PrID = types.NumberValue(big.NewFloat(float64(*resp.GitSource.CreateDeployment4.PrID)))
+				if resp.GitSource.GitSource4.PrID != nil {
+					r.GitSource.Four.PrID = types.NumberValue(big.NewFloat(float64(*resp.GitSource.GitSource4.PrID)))
 				} else {
 					r.GitSource.Four.PrID = types.NumberNull()
 				}
-				r.GitSource.Four.Ref = types.StringPointerValue(resp.GitSource.CreateDeployment4.Ref)
-				r.GitSource.Four.RepoUUID = types.StringValue(resp.GitSource.CreateDeployment4.RepoUUID)
-				r.GitSource.Four.Sha = types.StringPointerValue(resp.GitSource.CreateDeployment4.Sha)
-				r.GitSource.Four.Type = types.StringValue(string(resp.GitSource.CreateDeployment4.Type))
-				r.GitSource.Four.WorkspaceUUID = types.StringPointerValue(resp.GitSource.CreateDeployment4.WorkspaceUUID)
+				r.GitSource.Four.Ref = types.StringPointerValue(resp.GitSource.GitSource4.Ref)
+				r.GitSource.Four.RepoUUID = types.StringValue(resp.GitSource.GitSource4.RepoUUID)
+				r.GitSource.Four.Sha = types.StringPointerValue(resp.GitSource.GitSource4.Sha)
+				r.GitSource.Four.Type = types.StringValue(string(resp.GitSource.GitSource4.Type))
+				r.GitSource.Four.WorkspaceUUID = types.StringPointerValue(resp.GitSource.GitSource4.WorkspaceUUID)
 			}
-			if resp.GitSource.CreateDeployment5 != nil {
+			if resp.GitSource.GitSource5 != nil {
 				r.GitSource.Five = &tfTypes.Five{}
-				r.GitSource.Five.Owner = types.StringValue(resp.GitSource.CreateDeployment5.Owner)
-				if resp.GitSource.CreateDeployment5.PrID != nil {
-					r.GitSource.Five.PrID = types.NumberValue(big.NewFloat(float64(*resp.GitSource.CreateDeployment5.PrID)))
+				r.GitSource.Five.Owner = types.StringValue(resp.GitSource.GitSource5.Owner)
+				if resp.GitSource.GitSource5.PrID != nil {
+					r.GitSource.Five.PrID = types.NumberValue(big.NewFloat(float64(*resp.GitSource.GitSource5.PrID)))
 				} else {
 					r.GitSource.Five.PrID = types.NumberNull()
 				}
-				r.GitSource.Five.Ref = types.StringPointerValue(resp.GitSource.CreateDeployment5.Ref)
-				r.GitSource.Five.Sha = types.StringPointerValue(resp.GitSource.CreateDeployment5.Sha)
-				r.GitSource.Five.Slug = types.StringValue(resp.GitSource.CreateDeployment5.Slug)
-				r.GitSource.Five.Type = types.StringValue(string(resp.GitSource.CreateDeployment5.Type))
+				r.GitSource.Five.Ref = types.StringPointerValue(resp.GitSource.GitSource5.Ref)
+				r.GitSource.Five.Sha = types.StringPointerValue(resp.GitSource.GitSource5.Sha)
+				r.GitSource.Five.Slug = types.StringValue(resp.GitSource.GitSource5.Slug)
+				r.GitSource.Five.Type = types.StringValue(string(resp.GitSource.GitSource5.Type))
 			}
-			if resp.GitSource.CreateDeployment6 != nil {
-				r.GitSource.Six = &tfTypes.CreateDeployment6{}
-				r.GitSource.Six.GitURL = types.StringValue(resp.GitSource.CreateDeployment6.GitURL)
-				r.GitSource.Six.Ref = types.StringValue(resp.GitSource.CreateDeployment6.Ref)
-				r.GitSource.Six.Sha = types.StringValue(resp.GitSource.CreateDeployment6.Sha)
-				r.GitSource.Six.Type = types.StringValue(string(resp.GitSource.CreateDeployment6.Type))
+			if resp.GitSource.CreateDeploymentGitSource6 != nil {
+				r.GitSource.Six = &tfTypes.CreateDeploymentGitSource6{}
+				r.GitSource.Six.GitURL = types.StringValue(resp.GitSource.CreateDeploymentGitSource6.GitURL)
+				r.GitSource.Six.Ref = types.StringValue(resp.GitSource.CreateDeploymentGitSource6.Ref)
+				r.GitSource.Six.Sha = types.StringValue(resp.GitSource.CreateDeploymentGitSource6.Sha)
+				r.GitSource.Six.Type = types.StringValue(string(resp.GitSource.CreateDeploymentGitSource6.Type))
 			}
-			if resp.GitSource.CreateDeployment7 != nil {
-				r.GitSource.Seven = &tfTypes.CreateDeployment7{}
-				r.GitSource.Seven.Org = types.StringPointerValue(resp.GitSource.CreateDeployment7.Org)
-				r.GitSource.Seven.Ref = types.StringValue(resp.GitSource.CreateDeployment7.Ref)
-				r.GitSource.Seven.Repo = types.StringPointerValue(resp.GitSource.CreateDeployment7.Repo)
-				r.GitSource.Seven.RepoID = types.NumberValue(big.NewFloat(float64(resp.GitSource.CreateDeployment7.RepoID)))
-				r.GitSource.Seven.Sha = types.StringValue(resp.GitSource.CreateDeployment7.Sha)
-				r.GitSource.Seven.Type = types.StringValue(string(resp.GitSource.CreateDeployment7.Type))
+			if resp.GitSource.CreateDeploymentGitSource7 != nil {
+				r.GitSource.Seven = &tfTypes.CreateDeploymentGitSource7{}
+				r.GitSource.Seven.Org = types.StringPointerValue(resp.GitSource.CreateDeploymentGitSource7.Org)
+				r.GitSource.Seven.Ref = types.StringValue(resp.GitSource.CreateDeploymentGitSource7.Ref)
+				r.GitSource.Seven.Repo = types.StringPointerValue(resp.GitSource.CreateDeploymentGitSource7.Repo)
+				r.GitSource.Seven.RepoID = types.NumberValue(big.NewFloat(float64(resp.GitSource.CreateDeploymentGitSource7.RepoID)))
+				r.GitSource.Seven.Sha = types.StringValue(resp.GitSource.CreateDeploymentGitSource7.Sha)
+				r.GitSource.Seven.Type = types.StringValue(string(resp.GitSource.CreateDeploymentGitSource7.Type))
 			}
-			if resp.GitSource.CreateDeployment8 != nil {
-				r.GitSource.Eight = &tfTypes.CreateDeployment8{}
-				r.GitSource.Eight.ProjectID = types.NumberValue(big.NewFloat(float64(resp.GitSource.CreateDeployment8.ProjectID)))
-				r.GitSource.Eight.Ref = types.StringValue(resp.GitSource.CreateDeployment8.Ref)
-				r.GitSource.Eight.Sha = types.StringValue(resp.GitSource.CreateDeployment8.Sha)
-				r.GitSource.Eight.Type = types.StringValue(string(resp.GitSource.CreateDeployment8.Type))
+			if resp.GitSource.CreateDeploymentGitSource8 != nil {
+				r.GitSource.Eight = &tfTypes.CreateDeploymentGitSource8{}
+				r.GitSource.Eight.ProjectID = types.NumberValue(big.NewFloat(float64(resp.GitSource.CreateDeploymentGitSource8.ProjectID)))
+				r.GitSource.Eight.Ref = types.StringValue(resp.GitSource.CreateDeploymentGitSource8.Ref)
+				r.GitSource.Eight.Sha = types.StringValue(resp.GitSource.CreateDeploymentGitSource8.Sha)
+				r.GitSource.Eight.Type = types.StringValue(string(resp.GitSource.CreateDeploymentGitSource8.Type))
 			}
-			if resp.GitSource.CreateDeployment9 != nil {
-				r.GitSource.Nine = &tfTypes.CreateDeployment9{}
-				r.GitSource.Nine.Owner = types.StringPointerValue(resp.GitSource.CreateDeployment9.Owner)
-				r.GitSource.Nine.Ref = types.StringValue(resp.GitSource.CreateDeployment9.Ref)
-				r.GitSource.Nine.RepoUUID = types.StringValue(resp.GitSource.CreateDeployment9.RepoUUID)
-				r.GitSource.Nine.Sha = types.StringValue(resp.GitSource.CreateDeployment9.Sha)
-				r.GitSource.Nine.Slug = types.StringPointerValue(resp.GitSource.CreateDeployment9.Slug)
-				r.GitSource.Nine.Type = types.StringValue(string(resp.GitSource.CreateDeployment9.Type))
-				r.GitSource.Nine.WorkspaceUUID = types.StringValue(resp.GitSource.CreateDeployment9.WorkspaceUUID)
+			if resp.GitSource.CreateDeploymentGitSource9 != nil {
+				r.GitSource.Nine = &tfTypes.CreateDeploymentGitSource9{}
+				r.GitSource.Nine.Owner = types.StringPointerValue(resp.GitSource.CreateDeploymentGitSource9.Owner)
+				r.GitSource.Nine.Ref = types.StringValue(resp.GitSource.CreateDeploymentGitSource9.Ref)
+				r.GitSource.Nine.RepoUUID = types.StringValue(resp.GitSource.CreateDeploymentGitSource9.RepoUUID)
+				r.GitSource.Nine.Sha = types.StringValue(resp.GitSource.CreateDeploymentGitSource9.Sha)
+				r.GitSource.Nine.Slug = types.StringPointerValue(resp.GitSource.CreateDeploymentGitSource9.Slug)
+				r.GitSource.Nine.Type = types.StringValue(string(resp.GitSource.CreateDeploymentGitSource9.Type))
+				r.GitSource.Nine.WorkspaceUUID = types.StringValue(resp.GitSource.CreateDeploymentGitSource9.WorkspaceUUID)
 			}
 		}
 		r.ID = types.StringValue(resp.ID)
 		r.InspectorURL = types.StringPointerValue(resp.InspectorURL)
 		r.IsInConcurrentBuildsQueue = types.BoolValue(resp.IsInConcurrentBuildsQueue)
-		r.Lambdas = []tfTypes.CreateDeploymentLambdas{}
+		r.Lambdas = []tfTypes.Lambdas{}
 		if len(r.Lambdas) > len(resp.Lambdas) {
 			r.Lambdas = r.Lambdas[:len(resp.Lambdas)]
 		}
 		for lambdasCount, lambdasItem := range resp.Lambdas {
-			var lambdas1 tfTypes.CreateDeploymentLambdas
+			var lambdas1 tfTypes.Lambdas
 			if lambdasItem.CreatedAt != nil {
 				lambdas1.CreatedAt = types.NumberValue(big.NewFloat(float64(*lambdasItem.CreatedAt)))
 			} else {
@@ -766,7 +766,7 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 		if resp.ProjectObj == nil {
 			r.ProjectObj = nil
 		} else {
-			r.ProjectObj = &tfTypes.GetDeploymentProject{}
+			r.ProjectObj = &tfTypes.GetDeploymentResponseBodyProject{}
 			r.ProjectObj.Framework = types.StringPointerValue(resp.ProjectObj.Framework)
 			r.ProjectObj.ID = types.StringValue(resp.ProjectObj.ID)
 			r.ProjectObj.Name = types.StringValue(resp.ProjectObj.Name)
@@ -782,31 +782,31 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 		for _, v := range resp.Regions {
 			r.Regions = append(r.Regions, types.StringValue(v))
 		}
-		r.Routes = []tfTypes.GetDeploymentRoutes{}
+		r.Routes = []tfTypes.ResponseBodyRoutes{}
 		if len(r.Routes) > len(resp.Routes) {
 			r.Routes = r.Routes[:len(resp.Routes)]
 		}
 		for routesCount, routesItem := range resp.Routes {
-			var routes1 tfTypes.GetDeploymentRoutes
-			if routesItem.CreateDeploymentDeploymentsResponse1 != nil {
-				routes1.One = &tfTypes.GetDeploymentDeploymentsResponse2001{}
-				routes1.One.CaseSensitive = types.BoolPointerValue(routesItem.CreateDeploymentDeploymentsResponse1.CaseSensitive)
-				routes1.One.Check = types.BoolPointerValue(routesItem.CreateDeploymentDeploymentsResponse1.Check)
-				routes1.One.Continue = types.BoolPointerValue(routesItem.CreateDeploymentDeploymentsResponse1.Continue)
-				routes1.One.Dest = types.StringPointerValue(routesItem.CreateDeploymentDeploymentsResponse1.Dest)
-				routes1.One.Has = []tfTypes.GetDeploymentHas{}
-				for hasCount, hasItem := range routesItem.CreateDeploymentDeploymentsResponse1.Has {
-					var has1 tfTypes.GetDeploymentHas
-					if hasItem.CreateDeploymentDeploymentsResponse2001 != nil {
-						has1.One = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11{}
-						has1.One.Type = types.StringValue(string(hasItem.CreateDeploymentDeploymentsResponse2001.Type))
-						has1.One.Value = types.StringValue(hasItem.CreateDeploymentDeploymentsResponse2001.Value)
+			var routes1 tfTypes.ResponseBodyRoutes
+			if routesItem.Routes1 != nil {
+				routes1.One = &tfTypes.GetDeploymentRoutes1{}
+				routes1.One.CaseSensitive = types.BoolPointerValue(routesItem.Routes1.CaseSensitive)
+				routes1.One.Check = types.BoolPointerValue(routesItem.Routes1.Check)
+				routes1.One.Continue = types.BoolPointerValue(routesItem.Routes1.Continue)
+				routes1.One.Dest = types.StringPointerValue(routesItem.Routes1.Dest)
+				routes1.One.Has = []tfTypes.GetDeploymentRoutesHas{}
+				for hasCount, hasItem := range routesItem.Routes1.Has {
+					var has1 tfTypes.GetDeploymentRoutesHas
+					if hasItem.Has1 != nil {
+						has1.One = &tfTypes.GetDeploymentHas1{}
+						has1.One.Type = types.StringValue(string(hasItem.Has1.Type))
+						has1.One.Value = types.StringValue(hasItem.Has1.Value)
 					}
-					if hasItem.CreateDeploymentDeploymentsResponse2002 != nil {
-						has1.Two = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12{}
-						has1.Two.Key = types.StringValue(hasItem.CreateDeploymentDeploymentsResponse2002.Key)
-						has1.Two.Type = types.StringValue(string(hasItem.CreateDeploymentDeploymentsResponse2002.Type))
-						has1.Two.Value = types.StringPointerValue(hasItem.CreateDeploymentDeploymentsResponse2002.Value)
+					if hasItem.Has2 != nil {
+						has1.Two = &tfTypes.GetDeploymentHas2{}
+						has1.Two.Key = types.StringValue(hasItem.Has2.Key)
+						has1.Two.Type = types.StringValue(string(hasItem.Has2.Type))
+						has1.Two.Value = types.StringPointerValue(hasItem.Has2.Value)
 					}
 					if hasCount+1 > len(routes1.One.Has) {
 						routes1.One.Has = append(routes1.One.Has, has1)
@@ -815,52 +815,52 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 						routes1.One.Has[hasCount].Two = has1.Two
 					}
 				}
-				if len(routesItem.CreateDeploymentDeploymentsResponse1.Headers) > 0 {
+				if len(routesItem.Routes1.Headers) > 0 {
 					routes1.One.Headers = make(map[string]types.String)
-					for key2, value3 := range routesItem.CreateDeploymentDeploymentsResponse1.Headers {
+					for key2, value3 := range routesItem.Routes1.Headers {
 						routes1.One.Headers[key2] = types.StringValue(value3)
 					}
 				}
-				routes1.One.Important = types.BoolPointerValue(routesItem.CreateDeploymentDeploymentsResponse1.Important)
-				if routesItem.CreateDeploymentDeploymentsResponse1.Locale == nil {
+				routes1.One.Important = types.BoolPointerValue(routesItem.Routes1.Important)
+				if routesItem.Routes1.Locale == nil {
 					routes1.One.Locale = nil
 				} else {
-					routes1.One.Locale = &tfTypes.GetDeploymentLocale{}
-					routes1.One.Locale.Cookie = types.StringPointerValue(routesItem.CreateDeploymentDeploymentsResponse1.Locale.Cookie)
-					if len(routesItem.CreateDeploymentDeploymentsResponse1.Locale.Redirect) > 0 {
+					routes1.One.Locale = &tfTypes.GetDeploymentRoutesLocale{}
+					routes1.One.Locale.Cookie = types.StringPointerValue(routesItem.Routes1.Locale.Cookie)
+					if len(routesItem.Routes1.Locale.Redirect) > 0 {
 						routes1.One.Locale.Redirect = make(map[string]types.String)
-						for key3, value4 := range routesItem.CreateDeploymentDeploymentsResponse1.Locale.Redirect {
+						for key3, value4 := range routesItem.Routes1.Locale.Redirect {
 							routes1.One.Locale.Redirect[key3] = types.StringValue(value4)
 						}
 					}
 				}
 				routes1.One.Methods = []types.String{}
-				for _, v := range routesItem.CreateDeploymentDeploymentsResponse1.Methods {
+				for _, v := range routesItem.Routes1.Methods {
 					routes1.One.Methods = append(routes1.One.Methods, types.StringValue(v))
 				}
-				if routesItem.CreateDeploymentDeploymentsResponse1.Middleware != nil {
-					routes1.One.Middleware = types.NumberValue(big.NewFloat(float64(*routesItem.CreateDeploymentDeploymentsResponse1.Middleware)))
+				if routesItem.Routes1.Middleware != nil {
+					routes1.One.Middleware = types.NumberValue(big.NewFloat(float64(*routesItem.Routes1.Middleware)))
 				} else {
 					routes1.One.Middleware = types.NumberNull()
 				}
-				routes1.One.MiddlewarePath = types.StringPointerValue(routesItem.CreateDeploymentDeploymentsResponse1.MiddlewarePath)
+				routes1.One.MiddlewarePath = types.StringPointerValue(routesItem.Routes1.MiddlewarePath)
 				routes1.One.MiddlewareRawSrc = []types.String{}
-				for _, v := range routesItem.CreateDeploymentDeploymentsResponse1.MiddlewareRawSrc {
+				for _, v := range routesItem.Routes1.MiddlewareRawSrc {
 					routes1.One.MiddlewareRawSrc = append(routes1.One.MiddlewareRawSrc, types.StringValue(v))
 				}
-				routes1.One.Missing = []tfTypes.GetDeploymentHas{}
-				for missingCount, missingItem := range routesItem.CreateDeploymentDeploymentsResponse1.Missing {
-					var missing1 tfTypes.GetDeploymentHas
-					if missingItem.CreateDeploymentDeploymentsResponse200ApplicationJSON1 != nil {
-						missing1.One = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11{}
-						missing1.One.Type = types.StringValue(string(missingItem.CreateDeploymentDeploymentsResponse200ApplicationJSON1.Type))
-						missing1.One.Value = types.StringValue(missingItem.CreateDeploymentDeploymentsResponse200ApplicationJSON1.Value)
+				routes1.One.Missing = []tfTypes.GetDeploymentRoutesHas{}
+				for missingCount, missingItem := range routesItem.Routes1.Missing {
+					var missing1 tfTypes.GetDeploymentRoutesHas
+					if missingItem.Missing1 != nil {
+						missing1.One = &tfTypes.GetDeploymentHas1{}
+						missing1.One.Type = types.StringValue(string(missingItem.Missing1.Type))
+						missing1.One.Value = types.StringValue(missingItem.Missing1.Value)
 					}
-					if missingItem.CreateDeploymentDeploymentsResponse200ApplicationJSON2 != nil {
-						missing1.Two = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12{}
-						missing1.Two.Key = types.StringValue(missingItem.CreateDeploymentDeploymentsResponse200ApplicationJSON2.Key)
-						missing1.Two.Type = types.StringValue(string(missingItem.CreateDeploymentDeploymentsResponse200ApplicationJSON2.Type))
-						missing1.Two.Value = types.StringPointerValue(missingItem.CreateDeploymentDeploymentsResponse200ApplicationJSON2.Value)
+					if missingItem.Missing2 != nil {
+						missing1.Two = &tfTypes.GetDeploymentHas2{}
+						missing1.Two.Key = types.StringValue(missingItem.Missing2.Key)
+						missing1.Two.Type = types.StringValue(string(missingItem.Missing2.Type))
+						missing1.Two.Value = types.StringPointerValue(missingItem.Missing2.Value)
 					}
 					if missingCount+1 > len(routes1.One.Missing) {
 						routes1.One.Missing = append(routes1.One.Missing, missing1)
@@ -869,30 +869,30 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 						routes1.One.Missing[missingCount].Two = missing1.Two
 					}
 				}
-				routes1.One.Override = types.BoolPointerValue(routesItem.CreateDeploymentDeploymentsResponse1.Override)
-				routes1.One.Src = types.StringValue(routesItem.CreateDeploymentDeploymentsResponse1.Src)
-				if routesItem.CreateDeploymentDeploymentsResponse1.Status != nil {
-					routes1.One.Status = types.NumberValue(big.NewFloat(float64(*routesItem.CreateDeploymentDeploymentsResponse1.Status)))
+				routes1.One.Override = types.BoolPointerValue(routesItem.Routes1.Override)
+				routes1.One.Src = types.StringValue(routesItem.Routes1.Src)
+				if routesItem.Routes1.Status != nil {
+					routes1.One.Status = types.NumberValue(big.NewFloat(float64(*routesItem.Routes1.Status)))
 				} else {
 					routes1.One.Status = types.NumberNull()
 				}
 			}
-			if routesItem.CreateDeploymentDeploymentsResponse2 != nil {
-				routes1.Two = &tfTypes.GetDeploymentDeploymentsResponse2002{}
-				routes1.Two.Dest = types.StringPointerValue(routesItem.CreateDeploymentDeploymentsResponse2.Dest)
-				routes1.Two.Handle = types.StringValue(string(routesItem.CreateDeploymentDeploymentsResponse2.Handle))
-				routes1.Two.Src = types.StringPointerValue(routesItem.CreateDeploymentDeploymentsResponse2.Src)
-				if routesItem.CreateDeploymentDeploymentsResponse2.Status != nil {
-					routes1.Two.Status = types.NumberValue(big.NewFloat(float64(*routesItem.CreateDeploymentDeploymentsResponse2.Status)))
+			if routesItem.Routes2 != nil {
+				routes1.Two = &tfTypes.GetDeploymentRoutes2{}
+				routes1.Two.Dest = types.StringPointerValue(routesItem.Routes2.Dest)
+				routes1.Two.Handle = types.StringValue(string(routesItem.Routes2.Handle))
+				routes1.Two.Src = types.StringPointerValue(routesItem.Routes2.Src)
+				if routesItem.Routes2.Status != nil {
+					routes1.Two.Status = types.NumberValue(big.NewFloat(float64(*routesItem.Routes2.Status)))
 				} else {
 					routes1.Two.Status = types.NumberNull()
 				}
 			}
-			if routesItem.CreateDeploymentDeploymentsResponse3 != nil {
-				routes1.Three = &tfTypes.GetDeploymentDeploymentsResponse3{}
-				routes1.Three.Continue = types.BoolValue(routesItem.CreateDeploymentDeploymentsResponse3.Continue)
-				routes1.Three.Middleware = types.NumberValue(big.NewFloat(float64(routesItem.CreateDeploymentDeploymentsResponse3.Middleware)))
-				routes1.Three.Src = types.StringValue(routesItem.CreateDeploymentDeploymentsResponse3.Src)
+			if routesItem.Routes3 != nil {
+				routes1.Three = &tfTypes.GetDeploymentRoutes3{}
+				routes1.Three.Continue = types.BoolValue(routesItem.Routes3.Continue)
+				routes1.Three.Middleware = types.NumberValue(big.NewFloat(float64(routesItem.Routes3.Middleware)))
+				routes1.Three.Src = types.StringValue(routesItem.Routes3.Src)
 			}
 			if routesCount+1 > len(r.Routes) {
 				r.Routes = append(r.Routes, routes1)
@@ -915,7 +915,7 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 		if resp.Team == nil {
 			r.Team = nil
 		} else {
-			r.Team = &tfTypes.GetDeploymentTeam{}
+			r.Team = &tfTypes.GetDeploymentResponseBodyTeam{}
 			r.Team.Avatar = types.StringPointerValue(resp.Team.Avatar)
 			r.Team.ID = types.StringValue(resp.Team.ID)
 			r.Team.Name = types.StringValue(resp.Team.Name)
@@ -929,344 +929,55 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 		}
 		r.Version = types.NumberValue(big.NewFloat(float64(resp.Version)))
 		if resp.CreateDeploymentResponseBody != nil {
-			r.One = &tfTypes.GetDeployment1{}
-			r.One.Alias = []types.String{}
-			for _, v := range resp.CreateDeploymentResponseBody.Alias {
-				r.One.Alias = append(r.One.Alias, types.StringValue(v))
-			}
-			r.One.AliasAssigned = types.BoolValue(resp.CreateDeploymentResponseBody.AliasAssigned)
-			r.AliasAssigned = r.One.AliasAssigned
-			if resp.CreateDeploymentResponseBody.AliasAssignedAt == nil {
-				r.One.AliasAssignedAt = nil
-			} else {
-				r.One.AliasAssignedAt = &tfTypes.CreateDeploymentAliasAssignedAt{}
-				if resp.CreateDeploymentResponseBody.AliasAssignedAt.Number != nil {
-					if resp.CreateDeploymentResponseBody.AliasAssignedAt.Number != nil {
-						r.One.AliasAssignedAt.Number = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.AliasAssignedAt.Number)))
-					} else {
-						r.One.AliasAssignedAt.Number = types.NumberNull()
-					}
-				}
-				if resp.CreateDeploymentResponseBody.AliasAssignedAt.Boolean != nil {
-					r.One.AliasAssignedAt.Boolean = types.BoolPointerValue(resp.CreateDeploymentResponseBody.AliasAssignedAt.Boolean)
-				}
-			}
-			if resp.CreateDeploymentResponseBody.AliasError == nil {
-				r.One.AliasError = nil
-			} else {
-				r.One.AliasError = &tfTypes.CreateDeploymentAliasError{}
-				r.One.AliasError.Code = types.StringValue(resp.CreateDeploymentResponseBody.AliasError.Code)
-				r.One.AliasError.Message = types.StringValue(resp.CreateDeploymentResponseBody.AliasError.Message)
-			}
-			r.One.AliasFinal = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasFinal)
-			r.AliasFinal = r.One.AliasFinal
-			if resp.CreateDeploymentResponseBody.AliasWarning == nil {
-				r.One.AliasWarning = nil
-			} else {
-				r.One.AliasWarning = &tfTypes.CreateDeploymentAliasWarning{}
-				r.One.AliasWarning.Action = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasWarning.Action)
-				r.One.AliasWarning.Code = types.StringValue(resp.CreateDeploymentResponseBody.AliasWarning.Code)
-				r.One.AliasWarning.Link = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasWarning.Link)
-				r.One.AliasWarning.Message = types.StringValue(resp.CreateDeploymentResponseBody.AliasWarning.Message)
-			}
-			r.One.AutoAssignCustomDomains = types.BoolPointerValue(resp.CreateDeploymentResponseBody.AutoAssignCustomDomains)
-			r.AutoAssignCustomDomains = r.One.AutoAssignCustomDomains
-			r.One.AutomaticAliases = []types.String{}
-			for _, v := range resp.CreateDeploymentResponseBody.AutomaticAliases {
-				r.One.AutomaticAliases = append(r.One.AutomaticAliases, types.StringValue(v))
-			}
-			r.One.BootedAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.BootedAt)))
+			r.One = &tfTypes.GetDeploymentResponseBody1{}
 			r.One.Build.Env = []types.String{}
 			for _, v := range resp.CreateDeploymentResponseBody.Build.Env {
 				r.One.Build.Env = append(r.One.Build.Env, types.StringValue(v))
 			}
-			if resp.CreateDeploymentResponseBody.BuildErrorAt != nil {
-				r.One.BuildErrorAt = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.BuildErrorAt)))
-			} else {
-				r.One.BuildErrorAt = types.NumberNull()
-			}
-			r.One.BuildingAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.BuildingAt)))
-			if resp.CreateDeploymentResponseBody.CanceledAt != nil {
-				r.One.CanceledAt = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.CanceledAt)))
-			} else {
-				r.One.CanceledAt = types.NumberNull()
-			}
-			if resp.CreateDeploymentResponseBody.ChecksConclusion != nil {
-				r.One.ChecksConclusion = types.StringValue(string(*resp.CreateDeploymentResponseBody.ChecksConclusion))
-			} else {
-				r.One.ChecksConclusion = types.StringNull()
-			}
-			if resp.CreateDeploymentResponseBody.ChecksState != nil {
-				r.One.ChecksState = types.StringValue(string(*resp.CreateDeploymentResponseBody.ChecksState))
-			} else {
-				r.One.ChecksState = types.StringNull()
-			}
 			r.One.ConnectBuildsEnabled = types.BoolPointerValue(resp.CreateDeploymentResponseBody.ConnectBuildsEnabled)
 			r.One.ConnectConfigurationID = types.StringPointerValue(resp.CreateDeploymentResponseBody.ConnectConfigurationID)
-			r.One.CreatedAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.CreatedAt)))
 			r.One.CreatedIn = types.StringValue(resp.CreateDeploymentResponseBody.CreatedIn)
-			r.One.Creator.Avatar = types.StringPointerValue(resp.CreateDeploymentResponseBody.Creator.Avatar)
-			r.One.Creator.UID = types.StringValue(resp.CreateDeploymentResponseBody.Creator.UID)
-			r.One.Creator.Username = types.StringPointerValue(resp.CreateDeploymentResponseBody.Creator.Username)
 			r.One.Crons = []tfTypes.CreateDeploymentCrons{}
 			if len(r.One.Crons) > len(resp.CreateDeploymentResponseBody.Crons) {
 				r.One.Crons = r.One.Crons[:len(resp.CreateDeploymentResponseBody.Crons)]
 			}
 			for cronsCount1, cronsItem1 := range resp.CreateDeploymentResponseBody.Crons {
 				var crons3 tfTypes.CreateDeploymentCrons
-				crons3.Path = types.StringValue(cronsItem1.Path)
 				crons3.Schedule = types.StringValue(cronsItem1.Schedule)
+				crons3.Path = types.StringValue(cronsItem1.Path)
 				if cronsCount1+1 > len(r.One.Crons) {
 					r.One.Crons = append(r.One.Crons, crons3)
 				} else {
-					r.One.Crons[cronsCount1].Path = crons3.Path
 					r.One.Crons[cronsCount1].Schedule = crons3.Schedule
+					r.One.Crons[cronsCount1].Path = crons3.Path
 				}
 			}
 			r.One.Env = []types.String{}
 			for _, v := range resp.CreateDeploymentResponseBody.Env {
 				r.One.Env = append(r.One.Env, types.StringValue(v))
 			}
-			r.One.ErrorCode = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorCode)
-			r.ErrorCode = r.One.ErrorCode
-			r.One.ErrorLink = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorLink)
-			r.ErrorLink = r.One.ErrorLink
-			r.One.ErrorMessage = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorMessage)
-			r.ErrorMessage = r.One.ErrorMessage
-			r.One.ErrorStep = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorStep)
-			r.ErrorStep = r.One.ErrorStep
 			if len(resp.CreateDeploymentResponseBody.Functions) > 0 {
-				r.One.Functions = make(map[string]tfTypes.CreateDeploymentFunctions)
-				for getDeploymentFunctionsKey, getDeploymentFunctionsValue := range resp.CreateDeploymentResponseBody.Functions {
-					var getDeploymentFunctionsResult tfTypes.CreateDeploymentFunctions
-					getDeploymentFunctionsResult.ExcludeFiles = types.StringPointerValue(getDeploymentFunctionsValue.ExcludeFiles)
-					getDeploymentFunctionsResult.IncludeFiles = types.StringPointerValue(getDeploymentFunctionsValue.IncludeFiles)
-					if getDeploymentFunctionsValue.MaxDuration != nil {
-						getDeploymentFunctionsResult.MaxDuration = types.NumberValue(big.NewFloat(float64(*getDeploymentFunctionsValue.MaxDuration)))
+				r.One.Functions = make(map[string]tfTypes.Functions)
+				for responseBodyFunctionsKey, responseBodyFunctionsValue := range resp.CreateDeploymentResponseBody.Functions {
+					var responseBodyFunctionsResult tfTypes.Functions
+					if responseBodyFunctionsValue.Memory != nil {
+						responseBodyFunctionsResult.Memory = types.NumberValue(big.NewFloat(float64(*responseBodyFunctionsValue.Memory)))
 					} else {
-						getDeploymentFunctionsResult.MaxDuration = types.NumberNull()
+						responseBodyFunctionsResult.Memory = types.NumberNull()
 					}
-					if getDeploymentFunctionsValue.Memory != nil {
-						getDeploymentFunctionsResult.Memory = types.NumberValue(big.NewFloat(float64(*getDeploymentFunctionsValue.Memory)))
+					if responseBodyFunctionsValue.MaxDuration != nil {
+						responseBodyFunctionsResult.MaxDuration = types.NumberValue(big.NewFloat(float64(*responseBodyFunctionsValue.MaxDuration)))
 					} else {
-						getDeploymentFunctionsResult.Memory = types.NumberNull()
+						responseBodyFunctionsResult.MaxDuration = types.NumberNull()
 					}
-					getDeploymentFunctionsResult.Runtime = types.StringPointerValue(getDeploymentFunctionsValue.Runtime)
-					r.One.Functions[getDeploymentFunctionsKey] = getDeploymentFunctionsResult
+					responseBodyFunctionsResult.Runtime = types.StringPointerValue(responseBodyFunctionsValue.Runtime)
+					responseBodyFunctionsResult.IncludeFiles = types.StringPointerValue(responseBodyFunctionsValue.IncludeFiles)
+					responseBodyFunctionsResult.ExcludeFiles = types.StringPointerValue(responseBodyFunctionsValue.ExcludeFiles)
+					r.One.Functions[responseBodyFunctionsKey] = responseBodyFunctionsResult
 				}
 			}
-			if resp.CreateDeploymentResponseBody.GitRepo == nil {
-				r.One.GitRepo = nil
-			} else {
-				r.One.GitRepo = &tfTypes.CreateDeploymentGitRepo{}
-				if resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment1 != nil {
-					r.One.GitRepo.One = &tfTypes.CreateDeployment1{}
-					r.One.GitRepo.One.DefaultBranch = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment1.DefaultBranch)
-					r.One.GitRepo.One.Name = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment1.Name)
-					r.One.GitRepo.One.Namespace = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment1.Namespace)
-					r.One.GitRepo.One.OwnerType = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment1.OwnerType))
-					r.One.GitRepo.One.Path = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment1.Path)
-					r.One.GitRepo.One.Private = types.BoolValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment1.Private)
-					r.One.GitRepo.One.ProjectID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment1.ProjectID)))
-					r.One.GitRepo.One.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment1.Type))
-					r.One.GitRepo.One.URL = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment1.URL)
-				}
-				if resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment2 != nil {
-					r.One.GitRepo.Two = &tfTypes.CreateDeployment2{}
-					r.One.GitRepo.Two.DefaultBranch = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment2.DefaultBranch)
-					r.One.GitRepo.Two.Name = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment2.Name)
-					r.One.GitRepo.Two.Org = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment2.Org)
-					r.One.GitRepo.Two.OwnerType = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment2.OwnerType))
-					r.One.GitRepo.Two.Path = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment2.Path)
-					r.One.GitRepo.Two.Private = types.BoolValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment2.Private)
-					r.One.GitRepo.Two.Repo = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment2.Repo)
-					r.One.GitRepo.Two.RepoID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment2.RepoID)))
-					r.One.GitRepo.Two.RepoOwnerID = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment2.RepoOwnerID)
-					r.One.GitRepo.Two.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment2.Type))
-				}
-				if resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment3 != nil {
-					r.One.GitRepo.Three = &tfTypes.CreateDeployment3{}
-					r.One.GitRepo.Three.DefaultBranch = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment3.DefaultBranch)
-					r.One.GitRepo.Three.Name = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment3.Name)
-					r.One.GitRepo.Three.Owner = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment3.Owner)
-					r.One.GitRepo.Three.OwnerType = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment3.OwnerType))
-					r.One.GitRepo.Three.Path = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment3.Path)
-					r.One.GitRepo.Three.Private = types.BoolValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment3.Private)
-					r.One.GitRepo.Three.RepoUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment3.RepoUUID)
-					r.One.GitRepo.Three.Slug = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment3.Slug)
-					r.One.GitRepo.Three.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment3.Type))
-					r.One.GitRepo.Three.WorkspaceUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.CreateDeployment3.WorkspaceUUID)
-				}
-			}
-			if resp.CreateDeploymentResponseBody.GitSource == nil {
-				r.One.GitSource = nil
-			} else {
-				r.One.GitSource = &tfTypes.GetDeploymentGitSource{}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1 != nil {
-					r.One.GitSource.One = &tfTypes.GetDeploymentDeploymentsResponse1{}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.PrID != nil {
-						r.One.GitSource.One.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.PrID)))
-					} else {
-						r.One.GitSource.One.PrID = types.NumberNull()
-					}
-					r.One.GitSource.One.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.Ref)
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.RepoID.Str != nil {
-						r.One.GitSource.One.RepoID.Str = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.RepoID.Str)
-					}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.RepoID.Number != nil {
-						if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.RepoID.Number != nil {
-							r.One.GitSource.One.RepoID.Number = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.RepoID.Number)))
-						} else {
-							r.One.GitSource.One.RepoID.Number = types.NumberNull()
-						}
-					}
-					r.One.GitSource.One.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.Sha)
-					r.One.GitSource.One.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.Type))
-				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2 != nil {
-					r.One.GitSource.Two = &tfTypes.GetDeploymentDeploymentsResponse2{}
-					r.One.GitSource.Two.Org = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.Org)
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.PrID != nil {
-						r.One.GitSource.Two.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.PrID)))
-					} else {
-						r.One.GitSource.Two.PrID = types.NumberNull()
-					}
-					r.One.GitSource.Two.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.Ref)
-					r.One.GitSource.Two.Repo = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.Repo)
-					r.One.GitSource.Two.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.Sha)
-					r.One.GitSource.Two.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.Type))
-				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3 != nil {
-					r.One.GitSource.Three = &tfTypes.GetDeploymentDeployments3{}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.PrID != nil {
-						r.One.GitSource.Three.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.PrID)))
-					} else {
-						r.One.GitSource.Three.PrID = types.NumberNull()
-					}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.ProjectID.Str != nil {
-						r.One.GitSource.Three.ProjectID.Str = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.ProjectID.Str)
-					}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.ProjectID.Number != nil {
-						if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.ProjectID.Number != nil {
-							r.One.GitSource.Three.ProjectID.Number = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.ProjectID.Number)))
-						} else {
-							r.One.GitSource.Three.ProjectID.Number = types.NumberNull()
-						}
-					}
-					r.One.GitSource.Three.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.Ref)
-					r.One.GitSource.Three.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.Sha)
-					r.One.GitSource.Three.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.Type))
-				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4 != nil {
-					r.One.GitSource.Four = &tfTypes.GetDeployment4{}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.PrID != nil {
-						r.One.GitSource.Four.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.PrID)))
-					} else {
-						r.One.GitSource.Four.PrID = types.NumberNull()
-					}
-					r.One.GitSource.Four.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.Ref)
-					r.One.GitSource.Four.RepoUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.RepoUUID)
-					r.One.GitSource.Four.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.Sha)
-					r.One.GitSource.Four.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.Type))
-					r.One.GitSource.Four.WorkspaceUUID = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.WorkspaceUUID)
-				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5 != nil {
-					r.One.GitSource.Five = &tfTypes.GetDeployment5{}
-					r.One.GitSource.Five.Owner = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.Owner)
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.PrID != nil {
-						r.One.GitSource.Five.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.PrID)))
-					} else {
-						r.One.GitSource.Five.PrID = types.NumberNull()
-					}
-					r.One.GitSource.Five.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.Ref)
-					r.One.GitSource.Five.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.Sha)
-					r.One.GitSource.Five.Slug = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.Slug)
-					r.One.GitSource.Five.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.Type))
-				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment6 != nil {
-					r.One.GitSource.Six = &tfTypes.CreateDeployment6{}
-					r.One.GitSource.Six.GitURL = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment6.GitURL)
-					r.One.GitSource.Six.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment6.Ref)
-					r.One.GitSource.Six.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment6.Sha)
-					r.One.GitSource.Six.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment6.Type))
-				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7 != nil {
-					r.One.GitSource.Seven = &tfTypes.CreateDeployment7{}
-					r.One.GitSource.Seven.Org = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.Org)
-					r.One.GitSource.Seven.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.Ref)
-					r.One.GitSource.Seven.Repo = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.Repo)
-					r.One.GitSource.Seven.RepoID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.RepoID)))
-					r.One.GitSource.Seven.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.Sha)
-					r.One.GitSource.Seven.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.Type))
-				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment8 != nil {
-					r.One.GitSource.Eight = &tfTypes.CreateDeployment8{}
-					r.One.GitSource.Eight.ProjectID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment8.ProjectID)))
-					r.One.GitSource.Eight.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment8.Ref)
-					r.One.GitSource.Eight.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment8.Sha)
-					r.One.GitSource.Eight.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment8.Type))
-				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9 != nil {
-					r.One.GitSource.Nine = &tfTypes.CreateDeployment9{}
-					r.One.GitSource.Nine.Owner = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.Owner)
-					r.One.GitSource.Nine.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.Ref)
-					r.One.GitSource.Nine.RepoUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.RepoUUID)
-					r.One.GitSource.Nine.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.Sha)
-					r.One.GitSource.Nine.Slug = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.Slug)
-					r.One.GitSource.Nine.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.Type))
-					r.One.GitSource.Nine.WorkspaceUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.WorkspaceUUID)
-				}
-			}
-			r.One.ID = types.StringValue(resp.CreateDeploymentResponseBody.ID)
-			r.ID = r.One.ID
 			r.One.InspectorURL = types.StringPointerValue(resp.CreateDeploymentResponseBody.InspectorURL)
 			r.One.IsInConcurrentBuildsQueue = types.BoolValue(resp.CreateDeploymentResponseBody.IsInConcurrentBuildsQueue)
-			r.One.Lambdas = []tfTypes.CreateDeploymentLambdas{}
-			if len(r.One.Lambdas) > len(resp.CreateDeploymentResponseBody.Lambdas) {
-				r.One.Lambdas = r.One.Lambdas[:len(resp.CreateDeploymentResponseBody.Lambdas)]
-			}
-			for lambdasCount1, lambdasItem1 := range resp.CreateDeploymentResponseBody.Lambdas {
-				var lambdas3 tfTypes.CreateDeploymentLambdas
-				if lambdasItem1.CreatedAt != nil {
-					lambdas3.CreatedAt = types.NumberValue(big.NewFloat(float64(*lambdasItem1.CreatedAt)))
-				} else {
-					lambdas3.CreatedAt = types.NumberNull()
-				}
-				lambdas3.Entrypoint = types.StringPointerValue(lambdasItem1.Entrypoint)
-				lambdas3.ID = types.StringValue(lambdasItem1.ID)
-				lambdas3.Output = []tfTypes.CreateDeploymentOutput{}
-				for outputCount1, outputItem1 := range lambdasItem1.Output {
-					var output3 tfTypes.CreateDeploymentOutput
-					output3.FunctionName = types.StringValue(outputItem1.FunctionName)
-					output3.Path = types.StringValue(outputItem1.Path)
-					if outputCount1+1 > len(lambdas3.Output) {
-						lambdas3.Output = append(lambdas3.Output, output3)
-					} else {
-						lambdas3.Output[outputCount1].FunctionName = output3.FunctionName
-						lambdas3.Output[outputCount1].Path = output3.Path
-					}
-				}
-				if lambdasItem1.ReadyState != nil {
-					lambdas3.ReadyState = types.StringValue(string(*lambdasItem1.ReadyState))
-				} else {
-					lambdas3.ReadyState = types.StringNull()
-				}
-				if lambdasItem1.ReadyStateAt != nil {
-					lambdas3.ReadyStateAt = types.NumberValue(big.NewFloat(float64(*lambdasItem1.ReadyStateAt)))
-				} else {
-					lambdas3.ReadyStateAt = types.NumberNull()
-				}
-				if lambdasCount1+1 > len(r.One.Lambdas) {
-					r.One.Lambdas = append(r.One.Lambdas, lambdas3)
-				} else {
-					r.One.Lambdas[lambdasCount1].CreatedAt = lambdas3.CreatedAt
-					r.One.Lambdas[lambdasCount1].Entrypoint = lambdas3.Entrypoint
-					r.One.Lambdas[lambdasCount1].ID = lambdas3.ID
-					r.One.Lambdas[lambdasCount1].Output = lambdas3.Output
-					r.One.Lambdas[lambdasCount1].ReadyState = lambdas3.ReadyState
-					r.One.Lambdas[lambdasCount1].ReadyStateAt = lambdas3.ReadyStateAt
-				}
-			}
 			if len(resp.CreateDeploymentResponseBody.Meta) > 0 {
 				r.One.Meta = make(map[string]types.String)
 				for key5, value7 := range resp.CreateDeploymentResponseBody.Meta {
@@ -1278,14 +989,232 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 			r.Name = r.One.Name
 			r.One.OwnerID = types.StringValue(resp.CreateDeploymentResponseBody.OwnerID)
 			r.One.PassiveConnectConfigurationID = types.StringPointerValue(resp.CreateDeploymentResponseBody.PassiveConnectConfigurationID)
-			r.One.PassiveRegions = []types.String{}
-			for _, v := range resp.CreateDeploymentResponseBody.PassiveRegions {
-				r.One.PassiveRegions = append(r.One.PassiveRegions, types.StringValue(v))
-			}
 			r.One.Plan = types.StringValue(string(resp.CreateDeploymentResponseBody.Plan))
-			r.One.PreviewCommentsEnabled = types.BoolPointerValue(resp.CreateDeploymentResponseBody.PreviewCommentsEnabled)
-			r.PreviewCommentsEnabled = r.One.PreviewCommentsEnabled
 			r.One.ProjectID = types.StringValue(resp.CreateDeploymentResponseBody.ProjectID)
+			r.One.Routes = []tfTypes.ResponseBodyRoutes{}
+			if len(r.One.Routes) > len(resp.CreateDeploymentResponseBody.Routes) {
+				r.One.Routes = r.One.Routes[:len(resp.CreateDeploymentResponseBody.Routes)]
+			}
+			for routesCount1, routesItem1 := range resp.CreateDeploymentResponseBody.Routes {
+				var routes3 tfTypes.ResponseBodyRoutes
+				if routesItem1.Routes1 != nil {
+					routes3.One = &tfTypes.GetDeploymentRoutes1{}
+					routes3.One.Src = types.StringValue(routesItem1.Routes1.Src)
+					routes3.One.Dest = types.StringPointerValue(routesItem1.Routes1.Dest)
+					if len(routesItem1.Routes1.Headers) > 0 {
+						routes3.One.Headers = make(map[string]types.String)
+						for key6, value8 := range routesItem1.Routes1.Headers {
+							routes3.One.Headers[key6] = types.StringValue(value8)
+						}
+					}
+					routes3.One.Methods = []types.String{}
+					for _, v := range routesItem1.Routes1.Methods {
+						routes3.One.Methods = append(routes3.One.Methods, types.StringValue(v))
+					}
+					routes3.One.Continue = types.BoolPointerValue(routesItem1.Routes1.Continue)
+					routes3.One.Override = types.BoolPointerValue(routesItem1.Routes1.Override)
+					routes3.One.CaseSensitive = types.BoolPointerValue(routesItem1.Routes1.CaseSensitive)
+					routes3.One.Check = types.BoolPointerValue(routesItem1.Routes1.Check)
+					routes3.One.Important = types.BoolPointerValue(routesItem1.Routes1.Important)
+					if routesItem1.Routes1.Status != nil {
+						routes3.One.Status = types.NumberValue(big.NewFloat(float64(*routesItem1.Routes1.Status)))
+					} else {
+						routes3.One.Status = types.NumberNull()
+					}
+					routes3.One.Has = []tfTypes.GetDeploymentRoutesHas{}
+					for hasCount1, hasItem1 := range routesItem1.Routes1.Has {
+						var has3 tfTypes.GetDeploymentRoutesHas
+						if hasItem1.Has1 != nil {
+							has3.One = &tfTypes.GetDeploymentHas1{}
+							has3.One.Type = types.StringValue(string(hasItem1.Has1.Type))
+							has3.One.Value = types.StringValue(hasItem1.Has1.Value)
+						}
+						if hasItem1.Has2 != nil {
+							has3.Two = &tfTypes.GetDeploymentHas2{}
+							has3.Two.Type = types.StringValue(string(hasItem1.Has2.Type))
+							has3.Two.Key = types.StringValue(hasItem1.Has2.Key)
+							has3.Two.Value = types.StringPointerValue(hasItem1.Has2.Value)
+						}
+						if hasCount1+1 > len(routes3.One.Has) {
+							routes3.One.Has = append(routes3.One.Has, has3)
+						} else {
+							routes3.One.Has[hasCount1].One = has3.One
+							routes3.One.Has[hasCount1].Two = has3.Two
+						}
+					}
+					routes3.One.Missing = []tfTypes.GetDeploymentRoutesHas{}
+					for missingCount1, missingItem1 := range routesItem1.Routes1.Missing {
+						var missing3 tfTypes.GetDeploymentRoutesHas
+						if missingItem1.Missing1 != nil {
+							missing3.One = &tfTypes.GetDeploymentHas1{}
+							missing3.One.Type = types.StringValue(string(missingItem1.Missing1.Type))
+							missing3.One.Value = types.StringValue(missingItem1.Missing1.Value)
+						}
+						if missingItem1.Missing2 != nil {
+							missing3.Two = &tfTypes.GetDeploymentHas2{}
+							missing3.Two.Type = types.StringValue(string(missingItem1.Missing2.Type))
+							missing3.Two.Key = types.StringValue(missingItem1.Missing2.Key)
+							missing3.Two.Value = types.StringPointerValue(missingItem1.Missing2.Value)
+						}
+						if missingCount1+1 > len(routes3.One.Missing) {
+							routes3.One.Missing = append(routes3.One.Missing, missing3)
+						} else {
+							routes3.One.Missing[missingCount1].One = missing3.One
+							routes3.One.Missing[missingCount1].Two = missing3.Two
+						}
+					}
+					if routesItem1.Routes1.Locale == nil {
+						routes3.One.Locale = nil
+					} else {
+						routes3.One.Locale = &tfTypes.GetDeploymentRoutesLocale{}
+						if len(routesItem1.Routes1.Locale.Redirect) > 0 {
+							routes3.One.Locale.Redirect = make(map[string]types.String)
+							for key9, value13 := range routesItem1.Routes1.Locale.Redirect {
+								routes3.One.Locale.Redirect[key9] = types.StringValue(value13)
+							}
+						}
+						routes3.One.Locale.Cookie = types.StringPointerValue(routesItem1.Routes1.Locale.Cookie)
+					}
+					routes3.One.MiddlewarePath = types.StringPointerValue(routesItem1.Routes1.MiddlewarePath)
+					routes3.One.MiddlewareRawSrc = []types.String{}
+					for _, v := range routesItem1.Routes1.MiddlewareRawSrc {
+						routes3.One.MiddlewareRawSrc = append(routes3.One.MiddlewareRawSrc, types.StringValue(v))
+					}
+					if routesItem1.Routes1.Middleware != nil {
+						routes3.One.Middleware = types.NumberValue(big.NewFloat(float64(*routesItem1.Routes1.Middleware)))
+					} else {
+						routes3.One.Middleware = types.NumberNull()
+					}
+				}
+				if routesItem1.Routes2 != nil {
+					routes3.Two = &tfTypes.GetDeploymentRoutes2{}
+					routes3.Two.Handle = types.StringValue(string(routesItem1.Routes2.Handle))
+					routes3.Two.Src = types.StringPointerValue(routesItem1.Routes2.Src)
+					routes3.Two.Dest = types.StringPointerValue(routesItem1.Routes2.Dest)
+					if routesItem1.Routes2.Status != nil {
+						routes3.Two.Status = types.NumberValue(big.NewFloat(float64(*routesItem1.Routes2.Status)))
+					} else {
+						routes3.Two.Status = types.NumberNull()
+					}
+				}
+				if routesItem1.Routes3 != nil {
+					routes3.Three = &tfTypes.GetDeploymentRoutes3{}
+					routes3.Three.Src = types.StringValue(routesItem1.Routes3.Src)
+					routes3.Three.Continue = types.BoolValue(routesItem1.Routes3.Continue)
+					routes3.Three.Middleware = types.NumberValue(big.NewFloat(float64(routesItem1.Routes3.Middleware)))
+				}
+				if routesCount1+1 > len(r.One.Routes) {
+					r.One.Routes = append(r.One.Routes, routes3)
+				} else {
+					r.One.Routes[routesCount1].One = routes3.One
+					r.One.Routes[routesCount1].Two = routes3.Two
+					r.One.Routes[routesCount1].Three = routes3.Three
+				}
+			}
+			if resp.CreateDeploymentResponseBody.GitRepo == nil {
+				r.One.GitRepo = nil
+			} else {
+				r.One.GitRepo = &tfTypes.GitRepo{}
+				if resp.CreateDeploymentResponseBody.GitRepo.GitRepo1 != nil {
+					r.One.GitRepo.One = &tfTypes.GitRepo1{}
+					r.One.GitRepo.One.Namespace = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo1.Namespace)
+					r.One.GitRepo.One.ProjectID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitRepo.GitRepo1.ProjectID)))
+					r.One.GitRepo.One.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.GitRepo1.Type))
+					r.One.GitRepo.One.URL = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo1.URL)
+					r.One.GitRepo.One.Path = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo1.Path)
+					r.One.GitRepo.One.DefaultBranch = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo1.DefaultBranch)
+					r.One.GitRepo.One.Name = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo1.Name)
+					r.One.GitRepo.One.Private = types.BoolValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo1.Private)
+					r.One.GitRepo.One.OwnerType = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.GitRepo1.OwnerType))
+				}
+				if resp.CreateDeploymentResponseBody.GitRepo.GitRepo2 != nil {
+					r.One.GitRepo.Two = &tfTypes.GitRepo2{}
+					r.One.GitRepo.Two.Org = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo2.Org)
+					r.One.GitRepo.Two.Repo = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo2.Repo)
+					r.One.GitRepo.Two.RepoID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitRepo.GitRepo2.RepoID)))
+					r.One.GitRepo.Two.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.GitRepo2.Type))
+					r.One.GitRepo.Two.RepoOwnerID = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo2.RepoOwnerID)
+					r.One.GitRepo.Two.Path = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo2.Path)
+					r.One.GitRepo.Two.DefaultBranch = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo2.DefaultBranch)
+					r.One.GitRepo.Two.Name = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo2.Name)
+					r.One.GitRepo.Two.Private = types.BoolValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo2.Private)
+					r.One.GitRepo.Two.OwnerType = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.GitRepo2.OwnerType))
+				}
+				if resp.CreateDeploymentResponseBody.GitRepo.GitRepo3 != nil {
+					r.One.GitRepo.Three = &tfTypes.GitRepo3{}
+					r.One.GitRepo.Three.Owner = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo3.Owner)
+					r.One.GitRepo.Three.RepoUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo3.RepoUUID)
+					r.One.GitRepo.Three.Slug = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo3.Slug)
+					r.One.GitRepo.Three.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.GitRepo3.Type))
+					r.One.GitRepo.Three.WorkspaceUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo3.WorkspaceUUID)
+					r.One.GitRepo.Three.Path = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo3.Path)
+					r.One.GitRepo.Three.DefaultBranch = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo3.DefaultBranch)
+					r.One.GitRepo.Three.Name = types.StringValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo3.Name)
+					r.One.GitRepo.Three.Private = types.BoolValue(resp.CreateDeploymentResponseBody.GitRepo.GitRepo3.Private)
+					r.One.GitRepo.Three.OwnerType = types.StringValue(string(resp.CreateDeploymentResponseBody.GitRepo.GitRepo3.OwnerType))
+				}
+			}
+			if resp.CreateDeploymentResponseBody.AliasAssignedAt == nil {
+				r.One.AliasAssignedAt = nil
+			} else {
+				r.One.AliasAssignedAt = &tfTypes.AliasAssignedAt{}
+				if resp.CreateDeploymentResponseBody.AliasAssignedAt.Number != nil {
+					if resp.CreateDeploymentResponseBody.AliasAssignedAt.Number != nil {
+						r.One.AliasAssignedAt.Number = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.AliasAssignedAt.Number)))
+					} else {
+						r.One.AliasAssignedAt.Number = types.NumberNull()
+					}
+				}
+				if resp.CreateDeploymentResponseBody.AliasAssignedAt.Boolean != nil {
+					r.One.AliasAssignedAt.Boolean = types.BoolPointerValue(resp.CreateDeploymentResponseBody.AliasAssignedAt.Boolean)
+				}
+			}
+			r.One.Lambdas = []tfTypes.Lambdas{}
+			if len(r.One.Lambdas) > len(resp.CreateDeploymentResponseBody.Lambdas) {
+				r.One.Lambdas = r.One.Lambdas[:len(resp.CreateDeploymentResponseBody.Lambdas)]
+			}
+			for lambdasCount1, lambdasItem1 := range resp.CreateDeploymentResponseBody.Lambdas {
+				var lambdas3 tfTypes.Lambdas
+				lambdas3.ID = types.StringValue(lambdasItem1.ID)
+				if lambdasItem1.CreatedAt != nil {
+					lambdas3.CreatedAt = types.NumberValue(big.NewFloat(float64(*lambdasItem1.CreatedAt)))
+				} else {
+					lambdas3.CreatedAt = types.NumberNull()
+				}
+				lambdas3.Entrypoint = types.StringPointerValue(lambdasItem1.Entrypoint)
+				if lambdasItem1.ReadyState != nil {
+					lambdas3.ReadyState = types.StringValue(string(*lambdasItem1.ReadyState))
+				} else {
+					lambdas3.ReadyState = types.StringNull()
+				}
+				if lambdasItem1.ReadyStateAt != nil {
+					lambdas3.ReadyStateAt = types.NumberValue(big.NewFloat(float64(*lambdasItem1.ReadyStateAt)))
+				} else {
+					lambdas3.ReadyStateAt = types.NumberNull()
+				}
+				lambdas3.Output = []tfTypes.CreateDeploymentOutput{}
+				for outputCount1, outputItem1 := range lambdasItem1.Output {
+					var output3 tfTypes.CreateDeploymentOutput
+					output3.Path = types.StringValue(outputItem1.Path)
+					output3.FunctionName = types.StringValue(outputItem1.FunctionName)
+					if outputCount1+1 > len(lambdas3.Output) {
+						lambdas3.Output = append(lambdas3.Output, output3)
+					} else {
+						lambdas3.Output[outputCount1].Path = output3.Path
+						lambdas3.Output[outputCount1].FunctionName = output3.FunctionName
+					}
+				}
+				if lambdasCount1+1 > len(r.One.Lambdas) {
+					r.One.Lambdas = append(r.One.Lambdas, lambdas3)
+				} else {
+					r.One.Lambdas[lambdasCount1].ID = lambdas3.ID
+					r.One.Lambdas[lambdasCount1].CreatedAt = lambdas3.CreatedAt
+					r.One.Lambdas[lambdasCount1].Entrypoint = lambdas3.Entrypoint
+					r.One.Lambdas[lambdasCount1].ReadyState = lambdas3.ReadyState
+					r.One.Lambdas[lambdasCount1].ReadyStateAt = lambdas3.ReadyStateAt
+					r.One.Lambdas[lambdasCount1].Output = lambdas3.Output
+				}
+			}
 			r.One.Public = types.BoolValue(resp.CreateDeploymentResponseBody.Public)
 			r.Public = r.One.Public
 			r.One.ReadyState = types.StringValue(string(resp.CreateDeploymentResponseBody.ReadyState))
@@ -1297,126 +1226,6 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 			r.One.Regions = []types.String{}
 			for _, v := range resp.CreateDeploymentResponseBody.Regions {
 				r.One.Regions = append(r.One.Regions, types.StringValue(v))
-			}
-			r.One.Routes = []tfTypes.GetDeploymentRoutes{}
-			if len(r.One.Routes) > len(resp.CreateDeploymentResponseBody.Routes) {
-				r.One.Routes = r.One.Routes[:len(resp.CreateDeploymentResponseBody.Routes)]
-			}
-			for routesCount1, routesItem1 := range resp.CreateDeploymentResponseBody.Routes {
-				var routes3 tfTypes.GetDeploymentRoutes
-				if routesItem1.CreateDeploymentDeploymentsResponse1 != nil {
-					routes3.One = &tfTypes.GetDeploymentDeploymentsResponse2001{}
-					routes3.One.CaseSensitive = types.BoolPointerValue(routesItem1.CreateDeploymentDeploymentsResponse1.CaseSensitive)
-					routes3.One.Check = types.BoolPointerValue(routesItem1.CreateDeploymentDeploymentsResponse1.Check)
-					routes3.One.Continue = types.BoolPointerValue(routesItem1.CreateDeploymentDeploymentsResponse1.Continue)
-					routes3.One.Dest = types.StringPointerValue(routesItem1.CreateDeploymentDeploymentsResponse1.Dest)
-					routes3.One.Has = []tfTypes.GetDeploymentHas{}
-					for hasCount1, hasItem1 := range routesItem1.CreateDeploymentDeploymentsResponse1.Has {
-						var has3 tfTypes.GetDeploymentHas
-						if hasItem1.CreateDeploymentDeploymentsResponse2001 != nil {
-							has3.One = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11{}
-							has3.One.Type = types.StringValue(string(hasItem1.CreateDeploymentDeploymentsResponse2001.Type))
-							has3.One.Value = types.StringValue(hasItem1.CreateDeploymentDeploymentsResponse2001.Value)
-						}
-						if hasItem1.CreateDeploymentDeploymentsResponse2002 != nil {
-							has3.Two = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12{}
-							has3.Two.Key = types.StringValue(hasItem1.CreateDeploymentDeploymentsResponse2002.Key)
-							has3.Two.Type = types.StringValue(string(hasItem1.CreateDeploymentDeploymentsResponse2002.Type))
-							has3.Two.Value = types.StringPointerValue(hasItem1.CreateDeploymentDeploymentsResponse2002.Value)
-						}
-						if hasCount1+1 > len(routes3.One.Has) {
-							routes3.One.Has = append(routes3.One.Has, has3)
-						} else {
-							routes3.One.Has[hasCount1].One = has3.One
-							routes3.One.Has[hasCount1].Two = has3.Two
-						}
-					}
-					if len(routesItem1.CreateDeploymentDeploymentsResponse1.Headers) > 0 {
-						routes3.One.Headers = make(map[string]types.String)
-						for key7, value10 := range routesItem1.CreateDeploymentDeploymentsResponse1.Headers {
-							routes3.One.Headers[key7] = types.StringValue(value10)
-						}
-					}
-					routes3.One.Important = types.BoolPointerValue(routesItem1.CreateDeploymentDeploymentsResponse1.Important)
-					if routesItem1.CreateDeploymentDeploymentsResponse1.Locale == nil {
-						routes3.One.Locale = nil
-					} else {
-						routes3.One.Locale = &tfTypes.GetDeploymentLocale{}
-						routes3.One.Locale.Cookie = types.StringPointerValue(routesItem1.CreateDeploymentDeploymentsResponse1.Locale.Cookie)
-						if len(routesItem1.CreateDeploymentDeploymentsResponse1.Locale.Redirect) > 0 {
-							routes3.One.Locale.Redirect = make(map[string]types.String)
-							for key8, value11 := range routesItem1.CreateDeploymentDeploymentsResponse1.Locale.Redirect {
-								routes3.One.Locale.Redirect[key8] = types.StringValue(value11)
-							}
-						}
-					}
-					routes3.One.Methods = []types.String{}
-					for _, v := range routesItem1.CreateDeploymentDeploymentsResponse1.Methods {
-						routes3.One.Methods = append(routes3.One.Methods, types.StringValue(v))
-					}
-					if routesItem1.CreateDeploymentDeploymentsResponse1.Middleware != nil {
-						routes3.One.Middleware = types.NumberValue(big.NewFloat(float64(*routesItem1.CreateDeploymentDeploymentsResponse1.Middleware)))
-					} else {
-						routes3.One.Middleware = types.NumberNull()
-					}
-					routes3.One.MiddlewarePath = types.StringPointerValue(routesItem1.CreateDeploymentDeploymentsResponse1.MiddlewarePath)
-					routes3.One.MiddlewareRawSrc = []types.String{}
-					for _, v := range routesItem1.CreateDeploymentDeploymentsResponse1.MiddlewareRawSrc {
-						routes3.One.MiddlewareRawSrc = append(routes3.One.MiddlewareRawSrc, types.StringValue(v))
-					}
-					routes3.One.Missing = []tfTypes.GetDeploymentHas{}
-					for missingCount1, missingItem1 := range routesItem1.CreateDeploymentDeploymentsResponse1.Missing {
-						var missing3 tfTypes.GetDeploymentHas
-						if missingItem1.CreateDeploymentDeploymentsResponse200ApplicationJSON1 != nil {
-							missing3.One = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11{}
-							missing3.One.Type = types.StringValue(string(missingItem1.CreateDeploymentDeploymentsResponse200ApplicationJSON1.Type))
-							missing3.One.Value = types.StringValue(missingItem1.CreateDeploymentDeploymentsResponse200ApplicationJSON1.Value)
-						}
-						if missingItem1.CreateDeploymentDeploymentsResponse200ApplicationJSON2 != nil {
-							missing3.Two = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12{}
-							missing3.Two.Key = types.StringValue(missingItem1.CreateDeploymentDeploymentsResponse200ApplicationJSON2.Key)
-							missing3.Two.Type = types.StringValue(string(missingItem1.CreateDeploymentDeploymentsResponse200ApplicationJSON2.Type))
-							missing3.Two.Value = types.StringPointerValue(missingItem1.CreateDeploymentDeploymentsResponse200ApplicationJSON2.Value)
-						}
-						if missingCount1+1 > len(routes3.One.Missing) {
-							routes3.One.Missing = append(routes3.One.Missing, missing3)
-						} else {
-							routes3.One.Missing[missingCount1].One = missing3.One
-							routes3.One.Missing[missingCount1].Two = missing3.Two
-						}
-					}
-					routes3.One.Override = types.BoolPointerValue(routesItem1.CreateDeploymentDeploymentsResponse1.Override)
-					routes3.One.Src = types.StringValue(routesItem1.CreateDeploymentDeploymentsResponse1.Src)
-					if routesItem1.CreateDeploymentDeploymentsResponse1.Status != nil {
-						routes3.One.Status = types.NumberValue(big.NewFloat(float64(*routesItem1.CreateDeploymentDeploymentsResponse1.Status)))
-					} else {
-						routes3.One.Status = types.NumberNull()
-					}
-				}
-				if routesItem1.CreateDeploymentDeploymentsResponse2 != nil {
-					routes3.Two = &tfTypes.GetDeploymentDeploymentsResponse2002{}
-					routes3.Two.Dest = types.StringPointerValue(routesItem1.CreateDeploymentDeploymentsResponse2.Dest)
-					routes3.Two.Handle = types.StringValue(string(routesItem1.CreateDeploymentDeploymentsResponse2.Handle))
-					routes3.Two.Src = types.StringPointerValue(routesItem1.CreateDeploymentDeploymentsResponse2.Src)
-					if routesItem1.CreateDeploymentDeploymentsResponse2.Status != nil {
-						routes3.Two.Status = types.NumberValue(big.NewFloat(float64(*routesItem1.CreateDeploymentDeploymentsResponse2.Status)))
-					} else {
-						routes3.Two.Status = types.NumberNull()
-					}
-				}
-				if routesItem1.CreateDeploymentDeploymentsResponse3 != nil {
-					routes3.Three = &tfTypes.GetDeploymentDeploymentsResponse3{}
-					routes3.Three.Continue = types.BoolValue(routesItem1.CreateDeploymentDeploymentsResponse3.Continue)
-					routes3.Three.Middleware = types.NumberValue(big.NewFloat(float64(routesItem1.CreateDeploymentDeploymentsResponse3.Middleware)))
-					routes3.Three.Src = types.StringValue(routesItem1.CreateDeploymentDeploymentsResponse3.Src)
-				}
-				if routesCount1+1 > len(r.One.Routes) {
-					r.One.Routes = append(r.One.Routes, routes3)
-				} else {
-					r.One.Routes[routesCount1].One = routes3.One
-					r.One.Routes[routesCount1].Two = routes3.Two
-					r.One.Routes[routesCount1].Three = routes3.Three
-				}
 			}
 			if resp.CreateDeploymentResponseBody.Source != nil {
 				r.One.Source = types.StringValue(string(*resp.CreateDeploymentResponseBody.Source))
@@ -1431,11 +1240,11 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 			if resp.CreateDeploymentResponseBody.Team == nil {
 				r.One.Team = nil
 			} else {
-				r.One.Team = &tfTypes.GetDeploymentTeam{}
-				r.One.Team.Avatar = types.StringPointerValue(resp.CreateDeploymentResponseBody.Team.Avatar)
+				r.One.Team = &tfTypes.GetDeploymentResponseBodyTeam{}
 				r.One.Team.ID = types.StringValue(resp.CreateDeploymentResponseBody.Team.ID)
 				r.One.Team.Name = types.StringValue(resp.CreateDeploymentResponseBody.Team.Name)
 				r.One.Team.Slug = types.StringValue(resp.CreateDeploymentResponseBody.Team.Slug)
+				r.One.Team.Avatar = types.StringPointerValue(resp.CreateDeploymentResponseBody.Team.Avatar)
 			}
 			r.One.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.Type))
 			r.One.URL = types.StringValue(resp.CreateDeploymentResponseBody.URL)
@@ -1445,219 +1254,213 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 				r.One.UserAliases = append(r.One.UserAliases, types.StringValue(v))
 			}
 			r.One.Version = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.Version)))
-		}
-		if resp.CreateDeploymentResponseBody != nil {
-			r.Two = &tfTypes.GetDeployment2{}
-			r.Two.Alias = []types.String{}
+			r.One.PreviewCommentsEnabled = types.BoolPointerValue(resp.CreateDeploymentResponseBody.PreviewCommentsEnabled)
+			r.PreviewCommentsEnabled = r.One.PreviewCommentsEnabled
+			r.One.Alias = []types.String{}
 			for _, v := range resp.CreateDeploymentResponseBody.Alias {
-				r.Two.Alias = append(r.Two.Alias, types.StringValue(v))
+				r.One.Alias = append(r.One.Alias, types.StringValue(v))
 			}
-			r.Two.AliasAssigned = types.BoolValue(resp.CreateDeploymentResponseBody.AliasAssigned)
-			r.AliasAssigned = r.Two.AliasAssigned
+			r.One.AliasAssigned = types.BoolValue(resp.CreateDeploymentResponseBody.AliasAssigned)
+			r.AliasAssigned = r.One.AliasAssigned
 			if resp.CreateDeploymentResponseBody.AliasError == nil {
-				r.Two.AliasError = nil
+				r.One.AliasError = nil
 			} else {
-				r.Two.AliasError = &tfTypes.CreateDeploymentAliasError{}
-				r.Two.AliasError.Code = types.StringValue(resp.CreateDeploymentResponseBody.AliasError.Code)
-				r.Two.AliasError.Message = types.StringValue(resp.CreateDeploymentResponseBody.AliasError.Message)
+				r.One.AliasError = &tfTypes.AliasError{}
+				r.One.AliasError.Code = types.StringValue(resp.CreateDeploymentResponseBody.AliasError.Code)
+				r.One.AliasError.Message = types.StringValue(resp.CreateDeploymentResponseBody.AliasError.Message)
 			}
-			r.Two.AliasFinal = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasFinal)
-			r.AliasFinal = r.Two.AliasFinal
+			r.One.AliasFinal = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasFinal)
+			r.AliasFinal = r.One.AliasFinal
 			if resp.CreateDeploymentResponseBody.AliasWarning == nil {
-				r.Two.AliasWarning = nil
+				r.One.AliasWarning = nil
 			} else {
-				r.Two.AliasWarning = &tfTypes.CreateDeploymentAliasWarning{}
-				r.Two.AliasWarning.Action = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasWarning.Action)
-				r.Two.AliasWarning.Code = types.StringValue(resp.CreateDeploymentResponseBody.AliasWarning.Code)
-				r.Two.AliasWarning.Link = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasWarning.Link)
-				r.Two.AliasWarning.Message = types.StringValue(resp.CreateDeploymentResponseBody.AliasWarning.Message)
+				r.One.AliasWarning = &tfTypes.AliasWarning{}
+				r.One.AliasWarning.Code = types.StringValue(resp.CreateDeploymentResponseBody.AliasWarning.Code)
+				r.One.AliasWarning.Message = types.StringValue(resp.CreateDeploymentResponseBody.AliasWarning.Message)
+				r.One.AliasWarning.Link = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasWarning.Link)
+				r.One.AliasWarning.Action = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasWarning.Action)
 			}
-			r.Two.AutoAssignCustomDomains = types.BoolPointerValue(resp.CreateDeploymentResponseBody.AutoAssignCustomDomains)
-			r.AutoAssignCustomDomains = r.Two.AutoAssignCustomDomains
-			r.Two.AutomaticAliases = []types.String{}
+			r.One.AutoAssignCustomDomains = types.BoolPointerValue(resp.CreateDeploymentResponseBody.AutoAssignCustomDomains)
+			r.AutoAssignCustomDomains = r.One.AutoAssignCustomDomains
+			r.One.AutomaticAliases = []types.String{}
 			for _, v := range resp.CreateDeploymentResponseBody.AutomaticAliases {
-				r.Two.AutomaticAliases = append(r.Two.AutomaticAliases, types.StringValue(v))
+				r.One.AutomaticAliases = append(r.One.AutomaticAliases, types.StringValue(v))
 			}
-			r.Two.BootedAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.BootedAt)))
+			r.One.BootedAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.BootedAt)))
 			if resp.CreateDeploymentResponseBody.BuildErrorAt != nil {
-				r.Two.BuildErrorAt = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.BuildErrorAt)))
+				r.One.BuildErrorAt = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.BuildErrorAt)))
 			} else {
-				r.Two.BuildErrorAt = types.NumberNull()
+				r.One.BuildErrorAt = types.NumberNull()
 			}
-			r.Two.BuildingAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.BuildingAt)))
+			r.One.BuildingAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.BuildingAt)))
 			if resp.CreateDeploymentResponseBody.CanceledAt != nil {
-				r.Two.CanceledAt = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.CanceledAt)))
+				r.One.CanceledAt = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.CanceledAt)))
 			} else {
-				r.Two.CanceledAt = types.NumberNull()
-			}
-			if resp.CreateDeploymentResponseBody.ChecksConclusion != nil {
-				r.Two.ChecksConclusion = types.StringValue(string(*resp.CreateDeploymentResponseBody.ChecksConclusion))
-			} else {
-				r.Two.ChecksConclusion = types.StringNull()
+				r.One.CanceledAt = types.NumberNull()
 			}
 			if resp.CreateDeploymentResponseBody.ChecksState != nil {
-				r.Two.ChecksState = types.StringValue(string(*resp.CreateDeploymentResponseBody.ChecksState))
+				r.One.ChecksState = types.StringValue(string(*resp.CreateDeploymentResponseBody.ChecksState))
 			} else {
-				r.Two.ChecksState = types.StringNull()
+				r.One.ChecksState = types.StringNull()
 			}
-			r.Two.CreatedAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.CreatedAt)))
-			r.Two.Creator.Avatar = types.StringPointerValue(resp.CreateDeploymentResponseBody.Creator.Avatar)
-			r.Two.Creator.UID = types.StringValue(resp.CreateDeploymentResponseBody.Creator.UID)
-			r.Two.Creator.Username = types.StringPointerValue(resp.CreateDeploymentResponseBody.Creator.Username)
-			r.Two.ErrorCode = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorCode)
-			r.ErrorCode = r.Two.ErrorCode
-			r.Two.ErrorLink = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorLink)
-			r.ErrorLink = r.Two.ErrorLink
-			r.Two.ErrorMessage = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorMessage)
-			r.ErrorMessage = r.Two.ErrorMessage
-			r.Two.ErrorStep = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorStep)
-			r.ErrorStep = r.Two.ErrorStep
+			if resp.CreateDeploymentResponseBody.ChecksConclusion != nil {
+				r.One.ChecksConclusion = types.StringValue(string(*resp.CreateDeploymentResponseBody.ChecksConclusion))
+			} else {
+				r.One.ChecksConclusion = types.StringNull()
+			}
+			r.One.CreatedAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.CreatedAt)))
+			r.One.Creator.UID = types.StringValue(resp.CreateDeploymentResponseBody.Creator.UID)
+			r.One.Creator.Username = types.StringPointerValue(resp.CreateDeploymentResponseBody.Creator.Username)
+			r.One.Creator.Avatar = types.StringPointerValue(resp.CreateDeploymentResponseBody.Creator.Avatar)
+			r.One.ErrorCode = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorCode)
+			r.ErrorCode = r.One.ErrorCode
+			r.One.ErrorLink = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorLink)
+			r.ErrorLink = r.One.ErrorLink
+			r.One.ErrorMessage = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorMessage)
+			r.ErrorMessage = r.One.ErrorMessage
+			r.One.ErrorStep = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorStep)
+			r.ErrorStep = r.One.ErrorStep
+			r.One.PassiveRegions = []types.String{}
+			for _, v := range resp.CreateDeploymentResponseBody.PassiveRegions {
+				r.One.PassiveRegions = append(r.One.PassiveRegions, types.StringValue(v))
+			}
 			if resp.CreateDeploymentResponseBody.GitSource == nil {
-				r.Two.GitSource = nil
+				r.One.GitSource = nil
 			} else {
-				r.Two.GitSource = &tfTypes.GetDeploymentGitSource{}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1 != nil {
-					r.Two.GitSource.One = &tfTypes.GetDeploymentDeploymentsResponse1{}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.PrID != nil {
-						r.Two.GitSource.One.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.PrID)))
-					} else {
-						r.Two.GitSource.One.PrID = types.NumberNull()
+				r.One.GitSource = &tfTypes.GetDeploymentResponseBodyGitSource{}
+				if resp.CreateDeploymentResponseBody.GitSource.GitSource1 != nil {
+					r.One.GitSource.One = &tfTypes.GetDeploymentGitSourceDeployments1{}
+					r.One.GitSource.One.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.GitSource1.Type))
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource1.RepoID.Str != nil {
+						r.One.GitSource.One.RepoID.Str = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource1.RepoID.Str)
 					}
-					r.Two.GitSource.One.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.Ref)
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.RepoID.Str != nil {
-						r.Two.GitSource.One.RepoID.Str = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.RepoID.Str)
-					}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.RepoID.Number != nil {
-						if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.RepoID.Number != nil {
-							r.Two.GitSource.One.RepoID.Number = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.RepoID.Number)))
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource1.RepoID.Number != nil {
+						if resp.CreateDeploymentResponseBody.GitSource.GitSource1.RepoID.Number != nil {
+							r.One.GitSource.One.RepoID.Number = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource1.RepoID.Number)))
 						} else {
-							r.Two.GitSource.One.RepoID.Number = types.NumberNull()
+							r.One.GitSource.One.RepoID.Number = types.NumberNull()
 						}
 					}
-					r.Two.GitSource.One.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.Sha)
-					r.Two.GitSource.One.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments1.Type))
-				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2 != nil {
-					r.Two.GitSource.Two = &tfTypes.GetDeploymentDeploymentsResponse2{}
-					r.Two.GitSource.Two.Org = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.Org)
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.PrID != nil {
-						r.Two.GitSource.Two.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.PrID)))
+					r.One.GitSource.One.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource1.Ref)
+					r.One.GitSource.One.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource1.Sha)
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource1.PrID != nil {
+						r.One.GitSource.One.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource1.PrID)))
 					} else {
-						r.Two.GitSource.Two.PrID = types.NumberNull()
+						r.One.GitSource.One.PrID = types.NumberNull()
 					}
-					r.Two.GitSource.Two.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.Ref)
-					r.Two.GitSource.Two.Repo = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.Repo)
-					r.Two.GitSource.Two.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.Sha)
-					r.Two.GitSource.Two.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments2.Type))
 				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3 != nil {
-					r.Two.GitSource.Three = &tfTypes.GetDeploymentDeployments3{}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.PrID != nil {
-						r.Two.GitSource.Three.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.PrID)))
+				if resp.CreateDeploymentResponseBody.GitSource.GitSource2 != nil {
+					r.One.GitSource.Two = &tfTypes.GetDeploymentGitSourceDeployments2{}
+					r.One.GitSource.Two.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.GitSource2.Type))
+					r.One.GitSource.Two.Org = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.GitSource2.Org)
+					r.One.GitSource.Two.Repo = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.GitSource2.Repo)
+					r.One.GitSource.Two.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource2.Ref)
+					r.One.GitSource.Two.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource2.Sha)
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource2.PrID != nil {
+						r.One.GitSource.Two.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource2.PrID)))
 					} else {
-						r.Two.GitSource.Three.PrID = types.NumberNull()
+						r.One.GitSource.Two.PrID = types.NumberNull()
 					}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.ProjectID.Str != nil {
-						r.Two.GitSource.Three.ProjectID.Str = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.ProjectID.Str)
+				}
+				if resp.CreateDeploymentResponseBody.GitSource.GitSource3 != nil {
+					r.One.GitSource.Three = &tfTypes.GetDeploymentGitSourceDeployments3{}
+					r.One.GitSource.Three.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.GitSource3.Type))
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource3.ProjectID.Str != nil {
+						r.One.GitSource.Three.ProjectID.Str = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource3.ProjectID.Str)
 					}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.ProjectID.Number != nil {
-						if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.ProjectID.Number != nil {
-							r.Two.GitSource.Three.ProjectID.Number = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.ProjectID.Number)))
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource3.ProjectID.Number != nil {
+						if resp.CreateDeploymentResponseBody.GitSource.GitSource3.ProjectID.Number != nil {
+							r.One.GitSource.Three.ProjectID.Number = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource3.ProjectID.Number)))
 						} else {
-							r.Two.GitSource.Three.ProjectID.Number = types.NumberNull()
+							r.One.GitSource.Three.ProjectID.Number = types.NumberNull()
 						}
 					}
-					r.Two.GitSource.Three.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.Ref)
-					r.Two.GitSource.Three.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.Sha)
-					r.Two.GitSource.Three.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentDeployments3.Type))
-				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4 != nil {
-					r.Two.GitSource.Four = &tfTypes.GetDeployment4{}
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.PrID != nil {
-						r.Two.GitSource.Four.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.PrID)))
+					r.One.GitSource.Three.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource3.Ref)
+					r.One.GitSource.Three.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource3.Sha)
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource3.PrID != nil {
+						r.One.GitSource.Three.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource3.PrID)))
 					} else {
-						r.Two.GitSource.Four.PrID = types.NumberNull()
+						r.One.GitSource.Three.PrID = types.NumberNull()
 					}
-					r.Two.GitSource.Four.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.Ref)
-					r.Two.GitSource.Four.RepoUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.RepoUUID)
-					r.Two.GitSource.Four.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.Sha)
-					r.Two.GitSource.Four.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.Type))
-					r.Two.GitSource.Four.WorkspaceUUID = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment4.WorkspaceUUID)
 				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5 != nil {
-					r.Two.GitSource.Five = &tfTypes.GetDeployment5{}
-					r.Two.GitSource.Five.Owner = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.Owner)
-					if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.PrID != nil {
-						r.Two.GitSource.Five.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.PrID)))
+				if resp.CreateDeploymentResponseBody.GitSource.GitSource4 != nil {
+					r.One.GitSource.Four = &tfTypes.GetDeploymentGitSourceDeployments4{}
+					r.One.GitSource.Four.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.GitSource4.Type))
+					r.One.GitSource.Four.WorkspaceUUID = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource4.WorkspaceUUID)
+					r.One.GitSource.Four.RepoUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.GitSource4.RepoUUID)
+					r.One.GitSource.Four.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource4.Ref)
+					r.One.GitSource.Four.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource4.Sha)
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource4.PrID != nil {
+						r.One.GitSource.Four.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource4.PrID)))
 					} else {
-						r.Two.GitSource.Five.PrID = types.NumberNull()
+						r.One.GitSource.Four.PrID = types.NumberNull()
 					}
-					r.Two.GitSource.Five.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.Ref)
-					r.Two.GitSource.Five.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.Sha)
-					r.Two.GitSource.Five.Slug = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.Slug)
-					r.Two.GitSource.Five.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment5.Type))
 				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment6 != nil {
-					r.Two.GitSource.Six = &tfTypes.CreateDeployment6{}
-					r.Two.GitSource.Six.GitURL = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment6.GitURL)
-					r.Two.GitSource.Six.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment6.Ref)
-					r.Two.GitSource.Six.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment6.Sha)
-					r.Two.GitSource.Six.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment6.Type))
+				if resp.CreateDeploymentResponseBody.GitSource.GitSource5 != nil {
+					r.One.GitSource.Five = &tfTypes.GetDeploymentGitSourceDeployments5{}
+					r.One.GitSource.Five.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.GitSource5.Type))
+					r.One.GitSource.Five.Owner = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.GitSource5.Owner)
+					r.One.GitSource.Five.Slug = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.GitSource5.Slug)
+					r.One.GitSource.Five.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource5.Ref)
+					r.One.GitSource.Five.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource5.Sha)
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource5.PrID != nil {
+						r.One.GitSource.Five.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource5.PrID)))
+					} else {
+						r.One.GitSource.Five.PrID = types.NumberNull()
+					}
 				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7 != nil {
-					r.Two.GitSource.Seven = &tfTypes.CreateDeployment7{}
-					r.Two.GitSource.Seven.Org = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.Org)
-					r.Two.GitSource.Seven.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.Ref)
-					r.Two.GitSource.Seven.Repo = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.Repo)
-					r.Two.GitSource.Seven.RepoID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.RepoID)))
-					r.Two.GitSource.Seven.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.Sha)
-					r.Two.GitSource.Seven.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment7.Type))
+				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource6 != nil {
+					r.One.GitSource.Six = &tfTypes.CreateDeploymentGitSource6{}
+					r.One.GitSource.Six.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource6.Type))
+					r.One.GitSource.Six.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource6.Ref)
+					r.One.GitSource.Six.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource6.Sha)
+					r.One.GitSource.Six.GitURL = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource6.GitURL)
 				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment8 != nil {
-					r.Two.GitSource.Eight = &tfTypes.CreateDeployment8{}
-					r.Two.GitSource.Eight.ProjectID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment8.ProjectID)))
-					r.Two.GitSource.Eight.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment8.Ref)
-					r.Two.GitSource.Eight.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment8.Sha)
-					r.Two.GitSource.Eight.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment8.Type))
+				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7 != nil {
+					r.One.GitSource.Seven = &tfTypes.CreateDeploymentGitSource7{}
+					r.One.GitSource.Seven.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.Type))
+					r.One.GitSource.Seven.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.Ref)
+					r.One.GitSource.Seven.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.Sha)
+					r.One.GitSource.Seven.RepoID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.RepoID)))
+					r.One.GitSource.Seven.Org = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.Org)
+					r.One.GitSource.Seven.Repo = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.Repo)
 				}
-				if resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9 != nil {
-					r.Two.GitSource.Nine = &tfTypes.CreateDeployment9{}
-					r.Two.GitSource.Nine.Owner = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.Owner)
-					r.Two.GitSource.Nine.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.Ref)
-					r.Two.GitSource.Nine.RepoUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.RepoUUID)
-					r.Two.GitSource.Nine.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.Sha)
-					r.Two.GitSource.Nine.Slug = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.Slug)
-					r.Two.GitSource.Nine.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.Type))
-					r.Two.GitSource.Nine.WorkspaceUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeployment9.WorkspaceUUID)
+				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource8 != nil {
+					r.One.GitSource.Eight = &tfTypes.CreateDeploymentGitSource8{}
+					r.One.GitSource.Eight.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource8.Type))
+					r.One.GitSource.Eight.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource8.Ref)
+					r.One.GitSource.Eight.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource8.Sha)
+					r.One.GitSource.Eight.ProjectID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource8.ProjectID)))
+				}
+				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9 != nil {
+					r.One.GitSource.Nine = &tfTypes.CreateDeploymentGitSource9{}
+					r.One.GitSource.Nine.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.Type))
+					r.One.GitSource.Nine.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.Ref)
+					r.One.GitSource.Nine.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.Sha)
+					r.One.GitSource.Nine.Owner = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.Owner)
+					r.One.GitSource.Nine.Slug = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.Slug)
+					r.One.GitSource.Nine.WorkspaceUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.WorkspaceUUID)
+					r.One.GitSource.Nine.RepoUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.RepoUUID)
 				}
 			}
-			r.Two.ID = types.StringValue(resp.CreateDeploymentResponseBody.ID)
-			r.ID = r.Two.ID
-			r.Two.Lambdas = []tfTypes.CreateDeploymentLambdas{}
+			r.One.ID = types.StringValue(resp.CreateDeploymentResponseBody.ID)
+			r.ID = r.One.ID
+		}
+		if resp.CreateDeploymentResponseBody != nil {
+			r.Two = &tfTypes.GetDeploymentResponseBody2{}
+			r.Two.Lambdas = []tfTypes.Lambdas{}
 			if len(r.Two.Lambdas) > len(resp.CreateDeploymentResponseBody.Lambdas) {
 				r.Two.Lambdas = r.Two.Lambdas[:len(resp.CreateDeploymentResponseBody.Lambdas)]
 			}
 			for lambdasCount2, lambdasItem2 := range resp.CreateDeploymentResponseBody.Lambdas {
-				var lambdas5 tfTypes.CreateDeploymentLambdas
+				var lambdas5 tfTypes.Lambdas
+				lambdas5.ID = types.StringValue(lambdasItem2.ID)
 				if lambdasItem2.CreatedAt != nil {
 					lambdas5.CreatedAt = types.NumberValue(big.NewFloat(float64(*lambdasItem2.CreatedAt)))
 				} else {
 					lambdas5.CreatedAt = types.NumberNull()
 				}
 				lambdas5.Entrypoint = types.StringPointerValue(lambdasItem2.Entrypoint)
-				lambdas5.ID = types.StringValue(lambdasItem2.ID)
-				lambdas5.Output = []tfTypes.CreateDeploymentOutput{}
-				for outputCount2, outputItem2 := range lambdasItem2.Output {
-					var output5 tfTypes.CreateDeploymentOutput
-					output5.FunctionName = types.StringValue(outputItem2.FunctionName)
-					output5.Path = types.StringValue(outputItem2.Path)
-					if outputCount2+1 > len(lambdas5.Output) {
-						lambdas5.Output = append(lambdas5.Output, output5)
-					} else {
-						lambdas5.Output[outputCount2].FunctionName = output5.FunctionName
-						lambdas5.Output[outputCount2].Path = output5.Path
-					}
-				}
 				if lambdasItem2.ReadyState != nil {
 					lambdas5.ReadyState = types.StringValue(string(*lambdasItem2.ReadyState))
 				} else {
@@ -1668,31 +1471,37 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 				} else {
 					lambdas5.ReadyStateAt = types.NumberNull()
 				}
+				lambdas5.Output = []tfTypes.CreateDeploymentOutput{}
+				for outputCount2, outputItem2 := range lambdasItem2.Output {
+					var output5 tfTypes.CreateDeploymentOutput
+					output5.Path = types.StringValue(outputItem2.Path)
+					output5.FunctionName = types.StringValue(outputItem2.FunctionName)
+					if outputCount2+1 > len(lambdas5.Output) {
+						lambdas5.Output = append(lambdas5.Output, output5)
+					} else {
+						lambdas5.Output[outputCount2].Path = output5.Path
+						lambdas5.Output[outputCount2].FunctionName = output5.FunctionName
+					}
+				}
 				if lambdasCount2+1 > len(r.Two.Lambdas) {
 					r.Two.Lambdas = append(r.Two.Lambdas, lambdas5)
 				} else {
+					r.Two.Lambdas[lambdasCount2].ID = lambdas5.ID
 					r.Two.Lambdas[lambdasCount2].CreatedAt = lambdas5.CreatedAt
 					r.Two.Lambdas[lambdasCount2].Entrypoint = lambdas5.Entrypoint
-					r.Two.Lambdas[lambdasCount2].ID = lambdas5.ID
-					r.Two.Lambdas[lambdasCount2].Output = lambdas5.Output
 					r.Two.Lambdas[lambdasCount2].ReadyState = lambdas5.ReadyState
 					r.Two.Lambdas[lambdasCount2].ReadyStateAt = lambdas5.ReadyStateAt
+					r.Two.Lambdas[lambdasCount2].Output = lambdas5.Output
 				}
 			}
+			r.Two.Name = types.StringValue(resp.CreateDeploymentResponseBody.Name)
+			r.Name = r.Two.Name
 			if len(resp.CreateDeploymentResponseBody.Meta) > 0 {
 				r.Two.Meta = make(map[string]types.String)
 				for key10, value14 := range resp.CreateDeploymentResponseBody.Meta {
 					r.Two.Meta[key10] = types.StringValue(value14)
 				}
 			}
-			r.Two.Name = types.StringValue(resp.CreateDeploymentResponseBody.Name)
-			r.Name = r.Two.Name
-			r.Two.PassiveRegions = []types.String{}
-			for _, v := range resp.CreateDeploymentResponseBody.PassiveRegions {
-				r.Two.PassiveRegions = append(r.Two.PassiveRegions, types.StringValue(v))
-			}
-			r.Two.PreviewCommentsEnabled = types.BoolPointerValue(resp.CreateDeploymentResponseBody.PreviewCommentsEnabled)
-			r.PreviewCommentsEnabled = r.Two.PreviewCommentsEnabled
 			r.Two.Public = types.BoolValue(resp.CreateDeploymentResponseBody.Public)
 			r.Public = r.Two.Public
 			r.Two.ReadyState = types.StringValue(string(resp.CreateDeploymentResponseBody.ReadyState))
@@ -1718,11 +1527,11 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 			if resp.CreateDeploymentResponseBody.Team == nil {
 				r.Two.Team = nil
 			} else {
-				r.Two.Team = &tfTypes.GetDeploymentTeam{}
-				r.Two.Team.Avatar = types.StringPointerValue(resp.CreateDeploymentResponseBody.Team.Avatar)
+				r.Two.Team = &tfTypes.GetDeploymentResponseBodyTeam{}
 				r.Two.Team.ID = types.StringValue(resp.CreateDeploymentResponseBody.Team.ID)
 				r.Two.Team.Name = types.StringValue(resp.CreateDeploymentResponseBody.Team.Name)
 				r.Two.Team.Slug = types.StringValue(resp.CreateDeploymentResponseBody.Team.Slug)
+				r.Two.Team.Avatar = types.StringPointerValue(resp.CreateDeploymentResponseBody.Team.Avatar)
 			}
 			r.Two.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.Type))
 			r.Two.URL = types.StringValue(resp.CreateDeploymentResponseBody.URL)
@@ -1732,330 +1541,457 @@ func (r *DeploymentResourceModel) RefreshFromOperationsCreateDeploymentResponseB
 				r.Two.UserAliases = append(r.Two.UserAliases, types.StringValue(v))
 			}
 			r.Two.Version = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.Version)))
+			r.Two.PreviewCommentsEnabled = types.BoolPointerValue(resp.CreateDeploymentResponseBody.PreviewCommentsEnabled)
+			r.PreviewCommentsEnabled = r.Two.PreviewCommentsEnabled
+			r.Two.Alias = []types.String{}
+			for _, v := range resp.CreateDeploymentResponseBody.Alias {
+				r.Two.Alias = append(r.Two.Alias, types.StringValue(v))
+			}
+			r.Two.AliasAssigned = types.BoolValue(resp.CreateDeploymentResponseBody.AliasAssigned)
+			r.AliasAssigned = r.Two.AliasAssigned
+			if resp.CreateDeploymentResponseBody.AliasError == nil {
+				r.Two.AliasError = nil
+			} else {
+				r.Two.AliasError = &tfTypes.AliasError{}
+				r.Two.AliasError.Code = types.StringValue(resp.CreateDeploymentResponseBody.AliasError.Code)
+				r.Two.AliasError.Message = types.StringValue(resp.CreateDeploymentResponseBody.AliasError.Message)
+			}
+			r.Two.AliasFinal = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasFinal)
+			r.AliasFinal = r.Two.AliasFinal
+			if resp.CreateDeploymentResponseBody.AliasWarning == nil {
+				r.Two.AliasWarning = nil
+			} else {
+				r.Two.AliasWarning = &tfTypes.AliasWarning{}
+				r.Two.AliasWarning.Code = types.StringValue(resp.CreateDeploymentResponseBody.AliasWarning.Code)
+				r.Two.AliasWarning.Message = types.StringValue(resp.CreateDeploymentResponseBody.AliasWarning.Message)
+				r.Two.AliasWarning.Link = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasWarning.Link)
+				r.Two.AliasWarning.Action = types.StringPointerValue(resp.CreateDeploymentResponseBody.AliasWarning.Action)
+			}
+			r.Two.AutoAssignCustomDomains = types.BoolPointerValue(resp.CreateDeploymentResponseBody.AutoAssignCustomDomains)
+			r.AutoAssignCustomDomains = r.Two.AutoAssignCustomDomains
+			r.Two.AutomaticAliases = []types.String{}
+			for _, v := range resp.CreateDeploymentResponseBody.AutomaticAliases {
+				r.Two.AutomaticAliases = append(r.Two.AutomaticAliases, types.StringValue(v))
+			}
+			r.Two.BootedAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.BootedAt)))
+			if resp.CreateDeploymentResponseBody.BuildErrorAt != nil {
+				r.Two.BuildErrorAt = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.BuildErrorAt)))
+			} else {
+				r.Two.BuildErrorAt = types.NumberNull()
+			}
+			r.Two.BuildingAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.BuildingAt)))
+			if resp.CreateDeploymentResponseBody.CanceledAt != nil {
+				r.Two.CanceledAt = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.CanceledAt)))
+			} else {
+				r.Two.CanceledAt = types.NumberNull()
+			}
+			if resp.CreateDeploymentResponseBody.ChecksState != nil {
+				r.Two.ChecksState = types.StringValue(string(*resp.CreateDeploymentResponseBody.ChecksState))
+			} else {
+				r.Two.ChecksState = types.StringNull()
+			}
+			if resp.CreateDeploymentResponseBody.ChecksConclusion != nil {
+				r.Two.ChecksConclusion = types.StringValue(string(*resp.CreateDeploymentResponseBody.ChecksConclusion))
+			} else {
+				r.Two.ChecksConclusion = types.StringNull()
+			}
+			r.Two.CreatedAt = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.CreatedAt)))
+			r.Two.Creator.UID = types.StringValue(resp.CreateDeploymentResponseBody.Creator.UID)
+			r.Two.Creator.Username = types.StringPointerValue(resp.CreateDeploymentResponseBody.Creator.Username)
+			r.Two.Creator.Avatar = types.StringPointerValue(resp.CreateDeploymentResponseBody.Creator.Avatar)
+			r.Two.ErrorCode = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorCode)
+			r.ErrorCode = r.Two.ErrorCode
+			r.Two.ErrorLink = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorLink)
+			r.ErrorLink = r.Two.ErrorLink
+			r.Two.ErrorMessage = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorMessage)
+			r.ErrorMessage = r.Two.ErrorMessage
+			r.Two.ErrorStep = types.StringPointerValue(resp.CreateDeploymentResponseBody.ErrorStep)
+			r.ErrorStep = r.Two.ErrorStep
+			r.Two.PassiveRegions = []types.String{}
+			for _, v := range resp.CreateDeploymentResponseBody.PassiveRegions {
+				r.Two.PassiveRegions = append(r.Two.PassiveRegions, types.StringValue(v))
+			}
+			if resp.CreateDeploymentResponseBody.GitSource == nil {
+				r.Two.GitSource = nil
+			} else {
+				r.Two.GitSource = &tfTypes.GetDeploymentResponseBodyGitSource{}
+				if resp.CreateDeploymentResponseBody.GitSource.GitSource1 != nil {
+					r.Two.GitSource.One = &tfTypes.GetDeploymentGitSourceDeployments1{}
+					r.Two.GitSource.One.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.GitSource1.Type))
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource1.RepoID.Str != nil {
+						r.Two.GitSource.One.RepoID.Str = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource1.RepoID.Str)
+					}
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource1.RepoID.Number != nil {
+						if resp.CreateDeploymentResponseBody.GitSource.GitSource1.RepoID.Number != nil {
+							r.Two.GitSource.One.RepoID.Number = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource1.RepoID.Number)))
+						} else {
+							r.Two.GitSource.One.RepoID.Number = types.NumberNull()
+						}
+					}
+					r.Two.GitSource.One.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource1.Ref)
+					r.Two.GitSource.One.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource1.Sha)
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource1.PrID != nil {
+						r.Two.GitSource.One.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource1.PrID)))
+					} else {
+						r.Two.GitSource.One.PrID = types.NumberNull()
+					}
+				}
+				if resp.CreateDeploymentResponseBody.GitSource.GitSource2 != nil {
+					r.Two.GitSource.Two = &tfTypes.GetDeploymentGitSourceDeployments2{}
+					r.Two.GitSource.Two.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.GitSource2.Type))
+					r.Two.GitSource.Two.Org = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.GitSource2.Org)
+					r.Two.GitSource.Two.Repo = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.GitSource2.Repo)
+					r.Two.GitSource.Two.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource2.Ref)
+					r.Two.GitSource.Two.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource2.Sha)
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource2.PrID != nil {
+						r.Two.GitSource.Two.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource2.PrID)))
+					} else {
+						r.Two.GitSource.Two.PrID = types.NumberNull()
+					}
+				}
+				if resp.CreateDeploymentResponseBody.GitSource.GitSource3 != nil {
+					r.Two.GitSource.Three = &tfTypes.GetDeploymentGitSourceDeployments3{}
+					r.Two.GitSource.Three.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.GitSource3.Type))
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource3.ProjectID.Str != nil {
+						r.Two.GitSource.Three.ProjectID.Str = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource3.ProjectID.Str)
+					}
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource3.ProjectID.Number != nil {
+						if resp.CreateDeploymentResponseBody.GitSource.GitSource3.ProjectID.Number != nil {
+							r.Two.GitSource.Three.ProjectID.Number = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource3.ProjectID.Number)))
+						} else {
+							r.Two.GitSource.Three.ProjectID.Number = types.NumberNull()
+						}
+					}
+					r.Two.GitSource.Three.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource3.Ref)
+					r.Two.GitSource.Three.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource3.Sha)
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource3.PrID != nil {
+						r.Two.GitSource.Three.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource3.PrID)))
+					} else {
+						r.Two.GitSource.Three.PrID = types.NumberNull()
+					}
+				}
+				if resp.CreateDeploymentResponseBody.GitSource.GitSource4 != nil {
+					r.Two.GitSource.Four = &tfTypes.GetDeploymentGitSourceDeployments4{}
+					r.Two.GitSource.Four.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.GitSource4.Type))
+					r.Two.GitSource.Four.WorkspaceUUID = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource4.WorkspaceUUID)
+					r.Two.GitSource.Four.RepoUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.GitSource4.RepoUUID)
+					r.Two.GitSource.Four.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource4.Ref)
+					r.Two.GitSource.Four.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource4.Sha)
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource4.PrID != nil {
+						r.Two.GitSource.Four.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource4.PrID)))
+					} else {
+						r.Two.GitSource.Four.PrID = types.NumberNull()
+					}
+				}
+				if resp.CreateDeploymentResponseBody.GitSource.GitSource5 != nil {
+					r.Two.GitSource.Five = &tfTypes.GetDeploymentGitSourceDeployments5{}
+					r.Two.GitSource.Five.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.GitSource5.Type))
+					r.Two.GitSource.Five.Owner = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.GitSource5.Owner)
+					r.Two.GitSource.Five.Slug = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.GitSource5.Slug)
+					r.Two.GitSource.Five.Ref = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource5.Ref)
+					r.Two.GitSource.Five.Sha = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.GitSource5.Sha)
+					if resp.CreateDeploymentResponseBody.GitSource.GitSource5.PrID != nil {
+						r.Two.GitSource.Five.PrID = types.NumberValue(big.NewFloat(float64(*resp.CreateDeploymentResponseBody.GitSource.GitSource5.PrID)))
+					} else {
+						r.Two.GitSource.Five.PrID = types.NumberNull()
+					}
+				}
+				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource6 != nil {
+					r.Two.GitSource.Six = &tfTypes.CreateDeploymentGitSource6{}
+					r.Two.GitSource.Six.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource6.Type))
+					r.Two.GitSource.Six.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource6.Ref)
+					r.Two.GitSource.Six.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource6.Sha)
+					r.Two.GitSource.Six.GitURL = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource6.GitURL)
+				}
+				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7 != nil {
+					r.Two.GitSource.Seven = &tfTypes.CreateDeploymentGitSource7{}
+					r.Two.GitSource.Seven.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.Type))
+					r.Two.GitSource.Seven.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.Ref)
+					r.Two.GitSource.Seven.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.Sha)
+					r.Two.GitSource.Seven.RepoID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.RepoID)))
+					r.Two.GitSource.Seven.Org = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.Org)
+					r.Two.GitSource.Seven.Repo = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource7.Repo)
+				}
+				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource8 != nil {
+					r.Two.GitSource.Eight = &tfTypes.CreateDeploymentGitSource8{}
+					r.Two.GitSource.Eight.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource8.Type))
+					r.Two.GitSource.Eight.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource8.Ref)
+					r.Two.GitSource.Eight.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource8.Sha)
+					r.Two.GitSource.Eight.ProjectID = types.NumberValue(big.NewFloat(float64(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource8.ProjectID)))
+				}
+				if resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9 != nil {
+					r.Two.GitSource.Nine = &tfTypes.CreateDeploymentGitSource9{}
+					r.Two.GitSource.Nine.Type = types.StringValue(string(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.Type))
+					r.Two.GitSource.Nine.Ref = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.Ref)
+					r.Two.GitSource.Nine.Sha = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.Sha)
+					r.Two.GitSource.Nine.Owner = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.Owner)
+					r.Two.GitSource.Nine.Slug = types.StringPointerValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.Slug)
+					r.Two.GitSource.Nine.WorkspaceUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.WorkspaceUUID)
+					r.Two.GitSource.Nine.RepoUUID = types.StringValue(resp.CreateDeploymentResponseBody.GitSource.CreateDeploymentGitSource9.RepoUUID)
+				}
+			}
+			r.Two.ID = types.StringValue(resp.CreateDeploymentResponseBody.ID)
+			r.ID = r.Two.ID
 		}
 	}
 }
 
 func (r *DeploymentResourceModel) RefreshFromOperationsGetDeploymentResponseBody(resp *operations.GetDeploymentResponseBody) {
 	if resp != nil {
-		if resp.GetDeployment1 != nil {
-			r.One = &tfTypes.GetDeployment1{}
-			r.One.Alias = []types.String{}
-			for _, v := range resp.GetDeployment1.Alias {
-				r.One.Alias = append(r.One.Alias, types.StringValue(v))
+		if resp.GetDeploymentResponseBody1 != nil {
+			r.One = &tfTypes.GetDeploymentResponseBody1{}
+			r.One.Build.Env = []types.String{}
+			for _, v := range resp.GetDeploymentResponseBody1.Build.Env {
+				r.One.Build.Env = append(r.One.Build.Env, types.StringValue(v))
 			}
-			r.One.AliasAssigned = types.BoolValue(resp.GetDeployment1.AliasAssigned)
-			r.AliasAssigned = r.One.AliasAssigned
-			if resp.GetDeployment1.AliasAssignedAt == nil {
+			r.One.ConnectBuildsEnabled = types.BoolPointerValue(resp.GetDeploymentResponseBody1.ConnectBuildsEnabled)
+			r.One.ConnectConfigurationID = types.StringPointerValue(resp.GetDeploymentResponseBody1.ConnectConfigurationID)
+			r.One.CreatedIn = types.StringValue(resp.GetDeploymentResponseBody1.CreatedIn)
+			r.One.Crons = []tfTypes.CreateDeploymentCrons{}
+			if len(r.One.Crons) > len(resp.GetDeploymentResponseBody1.Crons) {
+				r.One.Crons = r.One.Crons[:len(resp.GetDeploymentResponseBody1.Crons)]
+			}
+			for cronsCount, cronsItem := range resp.GetDeploymentResponseBody1.Crons {
+				var crons1 tfTypes.CreateDeploymentCrons
+				crons1.Schedule = types.StringValue(cronsItem.Schedule)
+				crons1.Path = types.StringValue(cronsItem.Path)
+				if cronsCount+1 > len(r.One.Crons) {
+					r.One.Crons = append(r.One.Crons, crons1)
+				} else {
+					r.One.Crons[cronsCount].Schedule = crons1.Schedule
+					r.One.Crons[cronsCount].Path = crons1.Path
+				}
+			}
+			r.One.Env = []types.String{}
+			for _, v := range resp.GetDeploymentResponseBody1.Env {
+				r.One.Env = append(r.One.Env, types.StringValue(v))
+			}
+			if len(resp.GetDeploymentResponseBody1.Functions) > 0 {
+				r.One.Functions = make(map[string]tfTypes.Functions)
+				for responseBodyFunctionsKey, responseBodyFunctionsValue := range resp.GetDeploymentResponseBody1.Functions {
+					var responseBodyFunctionsResult tfTypes.Functions
+					if responseBodyFunctionsValue.Memory != nil {
+						responseBodyFunctionsResult.Memory = types.NumberValue(big.NewFloat(float64(*responseBodyFunctionsValue.Memory)))
+					} else {
+						responseBodyFunctionsResult.Memory = types.NumberNull()
+					}
+					if responseBodyFunctionsValue.MaxDuration != nil {
+						responseBodyFunctionsResult.MaxDuration = types.NumberValue(big.NewFloat(float64(*responseBodyFunctionsValue.MaxDuration)))
+					} else {
+						responseBodyFunctionsResult.MaxDuration = types.NumberNull()
+					}
+					responseBodyFunctionsResult.Runtime = types.StringPointerValue(responseBodyFunctionsValue.Runtime)
+					responseBodyFunctionsResult.IncludeFiles = types.StringPointerValue(responseBodyFunctionsValue.IncludeFiles)
+					responseBodyFunctionsResult.ExcludeFiles = types.StringPointerValue(responseBodyFunctionsValue.ExcludeFiles)
+					r.One.Functions[responseBodyFunctionsKey] = responseBodyFunctionsResult
+				}
+			}
+			r.One.InspectorURL = types.StringPointerValue(resp.GetDeploymentResponseBody1.InspectorURL)
+			r.One.IsInConcurrentBuildsQueue = types.BoolValue(resp.GetDeploymentResponseBody1.IsInConcurrentBuildsQueue)
+			if len(resp.GetDeploymentResponseBody1.Meta) > 0 {
+				r.One.Meta = make(map[string]types.String)
+				for key, value := range resp.GetDeploymentResponseBody1.Meta {
+					r.One.Meta[key] = types.StringValue(value)
+				}
+			}
+			r.One.MonorepoManager = types.StringPointerValue(resp.GetDeploymentResponseBody1.MonorepoManager)
+			r.One.Name = types.StringValue(resp.GetDeploymentResponseBody1.Name)
+			r.Name = r.One.Name
+			r.One.OwnerID = types.StringValue(resp.GetDeploymentResponseBody1.OwnerID)
+			r.One.PassiveConnectConfigurationID = types.StringPointerValue(resp.GetDeploymentResponseBody1.PassiveConnectConfigurationID)
+			r.One.Plan = types.StringValue(string(resp.GetDeploymentResponseBody1.Plan))
+			r.One.ProjectID = types.StringValue(resp.GetDeploymentResponseBody1.ProjectID)
+			r.One.Routes = []tfTypes.ResponseBodyRoutes{}
+			if len(r.One.Routes) > len(resp.GetDeploymentResponseBody1.Routes) {
+				r.One.Routes = r.One.Routes[:len(resp.GetDeploymentResponseBody1.Routes)]
+			}
+			for routesCount, routesItem := range resp.GetDeploymentResponseBody1.Routes {
+				var routes1 tfTypes.ResponseBodyRoutes
+				if routesItem.GetDeploymentRoutes1 != nil {
+					routes1.One = &tfTypes.GetDeploymentRoutes1{}
+					routes1.One.Src = types.StringValue(routesItem.GetDeploymentRoutes1.Src)
+					routes1.One.Dest = types.StringPointerValue(routesItem.GetDeploymentRoutes1.Dest)
+					if len(routesItem.GetDeploymentRoutes1.Headers) > 0 {
+						routes1.One.Headers = make(map[string]types.String)
+						for key1, value1 := range routesItem.GetDeploymentRoutes1.Headers {
+							routes1.One.Headers[key1] = types.StringValue(value1)
+						}
+					}
+					routes1.One.Methods = []types.String{}
+					for _, v := range routesItem.GetDeploymentRoutes1.Methods {
+						routes1.One.Methods = append(routes1.One.Methods, types.StringValue(v))
+					}
+					routes1.One.Continue = types.BoolPointerValue(routesItem.GetDeploymentRoutes1.Continue)
+					routes1.One.Override = types.BoolPointerValue(routesItem.GetDeploymentRoutes1.Override)
+					routes1.One.CaseSensitive = types.BoolPointerValue(routesItem.GetDeploymentRoutes1.CaseSensitive)
+					routes1.One.Check = types.BoolPointerValue(routesItem.GetDeploymentRoutes1.Check)
+					routes1.One.Important = types.BoolPointerValue(routesItem.GetDeploymentRoutes1.Important)
+					if routesItem.GetDeploymentRoutes1.Status != nil {
+						routes1.One.Status = types.NumberValue(big.NewFloat(float64(*routesItem.GetDeploymentRoutes1.Status)))
+					} else {
+						routes1.One.Status = types.NumberNull()
+					}
+					routes1.One.Has = []tfTypes.GetDeploymentRoutesHas{}
+					for hasCount, hasItem := range routesItem.GetDeploymentRoutes1.Has {
+						var has1 tfTypes.GetDeploymentRoutesHas
+						if hasItem.GetDeploymentHas1 != nil {
+							has1.One = &tfTypes.GetDeploymentHas1{}
+							has1.One.Type = types.StringValue(string(hasItem.GetDeploymentHas1.Type))
+							has1.One.Value = types.StringValue(hasItem.GetDeploymentHas1.Value)
+						}
+						if hasItem.GetDeploymentHas2 != nil {
+							has1.Two = &tfTypes.GetDeploymentHas2{}
+							has1.Two.Type = types.StringValue(string(hasItem.GetDeploymentHas2.Type))
+							has1.Two.Key = types.StringValue(hasItem.GetDeploymentHas2.Key)
+							has1.Two.Value = types.StringPointerValue(hasItem.GetDeploymentHas2.Value)
+						}
+						if hasCount+1 > len(routes1.One.Has) {
+							routes1.One.Has = append(routes1.One.Has, has1)
+						} else {
+							routes1.One.Has[hasCount].One = has1.One
+							routes1.One.Has[hasCount].Two = has1.Two
+						}
+					}
+					routes1.One.Missing = []tfTypes.GetDeploymentRoutesHas{}
+					for missingCount, missingItem := range routesItem.GetDeploymentRoutes1.Missing {
+						var missing1 tfTypes.GetDeploymentRoutesHas
+						if missingItem.GetDeploymentMissing1 != nil {
+							missing1.One = &tfTypes.GetDeploymentHas1{}
+							missing1.One.Type = types.StringValue(string(missingItem.GetDeploymentMissing1.Type))
+							missing1.One.Value = types.StringValue(missingItem.GetDeploymentMissing1.Value)
+						}
+						if missingItem.GetDeploymentMissing2 != nil {
+							missing1.Two = &tfTypes.GetDeploymentHas2{}
+							missing1.Two.Type = types.StringValue(string(missingItem.GetDeploymentMissing2.Type))
+							missing1.Two.Key = types.StringValue(missingItem.GetDeploymentMissing2.Key)
+							missing1.Two.Value = types.StringPointerValue(missingItem.GetDeploymentMissing2.Value)
+						}
+						if missingCount+1 > len(routes1.One.Missing) {
+							routes1.One.Missing = append(routes1.One.Missing, missing1)
+						} else {
+							routes1.One.Missing[missingCount].One = missing1.One
+							routes1.One.Missing[missingCount].Two = missing1.Two
+						}
+					}
+					if routesItem.GetDeploymentRoutes1.Locale == nil {
+						routes1.One.Locale = nil
+					} else {
+						routes1.One.Locale = &tfTypes.GetDeploymentRoutesLocale{}
+						if len(routesItem.GetDeploymentRoutes1.Locale.Redirect) > 0 {
+							routes1.One.Locale.Redirect = make(map[string]types.String)
+							for key4, value6 := range routesItem.GetDeploymentRoutes1.Locale.Redirect {
+								routes1.One.Locale.Redirect[key4] = types.StringValue(value6)
+							}
+						}
+						routes1.One.Locale.Cookie = types.StringPointerValue(routesItem.GetDeploymentRoutes1.Locale.Cookie)
+					}
+					routes1.One.MiddlewarePath = types.StringPointerValue(routesItem.GetDeploymentRoutes1.MiddlewarePath)
+					routes1.One.MiddlewareRawSrc = []types.String{}
+					for _, v := range routesItem.GetDeploymentRoutes1.MiddlewareRawSrc {
+						routes1.One.MiddlewareRawSrc = append(routes1.One.MiddlewareRawSrc, types.StringValue(v))
+					}
+					if routesItem.GetDeploymentRoutes1.Middleware != nil {
+						routes1.One.Middleware = types.NumberValue(big.NewFloat(float64(*routesItem.GetDeploymentRoutes1.Middleware)))
+					} else {
+						routes1.One.Middleware = types.NumberNull()
+					}
+				}
+				if routesItem.GetDeploymentRoutes2 != nil {
+					routes1.Two = &tfTypes.GetDeploymentRoutes2{}
+					routes1.Two.Handle = types.StringValue(string(routesItem.GetDeploymentRoutes2.Handle))
+					routes1.Two.Src = types.StringPointerValue(routesItem.GetDeploymentRoutes2.Src)
+					routes1.Two.Dest = types.StringPointerValue(routesItem.GetDeploymentRoutes2.Dest)
+					if routesItem.GetDeploymentRoutes2.Status != nil {
+						routes1.Two.Status = types.NumberValue(big.NewFloat(float64(*routesItem.GetDeploymentRoutes2.Status)))
+					} else {
+						routes1.Two.Status = types.NumberNull()
+					}
+				}
+				if routesItem.GetDeploymentRoutes3 != nil {
+					routes1.Three = &tfTypes.GetDeploymentRoutes3{}
+					routes1.Three.Src = types.StringValue(routesItem.GetDeploymentRoutes3.Src)
+					routes1.Three.Continue = types.BoolValue(routesItem.GetDeploymentRoutes3.Continue)
+					routes1.Three.Middleware = types.NumberValue(big.NewFloat(float64(routesItem.GetDeploymentRoutes3.Middleware)))
+				}
+				if routesCount+1 > len(r.One.Routes) {
+					r.One.Routes = append(r.One.Routes, routes1)
+				} else {
+					r.One.Routes[routesCount].One = routes1.One
+					r.One.Routes[routesCount].Two = routes1.Two
+					r.One.Routes[routesCount].Three = routes1.Three
+				}
+			}
+			if resp.GetDeploymentResponseBody1.GitRepo == nil {
+				r.One.GitRepo = nil
+			} else {
+				r.One.GitRepo = &tfTypes.GitRepo{}
+				if resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo1 != nil {
+					r.One.GitRepo.One = &tfTypes.GitRepo1{}
+					r.One.GitRepo.One.Namespace = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo1.Namespace)
+					r.One.GitRepo.One.ProjectID = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo1.ProjectID)))
+					r.One.GitRepo.One.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo1.Type))
+					r.One.GitRepo.One.URL = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo1.URL)
+					r.One.GitRepo.One.Path = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo1.Path)
+					r.One.GitRepo.One.DefaultBranch = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo1.DefaultBranch)
+					r.One.GitRepo.One.Name = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo1.Name)
+					r.One.GitRepo.One.Private = types.BoolValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo1.Private)
+					r.One.GitRepo.One.OwnerType = types.StringValue(string(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo1.OwnerType))
+				}
+				if resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo2 != nil {
+					r.One.GitRepo.Two = &tfTypes.GitRepo2{}
+					r.One.GitRepo.Two.Org = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo2.Org)
+					r.One.GitRepo.Two.Repo = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo2.Repo)
+					r.One.GitRepo.Two.RepoID = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo2.RepoID)))
+					r.One.GitRepo.Two.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo2.Type))
+					r.One.GitRepo.Two.RepoOwnerID = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo2.RepoOwnerID)
+					r.One.GitRepo.Two.Path = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo2.Path)
+					r.One.GitRepo.Two.DefaultBranch = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo2.DefaultBranch)
+					r.One.GitRepo.Two.Name = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo2.Name)
+					r.One.GitRepo.Two.Private = types.BoolValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo2.Private)
+					r.One.GitRepo.Two.OwnerType = types.StringValue(string(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo2.OwnerType))
+				}
+				if resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo3 != nil {
+					r.One.GitRepo.Three = &tfTypes.GitRepo3{}
+					r.One.GitRepo.Three.Owner = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo3.Owner)
+					r.One.GitRepo.Three.RepoUUID = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo3.RepoUUID)
+					r.One.GitRepo.Three.Slug = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo3.Slug)
+					r.One.GitRepo.Three.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo3.Type))
+					r.One.GitRepo.Three.WorkspaceUUID = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo3.WorkspaceUUID)
+					r.One.GitRepo.Three.Path = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo3.Path)
+					r.One.GitRepo.Three.DefaultBranch = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo3.DefaultBranch)
+					r.One.GitRepo.Three.Name = types.StringValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo3.Name)
+					r.One.GitRepo.Three.Private = types.BoolValue(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo3.Private)
+					r.One.GitRepo.Three.OwnerType = types.StringValue(string(resp.GetDeploymentResponseBody1.GitRepo.GetDeploymentGitRepo3.OwnerType))
+				}
+			}
+			if resp.GetDeploymentResponseBody1.AliasAssignedAt == nil {
 				r.One.AliasAssignedAt = nil
 			} else {
-				r.One.AliasAssignedAt = &tfTypes.CreateDeploymentAliasAssignedAt{}
-				if resp.GetDeployment1.AliasAssignedAt.Number != nil {
-					if resp.GetDeployment1.AliasAssignedAt.Number != nil {
-						r.One.AliasAssignedAt.Number = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment1.AliasAssignedAt.Number)))
+				r.One.AliasAssignedAt = &tfTypes.AliasAssignedAt{}
+				if resp.GetDeploymentResponseBody1.AliasAssignedAt.Number != nil {
+					if resp.GetDeploymentResponseBody1.AliasAssignedAt.Number != nil {
+						r.One.AliasAssignedAt.Number = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody1.AliasAssignedAt.Number)))
 					} else {
 						r.One.AliasAssignedAt.Number = types.NumberNull()
 					}
 				}
-				if resp.GetDeployment1.AliasAssignedAt.Boolean != nil {
-					r.One.AliasAssignedAt.Boolean = types.BoolPointerValue(resp.GetDeployment1.AliasAssignedAt.Boolean)
+				if resp.GetDeploymentResponseBody1.AliasAssignedAt.Boolean != nil {
+					r.One.AliasAssignedAt.Boolean = types.BoolPointerValue(resp.GetDeploymentResponseBody1.AliasAssignedAt.Boolean)
 				}
 			}
-			if resp.GetDeployment1.AliasError == nil {
-				r.One.AliasError = nil
-			} else {
-				r.One.AliasError = &tfTypes.CreateDeploymentAliasError{}
-				r.One.AliasError.Code = types.StringValue(resp.GetDeployment1.AliasError.Code)
-				r.One.AliasError.Message = types.StringValue(resp.GetDeployment1.AliasError.Message)
+			r.One.Lambdas = []tfTypes.Lambdas{}
+			if len(r.One.Lambdas) > len(resp.GetDeploymentResponseBody1.Lambdas) {
+				r.One.Lambdas = r.One.Lambdas[:len(resp.GetDeploymentResponseBody1.Lambdas)]
 			}
-			r.One.AliasFinal = types.StringPointerValue(resp.GetDeployment1.AliasFinal)
-			r.AliasFinal = r.One.AliasFinal
-			if resp.GetDeployment1.AliasWarning == nil {
-				r.One.AliasWarning = nil
-			} else {
-				r.One.AliasWarning = &tfTypes.CreateDeploymentAliasWarning{}
-				r.One.AliasWarning.Action = types.StringPointerValue(resp.GetDeployment1.AliasWarning.Action)
-				r.One.AliasWarning.Code = types.StringValue(resp.GetDeployment1.AliasWarning.Code)
-				r.One.AliasWarning.Link = types.StringPointerValue(resp.GetDeployment1.AliasWarning.Link)
-				r.One.AliasWarning.Message = types.StringValue(resp.GetDeployment1.AliasWarning.Message)
-			}
-			r.One.AutoAssignCustomDomains = types.BoolPointerValue(resp.GetDeployment1.AutoAssignCustomDomains)
-			r.AutoAssignCustomDomains = r.One.AutoAssignCustomDomains
-			r.One.AutomaticAliases = []types.String{}
-			for _, v := range resp.GetDeployment1.AutomaticAliases {
-				r.One.AutomaticAliases = append(r.One.AutomaticAliases, types.StringValue(v))
-			}
-			r.One.BootedAt = types.NumberValue(big.NewFloat(float64(resp.GetDeployment1.BootedAt)))
-			r.One.Build.Env = []types.String{}
-			for _, v := range resp.GetDeployment1.Build.Env {
-				r.One.Build.Env = append(r.One.Build.Env, types.StringValue(v))
-			}
-			if resp.GetDeployment1.BuildErrorAt != nil {
-				r.One.BuildErrorAt = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment1.BuildErrorAt)))
-			} else {
-				r.One.BuildErrorAt = types.NumberNull()
-			}
-			r.One.BuildingAt = types.NumberValue(big.NewFloat(float64(resp.GetDeployment1.BuildingAt)))
-			if resp.GetDeployment1.CanceledAt != nil {
-				r.One.CanceledAt = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment1.CanceledAt)))
-			} else {
-				r.One.CanceledAt = types.NumberNull()
-			}
-			if resp.GetDeployment1.ChecksConclusion != nil {
-				r.One.ChecksConclusion = types.StringValue(string(*resp.GetDeployment1.ChecksConclusion))
-			} else {
-				r.One.ChecksConclusion = types.StringNull()
-			}
-			if resp.GetDeployment1.ChecksState != nil {
-				r.One.ChecksState = types.StringValue(string(*resp.GetDeployment1.ChecksState))
-			} else {
-				r.One.ChecksState = types.StringNull()
-			}
-			r.One.ConnectBuildsEnabled = types.BoolPointerValue(resp.GetDeployment1.ConnectBuildsEnabled)
-			r.One.ConnectConfigurationID = types.StringPointerValue(resp.GetDeployment1.ConnectConfigurationID)
-			r.One.CreatedAt = types.NumberValue(big.NewFloat(float64(resp.GetDeployment1.CreatedAt)))
-			r.One.CreatedIn = types.StringValue(resp.GetDeployment1.CreatedIn)
-			r.One.Creator.Avatar = types.StringPointerValue(resp.GetDeployment1.Creator.Avatar)
-			r.One.Creator.UID = types.StringValue(resp.GetDeployment1.Creator.UID)
-			r.One.Creator.Username = types.StringPointerValue(resp.GetDeployment1.Creator.Username)
-			r.One.Crons = []tfTypes.CreateDeploymentCrons{}
-			if len(r.One.Crons) > len(resp.GetDeployment1.Crons) {
-				r.One.Crons = r.One.Crons[:len(resp.GetDeployment1.Crons)]
-			}
-			for cronsCount, cronsItem := range resp.GetDeployment1.Crons {
-				var crons1 tfTypes.CreateDeploymentCrons
-				crons1.Path = types.StringValue(cronsItem.Path)
-				crons1.Schedule = types.StringValue(cronsItem.Schedule)
-				if cronsCount+1 > len(r.One.Crons) {
-					r.One.Crons = append(r.One.Crons, crons1)
-				} else {
-					r.One.Crons[cronsCount].Path = crons1.Path
-					r.One.Crons[cronsCount].Schedule = crons1.Schedule
-				}
-			}
-			r.One.Env = []types.String{}
-			for _, v := range resp.GetDeployment1.Env {
-				r.One.Env = append(r.One.Env, types.StringValue(v))
-			}
-			r.One.ErrorCode = types.StringPointerValue(resp.GetDeployment1.ErrorCode)
-			r.ErrorCode = r.One.ErrorCode
-			r.One.ErrorLink = types.StringPointerValue(resp.GetDeployment1.ErrorLink)
-			r.ErrorLink = r.One.ErrorLink
-			r.One.ErrorMessage = types.StringPointerValue(resp.GetDeployment1.ErrorMessage)
-			r.ErrorMessage = r.One.ErrorMessage
-			r.One.ErrorStep = types.StringPointerValue(resp.GetDeployment1.ErrorStep)
-			r.ErrorStep = r.One.ErrorStep
-			if len(resp.GetDeployment1.Functions) > 0 {
-				r.One.Functions = make(map[string]tfTypes.CreateDeploymentFunctions)
-				for getDeploymentFunctionsKey, getDeploymentFunctionsValue := range resp.GetDeployment1.Functions {
-					var getDeploymentFunctionsResult tfTypes.CreateDeploymentFunctions
-					getDeploymentFunctionsResult.ExcludeFiles = types.StringPointerValue(getDeploymentFunctionsValue.ExcludeFiles)
-					getDeploymentFunctionsResult.IncludeFiles = types.StringPointerValue(getDeploymentFunctionsValue.IncludeFiles)
-					if getDeploymentFunctionsValue.MaxDuration != nil {
-						getDeploymentFunctionsResult.MaxDuration = types.NumberValue(big.NewFloat(float64(*getDeploymentFunctionsValue.MaxDuration)))
-					} else {
-						getDeploymentFunctionsResult.MaxDuration = types.NumberNull()
-					}
-					if getDeploymentFunctionsValue.Memory != nil {
-						getDeploymentFunctionsResult.Memory = types.NumberValue(big.NewFloat(float64(*getDeploymentFunctionsValue.Memory)))
-					} else {
-						getDeploymentFunctionsResult.Memory = types.NumberNull()
-					}
-					getDeploymentFunctionsResult.Runtime = types.StringPointerValue(getDeploymentFunctionsValue.Runtime)
-					r.One.Functions[getDeploymentFunctionsKey] = getDeploymentFunctionsResult
-				}
-			}
-			if resp.GetDeployment1.GitRepo == nil {
-				r.One.GitRepo = nil
-			} else {
-				r.One.GitRepo = &tfTypes.CreateDeploymentGitRepo{}
-				if resp.GetDeployment1.GitRepo.GetDeploymentDeployments1 != nil {
-					r.One.GitRepo.One = &tfTypes.CreateDeployment1{}
-					r.One.GitRepo.One.DefaultBranch = types.StringValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments1.DefaultBranch)
-					r.One.GitRepo.One.Name = types.StringValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments1.Name)
-					r.One.GitRepo.One.Namespace = types.StringValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments1.Namespace)
-					r.One.GitRepo.One.OwnerType = types.StringValue(string(resp.GetDeployment1.GitRepo.GetDeploymentDeployments1.OwnerType))
-					r.One.GitRepo.One.Path = types.StringValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments1.Path)
-					r.One.GitRepo.One.Private = types.BoolValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments1.Private)
-					r.One.GitRepo.One.ProjectID = types.NumberValue(big.NewFloat(float64(resp.GetDeployment1.GitRepo.GetDeploymentDeployments1.ProjectID)))
-					r.One.GitRepo.One.Type = types.StringValue(string(resp.GetDeployment1.GitRepo.GetDeploymentDeployments1.Type))
-					r.One.GitRepo.One.URL = types.StringValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments1.URL)
-				}
-				if resp.GetDeployment1.GitRepo.GetDeploymentDeployments2 != nil {
-					r.One.GitRepo.Two = &tfTypes.CreateDeployment2{}
-					r.One.GitRepo.Two.DefaultBranch = types.StringValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments2.DefaultBranch)
-					r.One.GitRepo.Two.Name = types.StringValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments2.Name)
-					r.One.GitRepo.Two.Org = types.StringValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments2.Org)
-					r.One.GitRepo.Two.OwnerType = types.StringValue(string(resp.GetDeployment1.GitRepo.GetDeploymentDeployments2.OwnerType))
-					r.One.GitRepo.Two.Path = types.StringValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments2.Path)
-					r.One.GitRepo.Two.Private = types.BoolValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments2.Private)
-					r.One.GitRepo.Two.Repo = types.StringValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments2.Repo)
-					r.One.GitRepo.Two.RepoID = types.NumberValue(big.NewFloat(float64(resp.GetDeployment1.GitRepo.GetDeploymentDeployments2.RepoID)))
-					r.One.GitRepo.Two.RepoOwnerID = types.StringValue(resp.GetDeployment1.GitRepo.GetDeploymentDeployments2.RepoOwnerID)
-					r.One.GitRepo.Two.Type = types.StringValue(string(resp.GetDeployment1.GitRepo.GetDeploymentDeployments2.Type))
-				}
-				if resp.GetDeployment1.GitRepo.GetDeployment3 != nil {
-					r.One.GitRepo.Three = &tfTypes.CreateDeployment3{}
-					r.One.GitRepo.Three.DefaultBranch = types.StringValue(resp.GetDeployment1.GitRepo.GetDeployment3.DefaultBranch)
-					r.One.GitRepo.Three.Name = types.StringValue(resp.GetDeployment1.GitRepo.GetDeployment3.Name)
-					r.One.GitRepo.Three.Owner = types.StringValue(resp.GetDeployment1.GitRepo.GetDeployment3.Owner)
-					r.One.GitRepo.Three.OwnerType = types.StringValue(string(resp.GetDeployment1.GitRepo.GetDeployment3.OwnerType))
-					r.One.GitRepo.Three.Path = types.StringValue(resp.GetDeployment1.GitRepo.GetDeployment3.Path)
-					r.One.GitRepo.Three.Private = types.BoolValue(resp.GetDeployment1.GitRepo.GetDeployment3.Private)
-					r.One.GitRepo.Three.RepoUUID = types.StringValue(resp.GetDeployment1.GitRepo.GetDeployment3.RepoUUID)
-					r.One.GitRepo.Three.Slug = types.StringValue(resp.GetDeployment1.GitRepo.GetDeployment3.Slug)
-					r.One.GitRepo.Three.Type = types.StringValue(string(resp.GetDeployment1.GitRepo.GetDeployment3.Type))
-					r.One.GitRepo.Three.WorkspaceUUID = types.StringValue(resp.GetDeployment1.GitRepo.GetDeployment3.WorkspaceUUID)
-				}
-			}
-			if resp.GetDeployment1.GitSource == nil {
-				r.One.GitSource = nil
-			} else {
-				r.One.GitSource = &tfTypes.GetDeploymentGitSource{}
-				if resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse1 != nil {
-					r.One.GitSource.One = &tfTypes.GetDeploymentDeploymentsResponse1{}
-					if resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse1.PrID != nil {
-						r.One.GitSource.One.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse1.PrID)))
-					} else {
-						r.One.GitSource.One.PrID = types.NumberNull()
-					}
-					r.One.GitSource.One.Ref = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse1.Ref)
-					if resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse1.RepoID.Str != nil {
-						r.One.GitSource.One.RepoID.Str = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse1.RepoID.Str)
-					}
-					if resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse1.RepoID.Number != nil {
-						if resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse1.RepoID.Number != nil {
-							r.One.GitSource.One.RepoID.Number = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse1.RepoID.Number)))
-						} else {
-							r.One.GitSource.One.RepoID.Number = types.NumberNull()
-						}
-					}
-					r.One.GitSource.One.Sha = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse1.Sha)
-					r.One.GitSource.One.Type = types.StringValue(string(resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse1.Type))
-				}
-				if resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse2 != nil {
-					r.One.GitSource.Two = &tfTypes.GetDeploymentDeploymentsResponse2{}
-					r.One.GitSource.Two.Org = types.StringValue(resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse2.Org)
-					if resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse2.PrID != nil {
-						r.One.GitSource.Two.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse2.PrID)))
-					} else {
-						r.One.GitSource.Two.PrID = types.NumberNull()
-					}
-					r.One.GitSource.Two.Ref = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse2.Ref)
-					r.One.GitSource.Two.Repo = types.StringValue(resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse2.Repo)
-					r.One.GitSource.Two.Sha = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse2.Sha)
-					r.One.GitSource.Two.Type = types.StringValue(string(resp.GetDeployment1.GitSource.GetDeploymentDeploymentsResponse2.Type))
-				}
-				if resp.GetDeployment1.GitSource.GetDeploymentDeployments3 != nil {
-					r.One.GitSource.Three = &tfTypes.GetDeploymentDeployments3{}
-					if resp.GetDeployment1.GitSource.GetDeploymentDeployments3.PrID != nil {
-						r.One.GitSource.Three.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment1.GitSource.GetDeploymentDeployments3.PrID)))
-					} else {
-						r.One.GitSource.Three.PrID = types.NumberNull()
-					}
-					if resp.GetDeployment1.GitSource.GetDeploymentDeployments3.ProjectID.Str != nil {
-						r.One.GitSource.Three.ProjectID.Str = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeploymentDeployments3.ProjectID.Str)
-					}
-					if resp.GetDeployment1.GitSource.GetDeploymentDeployments3.ProjectID.Number != nil {
-						if resp.GetDeployment1.GitSource.GetDeploymentDeployments3.ProjectID.Number != nil {
-							r.One.GitSource.Three.ProjectID.Number = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment1.GitSource.GetDeploymentDeployments3.ProjectID.Number)))
-						} else {
-							r.One.GitSource.Three.ProjectID.Number = types.NumberNull()
-						}
-					}
-					r.One.GitSource.Three.Ref = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeploymentDeployments3.Ref)
-					r.One.GitSource.Three.Sha = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeploymentDeployments3.Sha)
-					r.One.GitSource.Three.Type = types.StringValue(string(resp.GetDeployment1.GitSource.GetDeploymentDeployments3.Type))
-				}
-				if resp.GetDeployment1.GitSource.GetDeployment4 != nil {
-					r.One.GitSource.Four = &tfTypes.GetDeployment4{}
-					if resp.GetDeployment1.GitSource.GetDeployment4.PrID != nil {
-						r.One.GitSource.Four.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment1.GitSource.GetDeployment4.PrID)))
-					} else {
-						r.One.GitSource.Four.PrID = types.NumberNull()
-					}
-					r.One.GitSource.Four.Ref = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeployment4.Ref)
-					r.One.GitSource.Four.RepoUUID = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment4.RepoUUID)
-					r.One.GitSource.Four.Sha = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeployment4.Sha)
-					r.One.GitSource.Four.Type = types.StringValue(string(resp.GetDeployment1.GitSource.GetDeployment4.Type))
-					r.One.GitSource.Four.WorkspaceUUID = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeployment4.WorkspaceUUID)
-				}
-				if resp.GetDeployment1.GitSource.GetDeployment5 != nil {
-					r.One.GitSource.Five = &tfTypes.GetDeployment5{}
-					r.One.GitSource.Five.Owner = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment5.Owner)
-					if resp.GetDeployment1.GitSource.GetDeployment5.PrID != nil {
-						r.One.GitSource.Five.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment1.GitSource.GetDeployment5.PrID)))
-					} else {
-						r.One.GitSource.Five.PrID = types.NumberNull()
-					}
-					r.One.GitSource.Five.Ref = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeployment5.Ref)
-					r.One.GitSource.Five.Sha = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeployment5.Sha)
-					r.One.GitSource.Five.Slug = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment5.Slug)
-					r.One.GitSource.Five.Type = types.StringValue(string(resp.GetDeployment1.GitSource.GetDeployment5.Type))
-				}
-				if resp.GetDeployment1.GitSource.GetDeployment6 != nil {
-					r.One.GitSource.Six = &tfTypes.CreateDeployment6{}
-					r.One.GitSource.Six.GitURL = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment6.GitURL)
-					r.One.GitSource.Six.Ref = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment6.Ref)
-					r.One.GitSource.Six.Sha = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment6.Sha)
-					r.One.GitSource.Six.Type = types.StringValue(string(resp.GetDeployment1.GitSource.GetDeployment6.Type))
-				}
-				if resp.GetDeployment1.GitSource.GetDeployment7 != nil {
-					r.One.GitSource.Seven = &tfTypes.CreateDeployment7{}
-					r.One.GitSource.Seven.Org = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeployment7.Org)
-					r.One.GitSource.Seven.Ref = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment7.Ref)
-					r.One.GitSource.Seven.Repo = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeployment7.Repo)
-					r.One.GitSource.Seven.RepoID = types.NumberValue(big.NewFloat(float64(resp.GetDeployment1.GitSource.GetDeployment7.RepoID)))
-					r.One.GitSource.Seven.Sha = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment7.Sha)
-					r.One.GitSource.Seven.Type = types.StringValue(string(resp.GetDeployment1.GitSource.GetDeployment7.Type))
-				}
-				if resp.GetDeployment1.GitSource.GetDeployment8 != nil {
-					r.One.GitSource.Eight = &tfTypes.CreateDeployment8{}
-					r.One.GitSource.Eight.ProjectID = types.NumberValue(big.NewFloat(float64(resp.GetDeployment1.GitSource.GetDeployment8.ProjectID)))
-					r.One.GitSource.Eight.Ref = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment8.Ref)
-					r.One.GitSource.Eight.Sha = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment8.Sha)
-					r.One.GitSource.Eight.Type = types.StringValue(string(resp.GetDeployment1.GitSource.GetDeployment8.Type))
-				}
-				if resp.GetDeployment1.GitSource.GetDeployment9 != nil {
-					r.One.GitSource.Nine = &tfTypes.CreateDeployment9{}
-					r.One.GitSource.Nine.Owner = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeployment9.Owner)
-					r.One.GitSource.Nine.Ref = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment9.Ref)
-					r.One.GitSource.Nine.RepoUUID = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment9.RepoUUID)
-					r.One.GitSource.Nine.Sha = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment9.Sha)
-					r.One.GitSource.Nine.Slug = types.StringPointerValue(resp.GetDeployment1.GitSource.GetDeployment9.Slug)
-					r.One.GitSource.Nine.Type = types.StringValue(string(resp.GetDeployment1.GitSource.GetDeployment9.Type))
-					r.One.GitSource.Nine.WorkspaceUUID = types.StringValue(resp.GetDeployment1.GitSource.GetDeployment9.WorkspaceUUID)
-				}
-			}
-			r.One.ID = types.StringValue(resp.GetDeployment1.ID)
-			r.ID = r.One.ID
-			r.One.InspectorURL = types.StringPointerValue(resp.GetDeployment1.InspectorURL)
-			r.One.IsInConcurrentBuildsQueue = types.BoolValue(resp.GetDeployment1.IsInConcurrentBuildsQueue)
-			r.One.Lambdas = []tfTypes.CreateDeploymentLambdas{}
-			if len(r.One.Lambdas) > len(resp.GetDeployment1.Lambdas) {
-				r.One.Lambdas = r.One.Lambdas[:len(resp.GetDeployment1.Lambdas)]
-			}
-			for lambdasCount, lambdasItem := range resp.GetDeployment1.Lambdas {
-				var lambdas1 tfTypes.CreateDeploymentLambdas
+			for lambdasCount, lambdasItem := range resp.GetDeploymentResponseBody1.Lambdas {
+				var lambdas1 tfTypes.Lambdas
+				lambdas1.ID = types.StringValue(lambdasItem.ID)
 				if lambdasItem.CreatedAt != nil {
 					lambdas1.CreatedAt = types.NumberValue(big.NewFloat(float64(*lambdasItem.CreatedAt)))
 				} else {
 					lambdas1.CreatedAt = types.NumberNull()
 				}
 				lambdas1.Entrypoint = types.StringPointerValue(lambdasItem.Entrypoint)
-				lambdas1.ID = types.StringValue(lambdasItem.ID)
-				lambdas1.Output = []tfTypes.CreateDeploymentOutput{}
-				for outputCount, outputItem := range lambdasItem.Output {
-					var output1 tfTypes.CreateDeploymentOutput
-					output1.FunctionName = types.StringValue(outputItem.FunctionName)
-					output1.Path = types.StringValue(outputItem.Path)
-					if outputCount+1 > len(lambdas1.Output) {
-						lambdas1.Output = append(lambdas1.Output, output1)
-					} else {
-						lambdas1.Output[outputCount].FunctionName = output1.FunctionName
-						lambdas1.Output[outputCount].Path = output1.Path
-					}
-				}
 				if lambdasItem.ReadyState != nil {
 					lambdas1.ReadyState = types.StringValue(string(*lambdasItem.ReadyState))
 				} else {
@@ -2066,416 +2002,283 @@ func (r *DeploymentResourceModel) RefreshFromOperationsGetDeploymentResponseBody
 				} else {
 					lambdas1.ReadyStateAt = types.NumberNull()
 				}
+				lambdas1.Output = []tfTypes.CreateDeploymentOutput{}
+				for outputCount, outputItem := range lambdasItem.Output {
+					var output1 tfTypes.CreateDeploymentOutput
+					output1.Path = types.StringValue(outputItem.Path)
+					output1.FunctionName = types.StringValue(outputItem.FunctionName)
+					if outputCount+1 > len(lambdas1.Output) {
+						lambdas1.Output = append(lambdas1.Output, output1)
+					} else {
+						lambdas1.Output[outputCount].Path = output1.Path
+						lambdas1.Output[outputCount].FunctionName = output1.FunctionName
+					}
+				}
 				if lambdasCount+1 > len(r.One.Lambdas) {
 					r.One.Lambdas = append(r.One.Lambdas, lambdas1)
 				} else {
+					r.One.Lambdas[lambdasCount].ID = lambdas1.ID
 					r.One.Lambdas[lambdasCount].CreatedAt = lambdas1.CreatedAt
 					r.One.Lambdas[lambdasCount].Entrypoint = lambdas1.Entrypoint
-					r.One.Lambdas[lambdasCount].ID = lambdas1.ID
-					r.One.Lambdas[lambdasCount].Output = lambdas1.Output
 					r.One.Lambdas[lambdasCount].ReadyState = lambdas1.ReadyState
 					r.One.Lambdas[lambdasCount].ReadyStateAt = lambdas1.ReadyStateAt
+					r.One.Lambdas[lambdasCount].Output = lambdas1.Output
 				}
 			}
-			if len(resp.GetDeployment1.Meta) > 0 {
-				r.One.Meta = make(map[string]types.String)
-				for key, value := range resp.GetDeployment1.Meta {
-					r.One.Meta[key] = types.StringValue(value)
-				}
-			}
-			r.One.MonorepoManager = types.StringPointerValue(resp.GetDeployment1.MonorepoManager)
-			r.One.Name = types.StringValue(resp.GetDeployment1.Name)
-			r.Name = r.One.Name
-			r.One.OwnerID = types.StringValue(resp.GetDeployment1.OwnerID)
-			r.One.PassiveConnectConfigurationID = types.StringPointerValue(resp.GetDeployment1.PassiveConnectConfigurationID)
-			r.One.PassiveRegions = []types.String{}
-			for _, v := range resp.GetDeployment1.PassiveRegions {
-				r.One.PassiveRegions = append(r.One.PassiveRegions, types.StringValue(v))
-			}
-			r.One.Plan = types.StringValue(string(resp.GetDeployment1.Plan))
-			r.One.PreviewCommentsEnabled = types.BoolPointerValue(resp.GetDeployment1.PreviewCommentsEnabled)
-			r.PreviewCommentsEnabled = r.One.PreviewCommentsEnabled
-			if resp.GetDeployment1.Project == nil {
+			if resp.GetDeploymentResponseBody1.Project == nil {
 				r.One.Project = nil
 			} else {
-				r.One.Project = &tfTypes.GetDeploymentProject{}
-				r.One.Project.Framework = types.StringPointerValue(resp.GetDeployment1.Project.Framework)
-				r.One.Project.ID = types.StringValue(resp.GetDeployment1.Project.ID)
-				r.One.Project.Name = types.StringValue(resp.GetDeployment1.Project.Name)
+				r.One.Project = &tfTypes.GetDeploymentResponseBodyProject{}
+				r.One.Project.ID = types.StringValue(resp.GetDeploymentResponseBody1.Project.ID)
+				r.One.Project.Name = types.StringValue(resp.GetDeploymentResponseBody1.Project.Name)
+				r.One.Project.Framework = types.StringPointerValue(resp.GetDeploymentResponseBody1.Project.Framework)
 			}
-			r.One.ProjectID = types.StringValue(resp.GetDeployment1.ProjectID)
-			r.One.Public = types.BoolValue(resp.GetDeployment1.Public)
+			r.One.Public = types.BoolValue(resp.GetDeploymentResponseBody1.Public)
 			r.Public = r.One.Public
-			r.One.ReadyState = types.StringValue(string(resp.GetDeployment1.ReadyState))
-			if resp.GetDeployment1.ReadySubstate != nil {
-				r.One.ReadySubstate = types.StringValue(string(*resp.GetDeployment1.ReadySubstate))
+			r.One.ReadyState = types.StringValue(string(resp.GetDeploymentResponseBody1.ReadyState))
+			if resp.GetDeploymentResponseBody1.ReadySubstate != nil {
+				r.One.ReadySubstate = types.StringValue(string(*resp.GetDeploymentResponseBody1.ReadySubstate))
 			} else {
 				r.One.ReadySubstate = types.StringNull()
 			}
 			r.One.Regions = []types.String{}
-			for _, v := range resp.GetDeployment1.Regions {
+			for _, v := range resp.GetDeploymentResponseBody1.Regions {
 				r.One.Regions = append(r.One.Regions, types.StringValue(v))
 			}
-			r.One.Routes = []tfTypes.GetDeploymentRoutes{}
-			if len(r.One.Routes) > len(resp.GetDeployment1.Routes) {
-				r.One.Routes = r.One.Routes[:len(resp.GetDeployment1.Routes)]
-			}
-			for routesCount, routesItem := range resp.GetDeployment1.Routes {
-				var routes1 tfTypes.GetDeploymentRoutes
-				if routesItem.GetDeploymentDeploymentsResponse2001 != nil {
-					routes1.One = &tfTypes.GetDeploymentDeploymentsResponse2001{}
-					routes1.One.CaseSensitive = types.BoolPointerValue(routesItem.GetDeploymentDeploymentsResponse2001.CaseSensitive)
-					routes1.One.Check = types.BoolPointerValue(routesItem.GetDeploymentDeploymentsResponse2001.Check)
-					routes1.One.Continue = types.BoolPointerValue(routesItem.GetDeploymentDeploymentsResponse2001.Continue)
-					routes1.One.Dest = types.StringPointerValue(routesItem.GetDeploymentDeploymentsResponse2001.Dest)
-					routes1.One.Has = []tfTypes.GetDeploymentHas{}
-					for hasCount, hasItem := range routesItem.GetDeploymentDeploymentsResponse2001.Has {
-						var has1 tfTypes.GetDeploymentHas
-						if hasItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11 != nil {
-							has1.One = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11{}
-							has1.One.Type = types.StringValue(string(hasItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11.Type))
-							has1.One.Value = types.StringValue(hasItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11.Value)
-						}
-						if hasItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12 != nil {
-							has1.Two = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12{}
-							has1.Two.Key = types.StringValue(hasItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12.Key)
-							has1.Two.Type = types.StringValue(string(hasItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12.Type))
-							has1.Two.Value = types.StringPointerValue(hasItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12.Value)
-						}
-						if hasCount+1 > len(routes1.One.Has) {
-							routes1.One.Has = append(routes1.One.Has, has1)
-						} else {
-							routes1.One.Has[hasCount].One = has1.One
-							routes1.One.Has[hasCount].Two = has1.Two
-						}
-					}
-					if len(routesItem.GetDeploymentDeploymentsResponse2001.Headers) > 0 {
-						routes1.One.Headers = make(map[string]types.String)
-						for key2, value3 := range routesItem.GetDeploymentDeploymentsResponse2001.Headers {
-							routes1.One.Headers[key2] = types.StringValue(value3)
-						}
-					}
-					routes1.One.Important = types.BoolPointerValue(routesItem.GetDeploymentDeploymentsResponse2001.Important)
-					if routesItem.GetDeploymentDeploymentsResponse2001.Locale == nil {
-						routes1.One.Locale = nil
-					} else {
-						routes1.One.Locale = &tfTypes.GetDeploymentLocale{}
-						routes1.One.Locale.Cookie = types.StringPointerValue(routesItem.GetDeploymentDeploymentsResponse2001.Locale.Cookie)
-						if len(routesItem.GetDeploymentDeploymentsResponse2001.Locale.Redirect) > 0 {
-							routes1.One.Locale.Redirect = make(map[string]types.String)
-							for key3, value4 := range routesItem.GetDeploymentDeploymentsResponse2001.Locale.Redirect {
-								routes1.One.Locale.Redirect[key3] = types.StringValue(value4)
-							}
-						}
-					}
-					routes1.One.Methods = []types.String{}
-					for _, v := range routesItem.GetDeploymentDeploymentsResponse2001.Methods {
-						routes1.One.Methods = append(routes1.One.Methods, types.StringValue(v))
-					}
-					if routesItem.GetDeploymentDeploymentsResponse2001.Middleware != nil {
-						routes1.One.Middleware = types.NumberValue(big.NewFloat(float64(*routesItem.GetDeploymentDeploymentsResponse2001.Middleware)))
-					} else {
-						routes1.One.Middleware = types.NumberNull()
-					}
-					routes1.One.MiddlewarePath = types.StringPointerValue(routesItem.GetDeploymentDeploymentsResponse2001.MiddlewarePath)
-					routes1.One.MiddlewareRawSrc = []types.String{}
-					for _, v := range routesItem.GetDeploymentDeploymentsResponse2001.MiddlewareRawSrc {
-						routes1.One.MiddlewareRawSrc = append(routes1.One.MiddlewareRawSrc, types.StringValue(v))
-					}
-					routes1.One.Missing = []tfTypes.GetDeploymentHas{}
-					for missingCount, missingItem := range routesItem.GetDeploymentDeploymentsResponse2001.Missing {
-						var missing1 tfTypes.GetDeploymentHas
-						if missingItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 != nil {
-							missing1.One = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody11{}
-							missing1.One.Type = types.StringValue(string(missingItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1.Type))
-							missing1.One.Value = types.StringValue(missingItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody1.Value)
-						}
-						if missingItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 != nil {
-							missing1.Two = &tfTypes.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody12{}
-							missing1.Two.Key = types.StringValue(missingItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2.Key)
-							missing1.Two.Type = types.StringValue(string(missingItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2.Type))
-							missing1.Two.Value = types.StringPointerValue(missingItem.GetDeploymentDeploymentsResponse200ApplicationJSONResponseBody2.Value)
-						}
-						if missingCount+1 > len(routes1.One.Missing) {
-							routes1.One.Missing = append(routes1.One.Missing, missing1)
-						} else {
-							routes1.One.Missing[missingCount].One = missing1.One
-							routes1.One.Missing[missingCount].Two = missing1.Two
-						}
-					}
-					routes1.One.Override = types.BoolPointerValue(routesItem.GetDeploymentDeploymentsResponse2001.Override)
-					routes1.One.Src = types.StringValue(routesItem.GetDeploymentDeploymentsResponse2001.Src)
-					if routesItem.GetDeploymentDeploymentsResponse2001.Status != nil {
-						routes1.One.Status = types.NumberValue(big.NewFloat(float64(*routesItem.GetDeploymentDeploymentsResponse2001.Status)))
-					} else {
-						routes1.One.Status = types.NumberNull()
-					}
-				}
-				if routesItem.GetDeploymentDeploymentsResponse2002 != nil {
-					routes1.Two = &tfTypes.GetDeploymentDeploymentsResponse2002{}
-					routes1.Two.Dest = types.StringPointerValue(routesItem.GetDeploymentDeploymentsResponse2002.Dest)
-					routes1.Two.Handle = types.StringValue(string(routesItem.GetDeploymentDeploymentsResponse2002.Handle))
-					routes1.Two.Src = types.StringPointerValue(routesItem.GetDeploymentDeploymentsResponse2002.Src)
-					if routesItem.GetDeploymentDeploymentsResponse2002.Status != nil {
-						routes1.Two.Status = types.NumberValue(big.NewFloat(float64(*routesItem.GetDeploymentDeploymentsResponse2002.Status)))
-					} else {
-						routes1.Two.Status = types.NumberNull()
-					}
-				}
-				if routesItem.GetDeploymentDeploymentsResponse3 != nil {
-					routes1.Three = &tfTypes.GetDeploymentDeploymentsResponse3{}
-					routes1.Three.Continue = types.BoolValue(routesItem.GetDeploymentDeploymentsResponse3.Continue)
-					routes1.Three.Middleware = types.NumberValue(big.NewFloat(float64(routesItem.GetDeploymentDeploymentsResponse3.Middleware)))
-					routes1.Three.Src = types.StringValue(routesItem.GetDeploymentDeploymentsResponse3.Src)
-				}
-				if routesCount+1 > len(r.One.Routes) {
-					r.One.Routes = append(r.One.Routes, routes1)
-				} else {
-					r.One.Routes[routesCount].One = routes1.One
-					r.One.Routes[routesCount].Two = routes1.Two
-					r.One.Routes[routesCount].Three = routes1.Three
-				}
-			}
-			if resp.GetDeployment1.Source != nil {
-				r.One.Source = types.StringValue(string(*resp.GetDeployment1.Source))
+			if resp.GetDeploymentResponseBody1.Source != nil {
+				r.One.Source = types.StringValue(string(*resp.GetDeploymentResponseBody1.Source))
 			} else {
 				r.One.Source = types.StringNull()
 			}
-			if resp.GetDeployment1.Target != nil {
-				r.One.Target = types.StringValue(string(*resp.GetDeployment1.Target))
+			if resp.GetDeploymentResponseBody1.Target != nil {
+				r.One.Target = types.StringValue(string(*resp.GetDeploymentResponseBody1.Target))
 			} else {
 				r.One.Target = types.StringNull()
 			}
-			if resp.GetDeployment1.Team == nil {
+			if resp.GetDeploymentResponseBody1.Team == nil {
 				r.One.Team = nil
 			} else {
-				r.One.Team = &tfTypes.GetDeploymentTeam{}
-				r.One.Team.Avatar = types.StringPointerValue(resp.GetDeployment1.Team.Avatar)
-				r.One.Team.ID = types.StringValue(resp.GetDeployment1.Team.ID)
-				r.One.Team.Name = types.StringValue(resp.GetDeployment1.Team.Name)
-				r.One.Team.Slug = types.StringValue(resp.GetDeployment1.Team.Slug)
+				r.One.Team = &tfTypes.GetDeploymentResponseBodyTeam{}
+				r.One.Team.ID = types.StringValue(resp.GetDeploymentResponseBody1.Team.ID)
+				r.One.Team.Name = types.StringValue(resp.GetDeploymentResponseBody1.Team.Name)
+				r.One.Team.Slug = types.StringValue(resp.GetDeploymentResponseBody1.Team.Slug)
+				r.One.Team.Avatar = types.StringPointerValue(resp.GetDeploymentResponseBody1.Team.Avatar)
 			}
-			r.One.Type = types.StringValue(string(resp.GetDeployment1.Type))
-			r.One.URL = types.StringValue(resp.GetDeployment1.URL)
+			r.One.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.Type))
+			r.One.URL = types.StringValue(resp.GetDeploymentResponseBody1.URL)
 			r.URL = r.One.URL
 			r.One.UserAliases = []types.String{}
-			for _, v := range resp.GetDeployment1.UserAliases {
+			for _, v := range resp.GetDeploymentResponseBody1.UserAliases {
 				r.One.UserAliases = append(r.One.UserAliases, types.StringValue(v))
 			}
-			r.One.Version = types.NumberValue(big.NewFloat(float64(resp.GetDeployment1.Version)))
+			r.One.Version = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody1.Version)))
+			r.One.PreviewCommentsEnabled = types.BoolPointerValue(resp.GetDeploymentResponseBody1.PreviewCommentsEnabled)
+			r.PreviewCommentsEnabled = r.One.PreviewCommentsEnabled
+			r.One.Alias = []types.String{}
+			for _, v := range resp.GetDeploymentResponseBody1.Alias {
+				r.One.Alias = append(r.One.Alias, types.StringValue(v))
+			}
+			r.One.AliasAssigned = types.BoolValue(resp.GetDeploymentResponseBody1.AliasAssigned)
+			r.AliasAssigned = r.One.AliasAssigned
+			if resp.GetDeploymentResponseBody1.AliasError == nil {
+				r.One.AliasError = nil
+			} else {
+				r.One.AliasError = &tfTypes.AliasError{}
+				r.One.AliasError.Code = types.StringValue(resp.GetDeploymentResponseBody1.AliasError.Code)
+				r.One.AliasError.Message = types.StringValue(resp.GetDeploymentResponseBody1.AliasError.Message)
+			}
+			r.One.AliasFinal = types.StringPointerValue(resp.GetDeploymentResponseBody1.AliasFinal)
+			r.AliasFinal = r.One.AliasFinal
+			if resp.GetDeploymentResponseBody1.AliasWarning == nil {
+				r.One.AliasWarning = nil
+			} else {
+				r.One.AliasWarning = &tfTypes.AliasWarning{}
+				r.One.AliasWarning.Code = types.StringValue(resp.GetDeploymentResponseBody1.AliasWarning.Code)
+				r.One.AliasWarning.Message = types.StringValue(resp.GetDeploymentResponseBody1.AliasWarning.Message)
+				r.One.AliasWarning.Link = types.StringPointerValue(resp.GetDeploymentResponseBody1.AliasWarning.Link)
+				r.One.AliasWarning.Action = types.StringPointerValue(resp.GetDeploymentResponseBody1.AliasWarning.Action)
+			}
+			r.One.AutoAssignCustomDomains = types.BoolPointerValue(resp.GetDeploymentResponseBody1.AutoAssignCustomDomains)
+			r.AutoAssignCustomDomains = r.One.AutoAssignCustomDomains
+			r.One.AutomaticAliases = []types.String{}
+			for _, v := range resp.GetDeploymentResponseBody1.AutomaticAliases {
+				r.One.AutomaticAliases = append(r.One.AutomaticAliases, types.StringValue(v))
+			}
+			r.One.BootedAt = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody1.BootedAt)))
+			if resp.GetDeploymentResponseBody1.BuildErrorAt != nil {
+				r.One.BuildErrorAt = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody1.BuildErrorAt)))
+			} else {
+				r.One.BuildErrorAt = types.NumberNull()
+			}
+			r.One.BuildingAt = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody1.BuildingAt)))
+			if resp.GetDeploymentResponseBody1.CanceledAt != nil {
+				r.One.CanceledAt = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody1.CanceledAt)))
+			} else {
+				r.One.CanceledAt = types.NumberNull()
+			}
+			if resp.GetDeploymentResponseBody1.ChecksState != nil {
+				r.One.ChecksState = types.StringValue(string(*resp.GetDeploymentResponseBody1.ChecksState))
+			} else {
+				r.One.ChecksState = types.StringNull()
+			}
+			if resp.GetDeploymentResponseBody1.ChecksConclusion != nil {
+				r.One.ChecksConclusion = types.StringValue(string(*resp.GetDeploymentResponseBody1.ChecksConclusion))
+			} else {
+				r.One.ChecksConclusion = types.StringNull()
+			}
+			r.One.CreatedAt = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody1.CreatedAt)))
+			r.One.Creator.UID = types.StringValue(resp.GetDeploymentResponseBody1.Creator.UID)
+			r.One.Creator.Username = types.StringPointerValue(resp.GetDeploymentResponseBody1.Creator.Username)
+			r.One.Creator.Avatar = types.StringPointerValue(resp.GetDeploymentResponseBody1.Creator.Avatar)
+			r.One.ErrorCode = types.StringPointerValue(resp.GetDeploymentResponseBody1.ErrorCode)
+			r.ErrorCode = r.One.ErrorCode
+			r.One.ErrorLink = types.StringPointerValue(resp.GetDeploymentResponseBody1.ErrorLink)
+			r.ErrorLink = r.One.ErrorLink
+			r.One.ErrorMessage = types.StringPointerValue(resp.GetDeploymentResponseBody1.ErrorMessage)
+			r.ErrorMessage = r.One.ErrorMessage
+			r.One.ErrorStep = types.StringPointerValue(resp.GetDeploymentResponseBody1.ErrorStep)
+			r.ErrorStep = r.One.ErrorStep
+			r.One.PassiveRegions = []types.String{}
+			for _, v := range resp.GetDeploymentResponseBody1.PassiveRegions {
+				r.One.PassiveRegions = append(r.One.PassiveRegions, types.StringValue(v))
+			}
+			if resp.GetDeploymentResponseBody1.GitSource == nil {
+				r.One.GitSource = nil
+			} else {
+				r.One.GitSource = &tfTypes.GetDeploymentResponseBodyGitSource{}
+				if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments1 != nil {
+					r.One.GitSource.One = &tfTypes.GetDeploymentGitSourceDeployments1{}
+					r.One.GitSource.One.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments1.Type))
+					if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments1.RepoID.Str != nil {
+						r.One.GitSource.One.RepoID.Str = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments1.RepoID.Str)
+					}
+					if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments1.RepoID.Number != nil {
+						if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments1.RepoID.Number != nil {
+							r.One.GitSource.One.RepoID.Number = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments1.RepoID.Number)))
+						} else {
+							r.One.GitSource.One.RepoID.Number = types.NumberNull()
+						}
+					}
+					r.One.GitSource.One.Ref = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments1.Ref)
+					r.One.GitSource.One.Sha = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments1.Sha)
+					if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments1.PrID != nil {
+						r.One.GitSource.One.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments1.PrID)))
+					} else {
+						r.One.GitSource.One.PrID = types.NumberNull()
+					}
+				}
+				if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments2 != nil {
+					r.One.GitSource.Two = &tfTypes.GetDeploymentGitSourceDeployments2{}
+					r.One.GitSource.Two.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments2.Type))
+					r.One.GitSource.Two.Org = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments2.Org)
+					r.One.GitSource.Two.Repo = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments2.Repo)
+					r.One.GitSource.Two.Ref = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments2.Ref)
+					r.One.GitSource.Two.Sha = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments2.Sha)
+					if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments2.PrID != nil {
+						r.One.GitSource.Two.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments2.PrID)))
+					} else {
+						r.One.GitSource.Two.PrID = types.NumberNull()
+					}
+				}
+				if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments3 != nil {
+					r.One.GitSource.Three = &tfTypes.GetDeploymentGitSourceDeployments3{}
+					r.One.GitSource.Three.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments3.Type))
+					if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments3.ProjectID.Str != nil {
+						r.One.GitSource.Three.ProjectID.Str = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments3.ProjectID.Str)
+					}
+					if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments3.ProjectID.Number != nil {
+						if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments3.ProjectID.Number != nil {
+							r.One.GitSource.Three.ProjectID.Number = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments3.ProjectID.Number)))
+						} else {
+							r.One.GitSource.Three.ProjectID.Number = types.NumberNull()
+						}
+					}
+					r.One.GitSource.Three.Ref = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments3.Ref)
+					r.One.GitSource.Three.Sha = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments3.Sha)
+					if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments3.PrID != nil {
+						r.One.GitSource.Three.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments3.PrID)))
+					} else {
+						r.One.GitSource.Three.PrID = types.NumberNull()
+					}
+				}
+				if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments4 != nil {
+					r.One.GitSource.Four = &tfTypes.GetDeploymentGitSourceDeployments4{}
+					r.One.GitSource.Four.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments4.Type))
+					r.One.GitSource.Four.WorkspaceUUID = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments4.WorkspaceUUID)
+					r.One.GitSource.Four.RepoUUID = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments4.RepoUUID)
+					r.One.GitSource.Four.Ref = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments4.Ref)
+					r.One.GitSource.Four.Sha = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments4.Sha)
+					if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments4.PrID != nil {
+						r.One.GitSource.Four.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments4.PrID)))
+					} else {
+						r.One.GitSource.Four.PrID = types.NumberNull()
+					}
+				}
+				if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments5 != nil {
+					r.One.GitSource.Five = &tfTypes.GetDeploymentGitSourceDeployments5{}
+					r.One.GitSource.Five.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments5.Type))
+					r.One.GitSource.Five.Owner = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments5.Owner)
+					r.One.GitSource.Five.Slug = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments5.Slug)
+					r.One.GitSource.Five.Ref = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments5.Ref)
+					r.One.GitSource.Five.Sha = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments5.Sha)
+					if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments5.PrID != nil {
+						r.One.GitSource.Five.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments5.PrID)))
+					} else {
+						r.One.GitSource.Five.PrID = types.NumberNull()
+					}
+				}
+				if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments6 != nil {
+					r.One.GitSource.Six = &tfTypes.CreateDeploymentGitSource6{}
+					r.One.GitSource.Six.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments6.Type))
+					r.One.GitSource.Six.Ref = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments6.Ref)
+					r.One.GitSource.Six.Sha = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments6.Sha)
+					r.One.GitSource.Six.GitURL = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments6.GitURL)
+				}
+				if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments7 != nil {
+					r.One.GitSource.Seven = &tfTypes.CreateDeploymentGitSource7{}
+					r.One.GitSource.Seven.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments7.Type))
+					r.One.GitSource.Seven.Ref = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments7.Ref)
+					r.One.GitSource.Seven.Sha = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments7.Sha)
+					r.One.GitSource.Seven.RepoID = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments7.RepoID)))
+					r.One.GitSource.Seven.Org = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments7.Org)
+					r.One.GitSource.Seven.Repo = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments7.Repo)
+				}
+				if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments8 != nil {
+					r.One.GitSource.Eight = &tfTypes.CreateDeploymentGitSource8{}
+					r.One.GitSource.Eight.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments8.Type))
+					r.One.GitSource.Eight.Ref = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments8.Ref)
+					r.One.GitSource.Eight.Sha = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments8.Sha)
+					r.One.GitSource.Eight.ProjectID = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments8.ProjectID)))
+				}
+				if resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments9 != nil {
+					r.One.GitSource.Nine = &tfTypes.CreateDeploymentGitSource9{}
+					r.One.GitSource.Nine.Type = types.StringValue(string(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments9.Type))
+					r.One.GitSource.Nine.Ref = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments9.Ref)
+					r.One.GitSource.Nine.Sha = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments9.Sha)
+					r.One.GitSource.Nine.Owner = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments9.Owner)
+					r.One.GitSource.Nine.Slug = types.StringPointerValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments9.Slug)
+					r.One.GitSource.Nine.WorkspaceUUID = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments9.WorkspaceUUID)
+					r.One.GitSource.Nine.RepoUUID = types.StringValue(resp.GetDeploymentResponseBody1.GitSource.GetDeploymentGitSourceDeployments9.RepoUUID)
+				}
+			}
+			r.One.ID = types.StringValue(resp.GetDeploymentResponseBody1.ID)
+			r.ID = r.One.ID
 		}
-		if resp.GetDeployment2 != nil {
-			r.Two = &tfTypes.GetDeployment2{}
-			r.Two.Alias = []types.String{}
-			for _, v := range resp.GetDeployment2.Alias {
-				r.Two.Alias = append(r.Two.Alias, types.StringValue(v))
+		if resp.GetDeploymentResponseBody2 != nil {
+			r.Two = &tfTypes.GetDeploymentResponseBody2{}
+			r.Two.Lambdas = []tfTypes.Lambdas{}
+			if len(r.Two.Lambdas) > len(resp.GetDeploymentResponseBody2.Lambdas) {
+				r.Two.Lambdas = r.Two.Lambdas[:len(resp.GetDeploymentResponseBody2.Lambdas)]
 			}
-			r.Two.AliasAssigned = types.BoolValue(resp.GetDeployment2.AliasAssigned)
-			r.AliasAssigned = r.Two.AliasAssigned
-			if resp.GetDeployment2.AliasError == nil {
-				r.Two.AliasError = nil
-			} else {
-				r.Two.AliasError = &tfTypes.CreateDeploymentAliasError{}
-				r.Two.AliasError.Code = types.StringValue(resp.GetDeployment2.AliasError.Code)
-				r.Two.AliasError.Message = types.StringValue(resp.GetDeployment2.AliasError.Message)
-			}
-			r.Two.AliasFinal = types.StringPointerValue(resp.GetDeployment2.AliasFinal)
-			r.AliasFinal = r.Two.AliasFinal
-			if resp.GetDeployment2.AliasWarning == nil {
-				r.Two.AliasWarning = nil
-			} else {
-				r.Two.AliasWarning = &tfTypes.CreateDeploymentAliasWarning{}
-				r.Two.AliasWarning.Action = types.StringPointerValue(resp.GetDeployment2.AliasWarning.Action)
-				r.Two.AliasWarning.Code = types.StringValue(resp.GetDeployment2.AliasWarning.Code)
-				r.Two.AliasWarning.Link = types.StringPointerValue(resp.GetDeployment2.AliasWarning.Link)
-				r.Two.AliasWarning.Message = types.StringValue(resp.GetDeployment2.AliasWarning.Message)
-			}
-			r.Two.AutoAssignCustomDomains = types.BoolPointerValue(resp.GetDeployment2.AutoAssignCustomDomains)
-			r.AutoAssignCustomDomains = r.Two.AutoAssignCustomDomains
-			r.Two.AutomaticAliases = []types.String{}
-			for _, v := range resp.GetDeployment2.AutomaticAliases {
-				r.Two.AutomaticAliases = append(r.Two.AutomaticAliases, types.StringValue(v))
-			}
-			r.Two.BootedAt = types.NumberValue(big.NewFloat(float64(resp.GetDeployment2.BootedAt)))
-			if resp.GetDeployment2.BuildErrorAt != nil {
-				r.Two.BuildErrorAt = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment2.BuildErrorAt)))
-			} else {
-				r.Two.BuildErrorAt = types.NumberNull()
-			}
-			r.Two.BuildingAt = types.NumberValue(big.NewFloat(float64(resp.GetDeployment2.BuildingAt)))
-			if resp.GetDeployment2.CanceledAt != nil {
-				r.Two.CanceledAt = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment2.CanceledAt)))
-			} else {
-				r.Two.CanceledAt = types.NumberNull()
-			}
-			if resp.GetDeployment2.ChecksConclusion != nil {
-				r.Two.ChecksConclusion = types.StringValue(string(*resp.GetDeployment2.ChecksConclusion))
-			} else {
-				r.Two.ChecksConclusion = types.StringNull()
-			}
-			if resp.GetDeployment2.ChecksState != nil {
-				r.Two.ChecksState = types.StringValue(string(*resp.GetDeployment2.ChecksState))
-			} else {
-				r.Two.ChecksState = types.StringNull()
-			}
-			r.Two.CreatedAt = types.NumberValue(big.NewFloat(float64(resp.GetDeployment2.CreatedAt)))
-			r.Two.Creator.Avatar = types.StringPointerValue(resp.GetDeployment2.Creator.Avatar)
-			r.Two.Creator.UID = types.StringValue(resp.GetDeployment2.Creator.UID)
-			r.Two.Creator.Username = types.StringPointerValue(resp.GetDeployment2.Creator.Username)
-			r.Two.ErrorCode = types.StringPointerValue(resp.GetDeployment2.ErrorCode)
-			r.ErrorCode = r.Two.ErrorCode
-			r.Two.ErrorLink = types.StringPointerValue(resp.GetDeployment2.ErrorLink)
-			r.ErrorLink = r.Two.ErrorLink
-			r.Two.ErrorMessage = types.StringPointerValue(resp.GetDeployment2.ErrorMessage)
-			r.ErrorMessage = r.Two.ErrorMessage
-			r.Two.ErrorStep = types.StringPointerValue(resp.GetDeployment2.ErrorStep)
-			r.ErrorStep = r.Two.ErrorStep
-			if resp.GetDeployment2.GitSource == nil {
-				r.Two.GitSource = nil
-			} else {
-				r.Two.GitSource = &tfTypes.GetDeploymentGitSource{}
-				if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON1 != nil {
-					r.Two.GitSource.One = &tfTypes.GetDeploymentDeploymentsResponse1{}
-					if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON1.PrID != nil {
-						r.Two.GitSource.One.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON1.PrID)))
-					} else {
-						r.Two.GitSource.One.PrID = types.NumberNull()
-					}
-					r.Two.GitSource.One.Ref = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON1.Ref)
-					if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON1.RepoID.Str != nil {
-						r.Two.GitSource.One.RepoID.Str = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON1.RepoID.Str)
-					}
-					if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON1.RepoID.Number != nil {
-						if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON1.RepoID.Number != nil {
-							r.Two.GitSource.One.RepoID.Number = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON1.RepoID.Number)))
-						} else {
-							r.Two.GitSource.One.RepoID.Number = types.NumberNull()
-						}
-					}
-					r.Two.GitSource.One.Sha = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON1.Sha)
-					r.Two.GitSource.One.Type = types.StringValue(string(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON1.Type))
-				}
-				if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON2 != nil {
-					r.Two.GitSource.Two = &tfTypes.GetDeploymentDeploymentsResponse2{}
-					r.Two.GitSource.Two.Org = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON2.Org)
-					if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON2.PrID != nil {
-						r.Two.GitSource.Two.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON2.PrID)))
-					} else {
-						r.Two.GitSource.Two.PrID = types.NumberNull()
-					}
-					r.Two.GitSource.Two.Ref = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON2.Ref)
-					r.Two.GitSource.Two.Repo = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON2.Repo)
-					r.Two.GitSource.Two.Sha = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON2.Sha)
-					r.Two.GitSource.Two.Type = types.StringValue(string(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse200ApplicationJSON2.Type))
-				}
-				if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse2003 != nil {
-					r.Two.GitSource.Three = &tfTypes.GetDeploymentDeployments3{}
-					if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse2003.PrID != nil {
-						r.Two.GitSource.Three.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse2003.PrID)))
-					} else {
-						r.Two.GitSource.Three.PrID = types.NumberNull()
-					}
-					if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse2003.ProjectID.Str != nil {
-						r.Two.GitSource.Three.ProjectID.Str = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse2003.ProjectID.Str)
-					}
-					if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse2003.ProjectID.Number != nil {
-						if resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse2003.ProjectID.Number != nil {
-							r.Two.GitSource.Three.ProjectID.Number = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse2003.ProjectID.Number)))
-						} else {
-							r.Two.GitSource.Three.ProjectID.Number = types.NumberNull()
-						}
-					}
-					r.Two.GitSource.Three.Ref = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse2003.Ref)
-					r.Two.GitSource.Three.Sha = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse2003.Sha)
-					r.Two.GitSource.Three.Type = types.StringValue(string(resp.GetDeployment2.GitSource.GetDeploymentDeploymentsResponse2003.Type))
-				}
-				if resp.GetDeployment2.GitSource.GetDeploymentDeployments4 != nil {
-					r.Two.GitSource.Four = &tfTypes.GetDeployment4{}
-					if resp.GetDeployment2.GitSource.GetDeploymentDeployments4.PrID != nil {
-						r.Two.GitSource.Four.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment2.GitSource.GetDeploymentDeployments4.PrID)))
-					} else {
-						r.Two.GitSource.Four.PrID = types.NumberNull()
-					}
-					r.Two.GitSource.Four.Ref = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments4.Ref)
-					r.Two.GitSource.Four.RepoUUID = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments4.RepoUUID)
-					r.Two.GitSource.Four.Sha = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments4.Sha)
-					r.Two.GitSource.Four.Type = types.StringValue(string(resp.GetDeployment2.GitSource.GetDeploymentDeployments4.Type))
-					r.Two.GitSource.Four.WorkspaceUUID = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments4.WorkspaceUUID)
-				}
-				if resp.GetDeployment2.GitSource.GetDeploymentDeployments5 != nil {
-					r.Two.GitSource.Five = &tfTypes.GetDeployment5{}
-					r.Two.GitSource.Five.Owner = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments5.Owner)
-					if resp.GetDeployment2.GitSource.GetDeploymentDeployments5.PrID != nil {
-						r.Two.GitSource.Five.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeployment2.GitSource.GetDeploymentDeployments5.PrID)))
-					} else {
-						r.Two.GitSource.Five.PrID = types.NumberNull()
-					}
-					r.Two.GitSource.Five.Ref = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments5.Ref)
-					r.Two.GitSource.Five.Sha = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments5.Sha)
-					r.Two.GitSource.Five.Slug = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments5.Slug)
-					r.Two.GitSource.Five.Type = types.StringValue(string(resp.GetDeployment2.GitSource.GetDeploymentDeployments5.Type))
-				}
-				if resp.GetDeployment2.GitSource.GetDeploymentDeployments6 != nil {
-					r.Two.GitSource.Six = &tfTypes.CreateDeployment6{}
-					r.Two.GitSource.Six.GitURL = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments6.GitURL)
-					r.Two.GitSource.Six.Ref = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments6.Ref)
-					r.Two.GitSource.Six.Sha = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments6.Sha)
-					r.Two.GitSource.Six.Type = types.StringValue(string(resp.GetDeployment2.GitSource.GetDeploymentDeployments6.Type))
-				}
-				if resp.GetDeployment2.GitSource.GetDeploymentDeployments7 != nil {
-					r.Two.GitSource.Seven = &tfTypes.CreateDeployment7{}
-					r.Two.GitSource.Seven.Org = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments7.Org)
-					r.Two.GitSource.Seven.Ref = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments7.Ref)
-					r.Two.GitSource.Seven.Repo = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments7.Repo)
-					r.Two.GitSource.Seven.RepoID = types.NumberValue(big.NewFloat(float64(resp.GetDeployment2.GitSource.GetDeploymentDeployments7.RepoID)))
-					r.Two.GitSource.Seven.Sha = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments7.Sha)
-					r.Two.GitSource.Seven.Type = types.StringValue(string(resp.GetDeployment2.GitSource.GetDeploymentDeployments7.Type))
-				}
-				if resp.GetDeployment2.GitSource.GetDeploymentDeployments8 != nil {
-					r.Two.GitSource.Eight = &tfTypes.CreateDeployment8{}
-					r.Two.GitSource.Eight.ProjectID = types.NumberValue(big.NewFloat(float64(resp.GetDeployment2.GitSource.GetDeploymentDeployments8.ProjectID)))
-					r.Two.GitSource.Eight.Ref = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments8.Ref)
-					r.Two.GitSource.Eight.Sha = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments8.Sha)
-					r.Two.GitSource.Eight.Type = types.StringValue(string(resp.GetDeployment2.GitSource.GetDeploymentDeployments8.Type))
-				}
-				if resp.GetDeployment2.GitSource.GetDeploymentDeployments9 != nil {
-					r.Two.GitSource.Nine = &tfTypes.CreateDeployment9{}
-					r.Two.GitSource.Nine.Owner = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments9.Owner)
-					r.Two.GitSource.Nine.Ref = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments9.Ref)
-					r.Two.GitSource.Nine.RepoUUID = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments9.RepoUUID)
-					r.Two.GitSource.Nine.Sha = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments9.Sha)
-					r.Two.GitSource.Nine.Slug = types.StringPointerValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments9.Slug)
-					r.Two.GitSource.Nine.Type = types.StringValue(string(resp.GetDeployment2.GitSource.GetDeploymentDeployments9.Type))
-					r.Two.GitSource.Nine.WorkspaceUUID = types.StringValue(resp.GetDeployment2.GitSource.GetDeploymentDeployments9.WorkspaceUUID)
-				}
-			}
-			r.Two.ID = types.StringValue(resp.GetDeployment2.ID)
-			r.ID = r.Two.ID
-			r.Two.Lambdas = []tfTypes.CreateDeploymentLambdas{}
-			if len(r.Two.Lambdas) > len(resp.GetDeployment2.Lambdas) {
-				r.Two.Lambdas = r.Two.Lambdas[:len(resp.GetDeployment2.Lambdas)]
-			}
-			for lambdasCount1, lambdasItem1 := range resp.GetDeployment2.Lambdas {
-				var lambdas3 tfTypes.CreateDeploymentLambdas
+			for lambdasCount1, lambdasItem1 := range resp.GetDeploymentResponseBody2.Lambdas {
+				var lambdas3 tfTypes.Lambdas
+				lambdas3.ID = types.StringValue(lambdasItem1.ID)
 				if lambdasItem1.CreatedAt != nil {
 					lambdas3.CreatedAt = types.NumberValue(big.NewFloat(float64(*lambdasItem1.CreatedAt)))
 				} else {
 					lambdas3.CreatedAt = types.NumberNull()
 				}
 				lambdas3.Entrypoint = types.StringPointerValue(lambdasItem1.Entrypoint)
-				lambdas3.ID = types.StringValue(lambdasItem1.ID)
-				lambdas3.Output = []tfTypes.CreateDeploymentOutput{}
-				for outputCount1, outputItem1 := range lambdasItem1.Output {
-					var output3 tfTypes.CreateDeploymentOutput
-					output3.FunctionName = types.StringValue(outputItem1.FunctionName)
-					output3.Path = types.StringValue(outputItem1.Path)
-					if outputCount1+1 > len(lambdas3.Output) {
-						lambdas3.Output = append(lambdas3.Output, output3)
-					} else {
-						lambdas3.Output[outputCount1].FunctionName = output3.FunctionName
-						lambdas3.Output[outputCount1].Path = output3.Path
-					}
-				}
 				if lambdasItem1.ReadyState != nil {
 					lambdas3.ReadyState = types.StringValue(string(*lambdasItem1.ReadyState))
 				} else {
@@ -2486,78 +2289,275 @@ func (r *DeploymentResourceModel) RefreshFromOperationsGetDeploymentResponseBody
 				} else {
 					lambdas3.ReadyStateAt = types.NumberNull()
 				}
+				lambdas3.Output = []tfTypes.CreateDeploymentOutput{}
+				for outputCount1, outputItem1 := range lambdasItem1.Output {
+					var output3 tfTypes.CreateDeploymentOutput
+					output3.Path = types.StringValue(outputItem1.Path)
+					output3.FunctionName = types.StringValue(outputItem1.FunctionName)
+					if outputCount1+1 > len(lambdas3.Output) {
+						lambdas3.Output = append(lambdas3.Output, output3)
+					} else {
+						lambdas3.Output[outputCount1].Path = output3.Path
+						lambdas3.Output[outputCount1].FunctionName = output3.FunctionName
+					}
+				}
 				if lambdasCount1+1 > len(r.Two.Lambdas) {
 					r.Two.Lambdas = append(r.Two.Lambdas, lambdas3)
 				} else {
+					r.Two.Lambdas[lambdasCount1].ID = lambdas3.ID
 					r.Two.Lambdas[lambdasCount1].CreatedAt = lambdas3.CreatedAt
 					r.Two.Lambdas[lambdasCount1].Entrypoint = lambdas3.Entrypoint
-					r.Two.Lambdas[lambdasCount1].ID = lambdas3.ID
-					r.Two.Lambdas[lambdasCount1].Output = lambdas3.Output
 					r.Two.Lambdas[lambdasCount1].ReadyState = lambdas3.ReadyState
 					r.Two.Lambdas[lambdasCount1].ReadyStateAt = lambdas3.ReadyStateAt
+					r.Two.Lambdas[lambdasCount1].Output = lambdas3.Output
 				}
 			}
-			if len(resp.GetDeployment2.Meta) > 0 {
+			r.Two.Name = types.StringValue(resp.GetDeploymentResponseBody2.Name)
+			r.Name = r.Two.Name
+			if len(resp.GetDeploymentResponseBody2.Meta) > 0 {
 				r.Two.Meta = make(map[string]types.String)
-				for key5, value7 := range resp.GetDeployment2.Meta {
+				for key5, value7 := range resp.GetDeploymentResponseBody2.Meta {
 					r.Two.Meta[key5] = types.StringValue(value7)
 				}
 			}
-			r.Two.Name = types.StringValue(resp.GetDeployment2.Name)
-			r.Name = r.Two.Name
-			r.Two.PassiveRegions = []types.String{}
-			for _, v := range resp.GetDeployment2.PassiveRegions {
-				r.Two.PassiveRegions = append(r.Two.PassiveRegions, types.StringValue(v))
-			}
-			r.Two.PreviewCommentsEnabled = types.BoolPointerValue(resp.GetDeployment2.PreviewCommentsEnabled)
-			r.PreviewCommentsEnabled = r.Two.PreviewCommentsEnabled
-			if resp.GetDeployment2.Project == nil {
+			if resp.GetDeploymentResponseBody2.Project == nil {
 				r.Two.Project = nil
 			} else {
-				r.Two.Project = &tfTypes.GetDeploymentProject{}
-				r.Two.Project.Framework = types.StringPointerValue(resp.GetDeployment2.Project.Framework)
-				r.Two.Project.ID = types.StringValue(resp.GetDeployment2.Project.ID)
-				r.Two.Project.Name = types.StringValue(resp.GetDeployment2.Project.Name)
+				r.Two.Project = &tfTypes.GetDeploymentResponseBodyProject{}
+				r.Two.Project.ID = types.StringValue(resp.GetDeploymentResponseBody2.Project.ID)
+				r.Two.Project.Name = types.StringValue(resp.GetDeploymentResponseBody2.Project.Name)
+				r.Two.Project.Framework = types.StringPointerValue(resp.GetDeploymentResponseBody2.Project.Framework)
 			}
-			r.Two.Public = types.BoolValue(resp.GetDeployment2.Public)
+			r.Two.Public = types.BoolValue(resp.GetDeploymentResponseBody2.Public)
 			r.Public = r.Two.Public
-			r.Two.ReadyState = types.StringValue(string(resp.GetDeployment2.ReadyState))
-			if resp.GetDeployment2.ReadySubstate != nil {
-				r.Two.ReadySubstate = types.StringValue(string(*resp.GetDeployment2.ReadySubstate))
+			r.Two.ReadyState = types.StringValue(string(resp.GetDeploymentResponseBody2.ReadyState))
+			if resp.GetDeploymentResponseBody2.ReadySubstate != nil {
+				r.Two.ReadySubstate = types.StringValue(string(*resp.GetDeploymentResponseBody2.ReadySubstate))
 			} else {
 				r.Two.ReadySubstate = types.StringNull()
 			}
 			r.Two.Regions = []types.String{}
-			for _, v := range resp.GetDeployment2.Regions {
+			for _, v := range resp.GetDeploymentResponseBody2.Regions {
 				r.Two.Regions = append(r.Two.Regions, types.StringValue(v))
 			}
-			if resp.GetDeployment2.Source != nil {
-				r.Two.Source = types.StringValue(string(*resp.GetDeployment2.Source))
+			if resp.GetDeploymentResponseBody2.Source != nil {
+				r.Two.Source = types.StringValue(string(*resp.GetDeploymentResponseBody2.Source))
 			} else {
 				r.Two.Source = types.StringNull()
 			}
-			if resp.GetDeployment2.Target != nil {
-				r.Two.Target = types.StringValue(string(*resp.GetDeployment2.Target))
+			if resp.GetDeploymentResponseBody2.Target != nil {
+				r.Two.Target = types.StringValue(string(*resp.GetDeploymentResponseBody2.Target))
 			} else {
 				r.Two.Target = types.StringNull()
 			}
-			if resp.GetDeployment2.Team == nil {
+			if resp.GetDeploymentResponseBody2.Team == nil {
 				r.Two.Team = nil
 			} else {
-				r.Two.Team = &tfTypes.GetDeploymentTeam{}
-				r.Two.Team.Avatar = types.StringPointerValue(resp.GetDeployment2.Team.Avatar)
-				r.Two.Team.ID = types.StringValue(resp.GetDeployment2.Team.ID)
-				r.Two.Team.Name = types.StringValue(resp.GetDeployment2.Team.Name)
-				r.Two.Team.Slug = types.StringValue(resp.GetDeployment2.Team.Slug)
+				r.Two.Team = &tfTypes.GetDeploymentResponseBodyTeam{}
+				r.Two.Team.ID = types.StringValue(resp.GetDeploymentResponseBody2.Team.ID)
+				r.Two.Team.Name = types.StringValue(resp.GetDeploymentResponseBody2.Team.Name)
+				r.Two.Team.Slug = types.StringValue(resp.GetDeploymentResponseBody2.Team.Slug)
+				r.Two.Team.Avatar = types.StringPointerValue(resp.GetDeploymentResponseBody2.Team.Avatar)
 			}
-			r.Two.Type = types.StringValue(string(resp.GetDeployment2.Type))
-			r.Two.URL = types.StringValue(resp.GetDeployment2.URL)
+			r.Two.Type = types.StringValue(string(resp.GetDeploymentResponseBody2.Type))
+			r.Two.URL = types.StringValue(resp.GetDeploymentResponseBody2.URL)
 			r.URL = r.Two.URL
 			r.Two.UserAliases = []types.String{}
-			for _, v := range resp.GetDeployment2.UserAliases {
+			for _, v := range resp.GetDeploymentResponseBody2.UserAliases {
 				r.Two.UserAliases = append(r.Two.UserAliases, types.StringValue(v))
 			}
-			r.Two.Version = types.NumberValue(big.NewFloat(float64(resp.GetDeployment2.Version)))
+			r.Two.Version = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody2.Version)))
+			r.Two.PreviewCommentsEnabled = types.BoolPointerValue(resp.GetDeploymentResponseBody2.PreviewCommentsEnabled)
+			r.PreviewCommentsEnabled = r.Two.PreviewCommentsEnabled
+			r.Two.Alias = []types.String{}
+			for _, v := range resp.GetDeploymentResponseBody2.Alias {
+				r.Two.Alias = append(r.Two.Alias, types.StringValue(v))
+			}
+			r.Two.AliasAssigned = types.BoolValue(resp.GetDeploymentResponseBody2.AliasAssigned)
+			r.AliasAssigned = r.Two.AliasAssigned
+			if resp.GetDeploymentResponseBody2.AliasError == nil {
+				r.Two.AliasError = nil
+			} else {
+				r.Two.AliasError = &tfTypes.AliasError{}
+				r.Two.AliasError.Code = types.StringValue(resp.GetDeploymentResponseBody2.AliasError.Code)
+				r.Two.AliasError.Message = types.StringValue(resp.GetDeploymentResponseBody2.AliasError.Message)
+			}
+			r.Two.AliasFinal = types.StringPointerValue(resp.GetDeploymentResponseBody2.AliasFinal)
+			r.AliasFinal = r.Two.AliasFinal
+			if resp.GetDeploymentResponseBody2.AliasWarning == nil {
+				r.Two.AliasWarning = nil
+			} else {
+				r.Two.AliasWarning = &tfTypes.AliasWarning{}
+				r.Two.AliasWarning.Code = types.StringValue(resp.GetDeploymentResponseBody2.AliasWarning.Code)
+				r.Two.AliasWarning.Message = types.StringValue(resp.GetDeploymentResponseBody2.AliasWarning.Message)
+				r.Two.AliasWarning.Link = types.StringPointerValue(resp.GetDeploymentResponseBody2.AliasWarning.Link)
+				r.Two.AliasWarning.Action = types.StringPointerValue(resp.GetDeploymentResponseBody2.AliasWarning.Action)
+			}
+			r.Two.AutoAssignCustomDomains = types.BoolPointerValue(resp.GetDeploymentResponseBody2.AutoAssignCustomDomains)
+			r.AutoAssignCustomDomains = r.Two.AutoAssignCustomDomains
+			r.Two.AutomaticAliases = []types.String{}
+			for _, v := range resp.GetDeploymentResponseBody2.AutomaticAliases {
+				r.Two.AutomaticAliases = append(r.Two.AutomaticAliases, types.StringValue(v))
+			}
+			r.Two.BootedAt = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody2.BootedAt)))
+			if resp.GetDeploymentResponseBody2.BuildErrorAt != nil {
+				r.Two.BuildErrorAt = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody2.BuildErrorAt)))
+			} else {
+				r.Two.BuildErrorAt = types.NumberNull()
+			}
+			r.Two.BuildingAt = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody2.BuildingAt)))
+			if resp.GetDeploymentResponseBody2.CanceledAt != nil {
+				r.Two.CanceledAt = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody2.CanceledAt)))
+			} else {
+				r.Two.CanceledAt = types.NumberNull()
+			}
+			if resp.GetDeploymentResponseBody2.ChecksState != nil {
+				r.Two.ChecksState = types.StringValue(string(*resp.GetDeploymentResponseBody2.ChecksState))
+			} else {
+				r.Two.ChecksState = types.StringNull()
+			}
+			if resp.GetDeploymentResponseBody2.ChecksConclusion != nil {
+				r.Two.ChecksConclusion = types.StringValue(string(*resp.GetDeploymentResponseBody2.ChecksConclusion))
+			} else {
+				r.Two.ChecksConclusion = types.StringNull()
+			}
+			r.Two.CreatedAt = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody2.CreatedAt)))
+			r.Two.Creator.UID = types.StringValue(resp.GetDeploymentResponseBody2.Creator.UID)
+			r.Two.Creator.Username = types.StringPointerValue(resp.GetDeploymentResponseBody2.Creator.Username)
+			r.Two.Creator.Avatar = types.StringPointerValue(resp.GetDeploymentResponseBody2.Creator.Avatar)
+			r.Two.ErrorCode = types.StringPointerValue(resp.GetDeploymentResponseBody2.ErrorCode)
+			r.ErrorCode = r.Two.ErrorCode
+			r.Two.ErrorLink = types.StringPointerValue(resp.GetDeploymentResponseBody2.ErrorLink)
+			r.ErrorLink = r.Two.ErrorLink
+			r.Two.ErrorMessage = types.StringPointerValue(resp.GetDeploymentResponseBody2.ErrorMessage)
+			r.ErrorMessage = r.Two.ErrorMessage
+			r.Two.ErrorStep = types.StringPointerValue(resp.GetDeploymentResponseBody2.ErrorStep)
+			r.ErrorStep = r.Two.ErrorStep
+			r.Two.PassiveRegions = []types.String{}
+			for _, v := range resp.GetDeploymentResponseBody2.PassiveRegions {
+				r.Two.PassiveRegions = append(r.Two.PassiveRegions, types.StringValue(v))
+			}
+			if resp.GetDeploymentResponseBody2.GitSource == nil {
+				r.Two.GitSource = nil
+			} else {
+				r.Two.GitSource = &tfTypes.GetDeploymentResponseBodyGitSource{}
+				if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource1 != nil {
+					r.Two.GitSource.One = &tfTypes.GetDeploymentGitSourceDeployments1{}
+					r.Two.GitSource.One.Type = types.StringValue(string(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource1.Type))
+					if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource1.RepoID.Str != nil {
+						r.Two.GitSource.One.RepoID.Str = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource1.RepoID.Str)
+					}
+					if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource1.RepoID.Number != nil {
+						if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource1.RepoID.Number != nil {
+							r.Two.GitSource.One.RepoID.Number = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource1.RepoID.Number)))
+						} else {
+							r.Two.GitSource.One.RepoID.Number = types.NumberNull()
+						}
+					}
+					r.Two.GitSource.One.Ref = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource1.Ref)
+					r.Two.GitSource.One.Sha = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource1.Sha)
+					if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource1.PrID != nil {
+						r.Two.GitSource.One.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource1.PrID)))
+					} else {
+						r.Two.GitSource.One.PrID = types.NumberNull()
+					}
+				}
+				if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource2 != nil {
+					r.Two.GitSource.Two = &tfTypes.GetDeploymentGitSourceDeployments2{}
+					r.Two.GitSource.Two.Type = types.StringValue(string(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource2.Type))
+					r.Two.GitSource.Two.Org = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource2.Org)
+					r.Two.GitSource.Two.Repo = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource2.Repo)
+					r.Two.GitSource.Two.Ref = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource2.Ref)
+					r.Two.GitSource.Two.Sha = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource2.Sha)
+					if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource2.PrID != nil {
+						r.Two.GitSource.Two.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource2.PrID)))
+					} else {
+						r.Two.GitSource.Two.PrID = types.NumberNull()
+					}
+				}
+				if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource3 != nil {
+					r.Two.GitSource.Three = &tfTypes.GetDeploymentGitSourceDeployments3{}
+					r.Two.GitSource.Three.Type = types.StringValue(string(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource3.Type))
+					if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource3.ProjectID.Str != nil {
+						r.Two.GitSource.Three.ProjectID.Str = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource3.ProjectID.Str)
+					}
+					if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource3.ProjectID.Number != nil {
+						if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource3.ProjectID.Number != nil {
+							r.Two.GitSource.Three.ProjectID.Number = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource3.ProjectID.Number)))
+						} else {
+							r.Two.GitSource.Three.ProjectID.Number = types.NumberNull()
+						}
+					}
+					r.Two.GitSource.Three.Ref = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource3.Ref)
+					r.Two.GitSource.Three.Sha = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource3.Sha)
+					if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource3.PrID != nil {
+						r.Two.GitSource.Three.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource3.PrID)))
+					} else {
+						r.Two.GitSource.Three.PrID = types.NumberNull()
+					}
+				}
+				if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource4 != nil {
+					r.Two.GitSource.Four = &tfTypes.GetDeploymentGitSourceDeployments4{}
+					r.Two.GitSource.Four.Type = types.StringValue(string(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource4.Type))
+					r.Two.GitSource.Four.WorkspaceUUID = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource4.WorkspaceUUID)
+					r.Two.GitSource.Four.RepoUUID = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource4.RepoUUID)
+					r.Two.GitSource.Four.Ref = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource4.Ref)
+					r.Two.GitSource.Four.Sha = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource4.Sha)
+					if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource4.PrID != nil {
+						r.Two.GitSource.Four.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource4.PrID)))
+					} else {
+						r.Two.GitSource.Four.PrID = types.NumberNull()
+					}
+				}
+				if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource5 != nil {
+					r.Two.GitSource.Five = &tfTypes.GetDeploymentGitSourceDeployments5{}
+					r.Two.GitSource.Five.Type = types.StringValue(string(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource5.Type))
+					r.Two.GitSource.Five.Owner = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource5.Owner)
+					r.Two.GitSource.Five.Slug = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource5.Slug)
+					r.Two.GitSource.Five.Ref = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource5.Ref)
+					r.Two.GitSource.Five.Sha = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource5.Sha)
+					if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource5.PrID != nil {
+						r.Two.GitSource.Five.PrID = types.NumberValue(big.NewFloat(float64(*resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource5.PrID)))
+					} else {
+						r.Two.GitSource.Five.PrID = types.NumberNull()
+					}
+				}
+				if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource6 != nil {
+					r.Two.GitSource.Six = &tfTypes.CreateDeploymentGitSource6{}
+					r.Two.GitSource.Six.Type = types.StringValue(string(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource6.Type))
+					r.Two.GitSource.Six.Ref = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource6.Ref)
+					r.Two.GitSource.Six.Sha = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource6.Sha)
+					r.Two.GitSource.Six.GitURL = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource6.GitURL)
+				}
+				if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource7 != nil {
+					r.Two.GitSource.Seven = &tfTypes.CreateDeploymentGitSource7{}
+					r.Two.GitSource.Seven.Type = types.StringValue(string(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource7.Type))
+					r.Two.GitSource.Seven.Ref = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource7.Ref)
+					r.Two.GitSource.Seven.Sha = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource7.Sha)
+					r.Two.GitSource.Seven.RepoID = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource7.RepoID)))
+					r.Two.GitSource.Seven.Org = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource7.Org)
+					r.Two.GitSource.Seven.Repo = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource7.Repo)
+				}
+				if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource8 != nil {
+					r.Two.GitSource.Eight = &tfTypes.CreateDeploymentGitSource8{}
+					r.Two.GitSource.Eight.Type = types.StringValue(string(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource8.Type))
+					r.Two.GitSource.Eight.Ref = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource8.Ref)
+					r.Two.GitSource.Eight.Sha = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource8.Sha)
+					r.Two.GitSource.Eight.ProjectID = types.NumberValue(big.NewFloat(float64(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource8.ProjectID)))
+				}
+				if resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource9 != nil {
+					r.Two.GitSource.Nine = &tfTypes.CreateDeploymentGitSource9{}
+					r.Two.GitSource.Nine.Type = types.StringValue(string(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource9.Type))
+					r.Two.GitSource.Nine.Ref = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource9.Ref)
+					r.Two.GitSource.Nine.Sha = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource9.Sha)
+					r.Two.GitSource.Nine.Owner = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource9.Owner)
+					r.Two.GitSource.Nine.Slug = types.StringPointerValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource9.Slug)
+					r.Two.GitSource.Nine.WorkspaceUUID = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource9.WorkspaceUUID)
+					r.Two.GitSource.Nine.RepoUUID = types.StringValue(resp.GetDeploymentResponseBody2.GitSource.GetDeploymentGitSource9.RepoUUID)
+				}
+			}
+			r.Two.ID = types.StringValue(resp.GetDeploymentResponseBody2.ID)
+			r.ID = r.Two.ID
 		}
 	}
 }

@@ -9,33 +9,33 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
 
-var _ provider.Provider = &VercelProvider{}
+var _ provider.Provider = &TerraformProvider{}
 
-type VercelProvider struct {
+type TerraformProvider struct {
 	// version is set to the provider version on release, "dev" when the
 	// provider is built and ran locally, and "test" when running acceptance
 	// testing.
 	version string
 }
 
-// VercelProviderModel describes the provider data model.
-type VercelProviderModel struct {
+// TerraformProviderModel describes the provider data model.
+type TerraformProviderModel struct {
 	ServerURL   types.String `tfsdk:"server_url"`
 	BearerToken types.String `tfsdk:"bearer_token"`
 	Oauth2      types.String `tfsdk:"oauth2"`
 }
 
-func (p *VercelProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "vercel"
+func (p *TerraformProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
+	resp.TypeName = "terraform"
 	resp.Version = p.version
 }
 
-func (p *VercelProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
+func (p *TerraformProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Description: `Vercel API: Vercel combines the best developer experience with an obsessive focus on end-user performance. Our platform enables frontend teams to do their best work.`,
 		Attributes: map[string]schema.Attribute{
@@ -56,8 +56,8 @@ func (p *VercelProvider) Schema(ctx context.Context, req provider.SchemaRequest,
 	}
 }
 
-func (p *VercelProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
-	var data VercelProviderModel
+func (p *TerraformProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+	var data TerraformProviderModel
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 
@@ -99,7 +99,7 @@ func (p *VercelProvider) Configure(ctx context.Context, req provider.ConfigureRe
 	resp.ResourceData = client
 }
 
-func (p *VercelProvider) Resources(ctx context.Context) []func() resource.Resource {
+func (p *TerraformProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NewDeploymentResource,
 		NewDNSResource,
@@ -112,7 +112,7 @@ func (p *VercelProvider) Resources(ctx context.Context) []func() resource.Resour
 	}
 }
 
-func (p *VercelProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
+func (p *TerraformProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		NewDeploymentDataSource,
 		NewEdgeConfigDataSource,
@@ -125,7 +125,7 @@ func (p *VercelProvider) DataSources(ctx context.Context) []func() datasource.Da
 
 func New(version string) func() provider.Provider {
 	return func() provider.Provider {
-		return &VercelProvider{
+		return &TerraformProvider{
 			version: version,
 		}
 	}

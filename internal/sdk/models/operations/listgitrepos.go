@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 )
 
@@ -43,30 +43,23 @@ func (e *QueryParamProvider) UnmarshalJSON(data []byte) error {
 }
 
 type ListGitReposRequest struct {
-	// The custom Git host if using a custom Git provider, like GitHub Enterprise Server
-	Host           *string             `queryParam:"style=form,explode=true,name=host"`
-	InstallationID *string             `queryParam:"style=form,explode=true,name=installationId"`
+	Query          *string             `queryParam:"style=form,explode=true,name=query"`
 	NamespaceID    any                 `queryParam:"style=form,explode=true,name=namespaceId"`
 	Provider       *QueryParamProvider `queryParam:"style=form,explode=true,name=provider"`
-	Query          *string             `queryParam:"style=form,explode=true,name=query"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	InstallationID *string             `queryParam:"style=form,explode=true,name=installationId"`
+	// The custom Git host if using a custom Git provider, like GitHub Enterprise Server
+	Host *string `queryParam:"style=form,explode=true,name=host"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
-func (o *ListGitReposRequest) GetHost() *string {
+func (o *ListGitReposRequest) GetQuery() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Host
-}
-
-func (o *ListGitReposRequest) GetInstallationID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.InstallationID
+	return o.Query
 }
 
 func (o *ListGitReposRequest) GetNamespaceID() any {
@@ -83,11 +76,25 @@ func (o *ListGitReposRequest) GetProvider() *QueryParamProvider {
 	return o.Provider
 }
 
-func (o *ListGitReposRequest) GetQuery() *string {
+func (o *ListGitReposRequest) GetInstallationID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Query
+	return o.InstallationID
+}
+
+func (o *ListGitReposRequest) GetHost() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Host
+}
+
+func (o *ListGitReposRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 func (o *ListGitReposRequest) GetSlug() *string {
@@ -97,11 +104,36 @@ func (o *ListGitReposRequest) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *ListGitReposRequest) GetTeamID() *string {
-	if o == nil {
-		return nil
+type ListGitReposProvider string
+
+const (
+	ListGitReposProviderGithub           ListGitReposProvider = "github"
+	ListGitReposProviderGithubCustomHost ListGitReposProvider = "github-custom-host"
+	ListGitReposProviderGitlab           ListGitReposProvider = "gitlab"
+	ListGitReposProviderBitbucket        ListGitReposProvider = "bitbucket"
+)
+
+func (e ListGitReposProvider) ToPointer() *ListGitReposProvider {
+	return &e
+}
+func (e *ListGitReposProvider) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return o.TeamID
+	switch v {
+	case "github":
+		fallthrough
+	case "github-custom-host":
+		fallthrough
+	case "gitlab":
+		fallthrough
+	case "bitbucket":
+		*e = ListGitReposProvider(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ListGitReposProvider: %v", v)
+	}
 }
 
 type NamespaceIDType string
@@ -167,48 +199,9 @@ func (u NamespaceID) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type NamespaceID: all fields are null")
 }
 
-type ListGitReposProvider string
-
-const (
-	ListGitReposProviderGithub           ListGitReposProvider = "github"
-	ListGitReposProviderGithubCustomHost ListGitReposProvider = "github-custom-host"
-	ListGitReposProviderGitlab           ListGitReposProvider = "gitlab"
-	ListGitReposProviderBitbucket        ListGitReposProvider = "bitbucket"
-)
-
-func (e ListGitReposProvider) ToPointer() *ListGitReposProvider {
-	return &e
-}
-func (e *ListGitReposProvider) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "github":
-		fallthrough
-	case "github-custom-host":
-		fallthrough
-	case "gitlab":
-		fallthrough
-	case "bitbucket":
-		*e = ListGitReposProvider(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ListGitReposProvider: %v", v)
-	}
-}
-
 type GitAccount struct {
-	NamespaceID *NamespaceID         `json:"namespaceId"`
 	Provider    ListGitReposProvider `json:"provider"`
-}
-
-func (o *GitAccount) GetNamespaceID() *NamespaceID {
-	if o == nil {
-		return nil
-	}
-	return o.NamespaceID
+	NamespaceID *NamespaceID         `json:"namespaceId"`
 }
 
 func (o *GitAccount) GetProvider() ListGitReposProvider {
@@ -216,6 +209,13 @@ func (o *GitAccount) GetProvider() ListGitReposProvider {
 		return ListGitReposProvider("")
 	}
 	return o.Provider
+}
+
+func (o *GitAccount) GetNamespaceID() *NamespaceID {
+	if o == nil {
+		return nil
+	}
+	return o.NamespaceID
 }
 
 type ListGitReposIDType string
@@ -279,6 +279,38 @@ func (u ListGitReposID) MarshalJSON() ([]byte, error) {
 	}
 
 	return nil, errors.New("could not marshal union type ListGitReposID: all fields are null")
+}
+
+type ListGitReposIntegrationsProvider string
+
+const (
+	ListGitReposIntegrationsProviderGithub           ListGitReposIntegrationsProvider = "github"
+	ListGitReposIntegrationsProviderGithubCustomHost ListGitReposIntegrationsProvider = "github-custom-host"
+	ListGitReposIntegrationsProviderGitlab           ListGitReposIntegrationsProvider = "gitlab"
+	ListGitReposIntegrationsProviderBitbucket        ListGitReposIntegrationsProvider = "bitbucket"
+)
+
+func (e ListGitReposIntegrationsProvider) ToPointer() *ListGitReposIntegrationsProvider {
+	return &e
+}
+func (e *ListGitReposIntegrationsProvider) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "github":
+		fallthrough
+	case "github-custom-host":
+		fallthrough
+	case "gitlab":
+		fallthrough
+	case "bitbucket":
+		*e = ListGitReposIntegrationsProvider(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ListGitReposIntegrationsProvider: %v", v)
+	}
 }
 
 type ListGitReposIntegrationsIDType string
@@ -389,57 +421,18 @@ func (e *OwnerType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type ListGitReposIntegrationsProvider string
-
-const (
-	ListGitReposIntegrationsProviderGithub           ListGitReposIntegrationsProvider = "github"
-	ListGitReposIntegrationsProviderGithubCustomHost ListGitReposIntegrationsProvider = "github-custom-host"
-	ListGitReposIntegrationsProviderGitlab           ListGitReposIntegrationsProvider = "gitlab"
-	ListGitReposIntegrationsProviderBitbucket        ListGitReposIntegrationsProvider = "bitbucket"
-)
-
-func (e ListGitReposIntegrationsProvider) ToPointer() *ListGitReposIntegrationsProvider {
-	return &e
-}
-func (e *ListGitReposIntegrationsProvider) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "github":
-		fallthrough
-	case "github-custom-host":
-		fallthrough
-	case "gitlab":
-		fallthrough
-	case "bitbucket":
-		*e = ListGitReposIntegrationsProvider(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ListGitReposIntegrationsProvider: %v", v)
-	}
-}
-
 type Repos struct {
-	DefaultBranch string                           `json:"defaultBranch"`
 	ID            ListGitReposID                   `json:"id"`
+	Provider      ListGitReposIntegrationsProvider `json:"provider"`
+	URL           string                           `json:"url"`
 	Name          string                           `json:"name"`
+	Slug          string                           `json:"slug"`
 	Namespace     string                           `json:"namespace"`
 	Owner         Owner                            `json:"owner"`
 	OwnerType     OwnerType                        `json:"ownerType"`
 	Private       bool                             `json:"private"`
-	Provider      ListGitReposIntegrationsProvider `json:"provider"`
-	Slug          string                           `json:"slug"`
+	DefaultBranch string                           `json:"defaultBranch"`
 	UpdatedAt     float64                          `json:"updatedAt"`
-	URL           string                           `json:"url"`
-}
-
-func (o *Repos) GetDefaultBranch() string {
-	if o == nil {
-		return ""
-	}
-	return o.DefaultBranch
 }
 
 func (o *Repos) GetID() ListGitReposID {
@@ -449,11 +442,32 @@ func (o *Repos) GetID() ListGitReposID {
 	return o.ID
 }
 
+func (o *Repos) GetProvider() ListGitReposIntegrationsProvider {
+	if o == nil {
+		return ListGitReposIntegrationsProvider("")
+	}
+	return o.Provider
+}
+
+func (o *Repos) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 func (o *Repos) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
+}
+
+func (o *Repos) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
 }
 
 func (o *Repos) GetNamespace() string {
@@ -484,18 +498,11 @@ func (o *Repos) GetPrivate() bool {
 	return o.Private
 }
 
-func (o *Repos) GetProvider() ListGitReposIntegrationsProvider {
-	if o == nil {
-		return ListGitReposIntegrationsProvider("")
-	}
-	return o.Provider
-}
-
-func (o *Repos) GetSlug() string {
+func (o *Repos) GetDefaultBranch() string {
 	if o == nil {
 		return ""
 	}
-	return o.Slug
+	return o.DefaultBranch
 }
 
 func (o *Repos) GetUpdatedAt() float64 {
@@ -503,13 +510,6 @@ func (o *Repos) GetUpdatedAt() float64 {
 		return 0.0
 	}
 	return o.UpdatedAt
-}
-
-func (o *Repos) GetURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.URL
 }
 
 type ListGitReposResponseBody struct {

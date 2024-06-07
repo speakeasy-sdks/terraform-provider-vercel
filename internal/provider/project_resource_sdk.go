@@ -4,8 +4,8 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 	"math/big"
 )
 
@@ -30,33 +30,33 @@ func (r *ProjectResourceModel) ToOperationsCreateProjectRequestBody() *operation
 	}
 	var environmentVariables []operations.EnvironmentVariables = []operations.EnvironmentVariables{}
 	for _, environmentVariablesItem := range r.EnvironmentVariables {
-		gitBranch := new(string)
-		if !environmentVariablesItem.GitBranch.IsUnknown() && !environmentVariablesItem.GitBranch.IsNull() {
-			*gitBranch = environmentVariablesItem.GitBranch.ValueString()
-		} else {
-			gitBranch = nil
-		}
 		key := environmentVariablesItem.Key.ValueString()
 		var target operations.CreateProjectTarget
-		createProject1 := new(operations.CreateProject1)
+		target1 := new(operations.Target1)
 		if !environmentVariablesItem.Target.One.IsUnknown() && !environmentVariablesItem.Target.One.IsNull() {
-			*createProject1 = operations.CreateProject1(environmentVariablesItem.Target.One.ValueString())
+			*target1 = operations.Target1(environmentVariablesItem.Target.One.ValueString())
 		} else {
-			createProject1 = nil
+			target1 = nil
 		}
-		if createProject1 != nil {
+		if target1 != nil {
 			target = operations.CreateProjectTarget{
-				CreateProject1: createProject1,
+				Target1: target1,
 			}
 		}
-		var arrayOfTwo []operations.CreateProject2 = []operations.CreateProject2{}
+		var arrayOfTwo []operations.Target2 = []operations.Target2{}
 		for _, arrayOfTwoItem := range environmentVariablesItem.Target.ArrayOfTwo {
-			arrayOfTwo = append(arrayOfTwo, operations.CreateProject2(arrayOfTwoItem.ValueString()))
+			arrayOfTwo = append(arrayOfTwo, operations.Target2(arrayOfTwoItem.ValueString()))
 		}
 		if arrayOfTwo != nil {
 			target = operations.CreateProjectTarget{
 				ArrayOfTwo: arrayOfTwo,
 			}
+		}
+		gitBranch := new(string)
+		if !environmentVariablesItem.GitBranch.IsUnknown() && !environmentVariablesItem.GitBranch.IsNull() {
+			*gitBranch = environmentVariablesItem.GitBranch.ValueString()
+		} else {
+			gitBranch = nil
 		}
 		typeVar := new(operations.CreateProjectType)
 		if !environmentVariablesItem.Type.IsUnknown() && !environmentVariablesItem.Type.IsNull() {
@@ -66,9 +66,9 @@ func (r *ProjectResourceModel) ToOperationsCreateProjectRequestBody() *operation
 		}
 		value := environmentVariablesItem.Value.ValueString()
 		environmentVariables = append(environmentVariables, operations.EnvironmentVariables{
-			GitBranch: gitBranch,
 			Key:       key,
 			Target:    target,
+			GitBranch: gitBranch,
 			Type:      typeVar,
 			Value:     value,
 		})
@@ -95,6 +95,12 @@ func (r *ProjectResourceModel) ToOperationsCreateProjectRequestBody() *operation
 		installCommand = nil
 	}
 	name := r.Name.ValueString()
+	skipGitConnectDuringLink := new(bool)
+	if !r.SkipGitConnectDuringLink.IsUnknown() && !r.SkipGitConnectDuringLink.IsNull() {
+		*skipGitConnectDuringLink = r.SkipGitConnectDuringLink.ValueBool()
+	} else {
+		skipGitConnectDuringLink = nil
+	}
 	outputDirectory := new(string)
 	if !r.OutputDirectory.IsUnknown() && !r.OutputDirectory.IsNull() {
 		*outputDirectory = r.OutputDirectory.ValueString()
@@ -125,12 +131,6 @@ func (r *ProjectResourceModel) ToOperationsCreateProjectRequestBody() *operation
 	} else {
 		serverlessFunctionZeroConfigFailover = nil
 	}
-	skipGitConnectDuringLink := new(bool)
-	if !r.SkipGitConnectDuringLink.IsUnknown() && !r.SkipGitConnectDuringLink.IsNull() {
-		*skipGitConnectDuringLink = r.SkipGitConnectDuringLink.ValueBool()
-	} else {
-		skipGitConnectDuringLink = nil
-	}
 	out := operations.CreateProjectRequestBody{
 		BuildCommand:                         buildCommand,
 		CommandForIgnoringBuildStep:          commandForIgnoringBuildStep,
@@ -140,12 +140,12 @@ func (r *ProjectResourceModel) ToOperationsCreateProjectRequestBody() *operation
 		GitRepository:                        gitRepository,
 		InstallCommand:                       installCommand,
 		Name:                                 name,
+		SkipGitConnectDuringLink:             skipGitConnectDuringLink,
 		OutputDirectory:                      outputDirectory,
 		PublicSource:                         publicSource,
 		RootDirectory:                        rootDirectory,
 		ServerlessFunctionRegion:             serverlessFunctionRegion,
 		ServerlessFunctionZeroConfigFailover: serverlessFunctionZeroConfigFailover,
-		SkipGitConnectDuringLink:             skipGitConnectDuringLink,
 	}
 	return &out
 }
@@ -156,7 +156,7 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		if resp.Analytics == nil {
 			r.Analytics = nil
 		} else {
-			r.Analytics = &tfTypes.Analytics{}
+			r.Analytics = &tfTypes.CreateProjectAnalytics{}
 			if resp.Analytics.CanceledAt != nil {
 				r.Analytics.CanceledAt = types.NumberValue(big.NewFloat(float64(*resp.Analytics.CanceledAt)))
 			} else {
@@ -198,12 +198,12 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 			r.Crons = nil
 		} else {
 			r.Crons = &tfTypes.CreateProjectCrons{}
-			r.Crons.Definitions = []tfTypes.Definitions{}
+			r.Crons.Definitions = []tfTypes.CreateProjectDefinitions{}
 			if len(r.Crons.Definitions) > len(resp.Crons.Definitions) {
 				r.Crons.Definitions = r.Crons.Definitions[:len(resp.Crons.Definitions)]
 			}
 			for definitionsCount, definitionsItem := range resp.Crons.Definitions {
-				var definitions1 tfTypes.Definitions
+				var definitions1 tfTypes.CreateProjectDefinitions
 				definitions1.Host = types.StringValue(definitionsItem.Host)
 				definitions1.Path = types.StringValue(definitionsItem.Path)
 				definitions1.Schedule = types.StringValue(definitionsItem.Schedule)
@@ -228,7 +228,7 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		if resp.DataCache == nil {
 			r.DataCache = nil
 		} else {
-			r.DataCache = &tfTypes.DataCache{}
+			r.DataCache = &tfTypes.CreateProjectDataCache{}
 			if resp.DataCache.StorageSizeBytes != nil {
 				r.DataCache.StorageSizeBytes = types.NumberValue(big.NewFloat(float64(*resp.DataCache.StorageSizeBytes)))
 			} else {
@@ -240,87 +240,87 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		r.DevCommand = types.StringPointerValue(resp.DevCommand)
 		r.DirectoryListing = types.BoolValue(resp.DirectoryListing)
 		r.EnablePreviewFeedback = types.BoolPointerValue(resp.EnablePreviewFeedback)
-		r.Env = []tfTypes.Env{}
+		r.Env = []tfTypes.CreateProjectEnv{}
 		if len(r.Env) > len(resp.Env) {
 			r.Env = r.Env[:len(resp.Env)]
 		}
 		for envCount, envItem := range resp.Env {
-			var env1 tfTypes.Env
+			var env1 tfTypes.CreateProjectEnv
 			env1.Comment = types.StringPointerValue(envItem.Comment)
 			env1.ConfigurationID = types.StringPointerValue(envItem.ConfigurationID)
 			if envItem.ContentHint == nil {
 				env1.ContentHint = nil
 			} else {
 				env1.ContentHint = &tfTypes.CreateProjectContentHint{}
-				if envItem.ContentHint.CreateProjectProjectsResponse2001 != nil {
-					env1.ContentHint.One = &tfTypes.CreateProjectProjectsResponse2001{}
-					env1.ContentHint.One.StoreID = types.StringValue(envItem.ContentHint.CreateProjectProjectsResponse2001.StoreID)
-					env1.ContentHint.One.Type = types.StringValue(string(envItem.ContentHint.CreateProjectProjectsResponse2001.Type))
+				if envItem.ContentHint.CreateProjectContentHint1 != nil {
+					env1.ContentHint.One = &tfTypes.CreateProjectContentHint1{}
+					env1.ContentHint.One.StoreID = types.StringValue(envItem.ContentHint.CreateProjectContentHint1.StoreID)
+					env1.ContentHint.One.Type = types.StringValue(string(envItem.ContentHint.CreateProjectContentHint1.Type))
 				}
-				if envItem.ContentHint.CreateProject10 != nil {
-					env1.ContentHint.Ten = &tfTypes.CreateProject10{}
-					env1.ContentHint.Ten.StoreID = types.StringValue(envItem.ContentHint.CreateProject10.StoreID)
-					env1.ContentHint.Ten.Type = types.StringValue(string(envItem.ContentHint.CreateProject10.Type))
+				if envItem.ContentHint.CreateProjectContentHint10 != nil {
+					env1.ContentHint.Ten = &tfTypes.CreateProjectContentHint10{}
+					env1.ContentHint.Ten.StoreID = types.StringValue(envItem.ContentHint.CreateProjectContentHint10.StoreID)
+					env1.ContentHint.Ten.Type = types.StringValue(string(envItem.ContentHint.CreateProjectContentHint10.Type))
 				}
-				if envItem.ContentHint.CreateProject11 != nil {
-					env1.ContentHint.Eleven = &tfTypes.CreateProject11{}
-					env1.ContentHint.Eleven.StoreID = types.StringValue(envItem.ContentHint.CreateProject11.StoreID)
-					env1.ContentHint.Eleven.Type = types.StringValue(string(envItem.ContentHint.CreateProject11.Type))
+				if envItem.ContentHint.ContentHint11 != nil {
+					env1.ContentHint.Eleven = &tfTypes.ContentHint11{}
+					env1.ContentHint.Eleven.StoreID = types.StringValue(envItem.ContentHint.ContentHint11.StoreID)
+					env1.ContentHint.Eleven.Type = types.StringValue(string(envItem.ContentHint.ContentHint11.Type))
 				}
-				if envItem.ContentHint.CreateProject12 != nil {
-					env1.ContentHint.Twelve = &tfTypes.CreateProject12{}
-					env1.ContentHint.Twelve.StoreID = types.StringValue(envItem.ContentHint.CreateProject12.StoreID)
-					env1.ContentHint.Twelve.Type = types.StringValue(string(envItem.ContentHint.CreateProject12.Type))
+				if envItem.ContentHint.ContentHint12 != nil {
+					env1.ContentHint.Twelve = &tfTypes.ContentHint12{}
+					env1.ContentHint.Twelve.StoreID = types.StringValue(envItem.ContentHint.ContentHint12.StoreID)
+					env1.ContentHint.Twelve.Type = types.StringValue(string(envItem.ContentHint.ContentHint12.Type))
 				}
-				if envItem.ContentHint.CreateProject13 != nil {
-					env1.ContentHint.Thirteen = &tfTypes.CreateProject13{}
-					env1.ContentHint.Thirteen.StoreID = types.StringValue(envItem.ContentHint.CreateProject13.StoreID)
-					env1.ContentHint.Thirteen.Type = types.StringValue(string(envItem.ContentHint.CreateProject13.Type))
+				if envItem.ContentHint.ContentHint13 != nil {
+					env1.ContentHint.Thirteen = &tfTypes.ContentHint13{}
+					env1.ContentHint.Thirteen.StoreID = types.StringValue(envItem.ContentHint.ContentHint13.StoreID)
+					env1.ContentHint.Thirteen.Type = types.StringValue(string(envItem.ContentHint.ContentHint13.Type))
 				}
-				if envItem.ContentHint.CreateProject14 != nil {
-					env1.ContentHint.Fourteen = &tfTypes.CreateProject14{}
-					env1.ContentHint.Fourteen.StoreID = types.StringValue(envItem.ContentHint.CreateProject14.StoreID)
-					env1.ContentHint.Fourteen.Type = types.StringValue(string(envItem.ContentHint.CreateProject14.Type))
+				if envItem.ContentHint.ContentHint14 != nil {
+					env1.ContentHint.Fourteen = &tfTypes.ContentHint14{}
+					env1.ContentHint.Fourteen.StoreID = types.StringValue(envItem.ContentHint.ContentHint14.StoreID)
+					env1.ContentHint.Fourteen.Type = types.StringValue(string(envItem.ContentHint.ContentHint14.Type))
 				}
-				if envItem.ContentHint.CreateProjectProjectsResponse2002 != nil {
-					env1.ContentHint.Two = &tfTypes.CreateProjectProjectsResponse2002{}
-					env1.ContentHint.Two.StoreID = types.StringValue(envItem.ContentHint.CreateProjectProjectsResponse2002.StoreID)
-					env1.ContentHint.Two.Type = types.StringValue(string(envItem.ContentHint.CreateProjectProjectsResponse2002.Type))
+				if envItem.ContentHint.CreateProjectContentHint2 != nil {
+					env1.ContentHint.Two = &tfTypes.CreateProjectContentHint2{}
+					env1.ContentHint.Two.StoreID = types.StringValue(envItem.ContentHint.CreateProjectContentHint2.StoreID)
+					env1.ContentHint.Two.Type = types.StringValue(string(envItem.ContentHint.CreateProjectContentHint2.Type))
 				}
-				if envItem.ContentHint.CreateProjectProjects3 != nil {
-					env1.ContentHint.Three = &tfTypes.CreateProjectProjects3{}
-					env1.ContentHint.Three.StoreID = types.StringValue(envItem.ContentHint.CreateProjectProjects3.StoreID)
-					env1.ContentHint.Three.Type = types.StringValue(string(envItem.ContentHint.CreateProjectProjects3.Type))
+				if envItem.ContentHint.CreateProjectContentHint3 != nil {
+					env1.ContentHint.Three = &tfTypes.CreateProjectContentHint3{}
+					env1.ContentHint.Three.StoreID = types.StringValue(envItem.ContentHint.CreateProjectContentHint3.StoreID)
+					env1.ContentHint.Three.Type = types.StringValue(string(envItem.ContentHint.CreateProjectContentHint3.Type))
 				}
-				if envItem.ContentHint.CreateProject4 != nil {
-					env1.ContentHint.Four = &tfTypes.CreateProject4{}
-					env1.ContentHint.Four.StoreID = types.StringValue(envItem.ContentHint.CreateProject4.StoreID)
-					env1.ContentHint.Four.Type = types.StringValue(string(envItem.ContentHint.CreateProject4.Type))
+				if envItem.ContentHint.CreateProjectContentHint4 != nil {
+					env1.ContentHint.Four = &tfTypes.CreateProjectContentHint4{}
+					env1.ContentHint.Four.StoreID = types.StringValue(envItem.ContentHint.CreateProjectContentHint4.StoreID)
+					env1.ContentHint.Four.Type = types.StringValue(string(envItem.ContentHint.CreateProjectContentHint4.Type))
 				}
-				if envItem.ContentHint.CreateProject5 != nil {
-					env1.ContentHint.Five = &tfTypes.CreateProject5{}
-					env1.ContentHint.Five.StoreID = types.StringValue(envItem.ContentHint.CreateProject5.StoreID)
-					env1.ContentHint.Five.Type = types.StringValue(string(envItem.ContentHint.CreateProject5.Type))
+				if envItem.ContentHint.CreateProjectContentHint5 != nil {
+					env1.ContentHint.Five = &tfTypes.CreateProjectContentHint5{}
+					env1.ContentHint.Five.StoreID = types.StringValue(envItem.ContentHint.CreateProjectContentHint5.StoreID)
+					env1.ContentHint.Five.Type = types.StringValue(string(envItem.ContentHint.CreateProjectContentHint5.Type))
 				}
-				if envItem.ContentHint.CreateProject6 != nil {
-					env1.ContentHint.Six = &tfTypes.CreateProject6{}
-					env1.ContentHint.Six.StoreID = types.StringValue(envItem.ContentHint.CreateProject6.StoreID)
-					env1.ContentHint.Six.Type = types.StringValue(string(envItem.ContentHint.CreateProject6.Type))
+				if envItem.ContentHint.CreateProjectContentHint6 != nil {
+					env1.ContentHint.Six = &tfTypes.CreateProjectContentHint6{}
+					env1.ContentHint.Six.StoreID = types.StringValue(envItem.ContentHint.CreateProjectContentHint6.StoreID)
+					env1.ContentHint.Six.Type = types.StringValue(string(envItem.ContentHint.CreateProjectContentHint6.Type))
 				}
-				if envItem.ContentHint.CreateProject7 != nil {
-					env1.ContentHint.Seven = &tfTypes.CreateProject7{}
-					env1.ContentHint.Seven.StoreID = types.StringValue(envItem.ContentHint.CreateProject7.StoreID)
-					env1.ContentHint.Seven.Type = types.StringValue(string(envItem.ContentHint.CreateProject7.Type))
+				if envItem.ContentHint.CreateProjectContentHint7 != nil {
+					env1.ContentHint.Seven = &tfTypes.CreateProjectContentHint7{}
+					env1.ContentHint.Seven.StoreID = types.StringValue(envItem.ContentHint.CreateProjectContentHint7.StoreID)
+					env1.ContentHint.Seven.Type = types.StringValue(string(envItem.ContentHint.CreateProjectContentHint7.Type))
 				}
-				if envItem.ContentHint.CreateProject8 != nil {
-					env1.ContentHint.Eight = &tfTypes.CreateProject8{}
-					env1.ContentHint.Eight.StoreID = types.StringValue(envItem.ContentHint.CreateProject8.StoreID)
-					env1.ContentHint.Eight.Type = types.StringValue(string(envItem.ContentHint.CreateProject8.Type))
+				if envItem.ContentHint.CreateProjectContentHint8 != nil {
+					env1.ContentHint.Eight = &tfTypes.CreateProjectContentHint8{}
+					env1.ContentHint.Eight.StoreID = types.StringValue(envItem.ContentHint.CreateProjectContentHint8.StoreID)
+					env1.ContentHint.Eight.Type = types.StringValue(string(envItem.ContentHint.CreateProjectContentHint8.Type))
 				}
-				if envItem.ContentHint.CreateProject9 != nil {
-					env1.ContentHint.Nine = &tfTypes.CreateProject9{}
-					env1.ContentHint.Nine.StoreID = types.StringValue(envItem.ContentHint.CreateProject9.StoreID)
-					env1.ContentHint.Nine.Type = types.StringValue(string(envItem.ContentHint.CreateProject9.Type))
+				if envItem.ContentHint.CreateProjectContentHint9 != nil {
+					env1.ContentHint.Nine = &tfTypes.CreateProjectContentHint9{}
+					env1.ContentHint.Nine.StoreID = types.StringValue(envItem.ContentHint.CreateProjectContentHint9.StoreID)
+					env1.ContentHint.Nine.Type = types.StringValue(string(envItem.ContentHint.CreateProjectContentHint9.Type))
 				}
 			}
 			if envItem.CreatedAt != nil {
@@ -353,9 +353,9 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 						env1.Target.ArrayOfOne = append(env1.Target.ArrayOfOne, types.StringValue(string(v)))
 					}
 				}
-				if envItem.Target.CreateProjectProjectsResponse200ApplicationJSON2 != nil {
-					if envItem.Target.CreateProjectProjectsResponse200ApplicationJSON2 != nil {
-						env1.Target.Two = types.StringValue(string(*envItem.Target.CreateProjectProjectsResponse200ApplicationJSON2))
+				if envItem.Target.CreateProjectTarget2 != nil {
+					if envItem.Target.CreateProjectTarget2 != nil {
+						env1.Target.Two = types.StringValue(string(*envItem.Target.CreateProjectTarget2))
 					} else {
 						env1.Target.Two = types.StringNull()
 					}
@@ -400,7 +400,7 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		if resp.GitComments == nil {
 			r.GitComments = nil
 		} else {
-			r.GitComments = &tfTypes.GitComments{}
+			r.GitComments = &tfTypes.CreateProjectGitComments{}
 			r.GitComments.OnCommit = types.BoolValue(resp.GitComments.OnCommit)
 			r.GitComments.OnPullRequest = types.BoolValue(resp.GitComments.OnPullRequest)
 		}
@@ -413,7 +413,7 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		if resp.LastAliasRequest == nil {
 			r.LastAliasRequest = nil
 		} else {
-			r.LastAliasRequest = &tfTypes.LastAliasRequest{}
+			r.LastAliasRequest = &tfTypes.CreateProjectLastAliasRequest{}
 			r.LastAliasRequest.FromDeploymentID = types.StringValue(resp.LastAliasRequest.FromDeploymentID)
 			r.LastAliasRequest.JobStatus = types.StringValue(string(resp.LastAliasRequest.JobStatus))
 			r.LastAliasRequest.RequestedAt = types.NumberValue(big.NewFloat(float64(resp.LastAliasRequest.RequestedAt)))
@@ -423,14 +423,14 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		if resp.LastRollbackTarget == nil {
 			r.LastRollbackTarget = nil
 		} else {
-			r.LastRollbackTarget = &tfTypes.Schema{}
+			r.LastRollbackTarget = &tfTypes.GetEdgeConfigSchema{}
 		}
-		r.LatestDeployments = []tfTypes.LatestDeployments{}
+		r.LatestDeployments = []tfTypes.CreateProjectLatestDeployments{}
 		if len(r.LatestDeployments) > len(resp.LatestDeployments) {
 			r.LatestDeployments = r.LatestDeployments[:len(resp.LatestDeployments)]
 		}
 		for latestDeploymentsCount, latestDeploymentsItem := range resp.LatestDeployments {
-			var latestDeployments1 tfTypes.LatestDeployments
+			var latestDeployments1 tfTypes.CreateProjectLatestDeployments
 			latestDeployments1.Alias = []types.String{}
 			for _, v := range latestDeploymentsItem.Alias {
 				latestDeployments1.Alias = append(latestDeployments1.Alias, types.StringValue(v))
@@ -438,7 +438,7 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 			if latestDeploymentsItem.AliasAssigned == nil {
 				latestDeployments1.AliasAssigned = nil
 			} else {
-				latestDeployments1.AliasAssigned = &tfTypes.CreateDeploymentAliasAssignedAt{}
+				latestDeployments1.AliasAssigned = &tfTypes.AliasAssignedAt{}
 				if latestDeploymentsItem.AliasAssigned.Number != nil {
 					if latestDeploymentsItem.AliasAssigned.Number != nil {
 						latestDeployments1.AliasAssigned.Number = types.NumberValue(big.NewFloat(float64(*latestDeploymentsItem.AliasAssigned.Number)))
@@ -453,7 +453,7 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 			if latestDeploymentsItem.AliasError == nil {
 				latestDeployments1.AliasError = nil
 			} else {
-				latestDeployments1.AliasError = &tfTypes.CreateDeploymentAliasError{}
+				latestDeployments1.AliasError = &tfTypes.AliasError{}
 				latestDeployments1.AliasError.Code = types.StringValue(latestDeploymentsItem.AliasError.Code)
 				latestDeployments1.AliasError.Message = types.StringValue(latestDeploymentsItem.AliasError.Message)
 			}
@@ -517,19 +517,19 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 			latestDeployments1.MonorepoManager = types.StringPointerValue(latestDeploymentsItem.MonorepoManager)
 			latestDeployments1.Name = types.StringValue(latestDeploymentsItem.Name)
 			if len(latestDeploymentsItem.OidcTokenClaims) > 0 {
-				latestDeployments1.OidcTokenClaims = make(map[string]tfTypes.OidcTokenClaims)
-				for oidcTokenClaimsKey, oidcTokenClaimsValue := range latestDeploymentsItem.OidcTokenClaims {
-					var oidcTokenClaimsResult tfTypes.OidcTokenClaims
-					if oidcTokenClaimsValue.Str != nil {
-						oidcTokenClaimsResult.Str = types.StringPointerValue(oidcTokenClaimsValue.Str)
+				latestDeployments1.OidcTokenClaims = make(map[string]tfTypes.CreateProjectOidcTokenClaims)
+				for createProjectOidcTokenClaimsKey, createProjectOidcTokenClaimsValue := range latestDeploymentsItem.OidcTokenClaims {
+					var createProjectOidcTokenClaimsResult tfTypes.CreateProjectOidcTokenClaims
+					if createProjectOidcTokenClaimsValue.Str != nil {
+						createProjectOidcTokenClaimsResult.Str = types.StringPointerValue(createProjectOidcTokenClaimsValue.Str)
 					}
-					if oidcTokenClaimsValue.ArrayOfStr != nil {
-						oidcTokenClaimsResult.ArrayOfStr = []types.String{}
-						for _, v := range oidcTokenClaimsValue.ArrayOfStr {
-							oidcTokenClaimsResult.ArrayOfStr = append(oidcTokenClaimsResult.ArrayOfStr, types.StringValue(v))
+					if createProjectOidcTokenClaimsValue.ArrayOfStr != nil {
+						createProjectOidcTokenClaimsResult.ArrayOfStr = []types.String{}
+						for _, v := range createProjectOidcTokenClaimsValue.ArrayOfStr {
+							createProjectOidcTokenClaimsResult.ArrayOfStr = append(createProjectOidcTokenClaimsResult.ArrayOfStr, types.StringValue(v))
 						}
 					}
-					latestDeployments1.OidcTokenClaims[oidcTokenClaimsKey] = oidcTokenClaimsResult
+					latestDeployments1.OidcTokenClaims[createProjectOidcTokenClaimsKey] = createProjectOidcTokenClaimsResult
 				}
 			}
 			latestDeployments1.Plan = types.StringValue(string(latestDeploymentsItem.Plan))
@@ -599,20 +599,20 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		if resp.Link == nil {
 			r.Link = nil
 		} else {
-			r.Link = &tfTypes.Link{}
-			if resp.Link.CreateProjectProjects1 != nil {
-				r.Link.One = &tfTypes.CreateProjectProjects1{}
-				if resp.Link.CreateProjectProjects1.CreatedAt != nil {
-					r.Link.One.CreatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectProjects1.CreatedAt)))
+			r.Link = &tfTypes.CreateProjectLink{}
+			if resp.Link.CreateProjectLink1 != nil {
+				r.Link.One = &tfTypes.CreateProjectLink1{}
+				if resp.Link.CreateProjectLink1.CreatedAt != nil {
+					r.Link.One.CreatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectLink1.CreatedAt)))
 				} else {
 					r.Link.One.CreatedAt = types.NumberNull()
 				}
-				r.Link.One.DeployHooks = []tfTypes.DeployHooks{}
-				if len(r.Link.One.DeployHooks) > len(resp.Link.CreateProjectProjects1.DeployHooks) {
-					r.Link.One.DeployHooks = r.Link.One.DeployHooks[:len(resp.Link.CreateProjectProjects1.DeployHooks)]
+				r.Link.One.DeployHooks = []tfTypes.CreateProjectLinkDeployHooks{}
+				if len(r.Link.One.DeployHooks) > len(resp.Link.CreateProjectLink1.DeployHooks) {
+					r.Link.One.DeployHooks = r.Link.One.DeployHooks[:len(resp.Link.CreateProjectLink1.DeployHooks)]
 				}
-				for deployHooksCount, deployHooksItem := range resp.Link.CreateProjectProjects1.DeployHooks {
-					var deployHooks1 tfTypes.DeployHooks
+				for deployHooksCount, deployHooksItem := range resp.Link.CreateProjectLink1.DeployHooks {
+					var deployHooks1 tfTypes.CreateProjectLinkDeployHooks
 					if deployHooksItem.CreatedAt != nil {
 						deployHooks1.CreatedAt = types.NumberValue(big.NewFloat(float64(*deployHooksItem.CreatedAt)))
 					} else {
@@ -632,40 +632,40 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 						r.Link.One.DeployHooks[deployHooksCount].URL = deployHooks1.URL
 					}
 				}
-				r.Link.One.GitCredentialID = types.StringPointerValue(resp.Link.CreateProjectProjects1.GitCredentialID)
-				r.Link.One.Org = types.StringPointerValue(resp.Link.CreateProjectProjects1.Org)
-				r.Link.One.ProductionBranch = types.StringPointerValue(resp.Link.CreateProjectProjects1.ProductionBranch)
-				r.Link.One.Repo = types.StringPointerValue(resp.Link.CreateProjectProjects1.Repo)
-				if resp.Link.CreateProjectProjects1.RepoID != nil {
-					r.Link.One.RepoID = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectProjects1.RepoID)))
+				r.Link.One.GitCredentialID = types.StringPointerValue(resp.Link.CreateProjectLink1.GitCredentialID)
+				r.Link.One.Org = types.StringPointerValue(resp.Link.CreateProjectLink1.Org)
+				r.Link.One.ProductionBranch = types.StringPointerValue(resp.Link.CreateProjectLink1.ProductionBranch)
+				r.Link.One.Repo = types.StringPointerValue(resp.Link.CreateProjectLink1.Repo)
+				if resp.Link.CreateProjectLink1.RepoID != nil {
+					r.Link.One.RepoID = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectLink1.RepoID)))
 				} else {
 					r.Link.One.RepoID = types.NumberNull()
 				}
-				r.Link.One.Sourceless = types.BoolPointerValue(resp.Link.CreateProjectProjects1.Sourceless)
-				if resp.Link.CreateProjectProjects1.Type != nil {
-					r.Link.One.Type = types.StringValue(string(*resp.Link.CreateProjectProjects1.Type))
+				r.Link.One.Sourceless = types.BoolPointerValue(resp.Link.CreateProjectLink1.Sourceless)
+				if resp.Link.CreateProjectLink1.Type != nil {
+					r.Link.One.Type = types.StringValue(string(*resp.Link.CreateProjectLink1.Type))
 				} else {
 					r.Link.One.Type = types.StringNull()
 				}
-				if resp.Link.CreateProjectProjects1.UpdatedAt != nil {
-					r.Link.One.UpdatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectProjects1.UpdatedAt)))
+				if resp.Link.CreateProjectLink1.UpdatedAt != nil {
+					r.Link.One.UpdatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectLink1.UpdatedAt)))
 				} else {
 					r.Link.One.UpdatedAt = types.NumberNull()
 				}
 			}
-			if resp.Link.CreateProjectProjects2 != nil {
-				r.Link.Two = &tfTypes.CreateProjectProjects2{}
-				if resp.Link.CreateProjectProjects2.CreatedAt != nil {
-					r.Link.Two.CreatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectProjects2.CreatedAt)))
+			if resp.Link.CreateProjectLink2 != nil {
+				r.Link.Two = &tfTypes.CreateProjectLink2{}
+				if resp.Link.CreateProjectLink2.CreatedAt != nil {
+					r.Link.Two.CreatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectLink2.CreatedAt)))
 				} else {
 					r.Link.Two.CreatedAt = types.NumberNull()
 				}
-				r.Link.Two.DeployHooks = []tfTypes.DeployHooks{}
-				if len(r.Link.Two.DeployHooks) > len(resp.Link.CreateProjectProjects2.DeployHooks) {
-					r.Link.Two.DeployHooks = r.Link.Two.DeployHooks[:len(resp.Link.CreateProjectProjects2.DeployHooks)]
+				r.Link.Two.DeployHooks = []tfTypes.CreateProjectLinkDeployHooks{}
+				if len(r.Link.Two.DeployHooks) > len(resp.Link.CreateProjectLink2.DeployHooks) {
+					r.Link.Two.DeployHooks = r.Link.Two.DeployHooks[:len(resp.Link.CreateProjectLink2.DeployHooks)]
 				}
-				for deployHooksCount1, deployHooksItem1 := range resp.Link.CreateProjectProjects2.DeployHooks {
-					var deployHooks3 tfTypes.DeployHooks
+				for deployHooksCount1, deployHooksItem1 := range resp.Link.CreateProjectLink2.DeployHooks {
+					var deployHooks3 tfTypes.CreateProjectLinkDeployHooks
 					if deployHooksItem1.CreatedAt != nil {
 						deployHooks3.CreatedAt = types.NumberValue(big.NewFloat(float64(*deployHooksItem1.CreatedAt)))
 					} else {
@@ -685,38 +685,38 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 						r.Link.Two.DeployHooks[deployHooksCount1].URL = deployHooks3.URL
 					}
 				}
-				r.Link.Two.GitCredentialID = types.StringPointerValue(resp.Link.CreateProjectProjects2.GitCredentialID)
-				r.Link.Two.ProductionBranch = types.StringPointerValue(resp.Link.CreateProjectProjects2.ProductionBranch)
-				r.Link.Two.ProjectID = types.StringPointerValue(resp.Link.CreateProjectProjects2.ProjectID)
-				r.Link.Two.ProjectName = types.StringPointerValue(resp.Link.CreateProjectProjects2.ProjectName)
-				r.Link.Two.ProjectNamespace = types.StringPointerValue(resp.Link.CreateProjectProjects2.ProjectNamespace)
-				r.Link.Two.ProjectNameWithNamespace = types.StringPointerValue(resp.Link.CreateProjectProjects2.ProjectNameWithNamespace)
-				r.Link.Two.ProjectURL = types.StringPointerValue(resp.Link.CreateProjectProjects2.ProjectURL)
-				r.Link.Two.Sourceless = types.BoolPointerValue(resp.Link.CreateProjectProjects2.Sourceless)
-				if resp.Link.CreateProjectProjects2.Type != nil {
-					r.Link.Two.Type = types.StringValue(string(*resp.Link.CreateProjectProjects2.Type))
+				r.Link.Two.GitCredentialID = types.StringPointerValue(resp.Link.CreateProjectLink2.GitCredentialID)
+				r.Link.Two.ProductionBranch = types.StringPointerValue(resp.Link.CreateProjectLink2.ProductionBranch)
+				r.Link.Two.ProjectID = types.StringPointerValue(resp.Link.CreateProjectLink2.ProjectID)
+				r.Link.Two.ProjectName = types.StringPointerValue(resp.Link.CreateProjectLink2.ProjectName)
+				r.Link.Two.ProjectNamespace = types.StringPointerValue(resp.Link.CreateProjectLink2.ProjectNamespace)
+				r.Link.Two.ProjectNameWithNamespace = types.StringPointerValue(resp.Link.CreateProjectLink2.ProjectNameWithNamespace)
+				r.Link.Two.ProjectURL = types.StringPointerValue(resp.Link.CreateProjectLink2.ProjectURL)
+				r.Link.Two.Sourceless = types.BoolPointerValue(resp.Link.CreateProjectLink2.Sourceless)
+				if resp.Link.CreateProjectLink2.Type != nil {
+					r.Link.Two.Type = types.StringValue(string(*resp.Link.CreateProjectLink2.Type))
 				} else {
 					r.Link.Two.Type = types.StringNull()
 				}
-				if resp.Link.CreateProjectProjects2.UpdatedAt != nil {
-					r.Link.Two.UpdatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectProjects2.UpdatedAt)))
+				if resp.Link.CreateProjectLink2.UpdatedAt != nil {
+					r.Link.Two.UpdatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectLink2.UpdatedAt)))
 				} else {
 					r.Link.Two.UpdatedAt = types.NumberNull()
 				}
 			}
-			if resp.Link.CreateProject3 != nil {
-				r.Link.Three = &tfTypes.CreateProject3{}
-				if resp.Link.CreateProject3.CreatedAt != nil {
-					r.Link.Three.CreatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProject3.CreatedAt)))
+			if resp.Link.CreateProjectLink3 != nil {
+				r.Link.Three = &tfTypes.CreateProjectLink3{}
+				if resp.Link.CreateProjectLink3.CreatedAt != nil {
+					r.Link.Three.CreatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectLink3.CreatedAt)))
 				} else {
 					r.Link.Three.CreatedAt = types.NumberNull()
 				}
-				r.Link.Three.DeployHooks = []tfTypes.DeployHooks{}
-				if len(r.Link.Three.DeployHooks) > len(resp.Link.CreateProject3.DeployHooks) {
-					r.Link.Three.DeployHooks = r.Link.Three.DeployHooks[:len(resp.Link.CreateProject3.DeployHooks)]
+				r.Link.Three.DeployHooks = []tfTypes.CreateProjectLinkDeployHooks{}
+				if len(r.Link.Three.DeployHooks) > len(resp.Link.CreateProjectLink3.DeployHooks) {
+					r.Link.Three.DeployHooks = r.Link.Three.DeployHooks[:len(resp.Link.CreateProjectLink3.DeployHooks)]
 				}
-				for deployHooksCount2, deployHooksItem2 := range resp.Link.CreateProject3.DeployHooks {
-					var deployHooks5 tfTypes.DeployHooks
+				for deployHooksCount2, deployHooksItem2 := range resp.Link.CreateProjectLink3.DeployHooks {
+					var deployHooks5 tfTypes.CreateProjectLinkDeployHooks
 					if deployHooksItem2.CreatedAt != nil {
 						deployHooks5.CreatedAt = types.NumberValue(big.NewFloat(float64(*deployHooksItem2.CreatedAt)))
 					} else {
@@ -736,24 +736,24 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 						r.Link.Three.DeployHooks[deployHooksCount2].URL = deployHooks5.URL
 					}
 				}
-				r.Link.Three.GitCredentialID = types.StringPointerValue(resp.Link.CreateProject3.GitCredentialID)
-				r.Link.Three.Name = types.StringPointerValue(resp.Link.CreateProject3.Name)
-				r.Link.Three.Owner = types.StringPointerValue(resp.Link.CreateProject3.Owner)
-				r.Link.Three.ProductionBranch = types.StringPointerValue(resp.Link.CreateProject3.ProductionBranch)
-				r.Link.Three.Slug = types.StringPointerValue(resp.Link.CreateProject3.Slug)
-				r.Link.Three.Sourceless = types.BoolPointerValue(resp.Link.CreateProject3.Sourceless)
-				if resp.Link.CreateProject3.Type != nil {
-					r.Link.Three.Type = types.StringValue(string(*resp.Link.CreateProject3.Type))
+				r.Link.Three.GitCredentialID = types.StringPointerValue(resp.Link.CreateProjectLink3.GitCredentialID)
+				r.Link.Three.Name = types.StringPointerValue(resp.Link.CreateProjectLink3.Name)
+				r.Link.Three.Owner = types.StringPointerValue(resp.Link.CreateProjectLink3.Owner)
+				r.Link.Three.ProductionBranch = types.StringPointerValue(resp.Link.CreateProjectLink3.ProductionBranch)
+				r.Link.Three.Slug = types.StringPointerValue(resp.Link.CreateProjectLink3.Slug)
+				r.Link.Three.Sourceless = types.BoolPointerValue(resp.Link.CreateProjectLink3.Sourceless)
+				if resp.Link.CreateProjectLink3.Type != nil {
+					r.Link.Three.Type = types.StringValue(string(*resp.Link.CreateProjectLink3.Type))
 				} else {
 					r.Link.Three.Type = types.StringNull()
 				}
-				if resp.Link.CreateProject3.UpdatedAt != nil {
-					r.Link.Three.UpdatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProject3.UpdatedAt)))
+				if resp.Link.CreateProjectLink3.UpdatedAt != nil {
+					r.Link.Three.UpdatedAt = types.NumberValue(big.NewFloat(float64(*resp.Link.CreateProjectLink3.UpdatedAt)))
 				} else {
 					r.Link.Three.UpdatedAt = types.NumberNull()
 				}
-				r.Link.Three.UUID = types.StringPointerValue(resp.Link.CreateProject3.UUID)
-				r.Link.Three.WorkspaceUUID = types.StringPointerValue(resp.Link.CreateProject3.WorkspaceUUID)
+				r.Link.Three.UUID = types.StringPointerValue(resp.Link.CreateProjectLink3.UUID)
+				r.Link.Three.WorkspaceUUID = types.StringPointerValue(resp.Link.CreateProjectLink3.WorkspaceUUID)
 			}
 		}
 		r.Live = types.BoolPointerValue(resp.Live)
@@ -762,7 +762,7 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		if resp.OidcTokenConfig == nil {
 			r.OidcTokenConfig = nil
 		} else {
-			r.OidcTokenConfig = &tfTypes.OidcTokenConfig{}
+			r.OidcTokenConfig = &tfTypes.CreateProjectOidcTokenConfig{}
 			r.OidcTokenConfig.Enabled = types.BoolValue(resp.OidcTokenConfig.Enabled)
 		}
 		if resp.OptionsAllowlist == nil {
@@ -788,13 +788,13 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		if resp.PasswordProtection == nil {
 			r.PasswordProtection = nil
 		} else {
-			r.PasswordProtection = &tfTypes.Schema{}
+			r.PasswordProtection = &tfTypes.GetEdgeConfigSchema{}
 		}
 		r.Paused = types.BoolPointerValue(resp.Paused)
 		if resp.Permissions == nil {
 			r.Permissions = nil
 		} else {
-			r.Permissions = &tfTypes.Permissions{}
+			r.Permissions = &tfTypes.CreateProjectPermissions{}
 			r.Permissions.AccessGroup = []types.String{}
 			for _, v := range resp.Permissions.AccessGroup {
 				r.Permissions.AccessGroup = append(r.Permissions.AccessGroup, types.StringValue(string(v)))
@@ -1472,7 +1472,7 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		if resp.Security == nil {
 			r.Security = nil
 		} else {
-			r.Security = &tfTypes.Security{}
+			r.Security = &tfTypes.CreateProjectSecurity{}
 			if resp.Security.AttackModeActiveUntil != nil {
 				r.Security.AttackModeActiveUntil = types.NumberValue(big.NewFloat(float64(*resp.Security.AttackModeActiveUntil)))
 			} else {
@@ -1490,12 +1490,12 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 				r.Security.FirewallConfigVersion = types.NumberNull()
 			}
 			r.Security.FirewallEnabled = types.BoolPointerValue(resp.Security.FirewallEnabled)
-			r.Security.FirewallRoutes = []tfTypes.FirewallRoutes{}
+			r.Security.FirewallRoutes = []tfTypes.CreateProjectFirewallRoutes{}
 			if len(r.Security.FirewallRoutes) > len(resp.Security.FirewallRoutes) {
 				r.Security.FirewallRoutes = r.Security.FirewallRoutes[:len(resp.Security.FirewallRoutes)]
 			}
 			for firewallRoutesCount, firewallRoutesItem := range resp.Security.FirewallRoutes {
-				var firewallRoutes1 tfTypes.FirewallRoutes
+				var firewallRoutes1 tfTypes.CreateProjectFirewallRoutes
 				firewallRoutes1.Dest = types.StringPointerValue(firewallRoutesItem.Dest)
 				if firewallRoutesItem.Handle != nil {
 					firewallRoutes1.Handle = types.StringValue(string(*firewallRoutesItem.Handle))
@@ -1510,45 +1510,45 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 					if hasItem.Value == nil {
 						has1.Value = nil
 					} else {
-						has1.Value = &tfTypes.CreateProjectProjectsValue{}
+						has1.Value = &tfTypes.CreateProjectValue{}
 						if hasItem.Value.Str != nil {
 							has1.Value.Str = types.StringPointerValue(hasItem.Value.Str)
 						}
-						if hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2 != nil {
-							has1.Value.Two = &tfTypes.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2{}
-							has1.Value.Two.Eq = types.StringPointerValue(hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Eq)
-							if hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Gt != nil {
-								has1.Value.Two.Gt = types.NumberValue(big.NewFloat(float64(*hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Gt)))
+						if hasItem.Value.CreateProjectValue2 != nil {
+							has1.Value.Two = &tfTypes.CreateProjectValue2{}
+							has1.Value.Two.Eq = types.StringPointerValue(hasItem.Value.CreateProjectValue2.Eq)
+							if hasItem.Value.CreateProjectValue2.Gt != nil {
+								has1.Value.Two.Gt = types.NumberValue(big.NewFloat(float64(*hasItem.Value.CreateProjectValue2.Gt)))
 							} else {
 								has1.Value.Two.Gt = types.NumberNull()
 							}
-							if hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Gte != nil {
-								has1.Value.Two.Gte = types.NumberValue(big.NewFloat(float64(*hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Gte)))
+							if hasItem.Value.CreateProjectValue2.Gte != nil {
+								has1.Value.Two.Gte = types.NumberValue(big.NewFloat(float64(*hasItem.Value.CreateProjectValue2.Gte)))
 							} else {
 								has1.Value.Two.Gte = types.NumberNull()
 							}
 							has1.Value.Two.Inc = []types.String{}
-							for _, v := range hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Inc {
+							for _, v := range hasItem.Value.CreateProjectValue2.Inc {
 								has1.Value.Two.Inc = append(has1.Value.Two.Inc, types.StringValue(v))
 							}
-							if hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Lt != nil {
-								has1.Value.Two.Lt = types.NumberValue(big.NewFloat(float64(*hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Lt)))
+							if hasItem.Value.CreateProjectValue2.Lt != nil {
+								has1.Value.Two.Lt = types.NumberValue(big.NewFloat(float64(*hasItem.Value.CreateProjectValue2.Lt)))
 							} else {
 								has1.Value.Two.Lt = types.NumberNull()
 							}
-							if hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Lte != nil {
-								has1.Value.Two.Lte = types.NumberValue(big.NewFloat(float64(*hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Lte)))
+							if hasItem.Value.CreateProjectValue2.Lte != nil {
+								has1.Value.Two.Lte = types.NumberValue(big.NewFloat(float64(*hasItem.Value.CreateProjectValue2.Lte)))
 							} else {
 								has1.Value.Two.Lte = types.NumberNull()
 							}
-							has1.Value.Two.Neq = types.StringPointerValue(hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Neq)
+							has1.Value.Two.Neq = types.StringPointerValue(hasItem.Value.CreateProjectValue2.Neq)
 							has1.Value.Two.Ninc = []types.String{}
-							for _, v := range hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Ninc {
+							for _, v := range hasItem.Value.CreateProjectValue2.Ninc {
 								has1.Value.Two.Ninc = append(has1.Value.Two.Ninc, types.StringValue(v))
 							}
-							has1.Value.Two.Pre = types.StringPointerValue(hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Pre)
-							has1.Value.Two.Re = types.StringPointerValue(hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Re)
-							has1.Value.Two.Suf = types.StringPointerValue(hasItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2.Suf)
+							has1.Value.Two.Pre = types.StringPointerValue(hasItem.Value.CreateProjectValue2.Pre)
+							has1.Value.Two.Re = types.StringPointerValue(hasItem.Value.CreateProjectValue2.Re)
+							has1.Value.Two.Suf = types.StringPointerValue(hasItem.Value.CreateProjectValue2.Suf)
 						}
 					}
 					if hasCount+1 > len(firewallRoutes1.Has) {
@@ -1567,45 +1567,45 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 					if missingItem.Value == nil {
 						missing1.Value = nil
 					} else {
-						missing1.Value = &tfTypes.CreateProjectProjectsValue{}
+						missing1.Value = &tfTypes.CreateProjectValue{}
 						if missingItem.Value.Str != nil {
 							missing1.Value.Str = types.StringPointerValue(missingItem.Value.Str)
 						}
-						if missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2 != nil {
-							missing1.Value.Two = &tfTypes.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2{}
-							missing1.Value.Two.Eq = types.StringPointerValue(missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Eq)
-							if missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Gt != nil {
-								missing1.Value.Two.Gt = types.NumberValue(big.NewFloat(float64(*missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Gt)))
+						if missingItem.Value.CreateProjectValueProjects2 != nil {
+							missing1.Value.Two = &tfTypes.CreateProjectValue2{}
+							missing1.Value.Two.Eq = types.StringPointerValue(missingItem.Value.CreateProjectValueProjects2.Eq)
+							if missingItem.Value.CreateProjectValueProjects2.Gt != nil {
+								missing1.Value.Two.Gt = types.NumberValue(big.NewFloat(float64(*missingItem.Value.CreateProjectValueProjects2.Gt)))
 							} else {
 								missing1.Value.Two.Gt = types.NumberNull()
 							}
-							if missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Gte != nil {
-								missing1.Value.Two.Gte = types.NumberValue(big.NewFloat(float64(*missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Gte)))
+							if missingItem.Value.CreateProjectValueProjects2.Gte != nil {
+								missing1.Value.Two.Gte = types.NumberValue(big.NewFloat(float64(*missingItem.Value.CreateProjectValueProjects2.Gte)))
 							} else {
 								missing1.Value.Two.Gte = types.NumberNull()
 							}
 							missing1.Value.Two.Inc = []types.String{}
-							for _, v := range missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Inc {
+							for _, v := range missingItem.Value.CreateProjectValueProjects2.Inc {
 								missing1.Value.Two.Inc = append(missing1.Value.Two.Inc, types.StringValue(v))
 							}
-							if missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Lt != nil {
-								missing1.Value.Two.Lt = types.NumberValue(big.NewFloat(float64(*missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Lt)))
+							if missingItem.Value.CreateProjectValueProjects2.Lt != nil {
+								missing1.Value.Two.Lt = types.NumberValue(big.NewFloat(float64(*missingItem.Value.CreateProjectValueProjects2.Lt)))
 							} else {
 								missing1.Value.Two.Lt = types.NumberNull()
 							}
-							if missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Lte != nil {
-								missing1.Value.Two.Lte = types.NumberValue(big.NewFloat(float64(*missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Lte)))
+							if missingItem.Value.CreateProjectValueProjects2.Lte != nil {
+								missing1.Value.Two.Lte = types.NumberValue(big.NewFloat(float64(*missingItem.Value.CreateProjectValueProjects2.Lte)))
 							} else {
 								missing1.Value.Two.Lte = types.NumberNull()
 							}
-							missing1.Value.Two.Neq = types.StringPointerValue(missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Neq)
+							missing1.Value.Two.Neq = types.StringPointerValue(missingItem.Value.CreateProjectValueProjects2.Neq)
 							missing1.Value.Two.Ninc = []types.String{}
-							for _, v := range missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Ninc {
+							for _, v := range missingItem.Value.CreateProjectValueProjects2.Ninc {
 								missing1.Value.Two.Ninc = append(missing1.Value.Two.Ninc, types.StringValue(v))
 							}
-							missing1.Value.Two.Pre = types.StringPointerValue(missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Pre)
-							missing1.Value.Two.Re = types.StringPointerValue(missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Re)
-							missing1.Value.Two.Suf = types.StringPointerValue(missingItem.Value.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutes2.Suf)
+							missing1.Value.Two.Pre = types.StringPointerValue(missingItem.Value.CreateProjectValueProjects2.Pre)
+							missing1.Value.Two.Re = types.StringPointerValue(missingItem.Value.CreateProjectValueProjects2.Re)
+							missing1.Value.Two.Suf = types.StringPointerValue(missingItem.Value.CreateProjectValueProjects2.Suf)
 						}
 					}
 					if missingCount+1 > len(firewallRoutes1.Missing) {
@@ -1619,12 +1619,12 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 				if firewallRoutesItem.Mitigate == nil {
 					firewallRoutes1.Mitigate = nil
 				} else {
-					firewallRoutes1.Mitigate = &tfTypes.Mitigate{}
+					firewallRoutes1.Mitigate = &tfTypes.CreateProjectMitigate{}
 					firewallRoutes1.Mitigate.Action = types.StringValue(string(firewallRoutesItem.Mitigate.Action))
 					if firewallRoutesItem.Mitigate.Erl == nil {
 						firewallRoutes1.Mitigate.Erl = nil
 					} else {
-						firewallRoutes1.Mitigate.Erl = &tfTypes.Erl{}
+						firewallRoutes1.Mitigate.Erl = &tfTypes.CreateProjectErl{}
 						firewallRoutes1.Mitigate.Erl.Algo = types.StringValue(string(firewallRoutesItem.Mitigate.Erl.Algo))
 						firewallRoutes1.Mitigate.Erl.Keys = []types.String{}
 						for _, v := range firewallRoutesItem.Mitigate.Erl.Keys {
@@ -1638,45 +1638,45 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 				if firewallRoutesItem.Src == nil {
 					firewallRoutes1.Src = nil
 				} else {
-					firewallRoutes1.Src = &tfTypes.CreateProjectProjectsValue{}
+					firewallRoutes1.Src = &tfTypes.CreateProjectValue{}
 					if firewallRoutesItem.Src.Str != nil {
 						firewallRoutes1.Src.Str = types.StringPointerValue(firewallRoutesItem.Src.Str)
 					}
-					if firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2 != nil {
-						firewallRoutes1.Src.Two = &tfTypes.CreateProjectProjectsResponse200ApplicationJSONResponseBodySecurity2{}
-						firewallRoutes1.Src.Two.Eq = types.StringPointerValue(firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Eq)
-						if firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Gt != nil {
-							firewallRoutes1.Src.Two.Gt = types.NumberValue(big.NewFloat(float64(*firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Gt)))
+					if firewallRoutesItem.Src.CreateProjectSrc2 != nil {
+						firewallRoutes1.Src.Two = &tfTypes.CreateProjectValue2{}
+						firewallRoutes1.Src.Two.Eq = types.StringPointerValue(firewallRoutesItem.Src.CreateProjectSrc2.Eq)
+						if firewallRoutesItem.Src.CreateProjectSrc2.Gt != nil {
+							firewallRoutes1.Src.Two.Gt = types.NumberValue(big.NewFloat(float64(*firewallRoutesItem.Src.CreateProjectSrc2.Gt)))
 						} else {
 							firewallRoutes1.Src.Two.Gt = types.NumberNull()
 						}
-						if firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Gte != nil {
-							firewallRoutes1.Src.Two.Gte = types.NumberValue(big.NewFloat(float64(*firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Gte)))
+						if firewallRoutesItem.Src.CreateProjectSrc2.Gte != nil {
+							firewallRoutes1.Src.Two.Gte = types.NumberValue(big.NewFloat(float64(*firewallRoutesItem.Src.CreateProjectSrc2.Gte)))
 						} else {
 							firewallRoutes1.Src.Two.Gte = types.NumberNull()
 						}
 						firewallRoutes1.Src.Two.Inc = []types.String{}
-						for _, v := range firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Inc {
+						for _, v := range firewallRoutesItem.Src.CreateProjectSrc2.Inc {
 							firewallRoutes1.Src.Two.Inc = append(firewallRoutes1.Src.Two.Inc, types.StringValue(v))
 						}
-						if firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Lt != nil {
-							firewallRoutes1.Src.Two.Lt = types.NumberValue(big.NewFloat(float64(*firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Lt)))
+						if firewallRoutesItem.Src.CreateProjectSrc2.Lt != nil {
+							firewallRoutes1.Src.Two.Lt = types.NumberValue(big.NewFloat(float64(*firewallRoutesItem.Src.CreateProjectSrc2.Lt)))
 						} else {
 							firewallRoutes1.Src.Two.Lt = types.NumberNull()
 						}
-						if firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Lte != nil {
-							firewallRoutes1.Src.Two.Lte = types.NumberValue(big.NewFloat(float64(*firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Lte)))
+						if firewallRoutesItem.Src.CreateProjectSrc2.Lte != nil {
+							firewallRoutes1.Src.Two.Lte = types.NumberValue(big.NewFloat(float64(*firewallRoutesItem.Src.CreateProjectSrc2.Lte)))
 						} else {
 							firewallRoutes1.Src.Two.Lte = types.NumberNull()
 						}
-						firewallRoutes1.Src.Two.Neq = types.StringPointerValue(firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Neq)
+						firewallRoutes1.Src.Two.Neq = types.StringPointerValue(firewallRoutesItem.Src.CreateProjectSrc2.Neq)
 						firewallRoutes1.Src.Two.Ninc = []types.String{}
-						for _, v := range firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Ninc {
+						for _, v := range firewallRoutesItem.Src.CreateProjectSrc2.Ninc {
 							firewallRoutes1.Src.Two.Ninc = append(firewallRoutes1.Src.Two.Ninc, types.StringValue(v))
 						}
-						firewallRoutes1.Src.Two.Pre = types.StringPointerValue(firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Pre)
-						firewallRoutes1.Src.Two.Re = types.StringPointerValue(firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Re)
-						firewallRoutes1.Src.Two.Suf = types.StringPointerValue(firewallRoutesItem.Src.CreateProjectProjectsResponse200ApplicationJSONResponseBody2.Suf)
+						firewallRoutes1.Src.Two.Pre = types.StringPointerValue(firewallRoutesItem.Src.CreateProjectSrc2.Pre)
+						firewallRoutes1.Src.Two.Re = types.StringPointerValue(firewallRoutesItem.Src.CreateProjectSrc2.Re)
+						firewallRoutes1.Src.Two.Suf = types.StringPointerValue(firewallRoutesItem.Src.CreateProjectSrc2.Suf)
 					}
 				}
 				if firewallRoutesItem.Status != nil {
@@ -1722,7 +1722,7 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		if resp.SpeedInsights == nil {
 			r.SpeedInsights = nil
 		} else {
-			r.SpeedInsights = &tfTypes.SpeedInsights{}
+			r.SpeedInsights = &tfTypes.CreateProjectSpeedInsights{}
 			if resp.SpeedInsights.CanceledAt != nil {
 				r.SpeedInsights.CanceledAt = types.NumberValue(big.NewFloat(float64(*resp.SpeedInsights.CanceledAt)))
 			} else {
@@ -1753,19 +1753,19 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 			r.SsoProtection.DeploymentType = types.StringValue(string(resp.SsoProtection.DeploymentType))
 		}
 		if len(resp.Targets) > 0 {
-			r.Targets = make(map[string]tfTypes.OidcTokenClaims)
-			for targetsKey, targetsValue := range resp.Targets {
-				var targetsResult tfTypes.OidcTokenClaims
-				if targetsValue.Str != nil {
-					targetsResult.Str = types.StringPointerValue(targetsValue.Str)
+			r.Targets = make(map[string]tfTypes.CreateProjectOidcTokenClaims)
+			for createProjectTargetsKey, createProjectTargetsValue := range resp.Targets {
+				var createProjectTargetsResult tfTypes.CreateProjectOidcTokenClaims
+				if createProjectTargetsValue.Str != nil {
+					createProjectTargetsResult.Str = types.StringPointerValue(createProjectTargetsValue.Str)
 				}
-				if targetsValue.ArrayOfStr != nil {
-					targetsResult.ArrayOfStr = []types.String{}
-					for _, v := range targetsValue.ArrayOfStr {
-						targetsResult.ArrayOfStr = append(targetsResult.ArrayOfStr, types.StringValue(v))
+				if createProjectTargetsValue.ArrayOfStr != nil {
+					createProjectTargetsResult.ArrayOfStr = []types.String{}
+					for _, v := range createProjectTargetsValue.ArrayOfStr {
+						createProjectTargetsResult.ArrayOfStr = append(createProjectTargetsResult.ArrayOfStr, types.StringValue(v))
 					}
 				}
-				r.Targets[targetsKey] = targetsResult
+				r.Targets[createProjectTargetsKey] = createProjectTargetsResult
 			}
 		}
 		if resp.TransferCompletedAt != nil {
@@ -1784,14 +1784,14 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 			r.TrustedIps = nil
 		} else {
 			r.TrustedIps = &tfTypes.CreateProjectTrustedIps{}
-			if resp.TrustedIps.CreateProjectProjectsResponse1 != nil {
-				r.TrustedIps.One = &tfTypes.CreateProjectProjectsResponse1{}
-				r.TrustedIps.One.Addresses = []tfTypes.CreateProjectAddresses{}
-				if len(r.TrustedIps.One.Addresses) > len(resp.TrustedIps.CreateProjectProjectsResponse1.Addresses) {
-					r.TrustedIps.One.Addresses = r.TrustedIps.One.Addresses[:len(resp.TrustedIps.CreateProjectProjectsResponse1.Addresses)]
+			if resp.TrustedIps.CreateProjectTrustedIps1 != nil {
+				r.TrustedIps.One = &tfTypes.CreateProjectTrustedIps1{}
+				r.TrustedIps.One.Addresses = []tfTypes.TrustedIpsAddresses{}
+				if len(r.TrustedIps.One.Addresses) > len(resp.TrustedIps.CreateProjectTrustedIps1.Addresses) {
+					r.TrustedIps.One.Addresses = r.TrustedIps.One.Addresses[:len(resp.TrustedIps.CreateProjectTrustedIps1.Addresses)]
 				}
-				for addressesCount, addressesItem := range resp.TrustedIps.CreateProjectProjectsResponse1.Addresses {
-					var addresses1 tfTypes.CreateProjectAddresses
+				for addressesCount, addressesItem := range resp.TrustedIps.CreateProjectTrustedIps1.Addresses {
+					var addresses1 tfTypes.TrustedIpsAddresses
 					addresses1.Note = types.StringPointerValue(addressesItem.Note)
 					addresses1.Value = types.StringValue(addressesItem.Value)
 					if addressesCount+1 > len(r.TrustedIps.One.Addresses) {
@@ -1801,12 +1801,12 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 						r.TrustedIps.One.Addresses[addressesCount].Value = addresses1.Value
 					}
 				}
-				r.TrustedIps.One.DeploymentType = types.StringValue(string(resp.TrustedIps.CreateProjectProjectsResponse1.DeploymentType))
-				r.TrustedIps.One.ProtectionMode = types.StringValue(string(resp.TrustedIps.CreateProjectProjectsResponse1.ProtectionMode))
+				r.TrustedIps.One.DeploymentType = types.StringValue(string(resp.TrustedIps.CreateProjectTrustedIps1.DeploymentType))
+				r.TrustedIps.One.ProtectionMode = types.StringValue(string(resp.TrustedIps.CreateProjectTrustedIps1.ProtectionMode))
 			}
-			if resp.TrustedIps.CreateProjectProjectsResponse2 != nil {
-				r.TrustedIps.Two = &tfTypes.CreateProjectProjectsResponse2{}
-				r.TrustedIps.Two.DeploymentType = types.StringValue(string(resp.TrustedIps.CreateProjectProjectsResponse2.DeploymentType))
+			if resp.TrustedIps.CreateProjectTrustedIps2 != nil {
+				r.TrustedIps.Two = &tfTypes.CreateProjectTrustedIps2{}
+				r.TrustedIps.Two.DeploymentType = types.StringValue(string(resp.TrustedIps.CreateProjectTrustedIps2.DeploymentType))
 			}
 		}
 		if resp.UpdatedAt != nil {
@@ -1817,7 +1817,7 @@ func (r *ProjectResourceModel) RefreshFromOperationsCreateProjectResponseBody(re
 		if resp.WebAnalytics == nil {
 			r.WebAnalytics = nil
 		} else {
-			r.WebAnalytics = &tfTypes.WebAnalytics{}
+			r.WebAnalytics = &tfTypes.CreateProjectWebAnalytics{}
 			if resp.WebAnalytics.CanceledAt != nil {
 				r.WebAnalytics.CanceledAt = types.NumberValue(big.NewFloat(float64(*resp.WebAnalytics.CanceledAt)))
 			} else {

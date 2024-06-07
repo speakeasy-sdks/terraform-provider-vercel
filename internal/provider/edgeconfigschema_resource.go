@@ -13,9 +13,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
-	"github.com/zchee/terraform-provider-vercel/internal/validators"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
+	"github.com/speakeasy/terraform-provider-terraform/internal/validators"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -28,7 +28,7 @@ func NewEdgeConfigSchemaResource() resource.Resource {
 
 // EdgeConfigSchemaResource defines the resource implementation.
 type EdgeConfigSchemaResource struct {
-	client *sdk.Vercel
+	client *sdk.SDK
 }
 
 // EdgeConfigSchemaResourceModel describes the resource data model.
@@ -96,12 +96,12 @@ func (r *EdgeConfigSchemaResource) Configure(ctx context.Context, req resource.C
 		return
 	}
 
-	client, ok := req.ProviderData.(*sdk.Vercel)
+	client, ok := req.ProviderData.(*sdk.SDK)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *sdk.Vercel, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -128,19 +128,12 @@ func (r *EdgeConfigSchemaResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	requestBody := data.ToOperationsPatchEdgeConfigSchemaRequestBody()
+	edgeConfigID := data.EdgeConfigID.ValueString()
 	dryRun := new(string)
 	if !data.DryRun.IsUnknown() && !data.DryRun.IsNull() {
 		*dryRun = data.DryRun.ValueString()
 	} else {
 		dryRun = nil
-	}
-	edgeConfigID := data.EdgeConfigID.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
 	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
@@ -148,12 +141,19 @@ func (r *EdgeConfigSchemaResource) Create(ctx context.Context, req resource.Crea
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
+	requestBody := data.ToOperationsPatchEdgeConfigSchemaRequestBody()
 	request := operations.PatchEdgeConfigSchemaRequest{
-		RequestBody:  requestBody,
-		DryRun:       dryRun,
 		EdgeConfigID: edgeConfigID,
-		Slug:         slug,
+		DryRun:       dryRun,
 		TeamID:       teamID,
+		Slug:         slug,
+		RequestBody:  requestBody,
 	}
 	res, err := r.client.EdgeConfig.UpdateSchema(ctx, request)
 	if err != nil {
@@ -178,22 +178,22 @@ func (r *EdgeConfigSchemaResource) Create(ctx context.Context, req resource.Crea
 	data.RefreshFromOperationsPatchEdgeConfigSchemaResponseBody(res.Object)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	edgeConfigId1 := data.EdgeConfigID.ValueString()
-	slug1 := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug1 = data.Slug.ValueString()
-	} else {
-		slug1 = nil
-	}
 	teamId1 := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamId1 = data.TeamID.ValueString()
 	} else {
 		teamId1 = nil
 	}
+	slug1 := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug1 = data.Slug.ValueString()
+	} else {
+		slug1 = nil
+	}
 	request1 := operations.GetEdgeConfigSchemaRequest{
 		EdgeConfigID: edgeConfigId1,
-		Slug:         slug1,
 		TeamID:       teamId1,
+		Slug:         slug1,
 	}
 	res1, err := r.client.EdgeConfig.GetSchema(ctx, request1)
 	if err != nil {
@@ -241,22 +241,22 @@ func (r *EdgeConfigSchemaResource) Read(ctx context.Context, req resource.ReadRe
 	}
 
 	edgeConfigID := data.EdgeConfigID.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
 	request := operations.GetEdgeConfigSchemaRequest{
 		EdgeConfigID: edgeConfigID,
-		Slug:         slug,
 		TeamID:       teamID,
+		Slug:         slug,
 	}
 	res, err := r.client.EdgeConfig.GetSchema(ctx, request)
 	if err != nil {
@@ -327,22 +327,22 @@ func (r *EdgeConfigSchemaResource) Delete(ctx context.Context, req resource.Dele
 	}
 
 	edgeConfigID := data.EdgeConfigID.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
 	request := operations.DeleteEdgeConfigSchemaRequest{
 		EdgeConfigID: edgeConfigID,
-		Slug:         slug,
 		TeamID:       teamID,
+		Slug:         slug,
 	}
 	res, err := r.client.EdgeConfig.DeleteSchema(ctx, request)
 	if err != nil {

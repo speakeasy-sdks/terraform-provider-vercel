@@ -3,6 +3,6 @@
 package types
 
 type CreateProjectTrustedIps struct {
-	One *CreateProjectProjectsResponse1 `tfsdk:"one" tfPlanOnly:"true"`
-	Two *CreateProjectProjectsResponse2 `tfsdk:"two" tfPlanOnly:"true"`
+	One *CreateProjectTrustedIps1 `tfsdk:"one" tfPlanOnly:"true"`
+	Two *CreateProjectTrustedIps2 `tfsdk:"two" tfPlanOnly:"true"`
 }

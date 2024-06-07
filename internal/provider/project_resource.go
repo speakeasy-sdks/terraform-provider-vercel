@@ -21,12 +21,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	speakeasy_boolplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/boolplanmodifier"
-	speakeasy_stringplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/stringplanmodifier"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
-	"github.com/zchee/terraform-provider-vercel/internal/validators"
+	speakeasy_boolplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/boolplanmodifier"
+	speakeasy_stringplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
+	"github.com/speakeasy/terraform-provider-terraform/internal/validators"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -39,13 +39,13 @@ func NewProjectResource() resource.Resource {
 
 // ProjectResource defines the resource implementation.
 type ProjectResource struct {
-	client *sdk.Vercel
+	client *sdk.SDK
 }
 
 // ProjectResourceModel describes the resource data model.
 type ProjectResourceModel struct {
 	AccountID                            types.String                                     `tfsdk:"account_id"`
-	Analytics                            *tfTypes.Analytics                               `tfsdk:"analytics"`
+	Analytics                            *tfTypes.CreateProjectAnalytics                  `tfsdk:"analytics"`
 	AutoAssignCustomDomains              types.Bool                                       `tfsdk:"auto_assign_custom_domains"`
 	AutoAssignCustomDomainsUpdatedBy     types.String                                     `tfsdk:"auto_assign_custom_domains_updated_by"`
 	AutoExposeSystemEnvs                 types.Bool                                       `tfsdk:"auto_expose_system_envs"`
@@ -57,14 +57,14 @@ type ProjectResourceModel struct {
 	CreatedAt                            types.Number                                     `tfsdk:"created_at"`
 	Crons                                *tfTypes.CreateProjectCrons                      `tfsdk:"crons"`
 	CustomerSupportCodeVisibility        types.Bool                                       `tfsdk:"customer_support_code_visibility"`
-	DataCache                            *tfTypes.DataCache                               `tfsdk:"data_cache"`
+	DataCache                            *tfTypes.CreateProjectDataCache                  `tfsdk:"data_cache"`
 	DevCommand                           types.String                                     `tfsdk:"dev_command"`
 	DirectoryListing                     types.Bool                                       `tfsdk:"directory_listing"`
 	EnablePreviewFeedback                types.Bool                                       `tfsdk:"enable_preview_feedback"`
-	Env                                  []tfTypes.Env                                    `tfsdk:"env"`
+	Env                                  []tfTypes.CreateProjectEnv                       `tfsdk:"env"`
 	EnvironmentVariables                 []tfTypes.EnvironmentVariables                   `tfsdk:"environment_variables"`
 	Framework                            types.String                                     `tfsdk:"framework"`
-	GitComments                          *tfTypes.GitComments                             `tfsdk:"git_comments"`
+	GitComments                          *tfTypes.CreateProjectGitComments                `tfsdk:"git_comments"`
 	GitForkProtection                    types.Bool                                       `tfsdk:"git_fork_protection"`
 	GitLFS                               types.Bool                                       `tfsdk:"git_lfs"`
 	GitRepository                        *tfTypes.GitRepository                           `tfsdk:"git_repository"`
@@ -73,25 +73,25 @@ type ProjectResourceModel struct {
 	ID                                   types.String                                     `tfsdk:"id"`
 	IDOrName                             types.String                                     `tfsdk:"id_or_name"`
 	InstallCommand                       types.String                                     `tfsdk:"install_command"`
-	LastAliasRequest                     *tfTypes.LastAliasRequest                        `tfsdk:"last_alias_request"`
-	LastRollbackTarget                   *tfTypes.Schema                                  `tfsdk:"last_rollback_target"`
-	LatestDeployments                    []tfTypes.LatestDeployments                      `tfsdk:"latest_deployments"`
-	Link                                 *tfTypes.Link                                    `tfsdk:"link"`
+	LastAliasRequest                     *tfTypes.CreateProjectLastAliasRequest           `tfsdk:"last_alias_request"`
+	LastRollbackTarget                   *tfTypes.GetEdgeConfigSchema                     `tfsdk:"last_rollback_target"`
+	LatestDeployments                    []tfTypes.CreateProjectLatestDeployments         `tfsdk:"latest_deployments"`
+	Link                                 *tfTypes.CreateProjectLink                       `tfsdk:"link"`
 	Live                                 types.Bool                                       `tfsdk:"live"`
 	Name                                 types.String                                     `tfsdk:"name"`
 	NodeVersion                          types.String                                     `tfsdk:"node_version"`
-	OidcTokenConfig                      *tfTypes.OidcTokenConfig                         `tfsdk:"oidc_token_config"`
+	OidcTokenConfig                      *tfTypes.CreateProjectOidcTokenConfig            `tfsdk:"oidc_token_config"`
 	OptionsAllowlist                     *tfTypes.CreateProjectOptionsAllowlist           `tfsdk:"options_allowlist"`
 	OutputDirectory                      types.String                                     `tfsdk:"output_directory"`
 	PassiveConnectConfigurationID        types.String                                     `tfsdk:"passive_connect_configuration_id"`
-	PasswordProtection                   *tfTypes.Schema                                  `tfsdk:"password_protection"`
+	PasswordProtection                   *tfTypes.GetEdgeConfigSchema                     `tfsdk:"password_protection"`
 	Paused                               types.Bool                                       `tfsdk:"paused"`
-	Permissions                          *tfTypes.Permissions                             `tfsdk:"permissions"`
+	Permissions                          *tfTypes.CreateProjectPermissions                `tfsdk:"permissions"`
 	ProductionDeploymentsFastLane        types.Bool                                       `tfsdk:"production_deployments_fast_lane"`
 	ProtectionBypass                     map[string]tfTypes.CreateProjectProtectionBypass `tfsdk:"protection_bypass"`
 	PublicSource                         types.Bool                                       `tfsdk:"public_source"`
 	RootDirectory                        types.String                                     `tfsdk:"root_directory"`
-	Security                             *tfTypes.Security                                `tfsdk:"security"`
+	Security                             *tfTypes.CreateProjectSecurity                   `tfsdk:"security"`
 	ServerlessFunctionRegion             types.String                                     `tfsdk:"serverless_function_region"`
 	ServerlessFunctionZeroConfigFailover types.Bool                                       `tfsdk:"serverless_function_zero_config_failover"`
 	SkewProtectionBoundaryAt             types.Number                                     `tfsdk:"skew_protection_boundary_at"`
@@ -99,9 +99,9 @@ type ProjectResourceModel struct {
 	SkipGitConnectDuringLink             types.Bool                                       `tfsdk:"skip_git_connect_during_link"`
 	Slug                                 types.String                                     `tfsdk:"slug"`
 	SourceFilesOutsideRootDirectory      types.Bool                                       `tfsdk:"source_files_outside_root_directory"`
-	SpeedInsights                        *tfTypes.SpeedInsights                           `tfsdk:"speed_insights"`
+	SpeedInsights                        *tfTypes.CreateProjectSpeedInsights              `tfsdk:"speed_insights"`
 	SsoProtection                        *tfTypes.CreateProjectSsoProtection              `tfsdk:"sso_protection"`
-	Targets                              map[string]tfTypes.OidcTokenClaims               `tfsdk:"targets"`
+	Targets                              map[string]tfTypes.CreateProjectOidcTokenClaims  `tfsdk:"targets"`
 	TeamID                               types.String                                     `tfsdk:"team_id"`
 	TransferCompletedAt                  types.Number                                     `tfsdk:"transfer_completed_at"`
 	TransferStartedAt                    types.Number                                     `tfsdk:"transfer_started_at"`
@@ -109,7 +109,7 @@ type ProjectResourceModel struct {
 	TransferredFromAccountID             types.String                                     `tfsdk:"transferred_from_account_id"`
 	TrustedIps                           *tfTypes.CreateProjectTrustedIps                 `tfsdk:"trusted_ips"`
 	UpdatedAt                            types.Number                                     `tfsdk:"updated_at"`
-	WebAnalytics                         *tfTypes.WebAnalytics                            `tfsdk:"web_analytics"`
+	WebAnalytics                         *tfTypes.CreateProjectWebAnalytics               `tfsdk:"web_analytics"`
 }
 
 func (r *ProjectResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -2929,12 +2929,12 @@ func (r *ProjectResource) Configure(ctx context.Context, req resource.ConfigureR
 		return
 	}
 
-	client, ok := req.ProviderData.(*sdk.Vercel)
+	client, ok := req.ProviderData.(*sdk.SDK)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *sdk.Vercel, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -2961,23 +2961,23 @@ func (r *ProjectResource) Create(ctx context.Context, req resource.CreateRequest
 		return
 	}
 
-	requestBody := data.ToOperationsCreateProjectRequestBody()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
+	requestBody := data.ToOperationsCreateProjectRequestBody()
 	request := operations.CreateProjectRequest{
-		RequestBody: requestBody,
-		Slug:        slug,
 		TeamID:      teamID,
+		Slug:        slug,
+		RequestBody: requestBody,
 	}
 	res, err := r.client.Projects.Create(ctx, request)
 	if err != nil {
@@ -3069,22 +3069,22 @@ func (r *ProjectResource) Delete(ctx context.Context, req resource.DeleteRequest
 	}
 
 	idOrName := data.IDOrName.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
 	request := operations.DeleteProjectRequest{
 		IDOrName: idOrName,
-		Slug:     slug,
 		TeamID:   teamID,
+		Slug:     slug,
 	}
 	res, err := r.client.Projects.Delete(ctx, request)
 	if err != nil {

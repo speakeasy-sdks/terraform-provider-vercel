@@ -9,21 +9,21 @@ import (
 type UploadArtifactRequest struct {
 	// The artifact size in bytes
 	ContentLength float64 `header:"style=simple,explode=false,name=Content-Length"`
-	RequestBody   []byte  `request:"mediaType=application/octet-stream"`
-	// The artifact hash
-	Hash string `pathParam:"style=simple,explode=false,name=hash"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The time taken to generate the uploaded artifact in milliseconds.
+	XArtifactDuration *float64 `header:"style=simple,explode=false,name=x-artifact-duration"`
 	// The continuous integration or delivery environment where this artifact was generated.
 	XArtifactClientCi *string `header:"style=simple,explode=false,name=x-artifact-client-ci"`
 	// 1 if the client is an interactive shell. Otherwise 0
 	XArtifactClientInteractive *int64 `header:"style=simple,explode=false,name=x-artifact-client-interactive"`
-	// The time taken to generate the uploaded artifact in milliseconds.
-	XArtifactDuration *float64 `header:"style=simple,explode=false,name=x-artifact-duration"`
 	// The base64 encoded tag for this artifact. The value is sent back to clients when the artifact is downloaded as the header `x-artifact-tag`
 	XArtifactTag *string `header:"style=simple,explode=false,name=x-artifact-tag"`
+	// The artifact hash
+	Hash string `pathParam:"style=simple,explode=false,name=hash"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug        *string `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody []byte  `request:"mediaType=application/octet-stream"`
 }
 
 func (o *UploadArtifactRequest) GetContentLength() float64 {
@@ -33,32 +33,11 @@ func (o *UploadArtifactRequest) GetContentLength() float64 {
 	return o.ContentLength
 }
 
-func (o *UploadArtifactRequest) GetRequestBody() []byte {
+func (o *UploadArtifactRequest) GetXArtifactDuration() *float64 {
 	if o == nil {
 		return nil
 	}
-	return o.RequestBody
-}
-
-func (o *UploadArtifactRequest) GetHash() string {
-	if o == nil {
-		return ""
-	}
-	return o.Hash
-}
-
-func (o *UploadArtifactRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
-func (o *UploadArtifactRequest) GetTeamID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TeamID
+	return o.XArtifactDuration
 }
 
 func (o *UploadArtifactRequest) GetXArtifactClientCi() *string {
@@ -75,18 +54,39 @@ func (o *UploadArtifactRequest) GetXArtifactClientInteractive() *int64 {
 	return o.XArtifactClientInteractive
 }
 
-func (o *UploadArtifactRequest) GetXArtifactDuration() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.XArtifactDuration
-}
-
 func (o *UploadArtifactRequest) GetXArtifactTag() *string {
 	if o == nil {
 		return nil
 	}
 	return o.XArtifactTag
+}
+
+func (o *UploadArtifactRequest) GetHash() string {
+	if o == nil {
+		return ""
+	}
+	return o.Hash
+}
+
+func (o *UploadArtifactRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *UploadArtifactRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *UploadArtifactRequest) GetRequestBody() []byte {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
 }
 
 // UploadArtifactResponseBody - File successfully uploaded

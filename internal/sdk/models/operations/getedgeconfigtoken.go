@@ -3,17 +3,17 @@
 package operations
 
 import (
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
 
 type GetEdgeConfigTokenRequest struct {
 	EdgeConfigID string `pathParam:"style=simple,explode=false,name=edgeConfigId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	Token        string `pathParam:"style=simple,explode=false,name=token"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-	Token  string  `pathParam:"style=simple,explode=false,name=token"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetEdgeConfigTokenRequest) GetEdgeConfigID() string {
@@ -23,11 +23,11 @@ func (o *GetEdgeConfigTokenRequest) GetEdgeConfigID() string {
 	return o.EdgeConfigID
 }
 
-func (o *GetEdgeConfigTokenRequest) GetSlug() *string {
+func (o *GetEdgeConfigTokenRequest) GetToken() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Slug
+	return o.Token
 }
 
 func (o *GetEdgeConfigTokenRequest) GetTeamID() *string {
@@ -37,22 +37,22 @@ func (o *GetEdgeConfigTokenRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-func (o *GetEdgeConfigTokenRequest) GetToken() string {
+func (o *GetEdgeConfigTokenRequest) GetSlug() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Token
+	return o.Slug
 }
 
 type GetEdgeConfigTokenResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// The EdgeConfig.
-	EdgeConfigToken *shared.EdgeConfigToken
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The EdgeConfig.
+	EdgeConfigToken *shared.EdgeConfigToken
 }
 
 func (o *GetEdgeConfigTokenResponse) GetContentType() string {
@@ -60,13 +60,6 @@ func (o *GetEdgeConfigTokenResponse) GetContentType() string {
 		return ""
 	}
 	return o.ContentType
-}
-
-func (o *GetEdgeConfigTokenResponse) GetEdgeConfigToken() *shared.EdgeConfigToken {
-	if o == nil {
-		return nil
-	}
-	return o.EdgeConfigToken
 }
 
 func (o *GetEdgeConfigTokenResponse) GetStatusCode() int {
@@ -81,4 +74,11 @@ func (o *GetEdgeConfigTokenResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *GetEdgeConfigTokenResponse) GetEdgeConfigToken() *shared.EdgeConfigToken {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigToken
 }

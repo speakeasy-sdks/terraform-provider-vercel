@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
 
@@ -47,24 +47,24 @@ type GetDeploymentsRequest struct {
 	Limit *float64 `queryParam:"style=form,explode=true,name=limit"`
 	// Filter deployments from the given `projectId`.
 	ProjectID *string `queryParam:"style=form,explode=true,name=projectId"`
-	// Filter deployments based on their rollback candidacy
-	RollbackCandidate *bool `queryParam:"style=form,explode=true,name=rollbackCandidate"`
-	// Get Deployments created after this JavaScript timestamp.
-	Since *float64 `queryParam:"style=form,explode=true,name=since"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// Filter deployments based on their state (`BUILDING`, `ERROR`, `INITIALIZING`, `QUEUED`, `READY`, `CANCELED`)
-	State *string `queryParam:"style=form,explode=true,name=state"`
 	// Filter deployments based on the environment.
 	Target *QueryParamTarget `queryParam:"style=form,explode=true,name=target"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Gets the deployment created before this Date timestamp. (default: current time)
 	To *float64 `queryParam:"style=form,explode=true,name=to"`
-	// Get Deployments created before this JavaScript timestamp.
-	Until *float64 `queryParam:"style=form,explode=true,name=until"`
 	// Filter out deployments based on users who have created the deployment.
 	Users *string `queryParam:"style=form,explode=true,name=users"`
+	// Get Deployments created after this JavaScript timestamp.
+	Since *float64 `queryParam:"style=form,explode=true,name=since"`
+	// Get Deployments created before this JavaScript timestamp.
+	Until *float64 `queryParam:"style=form,explode=true,name=until"`
+	// Filter deployments based on their state (`BUILDING`, `ERROR`, `INITIALIZING`, `QUEUED`, `READY`, `CANCELED`)
+	State *string `queryParam:"style=form,explode=true,name=state"`
+	// Filter deployments based on their rollback candidacy
+	RollbackCandidate *bool `queryParam:"style=form,explode=true,name=rollbackCandidate"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetDeploymentsRequest) GetApp() *string {
@@ -95,46 +95,11 @@ func (o *GetDeploymentsRequest) GetProjectID() *string {
 	return o.ProjectID
 }
 
-func (o *GetDeploymentsRequest) GetRollbackCandidate() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.RollbackCandidate
-}
-
-func (o *GetDeploymentsRequest) GetSince() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Since
-}
-
-func (o *GetDeploymentsRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
-func (o *GetDeploymentsRequest) GetState() *string {
-	if o == nil {
-		return nil
-	}
-	return o.State
-}
-
 func (o *GetDeploymentsRequest) GetTarget() *QueryParamTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
-}
-
-func (o *GetDeploymentsRequest) GetTeamID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TeamID
 }
 
 func (o *GetDeploymentsRequest) GetTo() *float64 {
@@ -144,13 +109,6 @@ func (o *GetDeploymentsRequest) GetTo() *float64 {
 	return o.To
 }
 
-func (o *GetDeploymentsRequest) GetUntil() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Until
-}
-
 func (o *GetDeploymentsRequest) GetUsers() *string {
 	if o == nil {
 		return nil
@@ -158,67 +116,263 @@ func (o *GetDeploymentsRequest) GetUsers() *string {
 	return o.Users
 }
 
-type AliasAssignedType string
+func (o *GetDeploymentsRequest) GetSince() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Since
+}
+
+func (o *GetDeploymentsRequest) GetUntil() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Until
+}
+
+func (o *GetDeploymentsRequest) GetState() *string {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}
+
+func (o *GetDeploymentsRequest) GetRollbackCandidate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RollbackCandidate
+}
+
+func (o *GetDeploymentsRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *GetDeploymentsRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+// GetDeploymentsSource - The source of the deployment.
+type GetDeploymentsSource string
 
 const (
-	AliasAssignedTypeNumber  AliasAssignedType = "number"
-	AliasAssignedTypeBoolean AliasAssignedType = "boolean"
+	GetDeploymentsSourceAPITriggerGitDeploy GetDeploymentsSource = "api-trigger-git-deploy"
+	GetDeploymentsSourceCli                 GetDeploymentsSource = "cli"
+	GetDeploymentsSourceCloneRepo           GetDeploymentsSource = "clone/repo"
+	GetDeploymentsSourceGit                 GetDeploymentsSource = "git"
+	GetDeploymentsSourceImport              GetDeploymentsSource = "import"
+	GetDeploymentsSourceImportRepo          GetDeploymentsSource = "import/repo"
 )
 
-type AliasAssigned struct {
-	Number  *float64
-	Boolean *bool
-
-	Type AliasAssignedType
+func (e GetDeploymentsSource) ToPointer() *GetDeploymentsSource {
+	return &e
 }
-
-func CreateAliasAssignedNumber(number float64) AliasAssigned {
-	typ := AliasAssignedTypeNumber
-
-	return AliasAssigned{
-		Number: &number,
-		Type:   typ,
+func (e *GetDeploymentsSource) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "api-trigger-git-deploy":
+		fallthrough
+	case "cli":
+		fallthrough
+	case "clone/repo":
+		fallthrough
+	case "git":
+		fallthrough
+	case "import":
+		fallthrough
+	case "import/repo":
+		*e = GetDeploymentsSource(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetDeploymentsSource: %v", v)
 	}
 }
 
-func CreateAliasAssignedBoolean(boolean bool) AliasAssigned {
-	typ := AliasAssignedTypeBoolean
+// GetDeploymentsState - In which state is the deployment.
+type GetDeploymentsState string
 
-	return AliasAssigned{
-		Boolean: &boolean,
-		Type:    typ,
+const (
+	GetDeploymentsStateBuilding     GetDeploymentsState = "BUILDING"
+	GetDeploymentsStateError        GetDeploymentsState = "ERROR"
+	GetDeploymentsStateInitializing GetDeploymentsState = "INITIALIZING"
+	GetDeploymentsStateQueued       GetDeploymentsState = "QUEUED"
+	GetDeploymentsStateReady        GetDeploymentsState = "READY"
+	GetDeploymentsStateCanceled     GetDeploymentsState = "CANCELED"
+)
+
+func (e GetDeploymentsState) ToPointer() *GetDeploymentsState {
+	return &e
+}
+func (e *GetDeploymentsState) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "BUILDING":
+		fallthrough
+	case "ERROR":
+		fallthrough
+	case "INITIALIZING":
+		fallthrough
+	case "QUEUED":
+		fallthrough
+	case "READY":
+		fallthrough
+	case "CANCELED":
+		*e = GetDeploymentsState(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetDeploymentsState: %v", v)
 	}
 }
 
-func (u *AliasAssigned) UnmarshalJSON(data []byte) error {
+// GetDeploymentsReadyState - In which state is the deployment.
+type GetDeploymentsReadyState string
 
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
-		u.Number = &number
-		u.Type = AliasAssignedTypeNumber
+const (
+	GetDeploymentsReadyStateBuilding     GetDeploymentsReadyState = "BUILDING"
+	GetDeploymentsReadyStateError        GetDeploymentsReadyState = "ERROR"
+	GetDeploymentsReadyStateInitializing GetDeploymentsReadyState = "INITIALIZING"
+	GetDeploymentsReadyStateQueued       GetDeploymentsReadyState = "QUEUED"
+	GetDeploymentsReadyStateReady        GetDeploymentsReadyState = "READY"
+	GetDeploymentsReadyStateCanceled     GetDeploymentsReadyState = "CANCELED"
+)
+
+func (e GetDeploymentsReadyState) ToPointer() *GetDeploymentsReadyState {
+	return &e
+}
+func (e *GetDeploymentsReadyState) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "BUILDING":
+		fallthrough
+	case "ERROR":
+		fallthrough
+	case "INITIALIZING":
+		fallthrough
+	case "QUEUED":
+		fallthrough
+	case "READY":
+		fallthrough
+	case "CANCELED":
+		*e = GetDeploymentsReadyState(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetDeploymentsReadyState: %v", v)
+	}
+}
+
+// GetDeploymentsType - The type of the deployment.
+type GetDeploymentsType string
+
+const (
+	GetDeploymentsTypeLambdas GetDeploymentsType = "LAMBDAS"
+)
+
+func (e GetDeploymentsType) ToPointer() *GetDeploymentsType {
+	return &e
+}
+func (e *GetDeploymentsType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "LAMBDAS":
+		*e = GetDeploymentsType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetDeploymentsType: %v", v)
+	}
+}
+
+// GetDeploymentsCreator - Metadata information of the user who created the deployment.
+type GetDeploymentsCreator struct {
+	// The unique identifier of the user.
+	UID string `json:"uid"`
+	// The email address of the user.
+	Email *string `json:"email,omitempty"`
+	// The username of the user.
+	Username *string `json:"username,omitempty"`
+	// The GitHub login of the user.
+	GithubLogin *string `json:"githubLogin,omitempty"`
+	// The GitLab login of the user.
+	GitlabLogin *string `json:"gitlabLogin,omitempty"`
+}
+
+func (o *GetDeploymentsCreator) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *GetDeploymentsCreator) GetEmail() *string {
+	if o == nil {
 		return nil
 	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
-		u.Boolean = &boolean
-		u.Type = AliasAssignedTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for AliasAssigned", string(data))
+	return o.Email
 }
 
-func (u AliasAssigned) MarshalJSON() ([]byte, error) {
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
+func (o *GetDeploymentsCreator) GetUsername() *string {
+	if o == nil {
+		return nil
 	}
+	return o.Username
+}
 
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
+func (o *GetDeploymentsCreator) GetGithubLogin() *string {
+	if o == nil {
+		return nil
 	}
+	return o.GithubLogin
+}
 
-	return nil, errors.New("could not marshal union type AliasAssigned: all fields are null")
+func (o *GetDeploymentsCreator) GetGitlabLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitlabLogin
+}
+
+// GetDeploymentsTarget - On which environment has the deployment been deployed to.
+type GetDeploymentsTarget string
+
+const (
+	GetDeploymentsTargetProduction GetDeploymentsTarget = "production"
+	GetDeploymentsTargetStaging    GetDeploymentsTarget = "staging"
+)
+
+func (e GetDeploymentsTarget) ToPointer() *GetDeploymentsTarget {
+	return &e
+}
+func (e *GetDeploymentsTarget) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "production":
+		fallthrough
+	case "staging":
+		*e = GetDeploymentsTarget(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetDeploymentsTarget: %v", v)
+	}
 }
 
 // GetDeploymentsAliasError - An error object in case aliasing of the deployment failed.
@@ -241,36 +395,93 @@ func (o *GetDeploymentsAliasError) GetMessage() string {
 	return o.Message
 }
 
-// GetDeploymentsChecksConclusion - Conclusion for checks
-type GetDeploymentsChecksConclusion string
+type GetDeploymentsAliasAssignedType string
 
 const (
-	GetDeploymentsChecksConclusionSucceeded GetDeploymentsChecksConclusion = "succeeded"
-	GetDeploymentsChecksConclusionFailed    GetDeploymentsChecksConclusion = "failed"
-	GetDeploymentsChecksConclusionSkipped   GetDeploymentsChecksConclusion = "skipped"
-	GetDeploymentsChecksConclusionCanceled  GetDeploymentsChecksConclusion = "canceled"
+	GetDeploymentsAliasAssignedTypeNumber  GetDeploymentsAliasAssignedType = "number"
+	GetDeploymentsAliasAssignedTypeBoolean GetDeploymentsAliasAssignedType = "boolean"
 )
 
-func (e GetDeploymentsChecksConclusion) ToPointer() *GetDeploymentsChecksConclusion {
+type GetDeploymentsAliasAssigned struct {
+	Number  *float64
+	Boolean *bool
+
+	Type GetDeploymentsAliasAssignedType
+}
+
+func CreateGetDeploymentsAliasAssignedNumber(number float64) GetDeploymentsAliasAssigned {
+	typ := GetDeploymentsAliasAssignedTypeNumber
+
+	return GetDeploymentsAliasAssigned{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateGetDeploymentsAliasAssignedBoolean(boolean bool) GetDeploymentsAliasAssigned {
+	typ := GetDeploymentsAliasAssignedTypeBoolean
+
+	return GetDeploymentsAliasAssigned{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *GetDeploymentsAliasAssigned) UnmarshalJSON(data []byte) error {
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = GetDeploymentsAliasAssignedTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = GetDeploymentsAliasAssignedTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GetDeploymentsAliasAssigned", string(data))
+}
+
+func (u GetDeploymentsAliasAssigned) MarshalJSON() ([]byte, error) {
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type GetDeploymentsAliasAssigned: all fields are null")
+}
+
+// GetDeploymentsReadySubstate - Since June 2023 Substate of deployment when readyState is 'READY' Tracks whether or not deployment has seen production traffic: - STAGED: never seen production traffic - PROMOTED: has seen production traffic
+type GetDeploymentsReadySubstate string
+
+const (
+	GetDeploymentsReadySubstateStaged   GetDeploymentsReadySubstate = "STAGED"
+	GetDeploymentsReadySubstatePromoted GetDeploymentsReadySubstate = "PROMOTED"
+)
+
+func (e GetDeploymentsReadySubstate) ToPointer() *GetDeploymentsReadySubstate {
 	return &e
 }
-func (e *GetDeploymentsChecksConclusion) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentsReadySubstate) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "succeeded":
+	case "STAGED":
 		fallthrough
-	case "failed":
-		fallthrough
-	case "skipped":
-		fallthrough
-	case "canceled":
-		*e = GetDeploymentsChecksConclusion(v)
+	case "PROMOTED":
+		*e = GetDeploymentsReadySubstate(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeploymentsChecksConclusion: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentsReadySubstate: %v", v)
 	}
 }
 
@@ -304,53 +515,37 @@ func (e *GetDeploymentsChecksState) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// GetDeploymentsCreator - Metadata information of the user who created the deployment.
-type GetDeploymentsCreator struct {
-	// The email address of the user.
-	Email *string `json:"email,omitempty"`
-	// The GitHub login of the user.
-	GithubLogin *string `json:"githubLogin,omitempty"`
-	// The GitLab login of the user.
-	GitlabLogin *string `json:"gitlabLogin,omitempty"`
-	// The unique identifier of the user.
-	UID string `json:"uid"`
-	// The username of the user.
-	Username *string `json:"username,omitempty"`
-}
+// GetDeploymentsChecksConclusion - Conclusion for checks
+type GetDeploymentsChecksConclusion string
 
-func (o *GetDeploymentsCreator) GetEmail() *string {
-	if o == nil {
+const (
+	GetDeploymentsChecksConclusionSucceeded GetDeploymentsChecksConclusion = "succeeded"
+	GetDeploymentsChecksConclusionFailed    GetDeploymentsChecksConclusion = "failed"
+	GetDeploymentsChecksConclusionSkipped   GetDeploymentsChecksConclusion = "skipped"
+	GetDeploymentsChecksConclusionCanceled  GetDeploymentsChecksConclusion = "canceled"
+)
+
+func (e GetDeploymentsChecksConclusion) ToPointer() *GetDeploymentsChecksConclusion {
+	return &e
+}
+func (e *GetDeploymentsChecksConclusion) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "succeeded":
+		fallthrough
+	case "failed":
+		fallthrough
+	case "skipped":
+		fallthrough
+	case "canceled":
+		*e = GetDeploymentsChecksConclusion(v)
 		return nil
+	default:
+		return fmt.Errorf("invalid value for GetDeploymentsChecksConclusion: %v", v)
 	}
-	return o.Email
-}
-
-func (o *GetDeploymentsCreator) GetGithubLogin() *string {
-	if o == nil {
-		return nil
-	}
-	return o.GithubLogin
-}
-
-func (o *GetDeploymentsCreator) GetGitlabLogin() *string {
-	if o == nil {
-		return nil
-	}
-	return o.GitlabLogin
-}
-
-func (o *GetDeploymentsCreator) GetUID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UID
-}
-
-func (o *GetDeploymentsCreator) GetUsername() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Username
 }
 
 type GetDeploymentsFramework string
@@ -502,28 +697,6 @@ func (e *GetDeploymentsFramework) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// GetDeploymentsGitComments - Since June '23
-type GetDeploymentsGitComments struct {
-	// Whether the Vercel bot should comment on commits
-	OnCommit bool `json:"onCommit"`
-	// Whether the Vercel bot should comment on PRs
-	OnPullRequest bool `json:"onPullRequest"`
-}
-
-func (o *GetDeploymentsGitComments) GetOnCommit() bool {
-	if o == nil {
-		return false
-	}
-	return o.OnCommit
-}
-
-func (o *GetDeploymentsGitComments) GetOnPullRequest() bool {
-	if o == nil {
-		return false
-	}
-	return o.OnPullRequest
-}
-
 type GetDeploymentsNodeVersion string
 
 const (
@@ -566,26 +739,19 @@ func (e *GetDeploymentsNodeVersion) UnmarshalJSON(data []byte) error {
 }
 
 type GetDeploymentsSpeedInsights struct {
-	CanceledAt *float64 `json:"canceledAt,omitempty"`
-	DisabledAt *float64 `json:"disabledAt,omitempty"`
-	EnabledAt  *float64 `json:"enabledAt,omitempty"`
-	HasData    *bool    `json:"hasData,omitempty"`
 	ID         string   `json:"id"`
+	EnabledAt  *float64 `json:"enabledAt,omitempty"`
+	DisabledAt *float64 `json:"disabledAt,omitempty"`
+	CanceledAt *float64 `json:"canceledAt,omitempty"`
+	HasData    *bool    `json:"hasData,omitempty"`
 	PaidAt     *float64 `json:"paidAt,omitempty"`
 }
 
-func (o *GetDeploymentsSpeedInsights) GetCanceledAt() *float64 {
+func (o *GetDeploymentsSpeedInsights) GetID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.CanceledAt
-}
-
-func (o *GetDeploymentsSpeedInsights) GetDisabledAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.DisabledAt
+	return o.ID
 }
 
 func (o *GetDeploymentsSpeedInsights) GetEnabledAt() *float64 {
@@ -595,18 +761,25 @@ func (o *GetDeploymentsSpeedInsights) GetEnabledAt() *float64 {
 	return o.EnabledAt
 }
 
+func (o *GetDeploymentsSpeedInsights) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *GetDeploymentsSpeedInsights) GetCanceledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CanceledAt
+}
+
 func (o *GetDeploymentsSpeedInsights) GetHasData() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.HasData
-}
-
-func (o *GetDeploymentsSpeedInsights) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
 }
 
 func (o *GetDeploymentsSpeedInsights) GetPaidAt() *float64 {
@@ -617,18 +790,18 @@ func (o *GetDeploymentsSpeedInsights) GetPaidAt() *float64 {
 }
 
 type GetDeploymentsWebAnalytics struct {
-	CanceledAt *float64 `json:"canceledAt,omitempty"`
+	ID         string   `json:"id"`
 	DisabledAt *float64 `json:"disabledAt,omitempty"`
+	CanceledAt *float64 `json:"canceledAt,omitempty"`
 	EnabledAt  *float64 `json:"enabledAt,omitempty"`
 	HasData    *bool    `json:"hasData,omitempty"`
-	ID         string   `json:"id"`
 }
 
-func (o *GetDeploymentsWebAnalytics) GetCanceledAt() *float64 {
+func (o *GetDeploymentsWebAnalytics) GetID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.CanceledAt
+	return o.ID
 }
 
 func (o *GetDeploymentsWebAnalytics) GetDisabledAt() *float64 {
@@ -636,6 +809,13 @@ func (o *GetDeploymentsWebAnalytics) GetDisabledAt() *float64 {
 		return nil
 	}
 	return o.DisabledAt
+}
+
+func (o *GetDeploymentsWebAnalytics) GetCanceledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CanceledAt
 }
 
 func (o *GetDeploymentsWebAnalytics) GetEnabledAt() *float64 {
@@ -652,70 +832,50 @@ func (o *GetDeploymentsWebAnalytics) GetHasData() *bool {
 	return o.HasData
 }
 
-func (o *GetDeploymentsWebAnalytics) GetID() string {
+// GetDeploymentsGitComments - Since June '23
+type GetDeploymentsGitComments struct {
+	// Whether the Vercel bot should comment on PRs
+	OnPullRequest bool `json:"onPullRequest"`
+	// Whether the Vercel bot should comment on commits
+	OnCommit bool `json:"onCommit"`
+}
+
+func (o *GetDeploymentsGitComments) GetOnPullRequest() bool {
 	if o == nil {
-		return ""
+		return false
 	}
-	return o.ID
+	return o.OnPullRequest
+}
+
+func (o *GetDeploymentsGitComments) GetOnCommit() bool {
+	if o == nil {
+		return false
+	}
+	return o.OnCommit
 }
 
 // GetDeploymentsProjectSettings - The project settings which was used for this deployment
 type GetDeploymentsProjectSettings struct {
-	BuildCommand                  *string                  `json:"buildCommand,omitempty"`
-	CommandForIgnoringBuildStep   *string                  `json:"commandForIgnoringBuildStep,omitempty"`
-	CreatedAt                     *float64                 `json:"createdAt,omitempty"`
-	CustomerSupportCodeVisibility *bool                    `json:"customerSupportCodeVisibility,omitempty"`
-	DevCommand                    *string                  `json:"devCommand,omitempty"`
-	Framework                     *GetDeploymentsFramework `json:"framework,omitempty"`
-	// Since June '23
-	GitComments                     *GetDeploymentsGitComments   `json:"gitComments,omitempty"`
+	Framework                       *GetDeploymentsFramework     `json:"framework,omitempty"`
 	GitForkProtection               *bool                        `json:"gitForkProtection,omitempty"`
+	CustomerSupportCodeVisibility   *bool                        `json:"customerSupportCodeVisibility,omitempty"`
 	GitLFS                          *bool                        `json:"gitLFS,omitempty"`
+	DevCommand                      *string                      `json:"devCommand,omitempty"`
 	InstallCommand                  *string                      `json:"installCommand,omitempty"`
+	BuildCommand                    *string                      `json:"buildCommand,omitempty"`
 	NodeVersion                     *GetDeploymentsNodeVersion   `json:"nodeVersion,omitempty"`
 	OutputDirectory                 *string                      `json:"outputDirectory,omitempty"`
 	PublicSource                    *bool                        `json:"publicSource,omitempty"`
 	RootDirectory                   *string                      `json:"rootDirectory,omitempty"`
 	ServerlessFunctionRegion        *string                      `json:"serverlessFunctionRegion,omitempty"`
-	SkipGitConnectDuringLink        *bool                        `json:"skipGitConnectDuringLink,omitempty"`
 	SourceFilesOutsideRootDirectory *bool                        `json:"sourceFilesOutsideRootDirectory,omitempty"`
+	CommandForIgnoringBuildStep     *string                      `json:"commandForIgnoringBuildStep,omitempty"`
+	CreatedAt                       *float64                     `json:"createdAt,omitempty"`
 	SpeedInsights                   *GetDeploymentsSpeedInsights `json:"speedInsights,omitempty"`
 	WebAnalytics                    *GetDeploymentsWebAnalytics  `json:"webAnalytics,omitempty"`
-}
-
-func (o *GetDeploymentsProjectSettings) GetBuildCommand() *string {
-	if o == nil {
-		return nil
-	}
-	return o.BuildCommand
-}
-
-func (o *GetDeploymentsProjectSettings) GetCommandForIgnoringBuildStep() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CommandForIgnoringBuildStep
-}
-
-func (o *GetDeploymentsProjectSettings) GetCreatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedAt
-}
-
-func (o *GetDeploymentsProjectSettings) GetCustomerSupportCodeVisibility() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.CustomerSupportCodeVisibility
-}
-
-func (o *GetDeploymentsProjectSettings) GetDevCommand() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DevCommand
+	SkipGitConnectDuringLink        *bool                        `json:"skipGitConnectDuringLink,omitempty"`
+	// Since June '23
+	GitComments *GetDeploymentsGitComments `json:"gitComments,omitempty"`
 }
 
 func (o *GetDeploymentsProjectSettings) GetFramework() *GetDeploymentsFramework {
@@ -725,18 +885,18 @@ func (o *GetDeploymentsProjectSettings) GetFramework() *GetDeploymentsFramework 
 	return o.Framework
 }
 
-func (o *GetDeploymentsProjectSettings) GetGitComments() *GetDeploymentsGitComments {
-	if o == nil {
-		return nil
-	}
-	return o.GitComments
-}
-
 func (o *GetDeploymentsProjectSettings) GetGitForkProtection() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.GitForkProtection
+}
+
+func (o *GetDeploymentsProjectSettings) GetCustomerSupportCodeVisibility() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerSupportCodeVisibility
 }
 
 func (o *GetDeploymentsProjectSettings) GetGitLFS() *bool {
@@ -746,11 +906,25 @@ func (o *GetDeploymentsProjectSettings) GetGitLFS() *bool {
 	return o.GitLFS
 }
 
+func (o *GetDeploymentsProjectSettings) GetDevCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DevCommand
+}
+
 func (o *GetDeploymentsProjectSettings) GetInstallCommand() *string {
 	if o == nil {
 		return nil
 	}
 	return o.InstallCommand
+}
+
+func (o *GetDeploymentsProjectSettings) GetBuildCommand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BuildCommand
 }
 
 func (o *GetDeploymentsProjectSettings) GetNodeVersion() *GetDeploymentsNodeVersion {
@@ -788,18 +962,25 @@ func (o *GetDeploymentsProjectSettings) GetServerlessFunctionRegion() *string {
 	return o.ServerlessFunctionRegion
 }
 
-func (o *GetDeploymentsProjectSettings) GetSkipGitConnectDuringLink() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.SkipGitConnectDuringLink
-}
-
 func (o *GetDeploymentsProjectSettings) GetSourceFilesOutsideRootDirectory() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SourceFilesOutsideRootDirectory
+}
+
+func (o *GetDeploymentsProjectSettings) GetCommandForIgnoringBuildStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommandForIgnoringBuildStep
+}
+
+func (o *GetDeploymentsProjectSettings) GetCreatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
 }
 
 func (o *GetDeploymentsProjectSettings) GetSpeedInsights() *GetDeploymentsSpeedInsights {
@@ -816,342 +997,77 @@ func (o *GetDeploymentsProjectSettings) GetWebAnalytics() *GetDeploymentsWebAnal
 	return o.WebAnalytics
 }
 
-// GetDeploymentsReadyState - In which state is the deployment.
-type GetDeploymentsReadyState string
-
-const (
-	GetDeploymentsReadyStateBuilding     GetDeploymentsReadyState = "BUILDING"
-	GetDeploymentsReadyStateError        GetDeploymentsReadyState = "ERROR"
-	GetDeploymentsReadyStateInitializing GetDeploymentsReadyState = "INITIALIZING"
-	GetDeploymentsReadyStateQueued       GetDeploymentsReadyState = "QUEUED"
-	GetDeploymentsReadyStateReady        GetDeploymentsReadyState = "READY"
-	GetDeploymentsReadyStateCanceled     GetDeploymentsReadyState = "CANCELED"
-)
-
-func (e GetDeploymentsReadyState) ToPointer() *GetDeploymentsReadyState {
-	return &e
-}
-func (e *GetDeploymentsReadyState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "BUILDING":
-		fallthrough
-	case "ERROR":
-		fallthrough
-	case "INITIALIZING":
-		fallthrough
-	case "QUEUED":
-		fallthrough
-	case "READY":
-		fallthrough
-	case "CANCELED":
-		*e = GetDeploymentsReadyState(v)
+func (o *GetDeploymentsProjectSettings) GetSkipGitConnectDuringLink() *bool {
+	if o == nil {
 		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentsReadyState: %v", v)
 	}
+	return o.SkipGitConnectDuringLink
 }
 
-// GetDeploymentsReadySubstate - Since June 2023 Substate of deployment when readyState is 'READY' Tracks whether or not deployment has seen production traffic: - STAGED: never seen production traffic - PROMOTED: has seen production traffic
-type GetDeploymentsReadySubstate string
-
-const (
-	GetDeploymentsReadySubstateStaged   GetDeploymentsReadySubstate = "STAGED"
-	GetDeploymentsReadySubstatePromoted GetDeploymentsReadySubstate = "PROMOTED"
-)
-
-func (e GetDeploymentsReadySubstate) ToPointer() *GetDeploymentsReadySubstate {
-	return &e
-}
-func (e *GetDeploymentsReadySubstate) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "STAGED":
-		fallthrough
-	case "PROMOTED":
-		*e = GetDeploymentsReadySubstate(v)
+func (o *GetDeploymentsProjectSettings) GetGitComments() *GetDeploymentsGitComments {
+	if o == nil {
 		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentsReadySubstate: %v", v)
 	}
-}
-
-// GetDeploymentsSource - The source of the deployment.
-type GetDeploymentsSource string
-
-const (
-	GetDeploymentsSourceAPITriggerGitDeploy GetDeploymentsSource = "api-trigger-git-deploy"
-	GetDeploymentsSourceCli                 GetDeploymentsSource = "cli"
-	GetDeploymentsSourceCloneRepo           GetDeploymentsSource = "clone/repo"
-	GetDeploymentsSourceGit                 GetDeploymentsSource = "git"
-	GetDeploymentsSourceImport              GetDeploymentsSource = "import"
-	GetDeploymentsSourceImportRepo          GetDeploymentsSource = "import/repo"
-)
-
-func (e GetDeploymentsSource) ToPointer() *GetDeploymentsSource {
-	return &e
-}
-func (e *GetDeploymentsSource) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "api-trigger-git-deploy":
-		fallthrough
-	case "cli":
-		fallthrough
-	case "clone/repo":
-		fallthrough
-	case "git":
-		fallthrough
-	case "import":
-		fallthrough
-	case "import/repo":
-		*e = GetDeploymentsSource(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentsSource: %v", v)
-	}
-}
-
-// GetDeploymentsState - In which state is the deployment.
-type GetDeploymentsState string
-
-const (
-	GetDeploymentsStateBuilding     GetDeploymentsState = "BUILDING"
-	GetDeploymentsStateError        GetDeploymentsState = "ERROR"
-	GetDeploymentsStateInitializing GetDeploymentsState = "INITIALIZING"
-	GetDeploymentsStateQueued       GetDeploymentsState = "QUEUED"
-	GetDeploymentsStateReady        GetDeploymentsState = "READY"
-	GetDeploymentsStateCanceled     GetDeploymentsState = "CANCELED"
-)
-
-func (e GetDeploymentsState) ToPointer() *GetDeploymentsState {
-	return &e
-}
-func (e *GetDeploymentsState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "BUILDING":
-		fallthrough
-	case "ERROR":
-		fallthrough
-	case "INITIALIZING":
-		fallthrough
-	case "QUEUED":
-		fallthrough
-	case "READY":
-		fallthrough
-	case "CANCELED":
-		*e = GetDeploymentsState(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentsState: %v", v)
-	}
-}
-
-// GetDeploymentsTarget - On which environment has the deployment been deployed to.
-type GetDeploymentsTarget string
-
-const (
-	GetDeploymentsTargetProduction GetDeploymentsTarget = "production"
-	GetDeploymentsTargetStaging    GetDeploymentsTarget = "staging"
-)
-
-func (e GetDeploymentsTarget) ToPointer() *GetDeploymentsTarget {
-	return &e
-}
-func (e *GetDeploymentsTarget) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "production":
-		fallthrough
-	case "staging":
-		*e = GetDeploymentsTarget(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentsTarget: %v", v)
-	}
-}
-
-// GetDeploymentsType - The type of the deployment.
-type GetDeploymentsType string
-
-const (
-	GetDeploymentsTypeLambdas GetDeploymentsType = "LAMBDAS"
-)
-
-func (e GetDeploymentsType) ToPointer() *GetDeploymentsType {
-	return &e
-}
-func (e *GetDeploymentsType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "LAMBDAS":
-		*e = GetDeploymentsType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentsType: %v", v)
-	}
+	return o.GitComments
 }
 
 type Deployments struct {
-	AliasAssigned *AliasAssigned `json:"aliasAssigned,omitempty"`
-	// An error object in case aliasing of the deployment failed.
-	AliasError *GetDeploymentsAliasError `json:"aliasError,omitempty"`
-	// Timestamp of when the deployment started building at.
-	BuildingAt *float64 `json:"buildingAt,omitempty"`
-	// Conclusion for checks
-	ChecksConclusion *GetDeploymentsChecksConclusion `json:"checksConclusion,omitempty"`
-	// State of all registered checks
-	ChecksState *GetDeploymentsChecksState `json:"checksState,omitempty"`
-	// The flag saying if Vercel Connect configuration is used for builds
-	ConnectBuildsEnabled *bool `json:"connectBuildsEnabled,omitempty"`
-	// The ID of Vercel Connect configuration used for this deployment
-	ConnectConfigurationID *string `json:"connectConfigurationId,omitempty"`
-	// Timestamp of when the deployment got created.
-	Created float64 `json:"created"`
-	// Timestamp of when the deployment got created.
-	CreatedAt *float64 `json:"createdAt,omitempty"`
-	// Metadata information of the user who created the deployment.
-	Creator GetDeploymentsCreator `json:"creator"`
-	// Vercel URL to inspect the deployment.
-	InspectorURL *string `json:"inspectorUrl"`
-	// Deployment can be used for instant rollback
-	IsRollbackCandidate *bool `json:"isRollbackCandidate,omitempty"`
-	// Metadata information from the Git provider.
-	Meta map[string]string `json:"meta,omitempty"`
+	// The unique identifier of the deployment.
+	UID string `json:"uid"`
 	// The name of the deployment.
 	Name string `json:"name"`
-	// The ID of Vercel Connect configuration used for this deployment's passive functions
-	PassiveConnectConfigurationID *string `json:"passiveConnectConfigurationId,omitempty"`
-	// The project settings which was used for this deployment
-	ProjectSettings *GetDeploymentsProjectSettings `json:"projectSettings,omitempty"`
-	// Timestamp of when the deployment got ready.
-	Ready *float64 `json:"ready,omitempty"`
-	// In which state is the deployment.
-	ReadyState *GetDeploymentsReadyState `json:"readyState,omitempty"`
-	// Since June 2023 Substate of deployment when readyState is 'READY' Tracks whether or not deployment has seen production traffic: - STAGED: never seen production traffic - PROMOTED: has seen production traffic
-	ReadySubstate *GetDeploymentsReadySubstate `json:"readySubstate,omitempty"`
+	// The URL of the deployment.
+	URL string `json:"url"`
+	// Timestamp of when the deployment got created.
+	Created float64 `json:"created"`
 	// The source of the deployment.
 	Source *GetDeploymentsSource `json:"source,omitempty"`
 	// In which state is the deployment.
 	State *GetDeploymentsState `json:"state,omitempty"`
-	// On which environment has the deployment been deployed to.
-	Target *GetDeploymentsTarget `json:"target,omitempty"`
+	// In which state is the deployment.
+	ReadyState *GetDeploymentsReadyState `json:"readyState,omitempty"`
 	// The type of the deployment.
 	Type GetDeploymentsType `json:"type"`
-	// The unique identifier of the deployment.
-	UID string `json:"uid"`
-	// The URL of the deployment.
-	URL string `json:"url"`
+	// Metadata information of the user who created the deployment.
+	Creator GetDeploymentsCreator `json:"creator"`
+	// Metadata information from the Git provider.
+	Meta map[string]string `json:"meta,omitempty"`
+	// On which environment has the deployment been deployed to.
+	Target *GetDeploymentsTarget `json:"target,omitempty"`
+	// An error object in case aliasing of the deployment failed.
+	AliasError    *GetDeploymentsAliasError    `json:"aliasError,omitempty"`
+	AliasAssigned *GetDeploymentsAliasAssigned `json:"aliasAssigned,omitempty"`
+	// Timestamp of when the deployment got created.
+	CreatedAt *float64 `json:"createdAt,omitempty"`
+	// Timestamp of when the deployment started building at.
+	BuildingAt *float64 `json:"buildingAt,omitempty"`
+	// Timestamp of when the deployment got ready.
+	Ready *float64 `json:"ready,omitempty"`
+	// Since June 2023 Substate of deployment when readyState is 'READY' Tracks whether or not deployment has seen production traffic: - STAGED: never seen production traffic - PROMOTED: has seen production traffic
+	ReadySubstate *GetDeploymentsReadySubstate `json:"readySubstate,omitempty"`
+	// State of all registered checks
+	ChecksState *GetDeploymentsChecksState `json:"checksState,omitempty"`
+	// Conclusion for checks
+	ChecksConclusion *GetDeploymentsChecksConclusion `json:"checksConclusion,omitempty"`
+	// Vercel URL to inspect the deployment.
+	InspectorURL *string `json:"inspectorUrl"`
+	// Deployment can be used for instant rollback
+	IsRollbackCandidate *bool `json:"isRollbackCandidate,omitempty"`
+	// The project settings which was used for this deployment
+	ProjectSettings *GetDeploymentsProjectSettings `json:"projectSettings,omitempty"`
+	// The flag saying if Vercel Connect configuration is used for builds
+	ConnectBuildsEnabled *bool `json:"connectBuildsEnabled,omitempty"`
+	// The ID of Vercel Connect configuration used for this deployment
+	ConnectConfigurationID *string `json:"connectConfigurationId,omitempty"`
+	// The ID of Vercel Connect configuration used for this deployment's passive functions
+	PassiveConnectConfigurationID *string `json:"passiveConnectConfigurationId,omitempty"`
 }
 
-func (o *Deployments) GetAliasAssigned() *AliasAssigned {
+func (o *Deployments) GetUID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.AliasAssigned
-}
-
-func (o *Deployments) GetAliasError() *GetDeploymentsAliasError {
-	if o == nil {
-		return nil
-	}
-	return o.AliasError
-}
-
-func (o *Deployments) GetBuildingAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.BuildingAt
-}
-
-func (o *Deployments) GetChecksConclusion() *GetDeploymentsChecksConclusion {
-	if o == nil {
-		return nil
-	}
-	return o.ChecksConclusion
-}
-
-func (o *Deployments) GetChecksState() *GetDeploymentsChecksState {
-	if o == nil {
-		return nil
-	}
-	return o.ChecksState
-}
-
-func (o *Deployments) GetConnectBuildsEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.ConnectBuildsEnabled
-}
-
-func (o *Deployments) GetConnectConfigurationID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ConnectConfigurationID
-}
-
-func (o *Deployments) GetCreated() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Created
-}
-
-func (o *Deployments) GetCreatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedAt
-}
-
-func (o *Deployments) GetCreator() GetDeploymentsCreator {
-	if o == nil {
-		return GetDeploymentsCreator{}
-	}
-	return o.Creator
-}
-
-func (o *Deployments) GetInspectorURL() *string {
-	if o == nil {
-		return nil
-	}
-	return o.InspectorURL
-}
-
-func (o *Deployments) GetIsRollbackCandidate() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IsRollbackCandidate
-}
-
-func (o *Deployments) GetMeta() map[string]string {
-	if o == nil {
-		return nil
-	}
-	return o.Meta
+	return o.UID
 }
 
 func (o *Deployments) GetName() string {
@@ -1161,39 +1077,18 @@ func (o *Deployments) GetName() string {
 	return o.Name
 }
 
-func (o *Deployments) GetPassiveConnectConfigurationID() *string {
+func (o *Deployments) GetURL() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.PassiveConnectConfigurationID
+	return o.URL
 }
 
-func (o *Deployments) GetProjectSettings() *GetDeploymentsProjectSettings {
+func (o *Deployments) GetCreated() float64 {
 	if o == nil {
-		return nil
+		return 0.0
 	}
-	return o.ProjectSettings
-}
-
-func (o *Deployments) GetReady() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Ready
-}
-
-func (o *Deployments) GetReadyState() *GetDeploymentsReadyState {
-	if o == nil {
-		return nil
-	}
-	return o.ReadyState
-}
-
-func (o *Deployments) GetReadySubstate() *GetDeploymentsReadySubstate {
-	if o == nil {
-		return nil
-	}
-	return o.ReadySubstate
+	return o.Created
 }
 
 func (o *Deployments) GetSource() *GetDeploymentsSource {
@@ -1210,11 +1105,11 @@ func (o *Deployments) GetState() *GetDeploymentsState {
 	return o.State
 }
 
-func (o *Deployments) GetTarget() *GetDeploymentsTarget {
+func (o *Deployments) GetReadyState() *GetDeploymentsReadyState {
 	if o == nil {
 		return nil
 	}
-	return o.Target
+	return o.ReadyState
 }
 
 func (o *Deployments) GetType() GetDeploymentsType {
@@ -1224,31 +1119,129 @@ func (o *Deployments) GetType() GetDeploymentsType {
 	return o.Type
 }
 
-func (o *Deployments) GetUID() string {
+func (o *Deployments) GetCreator() GetDeploymentsCreator {
 	if o == nil {
-		return ""
+		return GetDeploymentsCreator{}
 	}
-	return o.UID
+	return o.Creator
 }
 
-func (o *Deployments) GetURL() string {
+func (o *Deployments) GetMeta() map[string]string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.URL
+	return o.Meta
+}
+
+func (o *Deployments) GetTarget() *GetDeploymentsTarget {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *Deployments) GetAliasError() *GetDeploymentsAliasError {
+	if o == nil {
+		return nil
+	}
+	return o.AliasError
+}
+
+func (o *Deployments) GetAliasAssigned() *GetDeploymentsAliasAssigned {
+	if o == nil {
+		return nil
+	}
+	return o.AliasAssigned
+}
+
+func (o *Deployments) GetCreatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *Deployments) GetBuildingAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.BuildingAt
+}
+
+func (o *Deployments) GetReady() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Ready
+}
+
+func (o *Deployments) GetReadySubstate() *GetDeploymentsReadySubstate {
+	if o == nil {
+		return nil
+	}
+	return o.ReadySubstate
+}
+
+func (o *Deployments) GetChecksState() *GetDeploymentsChecksState {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksState
+}
+
+func (o *Deployments) GetChecksConclusion() *GetDeploymentsChecksConclusion {
+	if o == nil {
+		return nil
+	}
+	return o.ChecksConclusion
+}
+
+func (o *Deployments) GetInspectorURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InspectorURL
+}
+
+func (o *Deployments) GetIsRollbackCandidate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsRollbackCandidate
+}
+
+func (o *Deployments) GetProjectSettings() *GetDeploymentsProjectSettings {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectSettings
+}
+
+func (o *Deployments) GetConnectBuildsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectBuildsEnabled
+}
+
+func (o *Deployments) GetConnectConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectConfigurationID
+}
+
+func (o *Deployments) GetPassiveConnectConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PassiveConnectConfigurationID
 }
 
 type GetDeploymentsResponseBody struct {
-	Deployments []Deployments `json:"deployments"`
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
-	Pagination shared.Pagination `json:"pagination"`
-}
-
-func (o *GetDeploymentsResponseBody) GetDeployments() []Deployments {
-	if o == nil {
-		return []Deployments{}
-	}
-	return o.Deployments
+	Pagination  shared.Pagination `json:"pagination"`
+	Deployments []Deployments     `json:"deployments"`
 }
 
 func (o *GetDeploymentsResponseBody) GetPagination() shared.Pagination {
@@ -1256,6 +1249,13 @@ func (o *GetDeploymentsResponseBody) GetPagination() shared.Pagination {
 		return shared.Pagination{}
 	}
 	return o.Pagination
+}
+
+func (o *GetDeploymentsResponseBody) GetDeployments() []Deployments {
+	if o == nil {
+		return []Deployments{}
+	}
+	return o.Deployments
 }
 
 type GetDeploymentsResponse struct {

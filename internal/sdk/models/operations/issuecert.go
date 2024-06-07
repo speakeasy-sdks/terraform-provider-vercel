@@ -19,25 +19,11 @@ func (o *IssueCertRequestBody) GetCns() []string {
 }
 
 type IssueCertRequest struct {
-	RequestBody *IssueCertRequestBody `request:"mediaType=application/json"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *IssueCertRequest) GetRequestBody() *IssueCertRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
-}
-
-func (o *IssueCertRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
+	// The Team slug to perform the request on behalf of.
+	Slug        *string               `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *IssueCertRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *IssueCertRequest) GetTeamID() *string {
@@ -47,26 +33,33 @@ func (o *IssueCertRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
+func (o *IssueCertRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *IssueCertRequest) GetRequestBody() *IssueCertRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
 type IssueCertResponseBody struct {
-	AutoRenew bool     `json:"autoRenew"`
-	Cns       []string `json:"cns"`
+	ID        string   `json:"id"`
 	CreatedAt float64  `json:"createdAt"`
 	ExpiresAt float64  `json:"expiresAt"`
-	ID        string   `json:"id"`
+	AutoRenew bool     `json:"autoRenew"`
+	Cns       []string `json:"cns"`
 }
 
-func (o *IssueCertResponseBody) GetAutoRenew() bool {
+func (o *IssueCertResponseBody) GetID() string {
 	if o == nil {
-		return false
+		return ""
 	}
-	return o.AutoRenew
-}
-
-func (o *IssueCertResponseBody) GetCns() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.Cns
+	return o.ID
 }
 
 func (o *IssueCertResponseBody) GetCreatedAt() float64 {
@@ -83,11 +76,18 @@ func (o *IssueCertResponseBody) GetExpiresAt() float64 {
 	return o.ExpiresAt
 }
 
-func (o *IssueCertResponseBody) GetID() string {
+func (o *IssueCertResponseBody) GetAutoRenew() bool {
 	if o == nil {
-		return ""
+		return false
 	}
-	return o.ID
+	return o.AutoRenew
+}
+
+func (o *IssueCertResponseBody) GetCns() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Cns
 }
 
 type IssueCertResponse struct {

@@ -9,9 +9,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -24,29 +24,29 @@ func NewDeploymentDataSource() datasource.DataSource {
 
 // DeploymentDataSource is the data source implementation.
 type DeploymentDataSource struct {
-	client *sdk.Vercel
+	client *sdk.SDK
 }
 
 // DeploymentDataSourceModel describes the data model.
 type DeploymentDataSourceModel struct {
-	AliasAssigned           types.Bool              `tfsdk:"alias_assigned"`
-	AliasFinal              types.String            `tfsdk:"alias_final"`
-	AutoAssignCustomDomains types.Bool              `tfsdk:"auto_assign_custom_domains"`
-	ErrorCode               types.String            `tfsdk:"error_code"`
-	ErrorLink               types.String            `tfsdk:"error_link"`
-	ErrorMessage            types.String            `tfsdk:"error_message"`
-	ErrorStep               types.String            `tfsdk:"error_step"`
-	ID                      types.String            `tfsdk:"id"`
-	Name                    types.String            `tfsdk:"name"`
-	One                     *tfTypes.GetDeployment1 `tfsdk:"one" tfPlanOnly:"true"`
-	PreviewCommentsEnabled  types.Bool              `tfsdk:"preview_comments_enabled"`
-	ProjectID               types.String            `tfsdk:"project_id"`
-	Public                  types.Bool              `tfsdk:"public"`
-	Slug                    types.String            `tfsdk:"slug"`
-	TeamID                  types.String            `tfsdk:"team_id"`
-	Two                     *tfTypes.GetDeployment2 `tfsdk:"two" tfPlanOnly:"true"`
-	URL                     types.String            `tfsdk:"url"`
-	WithGitRepoInfo         types.String            `tfsdk:"with_git_repo_info"`
+	AliasAssigned           types.Bool                          `tfsdk:"alias_assigned"`
+	AliasFinal              types.String                        `tfsdk:"alias_final"`
+	AutoAssignCustomDomains types.Bool                          `tfsdk:"auto_assign_custom_domains"`
+	ErrorCode               types.String                        `tfsdk:"error_code"`
+	ErrorLink               types.String                        `tfsdk:"error_link"`
+	ErrorMessage            types.String                        `tfsdk:"error_message"`
+	ErrorStep               types.String                        `tfsdk:"error_step"`
+	ID                      types.String                        `tfsdk:"id"`
+	Name                    types.String                        `tfsdk:"name"`
+	One                     *tfTypes.GetDeploymentResponseBody1 `tfsdk:"one" tfPlanOnly:"true"`
+	PreviewCommentsEnabled  types.Bool                          `tfsdk:"preview_comments_enabled"`
+	ProjectID               types.String                        `tfsdk:"project_id"`
+	Public                  types.Bool                          `tfsdk:"public"`
+	Slug                    types.String                        `tfsdk:"slug"`
+	TeamID                  types.String                        `tfsdk:"team_id"`
+	Two                     *tfTypes.GetDeploymentResponseBody2 `tfsdk:"two" tfPlanOnly:"true"`
+	URL                     types.String                        `tfsdk:"url"`
+	WithGitRepoInfo         types.String                        `tfsdk:"with_git_repo_info"`
 }
 
 // Metadata returns the data source type name.
@@ -1449,12 +1449,12 @@ func (r *DeploymentDataSource) Configure(ctx context.Context, req datasource.Con
 		return
 	}
 
-	client, ok := req.ProviderData.(*sdk.Vercel)
+	client, ok := req.ProviderData.(*sdk.SDK)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected DataSource Configure Type",
-			fmt.Sprintf("Expected *sdk.Vercel, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -1482,11 +1482,11 @@ func (r *DeploymentDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	}
 
 	idOrURL := data.ProjectID.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
+	withGitRepoInfo := new(string)
+	if !data.WithGitRepoInfo.IsUnknown() && !data.WithGitRepoInfo.IsNull() {
+		*withGitRepoInfo = data.WithGitRepoInfo.ValueString()
 	} else {
-		slug = nil
+		withGitRepoInfo = nil
 	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
@@ -1494,17 +1494,17 @@ func (r *DeploymentDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	} else {
 		teamID = nil
 	}
-	withGitRepoInfo := new(string)
-	if !data.WithGitRepoInfo.IsUnknown() && !data.WithGitRepoInfo.IsNull() {
-		*withGitRepoInfo = data.WithGitRepoInfo.ValueString()
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
 	} else {
-		withGitRepoInfo = nil
+		slug = nil
 	}
 	request := operations.GetDeploymentRequest{
 		IDOrURL:         idOrURL,
-		Slug:            slug,
-		TeamID:          teamID,
 		WithGitRepoInfo: withGitRepoInfo,
+		TeamID:          teamID,
+		Slug:            slug,
 	}
 	res, err := r.client.Deployments.GetDeployment(ctx, request)
 	if err != nil {

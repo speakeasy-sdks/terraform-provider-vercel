@@ -5,64 +5,64 @@ package operations
 import (
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 )
 
-// PatchDomain2 - move-out
-type PatchDomain2 struct {
+// PatchDomainRequestBody2 - move-out
+type PatchDomainRequestBody2 struct {
+	Op *string `json:"op,omitempty"`
 	// User or team to move domain to
 	Destination *string `json:"destination,omitempty"`
-	Op          *string `json:"op,omitempty"`
 }
 
-func (o *PatchDomain2) GetDestination() *string {
+func (o *PatchDomainRequestBody2) GetOp() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Op
+}
+
+func (o *PatchDomainRequestBody2) GetDestination() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Destination
 }
 
-func (o *PatchDomain2) GetOp() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Op
-}
-
-// PatchDomain1 - update
-type PatchDomain1 struct {
-	// The custom nameservers for this project.
-	CustomNameservers []string `json:"customNameservers,omitempty"`
-	Op                *string  `json:"op,omitempty"`
+// PatchDomainRequestBody1 - update
+type PatchDomainRequestBody1 struct {
+	Op *string `json:"op,omitempty"`
 	// Specifies whether domain should be renewed.
 	Renew *bool `json:"renew,omitempty"`
+	// The custom nameservers for this project.
+	CustomNameservers []string `json:"customNameservers,omitempty"`
 	// Specifies whether this is a DNS zone that intends to use Vercel's nameservers.
 	Zone *bool `json:"zone,omitempty"`
 }
 
-func (o *PatchDomain1) GetCustomNameservers() []string {
-	if o == nil {
-		return nil
-	}
-	return o.CustomNameservers
-}
-
-func (o *PatchDomain1) GetOp() *string {
+func (o *PatchDomainRequestBody1) GetOp() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Op
 }
 
-func (o *PatchDomain1) GetRenew() *bool {
+func (o *PatchDomainRequestBody1) GetRenew() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Renew
 }
 
-func (o *PatchDomain1) GetZone() *bool {
+func (o *PatchDomainRequestBody1) GetCustomNameservers() []string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomNameservers
+}
+
+func (o *PatchDomainRequestBody1) GetZone() *bool {
 	if o == nil {
 		return nil
 	}
@@ -72,48 +72,48 @@ func (o *PatchDomain1) GetZone() *bool {
 type PatchDomainRequestBodyType string
 
 const (
-	PatchDomainRequestBodyTypePatchDomain1 PatchDomainRequestBodyType = "patchDomain_1"
-	PatchDomainRequestBodyTypePatchDomain2 PatchDomainRequestBodyType = "patchDomain_2"
+	PatchDomainRequestBodyTypePatchDomainRequestBody1 PatchDomainRequestBodyType = "patchDomain_requestBody_1"
+	PatchDomainRequestBodyTypePatchDomainRequestBody2 PatchDomainRequestBodyType = "patchDomain_requestBody_2"
 )
 
 type PatchDomainRequestBody struct {
-	PatchDomain1 *PatchDomain1
-	PatchDomain2 *PatchDomain2
+	PatchDomainRequestBody1 *PatchDomainRequestBody1
+	PatchDomainRequestBody2 *PatchDomainRequestBody2
 
 	Type PatchDomainRequestBodyType
 }
 
-func CreatePatchDomainRequestBodyPatchDomain1(patchDomain1 PatchDomain1) PatchDomainRequestBody {
-	typ := PatchDomainRequestBodyTypePatchDomain1
+func CreatePatchDomainRequestBodyPatchDomainRequestBody1(patchDomainRequestBody1 PatchDomainRequestBody1) PatchDomainRequestBody {
+	typ := PatchDomainRequestBodyTypePatchDomainRequestBody1
 
 	return PatchDomainRequestBody{
-		PatchDomain1: &patchDomain1,
-		Type:         typ,
+		PatchDomainRequestBody1: &patchDomainRequestBody1,
+		Type:                    typ,
 	}
 }
 
-func CreatePatchDomainRequestBodyPatchDomain2(patchDomain2 PatchDomain2) PatchDomainRequestBody {
-	typ := PatchDomainRequestBodyTypePatchDomain2
+func CreatePatchDomainRequestBodyPatchDomainRequestBody2(patchDomainRequestBody2 PatchDomainRequestBody2) PatchDomainRequestBody {
+	typ := PatchDomainRequestBodyTypePatchDomainRequestBody2
 
 	return PatchDomainRequestBody{
-		PatchDomain2: &patchDomain2,
-		Type:         typ,
+		PatchDomainRequestBody2: &patchDomainRequestBody2,
+		Type:                    typ,
 	}
 }
 
 func (u *PatchDomainRequestBody) UnmarshalJSON(data []byte) error {
 
-	var patchDomain2 PatchDomain2 = PatchDomain2{}
-	if err := utils.UnmarshalJSON(data, &patchDomain2, "", true, true); err == nil {
-		u.PatchDomain2 = &patchDomain2
-		u.Type = PatchDomainRequestBodyTypePatchDomain2
+	var patchDomainRequestBody2 PatchDomainRequestBody2 = PatchDomainRequestBody2{}
+	if err := utils.UnmarshalJSON(data, &patchDomainRequestBody2, "", true, true); err == nil {
+		u.PatchDomainRequestBody2 = &patchDomainRequestBody2
+		u.Type = PatchDomainRequestBodyTypePatchDomainRequestBody2
 		return nil
 	}
 
-	var patchDomain1 PatchDomain1 = PatchDomain1{}
-	if err := utils.UnmarshalJSON(data, &patchDomain1, "", true, true); err == nil {
-		u.PatchDomain1 = &patchDomain1
-		u.Type = PatchDomainRequestBodyTypePatchDomain1
+	var patchDomainRequestBody1 PatchDomainRequestBody1 = PatchDomainRequestBody1{}
+	if err := utils.UnmarshalJSON(data, &patchDomainRequestBody1, "", true, true); err == nil {
+		u.PatchDomainRequestBody1 = &patchDomainRequestBody1
+		u.Type = PatchDomainRequestBodyTypePatchDomainRequestBody1
 		return nil
 	}
 
@@ -121,31 +121,24 @@ func (u *PatchDomainRequestBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u PatchDomainRequestBody) MarshalJSON() ([]byte, error) {
-	if u.PatchDomain1 != nil {
-		return utils.MarshalJSON(u.PatchDomain1, "", true)
+	if u.PatchDomainRequestBody1 != nil {
+		return utils.MarshalJSON(u.PatchDomainRequestBody1, "", true)
 	}
 
-	if u.PatchDomain2 != nil {
-		return utils.MarshalJSON(u.PatchDomain2, "", true)
+	if u.PatchDomainRequestBody2 != nil {
+		return utils.MarshalJSON(u.PatchDomainRequestBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type PatchDomainRequestBody: all fields are null")
 }
 
 type PatchDomainRequest struct {
-	RequestBody *PatchDomainRequestBody `request:"mediaType=application/json"`
-	Domain      string                  `pathParam:"style=simple,explode=false,name=domain"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	Domain string `pathParam:"style=simple,explode=false,name=domain"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *PatchDomainRequest) GetRequestBody() *PatchDomainRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                 `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *PatchDomainRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *PatchDomainRequest) GetDomain() string {
@@ -155,13 +148,6 @@ func (o *PatchDomainRequest) GetDomain() string {
 	return o.Domain
 }
 
-func (o *PatchDomainRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *PatchDomainRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -169,57 +155,71 @@ func (o *PatchDomainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type PatchDomain3 struct {
-	CustomNameservers []string `json:"customNameservers,omitempty"`
-	Renew             *bool    `json:"renew,omitempty"`
-	Zone              *bool    `json:"zone,omitempty"`
-}
-
-func (o *PatchDomain3) GetCustomNameservers() []string {
+func (o *PatchDomainRequest) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
-	return o.CustomNameservers
+	return o.Slug
 }
 
-func (o *PatchDomain3) GetRenew() *bool {
+func (o *PatchDomainRequest) GetRequestBody() *PatchDomainRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+type PatchDomainResponseBody3 struct {
+	Renew             *bool    `json:"renew,omitempty"`
+	CustomNameservers []string `json:"customNameservers,omitempty"`
+	Zone              *bool    `json:"zone,omitempty"`
+}
+
+func (o *PatchDomainResponseBody3) GetRenew() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Renew
 }
 
-func (o *PatchDomain3) GetZone() *bool {
+func (o *PatchDomainResponseBody3) GetCustomNameservers() []string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomNameservers
+}
+
+func (o *PatchDomainResponseBody3) GetZone() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Zone
 }
 
-type PatchDomainDomains2 struct {
+type PatchDomainResponseBody2 struct {
 	Moved bool   `json:"moved"`
 	Token string `json:"token"`
 }
 
-func (o *PatchDomainDomains2) GetMoved() bool {
+func (o *PatchDomainResponseBody2) GetMoved() bool {
 	if o == nil {
 		return false
 	}
 	return o.Moved
 }
 
-func (o *PatchDomainDomains2) GetToken() string {
+func (o *PatchDomainResponseBody2) GetToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.Token
 }
 
-type PatchDomainDomains1 struct {
+type PatchDomainResponseBody1 struct {
 	Moved bool `json:"moved"`
 }
 
-func (o *PatchDomainDomains1) GetMoved() bool {
+func (o *PatchDomainResponseBody1) GetMoved() bool {
 	if o == nil {
 		return false
 	}
@@ -229,66 +229,66 @@ func (o *PatchDomainDomains1) GetMoved() bool {
 type PatchDomainResponseBodyType string
 
 const (
-	PatchDomainResponseBodyTypePatchDomainDomains1 PatchDomainResponseBodyType = "patchDomain_domains_1"
-	PatchDomainResponseBodyTypePatchDomainDomains2 PatchDomainResponseBodyType = "patchDomain_domains_2"
-	PatchDomainResponseBodyTypePatchDomain3        PatchDomainResponseBodyType = "patchDomain_3"
+	PatchDomainResponseBodyTypePatchDomainResponseBody1 PatchDomainResponseBodyType = "patchDomain_responseBody_1"
+	PatchDomainResponseBodyTypePatchDomainResponseBody2 PatchDomainResponseBodyType = "patchDomain_responseBody_2"
+	PatchDomainResponseBodyTypePatchDomainResponseBody3 PatchDomainResponseBodyType = "patchDomain_responseBody_3"
 )
 
 type PatchDomainResponseBody struct {
-	PatchDomainDomains1 *PatchDomainDomains1
-	PatchDomainDomains2 *PatchDomainDomains2
-	PatchDomain3        *PatchDomain3
+	PatchDomainResponseBody1 *PatchDomainResponseBody1
+	PatchDomainResponseBody2 *PatchDomainResponseBody2
+	PatchDomainResponseBody3 *PatchDomainResponseBody3
 
 	Type PatchDomainResponseBodyType
 }
 
-func CreatePatchDomainResponseBodyPatchDomainDomains1(patchDomainDomains1 PatchDomainDomains1) PatchDomainResponseBody {
-	typ := PatchDomainResponseBodyTypePatchDomainDomains1
+func CreatePatchDomainResponseBodyPatchDomainResponseBody1(patchDomainResponseBody1 PatchDomainResponseBody1) PatchDomainResponseBody {
+	typ := PatchDomainResponseBodyTypePatchDomainResponseBody1
 
 	return PatchDomainResponseBody{
-		PatchDomainDomains1: &patchDomainDomains1,
-		Type:                typ,
+		PatchDomainResponseBody1: &patchDomainResponseBody1,
+		Type:                     typ,
 	}
 }
 
-func CreatePatchDomainResponseBodyPatchDomainDomains2(patchDomainDomains2 PatchDomainDomains2) PatchDomainResponseBody {
-	typ := PatchDomainResponseBodyTypePatchDomainDomains2
+func CreatePatchDomainResponseBodyPatchDomainResponseBody2(patchDomainResponseBody2 PatchDomainResponseBody2) PatchDomainResponseBody {
+	typ := PatchDomainResponseBodyTypePatchDomainResponseBody2
 
 	return PatchDomainResponseBody{
-		PatchDomainDomains2: &patchDomainDomains2,
-		Type:                typ,
+		PatchDomainResponseBody2: &patchDomainResponseBody2,
+		Type:                     typ,
 	}
 }
 
-func CreatePatchDomainResponseBodyPatchDomain3(patchDomain3 PatchDomain3) PatchDomainResponseBody {
-	typ := PatchDomainResponseBodyTypePatchDomain3
+func CreatePatchDomainResponseBodyPatchDomainResponseBody3(patchDomainResponseBody3 PatchDomainResponseBody3) PatchDomainResponseBody {
+	typ := PatchDomainResponseBodyTypePatchDomainResponseBody3
 
 	return PatchDomainResponseBody{
-		PatchDomain3: &patchDomain3,
-		Type:         typ,
+		PatchDomainResponseBody3: &patchDomainResponseBody3,
+		Type:                     typ,
 	}
 }
 
 func (u *PatchDomainResponseBody) UnmarshalJSON(data []byte) error {
 
-	var patchDomainDomains1 PatchDomainDomains1 = PatchDomainDomains1{}
-	if err := utils.UnmarshalJSON(data, &patchDomainDomains1, "", true, true); err == nil {
-		u.PatchDomainDomains1 = &patchDomainDomains1
-		u.Type = PatchDomainResponseBodyTypePatchDomainDomains1
+	var patchDomainResponseBody1 PatchDomainResponseBody1 = PatchDomainResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &patchDomainResponseBody1, "", true, true); err == nil {
+		u.PatchDomainResponseBody1 = &patchDomainResponseBody1
+		u.Type = PatchDomainResponseBodyTypePatchDomainResponseBody1
 		return nil
 	}
 
-	var patchDomainDomains2 PatchDomainDomains2 = PatchDomainDomains2{}
-	if err := utils.UnmarshalJSON(data, &patchDomainDomains2, "", true, true); err == nil {
-		u.PatchDomainDomains2 = &patchDomainDomains2
-		u.Type = PatchDomainResponseBodyTypePatchDomainDomains2
+	var patchDomainResponseBody2 PatchDomainResponseBody2 = PatchDomainResponseBody2{}
+	if err := utils.UnmarshalJSON(data, &patchDomainResponseBody2, "", true, true); err == nil {
+		u.PatchDomainResponseBody2 = &patchDomainResponseBody2
+		u.Type = PatchDomainResponseBodyTypePatchDomainResponseBody2
 		return nil
 	}
 
-	var patchDomain3 PatchDomain3 = PatchDomain3{}
-	if err := utils.UnmarshalJSON(data, &patchDomain3, "", true, true); err == nil {
-		u.PatchDomain3 = &patchDomain3
-		u.Type = PatchDomainResponseBodyTypePatchDomain3
+	var patchDomainResponseBody3 PatchDomainResponseBody3 = PatchDomainResponseBody3{}
+	if err := utils.UnmarshalJSON(data, &patchDomainResponseBody3, "", true, true); err == nil {
+		u.PatchDomainResponseBody3 = &patchDomainResponseBody3
+		u.Type = PatchDomainResponseBodyTypePatchDomainResponseBody3
 		return nil
 	}
 
@@ -296,16 +296,16 @@ func (u *PatchDomainResponseBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u PatchDomainResponseBody) MarshalJSON() ([]byte, error) {
-	if u.PatchDomainDomains1 != nil {
-		return utils.MarshalJSON(u.PatchDomainDomains1, "", true)
+	if u.PatchDomainResponseBody1 != nil {
+		return utils.MarshalJSON(u.PatchDomainResponseBody1, "", true)
 	}
 
-	if u.PatchDomainDomains2 != nil {
-		return utils.MarshalJSON(u.PatchDomainDomains2, "", true)
+	if u.PatchDomainResponseBody2 != nil {
+		return utils.MarshalJSON(u.PatchDomainResponseBody2, "", true)
 	}
 
-	if u.PatchDomain3 != nil {
-		return utils.MarshalJSON(u.PatchDomain3, "", true)
+	if u.PatchDomainResponseBody3 != nil {
+		return utils.MarshalJSON(u.PatchDomainResponseBody3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type PatchDomainResponseBody: all fields are null")

@@ -9,7 +9,7 @@ type AuthUser struct {
 	Avatar                          types.String                      `tfsdk:"avatar"`
 	Billing                         *Billing                          `tfsdk:"billing"`
 	CreatedAt                       types.Number                      `tfsdk:"created_at"`
-	DataCache                       *DataCache1                       `tfsdk:"data_cache"`
+	DataCache                       *DataCache                        `tfsdk:"data_cache"`
 	DefaultTeamID                   types.String                      `tfsdk:"default_team_id"`
 	DismissedToasts                 []DismissedToasts                 `tfsdk:"dismissed_toasts"`
 	Email                           types.String                      `tfsdk:"email"`

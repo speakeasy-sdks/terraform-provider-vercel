@@ -7,19 +7,12 @@ import (
 )
 
 type RequestPromoteRequest struct {
-	DeploymentID string `pathParam:"style=simple,explode=false,name=deploymentId"`
 	ProjectID    string `pathParam:"style=simple,explode=false,name=projectId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	DeploymentID string `pathParam:"style=simple,explode=false,name=deploymentId"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *RequestPromoteRequest) GetDeploymentID() string {
-	if o == nil {
-		return ""
-	}
-	return o.DeploymentID
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *RequestPromoteRequest) GetProjectID() string {
@@ -29,11 +22,11 @@ func (o *RequestPromoteRequest) GetProjectID() string {
 	return o.ProjectID
 }
 
-func (o *RequestPromoteRequest) GetSlug() *string {
+func (o *RequestPromoteRequest) GetDeploymentID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Slug
+	return o.DeploymentID
 }
 
 func (o *RequestPromoteRequest) GetTeamID() *string {
@@ -41,6 +34,13 @@ func (o *RequestPromoteRequest) GetTeamID() *string {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *RequestPromoteRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 type RequestPromoteResponse struct {

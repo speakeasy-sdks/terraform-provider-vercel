@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
 
@@ -24,20 +24,13 @@ func (o *UpdateProjectDataCacheRequestBody) GetDisabled() *bool {
 }
 
 type UpdateProjectDataCacheRequest struct {
-	RequestBody *UpdateProjectDataCacheRequestBody `request:"mediaType=application/json"`
 	// The unique project identifier
 	ProjectID string `pathParam:"style=simple,explode=false,name=projectId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *UpdateProjectDataCacheRequest) GetRequestBody() *UpdateProjectDataCacheRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                            `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *UpdateProjectDataCacheRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *UpdateProjectDataCacheRequest) GetProjectID() string {
@@ -47,13 +40,6 @@ func (o *UpdateProjectDataCacheRequest) GetProjectID() string {
 	return o.ProjectID
 }
 
-func (o *UpdateProjectDataCacheRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *UpdateProjectDataCacheRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -61,66 +47,131 @@ func (o *UpdateProjectDataCacheRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type UpdateProjectDataCacheAnalytics struct {
+func (o *UpdateProjectDataCacheRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *UpdateProjectDataCacheRequest) GetRequestBody() *UpdateProjectDataCacheRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+type Analytics struct {
+	ID                  string   `json:"id"`
 	CanceledAt          *float64 `json:"canceledAt,omitempty"`
 	DisabledAt          float64  `json:"disabledAt"`
 	EnabledAt           float64  `json:"enabledAt"`
-	ID                  string   `json:"id"`
 	PaidAt              *float64 `json:"paidAt,omitempty"`
 	SampleRatePercent   *float64 `json:"sampleRatePercent,omitempty"`
 	SpendLimitInDollars *float64 `json:"spendLimitInDollars,omitempty"`
 }
 
-func (o *UpdateProjectDataCacheAnalytics) GetCanceledAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CanceledAt
-}
-
-func (o *UpdateProjectDataCacheAnalytics) GetDisabledAt() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.DisabledAt
-}
-
-func (o *UpdateProjectDataCacheAnalytics) GetEnabledAt() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.EnabledAt
-}
-
-func (o *UpdateProjectDataCacheAnalytics) GetID() string {
+func (o *Analytics) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *UpdateProjectDataCacheAnalytics) GetPaidAt() *float64 {
+func (o *Analytics) GetCanceledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CanceledAt
+}
+
+func (o *Analytics) GetDisabledAt() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.DisabledAt
+}
+
+func (o *Analytics) GetEnabledAt() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.EnabledAt
+}
+
+func (o *Analytics) GetPaidAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.PaidAt
 }
 
-func (o *UpdateProjectDataCacheAnalytics) GetSampleRatePercent() *float64 {
+func (o *Analytics) GetSampleRatePercent() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.SampleRatePercent
 }
 
-func (o *UpdateProjectDataCacheAnalytics) GetSpendLimitInDollars() *float64 {
+func (o *Analytics) GetSpendLimitInDollars() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.SpendLimitInDollars
 }
 
-type UpdateProjectDataCacheDefinitions struct {
+type SpeedInsights struct {
+	ID         string   `json:"id"`
+	EnabledAt  *float64 `json:"enabledAt,omitempty"`
+	DisabledAt *float64 `json:"disabledAt,omitempty"`
+	CanceledAt *float64 `json:"canceledAt,omitempty"`
+	HasData    *bool    `json:"hasData,omitempty"`
+	PaidAt     *float64 `json:"paidAt,omitempty"`
+}
+
+func (o *SpeedInsights) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *SpeedInsights) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *SpeedInsights) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *SpeedInsights) GetCanceledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CanceledAt
+}
+
+func (o *SpeedInsights) GetHasData() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.HasData
+}
+
+func (o *SpeedInsights) GetPaidAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PaidAt
+}
+
+type Definitions struct {
 	// The hostname that should be used.
 	Host string `json:"host"`
 	// The path that should be called for the cronjob.
@@ -129,1071 +180,112 @@ type UpdateProjectDataCacheDefinitions struct {
 	Schedule string `json:"schedule"`
 }
 
-func (o *UpdateProjectDataCacheDefinitions) GetHost() string {
+func (o *Definitions) GetHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.Host
 }
 
-func (o *UpdateProjectDataCacheDefinitions) GetPath() string {
+func (o *Definitions) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *UpdateProjectDataCacheDefinitions) GetSchedule() string {
+func (o *Definitions) GetSchedule() string {
 	if o == nil {
 		return ""
 	}
 	return o.Schedule
 }
 
-type UpdateProjectDataCacheCrons struct {
-	Definitions []UpdateProjectDataCacheDefinitions `json:"definitions"`
-	// The ID of the Deployment from which the definitions originated.
-	DeploymentID *string `json:"deploymentId"`
-	// The time the feature was disabled for this project.
-	DisabledAt *float64 `json:"disabledAt"`
+type Crons struct {
 	// The time the feature was enabled for this project. Note: It enables automatically with the first Deployment that outputs cronjobs.
 	EnabledAt float64 `json:"enabledAt"`
-	UpdatedAt float64 `json:"updatedAt"`
+	// The time the feature was disabled for this project.
+	DisabledAt *float64 `json:"disabledAt"`
+	UpdatedAt  float64  `json:"updatedAt"`
+	// The ID of the Deployment from which the definitions originated.
+	DeploymentID *string       `json:"deploymentId"`
+	Definitions  []Definitions `json:"definitions"`
 }
 
-func (o *UpdateProjectDataCacheCrons) GetDefinitions() []UpdateProjectDataCacheDefinitions {
-	if o == nil {
-		return []UpdateProjectDataCacheDefinitions{}
-	}
-	return o.Definitions
-}
-
-func (o *UpdateProjectDataCacheCrons) GetDeploymentID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DeploymentID
-}
-
-func (o *UpdateProjectDataCacheCrons) GetDisabledAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.DisabledAt
-}
-
-func (o *UpdateProjectDataCacheCrons) GetEnabledAt() float64 {
+func (o *Crons) GetEnabledAt() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.EnabledAt
 }
 
-func (o *UpdateProjectDataCacheCrons) GetUpdatedAt() float64 {
+func (o *Crons) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *Crons) GetUpdatedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.UpdatedAt
 }
 
-type UpdateProjectDataCacheDataCache struct {
+func (o *Crons) GetDeploymentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentID
+}
+
+func (o *Crons) GetDefinitions() []Definitions {
+	if o == nil {
+		return []Definitions{}
+	}
+	return o.Definitions
+}
+
+type DataCache struct {
+	UserDisabled     bool     `json:"userDisabled"`
 	StorageSizeBytes *float64 `json:"storageSizeBytes,omitempty"`
 	Unlimited        *bool    `json:"unlimited,omitempty"`
-	UserDisabled     bool     `json:"userDisabled"`
 }
 
-func (o *UpdateProjectDataCacheDataCache) GetStorageSizeBytes() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.StorageSizeBytes
-}
-
-func (o *UpdateProjectDataCacheDataCache) GetUnlimited() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Unlimited
-}
-
-func (o *UpdateProjectDataCacheDataCache) GetUserDisabled() bool {
+func (o *DataCache) GetUserDisabled() bool {
 	if o == nil {
 		return false
 	}
 	return o.UserDisabled
 }
 
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType string
+func (o *DataCache) GetStorageSizeBytes() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.StorageSizeBytes
+}
+
+func (o *DataCache) GetUnlimited() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Unlimited
+}
+
+type UpdateProjectDataCacheTarget2 string
 
 const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHintTypeIntegrationStoreSecret UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType = "integration-store-secret"
+	UpdateProjectDataCacheTarget2Production  UpdateProjectDataCacheTarget2 = "production"
+	UpdateProjectDataCacheTarget2Preview     UpdateProjectDataCacheTarget2 = "preview"
+	UpdateProjectDataCacheTarget2Development UpdateProjectDataCacheTarget2 = "development"
 )
 
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType {
+func (e UpdateProjectDataCacheTarget2) ToPointer() *UpdateProjectDataCacheTarget2 {
 	return &e
 }
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "integration-store-secret":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType: %v", v)
-	}
-}
-
-type UpdateProjectDataCache14 struct {
-	StoreID string                                                                                 `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType `json:"type"`
-}
-
-func (o *UpdateProjectDataCache14) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCache14) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHintType("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvType string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvTypePostgresURLNoSsl UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvType = "postgres-url-no-ssl"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvType) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvType {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "postgres-url-no-ssl":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvType: %v", v)
-	}
-}
-
-type UpdateProjectDataCache13 struct {
-	StoreID string                                                                      `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvType `json:"type"`
-}
-
-func (o *UpdateProjectDataCache13) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCache13) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvType {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvType("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint12Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint12TypePostgresDatabase UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint12Type = "postgres-database"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint12Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint12Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint12Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "postgres-database":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint12Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint12Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCache12 struct {
-	StoreID string                                                                                   `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint12Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCache12) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCache12) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint12Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint12Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint11Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint11TypePostgresPassword UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint11Type = "postgres-password"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint11Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint11Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint11Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "postgres-password":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint11Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint11Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCache11 struct {
-	StoreID string                                                                                   `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint11Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCache11) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCache11) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint11Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint11Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10TypePostgresHost UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type = "postgres-host"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "postgres-host":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCache10 struct {
-	StoreID string                                                                                   `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCache10) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCache10) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint10Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9TypePostgresUser UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type = "postgres-user"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "postgres-user":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCache9 struct {
-	StoreID string                                                                                  `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCache9) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCache9) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint9Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8TypePostgresPrismaURL UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type = "postgres-prisma-url"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "postgres-prisma-url":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCache8 struct {
-	StoreID string                                                                                  `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCache8) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCache8) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint8Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7TypePostgresURLNonPooling UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type = "postgres-url-non-pooling"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "postgres-url-non-pooling":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCache7 struct {
-	StoreID string                                                                                  `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCache7) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCache7) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint7Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6TypePostgresURL UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type = "postgres-url"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "postgres-url":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCache6 struct {
-	StoreID string                                                                                  `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCache6) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCache6) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint6Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5TypeBlobReadWriteToken UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type = "blob-read-write-token"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "blob-read-write-token":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCache5 struct {
-	StoreID string                                                                                  `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCache5) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCache5) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint5Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4TypeRedisRestAPIReadOnlyToken UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type = "redis-rest-api-read-only-token"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "redis-rest-api-read-only-token":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCache4 struct {
-	StoreID string                                                                                  `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCache4) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCache4) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint4Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3TypeRedisRestAPIToken UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type = "redis-rest-api-token"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "redis-rest-api-token":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheProjects3 struct {
-	StoreID string                                                                                  `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCacheProjects3) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCacheProjects3) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint3Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2TypeRedisRestAPIURL UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type = "redis-rest-api-url"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "redis-rest-api-url":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheProjectsResponse2 struct {
-	StoreID string                                                                                  `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse2) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse2) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint2Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1TypeRedisURL UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type = "redis-url"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "redis-url":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheProjectsResponse1 struct {
-	StoreID string                                                                                  `json:"storeId"`
-	Type    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse1) GetStoreID() string {
-	if o == nil {
-		return ""
-	}
-	return o.StoreID
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse1) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyEnvContentHint1Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheContentHintType string
-
-const (
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCacheProjectsResponse1 UpdateProjectDataCacheContentHintType = "updateProjectDataCache_projects_response_1"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCacheProjectsResponse2 UpdateProjectDataCacheContentHintType = "updateProjectDataCache_projects_response_2"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCacheProjects3         UpdateProjectDataCacheContentHintType = "updateProjectDataCache_projects_3"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache4                 UpdateProjectDataCacheContentHintType = "updateProjectDataCache_4"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache5                 UpdateProjectDataCacheContentHintType = "updateProjectDataCache_5"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache6                 UpdateProjectDataCacheContentHintType = "updateProjectDataCache_6"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache7                 UpdateProjectDataCacheContentHintType = "updateProjectDataCache_7"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache8                 UpdateProjectDataCacheContentHintType = "updateProjectDataCache_8"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache9                 UpdateProjectDataCacheContentHintType = "updateProjectDataCache_9"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache10                UpdateProjectDataCacheContentHintType = "updateProjectDataCache_10"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache11                UpdateProjectDataCacheContentHintType = "updateProjectDataCache_11"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache12                UpdateProjectDataCacheContentHintType = "updateProjectDataCache_12"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache13                UpdateProjectDataCacheContentHintType = "updateProjectDataCache_13"
-	UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache14                UpdateProjectDataCacheContentHintType = "updateProjectDataCache_14"
-)
-
-type UpdateProjectDataCacheContentHint struct {
-	UpdateProjectDataCacheProjectsResponse1 *UpdateProjectDataCacheProjectsResponse1
-	UpdateProjectDataCacheProjectsResponse2 *UpdateProjectDataCacheProjectsResponse2
-	UpdateProjectDataCacheProjects3         *UpdateProjectDataCacheProjects3
-	UpdateProjectDataCache4                 *UpdateProjectDataCache4
-	UpdateProjectDataCache5                 *UpdateProjectDataCache5
-	UpdateProjectDataCache6                 *UpdateProjectDataCache6
-	UpdateProjectDataCache7                 *UpdateProjectDataCache7
-	UpdateProjectDataCache8                 *UpdateProjectDataCache8
-	UpdateProjectDataCache9                 *UpdateProjectDataCache9
-	UpdateProjectDataCache10                *UpdateProjectDataCache10
-	UpdateProjectDataCache11                *UpdateProjectDataCache11
-	UpdateProjectDataCache12                *UpdateProjectDataCache12
-	UpdateProjectDataCache13                *UpdateProjectDataCache13
-	UpdateProjectDataCache14                *UpdateProjectDataCache14
-
-	Type UpdateProjectDataCacheContentHintType
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheProjectsResponse1(updateProjectDataCacheProjectsResponse1 UpdateProjectDataCacheProjectsResponse1) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCacheProjectsResponse1
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCacheProjectsResponse1: &updateProjectDataCacheProjectsResponse1,
-		Type:                                    typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheProjectsResponse2(updateProjectDataCacheProjectsResponse2 UpdateProjectDataCacheProjectsResponse2) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCacheProjectsResponse2
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCacheProjectsResponse2: &updateProjectDataCacheProjectsResponse2,
-		Type:                                    typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheProjects3(updateProjectDataCacheProjects3 UpdateProjectDataCacheProjects3) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCacheProjects3
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCacheProjects3: &updateProjectDataCacheProjects3,
-		Type:                            typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCache4(updateProjectDataCache4 UpdateProjectDataCache4) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache4
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCache4: &updateProjectDataCache4,
-		Type:                    typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCache5(updateProjectDataCache5 UpdateProjectDataCache5) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache5
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCache5: &updateProjectDataCache5,
-		Type:                    typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCache6(updateProjectDataCache6 UpdateProjectDataCache6) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache6
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCache6: &updateProjectDataCache6,
-		Type:                    typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCache7(updateProjectDataCache7 UpdateProjectDataCache7) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache7
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCache7: &updateProjectDataCache7,
-		Type:                    typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCache8(updateProjectDataCache8 UpdateProjectDataCache8) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache8
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCache8: &updateProjectDataCache8,
-		Type:                    typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCache9(updateProjectDataCache9 UpdateProjectDataCache9) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache9
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCache9: &updateProjectDataCache9,
-		Type:                    typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCache10(updateProjectDataCache10 UpdateProjectDataCache10) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache10
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCache10: &updateProjectDataCache10,
-		Type:                     typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCache11(updateProjectDataCache11 UpdateProjectDataCache11) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache11
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCache11: &updateProjectDataCache11,
-		Type:                     typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCache12(updateProjectDataCache12 UpdateProjectDataCache12) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache12
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCache12: &updateProjectDataCache12,
-		Type:                     typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCache13(updateProjectDataCache13 UpdateProjectDataCache13) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache13
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCache13: &updateProjectDataCache13,
-		Type:                     typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCache14(updateProjectDataCache14 UpdateProjectDataCache14) UpdateProjectDataCacheContentHint {
-	typ := UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache14
-
-	return UpdateProjectDataCacheContentHint{
-		UpdateProjectDataCache14: &updateProjectDataCache14,
-		Type:                     typ,
-	}
-}
-
-func (u *UpdateProjectDataCacheContentHint) UnmarshalJSON(data []byte) error {
-
-	var updateProjectDataCacheProjectsResponse1 UpdateProjectDataCacheProjectsResponse1 = UpdateProjectDataCacheProjectsResponse1{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheProjectsResponse1, "", true, true); err == nil {
-		u.UpdateProjectDataCacheProjectsResponse1 = &updateProjectDataCacheProjectsResponse1
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCacheProjectsResponse1
-		return nil
-	}
-
-	var updateProjectDataCacheProjectsResponse2 UpdateProjectDataCacheProjectsResponse2 = UpdateProjectDataCacheProjectsResponse2{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheProjectsResponse2, "", true, true); err == nil {
-		u.UpdateProjectDataCacheProjectsResponse2 = &updateProjectDataCacheProjectsResponse2
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCacheProjectsResponse2
-		return nil
-	}
-
-	var updateProjectDataCacheProjects3 UpdateProjectDataCacheProjects3 = UpdateProjectDataCacheProjects3{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheProjects3, "", true, true); err == nil {
-		u.UpdateProjectDataCacheProjects3 = &updateProjectDataCacheProjects3
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCacheProjects3
-		return nil
-	}
-
-	var updateProjectDataCache4 UpdateProjectDataCache4 = UpdateProjectDataCache4{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache4, "", true, true); err == nil {
-		u.UpdateProjectDataCache4 = &updateProjectDataCache4
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache4
-		return nil
-	}
-
-	var updateProjectDataCache5 UpdateProjectDataCache5 = UpdateProjectDataCache5{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache5, "", true, true); err == nil {
-		u.UpdateProjectDataCache5 = &updateProjectDataCache5
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache5
-		return nil
-	}
-
-	var updateProjectDataCache6 UpdateProjectDataCache6 = UpdateProjectDataCache6{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache6, "", true, true); err == nil {
-		u.UpdateProjectDataCache6 = &updateProjectDataCache6
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache6
-		return nil
-	}
-
-	var updateProjectDataCache7 UpdateProjectDataCache7 = UpdateProjectDataCache7{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache7, "", true, true); err == nil {
-		u.UpdateProjectDataCache7 = &updateProjectDataCache7
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache7
-		return nil
-	}
-
-	var updateProjectDataCache8 UpdateProjectDataCache8 = UpdateProjectDataCache8{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache8, "", true, true); err == nil {
-		u.UpdateProjectDataCache8 = &updateProjectDataCache8
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache8
-		return nil
-	}
-
-	var updateProjectDataCache9 UpdateProjectDataCache9 = UpdateProjectDataCache9{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache9, "", true, true); err == nil {
-		u.UpdateProjectDataCache9 = &updateProjectDataCache9
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache9
-		return nil
-	}
-
-	var updateProjectDataCache10 UpdateProjectDataCache10 = UpdateProjectDataCache10{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache10, "", true, true); err == nil {
-		u.UpdateProjectDataCache10 = &updateProjectDataCache10
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache10
-		return nil
-	}
-
-	var updateProjectDataCache11 UpdateProjectDataCache11 = UpdateProjectDataCache11{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache11, "", true, true); err == nil {
-		u.UpdateProjectDataCache11 = &updateProjectDataCache11
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache11
-		return nil
-	}
-
-	var updateProjectDataCache12 UpdateProjectDataCache12 = UpdateProjectDataCache12{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache12, "", true, true); err == nil {
-		u.UpdateProjectDataCache12 = &updateProjectDataCache12
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache12
-		return nil
-	}
-
-	var updateProjectDataCache13 UpdateProjectDataCache13 = UpdateProjectDataCache13{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache13, "", true, true); err == nil {
-		u.UpdateProjectDataCache13 = &updateProjectDataCache13
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache13
-		return nil
-	}
-
-	var updateProjectDataCache14 UpdateProjectDataCache14 = UpdateProjectDataCache14{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache14, "", true, true); err == nil {
-		u.UpdateProjectDataCache14 = &updateProjectDataCache14
-		u.Type = UpdateProjectDataCacheContentHintTypeUpdateProjectDataCache14
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheContentHint", string(data))
-}
-
-func (u UpdateProjectDataCacheContentHint) MarshalJSON() ([]byte, error) {
-	if u.UpdateProjectDataCacheProjectsResponse1 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCacheProjectsResponse1, "", true)
-	}
-
-	if u.UpdateProjectDataCacheProjectsResponse2 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCacheProjectsResponse2, "", true)
-	}
-
-	if u.UpdateProjectDataCacheProjects3 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCacheProjects3, "", true)
-	}
-
-	if u.UpdateProjectDataCache4 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache4, "", true)
-	}
-
-	if u.UpdateProjectDataCache5 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache5, "", true)
-	}
-
-	if u.UpdateProjectDataCache6 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache6, "", true)
-	}
-
-	if u.UpdateProjectDataCache7 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache7, "", true)
-	}
-
-	if u.UpdateProjectDataCache8 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache8, "", true)
-	}
-
-	if u.UpdateProjectDataCache9 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache9, "", true)
-	}
-
-	if u.UpdateProjectDataCache10 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache10, "", true)
-	}
-
-	if u.UpdateProjectDataCache11 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache11, "", true)
-	}
-
-	if u.UpdateProjectDataCache12 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache12, "", true)
-	}
-
-	if u.UpdateProjectDataCache13 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache13, "", true)
-	}
-
-	if u.UpdateProjectDataCache14 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache14, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type UpdateProjectDataCacheContentHint: all fields are null")
-}
-
-type UpdateProjectDataCacheProjectsResponse200Type string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200TypeFlagsSecret UpdateProjectDataCacheProjectsResponse200Type = "flags-secret"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200Type {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "flags-secret":
-		*e = UpdateProjectDataCacheProjectsResponse200Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200Type: %v", v)
-	}
-}
-
-// UpdateProjectDataCacheInternalContentHint - Similar to `contentHints`, but should not be exposed to the user.
-type UpdateProjectDataCacheInternalContentHint struct {
-	// Contains the `value` of the env variable, encrypted with a special key to make decryption possible in the subscriber Lambda.
-	EncryptedValue string                                        `json:"encryptedValue"`
-	Type           UpdateProjectDataCacheProjectsResponse200Type `json:"type"`
-}
-
-func (o *UpdateProjectDataCacheInternalContentHint) GetEncryptedValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.EncryptedValue
-}
-
-func (o *UpdateProjectDataCacheInternalContentHint) GetType() UpdateProjectDataCacheProjectsResponse200Type {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200Type("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheProjectsResponse2002 string
-
-const (
-	UpdateProjectDataCacheProjectsResponse2002Production  UpdateProjectDataCacheProjectsResponse2002 = "production"
-	UpdateProjectDataCacheProjectsResponse2002Preview     UpdateProjectDataCacheProjectsResponse2002 = "preview"
-	UpdateProjectDataCacheProjectsResponse2002Development UpdateProjectDataCacheProjectsResponse2002 = "development"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse2002) ToPointer() *UpdateProjectDataCacheProjectsResponse2002 {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse2002) UnmarshalJSON(data []byte) error {
+func (e *UpdateProjectDataCacheTarget2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1204,25 +296,25 @@ func (e *UpdateProjectDataCacheProjectsResponse2002) UnmarshalJSON(data []byte) 
 	case "preview":
 		fallthrough
 	case "development":
-		*e = UpdateProjectDataCacheProjectsResponse2002(v)
+		*e = UpdateProjectDataCacheTarget2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse2002: %v", v)
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheTarget2: %v", v)
 	}
 }
 
-type UpdateProjectDataCacheProjectsResponse2001 string
+type UpdateProjectDataCacheTarget1 string
 
 const (
-	UpdateProjectDataCacheProjectsResponse2001Production  UpdateProjectDataCacheProjectsResponse2001 = "production"
-	UpdateProjectDataCacheProjectsResponse2001Preview     UpdateProjectDataCacheProjectsResponse2001 = "preview"
-	UpdateProjectDataCacheProjectsResponse2001Development UpdateProjectDataCacheProjectsResponse2001 = "development"
+	UpdateProjectDataCacheTarget1Production  UpdateProjectDataCacheTarget1 = "production"
+	UpdateProjectDataCacheTarget1Preview     UpdateProjectDataCacheTarget1 = "preview"
+	UpdateProjectDataCacheTarget1Development UpdateProjectDataCacheTarget1 = "development"
 )
 
-func (e UpdateProjectDataCacheProjectsResponse2001) ToPointer() *UpdateProjectDataCacheProjectsResponse2001 {
+func (e UpdateProjectDataCacheTarget1) ToPointer() *UpdateProjectDataCacheTarget1 {
 	return &e
 }
-func (e *UpdateProjectDataCacheProjectsResponse2001) UnmarshalJSON(data []byte) error {
+func (e *UpdateProjectDataCacheTarget1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1233,58 +325,58 @@ func (e *UpdateProjectDataCacheProjectsResponse2001) UnmarshalJSON(data []byte) 
 	case "preview":
 		fallthrough
 	case "development":
-		*e = UpdateProjectDataCacheProjectsResponse2001(v)
+		*e = UpdateProjectDataCacheTarget1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse2001: %v", v)
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheTarget1: %v", v)
 	}
 }
 
 type UpdateProjectDataCacheTargetType string
 
 const (
-	UpdateProjectDataCacheTargetTypeArrayOfUpdateProjectDataCacheProjectsResponse2001 UpdateProjectDataCacheTargetType = "arrayOfUpdateProjectDataCacheProjectsResponse2001"
-	UpdateProjectDataCacheTargetTypeUpdateProjectDataCacheProjectsResponse2002        UpdateProjectDataCacheTargetType = "updateProjectDataCache_projects_response_200_2"
+	UpdateProjectDataCacheTargetTypeArrayOfUpdateProjectDataCacheTarget1 UpdateProjectDataCacheTargetType = "arrayOfUpdateProjectDataCacheTarget1"
+	UpdateProjectDataCacheTargetTypeUpdateProjectDataCacheTarget2        UpdateProjectDataCacheTargetType = "updateProjectDataCache_target_2"
 )
 
 type UpdateProjectDataCacheTarget struct {
-	ArrayOfUpdateProjectDataCacheProjectsResponse2001 []UpdateProjectDataCacheProjectsResponse2001
-	UpdateProjectDataCacheProjectsResponse2002        *UpdateProjectDataCacheProjectsResponse2002
+	ArrayOfUpdateProjectDataCacheTarget1 []UpdateProjectDataCacheTarget1
+	UpdateProjectDataCacheTarget2        *UpdateProjectDataCacheTarget2
 
 	Type UpdateProjectDataCacheTargetType
 }
 
-func CreateUpdateProjectDataCacheTargetArrayOfUpdateProjectDataCacheProjectsResponse2001(arrayOfUpdateProjectDataCacheProjectsResponse2001 []UpdateProjectDataCacheProjectsResponse2001) UpdateProjectDataCacheTarget {
-	typ := UpdateProjectDataCacheTargetTypeArrayOfUpdateProjectDataCacheProjectsResponse2001
+func CreateUpdateProjectDataCacheTargetArrayOfUpdateProjectDataCacheTarget1(arrayOfUpdateProjectDataCacheTarget1 []UpdateProjectDataCacheTarget1) UpdateProjectDataCacheTarget {
+	typ := UpdateProjectDataCacheTargetTypeArrayOfUpdateProjectDataCacheTarget1
 
 	return UpdateProjectDataCacheTarget{
-		ArrayOfUpdateProjectDataCacheProjectsResponse2001: arrayOfUpdateProjectDataCacheProjectsResponse2001,
-		Type: typ,
+		ArrayOfUpdateProjectDataCacheTarget1: arrayOfUpdateProjectDataCacheTarget1,
+		Type:                                 typ,
 	}
 }
 
-func CreateUpdateProjectDataCacheTargetUpdateProjectDataCacheProjectsResponse2002(updateProjectDataCacheProjectsResponse2002 UpdateProjectDataCacheProjectsResponse2002) UpdateProjectDataCacheTarget {
-	typ := UpdateProjectDataCacheTargetTypeUpdateProjectDataCacheProjectsResponse2002
+func CreateUpdateProjectDataCacheTargetUpdateProjectDataCacheTarget2(updateProjectDataCacheTarget2 UpdateProjectDataCacheTarget2) UpdateProjectDataCacheTarget {
+	typ := UpdateProjectDataCacheTargetTypeUpdateProjectDataCacheTarget2
 
 	return UpdateProjectDataCacheTarget{
-		UpdateProjectDataCacheProjectsResponse2002: &updateProjectDataCacheProjectsResponse2002,
-		Type: typ,
+		UpdateProjectDataCacheTarget2: &updateProjectDataCacheTarget2,
+		Type:                          typ,
 	}
 }
 
 func (u *UpdateProjectDataCacheTarget) UnmarshalJSON(data []byte) error {
 
-	var arrayOfUpdateProjectDataCacheProjectsResponse2001 []UpdateProjectDataCacheProjectsResponse2001 = []UpdateProjectDataCacheProjectsResponse2001{}
-	if err := utils.UnmarshalJSON(data, &arrayOfUpdateProjectDataCacheProjectsResponse2001, "", true, true); err == nil {
-		u.ArrayOfUpdateProjectDataCacheProjectsResponse2001 = arrayOfUpdateProjectDataCacheProjectsResponse2001
-		u.Type = UpdateProjectDataCacheTargetTypeArrayOfUpdateProjectDataCacheProjectsResponse2001
+	var arrayOfUpdateProjectDataCacheTarget1 []UpdateProjectDataCacheTarget1 = []UpdateProjectDataCacheTarget1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfUpdateProjectDataCacheTarget1, "", true, true); err == nil {
+		u.ArrayOfUpdateProjectDataCacheTarget1 = arrayOfUpdateProjectDataCacheTarget1
+		u.Type = UpdateProjectDataCacheTargetTypeArrayOfUpdateProjectDataCacheTarget1
 		return nil
 	}
 
-	var updateProjectDataCacheProjectsResponse2002 UpdateProjectDataCacheProjectsResponse2002 = UpdateProjectDataCacheProjectsResponse2002("")
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheProjectsResponse2002, "", true, true); err == nil {
-		u.UpdateProjectDataCacheProjectsResponse2002 = &updateProjectDataCacheProjectsResponse2002
-		u.Type = UpdateProjectDataCacheTargetTypeUpdateProjectDataCacheProjectsResponse2002
+	var updateProjectDataCacheTarget2 UpdateProjectDataCacheTarget2 = UpdateProjectDataCacheTarget2("")
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheTarget2, "", true, true); err == nil {
+		u.UpdateProjectDataCacheTarget2 = &updateProjectDataCacheTarget2
+		u.Type = UpdateProjectDataCacheTargetTypeUpdateProjectDataCacheTarget2
 		return nil
 	}
 
@@ -1292,12 +384,12 @@ func (u *UpdateProjectDataCacheTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u UpdateProjectDataCacheTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfUpdateProjectDataCacheProjectsResponse2001 != nil {
-		return utils.MarshalJSON(u.ArrayOfUpdateProjectDataCacheProjectsResponse2001, "", true)
+	if u.ArrayOfUpdateProjectDataCacheTarget1 != nil {
+		return utils.MarshalJSON(u.ArrayOfUpdateProjectDataCacheTarget1, "", true)
 	}
 
-	if u.UpdateProjectDataCacheProjectsResponse2002 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCacheProjectsResponse2002, "", true)
+	if u.UpdateProjectDataCacheTarget2 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheTarget2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type UpdateProjectDataCacheTarget: all fields are null")
@@ -1338,153 +430,1112 @@ func (e *UpdateProjectDataCacheType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type UpdateProjectDataCacheEnv struct {
-	Comment             *string                            `json:"comment,omitempty"`
-	ConfigurationID     *string                            `json:"configurationId,omitempty"`
-	ContentHint         *UpdateProjectDataCacheContentHint `json:"contentHint,omitempty"`
-	CreatedAt           *float64                           `json:"createdAt,omitempty"`
-	CreatedBy           *string                            `json:"createdBy,omitempty"`
-	CustomEnvironmentID *string                            `json:"customEnvironmentId,omitempty"`
-	// Whether `value` is decrypted.
-	Decrypted         *bool   `json:"decrypted,omitempty"`
-	EdgeConfigID      *string `json:"edgeConfigId,omitempty"`
-	EdgeConfigTokenID *string `json:"edgeConfigTokenId,omitempty"`
-	GitBranch         *string `json:"gitBranch,omitempty"`
-	ID                *string `json:"id,omitempty"`
-	// Similar to `contentHints`, but should not be exposed to the user.
-	InternalContentHint *UpdateProjectDataCacheInternalContentHint `json:"internalContentHint,omitempty"`
-	Key                 string                                     `json:"key"`
-	Target              *UpdateProjectDataCacheTarget              `json:"target,omitempty"`
-	Type                UpdateProjectDataCacheType                 `json:"type"`
-	UpdatedAt           *float64                                   `json:"updatedAt,omitempty"`
-	UpdatedBy           *string                                    `json:"updatedBy,omitempty"`
-	Value               string                                     `json:"value"`
-}
+type UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv14Type string
 
-func (o *UpdateProjectDataCacheEnv) GetComment() *string {
-	if o == nil {
-		return nil
+const (
+	UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv14TypeIntegrationStoreSecret UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv14Type = "integration-store-secret"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv14Type) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv14Type {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv14Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return o.Comment
-}
-
-func (o *UpdateProjectDataCacheEnv) GetConfigurationID() *string {
-	if o == nil {
+	switch v {
+	case "integration-store-secret":
+		*e = UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv14Type(v)
 		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv14Type: %v", v)
 	}
-	return o.ConfigurationID
 }
 
-func (o *UpdateProjectDataCacheEnv) GetContentHint() *UpdateProjectDataCacheContentHint {
+type UpdateProjectDataCacheContentHint14 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv14Type `json:"type"`
+	StoreID string                                                                                   `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint14) GetType() UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv14Type {
 	if o == nil {
-		return nil
+		return UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv14Type("")
 	}
-	return o.ContentHint
+	return o.Type
 }
 
-func (o *UpdateProjectDataCacheEnv) GetCreatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedAt
-}
-
-func (o *UpdateProjectDataCacheEnv) GetCreatedBy() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedBy
-}
-
-func (o *UpdateProjectDataCacheEnv) GetCustomEnvironmentID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CustomEnvironmentID
-}
-
-func (o *UpdateProjectDataCacheEnv) GetDecrypted() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Decrypted
-}
-
-func (o *UpdateProjectDataCacheEnv) GetEdgeConfigID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EdgeConfigID
-}
-
-func (o *UpdateProjectDataCacheEnv) GetEdgeConfigTokenID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EdgeConfigTokenID
-}
-
-func (o *UpdateProjectDataCacheEnv) GetGitBranch() *string {
-	if o == nil {
-		return nil
-	}
-	return o.GitBranch
-}
-
-func (o *UpdateProjectDataCacheEnv) GetID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ID
-}
-
-func (o *UpdateProjectDataCacheEnv) GetInternalContentHint() *UpdateProjectDataCacheInternalContentHint {
-	if o == nil {
-		return nil
-	}
-	return o.InternalContentHint
-}
-
-func (o *UpdateProjectDataCacheEnv) GetKey() string {
+func (o *UpdateProjectDataCacheContentHint14) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Key
+	return o.StoreID
 }
 
-func (o *UpdateProjectDataCacheEnv) GetTarget() *UpdateProjectDataCacheTarget {
+type UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv13Type string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv13TypePostgresURLNoSsl UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv13Type = "postgres-url-no-ssl"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv13Type) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv13Type {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv13Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-url-no-ssl":
+		*e = UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv13Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv13Type: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint13 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv13Type `json:"type"`
+	StoreID string                                                                                   `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint13) GetType() UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv13Type {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv13Type("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint13) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv12Type string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv12TypePostgresDatabase UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv12Type = "postgres-database"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv12Type) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv12Type {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv12Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-database":
+		*e = UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv12Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv12Type: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint12 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv12Type `json:"type"`
+	StoreID string                                                                                   `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint12) GetType() UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv12Type {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv12Type("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint12) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv11Type string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv11TypePostgresPassword UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv11Type = "postgres-password"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv11Type) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv11Type {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv11Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-password":
+		*e = UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv11Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv11Type: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint11 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv11Type `json:"type"`
+	StoreID string                                                                                   `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint11) GetType() UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv11Type {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv11Type("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint11) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv10Type string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv10TypePostgresHost UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv10Type = "postgres-host"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv10Type) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv10Type {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv10Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-host":
+		*e = UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv10Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv10Type: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint10 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv10Type `json:"type"`
+	StoreID string                                                                                   `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint10) GetType() UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv10Type {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv10Type("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint10) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv9Type string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv9TypePostgresUser UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv9Type = "postgres-user"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv9Type) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv9Type {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv9Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-user":
+		*e = UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv9Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv9Type: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint9 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv9Type `json:"type"`
+	StoreID string                                                                                  `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint9) GetType() UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv9Type {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv9Type("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint9) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnvType string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnvTypePostgresPrismaURL UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnvType = "postgres-prisma-url"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnvType) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnvType {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnvType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-prisma-url":
+		*e = UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnvType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnvType: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint8 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnvType `json:"type"`
+	StoreID string                                                                                 `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint8) GetType() UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnvType {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnvType("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint8) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyType string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyTypePostgresURLNonPooling UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyType = "postgres-url-non-pooling"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyType) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyType {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-url-non-pooling":
+		*e = UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyType: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint7 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyType `json:"type"`
+	StoreID string                                                                              `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint7) GetType() UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyType {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyType("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint7) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONType string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONTypePostgresURL UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONType = "postgres-url"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONType) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONType {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-url":
+		*e = UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONType: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint6 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONType `json:"type"`
+	StoreID string                                                                  `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint6) GetType() UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONType {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONType("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint6) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintProjectsResponse200Type string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsResponse200TypeBlobReadWriteToken UpdateProjectDataCacheContentHintProjectsResponse200Type = "blob-read-write-token"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponse200Type) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponse200Type {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponse200Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "blob-read-write-token":
+		*e = UpdateProjectDataCacheContentHintProjectsResponse200Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponse200Type: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint5 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponse200Type `json:"type"`
+	StoreID string                                                   `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint5) GetType() UpdateProjectDataCacheContentHintProjectsResponse200Type {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsResponse200Type("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint5) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintProjectsResponseType string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsResponseTypeRedisRestAPIReadOnlyToken UpdateProjectDataCacheContentHintProjectsResponseType = "redis-rest-api-read-only-token"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponseType) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponseType {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponseType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "redis-rest-api-read-only-token":
+		*e = UpdateProjectDataCacheContentHintProjectsResponseType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponseType: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint4 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponseType `json:"type"`
+	StoreID string                                                `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint4) GetType() UpdateProjectDataCacheContentHintProjectsResponseType {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsResponseType("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint4) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintProjectsType string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsTypeRedisRestAPIToken UpdateProjectDataCacheContentHintProjectsType = "redis-rest-api-token"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsType) ToPointer() *UpdateProjectDataCacheContentHintProjectsType {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "redis-rest-api-token":
+		*e = UpdateProjectDataCacheContentHintProjectsType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsType: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint3 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsType `json:"type"`
+	StoreID string                                        `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint3) GetType() UpdateProjectDataCacheContentHintProjectsType {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsType("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint3) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintType string
+
+const (
+	UpdateProjectDataCacheContentHintTypeRedisRestAPIURL UpdateProjectDataCacheContentHintType = "redis-rest-api-url"
+)
+
+func (e UpdateProjectDataCacheContentHintType) ToPointer() *UpdateProjectDataCacheContentHintType {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "redis-rest-api-url":
+		*e = UpdateProjectDataCacheContentHintType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintType: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint2 struct {
+	Type    UpdateProjectDataCacheContentHintType `json:"type"`
+	StoreID string                                `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint2) GetType() UpdateProjectDataCacheContentHintType {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintType("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint2) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv1Type string
+
+const (
+	UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv1TypeRedisURL UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv1Type = "redis-url"
+)
+
+func (e UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv1Type) ToPointer() *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv1Type {
+	return &e
+}
+func (e *UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv1Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "redis-url":
+		*e = UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv1Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv1Type: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheContentHint1 struct {
+	Type    UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv1Type `json:"type"`
+	StoreID string                                                                                  `json:"storeId"`
+}
+
+func (o *UpdateProjectDataCacheContentHint1) GetType() UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv1Type {
+	if o == nil {
+		return UpdateProjectDataCacheContentHintProjectsResponse200ApplicationJSONResponseBodyEnv1Type("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheContentHint1) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+type UpdateProjectDataCacheContentHintUnionType string
+
+const (
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint1  UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_1"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint2  UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_2"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint3  UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_3"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint4  UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_4"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint5  UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_5"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint6  UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_6"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint7  UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_7"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint8  UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_8"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint9  UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_9"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint10 UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_10"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint11 UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_11"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint12 UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_12"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint13 UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_13"
+	UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint14 UpdateProjectDataCacheContentHintUnionType = "updateProjectDataCache_contentHint_14"
+)
+
+type UpdateProjectDataCacheContentHint struct {
+	UpdateProjectDataCacheContentHint1  *UpdateProjectDataCacheContentHint1
+	UpdateProjectDataCacheContentHint2  *UpdateProjectDataCacheContentHint2
+	UpdateProjectDataCacheContentHint3  *UpdateProjectDataCacheContentHint3
+	UpdateProjectDataCacheContentHint4  *UpdateProjectDataCacheContentHint4
+	UpdateProjectDataCacheContentHint5  *UpdateProjectDataCacheContentHint5
+	UpdateProjectDataCacheContentHint6  *UpdateProjectDataCacheContentHint6
+	UpdateProjectDataCacheContentHint7  *UpdateProjectDataCacheContentHint7
+	UpdateProjectDataCacheContentHint8  *UpdateProjectDataCacheContentHint8
+	UpdateProjectDataCacheContentHint9  *UpdateProjectDataCacheContentHint9
+	UpdateProjectDataCacheContentHint10 *UpdateProjectDataCacheContentHint10
+	UpdateProjectDataCacheContentHint11 *UpdateProjectDataCacheContentHint11
+	UpdateProjectDataCacheContentHint12 *UpdateProjectDataCacheContentHint12
+	UpdateProjectDataCacheContentHint13 *UpdateProjectDataCacheContentHint13
+	UpdateProjectDataCacheContentHint14 *UpdateProjectDataCacheContentHint14
+
+	Type UpdateProjectDataCacheContentHintUnionType
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint1(updateProjectDataCacheContentHint1 UpdateProjectDataCacheContentHint1) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint1
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint1: &updateProjectDataCacheContentHint1,
+		Type:                               typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint2(updateProjectDataCacheContentHint2 UpdateProjectDataCacheContentHint2) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint2
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint2: &updateProjectDataCacheContentHint2,
+		Type:                               typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint3(updateProjectDataCacheContentHint3 UpdateProjectDataCacheContentHint3) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint3
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint3: &updateProjectDataCacheContentHint3,
+		Type:                               typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint4(updateProjectDataCacheContentHint4 UpdateProjectDataCacheContentHint4) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint4
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint4: &updateProjectDataCacheContentHint4,
+		Type:                               typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint5(updateProjectDataCacheContentHint5 UpdateProjectDataCacheContentHint5) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint5
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint5: &updateProjectDataCacheContentHint5,
+		Type:                               typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint6(updateProjectDataCacheContentHint6 UpdateProjectDataCacheContentHint6) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint6
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint6: &updateProjectDataCacheContentHint6,
+		Type:                               typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint7(updateProjectDataCacheContentHint7 UpdateProjectDataCacheContentHint7) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint7
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint7: &updateProjectDataCacheContentHint7,
+		Type:                               typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint8(updateProjectDataCacheContentHint8 UpdateProjectDataCacheContentHint8) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint8
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint8: &updateProjectDataCacheContentHint8,
+		Type:                               typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint9(updateProjectDataCacheContentHint9 UpdateProjectDataCacheContentHint9) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint9
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint9: &updateProjectDataCacheContentHint9,
+		Type:                               typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint10(updateProjectDataCacheContentHint10 UpdateProjectDataCacheContentHint10) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint10
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint10: &updateProjectDataCacheContentHint10,
+		Type:                                typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint11(updateProjectDataCacheContentHint11 UpdateProjectDataCacheContentHint11) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint11
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint11: &updateProjectDataCacheContentHint11,
+		Type:                                typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint12(updateProjectDataCacheContentHint12 UpdateProjectDataCacheContentHint12) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint12
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint12: &updateProjectDataCacheContentHint12,
+		Type:                                typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint13(updateProjectDataCacheContentHint13 UpdateProjectDataCacheContentHint13) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint13
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint13: &updateProjectDataCacheContentHint13,
+		Type:                                typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheContentHintUpdateProjectDataCacheContentHint14(updateProjectDataCacheContentHint14 UpdateProjectDataCacheContentHint14) UpdateProjectDataCacheContentHint {
+	typ := UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint14
+
+	return UpdateProjectDataCacheContentHint{
+		UpdateProjectDataCacheContentHint14: &updateProjectDataCacheContentHint14,
+		Type:                                typ,
+	}
+}
+
+func (u *UpdateProjectDataCacheContentHint) UnmarshalJSON(data []byte) error {
+
+	var updateProjectDataCacheContentHint1 UpdateProjectDataCacheContentHint1 = UpdateProjectDataCacheContentHint1{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint1, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint1 = &updateProjectDataCacheContentHint1
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint1
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint2 UpdateProjectDataCacheContentHint2 = UpdateProjectDataCacheContentHint2{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint2, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint2 = &updateProjectDataCacheContentHint2
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint2
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint3 UpdateProjectDataCacheContentHint3 = UpdateProjectDataCacheContentHint3{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint3, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint3 = &updateProjectDataCacheContentHint3
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint3
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint4 UpdateProjectDataCacheContentHint4 = UpdateProjectDataCacheContentHint4{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint4, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint4 = &updateProjectDataCacheContentHint4
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint4
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint5 UpdateProjectDataCacheContentHint5 = UpdateProjectDataCacheContentHint5{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint5, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint5 = &updateProjectDataCacheContentHint5
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint5
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint6 UpdateProjectDataCacheContentHint6 = UpdateProjectDataCacheContentHint6{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint6, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint6 = &updateProjectDataCacheContentHint6
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint6
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint7 UpdateProjectDataCacheContentHint7 = UpdateProjectDataCacheContentHint7{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint7, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint7 = &updateProjectDataCacheContentHint7
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint7
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint8 UpdateProjectDataCacheContentHint8 = UpdateProjectDataCacheContentHint8{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint8, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint8 = &updateProjectDataCacheContentHint8
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint8
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint9 UpdateProjectDataCacheContentHint9 = UpdateProjectDataCacheContentHint9{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint9, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint9 = &updateProjectDataCacheContentHint9
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint9
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint10 UpdateProjectDataCacheContentHint10 = UpdateProjectDataCacheContentHint10{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint10, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint10 = &updateProjectDataCacheContentHint10
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint10
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint11 UpdateProjectDataCacheContentHint11 = UpdateProjectDataCacheContentHint11{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint11, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint11 = &updateProjectDataCacheContentHint11
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint11
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint12 UpdateProjectDataCacheContentHint12 = UpdateProjectDataCacheContentHint12{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint12, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint12 = &updateProjectDataCacheContentHint12
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint12
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint13 UpdateProjectDataCacheContentHint13 = UpdateProjectDataCacheContentHint13{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint13, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint13 = &updateProjectDataCacheContentHint13
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint13
+		return nil
+	}
+
+	var updateProjectDataCacheContentHint14 UpdateProjectDataCacheContentHint14 = UpdateProjectDataCacheContentHint14{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheContentHint14, "", true, true); err == nil {
+		u.UpdateProjectDataCacheContentHint14 = &updateProjectDataCacheContentHint14
+		u.Type = UpdateProjectDataCacheContentHintUnionTypeUpdateProjectDataCacheContentHint14
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheContentHint", string(data))
+}
+
+func (u UpdateProjectDataCacheContentHint) MarshalJSON() ([]byte, error) {
+	if u.UpdateProjectDataCacheContentHint1 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint1, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint2 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint2, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint3 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint3, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint4 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint4, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint5 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint5, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint6 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint6, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint7 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint7, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint8 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint8, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint9 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint9, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint10 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint10, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint11 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint11, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint12 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint12, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint13 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint13, "", true)
+	}
+
+	if u.UpdateProjectDataCacheContentHint14 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheContentHint14, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type UpdateProjectDataCacheContentHint: all fields are null")
+}
+
+type UpdateProjectDataCacheProjectsResponse200Type string
+
+const (
+	UpdateProjectDataCacheProjectsResponse200TypeFlagsSecret UpdateProjectDataCacheProjectsResponse200Type = "flags-secret"
+)
+
+func (e UpdateProjectDataCacheProjectsResponse200Type) ToPointer() *UpdateProjectDataCacheProjectsResponse200Type {
+	return &e
+}
+func (e *UpdateProjectDataCacheProjectsResponse200Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "flags-secret":
+		*e = UpdateProjectDataCacheProjectsResponse200Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200Type: %v", v)
+	}
+}
+
+// UpdateProjectDataCacheInternalContentHint - Similar to `contentHints`, but should not be exposed to the user.
+type UpdateProjectDataCacheInternalContentHint struct {
+	Type UpdateProjectDataCacheProjectsResponse200Type `json:"type"`
+	// Contains the `value` of the env variable, encrypted with a special key to make decryption possible in the subscriber Lambda.
+	EncryptedValue string `json:"encryptedValue"`
+}
+
+func (o *UpdateProjectDataCacheInternalContentHint) GetType() UpdateProjectDataCacheProjectsResponse200Type {
+	if o == nil {
+		return UpdateProjectDataCacheProjectsResponse200Type("")
+	}
+	return o.Type
+}
+
+func (o *UpdateProjectDataCacheInternalContentHint) GetEncryptedValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.EncryptedValue
+}
+
+type Env struct {
+	Target            *UpdateProjectDataCacheTarget      `json:"target,omitempty"`
+	Type              UpdateProjectDataCacheType         `json:"type"`
+	ID                *string                            `json:"id,omitempty"`
+	Key               string                             `json:"key"`
+	Value             string                             `json:"value"`
+	ConfigurationID   *string                            `json:"configurationId,omitempty"`
+	CreatedAt         *float64                           `json:"createdAt,omitempty"`
+	UpdatedAt         *float64                           `json:"updatedAt,omitempty"`
+	CreatedBy         *string                            `json:"createdBy,omitempty"`
+	UpdatedBy         *string                            `json:"updatedBy,omitempty"`
+	GitBranch         *string                            `json:"gitBranch,omitempty"`
+	EdgeConfigID      *string                            `json:"edgeConfigId,omitempty"`
+	EdgeConfigTokenID *string                            `json:"edgeConfigTokenId,omitempty"`
+	ContentHint       *UpdateProjectDataCacheContentHint `json:"contentHint,omitempty"`
+	// Similar to `contentHints`, but should not be exposed to the user.
+	InternalContentHint *UpdateProjectDataCacheInternalContentHint `json:"internalContentHint,omitempty"`
+	// Whether `value` is decrypted.
+	Decrypted           *bool   `json:"decrypted,omitempty"`
+	Comment             *string `json:"comment,omitempty"`
+	CustomEnvironmentID *string `json:"customEnvironmentId,omitempty"`
+}
+
+func (o *Env) GetTarget() *UpdateProjectDataCacheTarget {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *UpdateProjectDataCacheEnv) GetType() UpdateProjectDataCacheType {
+func (o *Env) GetType() UpdateProjectDataCacheType {
 	if o == nil {
 		return UpdateProjectDataCacheType("")
 	}
 	return o.Type
 }
 
-func (o *UpdateProjectDataCacheEnv) GetUpdatedAt() *float64 {
+func (o *Env) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *Env) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *Env) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
+func (o *Env) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *Env) GetCreatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *Env) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-func (o *UpdateProjectDataCacheEnv) GetUpdatedBy() *string {
+func (o *Env) GetCreatedBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedBy
+}
+
+func (o *Env) GetUpdatedBy() *string {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedBy
 }
 
-func (o *UpdateProjectDataCacheEnv) GetValue() string {
+func (o *Env) GetGitBranch() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Value
+	return o.GitBranch
+}
+
+func (o *Env) GetEdgeConfigID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigID
+}
+
+func (o *Env) GetEdgeConfigTokenID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigTokenID
+}
+
+func (o *Env) GetContentHint() *UpdateProjectDataCacheContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.ContentHint
+}
+
+func (o *Env) GetInternalContentHint() *UpdateProjectDataCacheInternalContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.InternalContentHint
+}
+
+func (o *Env) GetDecrypted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Decrypted
+}
+
+func (o *Env) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *Env) GetCustomEnvironmentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomEnvironmentID
 }
 
 type UpdateProjectDataCacheFramework string
@@ -1636,186 +1687,58 @@ func (e *UpdateProjectDataCacheFramework) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type UpdateProjectDataCacheGitComments struct {
-	// Whether the Vercel bot should comment on commits
-	OnCommit bool `json:"onCommit"`
-	// Whether the Vercel bot should comment on PRs
-	OnPullRequest bool `json:"onPullRequest"`
-}
-
-func (o *UpdateProjectDataCacheGitComments) GetOnCommit() bool {
-	if o == nil {
-		return false
-	}
-	return o.OnCommit
-}
-
-func (o *UpdateProjectDataCacheGitComments) GetOnPullRequest() bool {
-	if o == nil {
-		return false
-	}
-	return o.OnPullRequest
-}
-
-type UpdateProjectDataCacheJobStatus string
+type AliasAssignedType string
 
 const (
-	UpdateProjectDataCacheJobStatusSucceeded  UpdateProjectDataCacheJobStatus = "succeeded"
-	UpdateProjectDataCacheJobStatusFailed     UpdateProjectDataCacheJobStatus = "failed"
-	UpdateProjectDataCacheJobStatusSkipped    UpdateProjectDataCacheJobStatus = "skipped"
-	UpdateProjectDataCacheJobStatusPending    UpdateProjectDataCacheJobStatus = "pending"
-	UpdateProjectDataCacheJobStatusInProgress UpdateProjectDataCacheJobStatus = "in-progress"
+	AliasAssignedTypeNumber  AliasAssignedType = "number"
+	AliasAssignedTypeBoolean AliasAssignedType = "boolean"
 )
 
-func (e UpdateProjectDataCacheJobStatus) ToPointer() *UpdateProjectDataCacheJobStatus {
-	return &e
-}
-func (e *UpdateProjectDataCacheJobStatus) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "succeeded":
-		fallthrough
-	case "failed":
-		fallthrough
-	case "skipped":
-		fallthrough
-	case "pending":
-		fallthrough
-	case "in-progress":
-		*e = UpdateProjectDataCacheJobStatus(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheJobStatus: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheProjectsType string
-
-const (
-	UpdateProjectDataCacheProjectsTypePromote  UpdateProjectDataCacheProjectsType = "promote"
-	UpdateProjectDataCacheProjectsTypeRollback UpdateProjectDataCacheProjectsType = "rollback"
-)
-
-func (e UpdateProjectDataCacheProjectsType) ToPointer() *UpdateProjectDataCacheProjectsType {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "promote":
-		fallthrough
-	case "rollback":
-		*e = UpdateProjectDataCacheProjectsType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsType: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheLastAliasRequest struct {
-	FromDeploymentID string                             `json:"fromDeploymentId"`
-	JobStatus        UpdateProjectDataCacheJobStatus    `json:"jobStatus"`
-	RequestedAt      float64                            `json:"requestedAt"`
-	ToDeploymentID   string                             `json:"toDeploymentId"`
-	Type             UpdateProjectDataCacheProjectsType `json:"type"`
-}
-
-func (o *UpdateProjectDataCacheLastAliasRequest) GetFromDeploymentID() string {
-	if o == nil {
-		return ""
-	}
-	return o.FromDeploymentID
-}
-
-func (o *UpdateProjectDataCacheLastAliasRequest) GetJobStatus() UpdateProjectDataCacheJobStatus {
-	if o == nil {
-		return UpdateProjectDataCacheJobStatus("")
-	}
-	return o.JobStatus
-}
-
-func (o *UpdateProjectDataCacheLastAliasRequest) GetRequestedAt() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.RequestedAt
-}
-
-func (o *UpdateProjectDataCacheLastAliasRequest) GetToDeploymentID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ToDeploymentID
-}
-
-func (o *UpdateProjectDataCacheLastAliasRequest) GetType() UpdateProjectDataCacheProjectsType {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsType("")
-	}
-	return o.Type
-}
-
-type UpdateProjectDataCacheLastRollbackTarget struct {
-}
-
-type UpdateProjectDataCacheAliasAssignedType string
-
-const (
-	UpdateProjectDataCacheAliasAssignedTypeNumber  UpdateProjectDataCacheAliasAssignedType = "number"
-	UpdateProjectDataCacheAliasAssignedTypeBoolean UpdateProjectDataCacheAliasAssignedType = "boolean"
-)
-
-type UpdateProjectDataCacheAliasAssigned struct {
+type AliasAssigned struct {
 	Number  *float64
 	Boolean *bool
 
-	Type UpdateProjectDataCacheAliasAssignedType
+	Type AliasAssignedType
 }
 
-func CreateUpdateProjectDataCacheAliasAssignedNumber(number float64) UpdateProjectDataCacheAliasAssigned {
-	typ := UpdateProjectDataCacheAliasAssignedTypeNumber
+func CreateAliasAssignedNumber(number float64) AliasAssigned {
+	typ := AliasAssignedTypeNumber
 
-	return UpdateProjectDataCacheAliasAssigned{
+	return AliasAssigned{
 		Number: &number,
 		Type:   typ,
 	}
 }
 
-func CreateUpdateProjectDataCacheAliasAssignedBoolean(boolean bool) UpdateProjectDataCacheAliasAssigned {
-	typ := UpdateProjectDataCacheAliasAssignedTypeBoolean
+func CreateAliasAssignedBoolean(boolean bool) AliasAssigned {
+	typ := AliasAssignedTypeBoolean
 
-	return UpdateProjectDataCacheAliasAssigned{
+	return AliasAssigned{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func (u *UpdateProjectDataCacheAliasAssigned) UnmarshalJSON(data []byte) error {
+func (u *AliasAssigned) UnmarshalJSON(data []byte) error {
 
 	var number float64 = float64(0)
 	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
 		u.Number = &number
-		u.Type = UpdateProjectDataCacheAliasAssignedTypeNumber
+		u.Type = AliasAssignedTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
-		u.Type = UpdateProjectDataCacheAliasAssignedTypeBoolean
+		u.Type = AliasAssignedTypeBoolean
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheAliasAssigned", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for AliasAssigned", string(data))
 }
 
-func (u UpdateProjectDataCacheAliasAssigned) MarshalJSON() ([]byte, error) {
+func (u AliasAssigned) MarshalJSON() ([]byte, error) {
 	if u.Number != nil {
 		return utils.MarshalJSON(u.Number, "", true)
 	}
@@ -1824,7 +1747,7 @@ func (u UpdateProjectDataCacheAliasAssigned) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type UpdateProjectDataCacheAliasAssigned: all fields are null")
+	return nil, errors.New("could not marshal union type AliasAssigned: all fields are null")
 }
 
 type UpdateProjectDataCacheAliasError struct {
@@ -1847,23 +1770,9 @@ func (o *UpdateProjectDataCacheAliasError) GetMessage() string {
 }
 
 type UpdateProjectDataCacheBuilds struct {
-	Dest *string `json:"dest,omitempty"`
-	Src  *string `json:"src,omitempty"`
 	Use  string  `json:"use"`
-}
-
-func (o *UpdateProjectDataCacheBuilds) GetDest() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Dest
-}
-
-func (o *UpdateProjectDataCacheBuilds) GetSrc() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Src
+	Src  *string `json:"src,omitempty"`
+	Dest *string `json:"dest,omitempty"`
 }
 
 func (o *UpdateProjectDataCacheBuilds) GetUse() string {
@@ -1873,65 +1782,18 @@ func (o *UpdateProjectDataCacheBuilds) GetUse() string {
 	return o.Use
 }
 
-type UpdateProjectDataCacheChecksConclusion string
-
-const (
-	UpdateProjectDataCacheChecksConclusionSucceeded UpdateProjectDataCacheChecksConclusion = "succeeded"
-	UpdateProjectDataCacheChecksConclusionFailed    UpdateProjectDataCacheChecksConclusion = "failed"
-	UpdateProjectDataCacheChecksConclusionSkipped   UpdateProjectDataCacheChecksConclusion = "skipped"
-	UpdateProjectDataCacheChecksConclusionCanceled  UpdateProjectDataCacheChecksConclusion = "canceled"
-)
-
-func (e UpdateProjectDataCacheChecksConclusion) ToPointer() *UpdateProjectDataCacheChecksConclusion {
-	return &e
-}
-func (e *UpdateProjectDataCacheChecksConclusion) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "succeeded":
-		fallthrough
-	case "failed":
-		fallthrough
-	case "skipped":
-		fallthrough
-	case "canceled":
-		*e = UpdateProjectDataCacheChecksConclusion(v)
+func (o *UpdateProjectDataCacheBuilds) GetSrc() *string {
+	if o == nil {
 		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheChecksConclusion: %v", v)
 	}
+	return o.Src
 }
 
-type UpdateProjectDataCacheChecksState string
-
-const (
-	UpdateProjectDataCacheChecksStateRegistered UpdateProjectDataCacheChecksState = "registered"
-	UpdateProjectDataCacheChecksStateRunning    UpdateProjectDataCacheChecksState = "running"
-	UpdateProjectDataCacheChecksStateCompleted  UpdateProjectDataCacheChecksState = "completed"
-)
-
-func (e UpdateProjectDataCacheChecksState) ToPointer() *UpdateProjectDataCacheChecksState {
-	return &e
-}
-func (e *UpdateProjectDataCacheChecksState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "registered":
-		fallthrough
-	case "running":
-		fallthrough
-	case "completed":
-		*e = UpdateProjectDataCacheChecksState(v)
+func (o *UpdateProjectDataCacheBuilds) GetDest() *string {
+	if o == nil {
 		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheChecksState: %v", v)
 	}
+	return o.Dest
 }
 
 type UpdateProjectDataCacheCreator struct {
@@ -1975,69 +1837,6 @@ func (o *UpdateProjectDataCacheCreator) GetUsername() string {
 		return ""
 	}
 	return o.Username
-}
-
-type UpdateProjectDataCacheOidcTokenClaimsType string
-
-const (
-	UpdateProjectDataCacheOidcTokenClaimsTypeStr        UpdateProjectDataCacheOidcTokenClaimsType = "str"
-	UpdateProjectDataCacheOidcTokenClaimsTypeArrayOfStr UpdateProjectDataCacheOidcTokenClaimsType = "arrayOfStr"
-)
-
-type UpdateProjectDataCacheOidcTokenClaims struct {
-	Str        *string
-	ArrayOfStr []string
-
-	Type UpdateProjectDataCacheOidcTokenClaimsType
-}
-
-func CreateUpdateProjectDataCacheOidcTokenClaimsStr(str string) UpdateProjectDataCacheOidcTokenClaims {
-	typ := UpdateProjectDataCacheOidcTokenClaimsTypeStr
-
-	return UpdateProjectDataCacheOidcTokenClaims{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheOidcTokenClaimsArrayOfStr(arrayOfStr []string) UpdateProjectDataCacheOidcTokenClaims {
-	typ := UpdateProjectDataCacheOidcTokenClaimsTypeArrayOfStr
-
-	return UpdateProjectDataCacheOidcTokenClaims{
-		ArrayOfStr: arrayOfStr,
-		Type:       typ,
-	}
-}
-
-func (u *UpdateProjectDataCacheOidcTokenClaims) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
-		u.Str = &str
-		u.Type = UpdateProjectDataCacheOidcTokenClaimsTypeStr
-		return nil
-	}
-
-	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
-		u.ArrayOfStr = arrayOfStr
-		u.Type = UpdateProjectDataCacheOidcTokenClaimsTypeArrayOfStr
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheOidcTokenClaims", string(data))
-}
-
-func (u UpdateProjectDataCacheOidcTokenClaims) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.ArrayOfStr != nil {
-		return utils.MarshalJSON(u.ArrayOfStr, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type UpdateProjectDataCacheOidcTokenClaims: all fields are null")
 }
 
 type UpdateProjectDataCachePlan string
@@ -2133,636 +1932,618 @@ func (e *UpdateProjectDataCacheReadySubstate) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type UpdateProjectDataCacheProjectsResponseType string
+type UpdateProjectDataCacheProjectsType string
 
 const (
-	UpdateProjectDataCacheProjectsResponseTypeLambdas UpdateProjectDataCacheProjectsResponseType = "LAMBDAS"
+	UpdateProjectDataCacheProjectsTypeLambdas UpdateProjectDataCacheProjectsType = "LAMBDAS"
 )
 
-func (e UpdateProjectDataCacheProjectsResponseType) ToPointer() *UpdateProjectDataCacheProjectsResponseType {
+func (e UpdateProjectDataCacheProjectsType) ToPointer() *UpdateProjectDataCacheProjectsType {
 	return &e
 }
-func (e *UpdateProjectDataCacheProjectsResponseType) UnmarshalJSON(data []byte) error {
+func (e *UpdateProjectDataCacheProjectsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "LAMBDAS":
-		*e = UpdateProjectDataCacheProjectsResponseType(v)
+		*e = UpdateProjectDataCacheProjectsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponseType: %v", v)
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsType: %v", v)
 	}
 }
 
-type UpdateProjectDataCacheLatestDeployments struct {
-	Alias                  []string                                         `json:"alias,omitempty"`
-	AliasAssigned          *UpdateProjectDataCacheAliasAssigned             `json:"aliasAssigned,omitempty"`
-	AliasError             *UpdateProjectDataCacheAliasError                `json:"aliasError,omitempty"`
-	AliasFinal             *string                                          `json:"aliasFinal,omitempty"`
-	AutomaticAliases       []string                                         `json:"automaticAliases,omitempty"`
-	BuildingAt             *float64                                         `json:"buildingAt,omitempty"`
-	Builds                 []UpdateProjectDataCacheBuilds                   `json:"builds,omitempty"`
-	ChecksConclusion       *UpdateProjectDataCacheChecksConclusion          `json:"checksConclusion,omitempty"`
-	ChecksState            *UpdateProjectDataCacheChecksState               `json:"checksState,omitempty"`
-	ConnectBuildsEnabled   *bool                                            `json:"connectBuildsEnabled,omitempty"`
-	ConnectConfigurationID *string                                          `json:"connectConfigurationId,omitempty"`
-	CreatedAt              float64                                          `json:"createdAt"`
-	CreatedIn              string                                           `json:"createdIn"`
-	Creator                *UpdateProjectDataCacheCreator                   `json:"creator"`
-	DeploymentHostname     string                                           `json:"deploymentHostname"`
-	Forced                 *bool                                            `json:"forced,omitempty"`
-	ID                     string                                           `json:"id"`
-	Meta                   map[string]string                                `json:"meta,omitempty"`
-	MonorepoManager        *string                                          `json:"monorepoManager,omitempty"`
-	Name                   string                                           `json:"name"`
-	OidcTokenClaims        map[string]UpdateProjectDataCacheOidcTokenClaims `json:"oidcTokenClaims,omitempty"`
-	Plan                   UpdateProjectDataCachePlan                       `json:"plan"`
-	// Whether or not preview comments are enabled for the deployment
-	PreviewCommentsEnabled *bool                                      `json:"previewCommentsEnabled,omitempty"`
-	Private                bool                                       `json:"private"`
-	ReadyAt                *float64                                   `json:"readyAt,omitempty"`
-	ReadyState             UpdateProjectDataCacheReadyState           `json:"readyState"`
-	ReadySubstate          *UpdateProjectDataCacheReadySubstate       `json:"readySubstate,omitempty"`
-	RequestedAt            *float64                                   `json:"requestedAt,omitempty"`
-	Target                 *string                                    `json:"target,omitempty"`
-	TeamID                 *string                                    `json:"teamId,omitempty"`
-	Type                   UpdateProjectDataCacheProjectsResponseType `json:"type"`
-	URL                    string                                     `json:"url"`
-	UserID                 string                                     `json:"userId"`
-	WithCache              *bool                                      `json:"withCache,omitempty"`
+type UpdateProjectDataCacheChecksConclusion string
+
+const (
+	UpdateProjectDataCacheChecksConclusionSucceeded UpdateProjectDataCacheChecksConclusion = "succeeded"
+	UpdateProjectDataCacheChecksConclusionFailed    UpdateProjectDataCacheChecksConclusion = "failed"
+	UpdateProjectDataCacheChecksConclusionSkipped   UpdateProjectDataCacheChecksConclusion = "skipped"
+	UpdateProjectDataCacheChecksConclusionCanceled  UpdateProjectDataCacheChecksConclusion = "canceled"
+)
+
+func (e UpdateProjectDataCacheChecksConclusion) ToPointer() *UpdateProjectDataCacheChecksConclusion {
+	return &e
+}
+func (e *UpdateProjectDataCacheChecksConclusion) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "succeeded":
+		fallthrough
+	case "failed":
+		fallthrough
+	case "skipped":
+		fallthrough
+	case "canceled":
+		*e = UpdateProjectDataCacheChecksConclusion(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheChecksConclusion: %v", v)
+	}
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetAlias() []string {
+type UpdateProjectDataCacheChecksState string
+
+const (
+	UpdateProjectDataCacheChecksStateRegistered UpdateProjectDataCacheChecksState = "registered"
+	UpdateProjectDataCacheChecksStateRunning    UpdateProjectDataCacheChecksState = "running"
+	UpdateProjectDataCacheChecksStateCompleted  UpdateProjectDataCacheChecksState = "completed"
+)
+
+func (e UpdateProjectDataCacheChecksState) ToPointer() *UpdateProjectDataCacheChecksState {
+	return &e
+}
+func (e *UpdateProjectDataCacheChecksState) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "registered":
+		fallthrough
+	case "running":
+		fallthrough
+	case "completed":
+		*e = UpdateProjectDataCacheChecksState(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheChecksState: %v", v)
+	}
+}
+
+type OidcTokenClaimsType string
+
+const (
+	OidcTokenClaimsTypeStr        OidcTokenClaimsType = "str"
+	OidcTokenClaimsTypeArrayOfStr OidcTokenClaimsType = "arrayOfStr"
+)
+
+type OidcTokenClaims struct {
+	Str        *string
+	ArrayOfStr []string
+
+	Type OidcTokenClaimsType
+}
+
+func CreateOidcTokenClaimsStr(str string) OidcTokenClaims {
+	typ := OidcTokenClaimsTypeStr
+
+	return OidcTokenClaims{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateOidcTokenClaimsArrayOfStr(arrayOfStr []string) OidcTokenClaims {
+	typ := OidcTokenClaimsTypeArrayOfStr
+
+	return OidcTokenClaims{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *OidcTokenClaims) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = OidcTokenClaimsTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = OidcTokenClaimsTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OidcTokenClaims", string(data))
+}
+
+func (u OidcTokenClaims) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type OidcTokenClaims: all fields are null")
+}
+
+type LatestDeployments struct {
+	Alias                  []string                                `json:"alias,omitempty"`
+	AliasAssigned          *AliasAssigned                          `json:"aliasAssigned,omitempty"`
+	AliasError             *UpdateProjectDataCacheAliasError       `json:"aliasError,omitempty"`
+	AliasFinal             *string                                 `json:"aliasFinal,omitempty"`
+	AutomaticAliases       []string                                `json:"automaticAliases,omitempty"`
+	Builds                 []UpdateProjectDataCacheBuilds          `json:"builds,omitempty"`
+	ConnectBuildsEnabled   *bool                                   `json:"connectBuildsEnabled,omitempty"`
+	ConnectConfigurationID *string                                 `json:"connectConfigurationId,omitempty"`
+	CreatedAt              float64                                 `json:"createdAt"`
+	CreatedIn              string                                  `json:"createdIn"`
+	Creator                *UpdateProjectDataCacheCreator          `json:"creator"`
+	DeploymentHostname     string                                  `json:"deploymentHostname"`
+	Name                   string                                  `json:"name"`
+	Forced                 *bool                                   `json:"forced,omitempty"`
+	ID                     string                                  `json:"id"`
+	Meta                   map[string]string                       `json:"meta,omitempty"`
+	MonorepoManager        *string                                 `json:"monorepoManager,omitempty"`
+	Plan                   UpdateProjectDataCachePlan              `json:"plan"`
+	Private                bool                                    `json:"private"`
+	ReadyState             UpdateProjectDataCacheReadyState        `json:"readyState"`
+	ReadySubstate          *UpdateProjectDataCacheReadySubstate    `json:"readySubstate,omitempty"`
+	RequestedAt            *float64                                `json:"requestedAt,omitempty"`
+	Target                 *string                                 `json:"target,omitempty"`
+	TeamID                 *string                                 `json:"teamId,omitempty"`
+	Type                   UpdateProjectDataCacheProjectsType      `json:"type"`
+	URL                    string                                  `json:"url"`
+	UserID                 string                                  `json:"userId"`
+	WithCache              *bool                                   `json:"withCache,omitempty"`
+	ChecksConclusion       *UpdateProjectDataCacheChecksConclusion `json:"checksConclusion,omitempty"`
+	ChecksState            *UpdateProjectDataCacheChecksState      `json:"checksState,omitempty"`
+	ReadyAt                *float64                                `json:"readyAt,omitempty"`
+	BuildingAt             *float64                                `json:"buildingAt,omitempty"`
+	// Whether or not preview comments are enabled for the deployment
+	PreviewCommentsEnabled *bool                      `json:"previewCommentsEnabled,omitempty"`
+	OidcTokenClaims        map[string]OidcTokenClaims `json:"oidcTokenClaims,omitempty"`
+}
+
+func (o *LatestDeployments) GetAlias() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Alias
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetAliasAssigned() *UpdateProjectDataCacheAliasAssigned {
+func (o *LatestDeployments) GetAliasAssigned() *AliasAssigned {
 	if o == nil {
 		return nil
 	}
 	return o.AliasAssigned
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetAliasError() *UpdateProjectDataCacheAliasError {
+func (o *LatestDeployments) GetAliasError() *UpdateProjectDataCacheAliasError {
 	if o == nil {
 		return nil
 	}
 	return o.AliasError
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetAliasFinal() *string {
+func (o *LatestDeployments) GetAliasFinal() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AliasFinal
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetAutomaticAliases() []string {
+func (o *LatestDeployments) GetAutomaticAliases() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AutomaticAliases
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetBuildingAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.BuildingAt
-}
-
-func (o *UpdateProjectDataCacheLatestDeployments) GetBuilds() []UpdateProjectDataCacheBuilds {
+func (o *LatestDeployments) GetBuilds() []UpdateProjectDataCacheBuilds {
 	if o == nil {
 		return nil
 	}
 	return o.Builds
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetChecksConclusion() *UpdateProjectDataCacheChecksConclusion {
-	if o == nil {
-		return nil
-	}
-	return o.ChecksConclusion
-}
-
-func (o *UpdateProjectDataCacheLatestDeployments) GetChecksState() *UpdateProjectDataCacheChecksState {
-	if o == nil {
-		return nil
-	}
-	return o.ChecksState
-}
-
-func (o *UpdateProjectDataCacheLatestDeployments) GetConnectBuildsEnabled() *bool {
+func (o *LatestDeployments) GetConnectBuildsEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectBuildsEnabled
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetConnectConfigurationID() *string {
+func (o *LatestDeployments) GetConnectConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectConfigurationID
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetCreatedAt() float64 {
+func (o *LatestDeployments) GetCreatedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.CreatedAt
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetCreatedIn() string {
+func (o *LatestDeployments) GetCreatedIn() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedIn
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetCreator() *UpdateProjectDataCacheCreator {
+func (o *LatestDeployments) GetCreator() *UpdateProjectDataCacheCreator {
 	if o == nil {
 		return nil
 	}
 	return o.Creator
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetDeploymentHostname() string {
+func (o *LatestDeployments) GetDeploymentHostname() string {
 	if o == nil {
 		return ""
 	}
 	return o.DeploymentHostname
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetForced() *bool {
+func (o *LatestDeployments) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *LatestDeployments) GetForced() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Forced
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetID() string {
+func (o *LatestDeployments) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetMeta() map[string]string {
+func (o *LatestDeployments) GetMeta() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Meta
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetMonorepoManager() *string {
+func (o *LatestDeployments) GetMonorepoManager() *string {
 	if o == nil {
 		return nil
 	}
 	return o.MonorepoManager
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *UpdateProjectDataCacheLatestDeployments) GetOidcTokenClaims() map[string]UpdateProjectDataCacheOidcTokenClaims {
-	if o == nil {
-		return nil
-	}
-	return o.OidcTokenClaims
-}
-
-func (o *UpdateProjectDataCacheLatestDeployments) GetPlan() UpdateProjectDataCachePlan {
+func (o *LatestDeployments) GetPlan() UpdateProjectDataCachePlan {
 	if o == nil {
 		return UpdateProjectDataCachePlan("")
 	}
 	return o.Plan
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetPreviewCommentsEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.PreviewCommentsEnabled
-}
-
-func (o *UpdateProjectDataCacheLatestDeployments) GetPrivate() bool {
+func (o *LatestDeployments) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetReadyAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.ReadyAt
-}
-
-func (o *UpdateProjectDataCacheLatestDeployments) GetReadyState() UpdateProjectDataCacheReadyState {
+func (o *LatestDeployments) GetReadyState() UpdateProjectDataCacheReadyState {
 	if o == nil {
 		return UpdateProjectDataCacheReadyState("")
 	}
 	return o.ReadyState
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetReadySubstate() *UpdateProjectDataCacheReadySubstate {
+func (o *LatestDeployments) GetReadySubstate() *UpdateProjectDataCacheReadySubstate {
 	if o == nil {
 		return nil
 	}
 	return o.ReadySubstate
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetRequestedAt() *float64 {
+func (o *LatestDeployments) GetRequestedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.RequestedAt
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetTarget() *string {
+func (o *LatestDeployments) GetTarget() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Target
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetTeamID() *string {
+func (o *LatestDeployments) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetType() UpdateProjectDataCacheProjectsResponseType {
+func (o *LatestDeployments) GetType() UpdateProjectDataCacheProjectsType {
 	if o == nil {
-		return UpdateProjectDataCacheProjectsResponseType("")
+		return UpdateProjectDataCacheProjectsType("")
 	}
 	return o.Type
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetURL() string {
+func (o *LatestDeployments) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetUserID() string {
+func (o *LatestDeployments) GetUserID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UserID
 }
 
-func (o *UpdateProjectDataCacheLatestDeployments) GetWithCache() *bool {
+func (o *LatestDeployments) GetWithCache() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.WithCache
 }
 
-type UpdateProjectDataCacheProjectsResponseDeployHooks struct {
-	CreatedAt *float64 `json:"createdAt,omitempty"`
-	ID        string   `json:"id"`
-	Name      string   `json:"name"`
-	Ref       string   `json:"ref"`
-	URL       string   `json:"url"`
-}
-
-func (o *UpdateProjectDataCacheProjectsResponseDeployHooks) GetCreatedAt() *float64 {
+func (o *LatestDeployments) GetChecksConclusion() *UpdateProjectDataCacheChecksConclusion {
 	if o == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return o.ChecksConclusion
 }
 
-func (o *UpdateProjectDataCacheProjectsResponseDeployHooks) GetID() string {
+func (o *LatestDeployments) GetChecksState() *UpdateProjectDataCacheChecksState {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.ID
+	return o.ChecksState
 }
 
-func (o *UpdateProjectDataCacheProjectsResponseDeployHooks) GetName() string {
+func (o *LatestDeployments) GetReadyAt() *float64 {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Name
+	return o.ReadyAt
 }
 
-func (o *UpdateProjectDataCacheProjectsResponseDeployHooks) GetRef() string {
+func (o *LatestDeployments) GetBuildingAt() *float64 {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Ref
+	return o.BuildingAt
 }
 
-func (o *UpdateProjectDataCacheProjectsResponseDeployHooks) GetURL() string {
+func (o *LatestDeployments) GetPreviewCommentsEnabled() *bool {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.URL
+	return o.PreviewCommentsEnabled
 }
 
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyLinkType string
+func (o *LatestDeployments) GetOidcTokenClaims() map[string]OidcTokenClaims {
+	if o == nil {
+		return nil
+	}
+	return o.OidcTokenClaims
+}
+
+type UpdateProjectDataCacheLinkProjectsType string
 
 const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyLinkTypeBitbucket UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyLinkType = "bitbucket"
+	UpdateProjectDataCacheLinkProjectsTypeBitbucket UpdateProjectDataCacheLinkProjectsType = "bitbucket"
 )
 
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyLinkType) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyLinkType {
+func (e UpdateProjectDataCacheLinkProjectsType) ToPointer() *UpdateProjectDataCacheLinkProjectsType {
 	return &e
 }
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyLinkType) UnmarshalJSON(data []byte) error {
+func (e *UpdateProjectDataCacheLinkProjectsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bitbucket":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyLinkType(v)
+		*e = UpdateProjectDataCacheLinkProjectsType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyLinkType: %v", v)
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheLinkProjectsType: %v", v)
 	}
 }
 
-type UpdateProjectDataCache3 struct {
-	CreatedAt        *float64                                                                      `json:"createdAt,omitempty"`
-	DeployHooks      []UpdateProjectDataCacheProjectsResponseDeployHooks                           `json:"deployHooks"`
-	GitCredentialID  *string                                                                       `json:"gitCredentialId,omitempty"`
-	Name             *string                                                                       `json:"name,omitempty"`
-	Owner            *string                                                                       `json:"owner,omitempty"`
-	ProductionBranch *string                                                                       `json:"productionBranch,omitempty"`
-	Slug             *string                                                                       `json:"slug,omitempty"`
-	Sourceless       *bool                                                                         `json:"sourceless,omitempty"`
-	Type             *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyLinkType `json:"type,omitempty"`
-	UpdatedAt        *float64                                                                      `json:"updatedAt,omitempty"`
-	UUID             *string                                                                       `json:"uuid,omitempty"`
-	WorkspaceUUID    *string                                                                       `json:"workspaceUuid,omitempty"`
+type UpdateProjectDataCacheLinkDeployHooks struct {
+	CreatedAt *float64 `json:"createdAt,omitempty"`
+	ID        string   `json:"id"`
+	Name      string   `json:"name"`
+	Ref       string   `json:"ref"`
+	URL       string   `json:"url"`
 }
 
-func (o *UpdateProjectDataCache3) GetCreatedAt() *float64 {
+func (o *UpdateProjectDataCacheLinkDeployHooks) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *UpdateProjectDataCache3) GetDeployHooks() []UpdateProjectDataCacheProjectsResponseDeployHooks {
+func (o *UpdateProjectDataCacheLinkDeployHooks) GetID() string {
 	if o == nil {
-		return []UpdateProjectDataCacheProjectsResponseDeployHooks{}
+		return ""
 	}
-	return o.DeployHooks
+	return o.ID
 }
 
-func (o *UpdateProjectDataCache3) GetGitCredentialID() *string {
+func (o *UpdateProjectDataCacheLinkDeployHooks) GetName() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.GitCredentialID
+	return o.Name
 }
 
-func (o *UpdateProjectDataCache3) GetName() *string {
+func (o *UpdateProjectDataCacheLinkDeployHooks) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *UpdateProjectDataCacheLinkDeployHooks) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
+type Link3 struct {
+	Name             *string                                 `json:"name,omitempty"`
+	Slug             *string                                 `json:"slug,omitempty"`
+	Owner            *string                                 `json:"owner,omitempty"`
+	Type             *UpdateProjectDataCacheLinkProjectsType `json:"type,omitempty"`
+	UUID             *string                                 `json:"uuid,omitempty"`
+	WorkspaceUUID    *string                                 `json:"workspaceUuid,omitempty"`
+	CreatedAt        *float64                                `json:"createdAt,omitempty"`
+	DeployHooks      []UpdateProjectDataCacheLinkDeployHooks `json:"deployHooks"`
+	GitCredentialID  *string                                 `json:"gitCredentialId,omitempty"`
+	UpdatedAt        *float64                                `json:"updatedAt,omitempty"`
+	Sourceless       *bool                                   `json:"sourceless,omitempty"`
+	ProductionBranch *string                                 `json:"productionBranch,omitempty"`
+}
+
+func (o *Link3) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *UpdateProjectDataCache3) GetOwner() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Owner
-}
-
-func (o *UpdateProjectDataCache3) GetProductionBranch() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProductionBranch
-}
-
-func (o *UpdateProjectDataCache3) GetSlug() *string {
+func (o *Link3) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Slug
 }
 
-func (o *UpdateProjectDataCache3) GetSourceless() *bool {
+func (o *Link3) GetOwner() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Sourceless
+	return o.Owner
 }
 
-func (o *UpdateProjectDataCache3) GetType() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyLinkType {
+func (o *Link3) GetType() *UpdateProjectDataCacheLinkProjectsType {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *UpdateProjectDataCache3) GetUpdatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.UpdatedAt
-}
-
-func (o *UpdateProjectDataCache3) GetUUID() *string {
+func (o *Link3) GetUUID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.UUID
 }
 
-func (o *UpdateProjectDataCache3) GetWorkspaceUUID() *string {
+func (o *Link3) GetWorkspaceUUID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.WorkspaceUUID
 }
 
-type UpdateProjectDataCacheProjectsDeployHooks struct {
-	CreatedAt *float64 `json:"createdAt,omitempty"`
-	ID        string   `json:"id"`
-	Name      string   `json:"name"`
-	Ref       string   `json:"ref"`
-	URL       string   `json:"url"`
-}
-
-func (o *UpdateProjectDataCacheProjectsDeployHooks) GetCreatedAt() *float64 {
+func (o *Link3) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *UpdateProjectDataCacheProjectsDeployHooks) GetID() string {
+func (o *Link3) GetDeployHooks() []UpdateProjectDataCacheLinkDeployHooks {
 	if o == nil {
-		return ""
+		return []UpdateProjectDataCacheLinkDeployHooks{}
 	}
-	return o.ID
+	return o.DeployHooks
 }
 
-func (o *UpdateProjectDataCacheProjectsDeployHooks) GetName() string {
+func (o *Link3) GetGitCredentialID() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Name
+	return o.GitCredentialID
 }
 
-func (o *UpdateProjectDataCacheProjectsDeployHooks) GetRef() string {
+func (o *Link3) GetUpdatedAt() *float64 {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Ref
+	return o.UpdatedAt
 }
 
-func (o *UpdateProjectDataCacheProjectsDeployHooks) GetURL() string {
+func (o *Link3) GetSourceless() *bool {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.URL
+	return o.Sourceless
 }
 
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType string
+func (o *Link3) GetProductionBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProductionBranch
+}
+
+type UpdateProjectDataCacheLinkType string
 
 const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyTypeGitlab UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType = "gitlab"
+	UpdateProjectDataCacheLinkTypeGitlab UpdateProjectDataCacheLinkType = "gitlab"
 )
 
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType {
+func (e UpdateProjectDataCacheLinkType) ToPointer() *UpdateProjectDataCacheLinkType {
 	return &e
 }
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
+func (e *UpdateProjectDataCacheLinkType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType(v)
+		*e = UpdateProjectDataCacheLinkType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType: %v", v)
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheLinkType: %v", v)
 	}
 }
 
-type UpdateProjectDataCache2 struct {
-	CreatedAt                *float64                                                                  `json:"createdAt,omitempty"`
-	DeployHooks              []UpdateProjectDataCacheProjectsDeployHooks                               `json:"deployHooks"`
-	GitCredentialID          *string                                                                   `json:"gitCredentialId,omitempty"`
-	ProductionBranch         *string                                                                   `json:"productionBranch,omitempty"`
-	ProjectID                *string                                                                   `json:"projectId,omitempty"`
-	ProjectName              *string                                                                   `json:"projectName,omitempty"`
-	ProjectNameWithNamespace *string                                                                   `json:"projectNameWithNamespace,omitempty"`
-	ProjectNamespace         *string                                                                   `json:"projectNamespace,omitempty"`
-	ProjectURL               *string                                                                   `json:"projectUrl,omitempty"`
-	Sourceless               *bool                                                                     `json:"sourceless,omitempty"`
-	Type                     *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType `json:"type,omitempty"`
-	UpdatedAt                *float64                                                                  `json:"updatedAt,omitempty"`
-}
-
-func (o *UpdateProjectDataCache2) GetCreatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedAt
-}
-
-func (o *UpdateProjectDataCache2) GetDeployHooks() []UpdateProjectDataCacheProjectsDeployHooks {
-	if o == nil {
-		return []UpdateProjectDataCacheProjectsDeployHooks{}
-	}
-	return o.DeployHooks
-}
-
-func (o *UpdateProjectDataCache2) GetGitCredentialID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.GitCredentialID
-}
-
-func (o *UpdateProjectDataCache2) GetProductionBranch() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProductionBranch
-}
-
-func (o *UpdateProjectDataCache2) GetProjectID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectID
-}
-
-func (o *UpdateProjectDataCache2) GetProjectName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectName
-}
-
-func (o *UpdateProjectDataCache2) GetProjectNameWithNamespace() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectNameWithNamespace
-}
-
-func (o *UpdateProjectDataCache2) GetProjectNamespace() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectNamespace
-}
-
-func (o *UpdateProjectDataCache2) GetProjectURL() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectURL
-}
-
-func (o *UpdateProjectDataCache2) GetSourceless() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Sourceless
-}
-
-func (o *UpdateProjectDataCache2) GetType() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
-}
-
-func (o *UpdateProjectDataCache2) GetUpdatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.UpdatedAt
-}
-
-type UpdateProjectDataCacheDeployHooks struct {
+type LinkDeployHooks struct {
 	CreatedAt *float64 `json:"createdAt,omitempty"`
 	ID        string   `json:"id"`
 	Name      string   `json:"name"`
@@ -2770,230 +2551,372 @@ type UpdateProjectDataCacheDeployHooks struct {
 	URL       string   `json:"url"`
 }
 
-func (o *UpdateProjectDataCacheDeployHooks) GetCreatedAt() *float64 {
+func (o *LinkDeployHooks) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *UpdateProjectDataCacheDeployHooks) GetID() string {
+func (o *LinkDeployHooks) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *UpdateProjectDataCacheDeployHooks) GetName() string {
+func (o *LinkDeployHooks) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *UpdateProjectDataCacheDeployHooks) GetRef() string {
+func (o *LinkDeployHooks) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *UpdateProjectDataCacheDeployHooks) GetURL() string {
+func (o *LinkDeployHooks) GetURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.URL
 }
 
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONType string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONTypeGithub UpdateProjectDataCacheProjectsResponse200ApplicationJSONType = "github"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONType) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONType {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "github":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONType: %v", v)
-	}
+type Link2 struct {
+	ProjectID                *string                         `json:"projectId,omitempty"`
+	ProjectName              *string                         `json:"projectName,omitempty"`
+	ProjectNameWithNamespace *string                         `json:"projectNameWithNamespace,omitempty"`
+	ProjectNamespace         *string                         `json:"projectNamespace,omitempty"`
+	ProjectURL               *string                         `json:"projectUrl,omitempty"`
+	Type                     *UpdateProjectDataCacheLinkType `json:"type,omitempty"`
+	CreatedAt                *float64                        `json:"createdAt,omitempty"`
+	DeployHooks              []LinkDeployHooks               `json:"deployHooks"`
+	GitCredentialID          *string                         `json:"gitCredentialId,omitempty"`
+	UpdatedAt                *float64                        `json:"updatedAt,omitempty"`
+	Sourceless               *bool                           `json:"sourceless,omitempty"`
+	ProductionBranch         *string                         `json:"productionBranch,omitempty"`
 }
 
-type UpdateProjectDataCache1 struct {
-	CreatedAt        *float64                                                      `json:"createdAt,omitempty"`
-	DeployHooks      []UpdateProjectDataCacheDeployHooks                           `json:"deployHooks"`
-	GitCredentialID  *string                                                       `json:"gitCredentialId,omitempty"`
-	Org              *string                                                       `json:"org,omitempty"`
-	ProductionBranch *string                                                       `json:"productionBranch,omitempty"`
-	Repo             *string                                                       `json:"repo,omitempty"`
-	RepoID           *float64                                                      `json:"repoId,omitempty"`
-	Sourceless       *bool                                                         `json:"sourceless,omitempty"`
-	Type             *UpdateProjectDataCacheProjectsResponse200ApplicationJSONType `json:"type,omitempty"`
-	UpdatedAt        *float64                                                      `json:"updatedAt,omitempty"`
-}
-
-func (o *UpdateProjectDataCache1) GetCreatedAt() *float64 {
+func (o *Link2) GetProjectID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return o.ProjectID
 }
 
-func (o *UpdateProjectDataCache1) GetDeployHooks() []UpdateProjectDataCacheDeployHooks {
-	if o == nil {
-		return []UpdateProjectDataCacheDeployHooks{}
-	}
-	return o.DeployHooks
-}
-
-func (o *UpdateProjectDataCache1) GetGitCredentialID() *string {
+func (o *Link2) GetProjectName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.GitCredentialID
+	return o.ProjectName
 }
 
-func (o *UpdateProjectDataCache1) GetOrg() *string {
+func (o *Link2) GetProjectNameWithNamespace() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Org
+	return o.ProjectNameWithNamespace
 }
 
-func (o *UpdateProjectDataCache1) GetProductionBranch() *string {
+func (o *Link2) GetProjectNamespace() *string {
 	if o == nil {
 		return nil
 	}
-	return o.ProductionBranch
+	return o.ProjectNamespace
 }
 
-func (o *UpdateProjectDataCache1) GetRepo() *string {
+func (o *Link2) GetProjectURL() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Repo
+	return o.ProjectURL
 }
 
-func (o *UpdateProjectDataCache1) GetRepoID() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.RepoID
-}
-
-func (o *UpdateProjectDataCache1) GetSourceless() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Sourceless
-}
-
-func (o *UpdateProjectDataCache1) GetType() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONType {
+func (o *Link2) GetType() *UpdateProjectDataCacheLinkType {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *UpdateProjectDataCache1) GetUpdatedAt() *float64 {
+func (o *Link2) GetCreatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *Link2) GetDeployHooks() []LinkDeployHooks {
+	if o == nil {
+		return []LinkDeployHooks{}
+	}
+	return o.DeployHooks
+}
+
+func (o *Link2) GetGitCredentialID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitCredentialID
+}
+
+func (o *Link2) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.UpdatedAt
 }
 
-type UpdateProjectDataCacheLinkType string
+func (o *Link2) GetSourceless() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Sourceless
+}
+
+func (o *Link2) GetProductionBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProductionBranch
+}
+
+type LinkType string
 
 const (
-	UpdateProjectDataCacheLinkTypeUpdateProjectDataCache1 UpdateProjectDataCacheLinkType = "updateProjectDataCache_1"
-	UpdateProjectDataCacheLinkTypeUpdateProjectDataCache2 UpdateProjectDataCacheLinkType = "updateProjectDataCache_2"
-	UpdateProjectDataCacheLinkTypeUpdateProjectDataCache3 UpdateProjectDataCacheLinkType = "updateProjectDataCache_3"
+	LinkTypeGithub LinkType = "github"
 )
 
-type UpdateProjectDataCacheLink struct {
-	UpdateProjectDataCache1 *UpdateProjectDataCache1
-	UpdateProjectDataCache2 *UpdateProjectDataCache2
-	UpdateProjectDataCache3 *UpdateProjectDataCache3
-
-	Type UpdateProjectDataCacheLinkType
+func (e LinkType) ToPointer() *LinkType {
+	return &e
 }
-
-func CreateUpdateProjectDataCacheLinkUpdateProjectDataCache1(updateProjectDataCache1 UpdateProjectDataCache1) UpdateProjectDataCacheLink {
-	typ := UpdateProjectDataCacheLinkTypeUpdateProjectDataCache1
-
-	return UpdateProjectDataCacheLink{
-		UpdateProjectDataCache1: &updateProjectDataCache1,
-		Type:                    typ,
+func (e *LinkType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "github":
+		*e = LinkType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for LinkType: %v", v)
 	}
 }
 
-func CreateUpdateProjectDataCacheLinkUpdateProjectDataCache2(updateProjectDataCache2 UpdateProjectDataCache2) UpdateProjectDataCacheLink {
-	typ := UpdateProjectDataCacheLinkTypeUpdateProjectDataCache2
+type DeployHooks struct {
+	CreatedAt *float64 `json:"createdAt,omitempty"`
+	ID        string   `json:"id"`
+	Name      string   `json:"name"`
+	Ref       string   `json:"ref"`
+	URL       string   `json:"url"`
+}
 
-	return UpdateProjectDataCacheLink{
-		UpdateProjectDataCache2: &updateProjectDataCache2,
-		Type:                    typ,
+func (o *DeployHooks) GetCreatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *DeployHooks) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *DeployHooks) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *DeployHooks) GetRef() string {
+	if o == nil {
+		return ""
+	}
+	return o.Ref
+}
+
+func (o *DeployHooks) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
+type Link1 struct {
+	Org              *string       `json:"org,omitempty"`
+	Repo             *string       `json:"repo,omitempty"`
+	RepoID           *float64      `json:"repoId,omitempty"`
+	Type             *LinkType     `json:"type,omitempty"`
+	CreatedAt        *float64      `json:"createdAt,omitempty"`
+	DeployHooks      []DeployHooks `json:"deployHooks"`
+	GitCredentialID  *string       `json:"gitCredentialId,omitempty"`
+	UpdatedAt        *float64      `json:"updatedAt,omitempty"`
+	Sourceless       *bool         `json:"sourceless,omitempty"`
+	ProductionBranch *string       `json:"productionBranch,omitempty"`
+}
+
+func (o *Link1) GetOrg() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Org
+}
+
+func (o *Link1) GetRepo() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Repo
+}
+
+func (o *Link1) GetRepoID() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.RepoID
+}
+
+func (o *Link1) GetType() *LinkType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *Link1) GetCreatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *Link1) GetDeployHooks() []DeployHooks {
+	if o == nil {
+		return []DeployHooks{}
+	}
+	return o.DeployHooks
+}
+
+func (o *Link1) GetGitCredentialID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitCredentialID
+}
+
+func (o *Link1) GetUpdatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *Link1) GetSourceless() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Sourceless
+}
+
+func (o *Link1) GetProductionBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProductionBranch
+}
+
+type LinkUnionType string
+
+const (
+	LinkUnionTypeLink1 LinkUnionType = "link_1"
+	LinkUnionTypeLink2 LinkUnionType = "link_2"
+	LinkUnionTypeLink3 LinkUnionType = "link_3"
+)
+
+type Link struct {
+	Link1 *Link1
+	Link2 *Link2
+	Link3 *Link3
+
+	Type LinkUnionType
+}
+
+func CreateLinkLink1(link1 Link1) Link {
+	typ := LinkUnionTypeLink1
+
+	return Link{
+		Link1: &link1,
+		Type:  typ,
 	}
 }
 
-func CreateUpdateProjectDataCacheLinkUpdateProjectDataCache3(updateProjectDataCache3 UpdateProjectDataCache3) UpdateProjectDataCacheLink {
-	typ := UpdateProjectDataCacheLinkTypeUpdateProjectDataCache3
+func CreateLinkLink2(link2 Link2) Link {
+	typ := LinkUnionTypeLink2
 
-	return UpdateProjectDataCacheLink{
-		UpdateProjectDataCache3: &updateProjectDataCache3,
-		Type:                    typ,
+	return Link{
+		Link2: &link2,
+		Type:  typ,
 	}
 }
 
-func (u *UpdateProjectDataCacheLink) UnmarshalJSON(data []byte) error {
+func CreateLinkLink3(link3 Link3) Link {
+	typ := LinkUnionTypeLink3
 
-	var updateProjectDataCache1 UpdateProjectDataCache1 = UpdateProjectDataCache1{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache1, "", true, true); err == nil {
-		u.UpdateProjectDataCache1 = &updateProjectDataCache1
-		u.Type = UpdateProjectDataCacheLinkTypeUpdateProjectDataCache1
+	return Link{
+		Link3: &link3,
+		Type:  typ,
+	}
+}
+
+func (u *Link) UnmarshalJSON(data []byte) error {
+
+	var link1 Link1 = Link1{}
+	if err := utils.UnmarshalJSON(data, &link1, "", true, true); err == nil {
+		u.Link1 = &link1
+		u.Type = LinkUnionTypeLink1
 		return nil
 	}
 
-	var updateProjectDataCache2 UpdateProjectDataCache2 = UpdateProjectDataCache2{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache2, "", true, true); err == nil {
-		u.UpdateProjectDataCache2 = &updateProjectDataCache2
-		u.Type = UpdateProjectDataCacheLinkTypeUpdateProjectDataCache2
+	var link2 Link2 = Link2{}
+	if err := utils.UnmarshalJSON(data, &link2, "", true, true); err == nil {
+		u.Link2 = &link2
+		u.Type = LinkUnionTypeLink2
 		return nil
 	}
 
-	var updateProjectDataCache3 UpdateProjectDataCache3 = UpdateProjectDataCache3{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCache3, "", true, true); err == nil {
-		u.UpdateProjectDataCache3 = &updateProjectDataCache3
-		u.Type = UpdateProjectDataCacheLinkTypeUpdateProjectDataCache3
+	var link3 Link3 = Link3{}
+	if err := utils.UnmarshalJSON(data, &link3, "", true, true); err == nil {
+		u.Link3 = &link3
+		u.Type = LinkUnionTypeLink3
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheLink", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Link", string(data))
 }
 
-func (u UpdateProjectDataCacheLink) MarshalJSON() ([]byte, error) {
-	if u.UpdateProjectDataCache1 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache1, "", true)
+func (u Link) MarshalJSON() ([]byte, error) {
+	if u.Link1 != nil {
+		return utils.MarshalJSON(u.Link1, "", true)
 	}
 
-	if u.UpdateProjectDataCache2 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache2, "", true)
+	if u.Link2 != nil {
+		return utils.MarshalJSON(u.Link2, "", true)
 	}
 
-	if u.UpdateProjectDataCache3 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCache3, "", true)
+	if u.Link3 != nil {
+		return utils.MarshalJSON(u.Link3, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type UpdateProjectDataCacheLink: all fields are null")
+	return nil, errors.New("could not marshal union type Link: all fields are null")
 }
 
 type UpdateProjectDataCacheNodeVersion string
@@ -3037,17 +2960,6 @@ func (e *UpdateProjectDataCacheNodeVersion) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type UpdateProjectDataCacheOidcTokenConfig struct {
-	Enabled bool `json:"enabled"`
-}
-
-func (o *UpdateProjectDataCacheOidcTokenConfig) GetEnabled() bool {
-	if o == nil {
-		return false
-	}
-	return o.Enabled
-}
-
 type UpdateProjectDataCachePaths struct {
 	Value string `json:"value"`
 }
@@ -3071,2337 +2983,6 @@ func (o *UpdateProjectDataCacheOptionsAllowlist) GetPaths() []UpdateProjectDataC
 }
 
 type UpdateProjectDataCachePasswordProtection struct {
-}
-
-type UpdateProjectDataCachePermissions struct {
-	Monitoring                               []shared.ACLAction `json:"Monitoring,omitempty"`
-	NotificationMonitoringAlert              []shared.ACLAction `json:"NotificationMonitoringAlert,omitempty"`
-	AccessGroup                              []shared.ACLAction `json:"accessGroup,omitempty"`
-	AliasGlobal                              []shared.ACLAction `json:"aliasGlobal,omitempty"`
-	AliasProject                             []shared.ACLAction `json:"aliasProject,omitempty"`
-	AliasProtectionBypass                    []shared.ACLAction `json:"aliasProtectionBypass,omitempty"`
-	Analytics                                []shared.ACLAction `json:"analytics,omitempty"`
-	AnalyticsSampling                        []shared.ACLAction `json:"analyticsSampling,omitempty"`
-	AnalyticsUsage                           []shared.ACLAction `json:"analyticsUsage,omitempty"`
-	AuditLog                                 []shared.ACLAction `json:"auditLog,omitempty"`
-	BillingAddress                           []shared.ACLAction `json:"billingAddress,omitempty"`
-	BillingInformation                       []shared.ACLAction `json:"billingInformation,omitempty"`
-	BillingInvoice                           []shared.ACLAction `json:"billingInvoice,omitempty"`
-	BillingInvoiceEmailRecipient             []shared.ACLAction `json:"billingInvoiceEmailRecipient,omitempty"`
-	BillingInvoiceLanguage                   []shared.ACLAction `json:"billingInvoiceLanguage,omitempty"`
-	BillingPlan                              []shared.ACLAction `json:"billingPlan,omitempty"`
-	BillingPurchaseOrder                     []shared.ACLAction `json:"billingPurchaseOrder,omitempty"`
-	BillingTaxID                             []shared.ACLAction `json:"billingTaxId,omitempty"`
-	Blob                                     []shared.ACLAction `json:"blob,omitempty"`
-	BlobStoreTokenSet                        []shared.ACLAction `json:"blobStoreTokenSet,omitempty"`
-	Budget                                   []shared.ACLAction `json:"budget,omitempty"`
-	CacheArtifact                            []shared.ACLAction `json:"cacheArtifact,omitempty"`
-	CacheArtifactUsageEvent                  []shared.ACLAction `json:"cacheArtifactUsageEvent,omitempty"`
-	CodeChecks                               []shared.ACLAction `json:"codeChecks,omitempty"`
-	ConcurrentBuilds                         []shared.ACLAction `json:"concurrentBuilds,omitempty"`
-	Connect                                  []shared.ACLAction `json:"connect,omitempty"`
-	ConnectConfiguration                     []shared.ACLAction `json:"connectConfiguration,omitempty"`
-	ConnectConfigurationLink                 []shared.ACLAction `json:"connectConfigurationLink,omitempty"`
-	DataCacheBillingSettings                 []shared.ACLAction `json:"dataCacheBillingSettings,omitempty"`
-	DataCacheNamespace                       []shared.ACLAction `json:"dataCacheNamespace,omitempty"`
-	Deployment                               []shared.ACLAction `json:"deployment,omitempty"`
-	DeploymentCheck                          []shared.ACLAction `json:"deploymentCheck,omitempty"`
-	DeploymentCheckPreview                   []shared.ACLAction `json:"deploymentCheckPreview,omitempty"`
-	DeploymentCheckReRunFromProductionBranch []shared.ACLAction `json:"deploymentCheckReRunFromProductionBranch,omitempty"`
-	DeploymentPreview                        []shared.ACLAction `json:"deploymentPreview,omitempty"`
-	DeploymentPrivate                        []shared.ACLAction `json:"deploymentPrivate,omitempty"`
-	DeploymentProductionGit                  []shared.ACLAction `json:"deploymentProductionGit,omitempty"`
-	DeploymentPromote                        []shared.ACLAction `json:"deploymentPromote,omitempty"`
-	DeploymentRollback                       []shared.ACLAction `json:"deploymentRollback,omitempty"`
-	Domain                                   []shared.ACLAction `json:"domain,omitempty"`
-	DomainAcceptDelegation                   []shared.ACLAction `json:"domainAcceptDelegation,omitempty"`
-	DomainAuthCodes                          []shared.ACLAction `json:"domainAuthCodes,omitempty"`
-	DomainCertificate                        []shared.ACLAction `json:"domainCertificate,omitempty"`
-	DomainCheckConfig                        []shared.ACLAction `json:"domainCheckConfig,omitempty"`
-	DomainMove                               []shared.ACLAction `json:"domainMove,omitempty"`
-	DomainPurchase                           []shared.ACLAction `json:"domainPurchase,omitempty"`
-	DomainRecord                             []shared.ACLAction `json:"domainRecord,omitempty"`
-	DomainTransferIn                         []shared.ACLAction `json:"domainTransferIn,omitempty"`
-	EdgeConfig                               []shared.ACLAction `json:"edgeConfig,omitempty"`
-	EdgeConfigItem                           []shared.ACLAction `json:"edgeConfigItem,omitempty"`
-	EdgeConfigSchema                         []shared.ACLAction `json:"edgeConfigSchema,omitempty"`
-	EdgeConfigToken                          []shared.ACLAction `json:"edgeConfigToken,omitempty"`
-	EndpointVerification                     []shared.ACLAction `json:"endpointVerification,omitempty"`
-	Environments                             []shared.ACLAction `json:"environments,omitempty"`
-	Event                                    []shared.ACLAction `json:"event,omitempty"`
-	FileUpload                               []shared.ACLAction `json:"fileUpload,omitempty"`
-	GitRepository                            []shared.ACLAction `json:"gitRepository,omitempty"`
-	Integration                              []shared.ACLAction `json:"integration,omitempty"`
-	IntegrationConfiguration                 []shared.ACLAction `json:"integrationConfiguration,omitempty"`
-	IntegrationConfigurationProjects         []shared.ACLAction `json:"integrationConfigurationProjects,omitempty"`
-	IntegrationConfigurationTransfer         []shared.ACLAction `json:"integrationConfigurationTransfer,omitempty"`
-	IntegrationEvent                         []shared.ACLAction `json:"integrationEvent,omitempty"`
-	IntegrationResourceSecrets               []shared.ACLAction `json:"integrationResourceSecrets,omitempty"`
-	IntegrationStore                         []shared.ACLAction `json:"integrationStore,omitempty"`
-	IntegrationStoreTokenSet                 []shared.ACLAction `json:"integrationStoreTokenSet,omitempty"`
-	IntegrationVercelConfigurationOverride   []shared.ACLAction `json:"integrationVercelConfigurationOverride,omitempty"`
-	IPBlocking                               []shared.ACLAction `json:"ipBlocking,omitempty"`
-	Job                                      []shared.ACLAction `json:"job,omitempty"`
-	JobGlobal                                []shared.ACLAction `json:"jobGlobal,omitempty"`
-	LogDrain                                 []shared.ACLAction `json:"logDrain,omitempty"`
-	Logs                                     []shared.ACLAction `json:"logs,omitempty"`
-	LogsPreset                               []shared.ACLAction `json:"logsPreset,omitempty"`
-	MarketplaceBillingData                   []shared.ACLAction `json:"marketplaceBillingData,omitempty"`
-	MonitoringAlert                          []shared.ACLAction `json:"monitoringAlert,omitempty"`
-	MonitoringChart                          []shared.ACLAction `json:"monitoringChart,omitempty"`
-	MonitoringQuery                          []shared.ACLAction `json:"monitoringQuery,omitempty"`
-	MonitoringSettings                       []shared.ACLAction `json:"monitoringSettings,omitempty"`
-	NotificationCustomerBudget               []shared.ACLAction `json:"notificationCustomerBudget,omitempty"`
-	NotificationDeploymentFailed             []shared.ACLAction `json:"notificationDeploymentFailed,omitempty"`
-	NotificationDomainConfiguration          []shared.ACLAction `json:"notificationDomainConfiguration,omitempty"`
-	NotificationDomainExpire                 []shared.ACLAction `json:"notificationDomainExpire,omitempty"`
-	NotificationDomainMoved                  []shared.ACLAction `json:"notificationDomainMoved,omitempty"`
-	NotificationDomainPurchase               []shared.ACLAction `json:"notificationDomainPurchase,omitempty"`
-	NotificationDomainRenewal                []shared.ACLAction `json:"notificationDomainRenewal,omitempty"`
-	NotificationDomainTransfer               []shared.ACLAction `json:"notificationDomainTransfer,omitempty"`
-	NotificationDomainUnverified             []shared.ACLAction `json:"notificationDomainUnverified,omitempty"`
-	NotificationPaymentFailed                []shared.ACLAction `json:"notificationPaymentFailed,omitempty"`
-	NotificationStatementOfReasons           []shared.ACLAction `json:"notificationStatementOfReasons,omitempty"`
-	NotificationUsageAlert                   []shared.ACLAction `json:"notificationUsageAlert,omitempty"`
-	Oauth2Application                        []shared.ACLAction `json:"oauth2Application,omitempty"`
-	Oauth2Connection                         []shared.ACLAction `json:"oauth2Connection,omitempty"`
-	OpenTelemetryEndpoint                    []shared.ACLAction `json:"openTelemetryEndpoint,omitempty"`
-	OptionsAllowlist                         []shared.ACLAction `json:"optionsAllowlist,omitempty"`
-	OwnEvent                                 []shared.ACLAction `json:"ownEvent,omitempty"`
-	PasswordProtection                       []shared.ACLAction `json:"passwordProtection,omitempty"`
-	PasswordProtectionInvoiceItem            []shared.ACLAction `json:"passwordProtectionInvoiceItem,omitempty"`
-	PaymentMethod                            []shared.ACLAction `json:"paymentMethod,omitempty"`
-	Permissions                              []shared.ACLAction `json:"permissions,omitempty"`
-	Postgres                                 []shared.ACLAction `json:"postgres,omitempty"`
-	PostgresStoreTokenSet                    []shared.ACLAction `json:"postgresStoreTokenSet,omitempty"`
-	PreviewDeploymentSuffix                  []shared.ACLAction `json:"previewDeploymentSuffix,omitempty"`
-	ProTrialOnboarding                       []shared.ACLAction `json:"proTrialOnboarding,omitempty"`
-	ProductionAliasProtectionBypass          []shared.ACLAction `json:"productionAliasProtectionBypass,omitempty"`
-	Project                                  []shared.ACLAction `json:"project,omitempty"`
-	ProjectAccessGroup                       []shared.ACLAction `json:"projectAccessGroup,omitempty"`
-	ProjectAnalyticsSampling                 []shared.ACLAction `json:"projectAnalyticsSampling,omitempty"`
-	ProjectAnalyticsUsage                    []shared.ACLAction `json:"projectAnalyticsUsage,omitempty"`
-	ProjectDeploymentExpiration              []shared.ACLAction `json:"projectDeploymentExpiration,omitempty"`
-	ProjectDeploymentHook                    []shared.ACLAction `json:"projectDeploymentHook,omitempty"`
-	ProjectDomain                            []shared.ACLAction `json:"projectDomain,omitempty"`
-	ProjectDomainCheckConfig                 []shared.ACLAction `json:"projectDomainCheckConfig,omitempty"`
-	ProjectDomainMove                        []shared.ACLAction `json:"projectDomainMove,omitempty"`
-	ProjectEnvVars                           []shared.ACLAction `json:"projectEnvVars,omitempty"`
-	ProjectEnvVarsProduction                 []shared.ACLAction `json:"projectEnvVarsProduction,omitempty"`
-	ProjectEnvVarsUnownedByIntegration       []shared.ACLAction `json:"projectEnvVarsUnownedByIntegration,omitempty"`
-	ProjectID                                []shared.ACLAction `json:"projectId,omitempty"`
-	ProjectIntegrationConfiguration          []shared.ACLAction `json:"projectIntegrationConfiguration,omitempty"`
-	ProjectLink                              []shared.ACLAction `json:"projectLink,omitempty"`
-	ProjectMember                            []shared.ACLAction `json:"projectMember,omitempty"`
-	ProjectMonitoring                        []shared.ACLAction `json:"projectMonitoring,omitempty"`
-	ProjectPermissions                       []shared.ACLAction `json:"projectPermissions,omitempty"`
-	ProjectProductionBranch                  []shared.ACLAction `json:"projectProductionBranch,omitempty"`
-	ProjectProtectionBypass                  []shared.ACLAction `json:"projectProtectionBypass,omitempty"`
-	ProjectSupportCase                       []shared.ACLAction `json:"projectSupportCase,omitempty"`
-	ProjectSupportCaseComment                []shared.ACLAction `json:"projectSupportCaseComment,omitempty"`
-	ProjectTransfer                          []shared.ACLAction `json:"projectTransfer,omitempty"`
-	ProjectTransferIn                        []shared.ACLAction `json:"projectTransferIn,omitempty"`
-	ProjectTransferOut                       []shared.ACLAction `json:"projectTransferOut,omitempty"`
-	ProjectUsage                             []shared.ACLAction `json:"projectUsage,omitempty"`
-	RateLimit                                []shared.ACLAction `json:"rateLimit,omitempty"`
-	Redis                                    []shared.ACLAction `json:"redis,omitempty"`
-	RedisStoreTokenSet                       []shared.ACLAction `json:"redisStoreTokenSet,omitempty"`
-	RemoteCaching                            []shared.ACLAction `json:"remoteCaching,omitempty"`
-	Repository                               []shared.ACLAction `json:"repository,omitempty"`
-	SamlConfig                               []shared.ACLAction `json:"samlConfig,omitempty"`
-	SeawallConfig                            []shared.ACLAction `json:"seawallConfig,omitempty"`
-	Secret                                   []shared.ACLAction `json:"secret,omitempty"`
-	SensitiveEnvironmentVariablePolicy       []shared.ACLAction `json:"sensitiveEnvironmentVariablePolicy,omitempty"`
-	SharedEnvVarConnection                   []shared.ACLAction `json:"sharedEnvVarConnection,omitempty"`
-	SharedEnvVars                            []shared.ACLAction `json:"sharedEnvVars,omitempty"`
-	SharedEnvVarsProduction                  []shared.ACLAction `json:"sharedEnvVarsProduction,omitempty"`
-	SkewProtection                           []shared.ACLAction `json:"skewProtection,omitempty"`
-	Space                                    []shared.ACLAction `json:"space,omitempty"`
-	SpaceRun                                 []shared.ACLAction `json:"spaceRun,omitempty"`
-	SupportCase                              []shared.ACLAction `json:"supportCase,omitempty"`
-	SupportCaseComment                       []shared.ACLAction `json:"supportCaseComment,omitempty"`
-	Team                                     []shared.ACLAction `json:"team,omitempty"`
-	TeamAccessRequest                        []shared.ACLAction `json:"teamAccessRequest,omitempty"`
-	TeamFellowMembership                     []shared.ACLAction `json:"teamFellowMembership,omitempty"`
-	TeamInvite                               []shared.ACLAction `json:"teamInvite,omitempty"`
-	TeamInviteCode                           []shared.ACLAction `json:"teamInviteCode,omitempty"`
-	TeamJoin                                 []shared.ACLAction `json:"teamJoin,omitempty"`
-	TeamOwnMembership                        []shared.ACLAction `json:"teamOwnMembership,omitempty"`
-	TeamOwnMembershipDisconnectSAML          []shared.ACLAction `json:"teamOwnMembershipDisconnectSAML,omitempty"`
-	Token                                    []shared.ACLAction `json:"token,omitempty"`
-	TrustedIps                               []shared.ACLAction `json:"trustedIps,omitempty"`
-	Usage                                    []shared.ACLAction `json:"usage,omitempty"`
-	UsageCycle                               []shared.ACLAction `json:"usageCycle,omitempty"`
-	User                                     []shared.ACLAction `json:"user,omitempty"`
-	UserConnection                           []shared.ACLAction `json:"userConnection,omitempty"`
-	WebAnalytics                             []shared.ACLAction `json:"webAnalytics,omitempty"`
-	WebAnalyticsPlan                         []shared.ACLAction `json:"webAnalyticsPlan,omitempty"`
-	WebAuthn                                 []shared.ACLAction `json:"webAuthn,omitempty"`
-	Webhook                                  []shared.ACLAction `json:"webhook,omitempty"`
-	WebhookEvent                             []shared.ACLAction `json:"webhook-event,omitempty"`
-}
-
-func (o *UpdateProjectDataCachePermissions) GetMonitoring() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Monitoring
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationMonitoringAlert() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationMonitoringAlert
-}
-
-func (o *UpdateProjectDataCachePermissions) GetAccessGroup() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.AccessGroup
-}
-
-func (o *UpdateProjectDataCachePermissions) GetAliasGlobal() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.AliasGlobal
-}
-
-func (o *UpdateProjectDataCachePermissions) GetAliasProject() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.AliasProject
-}
-
-func (o *UpdateProjectDataCachePermissions) GetAliasProtectionBypass() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.AliasProtectionBypass
-}
-
-func (o *UpdateProjectDataCachePermissions) GetAnalytics() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Analytics
-}
-
-func (o *UpdateProjectDataCachePermissions) GetAnalyticsSampling() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.AnalyticsSampling
-}
-
-func (o *UpdateProjectDataCachePermissions) GetAnalyticsUsage() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.AnalyticsUsage
-}
-
-func (o *UpdateProjectDataCachePermissions) GetAuditLog() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.AuditLog
-}
-
-func (o *UpdateProjectDataCachePermissions) GetBillingAddress() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.BillingAddress
-}
-
-func (o *UpdateProjectDataCachePermissions) GetBillingInformation() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.BillingInformation
-}
-
-func (o *UpdateProjectDataCachePermissions) GetBillingInvoice() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.BillingInvoice
-}
-
-func (o *UpdateProjectDataCachePermissions) GetBillingInvoiceEmailRecipient() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.BillingInvoiceEmailRecipient
-}
-
-func (o *UpdateProjectDataCachePermissions) GetBillingInvoiceLanguage() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.BillingInvoiceLanguage
-}
-
-func (o *UpdateProjectDataCachePermissions) GetBillingPlan() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.BillingPlan
-}
-
-func (o *UpdateProjectDataCachePermissions) GetBillingPurchaseOrder() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.BillingPurchaseOrder
-}
-
-func (o *UpdateProjectDataCachePermissions) GetBillingTaxID() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.BillingTaxID
-}
-
-func (o *UpdateProjectDataCachePermissions) GetBlob() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Blob
-}
-
-func (o *UpdateProjectDataCachePermissions) GetBlobStoreTokenSet() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.BlobStoreTokenSet
-}
-
-func (o *UpdateProjectDataCachePermissions) GetBudget() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Budget
-}
-
-func (o *UpdateProjectDataCachePermissions) GetCacheArtifact() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.CacheArtifact
-}
-
-func (o *UpdateProjectDataCachePermissions) GetCacheArtifactUsageEvent() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.CacheArtifactUsageEvent
-}
-
-func (o *UpdateProjectDataCachePermissions) GetCodeChecks() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.CodeChecks
-}
-
-func (o *UpdateProjectDataCachePermissions) GetConcurrentBuilds() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ConcurrentBuilds
-}
-
-func (o *UpdateProjectDataCachePermissions) GetConnect() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Connect
-}
-
-func (o *UpdateProjectDataCachePermissions) GetConnectConfiguration() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ConnectConfiguration
-}
-
-func (o *UpdateProjectDataCachePermissions) GetConnectConfigurationLink() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ConnectConfigurationLink
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDataCacheBillingSettings() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DataCacheBillingSettings
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDataCacheNamespace() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DataCacheNamespace
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDeployment() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Deployment
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDeploymentCheck() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DeploymentCheck
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDeploymentCheckPreview() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DeploymentCheckPreview
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDeploymentCheckReRunFromProductionBranch() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DeploymentCheckReRunFromProductionBranch
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDeploymentPreview() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DeploymentPreview
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDeploymentPrivate() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DeploymentPrivate
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDeploymentProductionGit() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DeploymentProductionGit
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDeploymentPromote() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DeploymentPromote
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDeploymentRollback() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DeploymentRollback
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDomain() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Domain
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDomainAcceptDelegation() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DomainAcceptDelegation
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDomainAuthCodes() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DomainAuthCodes
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDomainCertificate() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DomainCertificate
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDomainCheckConfig() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DomainCheckConfig
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDomainMove() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DomainMove
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDomainPurchase() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DomainPurchase
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDomainRecord() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DomainRecord
-}
-
-func (o *UpdateProjectDataCachePermissions) GetDomainTransferIn() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.DomainTransferIn
-}
-
-func (o *UpdateProjectDataCachePermissions) GetEdgeConfig() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.EdgeConfig
-}
-
-func (o *UpdateProjectDataCachePermissions) GetEdgeConfigItem() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.EdgeConfigItem
-}
-
-func (o *UpdateProjectDataCachePermissions) GetEdgeConfigSchema() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.EdgeConfigSchema
-}
-
-func (o *UpdateProjectDataCachePermissions) GetEdgeConfigToken() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.EdgeConfigToken
-}
-
-func (o *UpdateProjectDataCachePermissions) GetEndpointVerification() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.EndpointVerification
-}
-
-func (o *UpdateProjectDataCachePermissions) GetEnvironments() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Environments
-}
-
-func (o *UpdateProjectDataCachePermissions) GetEvent() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Event
-}
-
-func (o *UpdateProjectDataCachePermissions) GetFileUpload() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.FileUpload
-}
-
-func (o *UpdateProjectDataCachePermissions) GetGitRepository() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.GitRepository
-}
-
-func (o *UpdateProjectDataCachePermissions) GetIntegration() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Integration
-}
-
-func (o *UpdateProjectDataCachePermissions) GetIntegrationConfiguration() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.IntegrationConfiguration
-}
-
-func (o *UpdateProjectDataCachePermissions) GetIntegrationConfigurationProjects() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.IntegrationConfigurationProjects
-}
-
-func (o *UpdateProjectDataCachePermissions) GetIntegrationConfigurationTransfer() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.IntegrationConfigurationTransfer
-}
-
-func (o *UpdateProjectDataCachePermissions) GetIntegrationEvent() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.IntegrationEvent
-}
-
-func (o *UpdateProjectDataCachePermissions) GetIntegrationResourceSecrets() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.IntegrationResourceSecrets
-}
-
-func (o *UpdateProjectDataCachePermissions) GetIntegrationStore() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.IntegrationStore
-}
-
-func (o *UpdateProjectDataCachePermissions) GetIntegrationStoreTokenSet() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.IntegrationStoreTokenSet
-}
-
-func (o *UpdateProjectDataCachePermissions) GetIntegrationVercelConfigurationOverride() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.IntegrationVercelConfigurationOverride
-}
-
-func (o *UpdateProjectDataCachePermissions) GetIPBlocking() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.IPBlocking
-}
-
-func (o *UpdateProjectDataCachePermissions) GetJob() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Job
-}
-
-func (o *UpdateProjectDataCachePermissions) GetJobGlobal() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.JobGlobal
-}
-
-func (o *UpdateProjectDataCachePermissions) GetLogDrain() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.LogDrain
-}
-
-func (o *UpdateProjectDataCachePermissions) GetLogs() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Logs
-}
-
-func (o *UpdateProjectDataCachePermissions) GetLogsPreset() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.LogsPreset
-}
-
-func (o *UpdateProjectDataCachePermissions) GetMarketplaceBillingData() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.MarketplaceBillingData
-}
-
-func (o *UpdateProjectDataCachePermissions) GetMonitoringAlert() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.MonitoringAlert
-}
-
-func (o *UpdateProjectDataCachePermissions) GetMonitoringChart() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.MonitoringChart
-}
-
-func (o *UpdateProjectDataCachePermissions) GetMonitoringQuery() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.MonitoringQuery
-}
-
-func (o *UpdateProjectDataCachePermissions) GetMonitoringSettings() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.MonitoringSettings
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationCustomerBudget() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationCustomerBudget
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationDeploymentFailed() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationDeploymentFailed
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationDomainConfiguration() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationDomainConfiguration
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationDomainExpire() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationDomainExpire
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationDomainMoved() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationDomainMoved
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationDomainPurchase() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationDomainPurchase
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationDomainRenewal() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationDomainRenewal
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationDomainTransfer() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationDomainTransfer
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationDomainUnverified() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationDomainUnverified
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationPaymentFailed() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationPaymentFailed
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationStatementOfReasons() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationStatementOfReasons
-}
-
-func (o *UpdateProjectDataCachePermissions) GetNotificationUsageAlert() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationUsageAlert
-}
-
-func (o *UpdateProjectDataCachePermissions) GetOauth2Application() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Oauth2Application
-}
-
-func (o *UpdateProjectDataCachePermissions) GetOauth2Connection() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Oauth2Connection
-}
-
-func (o *UpdateProjectDataCachePermissions) GetOpenTelemetryEndpoint() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.OpenTelemetryEndpoint
-}
-
-func (o *UpdateProjectDataCachePermissions) GetOptionsAllowlist() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.OptionsAllowlist
-}
-
-func (o *UpdateProjectDataCachePermissions) GetOwnEvent() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.OwnEvent
-}
-
-func (o *UpdateProjectDataCachePermissions) GetPasswordProtection() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.PasswordProtection
-}
-
-func (o *UpdateProjectDataCachePermissions) GetPasswordProtectionInvoiceItem() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.PasswordProtectionInvoiceItem
-}
-
-func (o *UpdateProjectDataCachePermissions) GetPaymentMethod() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.PaymentMethod
-}
-
-func (o *UpdateProjectDataCachePermissions) GetPermissions() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Permissions
-}
-
-func (o *UpdateProjectDataCachePermissions) GetPostgres() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Postgres
-}
-
-func (o *UpdateProjectDataCachePermissions) GetPostgresStoreTokenSet() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.PostgresStoreTokenSet
-}
-
-func (o *UpdateProjectDataCachePermissions) GetPreviewDeploymentSuffix() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.PreviewDeploymentSuffix
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProTrialOnboarding() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProTrialOnboarding
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProductionAliasProtectionBypass() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProductionAliasProtectionBypass
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProject() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Project
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectAccessGroup() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectAccessGroup
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectAnalyticsSampling() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectAnalyticsSampling
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectAnalyticsUsage() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectAnalyticsUsage
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectDeploymentExpiration() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectDeploymentExpiration
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectDeploymentHook() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectDeploymentHook
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectDomain() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectDomain
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectDomainCheckConfig() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectDomainCheckConfig
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectDomainMove() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectDomainMove
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectEnvVars() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectEnvVars
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectEnvVarsProduction() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectEnvVarsProduction
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectEnvVarsUnownedByIntegration() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectEnvVarsUnownedByIntegration
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectID() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectID
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectIntegrationConfiguration() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectIntegrationConfiguration
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectLink() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectLink
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectMember() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectMember
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectMonitoring() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectMonitoring
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectPermissions() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectPermissions
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectProductionBranch() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectProductionBranch
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectProtectionBypass() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectProtectionBypass
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectSupportCase() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectSupportCase
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectSupportCaseComment() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectSupportCaseComment
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectTransfer() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectTransfer
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectTransferIn() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectTransferIn
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectTransferOut() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectTransferOut
-}
-
-func (o *UpdateProjectDataCachePermissions) GetProjectUsage() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectUsage
-}
-
-func (o *UpdateProjectDataCachePermissions) GetRateLimit() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.RateLimit
-}
-
-func (o *UpdateProjectDataCachePermissions) GetRedis() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Redis
-}
-
-func (o *UpdateProjectDataCachePermissions) GetRedisStoreTokenSet() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.RedisStoreTokenSet
-}
-
-func (o *UpdateProjectDataCachePermissions) GetRemoteCaching() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.RemoteCaching
-}
-
-func (o *UpdateProjectDataCachePermissions) GetRepository() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Repository
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSamlConfig() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.SamlConfig
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSeawallConfig() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.SeawallConfig
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSecret() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Secret
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSensitiveEnvironmentVariablePolicy() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.SensitiveEnvironmentVariablePolicy
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSharedEnvVarConnection() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.SharedEnvVarConnection
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSharedEnvVars() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.SharedEnvVars
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSharedEnvVarsProduction() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.SharedEnvVarsProduction
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSkewProtection() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.SkewProtection
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSpace() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Space
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSpaceRun() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.SpaceRun
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSupportCase() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.SupportCase
-}
-
-func (o *UpdateProjectDataCachePermissions) GetSupportCaseComment() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.SupportCaseComment
-}
-
-func (o *UpdateProjectDataCachePermissions) GetTeam() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Team
-}
-
-func (o *UpdateProjectDataCachePermissions) GetTeamAccessRequest() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.TeamAccessRequest
-}
-
-func (o *UpdateProjectDataCachePermissions) GetTeamFellowMembership() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.TeamFellowMembership
-}
-
-func (o *UpdateProjectDataCachePermissions) GetTeamInvite() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.TeamInvite
-}
-
-func (o *UpdateProjectDataCachePermissions) GetTeamInviteCode() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.TeamInviteCode
-}
-
-func (o *UpdateProjectDataCachePermissions) GetTeamJoin() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.TeamJoin
-}
-
-func (o *UpdateProjectDataCachePermissions) GetTeamOwnMembership() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.TeamOwnMembership
-}
-
-func (o *UpdateProjectDataCachePermissions) GetTeamOwnMembershipDisconnectSAML() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.TeamOwnMembershipDisconnectSAML
-}
-
-func (o *UpdateProjectDataCachePermissions) GetToken() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Token
-}
-
-func (o *UpdateProjectDataCachePermissions) GetTrustedIps() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.TrustedIps
-}
-
-func (o *UpdateProjectDataCachePermissions) GetUsage() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Usage
-}
-
-func (o *UpdateProjectDataCachePermissions) GetUsageCycle() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.UsageCycle
-}
-
-func (o *UpdateProjectDataCachePermissions) GetUser() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.User
-}
-
-func (o *UpdateProjectDataCachePermissions) GetUserConnection() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.UserConnection
-}
-
-func (o *UpdateProjectDataCachePermissions) GetWebAnalytics() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.WebAnalytics
-}
-
-func (o *UpdateProjectDataCachePermissions) GetWebAnalyticsPlan() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.WebAnalyticsPlan
-}
-
-func (o *UpdateProjectDataCachePermissions) GetWebAuthn() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.WebAuthn
-}
-
-func (o *UpdateProjectDataCachePermissions) GetWebhook() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.Webhook
-}
-
-func (o *UpdateProjectDataCachePermissions) GetWebhookEvent() []shared.ACLAction {
-	if o == nil {
-		return nil
-	}
-	return o.WebhookEvent
-}
-
-type UpdateProjectDataCacheScope string
-
-const (
-	UpdateProjectDataCacheScopeAutomationBypass UpdateProjectDataCacheScope = "automation-bypass"
-)
-
-func (e UpdateProjectDataCacheScope) ToPointer() *UpdateProjectDataCacheScope {
-	return &e
-}
-func (e *UpdateProjectDataCacheScope) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "automation-bypass":
-		*e = UpdateProjectDataCacheScope(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheScope: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheProtectionBypass struct {
-	CreatedAt float64                     `json:"createdAt"`
-	CreatedBy string                      `json:"createdBy"`
-	Scope     UpdateProjectDataCacheScope `json:"scope"`
-}
-
-func (o *UpdateProjectDataCacheProtectionBypass) GetCreatedAt() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.CreatedAt
-}
-
-func (o *UpdateProjectDataCacheProtectionBypass) GetCreatedBy() string {
-	if o == nil {
-		return ""
-	}
-	return o.CreatedBy
-}
-
-func (o *UpdateProjectDataCacheProtectionBypass) GetScope() UpdateProjectDataCacheScope {
-	if o == nil {
-		return UpdateProjectDataCacheScope("")
-	}
-	return o.Scope
-}
-
-type UpdateProjectDataCacheHandle string
-
-const (
-	UpdateProjectDataCacheHandleInit     UpdateProjectDataCacheHandle = "init"
-	UpdateProjectDataCacheHandleFinalize UpdateProjectDataCacheHandle = "finalize"
-)
-
-func (e UpdateProjectDataCacheHandle) ToPointer() *UpdateProjectDataCacheHandle {
-	return &e
-}
-func (e *UpdateProjectDataCacheHandle) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "init":
-		fallthrough
-	case "finalize":
-		*e = UpdateProjectDataCacheHandle(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheHandle: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityTypeHost      UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType = "host"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityTypeMethod    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType = "method"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityTypePath      UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType = "path"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityTypeHeader    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType = "header"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityTypeCookie    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType = "cookie"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityTypeQuery     UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType = "query"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityTypeIPAddress UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType = "ip_address"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityTypeProtocol  UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType = "protocol"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityTypeScheme    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType = "scheme"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityTypeRegion    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType = "region"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "host":
-		fallthrough
-	case "method":
-		fallthrough
-	case "path":
-		fallthrough
-	case "header":
-		fallthrough
-	case "cookie":
-		fallthrough
-	case "query":
-		fallthrough
-	case "ip_address":
-		fallthrough
-	case "protocol":
-		fallthrough
-	case "scheme":
-		fallthrough
-	case "region":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2 struct {
-	Eq   *string  `json:"eq,omitempty"`
-	Gt   *float64 `json:"gt,omitempty"`
-	Gte  *float64 `json:"gte,omitempty"`
-	Inc  []string `json:"inc,omitempty"`
-	Lt   *float64 `json:"lt,omitempty"`
-	Lte  *float64 `json:"lte,omitempty"`
-	Neq  *string  `json:"neq,omitempty"`
-	Ninc []string `json:"ninc,omitempty"`
-	Pre  *string  `json:"pre,omitempty"`
-	Re   *string  `json:"re,omitempty"`
-	Suf  *string  `json:"suf,omitempty"`
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) GetEq() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Eq
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) GetGt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Gt
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) GetGte() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Gte
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) GetInc() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Inc
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) GetLt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Lt
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) GetLte() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Lte
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) GetNeq() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Neq
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) GetNinc() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Ninc
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) GetPre() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Pre
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) GetRe() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Re
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) GetSuf() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Suf
-}
-
-type UpdateProjectDataCacheValueType string
-
-const (
-	UpdateProjectDataCacheValueTypeStr                                                                   UpdateProjectDataCacheValueType = "str"
-	UpdateProjectDataCacheValueTypeUpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2 UpdateProjectDataCacheValueType = "updateProjectDataCache_projects_response_200_ApplicationJSON_responseBody_2"
-)
-
-type UpdateProjectDataCacheValue struct {
-	Str                                                                   *string
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2 *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2
-
-	Type UpdateProjectDataCacheValueType
-}
-
-func CreateUpdateProjectDataCacheValueStr(str string) UpdateProjectDataCacheValue {
-	typ := UpdateProjectDataCacheValueTypeStr
-
-	return UpdateProjectDataCacheValue{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheValueUpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2(updateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2 UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2) UpdateProjectDataCacheValue {
-	typ := UpdateProjectDataCacheValueTypeUpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2
-
-	return UpdateProjectDataCacheValue{
-		UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2: &updateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2,
-		Type: typ,
-	}
-}
-
-func (u *UpdateProjectDataCacheValue) UnmarshalJSON(data []byte) error {
-
-	var updateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2 UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2 = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2, "", true, true); err == nil {
-		u.UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2 = &updateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2
-		u.Type = UpdateProjectDataCacheValueTypeUpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2
-		return nil
-	}
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
-		u.Str = &str
-		u.Type = UpdateProjectDataCacheValueTypeStr
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheValue", string(data))
-}
-
-func (u UpdateProjectDataCacheValue) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBody2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type UpdateProjectDataCacheValue: all fields are null")
-}
-
-type UpdateProjectDataCacheHas struct {
-	Key   *string                                                                          `json:"key,omitempty"`
-	Type  UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType `json:"type"`
-	Value *UpdateProjectDataCacheValue                                                     `json:"value,omitempty"`
-}
-
-func (o *UpdateProjectDataCacheHas) GetKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Key
-}
-
-func (o *UpdateProjectDataCacheHas) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityType("")
-	}
-	return o.Type
-}
-
-func (o *UpdateProjectDataCacheHas) GetValue() *UpdateProjectDataCacheValue {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType string
-
-const (
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesTypeHost      UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType = "host"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesTypeMethod    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType = "method"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesTypePath      UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType = "path"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesTypeHeader    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType = "header"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesTypeCookie    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType = "cookie"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesTypeQuery     UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType = "query"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesTypeIPAddress UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType = "ip_address"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesTypeProtocol  UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType = "protocol"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesTypeScheme    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType = "scheme"
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesTypeRegion    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType = "region"
-)
-
-func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "host":
-		fallthrough
-	case "method":
-		fallthrough
-	case "path":
-		fallthrough
-	case "header":
-		fallthrough
-	case "cookie":
-		fallthrough
-	case "query":
-		fallthrough
-	case "ip_address":
-		fallthrough
-	case "protocol":
-		fallthrough
-	case "scheme":
-		fallthrough
-	case "region":
-		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2 struct {
-	Eq   *string  `json:"eq,omitempty"`
-	Gt   *float64 `json:"gt,omitempty"`
-	Gte  *float64 `json:"gte,omitempty"`
-	Inc  []string `json:"inc,omitempty"`
-	Lt   *float64 `json:"lt,omitempty"`
-	Lte  *float64 `json:"lte,omitempty"`
-	Neq  *string  `json:"neq,omitempty"`
-	Ninc []string `json:"ninc,omitempty"`
-	Pre  *string  `json:"pre,omitempty"`
-	Re   *string  `json:"re,omitempty"`
-	Suf  *string  `json:"suf,omitempty"`
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) GetEq() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Eq
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) GetGt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Gt
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) GetGte() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Gte
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) GetInc() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Inc
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) GetLt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Lt
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) GetLte() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Lte
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) GetNeq() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Neq
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) GetNinc() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Ninc
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) GetPre() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Pre
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) GetRe() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Re
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) GetSuf() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Suf
-}
-
-type UpdateProjectDataCacheProjectsValueType string
-
-const (
-	UpdateProjectDataCacheProjectsValueTypeStr                                                                           UpdateProjectDataCacheProjectsValueType = "str"
-	UpdateProjectDataCacheProjectsValueTypeUpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2 UpdateProjectDataCacheProjectsValueType = "updateProjectDataCache_projects_response_200_ApplicationJSON_responseBody_security_2"
-)
-
-type UpdateProjectDataCacheProjectsValue struct {
-	Str                                                                           *string
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2 *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2
-
-	Type UpdateProjectDataCacheProjectsValueType
-}
-
-func CreateUpdateProjectDataCacheProjectsValueStr(str string) UpdateProjectDataCacheProjectsValue {
-	typ := UpdateProjectDataCacheProjectsValueTypeStr
-
-	return UpdateProjectDataCacheProjectsValue{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheProjectsValueUpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2(updateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2 UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2) UpdateProjectDataCacheProjectsValue {
-	typ := UpdateProjectDataCacheProjectsValueTypeUpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2
-
-	return UpdateProjectDataCacheProjectsValue{
-		UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2: &updateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2,
-		Type: typ,
-	}
-}
-
-func (u *UpdateProjectDataCacheProjectsValue) UnmarshalJSON(data []byte) error {
-
-	var updateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2 UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2 = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2, "", true, true); err == nil {
-		u.UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2 = &updateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2
-		u.Type = UpdateProjectDataCacheProjectsValueTypeUpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2
-		return nil
-	}
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
-		u.Str = &str
-		u.Type = UpdateProjectDataCacheProjectsValueTypeStr
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheProjectsValue", string(data))
-}
-
-func (u UpdateProjectDataCacheProjectsValue) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurity2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type UpdateProjectDataCacheProjectsValue: all fields are null")
-}
-
-type UpdateProjectDataCacheMissing struct {
-	Key   *string                                                                                        `json:"key,omitempty"`
-	Type  UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType `json:"type"`
-	Value *UpdateProjectDataCacheProjectsValue                                                           `json:"value,omitempty"`
-}
-
-func (o *UpdateProjectDataCacheMissing) GetKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Key
-}
-
-func (o *UpdateProjectDataCacheMissing) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodySecurityFirewallRoutesType("")
-	}
-	return o.Type
-}
-
-func (o *UpdateProjectDataCacheMissing) GetValue() *UpdateProjectDataCacheProjectsValue {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
-type UpdateProjectDataCacheAction string
-
-const (
-	UpdateProjectDataCacheActionDeny      UpdateProjectDataCacheAction = "deny"
-	UpdateProjectDataCacheActionChallenge UpdateProjectDataCacheAction = "challenge"
-	UpdateProjectDataCacheActionLog       UpdateProjectDataCacheAction = "log"
-	UpdateProjectDataCacheActionBypass    UpdateProjectDataCacheAction = "bypass"
-	UpdateProjectDataCacheActionRateLimit UpdateProjectDataCacheAction = "rate_limit"
-)
-
-func (e UpdateProjectDataCacheAction) ToPointer() *UpdateProjectDataCacheAction {
-	return &e
-}
-func (e *UpdateProjectDataCacheAction) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "deny":
-		fallthrough
-	case "challenge":
-		fallthrough
-	case "log":
-		fallthrough
-	case "bypass":
-		fallthrough
-	case "rate_limit":
-		*e = UpdateProjectDataCacheAction(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheAction: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheAlgo string
-
-const (
-	UpdateProjectDataCacheAlgoFixedWindow UpdateProjectDataCacheAlgo = "fixed_window"
-	UpdateProjectDataCacheAlgoTokenBucket UpdateProjectDataCacheAlgo = "token_bucket"
-)
-
-func (e UpdateProjectDataCacheAlgo) ToPointer() *UpdateProjectDataCacheAlgo {
-	return &e
-}
-func (e *UpdateProjectDataCacheAlgo) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "fixed_window":
-		fallthrough
-	case "token_bucket":
-		*e = UpdateProjectDataCacheAlgo(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheAlgo: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheErl struct {
-	Algo   UpdateProjectDataCacheAlgo `json:"algo"`
-	Keys   []string                   `json:"keys"`
-	Limit  float64                    `json:"limit"`
-	Window float64                    `json:"window"`
-}
-
-func (o *UpdateProjectDataCacheErl) GetAlgo() UpdateProjectDataCacheAlgo {
-	if o == nil {
-		return UpdateProjectDataCacheAlgo("")
-	}
-	return o.Algo
-}
-
-func (o *UpdateProjectDataCacheErl) GetKeys() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.Keys
-}
-
-func (o *UpdateProjectDataCacheErl) GetLimit() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Limit
-}
-
-func (o *UpdateProjectDataCacheErl) GetWindow() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Window
-}
-
-type UpdateProjectDataCacheMitigate struct {
-	Action UpdateProjectDataCacheAction `json:"action"`
-	Erl    *UpdateProjectDataCacheErl   `json:"erl,omitempty"`
-	RuleID string                       `json:"rule_id"`
-}
-
-func (o *UpdateProjectDataCacheMitigate) GetAction() UpdateProjectDataCacheAction {
-	if o == nil {
-		return UpdateProjectDataCacheAction("")
-	}
-	return o.Action
-}
-
-func (o *UpdateProjectDataCacheMitigate) GetErl() *UpdateProjectDataCacheErl {
-	if o == nil {
-		return nil
-	}
-	return o.Erl
-}
-
-func (o *UpdateProjectDataCacheMitigate) GetRuleID() string {
-	if o == nil {
-		return ""
-	}
-	return o.RuleID
-}
-
-type UpdateProjectDataCacheProjectsResponse200ApplicationJSON2 struct {
-	Eq   *string  `json:"eq,omitempty"`
-	Gt   *float64 `json:"gt,omitempty"`
-	Gte  *float64 `json:"gte,omitempty"`
-	Inc  []string `json:"inc,omitempty"`
-	Lt   *float64 `json:"lt,omitempty"`
-	Lte  *float64 `json:"lte,omitempty"`
-	Neq  *string  `json:"neq,omitempty"`
-	Ninc []string `json:"ninc,omitempty"`
-	Pre  *string  `json:"pre,omitempty"`
-	Re   *string  `json:"re,omitempty"`
-	Suf  *string  `json:"suf,omitempty"`
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) GetEq() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Eq
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) GetGt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Gt
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) GetGte() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Gte
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) GetInc() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Inc
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) GetLt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Lt
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) GetLte() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Lte
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) GetNeq() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Neq
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) GetNinc() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Ninc
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) GetPre() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Pre
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) GetRe() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Re
-}
-
-func (o *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) GetSuf() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Suf
-}
-
-type UpdateProjectDataCacheSrcType string
-
-const (
-	UpdateProjectDataCacheSrcTypeStr                                                       UpdateProjectDataCacheSrcType = "str"
-	UpdateProjectDataCacheSrcTypeUpdateProjectDataCacheProjectsResponse200ApplicationJSON2 UpdateProjectDataCacheSrcType = "updateProjectDataCache_projects_response_200_ApplicationJSON_2"
-)
-
-type UpdateProjectDataCacheSrc struct {
-	Str                                                       *string
-	UpdateProjectDataCacheProjectsResponse200ApplicationJSON2 *UpdateProjectDataCacheProjectsResponse200ApplicationJSON2
-
-	Type UpdateProjectDataCacheSrcType
-}
-
-func CreateUpdateProjectDataCacheSrcStr(str string) UpdateProjectDataCacheSrc {
-	typ := UpdateProjectDataCacheSrcTypeStr
-
-	return UpdateProjectDataCacheSrc{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheSrcUpdateProjectDataCacheProjectsResponse200ApplicationJSON2(updateProjectDataCacheProjectsResponse200ApplicationJSON2 UpdateProjectDataCacheProjectsResponse200ApplicationJSON2) UpdateProjectDataCacheSrc {
-	typ := UpdateProjectDataCacheSrcTypeUpdateProjectDataCacheProjectsResponse200ApplicationJSON2
-
-	return UpdateProjectDataCacheSrc{
-		UpdateProjectDataCacheProjectsResponse200ApplicationJSON2: &updateProjectDataCacheProjectsResponse200ApplicationJSON2,
-		Type: typ,
-	}
-}
-
-func (u *UpdateProjectDataCacheSrc) UnmarshalJSON(data []byte) error {
-
-	var updateProjectDataCacheProjectsResponse200ApplicationJSON2 UpdateProjectDataCacheProjectsResponse200ApplicationJSON2 = UpdateProjectDataCacheProjectsResponse200ApplicationJSON2{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheProjectsResponse200ApplicationJSON2, "", true, true); err == nil {
-		u.UpdateProjectDataCacheProjectsResponse200ApplicationJSON2 = &updateProjectDataCacheProjectsResponse200ApplicationJSON2
-		u.Type = UpdateProjectDataCacheSrcTypeUpdateProjectDataCacheProjectsResponse200ApplicationJSON2
-		return nil
-	}
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
-		u.Str = &str
-		u.Type = UpdateProjectDataCacheSrcTypeStr
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheSrc", string(data))
-}
-
-func (u UpdateProjectDataCacheSrc) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.UpdateProjectDataCacheProjectsResponse200ApplicationJSON2 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCacheProjectsResponse200ApplicationJSON2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type UpdateProjectDataCacheSrc: all fields are null")
-}
-
-type UpdateProjectDataCacheFirewallRoutes struct {
-	Dest     *string                         `json:"dest,omitempty"`
-	Handle   *UpdateProjectDataCacheHandle   `json:"handle,omitempty"`
-	Has      []UpdateProjectDataCacheHas     `json:"has,omitempty"`
-	Missing  []UpdateProjectDataCacheMissing `json:"missing,omitempty"`
-	Mitigate *UpdateProjectDataCacheMitigate `json:"mitigate,omitempty"`
-	Src      *UpdateProjectDataCacheSrc      `json:"src,omitempty"`
-	Status   *float64                        `json:"status,omitempty"`
-}
-
-func (o *UpdateProjectDataCacheFirewallRoutes) GetDest() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Dest
-}
-
-func (o *UpdateProjectDataCacheFirewallRoutes) GetHandle() *UpdateProjectDataCacheHandle {
-	if o == nil {
-		return nil
-	}
-	return o.Handle
-}
-
-func (o *UpdateProjectDataCacheFirewallRoutes) GetHas() []UpdateProjectDataCacheHas {
-	if o == nil {
-		return nil
-	}
-	return o.Has
-}
-
-func (o *UpdateProjectDataCacheFirewallRoutes) GetMissing() []UpdateProjectDataCacheMissing {
-	if o == nil {
-		return nil
-	}
-	return o.Missing
-}
-
-func (o *UpdateProjectDataCacheFirewallRoutes) GetMitigate() *UpdateProjectDataCacheMitigate {
-	if o == nil {
-		return nil
-	}
-	return o.Mitigate
-}
-
-func (o *UpdateProjectDataCacheFirewallRoutes) GetSrc() *UpdateProjectDataCacheSrc {
-	if o == nil {
-		return nil
-	}
-	return o.Src
-}
-
-func (o *UpdateProjectDataCacheFirewallRoutes) GetStatus() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Status
-}
-
-type UpdateProjectDataCacheSecurity struct {
-	AttackModeActiveUntil  *float64                               `json:"attackModeActiveUntil,omitempty"`
-	AttackModeEnabled      *bool                                  `json:"attackModeEnabled,omitempty"`
-	AttackModeUpdatedAt    *float64                               `json:"attackModeUpdatedAt,omitempty"`
-	FirewallConfigVersion  *float64                               `json:"firewallConfigVersion,omitempty"`
-	FirewallEnabled        *bool                                  `json:"firewallEnabled,omitempty"`
-	FirewallRoutes         []UpdateProjectDataCacheFirewallRoutes `json:"firewallRoutes,omitempty"`
-	FirewallSeawallEnabled *bool                                  `json:"firewallSeawallEnabled,omitempty"`
-	FirewallUpdatedAt      *float64                               `json:"firewallUpdatedAt,omitempty"`
-	Ja3Enabled             *bool                                  `json:"ja3Enabled,omitempty"`
-	Ja4Enabled             *bool                                  `json:"ja4Enabled,omitempty"`
-}
-
-func (o *UpdateProjectDataCacheSecurity) GetAttackModeActiveUntil() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.AttackModeActiveUntil
-}
-
-func (o *UpdateProjectDataCacheSecurity) GetAttackModeEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.AttackModeEnabled
-}
-
-func (o *UpdateProjectDataCacheSecurity) GetAttackModeUpdatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.AttackModeUpdatedAt
-}
-
-func (o *UpdateProjectDataCacheSecurity) GetFirewallConfigVersion() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.FirewallConfigVersion
-}
-
-func (o *UpdateProjectDataCacheSecurity) GetFirewallEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.FirewallEnabled
-}
-
-func (o *UpdateProjectDataCacheSecurity) GetFirewallRoutes() []UpdateProjectDataCacheFirewallRoutes {
-	if o == nil {
-		return nil
-	}
-	return o.FirewallRoutes
-}
-
-func (o *UpdateProjectDataCacheSecurity) GetFirewallSeawallEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.FirewallSeawallEnabled
-}
-
-func (o *UpdateProjectDataCacheSecurity) GetFirewallUpdatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.FirewallUpdatedAt
-}
-
-func (o *UpdateProjectDataCacheSecurity) GetJa3Enabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Ja3Enabled
-}
-
-func (o *UpdateProjectDataCacheSecurity) GetJa4Enabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Ja4Enabled
-}
-
-type UpdateProjectDataCacheSpeedInsights struct {
-	CanceledAt *float64 `json:"canceledAt,omitempty"`
-	DisabledAt *float64 `json:"disabledAt,omitempty"`
-	EnabledAt  *float64 `json:"enabledAt,omitempty"`
-	HasData    *bool    `json:"hasData,omitempty"`
-	ID         string   `json:"id"`
-	PaidAt     *float64 `json:"paidAt,omitempty"`
-}
-
-func (o *UpdateProjectDataCacheSpeedInsights) GetCanceledAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CanceledAt
-}
-
-func (o *UpdateProjectDataCacheSpeedInsights) GetDisabledAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.DisabledAt
-}
-
-func (o *UpdateProjectDataCacheSpeedInsights) GetEnabledAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.EnabledAt
-}
-
-func (o *UpdateProjectDataCacheSpeedInsights) GetHasData() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.HasData
-}
-
-func (o *UpdateProjectDataCacheSpeedInsights) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *UpdateProjectDataCacheSpeedInsights) GetPaidAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.PaidAt
 }
 
 type UpdateProjectDataCacheDeploymentType string
@@ -5444,58 +3025,58 @@ func (o *UpdateProjectDataCacheSsoProtection) GetDeploymentType() UpdateProjectD
 	return o.DeploymentType
 }
 
-type UpdateProjectDataCacheTargetsType string
+type TargetsType string
 
 const (
-	UpdateProjectDataCacheTargetsTypeStr        UpdateProjectDataCacheTargetsType = "str"
-	UpdateProjectDataCacheTargetsTypeArrayOfStr UpdateProjectDataCacheTargetsType = "arrayOfStr"
+	TargetsTypeStr        TargetsType = "str"
+	TargetsTypeArrayOfStr TargetsType = "arrayOfStr"
 )
 
-type UpdateProjectDataCacheTargets struct {
+type Targets struct {
 	Str        *string
 	ArrayOfStr []string
 
-	Type UpdateProjectDataCacheTargetsType
+	Type TargetsType
 }
 
-func CreateUpdateProjectDataCacheTargetsStr(str string) UpdateProjectDataCacheTargets {
-	typ := UpdateProjectDataCacheTargetsTypeStr
+func CreateTargetsStr(str string) Targets {
+	typ := TargetsTypeStr
 
-	return UpdateProjectDataCacheTargets{
+	return Targets{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateUpdateProjectDataCacheTargetsArrayOfStr(arrayOfStr []string) UpdateProjectDataCacheTargets {
-	typ := UpdateProjectDataCacheTargetsTypeArrayOfStr
+func CreateTargetsArrayOfStr(arrayOfStr []string) Targets {
+	typ := TargetsTypeArrayOfStr
 
-	return UpdateProjectDataCacheTargets{
+	return Targets{
 		ArrayOfStr: arrayOfStr,
 		Type:       typ,
 	}
 }
 
-func (u *UpdateProjectDataCacheTargets) UnmarshalJSON(data []byte) error {
+func (u *Targets) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = UpdateProjectDataCacheTargetsTypeStr
+		u.Type = TargetsTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
 	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
 		u.ArrayOfStr = arrayOfStr
-		u.Type = UpdateProjectDataCacheTargetsTypeArrayOfStr
+		u.Type = TargetsTypeArrayOfStr
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheTargets", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Targets", string(data))
 }
 
-func (u UpdateProjectDataCacheTargets) MarshalJSON() ([]byte, error) {
+func (u Targets) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -5504,22 +3085,1502 @@ func (u UpdateProjectDataCacheTargets) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArrayOfStr, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type UpdateProjectDataCacheTargets: all fields are null")
+	return nil, errors.New("could not marshal union type Targets: all fields are null")
 }
 
-type UpdateProjectDataCacheProjectsDeploymentType string
+type Permissions struct {
+	AccessGroup                              []shared.ACLAction `json:"accessGroup,omitempty"`
+	AliasGlobal                              []shared.ACLAction `json:"aliasGlobal,omitempty"`
+	AnalyticsSampling                        []shared.ACLAction `json:"analyticsSampling,omitempty"`
+	AnalyticsUsage                           []shared.ACLAction `json:"analyticsUsage,omitempty"`
+	AuditLog                                 []shared.ACLAction `json:"auditLog,omitempty"`
+	BillingAddress                           []shared.ACLAction `json:"billingAddress,omitempty"`
+	BillingInformation                       []shared.ACLAction `json:"billingInformation,omitempty"`
+	BillingInvoice                           []shared.ACLAction `json:"billingInvoice,omitempty"`
+	BillingInvoiceEmailRecipient             []shared.ACLAction `json:"billingInvoiceEmailRecipient,omitempty"`
+	BillingInvoiceLanguage                   []shared.ACLAction `json:"billingInvoiceLanguage,omitempty"`
+	BillingPlan                              []shared.ACLAction `json:"billingPlan,omitempty"`
+	BillingPurchaseOrder                     []shared.ACLAction `json:"billingPurchaseOrder,omitempty"`
+	BillingTaxID                             []shared.ACLAction `json:"billingTaxId,omitempty"`
+	Blob                                     []shared.ACLAction `json:"blob,omitempty"`
+	Budget                                   []shared.ACLAction `json:"budget,omitempty"`
+	CacheArtifact                            []shared.ACLAction `json:"cacheArtifact,omitempty"`
+	CacheArtifactUsageEvent                  []shared.ACLAction `json:"cacheArtifactUsageEvent,omitempty"`
+	CodeChecks                               []shared.ACLAction `json:"codeChecks,omitempty"`
+	ConcurrentBuilds                         []shared.ACLAction `json:"concurrentBuilds,omitempty"`
+	Connect                                  []shared.ACLAction `json:"connect,omitempty"`
+	ConnectConfiguration                     []shared.ACLAction `json:"connectConfiguration,omitempty"`
+	Domain                                   []shared.ACLAction `json:"domain,omitempty"`
+	DomainAcceptDelegation                   []shared.ACLAction `json:"domainAcceptDelegation,omitempty"`
+	DomainAuthCodes                          []shared.ACLAction `json:"domainAuthCodes,omitempty"`
+	DomainCertificate                        []shared.ACLAction `json:"domainCertificate,omitempty"`
+	DomainCheckConfig                        []shared.ACLAction `json:"domainCheckConfig,omitempty"`
+	DomainMove                               []shared.ACLAction `json:"domainMove,omitempty"`
+	DomainPurchase                           []shared.ACLAction `json:"domainPurchase,omitempty"`
+	DomainRecord                             []shared.ACLAction `json:"domainRecord,omitempty"`
+	DomainTransferIn                         []shared.ACLAction `json:"domainTransferIn,omitempty"`
+	Event                                    []shared.ACLAction `json:"event,omitempty"`
+	OwnEvent                                 []shared.ACLAction `json:"ownEvent,omitempty"`
+	SensitiveEnvironmentVariablePolicy       []shared.ACLAction `json:"sensitiveEnvironmentVariablePolicy,omitempty"`
+	FileUpload                               []shared.ACLAction `json:"fileUpload,omitempty"`
+	GitRepository                            []shared.ACLAction `json:"gitRepository,omitempty"`
+	IPBlocking                               []shared.ACLAction `json:"ipBlocking,omitempty"`
+	Integration                              []shared.ACLAction `json:"integration,omitempty"`
+	IntegrationConfiguration                 []shared.ACLAction `json:"integrationConfiguration,omitempty"`
+	IntegrationConfigurationTransfer         []shared.ACLAction `json:"integrationConfigurationTransfer,omitempty"`
+	IntegrationConfigurationProjects         []shared.ACLAction `json:"integrationConfigurationProjects,omitempty"`
+	IntegrationVercelConfigurationOverride   []shared.ACLAction `json:"integrationVercelConfigurationOverride,omitempty"`
+	IntegrationStore                         []shared.ACLAction `json:"integrationStore,omitempty"`
+	IntegrationEvent                         []shared.ACLAction `json:"integrationEvent,omitempty"`
+	IntegrationResourceSecrets               []shared.ACLAction `json:"integrationResourceSecrets,omitempty"`
+	MarketplaceBillingData                   []shared.ACLAction `json:"marketplaceBillingData,omitempty"`
+	JobGlobal                                []shared.ACLAction `json:"jobGlobal,omitempty"`
+	LogDrain                                 []shared.ACLAction `json:"logDrain,omitempty"`
+	Monitoring                               []shared.ACLAction `json:"Monitoring,omitempty"`
+	MonitoringSettings                       []shared.ACLAction `json:"monitoringSettings,omitempty"`
+	MonitoringQuery                          []shared.ACLAction `json:"monitoringQuery,omitempty"`
+	MonitoringChart                          []shared.ACLAction `json:"monitoringChart,omitempty"`
+	MonitoringAlert                          []shared.ACLAction `json:"monitoringAlert,omitempty"`
+	NotificationDeploymentFailed             []shared.ACLAction `json:"notificationDeploymentFailed,omitempty"`
+	NotificationDomainConfiguration          []shared.ACLAction `json:"notificationDomainConfiguration,omitempty"`
+	NotificationDomainExpire                 []shared.ACLAction `json:"notificationDomainExpire,omitempty"`
+	NotificationDomainMoved                  []shared.ACLAction `json:"notificationDomainMoved,omitempty"`
+	NotificationDomainPurchase               []shared.ACLAction `json:"notificationDomainPurchase,omitempty"`
+	NotificationDomainRenewal                []shared.ACLAction `json:"notificationDomainRenewal,omitempty"`
+	NotificationDomainTransfer               []shared.ACLAction `json:"notificationDomainTransfer,omitempty"`
+	NotificationDomainUnverified             []shared.ACLAction `json:"notificationDomainUnverified,omitempty"`
+	NotificationMonitoringAlert              []shared.ACLAction `json:"NotificationMonitoringAlert,omitempty"`
+	NotificationPaymentFailed                []shared.ACLAction `json:"notificationPaymentFailed,omitempty"`
+	NotificationUsageAlert                   []shared.ACLAction `json:"notificationUsageAlert,omitempty"`
+	NotificationCustomerBudget               []shared.ACLAction `json:"notificationCustomerBudget,omitempty"`
+	NotificationStatementOfReasons           []shared.ACLAction `json:"notificationStatementOfReasons,omitempty"`
+	Oauth2Connection                         []shared.ACLAction `json:"oauth2Connection,omitempty"`
+	OpenTelemetryEndpoint                    []shared.ACLAction `json:"openTelemetryEndpoint,omitempty"`
+	PaymentMethod                            []shared.ACLAction `json:"paymentMethod,omitempty"`
+	Permissions                              []shared.ACLAction `json:"permissions,omitempty"`
+	Postgres                                 []shared.ACLAction `json:"postgres,omitempty"`
+	PreviewDeploymentSuffix                  []shared.ACLAction `json:"previewDeploymentSuffix,omitempty"`
+	ProTrialOnboarding                       []shared.ACLAction `json:"proTrialOnboarding,omitempty"`
+	SeawallConfig                            []shared.ACLAction `json:"seawallConfig,omitempty"`
+	SharedEnvVars                            []shared.ACLAction `json:"sharedEnvVars,omitempty"`
+	SharedEnvVarsProduction                  []shared.ACLAction `json:"sharedEnvVarsProduction,omitempty"`
+	Space                                    []shared.ACLAction `json:"space,omitempty"`
+	SpaceRun                                 []shared.ACLAction `json:"spaceRun,omitempty"`
+	PasswordProtectionInvoiceItem            []shared.ACLAction `json:"passwordProtectionInvoiceItem,omitempty"`
+	RateLimit                                []shared.ACLAction `json:"rateLimit,omitempty"`
+	Redis                                    []shared.ACLAction `json:"redis,omitempty"`
+	Repository                               []shared.ACLAction `json:"repository,omitempty"`
+	RemoteCaching                            []shared.ACLAction `json:"remoteCaching,omitempty"`
+	SamlConfig                               []shared.ACLAction `json:"samlConfig,omitempty"`
+	Secret                                   []shared.ACLAction `json:"secret,omitempty"`
+	RedisStoreTokenSet                       []shared.ACLAction `json:"redisStoreTokenSet,omitempty"`
+	BlobStoreTokenSet                        []shared.ACLAction `json:"blobStoreTokenSet,omitempty"`
+	PostgresStoreTokenSet                    []shared.ACLAction `json:"postgresStoreTokenSet,omitempty"`
+	IntegrationStoreTokenSet                 []shared.ACLAction `json:"integrationStoreTokenSet,omitempty"`
+	SupportCase                              []shared.ACLAction `json:"supportCase,omitempty"`
+	SupportCaseComment                       []shared.ACLAction `json:"supportCaseComment,omitempty"`
+	DataCacheBillingSettings                 []shared.ACLAction `json:"dataCacheBillingSettings,omitempty"`
+	Team                                     []shared.ACLAction `json:"team,omitempty"`
+	TeamAccessRequest                        []shared.ACLAction `json:"teamAccessRequest,omitempty"`
+	TeamFellowMembership                     []shared.ACLAction `json:"teamFellowMembership,omitempty"`
+	TeamInvite                               []shared.ACLAction `json:"teamInvite,omitempty"`
+	TeamInviteCode                           []shared.ACLAction `json:"teamInviteCode,omitempty"`
+	TeamJoin                                 []shared.ACLAction `json:"teamJoin,omitempty"`
+	TeamOwnMembership                        []shared.ACLAction `json:"teamOwnMembership,omitempty"`
+	TeamOwnMembershipDisconnectSAML          []shared.ACLAction `json:"teamOwnMembershipDisconnectSAML,omitempty"`
+	Token                                    []shared.ACLAction `json:"token,omitempty"`
+	Usage                                    []shared.ACLAction `json:"usage,omitempty"`
+	UsageCycle                               []shared.ACLAction `json:"usageCycle,omitempty"`
+	User                                     []shared.ACLAction `json:"user,omitempty"`
+	UserConnection                           []shared.ACLAction `json:"userConnection,omitempty"`
+	WebAnalyticsPlan                         []shared.ACLAction `json:"webAnalyticsPlan,omitempty"`
+	WebAuthn                                 []shared.ACLAction `json:"webAuthn,omitempty"`
+	EdgeConfig                               []shared.ACLAction `json:"edgeConfig,omitempty"`
+	EdgeConfigItem                           []shared.ACLAction `json:"edgeConfigItem,omitempty"`
+	EdgeConfigSchema                         []shared.ACLAction `json:"edgeConfigSchema,omitempty"`
+	EdgeConfigToken                          []shared.ACLAction `json:"edgeConfigToken,omitempty"`
+	Webhook                                  []shared.ACLAction `json:"webhook,omitempty"`
+	WebhookEvent                             []shared.ACLAction `json:"webhook-event,omitempty"`
+	EndpointVerification                     []shared.ACLAction `json:"endpointVerification,omitempty"`
+	ProjectTransferIn                        []shared.ACLAction `json:"projectTransferIn,omitempty"`
+	Oauth2Application                        []shared.ACLAction `json:"oauth2Application,omitempty"`
+	AliasProject                             []shared.ACLAction `json:"aliasProject,omitempty"`
+	AliasProtectionBypass                    []shared.ACLAction `json:"aliasProtectionBypass,omitempty"`
+	ProductionAliasProtectionBypass          []shared.ACLAction `json:"productionAliasProtectionBypass,omitempty"`
+	ConnectConfigurationLink                 []shared.ACLAction `json:"connectConfigurationLink,omitempty"`
+	DataCacheNamespace                       []shared.ACLAction `json:"dataCacheNamespace,omitempty"`
+	Deployment                               []shared.ACLAction `json:"deployment,omitempty"`
+	DeploymentCheck                          []shared.ACLAction `json:"deploymentCheck,omitempty"`
+	DeploymentCheckPreview                   []shared.ACLAction `json:"deploymentCheckPreview,omitempty"`
+	DeploymentCheckReRunFromProductionBranch []shared.ACLAction `json:"deploymentCheckReRunFromProductionBranch,omitempty"`
+	DeploymentProductionGit                  []shared.ACLAction `json:"deploymentProductionGit,omitempty"`
+	DeploymentPreview                        []shared.ACLAction `json:"deploymentPreview,omitempty"`
+	DeploymentPrivate                        []shared.ACLAction `json:"deploymentPrivate,omitempty"`
+	DeploymentPromote                        []shared.ACLAction `json:"deploymentPromote,omitempty"`
+	DeploymentRollback                       []shared.ACLAction `json:"deploymentRollback,omitempty"`
+	Environments                             []shared.ACLAction `json:"environments,omitempty"`
+	Logs                                     []shared.ACLAction `json:"logs,omitempty"`
+	LogsPreset                               []shared.ACLAction `json:"logsPreset,omitempty"`
+	PasswordProtection                       []shared.ACLAction `json:"passwordProtection,omitempty"`
+	OptionsAllowlist                         []shared.ACLAction `json:"optionsAllowlist,omitempty"`
+	Job                                      []shared.ACLAction `json:"job,omitempty"`
+	Project                                  []shared.ACLAction `json:"project,omitempty"`
+	ProjectAccessGroup                       []shared.ACLAction `json:"projectAccessGroup,omitempty"`
+	ProjectAnalyticsSampling                 []shared.ACLAction `json:"projectAnalyticsSampling,omitempty"`
+	ProjectDeploymentHook                    []shared.ACLAction `json:"projectDeploymentHook,omitempty"`
+	ProjectDomain                            []shared.ACLAction `json:"projectDomain,omitempty"`
+	ProjectDomainMove                        []shared.ACLAction `json:"projectDomainMove,omitempty"`
+	ProjectDomainCheckConfig                 []shared.ACLAction `json:"projectDomainCheckConfig,omitempty"`
+	ProjectEnvVars                           []shared.ACLAction `json:"projectEnvVars,omitempty"`
+	ProjectEnvVarsProduction                 []shared.ACLAction `json:"projectEnvVarsProduction,omitempty"`
+	ProjectEnvVarsUnownedByIntegration       []shared.ACLAction `json:"projectEnvVarsUnownedByIntegration,omitempty"`
+	ProjectID                                []shared.ACLAction `json:"projectId,omitempty"`
+	ProjectIntegrationConfiguration          []shared.ACLAction `json:"projectIntegrationConfiguration,omitempty"`
+	ProjectLink                              []shared.ACLAction `json:"projectLink,omitempty"`
+	ProjectMember                            []shared.ACLAction `json:"projectMember,omitempty"`
+	ProjectMonitoring                        []shared.ACLAction `json:"projectMonitoring,omitempty"`
+	ProjectPermissions                       []shared.ACLAction `json:"projectPermissions,omitempty"`
+	ProjectProductionBranch                  []shared.ACLAction `json:"projectProductionBranch,omitempty"`
+	ProjectTransfer                          []shared.ACLAction `json:"projectTransfer,omitempty"`
+	ProjectTransferOut                       []shared.ACLAction `json:"projectTransferOut,omitempty"`
+	ProjectProtectionBypass                  []shared.ACLAction `json:"projectProtectionBypass,omitempty"`
+	ProjectUsage                             []shared.ACLAction `json:"projectUsage,omitempty"`
+	ProjectAnalyticsUsage                    []shared.ACLAction `json:"projectAnalyticsUsage,omitempty"`
+	ProjectSupportCase                       []shared.ACLAction `json:"projectSupportCase,omitempty"`
+	ProjectSupportCaseComment                []shared.ACLAction `json:"projectSupportCaseComment,omitempty"`
+	ProjectDeploymentExpiration              []shared.ACLAction `json:"projectDeploymentExpiration,omitempty"`
+	SkewProtection                           []shared.ACLAction `json:"skewProtection,omitempty"`
+	Analytics                                []shared.ACLAction `json:"analytics,omitempty"`
+	TrustedIps                               []shared.ACLAction `json:"trustedIps,omitempty"`
+	WebAnalytics                             []shared.ACLAction `json:"webAnalytics,omitempty"`
+	SharedEnvVarConnection                   []shared.ACLAction `json:"sharedEnvVarConnection,omitempty"`
+}
+
+func (o *Permissions) GetAccessGroup() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.AccessGroup
+}
+
+func (o *Permissions) GetAliasGlobal() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.AliasGlobal
+}
+
+func (o *Permissions) GetAnalyticsSampling() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.AnalyticsSampling
+}
+
+func (o *Permissions) GetAnalyticsUsage() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.AnalyticsUsage
+}
+
+func (o *Permissions) GetAuditLog() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.AuditLog
+}
+
+func (o *Permissions) GetBillingAddress() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.BillingAddress
+}
+
+func (o *Permissions) GetBillingInformation() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.BillingInformation
+}
+
+func (o *Permissions) GetBillingInvoice() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.BillingInvoice
+}
+
+func (o *Permissions) GetBillingInvoiceEmailRecipient() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.BillingInvoiceEmailRecipient
+}
+
+func (o *Permissions) GetBillingInvoiceLanguage() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.BillingInvoiceLanguage
+}
+
+func (o *Permissions) GetBillingPlan() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.BillingPlan
+}
+
+func (o *Permissions) GetBillingPurchaseOrder() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.BillingPurchaseOrder
+}
+
+func (o *Permissions) GetBillingTaxID() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.BillingTaxID
+}
+
+func (o *Permissions) GetBlob() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Blob
+}
+
+func (o *Permissions) GetBudget() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Budget
+}
+
+func (o *Permissions) GetCacheArtifact() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.CacheArtifact
+}
+
+func (o *Permissions) GetCacheArtifactUsageEvent() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.CacheArtifactUsageEvent
+}
+
+func (o *Permissions) GetCodeChecks() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.CodeChecks
+}
+
+func (o *Permissions) GetConcurrentBuilds() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ConcurrentBuilds
+}
+
+func (o *Permissions) GetConnect() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Connect
+}
+
+func (o *Permissions) GetConnectConfiguration() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectConfiguration
+}
+
+func (o *Permissions) GetDomain() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
+func (o *Permissions) GetDomainAcceptDelegation() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DomainAcceptDelegation
+}
+
+func (o *Permissions) GetDomainAuthCodes() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DomainAuthCodes
+}
+
+func (o *Permissions) GetDomainCertificate() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DomainCertificate
+}
+
+func (o *Permissions) GetDomainCheckConfig() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DomainCheckConfig
+}
+
+func (o *Permissions) GetDomainMove() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DomainMove
+}
+
+func (o *Permissions) GetDomainPurchase() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DomainPurchase
+}
+
+func (o *Permissions) GetDomainRecord() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DomainRecord
+}
+
+func (o *Permissions) GetDomainTransferIn() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DomainTransferIn
+}
+
+func (o *Permissions) GetEvent() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Event
+}
+
+func (o *Permissions) GetOwnEvent() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.OwnEvent
+}
+
+func (o *Permissions) GetSensitiveEnvironmentVariablePolicy() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.SensitiveEnvironmentVariablePolicy
+}
+
+func (o *Permissions) GetFileUpload() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.FileUpload
+}
+
+func (o *Permissions) GetGitRepository() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.GitRepository
+}
+
+func (o *Permissions) GetIPBlocking() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.IPBlocking
+}
+
+func (o *Permissions) GetIntegration() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Integration
+}
+
+func (o *Permissions) GetIntegrationConfiguration() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.IntegrationConfiguration
+}
+
+func (o *Permissions) GetIntegrationConfigurationTransfer() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.IntegrationConfigurationTransfer
+}
+
+func (o *Permissions) GetIntegrationConfigurationProjects() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.IntegrationConfigurationProjects
+}
+
+func (o *Permissions) GetIntegrationVercelConfigurationOverride() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.IntegrationVercelConfigurationOverride
+}
+
+func (o *Permissions) GetIntegrationStore() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.IntegrationStore
+}
+
+func (o *Permissions) GetIntegrationEvent() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.IntegrationEvent
+}
+
+func (o *Permissions) GetIntegrationResourceSecrets() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.IntegrationResourceSecrets
+}
+
+func (o *Permissions) GetMarketplaceBillingData() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.MarketplaceBillingData
+}
+
+func (o *Permissions) GetJobGlobal() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.JobGlobal
+}
+
+func (o *Permissions) GetLogDrain() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.LogDrain
+}
+
+func (o *Permissions) GetMonitoring() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Monitoring
+}
+
+func (o *Permissions) GetMonitoringSettings() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.MonitoringSettings
+}
+
+func (o *Permissions) GetMonitoringQuery() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.MonitoringQuery
+}
+
+func (o *Permissions) GetMonitoringChart() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.MonitoringChart
+}
+
+func (o *Permissions) GetMonitoringAlert() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.MonitoringAlert
+}
+
+func (o *Permissions) GetNotificationDeploymentFailed() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationDeploymentFailed
+}
+
+func (o *Permissions) GetNotificationDomainConfiguration() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationDomainConfiguration
+}
+
+func (o *Permissions) GetNotificationDomainExpire() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationDomainExpire
+}
+
+func (o *Permissions) GetNotificationDomainMoved() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationDomainMoved
+}
+
+func (o *Permissions) GetNotificationDomainPurchase() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationDomainPurchase
+}
+
+func (o *Permissions) GetNotificationDomainRenewal() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationDomainRenewal
+}
+
+func (o *Permissions) GetNotificationDomainTransfer() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationDomainTransfer
+}
+
+func (o *Permissions) GetNotificationDomainUnverified() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationDomainUnverified
+}
+
+func (o *Permissions) GetNotificationMonitoringAlert() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationMonitoringAlert
+}
+
+func (o *Permissions) GetNotificationPaymentFailed() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationPaymentFailed
+}
+
+func (o *Permissions) GetNotificationUsageAlert() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationUsageAlert
+}
+
+func (o *Permissions) GetNotificationCustomerBudget() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationCustomerBudget
+}
+
+func (o *Permissions) GetNotificationStatementOfReasons() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationStatementOfReasons
+}
+
+func (o *Permissions) GetOauth2Connection() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Oauth2Connection
+}
+
+func (o *Permissions) GetOpenTelemetryEndpoint() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.OpenTelemetryEndpoint
+}
+
+func (o *Permissions) GetPaymentMethod() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.PaymentMethod
+}
+
+func (o *Permissions) GetPermissions() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Permissions
+}
+
+func (o *Permissions) GetPostgres() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Postgres
+}
+
+func (o *Permissions) GetPreviewDeploymentSuffix() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.PreviewDeploymentSuffix
+}
+
+func (o *Permissions) GetProTrialOnboarding() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProTrialOnboarding
+}
+
+func (o *Permissions) GetSeawallConfig() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.SeawallConfig
+}
+
+func (o *Permissions) GetSharedEnvVars() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.SharedEnvVars
+}
+
+func (o *Permissions) GetSharedEnvVarsProduction() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.SharedEnvVarsProduction
+}
+
+func (o *Permissions) GetSpace() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Space
+}
+
+func (o *Permissions) GetSpaceRun() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.SpaceRun
+}
+
+func (o *Permissions) GetPasswordProtectionInvoiceItem() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.PasswordProtectionInvoiceItem
+}
+
+func (o *Permissions) GetRateLimit() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.RateLimit
+}
+
+func (o *Permissions) GetRedis() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Redis
+}
+
+func (o *Permissions) GetRepository() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Repository
+}
+
+func (o *Permissions) GetRemoteCaching() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.RemoteCaching
+}
+
+func (o *Permissions) GetSamlConfig() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.SamlConfig
+}
+
+func (o *Permissions) GetSecret() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Secret
+}
+
+func (o *Permissions) GetRedisStoreTokenSet() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.RedisStoreTokenSet
+}
+
+func (o *Permissions) GetBlobStoreTokenSet() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.BlobStoreTokenSet
+}
+
+func (o *Permissions) GetPostgresStoreTokenSet() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.PostgresStoreTokenSet
+}
+
+func (o *Permissions) GetIntegrationStoreTokenSet() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.IntegrationStoreTokenSet
+}
+
+func (o *Permissions) GetSupportCase() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.SupportCase
+}
+
+func (o *Permissions) GetSupportCaseComment() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.SupportCaseComment
+}
+
+func (o *Permissions) GetDataCacheBillingSettings() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DataCacheBillingSettings
+}
+
+func (o *Permissions) GetTeam() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Team
+}
+
+func (o *Permissions) GetTeamAccessRequest() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.TeamAccessRequest
+}
+
+func (o *Permissions) GetTeamFellowMembership() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.TeamFellowMembership
+}
+
+func (o *Permissions) GetTeamInvite() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.TeamInvite
+}
+
+func (o *Permissions) GetTeamInviteCode() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.TeamInviteCode
+}
+
+func (o *Permissions) GetTeamJoin() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.TeamJoin
+}
+
+func (o *Permissions) GetTeamOwnMembership() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.TeamOwnMembership
+}
+
+func (o *Permissions) GetTeamOwnMembershipDisconnectSAML() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.TeamOwnMembershipDisconnectSAML
+}
+
+func (o *Permissions) GetToken() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Token
+}
+
+func (o *Permissions) GetUsage() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Usage
+}
+
+func (o *Permissions) GetUsageCycle() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.UsageCycle
+}
+
+func (o *Permissions) GetUser() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.User
+}
+
+func (o *Permissions) GetUserConnection() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.UserConnection
+}
+
+func (o *Permissions) GetWebAnalyticsPlan() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.WebAnalyticsPlan
+}
+
+func (o *Permissions) GetWebAuthn() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.WebAuthn
+}
+
+func (o *Permissions) GetEdgeConfig() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfig
+}
+
+func (o *Permissions) GetEdgeConfigItem() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigItem
+}
+
+func (o *Permissions) GetEdgeConfigSchema() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigSchema
+}
+
+func (o *Permissions) GetEdgeConfigToken() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigToken
+}
+
+func (o *Permissions) GetWebhook() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Webhook
+}
+
+func (o *Permissions) GetWebhookEvent() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.WebhookEvent
+}
+
+func (o *Permissions) GetEndpointVerification() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.EndpointVerification
+}
+
+func (o *Permissions) GetProjectTransferIn() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectTransferIn
+}
+
+func (o *Permissions) GetOauth2Application() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Oauth2Application
+}
+
+func (o *Permissions) GetAliasProject() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.AliasProject
+}
+
+func (o *Permissions) GetAliasProtectionBypass() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.AliasProtectionBypass
+}
+
+func (o *Permissions) GetProductionAliasProtectionBypass() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProductionAliasProtectionBypass
+}
+
+func (o *Permissions) GetConnectConfigurationLink() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectConfigurationLink
+}
+
+func (o *Permissions) GetDataCacheNamespace() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DataCacheNamespace
+}
+
+func (o *Permissions) GetDeployment() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Deployment
+}
+
+func (o *Permissions) GetDeploymentCheck() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentCheck
+}
+
+func (o *Permissions) GetDeploymentCheckPreview() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentCheckPreview
+}
+
+func (o *Permissions) GetDeploymentCheckReRunFromProductionBranch() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentCheckReRunFromProductionBranch
+}
+
+func (o *Permissions) GetDeploymentProductionGit() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentProductionGit
+}
+
+func (o *Permissions) GetDeploymentPreview() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentPreview
+}
+
+func (o *Permissions) GetDeploymentPrivate() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentPrivate
+}
+
+func (o *Permissions) GetDeploymentPromote() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentPromote
+}
+
+func (o *Permissions) GetDeploymentRollback() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.DeploymentRollback
+}
+
+func (o *Permissions) GetEnvironments() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Environments
+}
+
+func (o *Permissions) GetLogs() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Logs
+}
+
+func (o *Permissions) GetLogsPreset() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.LogsPreset
+}
+
+func (o *Permissions) GetPasswordProtection() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.PasswordProtection
+}
+
+func (o *Permissions) GetOptionsAllowlist() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.OptionsAllowlist
+}
+
+func (o *Permissions) GetJob() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Job
+}
+
+func (o *Permissions) GetProject() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Project
+}
+
+func (o *Permissions) GetProjectAccessGroup() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectAccessGroup
+}
+
+func (o *Permissions) GetProjectAnalyticsSampling() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectAnalyticsSampling
+}
+
+func (o *Permissions) GetProjectDeploymentHook() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectDeploymentHook
+}
+
+func (o *Permissions) GetProjectDomain() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectDomain
+}
+
+func (o *Permissions) GetProjectDomainMove() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectDomainMove
+}
+
+func (o *Permissions) GetProjectDomainCheckConfig() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectDomainCheckConfig
+}
+
+func (o *Permissions) GetProjectEnvVars() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectEnvVars
+}
+
+func (o *Permissions) GetProjectEnvVarsProduction() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectEnvVarsProduction
+}
+
+func (o *Permissions) GetProjectEnvVarsUnownedByIntegration() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectEnvVarsUnownedByIntegration
+}
+
+func (o *Permissions) GetProjectID() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectID
+}
+
+func (o *Permissions) GetProjectIntegrationConfiguration() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectIntegrationConfiguration
+}
+
+func (o *Permissions) GetProjectLink() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectLink
+}
+
+func (o *Permissions) GetProjectMember() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectMember
+}
+
+func (o *Permissions) GetProjectMonitoring() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectMonitoring
+}
+
+func (o *Permissions) GetProjectPermissions() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectPermissions
+}
+
+func (o *Permissions) GetProjectProductionBranch() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectProductionBranch
+}
+
+func (o *Permissions) GetProjectTransfer() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectTransfer
+}
+
+func (o *Permissions) GetProjectTransferOut() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectTransferOut
+}
+
+func (o *Permissions) GetProjectProtectionBypass() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectProtectionBypass
+}
+
+func (o *Permissions) GetProjectUsage() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectUsage
+}
+
+func (o *Permissions) GetProjectAnalyticsUsage() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectAnalyticsUsage
+}
+
+func (o *Permissions) GetProjectSupportCase() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectSupportCase
+}
+
+func (o *Permissions) GetProjectSupportCaseComment() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectSupportCaseComment
+}
+
+func (o *Permissions) GetProjectDeploymentExpiration() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectDeploymentExpiration
+}
+
+func (o *Permissions) GetSkewProtection() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.SkewProtection
+}
+
+func (o *Permissions) GetAnalytics() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.Analytics
+}
+
+func (o *Permissions) GetTrustedIps() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.TrustedIps
+}
+
+func (o *Permissions) GetWebAnalytics() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.WebAnalytics
+}
+
+func (o *Permissions) GetSharedEnvVarConnection() []shared.ACLAction {
+	if o == nil {
+		return nil
+	}
+	return o.SharedEnvVarConnection
+}
+
+type LastRollbackTarget struct {
+}
+
+type JobStatus string
 
 const (
-	UpdateProjectDataCacheProjectsDeploymentTypeAll                              UpdateProjectDataCacheProjectsDeploymentType = "all"
-	UpdateProjectDataCacheProjectsDeploymentTypePreview                          UpdateProjectDataCacheProjectsDeploymentType = "preview"
-	UpdateProjectDataCacheProjectsDeploymentTypeProdDeploymentUrlsAndAllPreviews UpdateProjectDataCacheProjectsDeploymentType = "prod_deployment_urls_and_all_previews"
-	UpdateProjectDataCacheProjectsDeploymentTypeProduction                       UpdateProjectDataCacheProjectsDeploymentType = "production"
+	JobStatusSucceeded  JobStatus = "succeeded"
+	JobStatusFailed     JobStatus = "failed"
+	JobStatusSkipped    JobStatus = "skipped"
+	JobStatusPending    JobStatus = "pending"
+	JobStatusInProgress JobStatus = "in-progress"
 )
 
-func (e UpdateProjectDataCacheProjectsDeploymentType) ToPointer() *UpdateProjectDataCacheProjectsDeploymentType {
+func (e JobStatus) ToPointer() *JobStatus {
 	return &e
 }
-func (e *UpdateProjectDataCacheProjectsDeploymentType) UnmarshalJSON(data []byte) error {
+func (e *JobStatus) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "succeeded":
+		fallthrough
+	case "failed":
+		fallthrough
+	case "skipped":
+		fallthrough
+	case "pending":
+		fallthrough
+	case "in-progress":
+		*e = JobStatus(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for JobStatus: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheProjectsResponseType string
+
+const (
+	UpdateProjectDataCacheProjectsResponseTypePromote  UpdateProjectDataCacheProjectsResponseType = "promote"
+	UpdateProjectDataCacheProjectsResponseTypeRollback UpdateProjectDataCacheProjectsResponseType = "rollback"
+)
+
+func (e UpdateProjectDataCacheProjectsResponseType) ToPointer() *UpdateProjectDataCacheProjectsResponseType {
+	return &e
+}
+func (e *UpdateProjectDataCacheProjectsResponseType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "promote":
+		fallthrough
+	case "rollback":
+		*e = UpdateProjectDataCacheProjectsResponseType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponseType: %v", v)
+	}
+}
+
+type LastAliasRequest struct {
+	FromDeploymentID string                                     `json:"fromDeploymentId"`
+	ToDeploymentID   string                                     `json:"toDeploymentId"`
+	JobStatus        JobStatus                                  `json:"jobStatus"`
+	RequestedAt      float64                                    `json:"requestedAt"`
+	Type             UpdateProjectDataCacheProjectsResponseType `json:"type"`
+}
+
+func (o *LastAliasRequest) GetFromDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.FromDeploymentID
+}
+
+func (o *LastAliasRequest) GetToDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ToDeploymentID
+}
+
+func (o *LastAliasRequest) GetJobStatus() JobStatus {
+	if o == nil {
+		return JobStatus("")
+	}
+	return o.JobStatus
+}
+
+func (o *LastAliasRequest) GetRequestedAt() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.RequestedAt
+}
+
+func (o *LastAliasRequest) GetType() UpdateProjectDataCacheProjectsResponseType {
+	if o == nil {
+		return UpdateProjectDataCacheProjectsResponseType("")
+	}
+	return o.Type
+}
+
+type Scope string
+
+const (
+	ScopeAutomationBypass Scope = "automation-bypass"
+)
+
+func (e Scope) ToPointer() *Scope {
+	return &e
+}
+func (e *Scope) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "automation-bypass":
+		*e = Scope(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Scope: %v", v)
+	}
+}
+
+type ProtectionBypass struct {
+	CreatedAt float64 `json:"createdAt"`
+	CreatedBy string  `json:"createdBy"`
+	Scope     Scope   `json:"scope"`
+}
+
+func (o *ProtectionBypass) GetCreatedAt() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.CreatedAt
+}
+
+func (o *ProtectionBypass) GetCreatedBy() string {
+	if o == nil {
+		return ""
+	}
+	return o.CreatedBy
+}
+
+func (o *ProtectionBypass) GetScope() Scope {
+	if o == nil {
+		return Scope("")
+	}
+	return o.Scope
+}
+
+type UpdateProjectDataCacheTrustedIpsDeploymentType string
+
+const (
+	UpdateProjectDataCacheTrustedIpsDeploymentTypeAll                              UpdateProjectDataCacheTrustedIpsDeploymentType = "all"
+	UpdateProjectDataCacheTrustedIpsDeploymentTypePreview                          UpdateProjectDataCacheTrustedIpsDeploymentType = "preview"
+	UpdateProjectDataCacheTrustedIpsDeploymentTypeProdDeploymentUrlsAndAllPreviews UpdateProjectDataCacheTrustedIpsDeploymentType = "prod_deployment_urls_and_all_previews"
+	UpdateProjectDataCacheTrustedIpsDeploymentTypeProduction                       UpdateProjectDataCacheTrustedIpsDeploymentType = "production"
+)
+
+func (e UpdateProjectDataCacheTrustedIpsDeploymentType) ToPointer() *UpdateProjectDataCacheTrustedIpsDeploymentType {
+	return &e
+}
+func (e *UpdateProjectDataCacheTrustedIpsDeploymentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -5532,86 +4593,86 @@ func (e *UpdateProjectDataCacheProjectsDeploymentType) UnmarshalJSON(data []byte
 	case "prod_deployment_urls_and_all_previews":
 		fallthrough
 	case "production":
-		*e = UpdateProjectDataCacheProjectsDeploymentType(v)
+		*e = UpdateProjectDataCacheTrustedIpsDeploymentType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsDeploymentType: %v", v)
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheTrustedIpsDeploymentType: %v", v)
 	}
 }
 
-type UpdateProjectDataCacheProjects2 struct {
-	DeploymentType UpdateProjectDataCacheProjectsDeploymentType `json:"deploymentType"`
+type TrustedIps2 struct {
+	DeploymentType UpdateProjectDataCacheTrustedIpsDeploymentType `json:"deploymentType"`
 }
 
-func (o *UpdateProjectDataCacheProjects2) GetDeploymentType() UpdateProjectDataCacheProjectsDeploymentType {
+func (o *TrustedIps2) GetDeploymentType() UpdateProjectDataCacheTrustedIpsDeploymentType {
 	if o == nil {
-		return UpdateProjectDataCacheProjectsDeploymentType("")
+		return UpdateProjectDataCacheTrustedIpsDeploymentType("")
 	}
 	return o.DeploymentType
 }
 
-type UpdateProjectDataCacheAddresses struct {
-	Note  *string `json:"note,omitempty"`
-	Value string  `json:"value"`
-}
+type TrustedIpsDeploymentType string
 
-func (o *UpdateProjectDataCacheAddresses) GetNote() *string {
-	if o == nil {
-		return nil
+const (
+	TrustedIpsDeploymentTypeAll                              TrustedIpsDeploymentType = "all"
+	TrustedIpsDeploymentTypePreview                          TrustedIpsDeploymentType = "preview"
+	TrustedIpsDeploymentTypeProdDeploymentUrlsAndAllPreviews TrustedIpsDeploymentType = "prod_deployment_urls_and_all_previews"
+	TrustedIpsDeploymentTypeProduction                       TrustedIpsDeploymentType = "production"
+)
+
+func (e TrustedIpsDeploymentType) ToPointer() *TrustedIpsDeploymentType {
+	return &e
+}
+func (e *TrustedIpsDeploymentType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return o.Note
+	switch v {
+	case "all":
+		fallthrough
+	case "preview":
+		fallthrough
+	case "prod_deployment_urls_and_all_previews":
+		fallthrough
+	case "production":
+		*e = TrustedIpsDeploymentType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TrustedIpsDeploymentType: %v", v)
+	}
 }
 
-func (o *UpdateProjectDataCacheAddresses) GetValue() string {
+type UpdateProjectDataCacheTrustedIpsAddresses struct {
+	Value string  `json:"value"`
+	Note  *string `json:"note,omitempty"`
+}
+
+func (o *UpdateProjectDataCacheTrustedIpsAddresses) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type UpdateProjectDataCacheProjectsResponseDeploymentType string
-
-const (
-	UpdateProjectDataCacheProjectsResponseDeploymentTypeAll                              UpdateProjectDataCacheProjectsResponseDeploymentType = "all"
-	UpdateProjectDataCacheProjectsResponseDeploymentTypePreview                          UpdateProjectDataCacheProjectsResponseDeploymentType = "preview"
-	UpdateProjectDataCacheProjectsResponseDeploymentTypeProdDeploymentUrlsAndAllPreviews UpdateProjectDataCacheProjectsResponseDeploymentType = "prod_deployment_urls_and_all_previews"
-	UpdateProjectDataCacheProjectsResponseDeploymentTypeProduction                       UpdateProjectDataCacheProjectsResponseDeploymentType = "production"
-)
-
-func (e UpdateProjectDataCacheProjectsResponseDeploymentType) ToPointer() *UpdateProjectDataCacheProjectsResponseDeploymentType {
-	return &e
-}
-func (e *UpdateProjectDataCacheProjectsResponseDeploymentType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "all":
-		fallthrough
-	case "preview":
-		fallthrough
-	case "prod_deployment_urls_and_all_previews":
-		fallthrough
-	case "production":
-		*e = UpdateProjectDataCacheProjectsResponseDeploymentType(v)
+func (o *UpdateProjectDataCacheTrustedIpsAddresses) GetNote() *string {
+	if o == nil {
 		return nil
-	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponseDeploymentType: %v", v)
 	}
+	return o.Note
 }
 
-type UpdateProjectDataCacheProtectionMode string
+type UpdateProjectDataCacheTrustedIpsProtectionMode string
 
 const (
-	UpdateProjectDataCacheProtectionModeAdditional UpdateProjectDataCacheProtectionMode = "additional"
-	UpdateProjectDataCacheProtectionModeExclusive  UpdateProjectDataCacheProtectionMode = "exclusive"
+	UpdateProjectDataCacheTrustedIpsProtectionModeAdditional UpdateProjectDataCacheTrustedIpsProtectionMode = "additional"
+	UpdateProjectDataCacheTrustedIpsProtectionModeExclusive  UpdateProjectDataCacheTrustedIpsProtectionMode = "exclusive"
 )
 
-func (e UpdateProjectDataCacheProtectionMode) ToPointer() *UpdateProjectDataCacheProtectionMode {
+func (e UpdateProjectDataCacheTrustedIpsProtectionMode) ToPointer() *UpdateProjectDataCacheTrustedIpsProtectionMode {
 	return &e
 }
-func (e *UpdateProjectDataCacheProtectionMode) UnmarshalJSON(data []byte) error {
+func (e *UpdateProjectDataCacheTrustedIpsProtectionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -5620,36 +4681,36 @@ func (e *UpdateProjectDataCacheProtectionMode) UnmarshalJSON(data []byte) error 
 	case "additional":
 		fallthrough
 	case "exclusive":
-		*e = UpdateProjectDataCacheProtectionMode(v)
+		*e = UpdateProjectDataCacheTrustedIpsProtectionMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheProtectionMode: %v", v)
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheTrustedIpsProtectionMode: %v", v)
 	}
 }
 
-type UpdateProjectDataCacheProjects1 struct {
-	Addresses      []UpdateProjectDataCacheAddresses                    `json:"addresses"`
-	DeploymentType UpdateProjectDataCacheProjectsResponseDeploymentType `json:"deploymentType"`
-	ProtectionMode UpdateProjectDataCacheProtectionMode                 `json:"protectionMode"`
+type TrustedIps1 struct {
+	DeploymentType TrustedIpsDeploymentType                       `json:"deploymentType"`
+	Addresses      []UpdateProjectDataCacheTrustedIpsAddresses    `json:"addresses"`
+	ProtectionMode UpdateProjectDataCacheTrustedIpsProtectionMode `json:"protectionMode"`
 }
 
-func (o *UpdateProjectDataCacheProjects1) GetAddresses() []UpdateProjectDataCacheAddresses {
+func (o *TrustedIps1) GetDeploymentType() TrustedIpsDeploymentType {
 	if o == nil {
-		return []UpdateProjectDataCacheAddresses{}
-	}
-	return o.Addresses
-}
-
-func (o *UpdateProjectDataCacheProjects1) GetDeploymentType() UpdateProjectDataCacheProjectsResponseDeploymentType {
-	if o == nil {
-		return UpdateProjectDataCacheProjectsResponseDeploymentType("")
+		return TrustedIpsDeploymentType("")
 	}
 	return o.DeploymentType
 }
 
-func (o *UpdateProjectDataCacheProjects1) GetProtectionMode() UpdateProjectDataCacheProtectionMode {
+func (o *TrustedIps1) GetAddresses() []UpdateProjectDataCacheTrustedIpsAddresses {
 	if o == nil {
-		return UpdateProjectDataCacheProtectionMode("")
+		return []UpdateProjectDataCacheTrustedIpsAddresses{}
+	}
+	return o.Addresses
+}
+
+func (o *TrustedIps1) GetProtectionMode() UpdateProjectDataCacheTrustedIpsProtectionMode {
+	if o == nil {
+		return UpdateProjectDataCacheTrustedIpsProtectionMode("")
 	}
 	return o.ProtectionMode
 }
@@ -5657,48 +4718,48 @@ func (o *UpdateProjectDataCacheProjects1) GetProtectionMode() UpdateProjectDataC
 type UpdateProjectDataCacheTrustedIpsType string
 
 const (
-	UpdateProjectDataCacheTrustedIpsTypeUpdateProjectDataCacheProjects1 UpdateProjectDataCacheTrustedIpsType = "updateProjectDataCache_projects_1"
-	UpdateProjectDataCacheTrustedIpsTypeUpdateProjectDataCacheProjects2 UpdateProjectDataCacheTrustedIpsType = "updateProjectDataCache_projects_2"
+	UpdateProjectDataCacheTrustedIpsTypeTrustedIps1 UpdateProjectDataCacheTrustedIpsType = "trustedIps_1"
+	UpdateProjectDataCacheTrustedIpsTypeTrustedIps2 UpdateProjectDataCacheTrustedIpsType = "trustedIps_2"
 )
 
 type UpdateProjectDataCacheTrustedIps struct {
-	UpdateProjectDataCacheProjects1 *UpdateProjectDataCacheProjects1
-	UpdateProjectDataCacheProjects2 *UpdateProjectDataCacheProjects2
+	TrustedIps1 *TrustedIps1
+	TrustedIps2 *TrustedIps2
 
 	Type UpdateProjectDataCacheTrustedIpsType
 }
 
-func CreateUpdateProjectDataCacheTrustedIpsUpdateProjectDataCacheProjects1(updateProjectDataCacheProjects1 UpdateProjectDataCacheProjects1) UpdateProjectDataCacheTrustedIps {
-	typ := UpdateProjectDataCacheTrustedIpsTypeUpdateProjectDataCacheProjects1
+func CreateUpdateProjectDataCacheTrustedIpsTrustedIps1(trustedIps1 TrustedIps1) UpdateProjectDataCacheTrustedIps {
+	typ := UpdateProjectDataCacheTrustedIpsTypeTrustedIps1
 
 	return UpdateProjectDataCacheTrustedIps{
-		UpdateProjectDataCacheProjects1: &updateProjectDataCacheProjects1,
-		Type:                            typ,
+		TrustedIps1: &trustedIps1,
+		Type:        typ,
 	}
 }
 
-func CreateUpdateProjectDataCacheTrustedIpsUpdateProjectDataCacheProjects2(updateProjectDataCacheProjects2 UpdateProjectDataCacheProjects2) UpdateProjectDataCacheTrustedIps {
-	typ := UpdateProjectDataCacheTrustedIpsTypeUpdateProjectDataCacheProjects2
+func CreateUpdateProjectDataCacheTrustedIpsTrustedIps2(trustedIps2 TrustedIps2) UpdateProjectDataCacheTrustedIps {
+	typ := UpdateProjectDataCacheTrustedIpsTypeTrustedIps2
 
 	return UpdateProjectDataCacheTrustedIps{
-		UpdateProjectDataCacheProjects2: &updateProjectDataCacheProjects2,
-		Type:                            typ,
+		TrustedIps2: &trustedIps2,
+		Type:        typ,
 	}
 }
 
 func (u *UpdateProjectDataCacheTrustedIps) UnmarshalJSON(data []byte) error {
 
-	var updateProjectDataCacheProjects2 UpdateProjectDataCacheProjects2 = UpdateProjectDataCacheProjects2{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheProjects2, "", true, true); err == nil {
-		u.UpdateProjectDataCacheProjects2 = &updateProjectDataCacheProjects2
-		u.Type = UpdateProjectDataCacheTrustedIpsTypeUpdateProjectDataCacheProjects2
+	var trustedIps2 TrustedIps2 = TrustedIps2{}
+	if err := utils.UnmarshalJSON(data, &trustedIps2, "", true, true); err == nil {
+		u.TrustedIps2 = &trustedIps2
+		u.Type = UpdateProjectDataCacheTrustedIpsTypeTrustedIps2
 		return nil
 	}
 
-	var updateProjectDataCacheProjects1 UpdateProjectDataCacheProjects1 = UpdateProjectDataCacheProjects1{}
-	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheProjects1, "", true, true); err == nil {
-		u.UpdateProjectDataCacheProjects1 = &updateProjectDataCacheProjects1
-		u.Type = UpdateProjectDataCacheTrustedIpsTypeUpdateProjectDataCacheProjects1
+	var trustedIps1 TrustedIps1 = TrustedIps1{}
+	if err := utils.UnmarshalJSON(data, &trustedIps1, "", true, true); err == nil {
+		u.TrustedIps1 = &trustedIps1
+		u.Type = UpdateProjectDataCacheTrustedIpsTypeTrustedIps1
 		return nil
 	}
 
@@ -5706,122 +4767,1061 @@ func (u *UpdateProjectDataCacheTrustedIps) UnmarshalJSON(data []byte) error {
 }
 
 func (u UpdateProjectDataCacheTrustedIps) MarshalJSON() ([]byte, error) {
-	if u.UpdateProjectDataCacheProjects1 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCacheProjects1, "", true)
+	if u.TrustedIps1 != nil {
+		return utils.MarshalJSON(u.TrustedIps1, "", true)
 	}
 
-	if u.UpdateProjectDataCacheProjects2 != nil {
-		return utils.MarshalJSON(u.UpdateProjectDataCacheProjects2, "", true)
+	if u.TrustedIps2 != nil {
+		return utils.MarshalJSON(u.TrustedIps2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type UpdateProjectDataCacheTrustedIps: all fields are null")
 }
 
-type UpdateProjectDataCacheWebAnalytics struct {
-	CanceledAt *float64 `json:"canceledAt,omitempty"`
+type GitComments struct {
+	// Whether the Vercel bot should comment on PRs
+	OnPullRequest bool `json:"onPullRequest"`
+	// Whether the Vercel bot should comment on commits
+	OnCommit bool `json:"onCommit"`
+}
+
+func (o *GitComments) GetOnPullRequest() bool {
+	if o == nil {
+		return false
+	}
+	return o.OnPullRequest
+}
+
+func (o *GitComments) GetOnCommit() bool {
+	if o == nil {
+		return false
+	}
+	return o.OnCommit
+}
+
+type WebAnalytics struct {
+	ID         string   `json:"id"`
 	DisabledAt *float64 `json:"disabledAt,omitempty"`
+	CanceledAt *float64 `json:"canceledAt,omitempty"`
 	EnabledAt  *float64 `json:"enabledAt,omitempty"`
 	HasData    *bool    `json:"hasData,omitempty"`
-	ID         string   `json:"id"`
 }
 
-func (o *UpdateProjectDataCacheWebAnalytics) GetCanceledAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CanceledAt
-}
-
-func (o *UpdateProjectDataCacheWebAnalytics) GetDisabledAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.DisabledAt
-}
-
-func (o *UpdateProjectDataCacheWebAnalytics) GetEnabledAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.EnabledAt
-}
-
-func (o *UpdateProjectDataCacheWebAnalytics) GetHasData() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.HasData
-}
-
-func (o *UpdateProjectDataCacheWebAnalytics) GetID() string {
+func (o *WebAnalytics) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
+func (o *WebAnalytics) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *WebAnalytics) GetCanceledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CanceledAt
+}
+
+func (o *WebAnalytics) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *WebAnalytics) GetHasData() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.HasData
+}
+
+type Src2 struct {
+	Re   *string  `json:"re,omitempty"`
+	Eq   *string  `json:"eq,omitempty"`
+	Neq  *string  `json:"neq,omitempty"`
+	Inc  []string `json:"inc,omitempty"`
+	Ninc []string `json:"ninc,omitempty"`
+	Pre  *string  `json:"pre,omitempty"`
+	Suf  *string  `json:"suf,omitempty"`
+	Gt   *float64 `json:"gt,omitempty"`
+	Gte  *float64 `json:"gte,omitempty"`
+	Lt   *float64 `json:"lt,omitempty"`
+	Lte  *float64 `json:"lte,omitempty"`
+}
+
+func (o *Src2) GetRe() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Re
+}
+
+func (o *Src2) GetEq() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Eq
+}
+
+func (o *Src2) GetNeq() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Neq
+}
+
+func (o *Src2) GetInc() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Inc
+}
+
+func (o *Src2) GetNinc() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Ninc
+}
+
+func (o *Src2) GetPre() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Pre
+}
+
+func (o *Src2) GetSuf() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Suf
+}
+
+func (o *Src2) GetGt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Gt
+}
+
+func (o *Src2) GetGte() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Gte
+}
+
+func (o *Src2) GetLt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Lt
+}
+
+func (o *Src2) GetLte() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Lte
+}
+
+type SrcType string
+
+const (
+	SrcTypeStr  SrcType = "str"
+	SrcTypeSrc2 SrcType = "src_2"
+)
+
+type Src struct {
+	Str  *string
+	Src2 *Src2
+
+	Type SrcType
+}
+
+func CreateSrcStr(str string) Src {
+	typ := SrcTypeStr
+
+	return Src{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateSrcSrc2(src2 Src2) Src {
+	typ := SrcTypeSrc2
+
+	return Src{
+		Src2: &src2,
+		Type: typ,
+	}
+}
+
+func (u *Src) UnmarshalJSON(data []byte) error {
+
+	var src2 Src2 = Src2{}
+	if err := utils.UnmarshalJSON(data, &src2, "", true, true); err == nil {
+		u.Src2 = &src2
+		u.Type = SrcTypeSrc2
+		return nil
+	}
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = SrcTypeStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Src", string(data))
+}
+
+func (u Src) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Src2 != nil {
+		return utils.MarshalJSON(u.Src2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Src: all fields are null")
+}
+
+type UpdateProjectDataCacheProjectsResponse200ApplicationJSONType string
+
+const (
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONTypeHost      UpdateProjectDataCacheProjectsResponse200ApplicationJSONType = "host"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONTypeMethod    UpdateProjectDataCacheProjectsResponse200ApplicationJSONType = "method"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONTypePath      UpdateProjectDataCacheProjectsResponse200ApplicationJSONType = "path"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONTypeHeader    UpdateProjectDataCacheProjectsResponse200ApplicationJSONType = "header"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONTypeCookie    UpdateProjectDataCacheProjectsResponse200ApplicationJSONType = "cookie"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONTypeQuery     UpdateProjectDataCacheProjectsResponse200ApplicationJSONType = "query"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONTypeIPAddress UpdateProjectDataCacheProjectsResponse200ApplicationJSONType = "ip_address"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONTypeProtocol  UpdateProjectDataCacheProjectsResponse200ApplicationJSONType = "protocol"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONTypeScheme    UpdateProjectDataCacheProjectsResponse200ApplicationJSONType = "scheme"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONTypeRegion    UpdateProjectDataCacheProjectsResponse200ApplicationJSONType = "region"
+)
+
+func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONType) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONType {
+	return &e
+}
+func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "host":
+		fallthrough
+	case "method":
+		fallthrough
+	case "path":
+		fallthrough
+	case "header":
+		fallthrough
+	case "cookie":
+		fallthrough
+	case "query":
+		fallthrough
+	case "ip_address":
+		fallthrough
+	case "protocol":
+		fallthrough
+	case "scheme":
+		fallthrough
+	case "region":
+		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONType: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheValueProjects2 struct {
+	Re   *string  `json:"re,omitempty"`
+	Eq   *string  `json:"eq,omitempty"`
+	Neq  *string  `json:"neq,omitempty"`
+	Inc  []string `json:"inc,omitempty"`
+	Ninc []string `json:"ninc,omitempty"`
+	Pre  *string  `json:"pre,omitempty"`
+	Suf  *string  `json:"suf,omitempty"`
+	Gt   *float64 `json:"gt,omitempty"`
+	Gte  *float64 `json:"gte,omitempty"`
+	Lt   *float64 `json:"lt,omitempty"`
+	Lte  *float64 `json:"lte,omitempty"`
+}
+
+func (o *UpdateProjectDataCacheValueProjects2) GetRe() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Re
+}
+
+func (o *UpdateProjectDataCacheValueProjects2) GetEq() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Eq
+}
+
+func (o *UpdateProjectDataCacheValueProjects2) GetNeq() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Neq
+}
+
+func (o *UpdateProjectDataCacheValueProjects2) GetInc() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Inc
+}
+
+func (o *UpdateProjectDataCacheValueProjects2) GetNinc() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Ninc
+}
+
+func (o *UpdateProjectDataCacheValueProjects2) GetPre() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Pre
+}
+
+func (o *UpdateProjectDataCacheValueProjects2) GetSuf() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Suf
+}
+
+func (o *UpdateProjectDataCacheValueProjects2) GetGt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Gt
+}
+
+func (o *UpdateProjectDataCacheValueProjects2) GetGte() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Gte
+}
+
+func (o *UpdateProjectDataCacheValueProjects2) GetLt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Lt
+}
+
+func (o *UpdateProjectDataCacheValueProjects2) GetLte() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Lte
+}
+
+type UpdateProjectDataCacheProjectsValueType string
+
+const (
+	UpdateProjectDataCacheProjectsValueTypeStr                                  UpdateProjectDataCacheProjectsValueType = "str"
+	UpdateProjectDataCacheProjectsValueTypeUpdateProjectDataCacheValueProjects2 UpdateProjectDataCacheProjectsValueType = "updateProjectDataCache_value_projects_2"
+)
+
+type UpdateProjectDataCacheProjectsValue struct {
+	Str                                  *string
+	UpdateProjectDataCacheValueProjects2 *UpdateProjectDataCacheValueProjects2
+
+	Type UpdateProjectDataCacheProjectsValueType
+}
+
+func CreateUpdateProjectDataCacheProjectsValueStr(str string) UpdateProjectDataCacheProjectsValue {
+	typ := UpdateProjectDataCacheProjectsValueTypeStr
+
+	return UpdateProjectDataCacheProjectsValue{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheProjectsValueUpdateProjectDataCacheValueProjects2(updateProjectDataCacheValueProjects2 UpdateProjectDataCacheValueProjects2) UpdateProjectDataCacheProjectsValue {
+	typ := UpdateProjectDataCacheProjectsValueTypeUpdateProjectDataCacheValueProjects2
+
+	return UpdateProjectDataCacheProjectsValue{
+		UpdateProjectDataCacheValueProjects2: &updateProjectDataCacheValueProjects2,
+		Type:                                 typ,
+	}
+}
+
+func (u *UpdateProjectDataCacheProjectsValue) UnmarshalJSON(data []byte) error {
+
+	var updateProjectDataCacheValueProjects2 UpdateProjectDataCacheValueProjects2 = UpdateProjectDataCacheValueProjects2{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheValueProjects2, "", true, true); err == nil {
+		u.UpdateProjectDataCacheValueProjects2 = &updateProjectDataCacheValueProjects2
+		u.Type = UpdateProjectDataCacheProjectsValueTypeUpdateProjectDataCacheValueProjects2
+		return nil
+	}
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = UpdateProjectDataCacheProjectsValueTypeStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheProjectsValue", string(data))
+}
+
+func (u UpdateProjectDataCacheProjectsValue) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.UpdateProjectDataCacheValueProjects2 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheValueProjects2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type UpdateProjectDataCacheProjectsValue: all fields are null")
+}
+
+type Has struct {
+	Type  UpdateProjectDataCacheProjectsResponse200ApplicationJSONType `json:"type"`
+	Key   *string                                                      `json:"key,omitempty"`
+	Value *UpdateProjectDataCacheProjectsValue                         `json:"value,omitempty"`
+}
+
+func (o *Has) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONType {
+	if o == nil {
+		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONType("")
+	}
+	return o.Type
+}
+
+func (o *Has) GetKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Key
+}
+
+func (o *Has) GetValue() *UpdateProjectDataCacheProjectsValue {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
+type UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType string
+
+const (
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyTypeHost      UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType = "host"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyTypeMethod    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType = "method"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyTypePath      UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType = "path"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyTypeHeader    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType = "header"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyTypeCookie    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType = "cookie"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyTypeQuery     UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType = "query"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyTypeIPAddress UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType = "ip_address"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyTypeProtocol  UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType = "protocol"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyTypeScheme    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType = "scheme"
+	UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyTypeRegion    UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType = "region"
+)
+
+func (e UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType) ToPointer() *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType {
+	return &e
+}
+func (e *UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "host":
+		fallthrough
+	case "method":
+		fallthrough
+	case "path":
+		fallthrough
+	case "header":
+		fallthrough
+	case "cookie":
+		fallthrough
+	case "query":
+		fallthrough
+	case "ip_address":
+		fallthrough
+	case "protocol":
+		fallthrough
+	case "scheme":
+		fallthrough
+	case "region":
+		*e = UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType: %v", v)
+	}
+}
+
+type UpdateProjectDataCacheValue2 struct {
+	Re   *string  `json:"re,omitempty"`
+	Eq   *string  `json:"eq,omitempty"`
+	Neq  *string  `json:"neq,omitempty"`
+	Inc  []string `json:"inc,omitempty"`
+	Ninc []string `json:"ninc,omitempty"`
+	Pre  *string  `json:"pre,omitempty"`
+	Suf  *string  `json:"suf,omitempty"`
+	Gt   *float64 `json:"gt,omitempty"`
+	Gte  *float64 `json:"gte,omitempty"`
+	Lt   *float64 `json:"lt,omitempty"`
+	Lte  *float64 `json:"lte,omitempty"`
+}
+
+func (o *UpdateProjectDataCacheValue2) GetRe() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Re
+}
+
+func (o *UpdateProjectDataCacheValue2) GetEq() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Eq
+}
+
+func (o *UpdateProjectDataCacheValue2) GetNeq() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Neq
+}
+
+func (o *UpdateProjectDataCacheValue2) GetInc() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Inc
+}
+
+func (o *UpdateProjectDataCacheValue2) GetNinc() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Ninc
+}
+
+func (o *UpdateProjectDataCacheValue2) GetPre() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Pre
+}
+
+func (o *UpdateProjectDataCacheValue2) GetSuf() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Suf
+}
+
+func (o *UpdateProjectDataCacheValue2) GetGt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Gt
+}
+
+func (o *UpdateProjectDataCacheValue2) GetGte() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Gte
+}
+
+func (o *UpdateProjectDataCacheValue2) GetLt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Lt
+}
+
+func (o *UpdateProjectDataCacheValue2) GetLte() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Lte
+}
+
+type UpdateProjectDataCacheValueType string
+
+const (
+	UpdateProjectDataCacheValueTypeStr                          UpdateProjectDataCacheValueType = "str"
+	UpdateProjectDataCacheValueTypeUpdateProjectDataCacheValue2 UpdateProjectDataCacheValueType = "updateProjectDataCache_value_2"
+)
+
+type UpdateProjectDataCacheValue struct {
+	Str                          *string
+	UpdateProjectDataCacheValue2 *UpdateProjectDataCacheValue2
+
+	Type UpdateProjectDataCacheValueType
+}
+
+func CreateUpdateProjectDataCacheValueStr(str string) UpdateProjectDataCacheValue {
+	typ := UpdateProjectDataCacheValueTypeStr
+
+	return UpdateProjectDataCacheValue{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateUpdateProjectDataCacheValueUpdateProjectDataCacheValue2(updateProjectDataCacheValue2 UpdateProjectDataCacheValue2) UpdateProjectDataCacheValue {
+	typ := UpdateProjectDataCacheValueTypeUpdateProjectDataCacheValue2
+
+	return UpdateProjectDataCacheValue{
+		UpdateProjectDataCacheValue2: &updateProjectDataCacheValue2,
+		Type:                         typ,
+	}
+}
+
+func (u *UpdateProjectDataCacheValue) UnmarshalJSON(data []byte) error {
+
+	var updateProjectDataCacheValue2 UpdateProjectDataCacheValue2 = UpdateProjectDataCacheValue2{}
+	if err := utils.UnmarshalJSON(data, &updateProjectDataCacheValue2, "", true, true); err == nil {
+		u.UpdateProjectDataCacheValue2 = &updateProjectDataCacheValue2
+		u.Type = UpdateProjectDataCacheValueTypeUpdateProjectDataCacheValue2
+		return nil
+	}
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = UpdateProjectDataCacheValueTypeStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheValue", string(data))
+}
+
+func (u UpdateProjectDataCacheValue) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.UpdateProjectDataCacheValue2 != nil {
+		return utils.MarshalJSON(u.UpdateProjectDataCacheValue2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type UpdateProjectDataCacheValue: all fields are null")
+}
+
+type Missing struct {
+	Type  UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType `json:"type"`
+	Key   *string                                                                  `json:"key,omitempty"`
+	Value *UpdateProjectDataCacheValue                                             `json:"value,omitempty"`
+}
+
+func (o *Missing) GetType() UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType {
+	if o == nil {
+		return UpdateProjectDataCacheProjectsResponse200ApplicationJSONResponseBodyType("")
+	}
+	return o.Type
+}
+
+func (o *Missing) GetKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Key
+}
+
+func (o *Missing) GetValue() *UpdateProjectDataCacheValue {
+	if o == nil {
+		return nil
+	}
+	return o.Value
+}
+
+type Handle string
+
+const (
+	HandleInit     Handle = "init"
+	HandleFinalize Handle = "finalize"
+)
+
+func (e Handle) ToPointer() *Handle {
+	return &e
+}
+func (e *Handle) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "init":
+		fallthrough
+	case "finalize":
+		*e = Handle(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Handle: %v", v)
+	}
+}
+
+type Action string
+
+const (
+	ActionDeny      Action = "deny"
+	ActionChallenge Action = "challenge"
+	ActionLog       Action = "log"
+	ActionBypass    Action = "bypass"
+	ActionRateLimit Action = "rate_limit"
+)
+
+func (e Action) ToPointer() *Action {
+	return &e
+}
+func (e *Action) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "deny":
+		fallthrough
+	case "challenge":
+		fallthrough
+	case "log":
+		fallthrough
+	case "bypass":
+		fallthrough
+	case "rate_limit":
+		*e = Action(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Action: %v", v)
+	}
+}
+
+type Algo string
+
+const (
+	AlgoFixedWindow Algo = "fixed_window"
+	AlgoTokenBucket Algo = "token_bucket"
+)
+
+func (e Algo) ToPointer() *Algo {
+	return &e
+}
+func (e *Algo) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "fixed_window":
+		fallthrough
+	case "token_bucket":
+		*e = Algo(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Algo: %v", v)
+	}
+}
+
+type Erl struct {
+	Algo   Algo     `json:"algo"`
+	Window float64  `json:"window"`
+	Limit  float64  `json:"limit"`
+	Keys   []string `json:"keys"`
+}
+
+func (o *Erl) GetAlgo() Algo {
+	if o == nil {
+		return Algo("")
+	}
+	return o.Algo
+}
+
+func (o *Erl) GetWindow() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Window
+}
+
+func (o *Erl) GetLimit() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Limit
+}
+
+func (o *Erl) GetKeys() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Keys
+}
+
+type Mitigate struct {
+	Action Action `json:"action"`
+	RuleID string `json:"rule_id"`
+	Erl    *Erl   `json:"erl,omitempty"`
+}
+
+func (o *Mitigate) GetAction() Action {
+	if o == nil {
+		return Action("")
+	}
+	return o.Action
+}
+
+func (o *Mitigate) GetRuleID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RuleID
+}
+
+func (o *Mitigate) GetErl() *Erl {
+	if o == nil {
+		return nil
+	}
+	return o.Erl
+}
+
+type FirewallRoutes struct {
+	Src      *Src      `json:"src,omitempty"`
+	Has      []Has     `json:"has,omitempty"`
+	Missing  []Missing `json:"missing,omitempty"`
+	Dest     *string   `json:"dest,omitempty"`
+	Status   *float64  `json:"status,omitempty"`
+	Handle   *Handle   `json:"handle,omitempty"`
+	Mitigate *Mitigate `json:"mitigate,omitempty"`
+}
+
+func (o *FirewallRoutes) GetSrc() *Src {
+	if o == nil {
+		return nil
+	}
+	return o.Src
+}
+
+func (o *FirewallRoutes) GetHas() []Has {
+	if o == nil {
+		return nil
+	}
+	return o.Has
+}
+
+func (o *FirewallRoutes) GetMissing() []Missing {
+	if o == nil {
+		return nil
+	}
+	return o.Missing
+}
+
+func (o *FirewallRoutes) GetDest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Dest
+}
+
+func (o *FirewallRoutes) GetStatus() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
+func (o *FirewallRoutes) GetHandle() *Handle {
+	if o == nil {
+		return nil
+	}
+	return o.Handle
+}
+
+func (o *FirewallRoutes) GetMitigate() *Mitigate {
+	if o == nil {
+		return nil
+	}
+	return o.Mitigate
+}
+
+type Security struct {
+	AttackModeEnabled      *bool            `json:"attackModeEnabled,omitempty"`
+	AttackModeUpdatedAt    *float64         `json:"attackModeUpdatedAt,omitempty"`
+	FirewallEnabled        *bool            `json:"firewallEnabled,omitempty"`
+	FirewallUpdatedAt      *float64         `json:"firewallUpdatedAt,omitempty"`
+	AttackModeActiveUntil  *float64         `json:"attackModeActiveUntil,omitempty"`
+	FirewallConfigVersion  *float64         `json:"firewallConfigVersion,omitempty"`
+	FirewallRoutes         []FirewallRoutes `json:"firewallRoutes,omitempty"`
+	FirewallSeawallEnabled *bool            `json:"firewallSeawallEnabled,omitempty"`
+	Ja3Enabled             *bool            `json:"ja3Enabled,omitempty"`
+	Ja4Enabled             *bool            `json:"ja4Enabled,omitempty"`
+}
+
+func (o *Security) GetAttackModeEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AttackModeEnabled
+}
+
+func (o *Security) GetAttackModeUpdatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.AttackModeUpdatedAt
+}
+
+func (o *Security) GetFirewallEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.FirewallEnabled
+}
+
+func (o *Security) GetFirewallUpdatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.FirewallUpdatedAt
+}
+
+func (o *Security) GetAttackModeActiveUntil() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.AttackModeActiveUntil
+}
+
+func (o *Security) GetFirewallConfigVersion() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.FirewallConfigVersion
+}
+
+func (o *Security) GetFirewallRoutes() []FirewallRoutes {
+	if o == nil {
+		return nil
+	}
+	return o.FirewallRoutes
+}
+
+func (o *Security) GetFirewallSeawallEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.FirewallSeawallEnabled
+}
+
+func (o *Security) GetJa3Enabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ja3Enabled
+}
+
+func (o *Security) GetJa4Enabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ja4Enabled
+}
+
+type OidcTokenConfig struct {
+	Enabled bool `json:"enabled"`
+}
+
+func (o *OidcTokenConfig) GetEnabled() bool {
+	if o == nil {
+		return false
+	}
+	return o.Enabled
+}
+
 type UpdateProjectDataCacheResponseBody struct {
-	AccountID                            string                                            `json:"accountId"`
-	Analytics                            *UpdateProjectDataCacheAnalytics                  `json:"analytics,omitempty"`
-	AutoAssignCustomDomains              *bool                                             `json:"autoAssignCustomDomains,omitempty"`
-	AutoAssignCustomDomainsUpdatedBy     *string                                           `json:"autoAssignCustomDomainsUpdatedBy,omitempty"`
-	AutoExposeSystemEnvs                 *bool                                             `json:"autoExposeSystemEnvs,omitempty"`
-	BuildCommand                         *string                                           `json:"buildCommand,omitempty"`
-	CommandForIgnoringBuildStep          *string                                           `json:"commandForIgnoringBuildStep,omitempty"`
-	ConcurrencyBucketName                *string                                           `json:"concurrencyBucketName,omitempty"`
-	ConnectBuildsEnabled                 *bool                                             `json:"connectBuildsEnabled,omitempty"`
-	ConnectConfigurationID               *string                                           `json:"connectConfigurationId,omitempty"`
-	CreatedAt                            *float64                                          `json:"createdAt,omitempty"`
-	Crons                                *UpdateProjectDataCacheCrons                      `json:"crons,omitempty"`
-	CustomerSupportCodeVisibility        *bool                                             `json:"customerSupportCodeVisibility,omitempty"`
-	DataCache                            *UpdateProjectDataCacheDataCache                  `json:"dataCache,omitempty"`
-	DevCommand                           *string                                           `json:"devCommand,omitempty"`
-	DirectoryListing                     bool                                              `json:"directoryListing"`
-	EnablePreviewFeedback                *bool                                             `json:"enablePreviewFeedback,omitempty"`
-	Env                                  []UpdateProjectDataCacheEnv                       `json:"env,omitempty"`
-	Framework                            *UpdateProjectDataCacheFramework                  `json:"framework,omitempty"`
-	GitComments                          *UpdateProjectDataCacheGitComments                `json:"gitComments,omitempty"`
-	GitForkProtection                    *bool                                             `json:"gitForkProtection,omitempty"`
-	GitLFS                               *bool                                             `json:"gitLFS,omitempty"`
-	HasActiveBranches                    *bool                                             `json:"hasActiveBranches,omitempty"`
-	HasFloatingAliases                   *bool                                             `json:"hasFloatingAliases,omitempty"`
-	ID                                   string                                            `json:"id"`
-	InstallCommand                       *string                                           `json:"installCommand,omitempty"`
-	LastAliasRequest                     *UpdateProjectDataCacheLastAliasRequest           `json:"lastAliasRequest,omitempty"`
-	LastRollbackTarget                   *UpdateProjectDataCacheLastRollbackTarget         `json:"lastRollbackTarget,omitempty"`
-	LatestDeployments                    []UpdateProjectDataCacheLatestDeployments         `json:"latestDeployments,omitempty"`
-	Link                                 *UpdateProjectDataCacheLink                       `json:"link,omitempty"`
-	Live                                 *bool                                             `json:"live,omitempty"`
-	Name                                 string                                            `json:"name"`
-	NodeVersion                          UpdateProjectDataCacheNodeVersion                 `json:"nodeVersion"`
-	OidcTokenConfig                      *UpdateProjectDataCacheOidcTokenConfig            `json:"oidcTokenConfig,omitempty"`
-	OptionsAllowlist                     *UpdateProjectDataCacheOptionsAllowlist           `json:"optionsAllowlist,omitempty"`
-	OutputDirectory                      *string                                           `json:"outputDirectory,omitempty"`
-	PassiveConnectConfigurationID        *string                                           `json:"passiveConnectConfigurationId,omitempty"`
-	PasswordProtection                   *UpdateProjectDataCachePasswordProtection         `json:"passwordProtection,omitempty"`
-	Paused                               *bool                                             `json:"paused,omitempty"`
-	Permissions                          *UpdateProjectDataCachePermissions                `json:"permissions,omitempty"`
-	ProductionDeploymentsFastLane        *bool                                             `json:"productionDeploymentsFastLane,omitempty"`
-	ProtectionBypass                     map[string]UpdateProjectDataCacheProtectionBypass `json:"protectionBypass,omitempty"`
-	PublicSource                         *bool                                             `json:"publicSource,omitempty"`
-	RootDirectory                        *string                                           `json:"rootDirectory,omitempty"`
-	Security                             *UpdateProjectDataCacheSecurity                   `json:"security,omitempty"`
-	ServerlessFunctionRegion             *string                                           `json:"serverlessFunctionRegion,omitempty"`
-	ServerlessFunctionZeroConfigFailover *bool                                             `json:"serverlessFunctionZeroConfigFailover,omitempty"`
-	SkewProtectionBoundaryAt             *float64                                          `json:"skewProtectionBoundaryAt,omitempty"`
-	SkewProtectionMaxAge                 *float64                                          `json:"skewProtectionMaxAge,omitempty"`
-	SkipGitConnectDuringLink             *bool                                             `json:"skipGitConnectDuringLink,omitempty"`
-	SourceFilesOutsideRootDirectory      *bool                                             `json:"sourceFilesOutsideRootDirectory,omitempty"`
-	SpeedInsights                        *UpdateProjectDataCacheSpeedInsights              `json:"speedInsights,omitempty"`
-	SsoProtection                        *UpdateProjectDataCacheSsoProtection              `json:"ssoProtection,omitempty"`
-	Targets                              map[string]UpdateProjectDataCacheTargets          `json:"targets,omitempty"`
-	TransferCompletedAt                  *float64                                          `json:"transferCompletedAt,omitempty"`
-	TransferStartedAt                    *float64                                          `json:"transferStartedAt,omitempty"`
-	TransferToAccountID                  *string                                           `json:"transferToAccountId,omitempty"`
-	TransferredFromAccountID             *string                                           `json:"transferredFromAccountId,omitempty"`
-	TrustedIps                           *UpdateProjectDataCacheTrustedIps                 `json:"trustedIps,omitempty"`
-	UpdatedAt                            *float64                                          `json:"updatedAt,omitempty"`
-	WebAnalytics                         *UpdateProjectDataCacheWebAnalytics               `json:"webAnalytics,omitempty"`
+	AccountID                            string                                    `json:"accountId"`
+	Analytics                            *Analytics                                `json:"analytics,omitempty"`
+	SpeedInsights                        *SpeedInsights                            `json:"speedInsights,omitempty"`
+	AutoExposeSystemEnvs                 *bool                                     `json:"autoExposeSystemEnvs,omitempty"`
+	AutoAssignCustomDomains              *bool                                     `json:"autoAssignCustomDomains,omitempty"`
+	AutoAssignCustomDomainsUpdatedBy     *string                                   `json:"autoAssignCustomDomainsUpdatedBy,omitempty"`
+	BuildCommand                         *string                                   `json:"buildCommand,omitempty"`
+	CommandForIgnoringBuildStep          *string                                   `json:"commandForIgnoringBuildStep,omitempty"`
+	ConnectConfigurationID               *string                                   `json:"connectConfigurationId,omitempty"`
+	ConnectBuildsEnabled                 *bool                                     `json:"connectBuildsEnabled,omitempty"`
+	CreatedAt                            *float64                                  `json:"createdAt,omitempty"`
+	CustomerSupportCodeVisibility        *bool                                     `json:"customerSupportCodeVisibility,omitempty"`
+	Crons                                *Crons                                    `json:"crons,omitempty"`
+	DataCache                            *DataCache                                `json:"dataCache,omitempty"`
+	DevCommand                           *string                                   `json:"devCommand,omitempty"`
+	DirectoryListing                     bool                                      `json:"directoryListing"`
+	InstallCommand                       *string                                   `json:"installCommand,omitempty"`
+	Env                                  []Env                                     `json:"env,omitempty"`
+	Framework                            *UpdateProjectDataCacheFramework          `json:"framework,omitempty"`
+	GitForkProtection                    *bool                                     `json:"gitForkProtection,omitempty"`
+	GitLFS                               *bool                                     `json:"gitLFS,omitempty"`
+	ID                                   string                                    `json:"id"`
+	LatestDeployments                    []LatestDeployments                       `json:"latestDeployments,omitempty"`
+	Link                                 *Link                                     `json:"link,omitempty"`
+	Name                                 string                                    `json:"name"`
+	NodeVersion                          UpdateProjectDataCacheNodeVersion         `json:"nodeVersion"`
+	OptionsAllowlist                     *UpdateProjectDataCacheOptionsAllowlist   `json:"optionsAllowlist,omitempty"`
+	OutputDirectory                      *string                                   `json:"outputDirectory,omitempty"`
+	PassiveConnectConfigurationID        *string                                   `json:"passiveConnectConfigurationId,omitempty"`
+	PasswordProtection                   *UpdateProjectDataCachePasswordProtection `json:"passwordProtection,omitempty"`
+	ProductionDeploymentsFastLane        *bool                                     `json:"productionDeploymentsFastLane,omitempty"`
+	PublicSource                         *bool                                     `json:"publicSource,omitempty"`
+	RootDirectory                        *string                                   `json:"rootDirectory,omitempty"`
+	ServerlessFunctionRegion             *string                                   `json:"serverlessFunctionRegion,omitempty"`
+	ServerlessFunctionZeroConfigFailover *bool                                     `json:"serverlessFunctionZeroConfigFailover,omitempty"`
+	SkewProtectionBoundaryAt             *float64                                  `json:"skewProtectionBoundaryAt,omitempty"`
+	SkewProtectionMaxAge                 *float64                                  `json:"skewProtectionMaxAge,omitempty"`
+	SkipGitConnectDuringLink             *bool                                     `json:"skipGitConnectDuringLink,omitempty"`
+	SourceFilesOutsideRootDirectory      *bool                                     `json:"sourceFilesOutsideRootDirectory,omitempty"`
+	SsoProtection                        *UpdateProjectDataCacheSsoProtection      `json:"ssoProtection,omitempty"`
+	Targets                              map[string]Targets                        `json:"targets,omitempty"`
+	TransferCompletedAt                  *float64                                  `json:"transferCompletedAt,omitempty"`
+	TransferStartedAt                    *float64                                  `json:"transferStartedAt,omitempty"`
+	TransferToAccountID                  *string                                   `json:"transferToAccountId,omitempty"`
+	TransferredFromAccountID             *string                                   `json:"transferredFromAccountId,omitempty"`
+	UpdatedAt                            *float64                                  `json:"updatedAt,omitempty"`
+	Live                                 *bool                                     `json:"live,omitempty"`
+	EnablePreviewFeedback                *bool                                     `json:"enablePreviewFeedback,omitempty"`
+	Permissions                          *Permissions                              `json:"permissions,omitempty"`
+	LastRollbackTarget                   *LastRollbackTarget                       `json:"lastRollbackTarget,omitempty"`
+	LastAliasRequest                     *LastAliasRequest                         `json:"lastAliasRequest,omitempty"`
+	HasFloatingAliases                   *bool                                     `json:"hasFloatingAliases,omitempty"`
+	ProtectionBypass                     map[string]ProtectionBypass               `json:"protectionBypass,omitempty"`
+	HasActiveBranches                    *bool                                     `json:"hasActiveBranches,omitempty"`
+	TrustedIps                           *UpdateProjectDataCacheTrustedIps         `json:"trustedIps,omitempty"`
+	GitComments                          *GitComments                              `json:"gitComments,omitempty"`
+	Paused                               *bool                                     `json:"paused,omitempty"`
+	ConcurrencyBucketName                *string                                   `json:"concurrencyBucketName,omitempty"`
+	WebAnalytics                         *WebAnalytics                             `json:"webAnalytics,omitempty"`
+	Security                             *Security                                 `json:"security,omitempty"`
+	OidcTokenConfig                      *OidcTokenConfig                          `json:"oidcTokenConfig,omitempty"`
 }
 
 func (o *UpdateProjectDataCacheResponseBody) GetAccountID() string {
@@ -5831,11 +5831,25 @@ func (o *UpdateProjectDataCacheResponseBody) GetAccountID() string {
 	return o.AccountID
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetAnalytics() *UpdateProjectDataCacheAnalytics {
+func (o *UpdateProjectDataCacheResponseBody) GetAnalytics() *Analytics {
 	if o == nil {
 		return nil
 	}
 	return o.Analytics
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetSpeedInsights() *SpeedInsights {
+	if o == nil {
+		return nil
+	}
+	return o.SpeedInsights
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetAutoExposeSystemEnvs() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AutoExposeSystemEnvs
 }
 
 func (o *UpdateProjectDataCacheResponseBody) GetAutoAssignCustomDomains() *bool {
@@ -5852,13 +5866,6 @@ func (o *UpdateProjectDataCacheResponseBody) GetAutoAssignCustomDomainsUpdatedBy
 	return o.AutoAssignCustomDomainsUpdatedBy
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetAutoExposeSystemEnvs() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.AutoExposeSystemEnvs
-}
-
 func (o *UpdateProjectDataCacheResponseBody) GetBuildCommand() *string {
 	if o == nil {
 		return nil
@@ -5873,11 +5880,11 @@ func (o *UpdateProjectDataCacheResponseBody) GetCommandForIgnoringBuildStep() *s
 	return o.CommandForIgnoringBuildStep
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetConcurrencyBucketName() *string {
+func (o *UpdateProjectDataCacheResponseBody) GetConnectConfigurationID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.ConcurrencyBucketName
+	return o.ConnectConfigurationID
 }
 
 func (o *UpdateProjectDataCacheResponseBody) GetConnectBuildsEnabled() *bool {
@@ -5887,25 +5894,11 @@ func (o *UpdateProjectDataCacheResponseBody) GetConnectBuildsEnabled() *bool {
 	return o.ConnectBuildsEnabled
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetConnectConfigurationID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ConnectConfigurationID
-}
-
 func (o *UpdateProjectDataCacheResponseBody) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
-}
-
-func (o *UpdateProjectDataCacheResponseBody) GetCrons() *UpdateProjectDataCacheCrons {
-	if o == nil {
-		return nil
-	}
-	return o.Crons
 }
 
 func (o *UpdateProjectDataCacheResponseBody) GetCustomerSupportCodeVisibility() *bool {
@@ -5915,7 +5908,14 @@ func (o *UpdateProjectDataCacheResponseBody) GetCustomerSupportCodeVisibility() 
 	return o.CustomerSupportCodeVisibility
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetDataCache() *UpdateProjectDataCacheDataCache {
+func (o *UpdateProjectDataCacheResponseBody) GetCrons() *Crons {
+	if o == nil {
+		return nil
+	}
+	return o.Crons
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetDataCache() *DataCache {
 	if o == nil {
 		return nil
 	}
@@ -5936,14 +5936,14 @@ func (o *UpdateProjectDataCacheResponseBody) GetDirectoryListing() bool {
 	return o.DirectoryListing
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetEnablePreviewFeedback() *bool {
+func (o *UpdateProjectDataCacheResponseBody) GetInstallCommand() *string {
 	if o == nil {
 		return nil
 	}
-	return o.EnablePreviewFeedback
+	return o.InstallCommand
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetEnv() []UpdateProjectDataCacheEnv {
+func (o *UpdateProjectDataCacheResponseBody) GetEnv() []Env {
 	if o == nil {
 		return nil
 	}
@@ -5955,13 +5955,6 @@ func (o *UpdateProjectDataCacheResponseBody) GetFramework() *UpdateProjectDataCa
 		return nil
 	}
 	return o.Framework
-}
-
-func (o *UpdateProjectDataCacheResponseBody) GetGitComments() *UpdateProjectDataCacheGitComments {
-	if o == nil {
-		return nil
-	}
-	return o.GitComments
 }
 
 func (o *UpdateProjectDataCacheResponseBody) GetGitForkProtection() *bool {
@@ -5978,20 +5971,6 @@ func (o *UpdateProjectDataCacheResponseBody) GetGitLFS() *bool {
 	return o.GitLFS
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetHasActiveBranches() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.HasActiveBranches
-}
-
-func (o *UpdateProjectDataCacheResponseBody) GetHasFloatingAliases() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.HasFloatingAliases
-}
-
 func (o *UpdateProjectDataCacheResponseBody) GetID() string {
 	if o == nil {
 		return ""
@@ -5999,46 +5978,18 @@ func (o *UpdateProjectDataCacheResponseBody) GetID() string {
 	return o.ID
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetInstallCommand() *string {
-	if o == nil {
-		return nil
-	}
-	return o.InstallCommand
-}
-
-func (o *UpdateProjectDataCacheResponseBody) GetLastAliasRequest() *UpdateProjectDataCacheLastAliasRequest {
-	if o == nil {
-		return nil
-	}
-	return o.LastAliasRequest
-}
-
-func (o *UpdateProjectDataCacheResponseBody) GetLastRollbackTarget() *UpdateProjectDataCacheLastRollbackTarget {
-	if o == nil {
-		return nil
-	}
-	return o.LastRollbackTarget
-}
-
-func (o *UpdateProjectDataCacheResponseBody) GetLatestDeployments() []UpdateProjectDataCacheLatestDeployments {
+func (o *UpdateProjectDataCacheResponseBody) GetLatestDeployments() []LatestDeployments {
 	if o == nil {
 		return nil
 	}
 	return o.LatestDeployments
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetLink() *UpdateProjectDataCacheLink {
+func (o *UpdateProjectDataCacheResponseBody) GetLink() *Link {
 	if o == nil {
 		return nil
 	}
 	return o.Link
-}
-
-func (o *UpdateProjectDataCacheResponseBody) GetLive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Live
 }
 
 func (o *UpdateProjectDataCacheResponseBody) GetName() string {
@@ -6053,13 +6004,6 @@ func (o *UpdateProjectDataCacheResponseBody) GetNodeVersion() UpdateProjectDataC
 		return UpdateProjectDataCacheNodeVersion("")
 	}
 	return o.NodeVersion
-}
-
-func (o *UpdateProjectDataCacheResponseBody) GetOidcTokenConfig() *UpdateProjectDataCacheOidcTokenConfig {
-	if o == nil {
-		return nil
-	}
-	return o.OidcTokenConfig
 }
 
 func (o *UpdateProjectDataCacheResponseBody) GetOptionsAllowlist() *UpdateProjectDataCacheOptionsAllowlist {
@@ -6090,32 +6034,11 @@ func (o *UpdateProjectDataCacheResponseBody) GetPasswordProtection() *UpdateProj
 	return o.PasswordProtection
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetPaused() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Paused
-}
-
-func (o *UpdateProjectDataCacheResponseBody) GetPermissions() *UpdateProjectDataCachePermissions {
-	if o == nil {
-		return nil
-	}
-	return o.Permissions
-}
-
 func (o *UpdateProjectDataCacheResponseBody) GetProductionDeploymentsFastLane() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.ProductionDeploymentsFastLane
-}
-
-func (o *UpdateProjectDataCacheResponseBody) GetProtectionBypass() map[string]UpdateProjectDataCacheProtectionBypass {
-	if o == nil {
-		return nil
-	}
-	return o.ProtectionBypass
 }
 
 func (o *UpdateProjectDataCacheResponseBody) GetPublicSource() *bool {
@@ -6130,13 +6053,6 @@ func (o *UpdateProjectDataCacheResponseBody) GetRootDirectory() *string {
 		return nil
 	}
 	return o.RootDirectory
-}
-
-func (o *UpdateProjectDataCacheResponseBody) GetSecurity() *UpdateProjectDataCacheSecurity {
-	if o == nil {
-		return nil
-	}
-	return o.Security
 }
 
 func (o *UpdateProjectDataCacheResponseBody) GetServerlessFunctionRegion() *string {
@@ -6181,13 +6097,6 @@ func (o *UpdateProjectDataCacheResponseBody) GetSourceFilesOutsideRootDirectory(
 	return o.SourceFilesOutsideRootDirectory
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetSpeedInsights() *UpdateProjectDataCacheSpeedInsights {
-	if o == nil {
-		return nil
-	}
-	return o.SpeedInsights
-}
-
 func (o *UpdateProjectDataCacheResponseBody) GetSsoProtection() *UpdateProjectDataCacheSsoProtection {
 	if o == nil {
 		return nil
@@ -6195,7 +6104,7 @@ func (o *UpdateProjectDataCacheResponseBody) GetSsoProtection() *UpdateProjectDa
 	return o.SsoProtection
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetTargets() map[string]UpdateProjectDataCacheTargets {
+func (o *UpdateProjectDataCacheResponseBody) GetTargets() map[string]Targets {
 	if o == nil {
 		return nil
 	}
@@ -6230,13 +6139,6 @@ func (o *UpdateProjectDataCacheResponseBody) GetTransferredFromAccountID() *stri
 	return o.TransferredFromAccountID
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetTrustedIps() *UpdateProjectDataCacheTrustedIps {
-	if o == nil {
-		return nil
-	}
-	return o.TrustedIps
-}
-
 func (o *UpdateProjectDataCacheResponseBody) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
@@ -6244,11 +6146,109 @@ func (o *UpdateProjectDataCacheResponseBody) GetUpdatedAt() *float64 {
 	return o.UpdatedAt
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetWebAnalytics() *UpdateProjectDataCacheWebAnalytics {
+func (o *UpdateProjectDataCacheResponseBody) GetLive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Live
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetEnablePreviewFeedback() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EnablePreviewFeedback
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetPermissions() *Permissions {
+	if o == nil {
+		return nil
+	}
+	return o.Permissions
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetLastRollbackTarget() *LastRollbackTarget {
+	if o == nil {
+		return nil
+	}
+	return o.LastRollbackTarget
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetLastAliasRequest() *LastAliasRequest {
+	if o == nil {
+		return nil
+	}
+	return o.LastAliasRequest
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetHasFloatingAliases() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.HasFloatingAliases
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetProtectionBypass() map[string]ProtectionBypass {
+	if o == nil {
+		return nil
+	}
+	return o.ProtectionBypass
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetHasActiveBranches() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.HasActiveBranches
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetTrustedIps() *UpdateProjectDataCacheTrustedIps {
+	if o == nil {
+		return nil
+	}
+	return o.TrustedIps
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetGitComments() *GitComments {
+	if o == nil {
+		return nil
+	}
+	return o.GitComments
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetPaused() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Paused
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetConcurrencyBucketName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConcurrencyBucketName
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetWebAnalytics() *WebAnalytics {
 	if o == nil {
 		return nil
 	}
 	return o.WebAnalytics
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetSecurity() *Security {
+	if o == nil {
+		return nil
+	}
+	return o.Security
+}
+
+func (o *UpdateProjectDataCacheResponseBody) GetOidcTokenConfig() *OidcTokenConfig {
+	if o == nil {
+		return nil
+	}
+	return o.OidcTokenConfig
 }
 
 type UpdateProjectDataCacheResponse struct {

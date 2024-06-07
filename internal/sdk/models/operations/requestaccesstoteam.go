@@ -6,9 +6,51 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 )
+
+// Origin - The origin of the request.
+type Origin string
+
+const (
+	OriginImport            Origin = "import"
+	OriginTeams             Origin = "teams"
+	OriginGithub            Origin = "github"
+	OriginGitlab            Origin = "gitlab"
+	OriginBitbucket         Origin = "bitbucket"
+	OriginFeedback          Origin = "feedback"
+	OriginOrganizationTeams Origin = "organization-teams"
+)
+
+func (e Origin) ToPointer() *Origin {
+	return &e
+}
+func (e *Origin) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "import":
+		fallthrough
+	case "teams":
+		fallthrough
+	case "github":
+		fallthrough
+	case "gitlab":
+		fallthrough
+	case "bitbucket":
+		fallthrough
+	case "feedback":
+		fallthrough
+	case "organization-teams":
+		*e = Origin(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Origin: %v", v)
+	}
+}
 
 type GitUserIDType string
 
@@ -74,23 +116,113 @@ func (u GitUserID) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type GitUserID: all fields are null")
 }
 
-// Origin - The origin of the request.
-type Origin string
+type JoinedFrom struct {
+	// The origin of the request.
+	Origin Origin `json:"origin"`
+	// The commit sha if the origin is a git provider.
+	CommitID *string `json:"commitId,omitempty"`
+	// The ID of the repository for the given Git provider.
+	RepoID *string `json:"repoId,omitempty"`
+	// The path to the repository for the given Git provider.
+	RepoPath *string `json:"repoPath,omitempty"`
+	// The ID of the Git account of the user who requests access.
+	GitUserID *GitUserID `json:"gitUserId,omitempty"`
+	// The login name for the Git account of the user who requests access.
+	GitUserLogin *string `json:"gitUserLogin,omitempty"`
+}
+
+func (o *JoinedFrom) GetOrigin() Origin {
+	if o == nil {
+		return Origin("")
+	}
+	return o.Origin
+}
+
+func (o *JoinedFrom) GetCommitID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommitID
+}
+
+func (o *JoinedFrom) GetRepoID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoID
+}
+
+func (o *JoinedFrom) GetRepoPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RepoPath
+}
+
+func (o *JoinedFrom) GetGitUserID() *GitUserID {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserID
+}
+
+func (o *JoinedFrom) GetGitUserLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserLogin
+}
+
+type RequestAccessToTeamRequestBody struct {
+	JoinedFrom JoinedFrom `json:"joinedFrom"`
+}
+
+func (o *RequestAccessToTeamRequestBody) GetJoinedFrom() JoinedFrom {
+	if o == nil {
+		return JoinedFrom{}
+	}
+	return o.JoinedFrom
+}
+
+type RequestAccessToTeamRequest struct {
+	TeamID      string                          `pathParam:"style=simple,explode=false,name=teamId"`
+	RequestBody *RequestAccessToTeamRequestBody `request:"mediaType=application/json"`
+}
+
+func (o *RequestAccessToTeamRequest) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
+}
+
+func (o *RequestAccessToTeamRequest) GetRequestBody() *RequestAccessToTeamRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+type RequestAccessToTeamOrigin string
 
 const (
-	OriginImport            Origin = "import"
-	OriginTeams             Origin = "teams"
-	OriginGithub            Origin = "github"
-	OriginGitlab            Origin = "gitlab"
-	OriginBitbucket         Origin = "bitbucket"
-	OriginFeedback          Origin = "feedback"
-	OriginOrganizationTeams Origin = "organization-teams"
+	RequestAccessToTeamOriginImport            RequestAccessToTeamOrigin = "import"
+	RequestAccessToTeamOriginTeams             RequestAccessToTeamOrigin = "teams"
+	RequestAccessToTeamOriginGithub            RequestAccessToTeamOrigin = "github"
+	RequestAccessToTeamOriginGitlab            RequestAccessToTeamOrigin = "gitlab"
+	RequestAccessToTeamOriginBitbucket         RequestAccessToTeamOrigin = "bitbucket"
+	RequestAccessToTeamOriginFeedback          RequestAccessToTeamOrigin = "feedback"
+	RequestAccessToTeamOriginOrganizationTeams RequestAccessToTeamOrigin = "organization-teams"
+	RequestAccessToTeamOriginMail              RequestAccessToTeamOrigin = "mail"
+	RequestAccessToTeamOriginLink              RequestAccessToTeamOrigin = "link"
+	RequestAccessToTeamOriginSaml              RequestAccessToTeamOrigin = "saml"
+	RequestAccessToTeamOriginDsync             RequestAccessToTeamOrigin = "dsync"
 )
 
-func (e Origin) ToPointer() *Origin {
+func (e RequestAccessToTeamOrigin) ToPointer() *RequestAccessToTeamOrigin {
 	return &e
 }
-func (e *Origin) UnmarshalJSON(data []byte) error {
+func (e *RequestAccessToTeamOrigin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -109,131 +241,19 @@ func (e *Origin) UnmarshalJSON(data []byte) error {
 	case "feedback":
 		fallthrough
 	case "organization-teams":
-		*e = Origin(v)
+		fallthrough
+	case "mail":
+		fallthrough
+	case "link":
+		fallthrough
+	case "saml":
+		fallthrough
+	case "dsync":
+		*e = RequestAccessToTeamOrigin(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Origin: %v", v)
+		return fmt.Errorf("invalid value for RequestAccessToTeamOrigin: %v", v)
 	}
-}
-
-type JoinedFrom struct {
-	// The commit sha if the origin is a git provider.
-	CommitID *string `json:"commitId,omitempty"`
-	// The ID of the Git account of the user who requests access.
-	GitUserID *GitUserID `json:"gitUserId,omitempty"`
-	// The login name for the Git account of the user who requests access.
-	GitUserLogin *string `json:"gitUserLogin,omitempty"`
-	// The origin of the request.
-	Origin Origin `json:"origin"`
-	// The ID of the repository for the given Git provider.
-	RepoID *string `json:"repoId,omitempty"`
-	// The path to the repository for the given Git provider.
-	RepoPath *string `json:"repoPath,omitempty"`
-}
-
-func (o *JoinedFrom) GetCommitID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CommitID
-}
-
-func (o *JoinedFrom) GetGitUserID() *GitUserID {
-	if o == nil {
-		return nil
-	}
-	return o.GitUserID
-}
-
-func (o *JoinedFrom) GetGitUserLogin() *string {
-	if o == nil {
-		return nil
-	}
-	return o.GitUserLogin
-}
-
-func (o *JoinedFrom) GetOrigin() Origin {
-	if o == nil {
-		return Origin("")
-	}
-	return o.Origin
-}
-
-func (o *JoinedFrom) GetRepoID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RepoID
-}
-
-func (o *JoinedFrom) GetRepoPath() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RepoPath
-}
-
-type RequestAccessToTeamRequestBody struct {
-	JoinedFrom JoinedFrom `json:"joinedFrom"`
-}
-
-func (o *RequestAccessToTeamRequestBody) GetJoinedFrom() JoinedFrom {
-	if o == nil {
-		return JoinedFrom{}
-	}
-	return o.JoinedFrom
-}
-
-type RequestAccessToTeamRequest struct {
-	RequestBody *RequestAccessToTeamRequestBody `request:"mediaType=application/json"`
-	TeamID      string                          `pathParam:"style=simple,explode=false,name=teamId"`
-}
-
-func (o *RequestAccessToTeamRequest) GetRequestBody() *RequestAccessToTeamRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
-}
-
-func (o *RequestAccessToTeamRequest) GetTeamID() string {
-	if o == nil {
-		return ""
-	}
-	return o.TeamID
-}
-
-type RequestAccessToTeamBitbucket struct {
-	Login *string `json:"login,omitempty"`
-}
-
-func (o *RequestAccessToTeamBitbucket) GetLogin() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Login
-}
-
-type RequestAccessToTeamGithub struct {
-	Login *string `json:"login,omitempty"`
-}
-
-func (o *RequestAccessToTeamGithub) GetLogin() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Login
-}
-
-type RequestAccessToTeamGitlab struct {
-	Login *string `json:"login,omitempty"`
-}
-
-func (o *RequestAccessToTeamGitlab) GetLogin() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Login
 }
 
 type RequestAccessToTeamGitUserIDType string
@@ -299,113 +319,18 @@ func (u RequestAccessToTeamGitUserID) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type RequestAccessToTeamGitUserID: all fields are null")
 }
 
-type RequestAccessToTeamOrigin string
-
-const (
-	RequestAccessToTeamOriginImport            RequestAccessToTeamOrigin = "import"
-	RequestAccessToTeamOriginTeams             RequestAccessToTeamOrigin = "teams"
-	RequestAccessToTeamOriginGithub            RequestAccessToTeamOrigin = "github"
-	RequestAccessToTeamOriginGitlab            RequestAccessToTeamOrigin = "gitlab"
-	RequestAccessToTeamOriginBitbucket         RequestAccessToTeamOrigin = "bitbucket"
-	RequestAccessToTeamOriginFeedback          RequestAccessToTeamOrigin = "feedback"
-	RequestAccessToTeamOriginOrganizationTeams RequestAccessToTeamOrigin = "organization-teams"
-	RequestAccessToTeamOriginMail              RequestAccessToTeamOrigin = "mail"
-	RequestAccessToTeamOriginLink              RequestAccessToTeamOrigin = "link"
-	RequestAccessToTeamOriginSaml              RequestAccessToTeamOrigin = "saml"
-	RequestAccessToTeamOriginDsync             RequestAccessToTeamOrigin = "dsync"
-)
-
-func (e RequestAccessToTeamOrigin) ToPointer() *RequestAccessToTeamOrigin {
-	return &e
-}
-func (e *RequestAccessToTeamOrigin) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "import":
-		fallthrough
-	case "teams":
-		fallthrough
-	case "github":
-		fallthrough
-	case "gitlab":
-		fallthrough
-	case "bitbucket":
-		fallthrough
-	case "feedback":
-		fallthrough
-	case "organization-teams":
-		fallthrough
-	case "mail":
-		fallthrough
-	case "link":
-		fallthrough
-	case "saml":
-		fallthrough
-	case "dsync":
-		*e = RequestAccessToTeamOrigin(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for RequestAccessToTeamOrigin: %v", v)
-	}
-}
-
 type RequestAccessToTeamJoinedFrom struct {
-	CommitID         *string                       `json:"commitId,omitempty"`
-	DsyncConnectedAt *float64                      `json:"dsyncConnectedAt,omitempty"`
-	DsyncUserID      *string                       `json:"dsyncUserId,omitempty"`
-	GitUserID        *RequestAccessToTeamGitUserID `json:"gitUserId,omitempty"`
-	GitUserLogin     *string                       `json:"gitUserLogin,omitempty"`
-	IdpUserID        *string                       `json:"idpUserId,omitempty"`
 	Origin           RequestAccessToTeamOrigin     `json:"origin"`
+	CommitID         *string                       `json:"commitId,omitempty"`
 	RepoID           *string                       `json:"repoId,omitempty"`
 	RepoPath         *string                       `json:"repoPath,omitempty"`
-	SsoConnectedAt   *float64                      `json:"ssoConnectedAt,omitempty"`
+	GitUserID        *RequestAccessToTeamGitUserID `json:"gitUserId,omitempty"`
+	GitUserLogin     *string                       `json:"gitUserLogin,omitempty"`
 	SsoUserID        *string                       `json:"ssoUserId,omitempty"`
-}
-
-func (o *RequestAccessToTeamJoinedFrom) GetCommitID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CommitID
-}
-
-func (o *RequestAccessToTeamJoinedFrom) GetDsyncConnectedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.DsyncConnectedAt
-}
-
-func (o *RequestAccessToTeamJoinedFrom) GetDsyncUserID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DsyncUserID
-}
-
-func (o *RequestAccessToTeamJoinedFrom) GetGitUserID() *RequestAccessToTeamGitUserID {
-	if o == nil {
-		return nil
-	}
-	return o.GitUserID
-}
-
-func (o *RequestAccessToTeamJoinedFrom) GetGitUserLogin() *string {
-	if o == nil {
-		return nil
-	}
-	return o.GitUserLogin
-}
-
-func (o *RequestAccessToTeamJoinedFrom) GetIdpUserID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.IdpUserID
+	SsoConnectedAt   *float64                      `json:"ssoConnectedAt,omitempty"`
+	IdpUserID        *string                       `json:"idpUserId,omitempty"`
+	DsyncUserID      *string                       `json:"dsyncUserId,omitempty"`
+	DsyncConnectedAt *float64                      `json:"dsyncConnectedAt,omitempty"`
 }
 
 func (o *RequestAccessToTeamJoinedFrom) GetOrigin() RequestAccessToTeamOrigin {
@@ -413,6 +338,13 @@ func (o *RequestAccessToTeamJoinedFrom) GetOrigin() RequestAccessToTeamOrigin {
 		return RequestAccessToTeamOrigin("")
 	}
 	return o.Origin
+}
+
+func (o *RequestAccessToTeamJoinedFrom) GetCommitID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CommitID
 }
 
 func (o *RequestAccessToTeamJoinedFrom) GetRepoID() *string {
@@ -429,11 +361,18 @@ func (o *RequestAccessToTeamJoinedFrom) GetRepoPath() *string {
 	return o.RepoPath
 }
 
-func (o *RequestAccessToTeamJoinedFrom) GetSsoConnectedAt() *float64 {
+func (o *RequestAccessToTeamJoinedFrom) GetGitUserID() *RequestAccessToTeamGitUserID {
 	if o == nil {
 		return nil
 	}
-	return o.SsoConnectedAt
+	return o.GitUserID
+}
+
+func (o *RequestAccessToTeamJoinedFrom) GetGitUserLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitUserLogin
 }
 
 func (o *RequestAccessToTeamJoinedFrom) GetSsoUserID() *string {
@@ -443,58 +382,84 @@ func (o *RequestAccessToTeamJoinedFrom) GetSsoUserID() *string {
 	return o.SsoUserID
 }
 
+func (o *RequestAccessToTeamJoinedFrom) GetSsoConnectedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.SsoConnectedAt
+}
+
+func (o *RequestAccessToTeamJoinedFrom) GetIdpUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdpUserID
+}
+
+func (o *RequestAccessToTeamJoinedFrom) GetDsyncUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DsyncUserID
+}
+
+func (o *RequestAccessToTeamJoinedFrom) GetDsyncConnectedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DsyncConnectedAt
+}
+
+type Github struct {
+	Login *string `json:"login,omitempty"`
+}
+
+func (o *Github) GetLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Login
+}
+
+type Gitlab struct {
+	Login *string `json:"login,omitempty"`
+}
+
+func (o *Gitlab) GetLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Login
+}
+
+type Bitbucket struct {
+	Login *string `json:"login,omitempty"`
+}
+
+func (o *Bitbucket) GetLogin() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Login
+}
+
 // RequestAccessToTeamResponseBody - Successfuly requested access to the team.
 type RequestAccessToTeamResponseBody struct {
-	AccessRequestedAt *float64                       `json:"accessRequestedAt,omitempty"`
-	Bitbucket         *RequestAccessToTeamBitbucket  `json:"bitbucket"`
-	Confirmed         *bool                          `json:"confirmed,omitempty"`
-	Github            *RequestAccessToTeamGithub     `json:"github"`
-	Gitlab            *RequestAccessToTeamGitlab     `json:"gitlab"`
-	JoinedFrom        *RequestAccessToTeamJoinedFrom `json:"joinedFrom,omitempty"`
-	TeamName          string                         `json:"teamName"`
 	TeamSlug          string                         `json:"teamSlug"`
+	TeamName          string                         `json:"teamName"`
+	Confirmed         *bool                          `json:"confirmed,omitempty"`
+	JoinedFrom        *RequestAccessToTeamJoinedFrom `json:"joinedFrom,omitempty"`
+	AccessRequestedAt *float64                       `json:"accessRequestedAt,omitempty"`
+	Github            *Github                        `json:"github"`
+	Gitlab            *Gitlab                        `json:"gitlab"`
+	Bitbucket         *Bitbucket                     `json:"bitbucket"`
 }
 
-func (o *RequestAccessToTeamResponseBody) GetAccessRequestedAt() *float64 {
+func (o *RequestAccessToTeamResponseBody) GetTeamSlug() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.AccessRequestedAt
-}
-
-func (o *RequestAccessToTeamResponseBody) GetBitbucket() *RequestAccessToTeamBitbucket {
-	if o == nil {
-		return nil
-	}
-	return o.Bitbucket
-}
-
-func (o *RequestAccessToTeamResponseBody) GetConfirmed() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Confirmed
-}
-
-func (o *RequestAccessToTeamResponseBody) GetGithub() *RequestAccessToTeamGithub {
-	if o == nil {
-		return nil
-	}
-	return o.Github
-}
-
-func (o *RequestAccessToTeamResponseBody) GetGitlab() *RequestAccessToTeamGitlab {
-	if o == nil {
-		return nil
-	}
-	return o.Gitlab
-}
-
-func (o *RequestAccessToTeamResponseBody) GetJoinedFrom() *RequestAccessToTeamJoinedFrom {
-	if o == nil {
-		return nil
-	}
-	return o.JoinedFrom
+	return o.TeamSlug
 }
 
 func (o *RequestAccessToTeamResponseBody) GetTeamName() string {
@@ -504,11 +469,46 @@ func (o *RequestAccessToTeamResponseBody) GetTeamName() string {
 	return o.TeamName
 }
 
-func (o *RequestAccessToTeamResponseBody) GetTeamSlug() string {
+func (o *RequestAccessToTeamResponseBody) GetConfirmed() *bool {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.TeamSlug
+	return o.Confirmed
+}
+
+func (o *RequestAccessToTeamResponseBody) GetJoinedFrom() *RequestAccessToTeamJoinedFrom {
+	if o == nil {
+		return nil
+	}
+	return o.JoinedFrom
+}
+
+func (o *RequestAccessToTeamResponseBody) GetAccessRequestedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.AccessRequestedAt
+}
+
+func (o *RequestAccessToTeamResponseBody) GetGithub() *Github {
+	if o == nil {
+		return nil
+	}
+	return o.Github
+}
+
+func (o *RequestAccessToTeamResponseBody) GetGitlab() *Gitlab {
+	if o == nil {
+		return nil
+	}
+	return o.Gitlab
+}
+
+func (o *RequestAccessToTeamResponseBody) GetBitbucket() *Bitbucket {
+	if o == nil {
+		return nil
+	}
+	return o.Bitbucket
 }
 
 type RequestAccessToTeamResponse struct {

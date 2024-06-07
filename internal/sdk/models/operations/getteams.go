@@ -5,8 +5,8 @@ package operations
 import (
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
 
@@ -105,16 +105,9 @@ func (u Teams) MarshalJSON() ([]byte, error) {
 
 // GetTeamsResponseBody - A paginated list of teams.
 type GetTeamsResponseBody struct {
+	Teams []Teams `json:"teams"`
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 	Pagination shared.Pagination `json:"pagination"`
-	Teams      []Teams           `json:"teams"`
-}
-
-func (o *GetTeamsResponseBody) GetPagination() shared.Pagination {
-	if o == nil {
-		return shared.Pagination{}
-	}
-	return o.Pagination
 }
 
 func (o *GetTeamsResponseBody) GetTeams() []Teams {
@@ -122,6 +115,13 @@ func (o *GetTeamsResponseBody) GetTeams() []Teams {
 		return []Teams{}
 	}
 	return o.Teams
+}
+
+func (o *GetTeamsResponseBody) GetPagination() shared.Pagination {
+	if o == nil {
+		return shared.Pagination{}
+	}
+	return o.Pagination
 }
 
 type GetTeamsResponse struct {

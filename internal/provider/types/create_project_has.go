@@ -5,7 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type CreateProjectHas struct {
-	Key   types.String                `tfsdk:"key"`
-	Type  types.String                `tfsdk:"type"`
-	Value *CreateProjectProjectsValue `tfsdk:"value"`
+	Key   types.String        `tfsdk:"key"`
+	Type  types.String        `tfsdk:"type"`
+	Value *CreateProjectValue `tfsdk:"value"`
 }

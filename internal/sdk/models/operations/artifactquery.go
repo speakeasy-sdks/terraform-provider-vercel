@@ -5,7 +5,7 @@ package operations
 import (
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 )
 
@@ -22,18 +22,18 @@ func (o *ArtifactQueryRequestBody) GetHashes() []string {
 }
 
 type ArtifactQueryRequest struct {
-	RequestBody *ArtifactQueryRequestBody `request:"mediaType=application/json"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                   `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *ArtifactQueryRequestBody `request:"mediaType=application/json"`
 }
 
-func (o *ArtifactQueryRequest) GetRequestBody() *ArtifactQueryRequestBody {
+func (o *ArtifactQueryRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.RequestBody
+	return o.TeamID
 }
 
 func (o *ArtifactQueryRequest) GetSlug() *string {
@@ -43,11 +43,11 @@ func (o *ArtifactQueryRequest) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *ArtifactQueryRequest) GetTeamID() *string {
+func (o *ArtifactQueryRequest) GetRequestBody() *ArtifactQueryRequestBody {
 	if o == nil {
 		return nil
 	}
-	return o.TeamID
+	return o.RequestBody
 }
 
 type Error struct {
@@ -61,89 +61,89 @@ func (o *Error) GetMessage() string {
 	return o.Message
 }
 
-type ArtifactQuery2 struct {
+type ArtifactQueryResponseBody2 struct {
 	Error Error `json:"error"`
 }
 
-func (o *ArtifactQuery2) GetError() Error {
+func (o *ArtifactQueryResponseBody2) GetError() Error {
 	if o == nil {
 		return Error{}
 	}
 	return o.Error
 }
 
-type ArtifactQuery1 struct {
+type ArtifactQueryResponseBody1 struct {
 	Size           float64 `json:"size"`
-	Tag            *string `json:"tag,omitempty"`
 	TaskDurationMs float64 `json:"taskDurationMs"`
+	Tag            *string `json:"tag,omitempty"`
 }
 
-func (o *ArtifactQuery1) GetSize() float64 {
+func (o *ArtifactQueryResponseBody1) GetSize() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.Size
 }
 
-func (o *ArtifactQuery1) GetTag() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Tag
-}
-
-func (o *ArtifactQuery1) GetTaskDurationMs() float64 {
+func (o *ArtifactQueryResponseBody1) GetTaskDurationMs() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.TaskDurationMs
 }
 
-type ResponseBodyType string
+func (o *ArtifactQueryResponseBody1) GetTag() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Tag
+}
+
+type ResponseBodyUnionType string
 
 const (
-	ResponseBodyTypeArtifactQuery1 ResponseBodyType = "artifactQuery_1"
-	ResponseBodyTypeArtifactQuery2 ResponseBodyType = "artifactQuery_2"
+	ResponseBodyUnionTypeArtifactQueryResponseBody1 ResponseBodyUnionType = "artifactQuery_responseBody_1"
+	ResponseBodyUnionTypeArtifactQueryResponseBody2 ResponseBodyUnionType = "artifactQuery_responseBody_2"
 )
 
 type ResponseBody struct {
-	ArtifactQuery1 *ArtifactQuery1
-	ArtifactQuery2 *ArtifactQuery2
+	ArtifactQueryResponseBody1 *ArtifactQueryResponseBody1
+	ArtifactQueryResponseBody2 *ArtifactQueryResponseBody2
 
-	Type ResponseBodyType
+	Type ResponseBodyUnionType
 }
 
-func CreateResponseBodyArtifactQuery1(artifactQuery1 ArtifactQuery1) ResponseBody {
-	typ := ResponseBodyTypeArtifactQuery1
+func CreateResponseBodyArtifactQueryResponseBody1(artifactQueryResponseBody1 ArtifactQueryResponseBody1) ResponseBody {
+	typ := ResponseBodyUnionTypeArtifactQueryResponseBody1
 
 	return ResponseBody{
-		ArtifactQuery1: &artifactQuery1,
-		Type:           typ,
+		ArtifactQueryResponseBody1: &artifactQueryResponseBody1,
+		Type:                       typ,
 	}
 }
 
-func CreateResponseBodyArtifactQuery2(artifactQuery2 ArtifactQuery2) ResponseBody {
-	typ := ResponseBodyTypeArtifactQuery2
+func CreateResponseBodyArtifactQueryResponseBody2(artifactQueryResponseBody2 ArtifactQueryResponseBody2) ResponseBody {
+	typ := ResponseBodyUnionTypeArtifactQueryResponseBody2
 
 	return ResponseBody{
-		ArtifactQuery2: &artifactQuery2,
-		Type:           typ,
+		ArtifactQueryResponseBody2: &artifactQueryResponseBody2,
+		Type:                       typ,
 	}
 }
 
 func (u *ResponseBody) UnmarshalJSON(data []byte) error {
 
-	var artifactQuery2 ArtifactQuery2 = ArtifactQuery2{}
-	if err := utils.UnmarshalJSON(data, &artifactQuery2, "", true, true); err == nil {
-		u.ArtifactQuery2 = &artifactQuery2
-		u.Type = ResponseBodyTypeArtifactQuery2
+	var artifactQueryResponseBody2 ArtifactQueryResponseBody2 = ArtifactQueryResponseBody2{}
+	if err := utils.UnmarshalJSON(data, &artifactQueryResponseBody2, "", true, true); err == nil {
+		u.ArtifactQueryResponseBody2 = &artifactQueryResponseBody2
+		u.Type = ResponseBodyUnionTypeArtifactQueryResponseBody2
 		return nil
 	}
 
-	var artifactQuery1 ArtifactQuery1 = ArtifactQuery1{}
-	if err := utils.UnmarshalJSON(data, &artifactQuery1, "", true, true); err == nil {
-		u.ArtifactQuery1 = &artifactQuery1
-		u.Type = ResponseBodyTypeArtifactQuery1
+	var artifactQueryResponseBody1 ArtifactQueryResponseBody1 = ArtifactQueryResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &artifactQueryResponseBody1, "", true, true); err == nil {
+		u.ArtifactQueryResponseBody1 = &artifactQueryResponseBody1
+		u.Type = ResponseBodyUnionTypeArtifactQueryResponseBody1
 		return nil
 	}
 
@@ -151,12 +151,12 @@ func (u *ResponseBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u ResponseBody) MarshalJSON() ([]byte, error) {
-	if u.ArtifactQuery1 != nil {
-		return utils.MarshalJSON(u.ArtifactQuery1, "", true)
+	if u.ArtifactQueryResponseBody1 != nil {
+		return utils.MarshalJSON(u.ArtifactQueryResponseBody1, "", true)
 	}
 
-	if u.ArtifactQuery2 != nil {
-		return utils.MarshalJSON(u.ArtifactQuery2, "", true)
+	if u.ArtifactQueryResponseBody2 != nil {
+		return utils.MarshalJSON(u.ArtifactQueryResponseBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type ResponseBody: all fields are null")

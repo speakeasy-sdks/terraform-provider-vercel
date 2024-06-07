@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 )
 
@@ -46,10 +46,10 @@ type GitNamespacesRequest struct {
 	// The custom Git host if using a custom Git provider, like GitHub Enterprise Server
 	Host     *string   `queryParam:"style=form,explode=true,name=host"`
 	Provider *Provider `queryParam:"style=form,explode=true,name=provider"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GitNamespacesRequest) GetHost() *string {
@@ -66,18 +66,18 @@ func (o *GitNamespacesRequest) GetProvider() *Provider {
 	return o.Provider
 }
 
-func (o *GitNamespacesRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *GitNamespacesRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *GitNamespacesRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 type IDType string
@@ -144,49 +144,14 @@ func (u ID) MarshalJSON() ([]byte, error) {
 }
 
 type GitNamespacesResponseBody struct {
-	ID                 ID       `json:"id"`
-	InstallationID     *float64 `json:"installationId,omitempty"`
-	IsAccessRestricted *bool    `json:"isAccessRestricted,omitempty"`
-	Name               *string  `json:"name,omitempty"`
-	OwnerType          string   `json:"ownerType"`
 	Provider           string   `json:"provider"`
-	RequireReauth      *bool    `json:"requireReauth,omitempty"`
 	Slug               string   `json:"slug"`
-}
-
-func (o *GitNamespacesResponseBody) GetID() ID {
-	if o == nil {
-		return ID{}
-	}
-	return o.ID
-}
-
-func (o *GitNamespacesResponseBody) GetInstallationID() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.InstallationID
-}
-
-func (o *GitNamespacesResponseBody) GetIsAccessRestricted() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IsAccessRestricted
-}
-
-func (o *GitNamespacesResponseBody) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *GitNamespacesResponseBody) GetOwnerType() string {
-	if o == nil {
-		return ""
-	}
-	return o.OwnerType
+	ID                 ID       `json:"id"`
+	OwnerType          string   `json:"ownerType"`
+	Name               *string  `json:"name,omitempty"`
+	IsAccessRestricted *bool    `json:"isAccessRestricted,omitempty"`
+	InstallationID     *float64 `json:"installationId,omitempty"`
+	RequireReauth      *bool    `json:"requireReauth,omitempty"`
 }
 
 func (o *GitNamespacesResponseBody) GetProvider() string {
@@ -196,18 +161,53 @@ func (o *GitNamespacesResponseBody) GetProvider() string {
 	return o.Provider
 }
 
-func (o *GitNamespacesResponseBody) GetRequireReauth() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.RequireReauth
-}
-
 func (o *GitNamespacesResponseBody) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
+}
+
+func (o *GitNamespacesResponseBody) GetID() ID {
+	if o == nil {
+		return ID{}
+	}
+	return o.ID
+}
+
+func (o *GitNamespacesResponseBody) GetOwnerType() string {
+	if o == nil {
+		return ""
+	}
+	return o.OwnerType
+}
+
+func (o *GitNamespacesResponseBody) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *GitNamespacesResponseBody) GetIsAccessRestricted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsAccessRestricted
+}
+
+func (o *GitNamespacesResponseBody) GetInstallationID() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.InstallationID
+}
+
+func (o *GitNamespacesResponseBody) GetRequireReauth() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireReauth
 }
 
 type GitNamespacesResponse struct {
@@ -216,8 +216,8 @@ type GitNamespacesResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse *http.Response
-	Classes     []GitNamespacesResponseBody
+	RawResponse    *http.Response
+	ResponseBodies []GitNamespacesResponseBody
 }
 
 func (o *GitNamespacesResponse) GetContentType() string {
@@ -241,9 +241,9 @@ func (o *GitNamespacesResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GitNamespacesResponse) GetClasses() []GitNamespacesResponseBody {
+func (o *GitNamespacesResponse) GetResponseBodies() []GitNamespacesResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.Classes
+	return o.ResponseBodies
 }

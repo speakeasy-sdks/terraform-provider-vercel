@@ -8,20 +8,20 @@ import (
 	"net/http"
 )
 
-// RedirectStatusCode - Status code for domain redirect
-type RedirectStatusCode int64
+// AddProjectDomainRedirectStatusCode - Status code for domain redirect
+type AddProjectDomainRedirectStatusCode int64
 
 const (
-	RedirectStatusCodeThreeHundredAndOne   RedirectStatusCode = 301
-	RedirectStatusCodeThreeHundredAndTwo   RedirectStatusCode = 302
-	RedirectStatusCodeThreeHundredAndSeven RedirectStatusCode = 307
-	RedirectStatusCodeThreeHundredAndEight RedirectStatusCode = 308
+	AddProjectDomainRedirectStatusCodeThreeHundredAndOne   AddProjectDomainRedirectStatusCode = 301
+	AddProjectDomainRedirectStatusCodeThreeHundredAndTwo   AddProjectDomainRedirectStatusCode = 302
+	AddProjectDomainRedirectStatusCodeThreeHundredAndSeven AddProjectDomainRedirectStatusCode = 307
+	AddProjectDomainRedirectStatusCodeThreeHundredAndEight AddProjectDomainRedirectStatusCode = 308
 )
 
-func (e RedirectStatusCode) ToPointer() *RedirectStatusCode {
+func (e AddProjectDomainRedirectStatusCode) ToPointer() *AddProjectDomainRedirectStatusCode {
 	return &e
 }
-func (e *RedirectStatusCode) UnmarshalJSON(data []byte) error {
+func (e *AddProjectDomainRedirectStatusCode) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -34,38 +34,24 @@ func (e *RedirectStatusCode) UnmarshalJSON(data []byte) error {
 	case 307:
 		fallthrough
 	case 308:
-		*e = RedirectStatusCode(v)
+		*e = AddProjectDomainRedirectStatusCode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RedirectStatusCode: %v", v)
+		return fmt.Errorf("invalid value for AddProjectDomainRedirectStatusCode: %v", v)
 	}
 }
 
 type AddProjectDomainRequestBody struct {
-	// The unique custom environment identifier within the project
-	CustomEnvironmentID *string `json:"customEnvironmentId,omitempty"`
-	// Git branch to link the project domain
-	GitBranch *string `json:"gitBranch,omitempty"`
 	// The project domain name
 	Name string `json:"name"`
+	// Git branch to link the project domain
+	GitBranch *string `json:"gitBranch,omitempty"`
+	// The unique custom environment identifier within the project
+	CustomEnvironmentID *string `json:"customEnvironmentId,omitempty"`
 	// Target destination domain for redirect
 	Redirect *string `json:"redirect,omitempty"`
 	// Status code for domain redirect
-	RedirectStatusCode *RedirectStatusCode `json:"redirectStatusCode,omitempty"`
-}
-
-func (o *AddProjectDomainRequestBody) GetCustomEnvironmentID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CustomEnvironmentID
-}
-
-func (o *AddProjectDomainRequestBody) GetGitBranch() *string {
-	if o == nil {
-		return nil
-	}
-	return o.GitBranch
+	RedirectStatusCode *AddProjectDomainRedirectStatusCode `json:"redirectStatusCode,omitempty"`
 }
 
 func (o *AddProjectDomainRequestBody) GetName() string {
@@ -75,6 +61,20 @@ func (o *AddProjectDomainRequestBody) GetName() string {
 	return o.Name
 }
 
+func (o *AddProjectDomainRequestBody) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *AddProjectDomainRequestBody) GetCustomEnvironmentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomEnvironmentID
+}
+
 func (o *AddProjectDomainRequestBody) GetRedirect() *string {
 	if o == nil {
 		return nil
@@ -82,7 +82,7 @@ func (o *AddProjectDomainRequestBody) GetRedirect() *string {
 	return o.Redirect
 }
 
-func (o *AddProjectDomainRequestBody) GetRedirectStatusCode() *RedirectStatusCode {
+func (o *AddProjectDomainRequestBody) GetRedirectStatusCode() *AddProjectDomainRedirectStatusCode {
 	if o == nil {
 		return nil
 	}
@@ -90,20 +90,13 @@ func (o *AddProjectDomainRequestBody) GetRedirectStatusCode() *RedirectStatusCod
 }
 
 type AddProjectDomainRequest struct {
-	RequestBody *AddProjectDomainRequestBody `request:"mediaType=application/json"`
 	// The unique project identifier or the project name
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *AddProjectDomainRequest) GetRequestBody() *AddProjectDomainRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                      `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *AddProjectDomainRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *AddProjectDomainRequest) GetIDOrName() string {
@@ -113,13 +106,6 @@ func (o *AddProjectDomainRequest) GetIDOrName() string {
 	return o.IDOrName
 }
 
-func (o *AddProjectDomainRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *AddProjectDomainRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -127,85 +113,71 @@ func (o *AddProjectDomainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// Verification - A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
-type Verification struct {
-	Domain string `json:"domain"`
-	Reason string `json:"reason"`
+func (o *AddProjectDomainRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *AddProjectDomainRequest) GetRequestBody() *AddProjectDomainRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+// AddProjectDomainVerification - A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
+type AddProjectDomainVerification struct {
 	Type   string `json:"type"`
+	Domain string `json:"domain"`
 	Value  string `json:"value"`
+	Reason string `json:"reason"`
 }
 
-func (o *Verification) GetDomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Domain
-}
-
-func (o *Verification) GetReason() string {
-	if o == nil {
-		return ""
-	}
-	return o.Reason
-}
-
-func (o *Verification) GetType() string {
+func (o *AddProjectDomainVerification) GetType() string {
 	if o == nil {
 		return ""
 	}
 	return o.Type
 }
 
-func (o *Verification) GetValue() string {
+func (o *AddProjectDomainVerification) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
+}
+
+func (o *AddProjectDomainVerification) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-// AddProjectDomainResponseBody - The domain was successfully added to the project
-type AddProjectDomainResponseBody struct {
-	ApexName            string   `json:"apexName"`
-	CreatedAt           *float64 `json:"createdAt,omitempty"`
-	CustomEnvironmentID *string  `json:"customEnvironmentId,omitempty"`
-	GitBranch           *string  `json:"gitBranch,omitempty"`
-	Name                string   `json:"name"`
-	ProjectID           string   `json:"projectId"`
-	Redirect            *string  `json:"redirect,omitempty"`
-	RedirectStatusCode  *float64 `json:"redirectStatusCode,omitempty"`
-	UpdatedAt           *float64 `json:"updatedAt,omitempty"`
-	// A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
-	Verification []Verification `json:"verification,omitempty"`
-	// `true` if the domain is verified for use with the project. If `false` it will not be used as an alias on this project until the challenge in `verification` is completed.
-	Verified bool `json:"verified"`
-}
-
-func (o *AddProjectDomainResponseBody) GetApexName() string {
+func (o *AddProjectDomainVerification) GetReason() string {
 	if o == nil {
 		return ""
 	}
-	return o.ApexName
+	return o.Reason
 }
 
-func (o *AddProjectDomainResponseBody) GetCreatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedAt
-}
-
-func (o *AddProjectDomainResponseBody) GetCustomEnvironmentID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CustomEnvironmentID
-}
-
-func (o *AddProjectDomainResponseBody) GetGitBranch() *string {
-	if o == nil {
-		return nil
-	}
-	return o.GitBranch
+// AddProjectDomainResponseBody - The domain was successfully added to the project
+type AddProjectDomainResponseBody struct {
+	Name                string   `json:"name"`
+	ApexName            string   `json:"apexName"`
+	ProjectID           string   `json:"projectId"`
+	Redirect            *string  `json:"redirect,omitempty"`
+	RedirectStatusCode  *float64 `json:"redirectStatusCode,omitempty"`
+	GitBranch           *string  `json:"gitBranch,omitempty"`
+	CustomEnvironmentID *string  `json:"customEnvironmentId,omitempty"`
+	UpdatedAt           *float64 `json:"updatedAt,omitempty"`
+	CreatedAt           *float64 `json:"createdAt,omitempty"`
+	// `true` if the domain is verified for use with the project. If `false` it will not be used as an alias on this project until the challenge in `verification` is completed.
+	Verified bool `json:"verified"`
+	// A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
+	Verification []AddProjectDomainVerification `json:"verification,omitempty"`
 }
 
 func (o *AddProjectDomainResponseBody) GetName() string {
@@ -213,6 +185,13 @@ func (o *AddProjectDomainResponseBody) GetName() string {
 		return ""
 	}
 	return o.Name
+}
+
+func (o *AddProjectDomainResponseBody) GetApexName() string {
+	if o == nil {
+		return ""
+	}
+	return o.ApexName
 }
 
 func (o *AddProjectDomainResponseBody) GetProjectID() string {
@@ -236,6 +215,20 @@ func (o *AddProjectDomainResponseBody) GetRedirectStatusCode() *float64 {
 	return o.RedirectStatusCode
 }
 
+func (o *AddProjectDomainResponseBody) GetGitBranch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GitBranch
+}
+
+func (o *AddProjectDomainResponseBody) GetCustomEnvironmentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomEnvironmentID
+}
+
 func (o *AddProjectDomainResponseBody) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
@@ -243,11 +236,11 @@ func (o *AddProjectDomainResponseBody) GetUpdatedAt() *float64 {
 	return o.UpdatedAt
 }
 
-func (o *AddProjectDomainResponseBody) GetVerification() []Verification {
+func (o *AddProjectDomainResponseBody) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
-	return o.Verification
+	return o.CreatedAt
 }
 
 func (o *AddProjectDomainResponseBody) GetVerified() bool {
@@ -255,6 +248,13 @@ func (o *AddProjectDomainResponseBody) GetVerified() bool {
 		return false
 	}
 	return o.Verified
+}
+
+func (o *AddProjectDomainResponseBody) GetVerification() []AddProjectDomainVerification {
+	if o == nil {
+		return nil
+	}
+	return o.Verification
 }
 
 type AddProjectDomainResponse struct {

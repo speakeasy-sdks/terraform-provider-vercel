@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 )
 
 func (r *EdgeConfigSchemaDataSourceModel) RefreshFromOperationsGetEdgeConfigSchemaResponseBody(resp *operations.GetEdgeConfigSchemaResponseBody) {

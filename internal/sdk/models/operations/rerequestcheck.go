@@ -7,21 +7,14 @@ import (
 )
 
 type RerequestCheckRequest struct {
-	// The check to rerun
-	CheckID string `pathParam:"style=simple,explode=false,name=checkId"`
 	// The deployment to rerun the check for.
 	DeploymentID string `pathParam:"style=simple,explode=false,name=deploymentId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The check to rerun
+	CheckID string `pathParam:"style=simple,explode=false,name=checkId"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *RerequestCheckRequest) GetCheckID() string {
-	if o == nil {
-		return ""
-	}
-	return o.CheckID
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *RerequestCheckRequest) GetDeploymentID() string {
@@ -31,11 +24,11 @@ func (o *RerequestCheckRequest) GetDeploymentID() string {
 	return o.DeploymentID
 }
 
-func (o *RerequestCheckRequest) GetSlug() *string {
+func (o *RerequestCheckRequest) GetCheckID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Slug
+	return o.CheckID
 }
 
 func (o *RerequestCheckRequest) GetTeamID() *string {
@@ -43,6 +36,13 @@ func (o *RerequestCheckRequest) GetTeamID() *string {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *RerequestCheckRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 type RerequestCheckResponseBody struct {

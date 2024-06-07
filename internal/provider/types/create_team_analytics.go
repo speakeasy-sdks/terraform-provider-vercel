@@ -5,14 +5,14 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type CreateTeamAnalytics struct {
-	CreatedAt       types.Number                                                                                `tfsdk:"created_at"`
-	DisabledAt      types.Number                                                                                `tfsdk:"disabled_at"`
-	Frequency       *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency `tfsdk:"frequency"`
-	Hidden          types.Bool                                                                                  `tfsdk:"hidden"`
-	HighestQuantity types.Number                                                                                `tfsdk:"highest_quantity"`
-	MaxQuantity     types.Number                                                                                `tfsdk:"max_quantity"`
-	Name            types.String                                                                                `tfsdk:"name"`
-	Price           types.Number                                                                                `tfsdk:"price"`
-	Quantity        types.Number                                                                                `tfsdk:"quantity"`
-	Tier            types.Number                                                                                `tfsdk:"tier"`
+	CreatedAt       types.Number              `tfsdk:"created_at"`
+	DisabledAt      types.Number              `tfsdk:"disabled_at"`
+	Frequency       *CreateTeamTeamsFrequency `tfsdk:"frequency"`
+	Hidden          types.Bool                `tfsdk:"hidden"`
+	HighestQuantity types.Number              `tfsdk:"highest_quantity"`
+	MaxQuantity     types.Number              `tfsdk:"max_quantity"`
+	Name            types.String              `tfsdk:"name"`
+	Price           types.Number              `tfsdk:"price"`
+	Quantity        types.Number              `tfsdk:"quantity"`
+	Tier            types.Number              `tfsdk:"tier"`
 }

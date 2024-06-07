@@ -9,10 +9,10 @@ import (
 type RemoveRecordRequest struct {
 	Domain   string `pathParam:"style=simple,explode=false,name=domain"`
 	RecordID string `pathParam:"style=simple,explode=false,name=recordId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *RemoveRecordRequest) GetDomain() string {
@@ -29,18 +29,18 @@ func (o *RemoveRecordRequest) GetRecordID() string {
 	return o.RecordID
 }
 
-func (o *RemoveRecordRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *RemoveRecordRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *RemoveRecordRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 // RemoveRecordResponseBody - Successful response by removing the specified DNS record.

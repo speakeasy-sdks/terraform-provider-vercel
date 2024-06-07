@@ -48,20 +48,41 @@ func (e *Type) UnmarshalJSON(data []byte) error {
 
 // FileTree - A deployment file tree entry
 type FileTree struct {
+	// The name of the file tree entry
+	Name string `json:"name"`
+	// String indicating the type of file tree entry.
+	Type Type `json:"type"`
+	// The unique identifier of the file (only valid for the `file` type)
+	UID *string `json:"uid,omitempty"`
 	// The list of children files of the directory (only valid for the `directory` type)
 	Children []FileTree `json:"children,omitempty"`
 	// The content-type of the file (only valid for the `file` type)
 	ContentType *string `json:"contentType,omitempty"`
 	// The file "mode" indicating file type and permissions.
 	Mode float64 `json:"mode"`
-	// The name of the file tree entry
-	Name string `json:"name"`
 	// Not currently used. See `file-list-to-tree.ts`.
 	Symlink *string `json:"symlink,omitempty"`
-	// String indicating the type of file tree entry.
-	Type Type `json:"type"`
-	// The unique identifier of the file (only valid for the `file` type)
-	UID *string `json:"uid,omitempty"`
+}
+
+func (o *FileTree) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *FileTree) GetType() Type {
+	if o == nil {
+		return Type("")
+	}
+	return o.Type
+}
+
+func (o *FileTree) GetUID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UID
 }
 
 func (o *FileTree) GetChildren() []FileTree {
@@ -85,30 +106,9 @@ func (o *FileTree) GetMode() float64 {
 	return o.Mode
 }
 
-func (o *FileTree) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
 func (o *FileTree) GetSymlink() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Symlink
-}
-
-func (o *FileTree) GetType() Type {
-	if o == nil {
-		return Type("")
-	}
-	return o.Type
-}
-
-func (o *FileTree) GetUID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.UID
 }

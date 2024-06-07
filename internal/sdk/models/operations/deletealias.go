@@ -11,10 +11,10 @@ import (
 type DeleteAliasRequest struct {
 	// The ID or alias that will be removed
 	AliasID string `pathParam:"style=simple,explode=false,name=aliasId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *DeleteAliasRequest) GetAliasID() string {
@@ -24,18 +24,18 @@ func (o *DeleteAliasRequest) GetAliasID() string {
 	return o.AliasID
 }
 
-func (o *DeleteAliasRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *DeleteAliasRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *DeleteAliasRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 type DeleteAliasStatus string

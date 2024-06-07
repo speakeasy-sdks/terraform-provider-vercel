@@ -16,9 +16,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -31,19 +31,19 @@ func NewMemberResource() resource.Resource {
 
 // MemberResource defines the resource implementation.
 type MemberResource struct {
-	client *sdk.Vercel
+	client *sdk.SDK
 }
 
 // MemberResourceModel describes the resource data model.
 type MemberResourceModel struct {
-	ID       types.String               `tfsdk:"id"`
-	IDOrName types.String               `tfsdk:"id_or_name"`
-	One      *tfTypes.AddProjectMember1 `tfsdk:"one" tfPlanOnly:"true"`
-	Slug     types.String               `tfsdk:"slug"`
-	TeamID   types.String               `tfsdk:"team_id"`
-	Three    *tfTypes.AddProjectMember3 `tfsdk:"three" tfPlanOnly:"true"`
-	Two      *tfTypes.AddProjectMember2 `tfsdk:"two" tfPlanOnly:"true"`
-	UID      types.String               `tfsdk:"uid"`
+	ID       types.String                          `tfsdk:"id"`
+	IDOrName types.String                          `tfsdk:"id_or_name"`
+	One      *tfTypes.AddProjectMemberRequestBody1 `tfsdk:"one" tfPlanOnly:"true"`
+	Slug     types.String                          `tfsdk:"slug"`
+	TeamID   types.String                          `tfsdk:"team_id"`
+	Three    *tfTypes.AddProjectMemberRequestBody3 `tfsdk:"three" tfPlanOnly:"true"`
+	Two      *tfTypes.AddProjectMemberRequestBody2 `tfsdk:"two" tfPlanOnly:"true"`
+	UID      types.String                          `tfsdk:"uid"`
 }
 
 func (r *MemberResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -242,12 +242,12 @@ func (r *MemberResource) Configure(ctx context.Context, req resource.ConfigureRe
 		return
 	}
 
-	client, ok := req.ProviderData.(*sdk.Vercel)
+	client, ok := req.ProviderData.(*sdk.SDK)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *sdk.Vercel, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -274,25 +274,25 @@ func (r *MemberResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 
-	requestBody := data.ToOperationsAddProjectMemberRequestBody()
 	idOrName := data.IDOrName.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
+	requestBody := data.ToOperationsAddProjectMemberRequestBody()
 	request := operations.AddProjectMemberRequest{
-		RequestBody: requestBody,
 		IDOrName:    idOrName,
-		Slug:        slug,
 		TeamID:      teamID,
+		Slug:        slug,
+		RequestBody: requestBody,
 	}
 	res, err := r.client.ProjectMembers.Create(ctx, request)
 	if err != nil {
@@ -384,24 +384,24 @@ func (r *MemberResource) Delete(ctx context.Context, req resource.DeleteRequest,
 	}
 
 	idOrName := data.IDOrName.ValueString()
-	slug := new(string)
-	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
-		*slug = data.Slug.ValueString()
-	} else {
-		slug = nil
-	}
+	uid := data.UID.ValueString()
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
 	} else {
 		teamID = nil
 	}
-	uid := data.UID.ValueString()
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
 	request := operations.RemoveProjectMemberRequest{
 		IDOrName: idOrName,
-		Slug:     slug,
-		TeamID:   teamID,
 		UID:      uid,
+		TeamID:   teamID,
+		Slug:     slug,
 	}
 	res, err := r.client.ProjectMembers.Delete(ctx, request)
 	if err != nil {

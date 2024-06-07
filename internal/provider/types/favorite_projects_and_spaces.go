@@ -3,6 +3,6 @@
 package types
 
 type FavoriteProjectsAndSpaces struct {
-	One *AuthUser1 `tfsdk:"one" tfPlanOnly:"true"`
-	Two *AuthUser2 `tfsdk:"two" tfPlanOnly:"true"`
+	One *FavoriteProjectsAndSpaces1 `tfsdk:"one" tfPlanOnly:"true"`
+	Two *FavoriteProjectsAndSpaces2 `tfsdk:"two" tfPlanOnly:"true"`
 }

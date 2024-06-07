@@ -3,16 +3,16 @@
 package operations
 
 import (
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
 
 type GetEdgeConfigTokensRequest struct {
 	EdgeConfigID string `pathParam:"style=simple,explode=false,name=edgeConfigId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetEdgeConfigTokensRequest) GetEdgeConfigID() string {
@@ -22,13 +22,6 @@ func (o *GetEdgeConfigTokensRequest) GetEdgeConfigID() string {
 	return o.EdgeConfigID
 }
 
-func (o *GetEdgeConfigTokensRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *GetEdgeConfigTokensRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -36,15 +29,22 @@ func (o *GetEdgeConfigTokensRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
+func (o *GetEdgeConfigTokensRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 type GetEdgeConfigTokensResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// The EdgeConfig.
-	EdgeConfigToken *shared.EdgeConfigToken
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// The EdgeConfig.
+	EdgeConfigToken *shared.EdgeConfigToken
 }
 
 func (o *GetEdgeConfigTokensResponse) GetContentType() string {
@@ -52,13 +52,6 @@ func (o *GetEdgeConfigTokensResponse) GetContentType() string {
 		return ""
 	}
 	return o.ContentType
-}
-
-func (o *GetEdgeConfigTokensResponse) GetEdgeConfigToken() *shared.EdgeConfigToken {
-	if o == nil {
-		return nil
-	}
-	return o.EdgeConfigToken
 }
 
 func (o *GetEdgeConfigTokensResponse) GetStatusCode() int {
@@ -73,4 +66,11 @@ func (o *GetEdgeConfigTokensResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *GetEdgeConfigTokensResponse) GetEdgeConfigToken() *shared.EdgeConfigToken {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeConfigToken
 }

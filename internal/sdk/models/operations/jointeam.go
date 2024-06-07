@@ -19,15 +19,8 @@ func (o *JoinTeamRequestBody) GetInviteCode() *string {
 }
 
 type JoinTeamRequest struct {
-	RequestBody *JoinTeamRequestBody `request:"mediaType=application/json"`
 	TeamID      string               `pathParam:"style=simple,explode=false,name=teamId"`
-}
-
-func (o *JoinTeamRequest) GetRequestBody() *JoinTeamRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
+	RequestBody *JoinTeamRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *JoinTeamRequest) GetTeamID() string {
@@ -37,30 +30,30 @@ func (o *JoinTeamRequest) GetTeamID() string {
 	return o.TeamID
 }
 
+func (o *JoinTeamRequest) GetRequestBody() *JoinTeamRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
 // JoinTeamResponseBody - Successfully joined a team.
 type JoinTeamResponseBody struct {
-	// The origin of how the user joined.
-	From string `json:"from"`
-	// The name of the team the user joined.
-	Name string `json:"name"`
-	// The slug of the team the user joined.
-	Slug string `json:"slug"`
 	// The ID of the team the user joined.
 	TeamID string `json:"teamId"`
+	// The slug of the team the user joined.
+	Slug string `json:"slug"`
+	// The name of the team the user joined.
+	Name string `json:"name"`
+	// The origin of how the user joined.
+	From string `json:"from"`
 }
 
-func (o *JoinTeamResponseBody) GetFrom() string {
+func (o *JoinTeamResponseBody) GetTeamID() string {
 	if o == nil {
 		return ""
 	}
-	return o.From
-}
-
-func (o *JoinTeamResponseBody) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
+	return o.TeamID
 }
 
 func (o *JoinTeamResponseBody) GetSlug() string {
@@ -70,11 +63,18 @@ func (o *JoinTeamResponseBody) GetSlug() string {
 	return o.Slug
 }
 
-func (o *JoinTeamResponseBody) GetTeamID() string {
+func (o *JoinTeamResponseBody) GetName() string {
 	if o == nil {
 		return ""
 	}
-	return o.TeamID
+	return o.Name
+}
+
+func (o *JoinTeamResponseBody) GetFrom() string {
+	if o == nil {
+		return ""
+	}
+	return o.From
 }
 
 type JoinTeamResponse struct {

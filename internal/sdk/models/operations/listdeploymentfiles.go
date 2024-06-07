@@ -3,17 +3,17 @@
 package operations
 
 import (
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
 
 type ListDeploymentFilesRequest struct {
 	// The unique deployment identifier
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *ListDeploymentFilesRequest) GetID() string {
@@ -23,18 +23,18 @@ func (o *ListDeploymentFilesRequest) GetID() string {
 	return o.ID
 }
 
-func (o *ListDeploymentFilesRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *ListDeploymentFilesRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *ListDeploymentFilesRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 type ListDeploymentFilesResponse struct {
@@ -45,7 +45,7 @@ type ListDeploymentFilesResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Retrieved the file tree successfully
-	Classes []shared.FileTree
+	FileTrees []shared.FileTree
 }
 
 func (o *ListDeploymentFilesResponse) GetContentType() string {
@@ -69,9 +69,9 @@ func (o *ListDeploymentFilesResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *ListDeploymentFilesResponse) GetClasses() []shared.FileTree {
+func (o *ListDeploymentFilesResponse) GetFileTrees() []shared.FileTree {
 	if o == nil {
 		return nil
 	}
-	return o.Classes
+	return o.FileTrees
 }

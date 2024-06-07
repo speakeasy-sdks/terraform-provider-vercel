@@ -8,17 +8,10 @@ import (
 
 // Reasons - An object describing the reason why the team is being deleted.
 type Reasons struct {
-	// Description of the reason why the team is being deleted.
-	Description string `json:"description"`
 	// Idenitifier slug of the reason why the team is being deleted.
 	Slug string `json:"slug"`
-}
-
-func (o *Reasons) GetDescription() string {
-	if o == nil {
-		return ""
-	}
-	return o.Description
+	// Description of the reason why the team is being deleted.
+	Description string `json:"description"`
 }
 
 func (o *Reasons) GetSlug() string {
@@ -26,6 +19,13 @@ func (o *Reasons) GetSlug() string {
 		return ""
 	}
 	return o.Slug
+}
+
+func (o *Reasons) GetDescription() string {
+	if o == nil {
+		return ""
+	}
+	return o.Description
 }
 
 type DeleteTeamRequestBody struct {
@@ -41,20 +41,13 @@ func (o *DeleteTeamRequestBody) GetReasons() []Reasons {
 }
 
 type DeleteTeamRequest struct {
-	RequestBody *DeleteTeamRequestBody `request:"mediaType=application/json"`
 	// Id of the team to be set as the new default team
 	NewDefaultTeamID *string `queryParam:"style=form,explode=true,name=newDefaultTeamId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
-}
-
-func (o *DeleteTeamRequest) GetRequestBody() *DeleteTeamRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *DeleteTeamRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *DeleteTeamRequest) GetNewDefaultTeamID() *string {
@@ -64,6 +57,13 @@ func (o *DeleteTeamRequest) GetNewDefaultTeamID() *string {
 	return o.NewDefaultTeamID
 }
 
+func (o *DeleteTeamRequest) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
+}
+
 func (o *DeleteTeamRequest) GetSlug() *string {
 	if o == nil {
 		return nil
@@ -71,11 +71,11 @@ func (o *DeleteTeamRequest) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *DeleteTeamRequest) GetTeamID() string {
+func (o *DeleteTeamRequest) GetRequestBody() *DeleteTeamRequestBody {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.TeamID
+	return o.RequestBody
 }
 
 // DeleteTeamResponseBody - The Team was successfully deleted

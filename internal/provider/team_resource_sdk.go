@@ -4,15 +4,28 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"math/big"
 )
 
 func (r *TeamResourceModel) ToOperationsCreateTeamRequestBody() *operations.CreateTeamRequestBody {
+	slug := r.Slug.ValueString()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
+	}
 	var attribution *operations.Attribution
 	if r.Attribution != nil {
+		sessionReferrer := new(string)
+		if !r.Attribution.SessionReferrer.IsUnknown() && !r.Attribution.SessionReferrer.IsNull() {
+			*sessionReferrer = r.Attribution.SessionReferrer.ValueString()
+		} else {
+			sessionReferrer = nil
+		}
 		landingPage := new(string)
 		if !r.Attribution.LandingPage.IsUnknown() && !r.Attribution.LandingPage.IsNull() {
 			*landingPage = r.Attribution.LandingPage.ValueString()
@@ -25,19 +38,13 @@ func (r *TeamResourceModel) ToOperationsCreateTeamRequestBody() *operations.Crea
 		} else {
 			pageBeforeConversionPage = nil
 		}
-		sessionReferrer := new(string)
-		if !r.Attribution.SessionReferrer.IsUnknown() && !r.Attribution.SessionReferrer.IsNull() {
-			*sessionReferrer = r.Attribution.SessionReferrer.ValueString()
-		} else {
-			sessionReferrer = nil
-		}
 		var utm *operations.Utm
 		if r.Attribution.Utm != nil {
-			utmCampaign := new(string)
-			if !r.Attribution.Utm.UtmCampaign.IsUnknown() && !r.Attribution.Utm.UtmCampaign.IsNull() {
-				*utmCampaign = r.Attribution.Utm.UtmCampaign.ValueString()
+			utmSource := new(string)
+			if !r.Attribution.Utm.UtmSource.IsUnknown() && !r.Attribution.Utm.UtmSource.IsNull() {
+				*utmSource = r.Attribution.Utm.UtmSource.ValueString()
 			} else {
-				utmCampaign = nil
+				utmSource = nil
 			}
 			utmMedium := new(string)
 			if !r.Attribution.Utm.UtmMedium.IsUnknown() && !r.Attribution.Utm.UtmMedium.IsNull() {
@@ -45,11 +52,11 @@ func (r *TeamResourceModel) ToOperationsCreateTeamRequestBody() *operations.Crea
 			} else {
 				utmMedium = nil
 			}
-			utmSource := new(string)
-			if !r.Attribution.Utm.UtmSource.IsUnknown() && !r.Attribution.Utm.UtmSource.IsNull() {
-				*utmSource = r.Attribution.Utm.UtmSource.ValueString()
+			utmCampaign := new(string)
+			if !r.Attribution.Utm.UtmCampaign.IsUnknown() && !r.Attribution.Utm.UtmCampaign.IsNull() {
+				*utmCampaign = r.Attribution.Utm.UtmCampaign.ValueString()
 			} else {
-				utmSource = nil
+				utmCampaign = nil
 			}
 			utmTerm := new(string)
 			if !r.Attribution.Utm.UtmTerm.IsUnknown() && !r.Attribution.Utm.UtmTerm.IsNull() {
@@ -58,30 +65,23 @@ func (r *TeamResourceModel) ToOperationsCreateTeamRequestBody() *operations.Crea
 				utmTerm = nil
 			}
 			utm = &operations.Utm{
-				UtmCampaign: utmCampaign,
-				UtmMedium:   utmMedium,
 				UtmSource:   utmSource,
+				UtmMedium:   utmMedium,
+				UtmCampaign: utmCampaign,
 				UtmTerm:     utmTerm,
 			}
 		}
 		attribution = &operations.Attribution{
+			SessionReferrer:          sessionReferrer,
 			LandingPage:              landingPage,
 			PageBeforeConversionPage: pageBeforeConversionPage,
-			SessionReferrer:          sessionReferrer,
 			Utm:                      utm,
 		}
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
-	slug := r.Slug.ValueString()
 	out := operations.CreateTeamRequestBody{
-		Attribution: attribution,
-		Name:        name,
 		Slug:        slug,
+		Name:        name,
+		Attribution: attribution,
 	}
 	return &out
 }
@@ -153,7 +153,7 @@ func (r *TeamResourceModel) RefreshFromOperationsCreateTeamResponseBody(resp *op
 				if resp.Billing.InvoiceItems.Analytics.Frequency == nil {
 					r.Billing.InvoiceItems.Analytics.Frequency = nil
 				} else {
-					r.Billing.InvoiceItems.Analytics.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+					r.Billing.InvoiceItems.Analytics.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 					r.Billing.InvoiceItems.Analytics.Frequency.Interval = types.StringValue(string(resp.Billing.InvoiceItems.Analytics.Frequency.Interval))
 					r.Billing.InvoiceItems.Analytics.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.Billing.InvoiceItems.Analytics.Frequency.IntervalCount)))
 				}
@@ -527,7 +527,7 @@ func (r *TeamResourceModel) RefreshFromOperationsCreateTeamResponseBody(resp *op
 				if resp.Billing.InvoiceItems.ConcurrentBuilds.Frequency == nil {
 					r.Billing.InvoiceItems.ConcurrentBuilds.Frequency = nil
 				} else {
-					r.Billing.InvoiceItems.ConcurrentBuilds.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+					r.Billing.InvoiceItems.ConcurrentBuilds.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 					r.Billing.InvoiceItems.ConcurrentBuilds.Frequency.Interval = types.StringValue(string(resp.Billing.InvoiceItems.ConcurrentBuilds.Frequency.Interval))
 					r.Billing.InvoiceItems.ConcurrentBuilds.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.Billing.InvoiceItems.ConcurrentBuilds.Frequency.IntervalCount)))
 				}
@@ -901,7 +901,7 @@ func (r *TeamResourceModel) RefreshFromOperationsCreateTeamResponseBody(resp *op
 				if resp.Billing.InvoiceItems.Enterprise.Frequency == nil {
 					r.Billing.InvoiceItems.Enterprise.Frequency = nil
 				} else {
-					r.Billing.InvoiceItems.Enterprise.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+					r.Billing.InvoiceItems.Enterprise.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 					r.Billing.InvoiceItems.Enterprise.Frequency.Interval = types.StringValue(string(resp.Billing.InvoiceItems.Enterprise.Frequency.Interval))
 					r.Billing.InvoiceItems.Enterprise.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.Billing.InvoiceItems.Enterprise.Frequency.IntervalCount)))
 				}
@@ -1127,7 +1127,7 @@ func (r *TeamResourceModel) RefreshFromOperationsCreateTeamResponseBody(resp *op
 				if resp.Billing.InvoiceItems.Monitoring.Frequency == nil {
 					r.Billing.InvoiceItems.Monitoring.Frequency = nil
 				} else {
-					r.Billing.InvoiceItems.Monitoring.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+					r.Billing.InvoiceItems.Monitoring.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 					r.Billing.InvoiceItems.Monitoring.Frequency.Interval = types.StringValue(string(resp.Billing.InvoiceItems.Monitoring.Frequency.Interval))
 					r.Billing.InvoiceItems.Monitoring.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.Billing.InvoiceItems.Monitoring.Frequency.IntervalCount)))
 				}
@@ -1205,7 +1205,7 @@ func (r *TeamResourceModel) RefreshFromOperationsCreateTeamResponseBody(resp *op
 				if resp.Billing.InvoiceItems.PasswordProtection.Frequency == nil {
 					r.Billing.InvoiceItems.PasswordProtection.Frequency = nil
 				} else {
-					r.Billing.InvoiceItems.PasswordProtection.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+					r.Billing.InvoiceItems.PasswordProtection.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 					r.Billing.InvoiceItems.PasswordProtection.Frequency.Interval = types.StringValue(string(resp.Billing.InvoiceItems.PasswordProtection.Frequency.Interval))
 					r.Billing.InvoiceItems.PasswordProtection.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.Billing.InvoiceItems.PasswordProtection.Frequency.IntervalCount)))
 				}
@@ -1431,7 +1431,7 @@ func (r *TeamResourceModel) RefreshFromOperationsCreateTeamResponseBody(resp *op
 				if resp.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency == nil {
 					r.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency = nil
 				} else {
-					r.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+					r.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 					r.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency.Interval = types.StringValue(string(resp.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency.Interval))
 					r.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.Billing.InvoiceItems.PreviewDeploymentSuffix.Frequency.IntervalCount)))
 				}
@@ -1472,7 +1472,7 @@ func (r *TeamResourceModel) RefreshFromOperationsCreateTeamResponseBody(resp *op
 				if resp.Billing.InvoiceItems.Pro.Frequency == nil {
 					r.Billing.InvoiceItems.Pro.Frequency = nil
 				} else {
-					r.Billing.InvoiceItems.Pro.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+					r.Billing.InvoiceItems.Pro.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 					r.Billing.InvoiceItems.Pro.Frequency.Interval = types.StringValue(string(resp.Billing.InvoiceItems.Pro.Frequency.Interval))
 					r.Billing.InvoiceItems.Pro.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.Billing.InvoiceItems.Pro.Frequency.IntervalCount)))
 				}
@@ -1513,7 +1513,7 @@ func (r *TeamResourceModel) RefreshFromOperationsCreateTeamResponseBody(resp *op
 				if resp.Billing.InvoiceItems.Saml.Frequency == nil {
 					r.Billing.InvoiceItems.Saml.Frequency = nil
 				} else {
-					r.Billing.InvoiceItems.Saml.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+					r.Billing.InvoiceItems.Saml.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 					r.Billing.InvoiceItems.Saml.Frequency.Interval = types.StringValue(string(resp.Billing.InvoiceItems.Saml.Frequency.Interval))
 					r.Billing.InvoiceItems.Saml.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.Billing.InvoiceItems.Saml.Frequency.IntervalCount)))
 				}
@@ -1776,7 +1776,7 @@ func (r *TeamResourceModel) RefreshFromOperationsCreateTeamResponseBody(resp *op
 				if resp.Billing.InvoiceItems.TeamSeats.Frequency == nil {
 					r.Billing.InvoiceItems.TeamSeats.Frequency = nil
 				} else {
-					r.Billing.InvoiceItems.TeamSeats.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+					r.Billing.InvoiceItems.TeamSeats.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 					r.Billing.InvoiceItems.TeamSeats.Frequency.Interval = types.StringValue(string(resp.Billing.InvoiceItems.TeamSeats.Frequency.Interval))
 					r.Billing.InvoiceItems.TeamSeats.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.Billing.InvoiceItems.TeamSeats.Frequency.IntervalCount)))
 				}
@@ -1891,7 +1891,7 @@ func (r *TeamResourceModel) RefreshFromOperationsCreateTeamResponseBody(resp *op
 				if resp.Billing.InvoiceItems.WebAnalytics.Frequency == nil {
 					r.Billing.InvoiceItems.WebAnalytics.Frequency = nil
 				} else {
-					r.Billing.InvoiceItems.WebAnalytics.Frequency = &tfTypes.CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency{}
+					r.Billing.InvoiceItems.WebAnalytics.Frequency = &tfTypes.CreateTeamTeamsFrequency{}
 					r.Billing.InvoiceItems.WebAnalytics.Frequency.Interval = types.StringValue(string(resp.Billing.InvoiceItems.WebAnalytics.Frequency.Interval))
 					r.Billing.InvoiceItems.WebAnalytics.Frequency.IntervalCount = types.NumberValue(big.NewFloat(float64(resp.Billing.InvoiceItems.WebAnalytics.Frequency.IntervalCount)))
 				}
@@ -2100,11 +2100,11 @@ func (r *TeamResourceModel) RefreshFromSharedTeam(resp *shared.Team) {
 func (r *TeamResourceModel) ToOperationsDeleteTeamRequestBody() *operations.DeleteTeamRequestBody {
 	var reasons []operations.Reasons = []operations.Reasons{}
 	for _, reasonsItem := range r.Reasons {
-		description := reasonsItem.Description.ValueString()
 		slug := reasonsItem.Slug.ValueString()
+		description := reasonsItem.Description.ValueString()
 		reasons = append(reasons, operations.Reasons{
-			Description: description,
 			Slug:        slug,
+			Description: description,
 		})
 	}
 	out := operations.DeleteTeamRequestBody{

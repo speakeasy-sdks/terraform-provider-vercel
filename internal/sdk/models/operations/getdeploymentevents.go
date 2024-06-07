@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 )
 
@@ -102,28 +102,28 @@ func (u StatusCode) MarshalJSON() ([]byte, error) {
 }
 
 type GetDeploymentEventsRequest struct {
-	Builds    *float64 `queryParam:"style=form,explode=true,name=builds"`
-	Delimiter *float64 `queryParam:"style=form,explode=true,name=delimiter"`
+	// The unique identifier or hostname of the deployment.
+	IDOrURL string `pathParam:"style=simple,explode=false,name=idOrUrl"`
 	// Order of the returned events based on the timestamp.
 	Direction *Direction `default:"forward" queryParam:"style=form,explode=true,name=direction"`
 	// When enabled, this endpoint will return live events as they happen.
 	Follow *float64 `queryParam:"style=form,explode=true,name=follow"`
-	// The unique identifier or hostname of the deployment.
-	IDOrURL string `pathParam:"style=simple,explode=false,name=idOrUrl"`
 	// Maximum number of events to return. Provide `-1` to return all available logs.
 	Limit *float64 `queryParam:"style=form,explode=true,name=limit"`
 	// Deployment build ID.
 	Name *string `queryParam:"style=form,explode=true,name=name"`
 	// Timestamp for when build logs should be pulled from.
 	Since *float64 `queryParam:"style=form,explode=true,name=since"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// HTTP status code range to filter events by.
-	StatusCode *StatusCode `queryParam:"style=form,explode=true,name=statusCode"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Timestamp for when the build logs should be pulled up until.
 	Until *float64 `queryParam:"style=form,explode=true,name=until"`
+	// HTTP status code range to filter events by.
+	StatusCode *StatusCode `queryParam:"style=form,explode=true,name=statusCode"`
+	Delimiter  *float64    `queryParam:"style=form,explode=true,name=delimiter"`
+	Builds     *float64    `queryParam:"style=form,explode=true,name=builds"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (g GetDeploymentEventsRequest) MarshalJSON() ([]byte, error) {
@@ -137,18 +137,11 @@ func (g *GetDeploymentEventsRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *GetDeploymentEventsRequest) GetBuilds() *float64 {
+func (o *GetDeploymentEventsRequest) GetIDOrURL() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Builds
-}
-
-func (o *GetDeploymentEventsRequest) GetDelimiter() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Delimiter
+	return o.IDOrURL
 }
 
 func (o *GetDeploymentEventsRequest) GetDirection() *Direction {
@@ -163,13 +156,6 @@ func (o *GetDeploymentEventsRequest) GetFollow() *float64 {
 		return nil
 	}
 	return o.Follow
-}
-
-func (o *GetDeploymentEventsRequest) GetIDOrURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.IDOrURL
 }
 
 func (o *GetDeploymentEventsRequest) GetLimit() *float64 {
@@ -193,11 +179,11 @@ func (o *GetDeploymentEventsRequest) GetSince() *float64 {
 	return o.Since
 }
 
-func (o *GetDeploymentEventsRequest) GetSlug() *string {
+func (o *GetDeploymentEventsRequest) GetUntil() *float64 {
 	if o == nil {
 		return nil
 	}
-	return o.Slug
+	return o.Until
 }
 
 func (o *GetDeploymentEventsRequest) GetStatusCode() *StatusCode {
@@ -207,6 +193,20 @@ func (o *GetDeploymentEventsRequest) GetStatusCode() *StatusCode {
 	return o.StatusCode
 }
 
+func (o *GetDeploymentEventsRequest) GetDelimiter() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Delimiter
+}
+
+func (o *GetDeploymentEventsRequest) GetBuilds() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Builds
+}
+
 func (o *GetDeploymentEventsRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -214,1139 +214,32 @@ func (o *GetDeploymentEventsRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-func (o *GetDeploymentEventsRequest) GetUntil() *float64 {
+func (o *GetDeploymentEventsRequest) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Until
-}
-
-type GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONInfo struct {
-	Entrypoint *string `json:"entrypoint,omitempty"`
-	Name       string  `json:"name"`
-	Path       *string `json:"path,omitempty"`
-	ReadyState *string `json:"readyState,omitempty"`
-	Step       *string `json:"step,omitempty"`
-	Type       string  `json:"type"`
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONInfo) GetEntrypoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Entrypoint
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONInfo) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONInfo) GetPath() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Path
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONInfo) GetReadyState() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ReadyState
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONInfo) GetStep() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Step
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONInfo) GetType() string {
-	if o == nil {
-		return ""
-	}
-	return o.Type
-}
-
-type GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache string
-
-const (
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCacheMiss        GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache = "MISS"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCacheHit         GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache = "HIT"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCacheStale       GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache = "STALE"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCacheBypass      GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache = "BYPASS"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCachePrerender   GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache = "PRERENDER"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCacheRevalidated GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache = "REVALIDATED"
-)
-
-func (e GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache) ToPointer() *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache {
-	return &e
-}
-func (e *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "MISS":
-		fallthrough
-	case "HIT":
-		fallthrough
-	case "STALE":
-		fallthrough
-	case "BYPASS":
-		fallthrough
-	case "PRERENDER":
-		fallthrough
-	case "REVALIDATED":
-		*e = GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache: %v", v)
-	}
-}
-
-type GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy struct {
-	CacheID          *string                                                                        `json:"cacheId,omitempty"`
-	ClientIP         string                                                                         `json:"clientIp"`
-	Host             string                                                                         `json:"host"`
-	LambdaRegion     *string                                                                        `json:"lambdaRegion,omitempty"`
-	Method           string                                                                         `json:"method"`
-	Path             string                                                                         `json:"path"`
-	PathType         *string                                                                        `json:"pathType,omitempty"`
-	Referer          string                                                                         `json:"referer"`
-	Region           string                                                                         `json:"region"`
-	ResponseByteSize *float64                                                                       `json:"responseByteSize,omitempty"`
-	Scheme           *string                                                                        `json:"scheme,omitempty"`
-	StatusCode       *float64                                                                       `json:"statusCode,omitempty"`
-	Timestamp        float64                                                                        `json:"timestamp"`
-	UserAgent        []string                                                                       `json:"userAgent"`
-	VercelCache      *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache `json:"vercelCache,omitempty"`
-	VercelID         *string                                                                        `json:"vercelId,omitempty"`
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetCacheID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CacheID
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetClientIP() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientIP
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetLambdaRegion() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LambdaRegion
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetMethod() string {
-	if o == nil {
-		return ""
-	}
-	return o.Method
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetPath() string {
-	if o == nil {
-		return ""
-	}
-	return o.Path
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetPathType() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PathType
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetReferer() string {
-	if o == nil {
-		return ""
-	}
-	return o.Referer
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetRegion() string {
-	if o == nil {
-		return ""
-	}
-	return o.Region
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetResponseByteSize() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.ResponseByteSize
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetScheme() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Scheme
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetStatusCode() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.StatusCode
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetTimestamp() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Timestamp
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetUserAgent() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.UserAgent
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetVercelCache() *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONVercelCache {
-	if o == nil {
-		return nil
-	}
-	return o.VercelCache
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy) GetVercelID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.VercelID
-}
-
-type GetDeploymentEventsDeploymentsPayload struct {
-	Created      *float64                                                                 `json:"created,omitempty"`
-	Date         float64                                                                  `json:"date"`
-	DeploymentID string                                                                   `json:"deploymentId"`
-	ID           string                                                                   `json:"id"`
-	Info         *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONInfo  `json:"info,omitempty"`
-	Proxy        *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy `json:"proxy,omitempty"`
-	RequestID    *string                                                                  `json:"requestId,omitempty"`
-	Serial       string                                                                   `json:"serial"`
-	StatusCode   *float64                                                                 `json:"statusCode,omitempty"`
-	Text         *string                                                                  `json:"text,omitempty"`
-}
-
-func (o *GetDeploymentEventsDeploymentsPayload) GetCreated() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Created
-}
-
-func (o *GetDeploymentEventsDeploymentsPayload) GetDate() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Date
-}
-
-func (o *GetDeploymentEventsDeploymentsPayload) GetDeploymentID() string {
-	if o == nil {
-		return ""
-	}
-	return o.DeploymentID
-}
-
-func (o *GetDeploymentEventsDeploymentsPayload) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *GetDeploymentEventsDeploymentsPayload) GetInfo() *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONInfo {
-	if o == nil {
-		return nil
-	}
-	return o.Info
-}
-
-func (o *GetDeploymentEventsDeploymentsPayload) GetProxy() *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONProxy {
-	if o == nil {
-		return nil
-	}
-	return o.Proxy
-}
-
-func (o *GetDeploymentEventsDeploymentsPayload) GetRequestID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RequestID
-}
-
-func (o *GetDeploymentEventsDeploymentsPayload) GetSerial() string {
-	if o == nil {
-		return ""
-	}
-	return o.Serial
-}
-
-func (o *GetDeploymentEventsDeploymentsPayload) GetStatusCode() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.StatusCode
-}
-
-func (o *GetDeploymentEventsDeploymentsPayload) GetText() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Text
-}
-
-type GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType string
-
-const (
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyTypeCommand                GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType = "command"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyTypeStdout                 GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType = "stdout"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyTypeStderr                 GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType = "stderr"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyTypeExit                   GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType = "exit"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyTypeDeploymentState        GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType = "deployment-state"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyTypeDelimiter              GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType = "delimiter"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyTypeMiddleware             GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType = "middleware"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyTypeMiddlewareInvocation   GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType = "middleware-invocation"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyTypeEdgeFunctionInvocation GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType = "edge-function-invocation"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyTypeFatal                  GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType = "fatal"
-)
-
-func (e GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType) ToPointer() *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType {
-	return &e
-}
-func (e *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "command":
-		fallthrough
-	case "stdout":
-		fallthrough
-	case "stderr":
-		fallthrough
-	case "exit":
-		fallthrough
-	case "deployment-state":
-		fallthrough
-	case "delimiter":
-		fallthrough
-	case "middleware":
-		fallthrough
-	case "middleware-invocation":
-		fallthrough
-	case "edge-function-invocation":
-		fallthrough
-	case "fatal":
-		*e = GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType: %v", v)
-	}
-}
-
-type GetDeploymentEventsDeploymentsResponse2 struct {
-	Created float64                                                                            `json:"created"`
-	Payload GetDeploymentEventsDeploymentsPayload                                              `json:"payload"`
-	Type    GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType `json:"type"`
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse2) GetCreated() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Created
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse2) GetPayload() GetDeploymentEventsDeploymentsPayload {
-	if o == nil {
-		return GetDeploymentEventsDeploymentsPayload{}
-	}
-	return o.Payload
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse2) GetType() GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType {
-	if o == nil {
-		return GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONResponseBodyType("")
-	}
-	return o.Type
-}
-
-type GetDeploymentEventsDeploymentsInfo struct {
-	Entrypoint *string `json:"entrypoint,omitempty"`
-	Name       string  `json:"name"`
-	Path       *string `json:"path,omitempty"`
-	ReadyState *string `json:"readyState,omitempty"`
-	Step       *string `json:"step,omitempty"`
-	Type       string  `json:"type"`
-}
-
-func (o *GetDeploymentEventsDeploymentsInfo) GetEntrypoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Entrypoint
-}
-
-func (o *GetDeploymentEventsDeploymentsInfo) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *GetDeploymentEventsDeploymentsInfo) GetPath() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Path
-}
-
-func (o *GetDeploymentEventsDeploymentsInfo) GetReadyState() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ReadyState
-}
-
-func (o *GetDeploymentEventsDeploymentsInfo) GetStep() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Step
-}
-
-func (o *GetDeploymentEventsDeploymentsInfo) GetType() string {
-	if o == nil {
-		return ""
-	}
-	return o.Type
-}
-
-type GetDeploymentEventsDeploymentsVercelCache string
-
-const (
-	GetDeploymentEventsDeploymentsVercelCacheMiss        GetDeploymentEventsDeploymentsVercelCache = "MISS"
-	GetDeploymentEventsDeploymentsVercelCacheHit         GetDeploymentEventsDeploymentsVercelCache = "HIT"
-	GetDeploymentEventsDeploymentsVercelCacheStale       GetDeploymentEventsDeploymentsVercelCache = "STALE"
-	GetDeploymentEventsDeploymentsVercelCacheBypass      GetDeploymentEventsDeploymentsVercelCache = "BYPASS"
-	GetDeploymentEventsDeploymentsVercelCachePrerender   GetDeploymentEventsDeploymentsVercelCache = "PRERENDER"
-	GetDeploymentEventsDeploymentsVercelCacheRevalidated GetDeploymentEventsDeploymentsVercelCache = "REVALIDATED"
-)
-
-func (e GetDeploymentEventsDeploymentsVercelCache) ToPointer() *GetDeploymentEventsDeploymentsVercelCache {
-	return &e
-}
-func (e *GetDeploymentEventsDeploymentsVercelCache) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "MISS":
-		fallthrough
-	case "HIT":
-		fallthrough
-	case "STALE":
-		fallthrough
-	case "BYPASS":
-		fallthrough
-	case "PRERENDER":
-		fallthrough
-	case "REVALIDATED":
-		*e = GetDeploymentEventsDeploymentsVercelCache(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentEventsDeploymentsVercelCache: %v", v)
-	}
-}
-
-type GetDeploymentEventsDeploymentsProxy struct {
-	CacheID          *string                                    `json:"cacheId,omitempty"`
-	ClientIP         string                                     `json:"clientIp"`
-	Host             string                                     `json:"host"`
-	LambdaRegion     *string                                    `json:"lambdaRegion,omitempty"`
-	Method           string                                     `json:"method"`
-	Path             string                                     `json:"path"`
-	PathType         *string                                    `json:"pathType,omitempty"`
-	Referer          string                                     `json:"referer"`
-	Region           string                                     `json:"region"`
-	ResponseByteSize *float64                                   `json:"responseByteSize,omitempty"`
-	Scheme           *string                                    `json:"scheme,omitempty"`
-	StatusCode       *float64                                   `json:"statusCode,omitempty"`
-	Timestamp        float64                                    `json:"timestamp"`
-	UserAgent        []string                                   `json:"userAgent"`
-	VercelCache      *GetDeploymentEventsDeploymentsVercelCache `json:"vercelCache,omitempty"`
-	VercelID         *string                                    `json:"vercelId,omitempty"`
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetCacheID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CacheID
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetClientIP() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientIP
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetLambdaRegion() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LambdaRegion
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetMethod() string {
-	if o == nil {
-		return ""
-	}
-	return o.Method
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetPath() string {
-	if o == nil {
-		return ""
-	}
-	return o.Path
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetPathType() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PathType
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetReferer() string {
-	if o == nil {
-		return ""
-	}
-	return o.Referer
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetRegion() string {
-	if o == nil {
-		return ""
-	}
-	return o.Region
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetResponseByteSize() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.ResponseByteSize
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetScheme() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Scheme
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetStatusCode() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.StatusCode
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetTimestamp() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Timestamp
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetUserAgent() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.UserAgent
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetVercelCache() *GetDeploymentEventsDeploymentsVercelCache {
-	if o == nil {
-		return nil
-	}
-	return o.VercelCache
-}
-
-func (o *GetDeploymentEventsDeploymentsProxy) GetVercelID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.VercelID
-}
-
-type GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType string
-
-const (
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONTypeCommand                GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType = "command"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONTypeStdout                 GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType = "stdout"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONTypeStderr                 GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType = "stderr"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONTypeExit                   GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType = "exit"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONTypeDeploymentState        GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType = "deployment-state"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONTypeDelimiter              GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType = "delimiter"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONTypeMiddleware             GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType = "middleware"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONTypeMiddlewareInvocation   GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType = "middleware-invocation"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONTypeEdgeFunctionInvocation GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType = "edge-function-invocation"
-	GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONTypeFatal                  GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType = "fatal"
-)
-
-func (e GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType) ToPointer() *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType {
-	return &e
-}
-func (e *GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "command":
-		fallthrough
-	case "stdout":
-		fallthrough
-	case "stderr":
-		fallthrough
-	case "exit":
-		fallthrough
-	case "deployment-state":
-		fallthrough
-	case "delimiter":
-		fallthrough
-	case "middleware":
-		fallthrough
-	case "middleware-invocation":
-		fallthrough
-	case "edge-function-invocation":
-		fallthrough
-	case "fatal":
-		*e = GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType: %v", v)
-	}
-}
-
-type GetDeploymentEventsDeploymentsResponse1 struct {
-	Created      float64                                                                `json:"created"`
-	Date         float64                                                                `json:"date"`
-	DeploymentID string                                                                 `json:"deploymentId"`
-	ID           string                                                                 `json:"id"`
-	Info         GetDeploymentEventsDeploymentsInfo                                     `json:"info"`
-	Proxy        *GetDeploymentEventsDeploymentsProxy                                   `json:"proxy,omitempty"`
-	RequestID    *string                                                                `json:"requestId,omitempty"`
-	Serial       string                                                                 `json:"serial"`
-	StatusCode   *float64                                                               `json:"statusCode,omitempty"`
-	Text         *string                                                                `json:"text,omitempty"`
-	Type         GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType `json:"type"`
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse1) GetCreated() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Created
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse1) GetDate() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Date
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse1) GetDeploymentID() string {
-	if o == nil {
-		return ""
-	}
-	return o.DeploymentID
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse1) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse1) GetInfo() GetDeploymentEventsDeploymentsInfo {
-	if o == nil {
-		return GetDeploymentEventsDeploymentsInfo{}
-	}
-	return o.Info
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse1) GetProxy() *GetDeploymentEventsDeploymentsProxy {
-	if o == nil {
-		return nil
-	}
-	return o.Proxy
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse1) GetRequestID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RequestID
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse1) GetSerial() string {
-	if o == nil {
-		return ""
-	}
-	return o.Serial
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse1) GetStatusCode() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.StatusCode
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse1) GetText() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Text
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse1) GetType() GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType {
-	if o == nil {
-		return GetDeploymentEventsDeploymentsResponse200ApplicationStreamPlusJSONType("")
-	}
-	return o.Type
+	return o.Slug
 }
 
 type GetDeploymentEvents3Type string
 
 const (
-	GetDeploymentEvents3TypeGetDeploymentEventsDeploymentsResponse1 GetDeploymentEvents3Type = "getDeploymentEvents_deployments_response_1"
-	GetDeploymentEvents3TypeGetDeploymentEventsDeploymentsResponse2 GetDeploymentEvents3Type = "getDeploymentEvents_deployments_response_2"
+	GetDeploymentEvents3TypeCommand                GetDeploymentEvents3Type = "command"
+	GetDeploymentEvents3TypeStdout                 GetDeploymentEvents3Type = "stdout"
+	GetDeploymentEvents3TypeStderr                 GetDeploymentEvents3Type = "stderr"
+	GetDeploymentEvents3TypeExit                   GetDeploymentEvents3Type = "exit"
+	GetDeploymentEvents3TypeDeploymentState        GetDeploymentEvents3Type = "deployment-state"
+	GetDeploymentEvents3TypeDelimiter              GetDeploymentEvents3Type = "delimiter"
+	GetDeploymentEvents3TypeMiddleware             GetDeploymentEvents3Type = "middleware"
+	GetDeploymentEvents3TypeMiddlewareInvocation   GetDeploymentEvents3Type = "middleware-invocation"
+	GetDeploymentEvents3TypeEdgeFunctionInvocation GetDeploymentEvents3Type = "edge-function-invocation"
+	GetDeploymentEvents3TypeFatal                  GetDeploymentEvents3Type = "fatal"
 )
 
-type GetDeploymentEvents3 struct {
-	GetDeploymentEventsDeploymentsResponse1 *GetDeploymentEventsDeploymentsResponse1
-	GetDeploymentEventsDeploymentsResponse2 *GetDeploymentEventsDeploymentsResponse2
-
-	Type GetDeploymentEvents3Type
-}
-
-func CreateGetDeploymentEvents3GetDeploymentEventsDeploymentsResponse1(getDeploymentEventsDeploymentsResponse1 GetDeploymentEventsDeploymentsResponse1) GetDeploymentEvents3 {
-	typ := GetDeploymentEvents3TypeGetDeploymentEventsDeploymentsResponse1
-
-	return GetDeploymentEvents3{
-		GetDeploymentEventsDeploymentsResponse1: &getDeploymentEventsDeploymentsResponse1,
-		Type:                                    typ,
-	}
-}
-
-func CreateGetDeploymentEvents3GetDeploymentEventsDeploymentsResponse2(getDeploymentEventsDeploymentsResponse2 GetDeploymentEventsDeploymentsResponse2) GetDeploymentEvents3 {
-	typ := GetDeploymentEvents3TypeGetDeploymentEventsDeploymentsResponse2
-
-	return GetDeploymentEvents3{
-		GetDeploymentEventsDeploymentsResponse2: &getDeploymentEventsDeploymentsResponse2,
-		Type:                                    typ,
-	}
-}
-
-func (u *GetDeploymentEvents3) UnmarshalJSON(data []byte) error {
-
-	var getDeploymentEventsDeploymentsResponse2 GetDeploymentEventsDeploymentsResponse2 = GetDeploymentEventsDeploymentsResponse2{}
-	if err := utils.UnmarshalJSON(data, &getDeploymentEventsDeploymentsResponse2, "", true, true); err == nil {
-		u.GetDeploymentEventsDeploymentsResponse2 = &getDeploymentEventsDeploymentsResponse2
-		u.Type = GetDeploymentEvents3TypeGetDeploymentEventsDeploymentsResponse2
-		return nil
-	}
-
-	var getDeploymentEventsDeploymentsResponse1 GetDeploymentEventsDeploymentsResponse1 = GetDeploymentEventsDeploymentsResponse1{}
-	if err := utils.UnmarshalJSON(data, &getDeploymentEventsDeploymentsResponse1, "", true, true); err == nil {
-		u.GetDeploymentEventsDeploymentsResponse1 = &getDeploymentEventsDeploymentsResponse1
-		u.Type = GetDeploymentEvents3TypeGetDeploymentEventsDeploymentsResponse1
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GetDeploymentEvents3", string(data))
-}
-
-func (u GetDeploymentEvents3) MarshalJSON() ([]byte, error) {
-	if u.GetDeploymentEventsDeploymentsResponse1 != nil {
-		return utils.MarshalJSON(u.GetDeploymentEventsDeploymentsResponse1, "", true)
-	}
-
-	if u.GetDeploymentEventsDeploymentsResponse2 != nil {
-		return utils.MarshalJSON(u.GetDeploymentEventsDeploymentsResponse2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type GetDeploymentEvents3: all fields are null")
-}
-
-type GetDeploymentEventsDeploymentsResponse200Info struct {
-	Entrypoint *string `json:"entrypoint,omitempty"`
-	Name       string  `json:"name"`
-	Path       *string `json:"path,omitempty"`
-	ReadyState *string `json:"readyState,omitempty"`
-	Step       *string `json:"step,omitempty"`
-	Type       string  `json:"type"`
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Info) GetEntrypoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Entrypoint
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Info) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Info) GetPath() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Path
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Info) GetReadyState() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ReadyState
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Info) GetStep() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Step
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Info) GetType() string {
-	if o == nil {
-		return ""
-	}
-	return o.Type
-}
-
-type GetDeploymentEventsDeploymentsResponse200VercelCache string
-
-const (
-	GetDeploymentEventsDeploymentsResponse200VercelCacheMiss        GetDeploymentEventsDeploymentsResponse200VercelCache = "MISS"
-	GetDeploymentEventsDeploymentsResponse200VercelCacheHit         GetDeploymentEventsDeploymentsResponse200VercelCache = "HIT"
-	GetDeploymentEventsDeploymentsResponse200VercelCacheStale       GetDeploymentEventsDeploymentsResponse200VercelCache = "STALE"
-	GetDeploymentEventsDeploymentsResponse200VercelCacheBypass      GetDeploymentEventsDeploymentsResponse200VercelCache = "BYPASS"
-	GetDeploymentEventsDeploymentsResponse200VercelCachePrerender   GetDeploymentEventsDeploymentsResponse200VercelCache = "PRERENDER"
-	GetDeploymentEventsDeploymentsResponse200VercelCacheRevalidated GetDeploymentEventsDeploymentsResponse200VercelCache = "REVALIDATED"
-)
-
-func (e GetDeploymentEventsDeploymentsResponse200VercelCache) ToPointer() *GetDeploymentEventsDeploymentsResponse200VercelCache {
+func (e GetDeploymentEvents3Type) ToPointer() *GetDeploymentEvents3Type {
 	return &e
 }
-func (e *GetDeploymentEventsDeploymentsResponse200VercelCache) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "MISS":
-		fallthrough
-	case "HIT":
-		fallthrough
-	case "STALE":
-		fallthrough
-	case "BYPASS":
-		fallthrough
-	case "PRERENDER":
-		fallthrough
-	case "REVALIDATED":
-		*e = GetDeploymentEventsDeploymentsResponse200VercelCache(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentEventsDeploymentsResponse200VercelCache: %v", v)
-	}
-}
-
-type GetDeploymentEventsDeploymentsResponse200Proxy struct {
-	CacheID          *string                                               `json:"cacheId,omitempty"`
-	ClientIP         string                                                `json:"clientIp"`
-	Host             string                                                `json:"host"`
-	LambdaRegion     *string                                               `json:"lambdaRegion,omitempty"`
-	Method           string                                                `json:"method"`
-	Path             string                                                `json:"path"`
-	PathType         *string                                               `json:"pathType,omitempty"`
-	Referer          string                                                `json:"referer"`
-	Region           string                                                `json:"region"`
-	ResponseByteSize *float64                                              `json:"responseByteSize,omitempty"`
-	Scheme           *string                                               `json:"scheme,omitempty"`
-	StatusCode       *float64                                              `json:"statusCode,omitempty"`
-	Timestamp        float64                                               `json:"timestamp"`
-	UserAgent        []string                                              `json:"userAgent"`
-	VercelCache      *GetDeploymentEventsDeploymentsResponse200VercelCache `json:"vercelCache,omitempty"`
-	VercelID         *string                                               `json:"vercelId,omitempty"`
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetCacheID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CacheID
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetClientIP() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientIP
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetLambdaRegion() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LambdaRegion
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetMethod() string {
-	if o == nil {
-		return ""
-	}
-	return o.Method
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetPath() string {
-	if o == nil {
-		return ""
-	}
-	return o.Path
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetPathType() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PathType
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetReferer() string {
-	if o == nil {
-		return ""
-	}
-	return o.Referer
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetRegion() string {
-	if o == nil {
-		return ""
-	}
-	return o.Region
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetResponseByteSize() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.ResponseByteSize
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetScheme() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Scheme
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetStatusCode() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.StatusCode
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetTimestamp() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Timestamp
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetUserAgent() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.UserAgent
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetVercelCache() *GetDeploymentEventsDeploymentsResponse200VercelCache {
-	if o == nil {
-		return nil
-	}
-	return o.VercelCache
-}
-
-func (o *GetDeploymentEventsDeploymentsResponse200Proxy) GetVercelID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.VercelID
-}
-
-type GetDeploymentEventsPayload struct {
-	Created      *float64                                        `json:"created,omitempty"`
-	Date         float64                                         `json:"date"`
-	DeploymentID string                                          `json:"deploymentId"`
-	ID           string                                          `json:"id"`
-	Info         *GetDeploymentEventsDeploymentsResponse200Info  `json:"info,omitempty"`
-	Proxy        *GetDeploymentEventsDeploymentsResponse200Proxy `json:"proxy,omitempty"`
-	RequestID    *string                                         `json:"requestId,omitempty"`
-	Serial       string                                          `json:"serial"`
-	StatusCode   *float64                                        `json:"statusCode,omitempty"`
-	Text         *string                                         `json:"text,omitempty"`
-}
-
-func (o *GetDeploymentEventsPayload) GetCreated() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Created
-}
-
-func (o *GetDeploymentEventsPayload) GetDate() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Date
-}
-
-func (o *GetDeploymentEventsPayload) GetDeploymentID() string {
-	if o == nil {
-		return ""
-	}
-	return o.DeploymentID
-}
-
-func (o *GetDeploymentEventsPayload) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *GetDeploymentEventsPayload) GetInfo() *GetDeploymentEventsDeploymentsResponse200Info {
-	if o == nil {
-		return nil
-	}
-	return o.Info
-}
-
-func (o *GetDeploymentEventsPayload) GetProxy() *GetDeploymentEventsDeploymentsResponse200Proxy {
-	if o == nil {
-		return nil
-	}
-	return o.Proxy
-}
-
-func (o *GetDeploymentEventsPayload) GetRequestID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RequestID
-}
-
-func (o *GetDeploymentEventsPayload) GetSerial() string {
-	if o == nil {
-		return ""
-	}
-	return o.Serial
-}
-
-func (o *GetDeploymentEventsPayload) GetStatusCode() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.StatusCode
-}
-
-func (o *GetDeploymentEventsPayload) GetText() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Text
-}
-
-type GetDeploymentEventsDeploymentsResponse200Type string
-
-const (
-	GetDeploymentEventsDeploymentsResponse200TypeCommand                GetDeploymentEventsDeploymentsResponse200Type = "command"
-	GetDeploymentEventsDeploymentsResponse200TypeStdout                 GetDeploymentEventsDeploymentsResponse200Type = "stdout"
-	GetDeploymentEventsDeploymentsResponse200TypeStderr                 GetDeploymentEventsDeploymentsResponse200Type = "stderr"
-	GetDeploymentEventsDeploymentsResponse200TypeExit                   GetDeploymentEventsDeploymentsResponse200Type = "exit"
-	GetDeploymentEventsDeploymentsResponse200TypeDeploymentState        GetDeploymentEventsDeploymentsResponse200Type = "deployment-state"
-	GetDeploymentEventsDeploymentsResponse200TypeDelimiter              GetDeploymentEventsDeploymentsResponse200Type = "delimiter"
-	GetDeploymentEventsDeploymentsResponse200TypeMiddleware             GetDeploymentEventsDeploymentsResponse200Type = "middleware"
-	GetDeploymentEventsDeploymentsResponse200TypeMiddlewareInvocation   GetDeploymentEventsDeploymentsResponse200Type = "middleware-invocation"
-	GetDeploymentEventsDeploymentsResponse200TypeEdgeFunctionInvocation GetDeploymentEventsDeploymentsResponse200Type = "edge-function-invocation"
-	GetDeploymentEventsDeploymentsResponse200TypeFatal                  GetDeploymentEventsDeploymentsResponse200Type = "fatal"
-)
-
-func (e GetDeploymentEventsDeploymentsResponse200Type) ToPointer() *GetDeploymentEventsDeploymentsResponse200Type {
-	return &e
-}
-func (e *GetDeploymentEventsDeploymentsResponse200Type) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentEvents3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1371,106 +264,409 @@ func (e *GetDeploymentEventsDeploymentsResponse200Type) UnmarshalJSON(data []byt
 	case "edge-function-invocation":
 		fallthrough
 	case "fatal":
-		*e = GetDeploymentEventsDeploymentsResponse200Type(v)
+		*e = GetDeploymentEvents3Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeploymentEventsDeploymentsResponse200Type: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentEvents3Type: %v", v)
 	}
 }
 
-type GetDeploymentEventsDeployments2 struct {
-	Created float64                                       `json:"created"`
-	Payload GetDeploymentEventsPayload                    `json:"payload"`
-	Type    GetDeploymentEventsDeploymentsResponse200Type `json:"type"`
+type GetDeploymentEvents3Info struct {
+	Type       string  `json:"type"`
+	Name       string  `json:"name"`
+	Entrypoint *string `json:"entrypoint,omitempty"`
+	Path       *string `json:"path,omitempty"`
+	Step       *string `json:"step,omitempty"`
+	ReadyState *string `json:"readyState,omitempty"`
 }
 
-func (o *GetDeploymentEventsDeployments2) GetCreated() float64 {
+func (o *GetDeploymentEvents3Info) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
+func (o *GetDeploymentEvents3Info) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEvents3Info) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEvents3Info) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents3Info) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEvents3Info) GetReadyState() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyState
+}
+
+type GetDeploymentEvents3VercelCache string
+
+const (
+	GetDeploymentEvents3VercelCacheMiss        GetDeploymentEvents3VercelCache = "MISS"
+	GetDeploymentEvents3VercelCacheHit         GetDeploymentEvents3VercelCache = "HIT"
+	GetDeploymentEvents3VercelCacheStale       GetDeploymentEvents3VercelCache = "STALE"
+	GetDeploymentEvents3VercelCacheBypass      GetDeploymentEvents3VercelCache = "BYPASS"
+	GetDeploymentEvents3VercelCachePrerender   GetDeploymentEvents3VercelCache = "PRERENDER"
+	GetDeploymentEvents3VercelCacheRevalidated GetDeploymentEvents3VercelCache = "REVALIDATED"
+)
+
+func (e GetDeploymentEvents3VercelCache) ToPointer() *GetDeploymentEvents3VercelCache {
+	return &e
+}
+func (e *GetDeploymentEvents3VercelCache) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MISS":
+		fallthrough
+	case "HIT":
+		fallthrough
+	case "STALE":
+		fallthrough
+	case "BYPASS":
+		fallthrough
+	case "PRERENDER":
+		fallthrough
+	case "REVALIDATED":
+		*e = GetDeploymentEvents3VercelCache(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetDeploymentEvents3VercelCache: %v", v)
+	}
+}
+
+type GetDeploymentEvents3Proxy struct {
+	Timestamp        float64                          `json:"timestamp"`
+	Method           string                           `json:"method"`
+	Host             string                           `json:"host"`
+	Path             string                           `json:"path"`
+	StatusCode       *float64                         `json:"statusCode,omitempty"`
+	UserAgent        []string                         `json:"userAgent"`
+	Referer          string                           `json:"referer"`
+	ClientIP         string                           `json:"clientIp"`
+	Region           string                           `json:"region"`
+	Scheme           *string                          `json:"scheme,omitempty"`
+	ResponseByteSize *float64                         `json:"responseByteSize,omitempty"`
+	CacheID          *string                          `json:"cacheId,omitempty"`
+	PathType         *string                          `json:"pathType,omitempty"`
+	VercelID         *string                          `json:"vercelId,omitempty"`
+	VercelCache      *GetDeploymentEvents3VercelCache `json:"vercelCache,omitempty"`
+	LambdaRegion     *string                          `json:"lambdaRegion,omitempty"`
+}
+
+func (o *GetDeploymentEvents3Proxy) GetTimestamp() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Timestamp
+}
+
+func (o *GetDeploymentEvents3Proxy) GetMethod() string {
+	if o == nil {
+		return ""
+	}
+	return o.Method
+}
+
+func (o *GetDeploymentEvents3Proxy) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *GetDeploymentEvents3Proxy) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEvents3Proxy) GetStatusCode() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentEvents3Proxy) GetUserAgent() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.UserAgent
+}
+
+func (o *GetDeploymentEvents3Proxy) GetReferer() string {
+	if o == nil {
+		return ""
+	}
+	return o.Referer
+}
+
+func (o *GetDeploymentEvents3Proxy) GetClientIP() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientIP
+}
+
+func (o *GetDeploymentEvents3Proxy) GetRegion() string {
+	if o == nil {
+		return ""
+	}
+	return o.Region
+}
+
+func (o *GetDeploymentEvents3Proxy) GetScheme() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Scheme
+}
+
+func (o *GetDeploymentEvents3Proxy) GetResponseByteSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.ResponseByteSize
+}
+
+func (o *GetDeploymentEvents3Proxy) GetCacheID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CacheID
+}
+
+func (o *GetDeploymentEvents3Proxy) GetPathType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PathType
+}
+
+func (o *GetDeploymentEvents3Proxy) GetVercelID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.VercelID
+}
+
+func (o *GetDeploymentEvents3Proxy) GetVercelCache() *GetDeploymentEvents3VercelCache {
+	if o == nil {
+		return nil
+	}
+	return o.VercelCache
+}
+
+func (o *GetDeploymentEvents3Proxy) GetLambdaRegion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LambdaRegion
+}
+
+type ThreePayload struct {
+	DeploymentID string                     `json:"deploymentId"`
+	Info         *GetDeploymentEvents3Info  `json:"info,omitempty"`
+	Text         *string                    `json:"text,omitempty"`
+	ID           string                     `json:"id"`
+	Date         float64                    `json:"date"`
+	Serial       string                     `json:"serial"`
+	Created      *float64                   `json:"created,omitempty"`
+	StatusCode   *float64                   `json:"statusCode,omitempty"`
+	RequestID    *string                    `json:"requestId,omitempty"`
+	Proxy        *GetDeploymentEvents3Proxy `json:"proxy,omitempty"`
+}
+
+func (o *ThreePayload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *ThreePayload) GetInfo() *GetDeploymentEvents3Info {
+	if o == nil {
+		return nil
+	}
+	return o.Info
+}
+
+func (o *ThreePayload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
+}
+
+func (o *ThreePayload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *ThreePayload) GetDate() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Date
+}
+
+func (o *ThreePayload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *ThreePayload) GetCreated() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Created
+}
+
+func (o *ThreePayload) GetStatusCode() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *ThreePayload) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
+func (o *ThreePayload) GetProxy() *GetDeploymentEvents3Proxy {
+	if o == nil {
+		return nil
+	}
+	return o.Proxy
+}
+
+type Three2 struct {
+	Type    GetDeploymentEvents3Type `json:"type"`
+	Created float64                  `json:"created"`
+	Payload ThreePayload             `json:"payload"`
+}
+
+func (o *Three2) GetType() GetDeploymentEvents3Type {
+	if o == nil {
+		return GetDeploymentEvents3Type("")
+	}
+	return o.Type
+}
+
+func (o *Three2) GetCreated() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.Created
 }
 
-func (o *GetDeploymentEventsDeployments2) GetPayload() GetDeploymentEventsPayload {
+func (o *Three2) GetPayload() ThreePayload {
 	if o == nil {
-		return GetDeploymentEventsPayload{}
+		return ThreePayload{}
 	}
 	return o.Payload
 }
 
-func (o *GetDeploymentEventsDeployments2) GetType() GetDeploymentEventsDeploymentsResponse200Type {
+type ThreeInfo struct {
+	Type       string  `json:"type"`
+	Name       string  `json:"name"`
+	Entrypoint *string `json:"entrypoint,omitempty"`
+	Path       *string `json:"path,omitempty"`
+	Step       *string `json:"step,omitempty"`
+	ReadyState *string `json:"readyState,omitempty"`
+}
+
+func (o *ThreeInfo) GetType() string {
 	if o == nil {
-		return GetDeploymentEventsDeploymentsResponse200Type("")
+		return ""
 	}
 	return o.Type
 }
 
-type GetDeploymentEventsInfo struct {
-	Entrypoint *string `json:"entrypoint,omitempty"`
-	Name       string  `json:"name"`
-	Path       *string `json:"path,omitempty"`
-	ReadyState *string `json:"readyState,omitempty"`
-	Step       *string `json:"step,omitempty"`
-	Type       string  `json:"type"`
-}
-
-func (o *GetDeploymentEventsInfo) GetEntrypoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Entrypoint
-}
-
-func (o *GetDeploymentEventsInfo) GetName() string {
+func (o *ThreeInfo) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *GetDeploymentEventsInfo) GetPath() *string {
+func (o *ThreeInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *ThreeInfo) GetPath() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Path
 }
 
-func (o *GetDeploymentEventsInfo) GetReadyState() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ReadyState
-}
-
-func (o *GetDeploymentEventsInfo) GetStep() *string {
+func (o *ThreeInfo) GetStep() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Step
 }
 
-func (o *GetDeploymentEventsInfo) GetType() string {
+func (o *ThreeInfo) GetReadyState() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Type
+	return o.ReadyState
 }
 
-type GetDeploymentEventsVercelCache string
+type ThreeVercelCache string
 
 const (
-	GetDeploymentEventsVercelCacheMiss        GetDeploymentEventsVercelCache = "MISS"
-	GetDeploymentEventsVercelCacheHit         GetDeploymentEventsVercelCache = "HIT"
-	GetDeploymentEventsVercelCacheStale       GetDeploymentEventsVercelCache = "STALE"
-	GetDeploymentEventsVercelCacheBypass      GetDeploymentEventsVercelCache = "BYPASS"
-	GetDeploymentEventsVercelCachePrerender   GetDeploymentEventsVercelCache = "PRERENDER"
-	GetDeploymentEventsVercelCacheRevalidated GetDeploymentEventsVercelCache = "REVALIDATED"
+	ThreeVercelCacheMiss        ThreeVercelCache = "MISS"
+	ThreeVercelCacheHit         ThreeVercelCache = "HIT"
+	ThreeVercelCacheStale       ThreeVercelCache = "STALE"
+	ThreeVercelCacheBypass      ThreeVercelCache = "BYPASS"
+	ThreeVercelCachePrerender   ThreeVercelCache = "PRERENDER"
+	ThreeVercelCacheRevalidated ThreeVercelCache = "REVALIDATED"
 )
 
-func (e GetDeploymentEventsVercelCache) ToPointer() *GetDeploymentEventsVercelCache {
+func (e ThreeVercelCache) ToPointer() *ThreeVercelCache {
 	return &e
 }
-func (e *GetDeploymentEventsVercelCache) UnmarshalJSON(data []byte) error {
+func (e *ThreeVercelCache) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1487,163 +683,163 @@ func (e *GetDeploymentEventsVercelCache) UnmarshalJSON(data []byte) error {
 	case "PRERENDER":
 		fallthrough
 	case "REVALIDATED":
-		*e = GetDeploymentEventsVercelCache(v)
+		*e = ThreeVercelCache(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeploymentEventsVercelCache: %v", v)
+		return fmt.Errorf("invalid value for ThreeVercelCache: %v", v)
 	}
 }
 
-type GetDeploymentEventsProxy struct {
-	CacheID          *string                         `json:"cacheId,omitempty"`
-	ClientIP         string                          `json:"clientIp"`
-	Host             string                          `json:"host"`
-	LambdaRegion     *string                         `json:"lambdaRegion,omitempty"`
-	Method           string                          `json:"method"`
-	Path             string                          `json:"path"`
-	PathType         *string                         `json:"pathType,omitempty"`
-	Referer          string                          `json:"referer"`
-	Region           string                          `json:"region"`
-	ResponseByteSize *float64                        `json:"responseByteSize,omitempty"`
-	Scheme           *string                         `json:"scheme,omitempty"`
-	StatusCode       *float64                        `json:"statusCode,omitempty"`
-	Timestamp        float64                         `json:"timestamp"`
-	UserAgent        []string                        `json:"userAgent"`
-	VercelCache      *GetDeploymentEventsVercelCache `json:"vercelCache,omitempty"`
-	VercelID         *string                         `json:"vercelId,omitempty"`
+type ThreeProxy struct {
+	Timestamp        float64           `json:"timestamp"`
+	Method           string            `json:"method"`
+	Host             string            `json:"host"`
+	Path             string            `json:"path"`
+	StatusCode       *float64          `json:"statusCode,omitempty"`
+	UserAgent        []string          `json:"userAgent"`
+	Referer          string            `json:"referer"`
+	ClientIP         string            `json:"clientIp"`
+	Region           string            `json:"region"`
+	Scheme           *string           `json:"scheme,omitempty"`
+	ResponseByteSize *float64          `json:"responseByteSize,omitempty"`
+	CacheID          *string           `json:"cacheId,omitempty"`
+	PathType         *string           `json:"pathType,omitempty"`
+	VercelID         *string           `json:"vercelId,omitempty"`
+	VercelCache      *ThreeVercelCache `json:"vercelCache,omitempty"`
+	LambdaRegion     *string           `json:"lambdaRegion,omitempty"`
 }
 
-func (o *GetDeploymentEventsProxy) GetCacheID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CacheID
-}
-
-func (o *GetDeploymentEventsProxy) GetClientIP() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientIP
-}
-
-func (o *GetDeploymentEventsProxy) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *GetDeploymentEventsProxy) GetLambdaRegion() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LambdaRegion
-}
-
-func (o *GetDeploymentEventsProxy) GetMethod() string {
-	if o == nil {
-		return ""
-	}
-	return o.Method
-}
-
-func (o *GetDeploymentEventsProxy) GetPath() string {
-	if o == nil {
-		return ""
-	}
-	return o.Path
-}
-
-func (o *GetDeploymentEventsProxy) GetPathType() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PathType
-}
-
-func (o *GetDeploymentEventsProxy) GetReferer() string {
-	if o == nil {
-		return ""
-	}
-	return o.Referer
-}
-
-func (o *GetDeploymentEventsProxy) GetRegion() string {
-	if o == nil {
-		return ""
-	}
-	return o.Region
-}
-
-func (o *GetDeploymentEventsProxy) GetResponseByteSize() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.ResponseByteSize
-}
-
-func (o *GetDeploymentEventsProxy) GetScheme() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Scheme
-}
-
-func (o *GetDeploymentEventsProxy) GetStatusCode() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.StatusCode
-}
-
-func (o *GetDeploymentEventsProxy) GetTimestamp() float64 {
+func (o *ThreeProxy) GetTimestamp() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.Timestamp
 }
 
-func (o *GetDeploymentEventsProxy) GetUserAgent() []string {
+func (o *ThreeProxy) GetMethod() string {
+	if o == nil {
+		return ""
+	}
+	return o.Method
+}
+
+func (o *ThreeProxy) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *ThreeProxy) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *ThreeProxy) GetStatusCode() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *ThreeProxy) GetUserAgent() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.UserAgent
 }
 
-func (o *GetDeploymentEventsProxy) GetVercelCache() *GetDeploymentEventsVercelCache {
+func (o *ThreeProxy) GetReferer() string {
+	if o == nil {
+		return ""
+	}
+	return o.Referer
+}
+
+func (o *ThreeProxy) GetClientIP() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientIP
+}
+
+func (o *ThreeProxy) GetRegion() string {
+	if o == nil {
+		return ""
+	}
+	return o.Region
+}
+
+func (o *ThreeProxy) GetScheme() *string {
 	if o == nil {
 		return nil
 	}
-	return o.VercelCache
+	return o.Scheme
 }
 
-func (o *GetDeploymentEventsProxy) GetVercelID() *string {
+func (o *ThreeProxy) GetResponseByteSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.ResponseByteSize
+}
+
+func (o *ThreeProxy) GetCacheID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CacheID
+}
+
+func (o *ThreeProxy) GetPathType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PathType
+}
+
+func (o *ThreeProxy) GetVercelID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.VercelID
 }
 
-type GetDeploymentEventsDeploymentsResponseType string
+func (o *ThreeProxy) GetVercelCache() *ThreeVercelCache {
+	if o == nil {
+		return nil
+	}
+	return o.VercelCache
+}
+
+func (o *ThreeProxy) GetLambdaRegion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LambdaRegion
+}
+
+type ThreeType string
 
 const (
-	GetDeploymentEventsDeploymentsResponseTypeCommand                GetDeploymentEventsDeploymentsResponseType = "command"
-	GetDeploymentEventsDeploymentsResponseTypeStdout                 GetDeploymentEventsDeploymentsResponseType = "stdout"
-	GetDeploymentEventsDeploymentsResponseTypeStderr                 GetDeploymentEventsDeploymentsResponseType = "stderr"
-	GetDeploymentEventsDeploymentsResponseTypeExit                   GetDeploymentEventsDeploymentsResponseType = "exit"
-	GetDeploymentEventsDeploymentsResponseTypeDeploymentState        GetDeploymentEventsDeploymentsResponseType = "deployment-state"
-	GetDeploymentEventsDeploymentsResponseTypeDelimiter              GetDeploymentEventsDeploymentsResponseType = "delimiter"
-	GetDeploymentEventsDeploymentsResponseTypeMiddleware             GetDeploymentEventsDeploymentsResponseType = "middleware"
-	GetDeploymentEventsDeploymentsResponseTypeMiddlewareInvocation   GetDeploymentEventsDeploymentsResponseType = "middleware-invocation"
-	GetDeploymentEventsDeploymentsResponseTypeEdgeFunctionInvocation GetDeploymentEventsDeploymentsResponseType = "edge-function-invocation"
-	GetDeploymentEventsDeploymentsResponseTypeFatal                  GetDeploymentEventsDeploymentsResponseType = "fatal"
+	ThreeTypeCommand                ThreeType = "command"
+	ThreeTypeStdout                 ThreeType = "stdout"
+	ThreeTypeStderr                 ThreeType = "stderr"
+	ThreeTypeExit                   ThreeType = "exit"
+	ThreeTypeDeploymentState        ThreeType = "deployment-state"
+	ThreeTypeDelimiter              ThreeType = "delimiter"
+	ThreeTypeMiddleware             ThreeType = "middleware"
+	ThreeTypeMiddlewareInvocation   ThreeType = "middleware-invocation"
+	ThreeTypeEdgeFunctionInvocation ThreeType = "edge-function-invocation"
+	ThreeTypeFatal                  ThreeType = "fatal"
 )
 
-func (e GetDeploymentEventsDeploymentsResponseType) ToPointer() *GetDeploymentEventsDeploymentsResponseType {
+func (e ThreeType) ToPointer() *ThreeType {
 	return &e
 }
-func (e *GetDeploymentEventsDeploymentsResponseType) UnmarshalJSON(data []byte) error {
+func (e *ThreeType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1668,169 +864,973 @@ func (e *GetDeploymentEventsDeploymentsResponseType) UnmarshalJSON(data []byte) 
 	case "edge-function-invocation":
 		fallthrough
 	case "fatal":
-		*e = GetDeploymentEventsDeploymentsResponseType(v)
+		*e = ThreeType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeploymentEventsDeploymentsResponseType: %v", v)
+		return fmt.Errorf("invalid value for ThreeType: %v", v)
 	}
 }
 
-type GetDeploymentEventsDeployments1 struct {
-	Created      float64                                    `json:"created"`
-	Date         float64                                    `json:"date"`
-	DeploymentID string                                     `json:"deploymentId"`
-	ID           string                                     `json:"id"`
-	Info         GetDeploymentEventsInfo                    `json:"info"`
-	Proxy        *GetDeploymentEventsProxy                  `json:"proxy,omitempty"`
-	RequestID    *string                                    `json:"requestId,omitempty"`
-	Serial       string                                     `json:"serial"`
-	StatusCode   *float64                                   `json:"statusCode,omitempty"`
-	Text         *string                                    `json:"text,omitempty"`
-	Type         GetDeploymentEventsDeploymentsResponseType `json:"type"`
+type Three1 struct {
+	Created      float64     `json:"created"`
+	Date         float64     `json:"date"`
+	DeploymentID string      `json:"deploymentId"`
+	ID           string      `json:"id"`
+	Info         ThreeInfo   `json:"info"`
+	Proxy        *ThreeProxy `json:"proxy,omitempty"`
+	RequestID    *string     `json:"requestId,omitempty"`
+	Serial       string      `json:"serial"`
+	StatusCode   *float64    `json:"statusCode,omitempty"`
+	Text         *string     `json:"text,omitempty"`
+	Type         ThreeType   `json:"type"`
 }
 
-func (o *GetDeploymentEventsDeployments1) GetCreated() float64 {
+func (o *Three1) GetCreated() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.Created
 }
 
-func (o *GetDeploymentEventsDeployments1) GetDate() float64 {
+func (o *Three1) GetDate() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.Date
 }
 
-func (o *GetDeploymentEventsDeployments1) GetDeploymentID() string {
+func (o *Three1) GetDeploymentID() string {
 	if o == nil {
 		return ""
 	}
 	return o.DeploymentID
 }
 
-func (o *GetDeploymentEventsDeployments1) GetID() string {
+func (o *Three1) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetDeploymentEventsDeployments1) GetInfo() GetDeploymentEventsInfo {
+func (o *Three1) GetInfo() ThreeInfo {
 	if o == nil {
-		return GetDeploymentEventsInfo{}
+		return ThreeInfo{}
 	}
 	return o.Info
 }
 
-func (o *GetDeploymentEventsDeployments1) GetProxy() *GetDeploymentEventsProxy {
+func (o *Three1) GetProxy() *ThreeProxy {
 	if o == nil {
 		return nil
 	}
 	return o.Proxy
 }
 
-func (o *GetDeploymentEventsDeployments1) GetRequestID() *string {
+func (o *Three1) GetRequestID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.RequestID
 }
 
-func (o *GetDeploymentEventsDeployments1) GetSerial() string {
+func (o *Three1) GetSerial() string {
 	if o == nil {
 		return ""
 	}
 	return o.Serial
 }
 
-func (o *GetDeploymentEventsDeployments1) GetStatusCode() *float64 {
+func (o *Three1) GetStatusCode() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.StatusCode
 }
 
-func (o *GetDeploymentEventsDeployments1) GetText() *string {
+func (o *Three1) GetText() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Text
 }
 
-func (o *GetDeploymentEventsDeployments1) GetType() GetDeploymentEventsDeploymentsResponseType {
+func (o *Three1) GetType() ThreeType {
 	if o == nil {
-		return GetDeploymentEventsDeploymentsResponseType("")
+		return ThreeType("")
 	}
 	return o.Type
 }
 
-type GetDeploymentEventsResponseBodyType string
+type ResponseBody3Type string
 
 const (
-	GetDeploymentEventsResponseBodyTypeGetDeploymentEventsDeployments1 GetDeploymentEventsResponseBodyType = "getDeploymentEvents_deployments_1"
-	GetDeploymentEventsResponseBodyTypeGetDeploymentEventsDeployments2 GetDeploymentEventsResponseBodyType = "getDeploymentEvents_deployments_2"
-	GetDeploymentEventsResponseBodyTypeGetDeploymentEvents3            GetDeploymentEventsResponseBodyType = "getDeploymentEvents_3"
+	ResponseBody3TypeThree1 ResponseBody3Type = "3_1"
+	ResponseBody3TypeThree2 ResponseBody3Type = "3_2"
+)
+
+type ResponseBody3 struct {
+	Three1 *Three1
+	Three2 *Three2
+
+	Type ResponseBody3Type
+}
+
+func CreateResponseBody3Three1(three1 Three1) ResponseBody3 {
+	typ := ResponseBody3TypeThree1
+
+	return ResponseBody3{
+		Three1: &three1,
+		Type:   typ,
+	}
+}
+
+func CreateResponseBody3Three2(three2 Three2) ResponseBody3 {
+	typ := ResponseBody3TypeThree2
+
+	return ResponseBody3{
+		Three2: &three2,
+		Type:   typ,
+	}
+}
+
+func (u *ResponseBody3) UnmarshalJSON(data []byte) error {
+
+	var three2 Three2 = Three2{}
+	if err := utils.UnmarshalJSON(data, &three2, "", true, true); err == nil {
+		u.Three2 = &three2
+		u.Type = ResponseBody3TypeThree2
+		return nil
+	}
+
+	var three1 Three1 = Three1{}
+	if err := utils.UnmarshalJSON(data, &three1, "", true, true); err == nil {
+		u.Three1 = &three1
+		u.Type = ResponseBody3TypeThree1
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ResponseBody3", string(data))
+}
+
+func (u ResponseBody3) MarshalJSON() ([]byte, error) {
+	if u.Three1 != nil {
+		return utils.MarshalJSON(u.Three1, "", true)
+	}
+
+	if u.Three2 != nil {
+		return utils.MarshalJSON(u.Three2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type ResponseBody3: all fields are null")
+}
+
+type GetDeploymentEventsResponseBodyDeploymentsResponseType string
+
+const (
+	GetDeploymentEventsResponseBodyDeploymentsResponseTypeCommand                GetDeploymentEventsResponseBodyDeploymentsResponseType = "command"
+	GetDeploymentEventsResponseBodyDeploymentsResponseTypeStdout                 GetDeploymentEventsResponseBodyDeploymentsResponseType = "stdout"
+	GetDeploymentEventsResponseBodyDeploymentsResponseTypeStderr                 GetDeploymentEventsResponseBodyDeploymentsResponseType = "stderr"
+	GetDeploymentEventsResponseBodyDeploymentsResponseTypeExit                   GetDeploymentEventsResponseBodyDeploymentsResponseType = "exit"
+	GetDeploymentEventsResponseBodyDeploymentsResponseTypeDeploymentState        GetDeploymentEventsResponseBodyDeploymentsResponseType = "deployment-state"
+	GetDeploymentEventsResponseBodyDeploymentsResponseTypeDelimiter              GetDeploymentEventsResponseBodyDeploymentsResponseType = "delimiter"
+	GetDeploymentEventsResponseBodyDeploymentsResponseTypeMiddleware             GetDeploymentEventsResponseBodyDeploymentsResponseType = "middleware"
+	GetDeploymentEventsResponseBodyDeploymentsResponseTypeMiddlewareInvocation   GetDeploymentEventsResponseBodyDeploymentsResponseType = "middleware-invocation"
+	GetDeploymentEventsResponseBodyDeploymentsResponseTypeEdgeFunctionInvocation GetDeploymentEventsResponseBodyDeploymentsResponseType = "edge-function-invocation"
+	GetDeploymentEventsResponseBodyDeploymentsResponseTypeFatal                  GetDeploymentEventsResponseBodyDeploymentsResponseType = "fatal"
+)
+
+func (e GetDeploymentEventsResponseBodyDeploymentsResponseType) ToPointer() *GetDeploymentEventsResponseBodyDeploymentsResponseType {
+	return &e
+}
+func (e *GetDeploymentEventsResponseBodyDeploymentsResponseType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "command":
+		fallthrough
+	case "stdout":
+		fallthrough
+	case "stderr":
+		fallthrough
+	case "exit":
+		fallthrough
+	case "deployment-state":
+		fallthrough
+	case "delimiter":
+		fallthrough
+	case "middleware":
+		fallthrough
+	case "middleware-invocation":
+		fallthrough
+	case "edge-function-invocation":
+		fallthrough
+	case "fatal":
+		*e = GetDeploymentEventsResponseBodyDeploymentsResponseType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetDeploymentEventsResponseBodyDeploymentsResponseType: %v", v)
+	}
+}
+
+type GetDeploymentEventsResponseBodyDeploymentsInfo struct {
+	Type       string  `json:"type"`
+	Name       string  `json:"name"`
+	Entrypoint *string `json:"entrypoint,omitempty"`
+	Path       *string `json:"path,omitempty"`
+	Step       *string `json:"step,omitempty"`
+	ReadyState *string `json:"readyState,omitempty"`
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsInfo) GetReadyState() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyState
+}
+
+type GetDeploymentEventsResponseBodyDeploymentsVercelCache string
+
+const (
+	GetDeploymentEventsResponseBodyDeploymentsVercelCacheMiss        GetDeploymentEventsResponseBodyDeploymentsVercelCache = "MISS"
+	GetDeploymentEventsResponseBodyDeploymentsVercelCacheHit         GetDeploymentEventsResponseBodyDeploymentsVercelCache = "HIT"
+	GetDeploymentEventsResponseBodyDeploymentsVercelCacheStale       GetDeploymentEventsResponseBodyDeploymentsVercelCache = "STALE"
+	GetDeploymentEventsResponseBodyDeploymentsVercelCacheBypass      GetDeploymentEventsResponseBodyDeploymentsVercelCache = "BYPASS"
+	GetDeploymentEventsResponseBodyDeploymentsVercelCachePrerender   GetDeploymentEventsResponseBodyDeploymentsVercelCache = "PRERENDER"
+	GetDeploymentEventsResponseBodyDeploymentsVercelCacheRevalidated GetDeploymentEventsResponseBodyDeploymentsVercelCache = "REVALIDATED"
+)
+
+func (e GetDeploymentEventsResponseBodyDeploymentsVercelCache) ToPointer() *GetDeploymentEventsResponseBodyDeploymentsVercelCache {
+	return &e
+}
+func (e *GetDeploymentEventsResponseBodyDeploymentsVercelCache) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MISS":
+		fallthrough
+	case "HIT":
+		fallthrough
+	case "STALE":
+		fallthrough
+	case "BYPASS":
+		fallthrough
+	case "PRERENDER":
+		fallthrough
+	case "REVALIDATED":
+		*e = GetDeploymentEventsResponseBodyDeploymentsVercelCache(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetDeploymentEventsResponseBodyDeploymentsVercelCache: %v", v)
+	}
+}
+
+type GetDeploymentEventsResponseBodyDeploymentsProxy struct {
+	Timestamp        float64                                                `json:"timestamp"`
+	Method           string                                                 `json:"method"`
+	Host             string                                                 `json:"host"`
+	Path             string                                                 `json:"path"`
+	StatusCode       *float64                                               `json:"statusCode,omitempty"`
+	UserAgent        []string                                               `json:"userAgent"`
+	Referer          string                                                 `json:"referer"`
+	ClientIP         string                                                 `json:"clientIp"`
+	Region           string                                                 `json:"region"`
+	Scheme           *string                                                `json:"scheme,omitempty"`
+	ResponseByteSize *float64                                               `json:"responseByteSize,omitempty"`
+	CacheID          *string                                                `json:"cacheId,omitempty"`
+	PathType         *string                                                `json:"pathType,omitempty"`
+	VercelID         *string                                                `json:"vercelId,omitempty"`
+	VercelCache      *GetDeploymentEventsResponseBodyDeploymentsVercelCache `json:"vercelCache,omitempty"`
+	LambdaRegion     *string                                                `json:"lambdaRegion,omitempty"`
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetTimestamp() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Timestamp
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetMethod() string {
+	if o == nil {
+		return ""
+	}
+	return o.Method
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetStatusCode() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetUserAgent() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.UserAgent
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetReferer() string {
+	if o == nil {
+		return ""
+	}
+	return o.Referer
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetClientIP() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientIP
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetRegion() string {
+	if o == nil {
+		return ""
+	}
+	return o.Region
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetScheme() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Scheme
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetResponseByteSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.ResponseByteSize
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetCacheID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CacheID
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetPathType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PathType
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetVercelID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.VercelID
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetVercelCache() *GetDeploymentEventsResponseBodyDeploymentsVercelCache {
+	if o == nil {
+		return nil
+	}
+	return o.VercelCache
+}
+
+func (o *GetDeploymentEventsResponseBodyDeploymentsProxy) GetLambdaRegion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LambdaRegion
+}
+
+type ResponseBodyPayload struct {
+	DeploymentID string                                           `json:"deploymentId"`
+	Info         *GetDeploymentEventsResponseBodyDeploymentsInfo  `json:"info,omitempty"`
+	Text         *string                                          `json:"text,omitempty"`
+	ID           string                                           `json:"id"`
+	Date         float64                                          `json:"date"`
+	Serial       string                                           `json:"serial"`
+	Created      *float64                                         `json:"created,omitempty"`
+	StatusCode   *float64                                         `json:"statusCode,omitempty"`
+	RequestID    *string                                          `json:"requestId,omitempty"`
+	Proxy        *GetDeploymentEventsResponseBodyDeploymentsProxy `json:"proxy,omitempty"`
+}
+
+func (o *ResponseBodyPayload) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *ResponseBodyPayload) GetInfo() *GetDeploymentEventsResponseBodyDeploymentsInfo {
+	if o == nil {
+		return nil
+	}
+	return o.Info
+}
+
+func (o *ResponseBodyPayload) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
+}
+
+func (o *ResponseBodyPayload) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *ResponseBodyPayload) GetDate() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Date
+}
+
+func (o *ResponseBodyPayload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *ResponseBodyPayload) GetCreated() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Created
+}
+
+func (o *ResponseBodyPayload) GetStatusCode() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *ResponseBodyPayload) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
+func (o *ResponseBodyPayload) GetProxy() *GetDeploymentEventsResponseBodyDeploymentsProxy {
+	if o == nil {
+		return nil
+	}
+	return o.Proxy
+}
+
+type GetDeploymentEventsResponseBody2 struct {
+	Type    GetDeploymentEventsResponseBodyDeploymentsResponseType `json:"type"`
+	Created float64                                                `json:"created"`
+	Payload ResponseBodyPayload                                    `json:"payload"`
+}
+
+func (o *GetDeploymentEventsResponseBody2) GetType() GetDeploymentEventsResponseBodyDeploymentsResponseType {
+	if o == nil {
+		return GetDeploymentEventsResponseBodyDeploymentsResponseType("")
+	}
+	return o.Type
+}
+
+func (o *GetDeploymentEventsResponseBody2) GetCreated() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEventsResponseBody2) GetPayload() ResponseBodyPayload {
+	if o == nil {
+		return ResponseBodyPayload{}
+	}
+	return o.Payload
+}
+
+type ResponseBodyInfo struct {
+	Type       string  `json:"type"`
+	Name       string  `json:"name"`
+	Entrypoint *string `json:"entrypoint,omitempty"`
+	Path       *string `json:"path,omitempty"`
+	Step       *string `json:"step,omitempty"`
+	ReadyState *string `json:"readyState,omitempty"`
+}
+
+func (o *ResponseBodyInfo) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
+}
+
+func (o *ResponseBodyInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *ResponseBodyInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *ResponseBodyInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *ResponseBodyInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *ResponseBodyInfo) GetReadyState() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyState
+}
+
+type ResponseBodyVercelCache string
+
+const (
+	ResponseBodyVercelCacheMiss        ResponseBodyVercelCache = "MISS"
+	ResponseBodyVercelCacheHit         ResponseBodyVercelCache = "HIT"
+	ResponseBodyVercelCacheStale       ResponseBodyVercelCache = "STALE"
+	ResponseBodyVercelCacheBypass      ResponseBodyVercelCache = "BYPASS"
+	ResponseBodyVercelCachePrerender   ResponseBodyVercelCache = "PRERENDER"
+	ResponseBodyVercelCacheRevalidated ResponseBodyVercelCache = "REVALIDATED"
+)
+
+func (e ResponseBodyVercelCache) ToPointer() *ResponseBodyVercelCache {
+	return &e
+}
+func (e *ResponseBodyVercelCache) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MISS":
+		fallthrough
+	case "HIT":
+		fallthrough
+	case "STALE":
+		fallthrough
+	case "BYPASS":
+		fallthrough
+	case "PRERENDER":
+		fallthrough
+	case "REVALIDATED":
+		*e = ResponseBodyVercelCache(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ResponseBodyVercelCache: %v", v)
+	}
+}
+
+type ResponseBodyProxy struct {
+	Timestamp        float64                  `json:"timestamp"`
+	Method           string                   `json:"method"`
+	Host             string                   `json:"host"`
+	Path             string                   `json:"path"`
+	StatusCode       *float64                 `json:"statusCode,omitempty"`
+	UserAgent        []string                 `json:"userAgent"`
+	Referer          string                   `json:"referer"`
+	ClientIP         string                   `json:"clientIp"`
+	Region           string                   `json:"region"`
+	Scheme           *string                  `json:"scheme,omitempty"`
+	ResponseByteSize *float64                 `json:"responseByteSize,omitempty"`
+	CacheID          *string                  `json:"cacheId,omitempty"`
+	PathType         *string                  `json:"pathType,omitempty"`
+	VercelID         *string                  `json:"vercelId,omitempty"`
+	VercelCache      *ResponseBodyVercelCache `json:"vercelCache,omitempty"`
+	LambdaRegion     *string                  `json:"lambdaRegion,omitempty"`
+}
+
+func (o *ResponseBodyProxy) GetTimestamp() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Timestamp
+}
+
+func (o *ResponseBodyProxy) GetMethod() string {
+	if o == nil {
+		return ""
+	}
+	return o.Method
+}
+
+func (o *ResponseBodyProxy) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *ResponseBodyProxy) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *ResponseBodyProxy) GetStatusCode() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *ResponseBodyProxy) GetUserAgent() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.UserAgent
+}
+
+func (o *ResponseBodyProxy) GetReferer() string {
+	if o == nil {
+		return ""
+	}
+	return o.Referer
+}
+
+func (o *ResponseBodyProxy) GetClientIP() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientIP
+}
+
+func (o *ResponseBodyProxy) GetRegion() string {
+	if o == nil {
+		return ""
+	}
+	return o.Region
+}
+
+func (o *ResponseBodyProxy) GetScheme() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Scheme
+}
+
+func (o *ResponseBodyProxy) GetResponseByteSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.ResponseByteSize
+}
+
+func (o *ResponseBodyProxy) GetCacheID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CacheID
+}
+
+func (o *ResponseBodyProxy) GetPathType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PathType
+}
+
+func (o *ResponseBodyProxy) GetVercelID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.VercelID
+}
+
+func (o *ResponseBodyProxy) GetVercelCache() *ResponseBodyVercelCache {
+	if o == nil {
+		return nil
+	}
+	return o.VercelCache
+}
+
+func (o *ResponseBodyProxy) GetLambdaRegion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LambdaRegion
+}
+
+type GetDeploymentEventsResponseBodyDeploymentsType string
+
+const (
+	GetDeploymentEventsResponseBodyDeploymentsTypeCommand                GetDeploymentEventsResponseBodyDeploymentsType = "command"
+	GetDeploymentEventsResponseBodyDeploymentsTypeStdout                 GetDeploymentEventsResponseBodyDeploymentsType = "stdout"
+	GetDeploymentEventsResponseBodyDeploymentsTypeStderr                 GetDeploymentEventsResponseBodyDeploymentsType = "stderr"
+	GetDeploymentEventsResponseBodyDeploymentsTypeExit                   GetDeploymentEventsResponseBodyDeploymentsType = "exit"
+	GetDeploymentEventsResponseBodyDeploymentsTypeDeploymentState        GetDeploymentEventsResponseBodyDeploymentsType = "deployment-state"
+	GetDeploymentEventsResponseBodyDeploymentsTypeDelimiter              GetDeploymentEventsResponseBodyDeploymentsType = "delimiter"
+	GetDeploymentEventsResponseBodyDeploymentsTypeMiddleware             GetDeploymentEventsResponseBodyDeploymentsType = "middleware"
+	GetDeploymentEventsResponseBodyDeploymentsTypeMiddlewareInvocation   GetDeploymentEventsResponseBodyDeploymentsType = "middleware-invocation"
+	GetDeploymentEventsResponseBodyDeploymentsTypeEdgeFunctionInvocation GetDeploymentEventsResponseBodyDeploymentsType = "edge-function-invocation"
+	GetDeploymentEventsResponseBodyDeploymentsTypeFatal                  GetDeploymentEventsResponseBodyDeploymentsType = "fatal"
+)
+
+func (e GetDeploymentEventsResponseBodyDeploymentsType) ToPointer() *GetDeploymentEventsResponseBodyDeploymentsType {
+	return &e
+}
+func (e *GetDeploymentEventsResponseBodyDeploymentsType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "command":
+		fallthrough
+	case "stdout":
+		fallthrough
+	case "stderr":
+		fallthrough
+	case "exit":
+		fallthrough
+	case "deployment-state":
+		fallthrough
+	case "delimiter":
+		fallthrough
+	case "middleware":
+		fallthrough
+	case "middleware-invocation":
+		fallthrough
+	case "edge-function-invocation":
+		fallthrough
+	case "fatal":
+		*e = GetDeploymentEventsResponseBodyDeploymentsType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetDeploymentEventsResponseBodyDeploymentsType: %v", v)
+	}
+}
+
+type GetDeploymentEventsResponseBody1 struct {
+	Created      float64                                        `json:"created"`
+	Date         float64                                        `json:"date"`
+	DeploymentID string                                         `json:"deploymentId"`
+	ID           string                                         `json:"id"`
+	Info         ResponseBodyInfo                               `json:"info"`
+	Proxy        *ResponseBodyProxy                             `json:"proxy,omitempty"`
+	RequestID    *string                                        `json:"requestId,omitempty"`
+	Serial       string                                         `json:"serial"`
+	StatusCode   *float64                                       `json:"statusCode,omitempty"`
+	Text         *string                                        `json:"text,omitempty"`
+	Type         GetDeploymentEventsResponseBodyDeploymentsType `json:"type"`
+}
+
+func (o *GetDeploymentEventsResponseBody1) GetCreated() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Created
+}
+
+func (o *GetDeploymentEventsResponseBody1) GetDate() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Date
+}
+
+func (o *GetDeploymentEventsResponseBody1) GetDeploymentID() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentID
+}
+
+func (o *GetDeploymentEventsResponseBody1) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetDeploymentEventsResponseBody1) GetInfo() ResponseBodyInfo {
+	if o == nil {
+		return ResponseBodyInfo{}
+	}
+	return o.Info
+}
+
+func (o *GetDeploymentEventsResponseBody1) GetProxy() *ResponseBodyProxy {
+	if o == nil {
+		return nil
+	}
+	return o.Proxy
+}
+
+func (o *GetDeploymentEventsResponseBody1) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
+func (o *GetDeploymentEventsResponseBody1) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *GetDeploymentEventsResponseBody1) GetStatusCode() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentEventsResponseBody1) GetText() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Text
+}
+
+func (o *GetDeploymentEventsResponseBody1) GetType() GetDeploymentEventsResponseBodyDeploymentsType {
+	if o == nil {
+		return GetDeploymentEventsResponseBodyDeploymentsType("")
+	}
+	return o.Type
+}
+
+type GetDeploymentEventsResponseBodyUnionType string
+
+const (
+	GetDeploymentEventsResponseBodyUnionTypeGetDeploymentEventsResponseBody1 GetDeploymentEventsResponseBodyUnionType = "getDeploymentEvents_responseBody_1"
+	GetDeploymentEventsResponseBodyUnionTypeGetDeploymentEventsResponseBody2 GetDeploymentEventsResponseBodyUnionType = "getDeploymentEvents_responseBody_2"
+	GetDeploymentEventsResponseBodyUnionTypeResponseBody3                    GetDeploymentEventsResponseBodyUnionType = "responseBody_3"
 )
 
 // GetDeploymentEventsResponseBody - A stream of jsonlines where each line is a deployment log item.
 // Array of deployment logs for the provided query.
 type GetDeploymentEventsResponseBody struct {
-	GetDeploymentEventsDeployments1 *GetDeploymentEventsDeployments1
-	GetDeploymentEventsDeployments2 *GetDeploymentEventsDeployments2
-	GetDeploymentEvents3            *GetDeploymentEvents3
+	GetDeploymentEventsResponseBody1 *GetDeploymentEventsResponseBody1
+	GetDeploymentEventsResponseBody2 *GetDeploymentEventsResponseBody2
+	ResponseBody3                    *ResponseBody3
 
-	Type GetDeploymentEventsResponseBodyType
+	Type GetDeploymentEventsResponseBodyUnionType
 }
 
-func CreateGetDeploymentEventsResponseBodyGetDeploymentEventsDeployments1(getDeploymentEventsDeployments1 GetDeploymentEventsDeployments1) GetDeploymentEventsResponseBody {
-	typ := GetDeploymentEventsResponseBodyTypeGetDeploymentEventsDeployments1
+func CreateGetDeploymentEventsResponseBodyGetDeploymentEventsResponseBody1(getDeploymentEventsResponseBody1 GetDeploymentEventsResponseBody1) GetDeploymentEventsResponseBody {
+	typ := GetDeploymentEventsResponseBodyUnionTypeGetDeploymentEventsResponseBody1
 
 	return GetDeploymentEventsResponseBody{
-		GetDeploymentEventsDeployments1: &getDeploymentEventsDeployments1,
-		Type:                            typ,
+		GetDeploymentEventsResponseBody1: &getDeploymentEventsResponseBody1,
+		Type:                             typ,
 	}
 }
 
-func CreateGetDeploymentEventsResponseBodyGetDeploymentEventsDeployments2(getDeploymentEventsDeployments2 GetDeploymentEventsDeployments2) GetDeploymentEventsResponseBody {
-	typ := GetDeploymentEventsResponseBodyTypeGetDeploymentEventsDeployments2
+func CreateGetDeploymentEventsResponseBodyGetDeploymentEventsResponseBody2(getDeploymentEventsResponseBody2 GetDeploymentEventsResponseBody2) GetDeploymentEventsResponseBody {
+	typ := GetDeploymentEventsResponseBodyUnionTypeGetDeploymentEventsResponseBody2
 
 	return GetDeploymentEventsResponseBody{
-		GetDeploymentEventsDeployments2: &getDeploymentEventsDeployments2,
-		Type:                            typ,
+		GetDeploymentEventsResponseBody2: &getDeploymentEventsResponseBody2,
+		Type:                             typ,
 	}
 }
 
-func CreateGetDeploymentEventsResponseBodyGetDeploymentEvents3(getDeploymentEvents3 GetDeploymentEvents3) GetDeploymentEventsResponseBody {
-	typ := GetDeploymentEventsResponseBodyTypeGetDeploymentEvents3
+func CreateGetDeploymentEventsResponseBodyResponseBody3(responseBody3 ResponseBody3) GetDeploymentEventsResponseBody {
+	typ := GetDeploymentEventsResponseBodyUnionTypeResponseBody3
 
 	return GetDeploymentEventsResponseBody{
-		GetDeploymentEvents3: &getDeploymentEvents3,
-		Type:                 typ,
+		ResponseBody3: &responseBody3,
+		Type:          typ,
 	}
 }
 
 func (u *GetDeploymentEventsResponseBody) UnmarshalJSON(data []byte) error {
 
-	var getDeploymentEventsDeployments2 GetDeploymentEventsDeployments2 = GetDeploymentEventsDeployments2{}
-	if err := utils.UnmarshalJSON(data, &getDeploymentEventsDeployments2, "", true, true); err == nil {
-		u.GetDeploymentEventsDeployments2 = &getDeploymentEventsDeployments2
-		u.Type = GetDeploymentEventsResponseBodyTypeGetDeploymentEventsDeployments2
+	var getDeploymentEventsResponseBody2 GetDeploymentEventsResponseBody2 = GetDeploymentEventsResponseBody2{}
+	if err := utils.UnmarshalJSON(data, &getDeploymentEventsResponseBody2, "", true, true); err == nil {
+		u.GetDeploymentEventsResponseBody2 = &getDeploymentEventsResponseBody2
+		u.Type = GetDeploymentEventsResponseBodyUnionTypeGetDeploymentEventsResponseBody2
 		return nil
 	}
 
-	var getDeploymentEventsDeployments1 GetDeploymentEventsDeployments1 = GetDeploymentEventsDeployments1{}
-	if err := utils.UnmarshalJSON(data, &getDeploymentEventsDeployments1, "", true, true); err == nil {
-		u.GetDeploymentEventsDeployments1 = &getDeploymentEventsDeployments1
-		u.Type = GetDeploymentEventsResponseBodyTypeGetDeploymentEventsDeployments1
+	var getDeploymentEventsResponseBody1 GetDeploymentEventsResponseBody1 = GetDeploymentEventsResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &getDeploymentEventsResponseBody1, "", true, true); err == nil {
+		u.GetDeploymentEventsResponseBody1 = &getDeploymentEventsResponseBody1
+		u.Type = GetDeploymentEventsResponseBodyUnionTypeGetDeploymentEventsResponseBody1
 		return nil
 	}
 
-	var getDeploymentEvents3 GetDeploymentEvents3 = GetDeploymentEvents3{}
-	if err := utils.UnmarshalJSON(data, &getDeploymentEvents3, "", true, true); err == nil {
-		u.GetDeploymentEvents3 = &getDeploymentEvents3
-		u.Type = GetDeploymentEventsResponseBodyTypeGetDeploymentEvents3
+	var responseBody3 ResponseBody3 = ResponseBody3{}
+	if err := utils.UnmarshalJSON(data, &responseBody3, "", true, true); err == nil {
+		u.ResponseBody3 = &responseBody3
+		u.Type = GetDeploymentEventsResponseBodyUnionTypeResponseBody3
 		return nil
 	}
 
@@ -1838,87 +1838,137 @@ func (u *GetDeploymentEventsResponseBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u GetDeploymentEventsResponseBody) MarshalJSON() ([]byte, error) {
-	if u.GetDeploymentEventsDeployments1 != nil {
-		return utils.MarshalJSON(u.GetDeploymentEventsDeployments1, "", true)
+	if u.GetDeploymentEventsResponseBody1 != nil {
+		return utils.MarshalJSON(u.GetDeploymentEventsResponseBody1, "", true)
 	}
 
-	if u.GetDeploymentEventsDeployments2 != nil {
-		return utils.MarshalJSON(u.GetDeploymentEventsDeployments2, "", true)
+	if u.GetDeploymentEventsResponseBody2 != nil {
+		return utils.MarshalJSON(u.GetDeploymentEventsResponseBody2, "", true)
 	}
 
-	if u.GetDeploymentEvents3 != nil {
-		return utils.MarshalJSON(u.GetDeploymentEvents3, "", true)
+	if u.ResponseBody3 != nil {
+		return utils.MarshalJSON(u.ResponseBody3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type GetDeploymentEventsResponseBody: all fields are null")
 }
 
-type GetDeploymentEventsDeploymentsResponseInfo struct {
-	Entrypoint *string `json:"entrypoint,omitempty"`
-	Name       string  `json:"name"`
-	Path       *string `json:"path,omitempty"`
-	ReadyState *string `json:"readyState,omitempty"`
-	Step       *string `json:"step,omitempty"`
+type GetDeploymentEventsResponseBodyType string
+
+const (
+	GetDeploymentEventsResponseBodyTypeCommand                GetDeploymentEventsResponseBodyType = "command"
+	GetDeploymentEventsResponseBodyTypeStdout                 GetDeploymentEventsResponseBodyType = "stdout"
+	GetDeploymentEventsResponseBodyTypeStderr                 GetDeploymentEventsResponseBodyType = "stderr"
+	GetDeploymentEventsResponseBodyTypeExit                   GetDeploymentEventsResponseBodyType = "exit"
+	GetDeploymentEventsResponseBodyTypeDeploymentState        GetDeploymentEventsResponseBodyType = "deployment-state"
+	GetDeploymentEventsResponseBodyTypeDelimiter              GetDeploymentEventsResponseBodyType = "delimiter"
+	GetDeploymentEventsResponseBodyTypeMiddleware             GetDeploymentEventsResponseBodyType = "middleware"
+	GetDeploymentEventsResponseBodyTypeMiddlewareInvocation   GetDeploymentEventsResponseBodyType = "middleware-invocation"
+	GetDeploymentEventsResponseBodyTypeEdgeFunctionInvocation GetDeploymentEventsResponseBodyType = "edge-function-invocation"
+	GetDeploymentEventsResponseBodyTypeFatal                  GetDeploymentEventsResponseBodyType = "fatal"
+)
+
+func (e GetDeploymentEventsResponseBodyType) ToPointer() *GetDeploymentEventsResponseBodyType {
+	return &e
+}
+func (e *GetDeploymentEventsResponseBodyType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "command":
+		fallthrough
+	case "stdout":
+		fallthrough
+	case "stderr":
+		fallthrough
+	case "exit":
+		fallthrough
+	case "deployment-state":
+		fallthrough
+	case "delimiter":
+		fallthrough
+	case "middleware":
+		fallthrough
+	case "middleware-invocation":
+		fallthrough
+	case "edge-function-invocation":
+		fallthrough
+	case "fatal":
+		*e = GetDeploymentEventsResponseBodyType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetDeploymentEventsResponseBodyType: %v", v)
+	}
+}
+
+type GetDeploymentEventsResponseBodyInfo struct {
 	Type       string  `json:"type"`
+	Name       string  `json:"name"`
+	Entrypoint *string `json:"entrypoint,omitempty"`
+	Path       *string `json:"path,omitempty"`
+	Step       *string `json:"step,omitempty"`
+	ReadyState *string `json:"readyState,omitempty"`
 }
 
-func (o *GetDeploymentEventsDeploymentsResponseInfo) GetEntrypoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Entrypoint
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseInfo) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseInfo) GetPath() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Path
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseInfo) GetReadyState() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ReadyState
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseInfo) GetStep() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Step
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseInfo) GetType() string {
+func (o *GetDeploymentEventsResponseBodyInfo) GetType() string {
 	if o == nil {
 		return ""
 	}
 	return o.Type
 }
 
-type GetDeploymentEventsDeploymentsResponseVercelCache string
+func (o *GetDeploymentEventsResponseBodyInfo) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *GetDeploymentEventsResponseBodyInfo) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
+func (o *GetDeploymentEventsResponseBodyInfo) GetPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEventsResponseBodyInfo) GetStep() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Step
+}
+
+func (o *GetDeploymentEventsResponseBodyInfo) GetReadyState() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ReadyState
+}
+
+type GetDeploymentEventsResponseBodyVercelCache string
 
 const (
-	GetDeploymentEventsDeploymentsResponseVercelCacheMiss        GetDeploymentEventsDeploymentsResponseVercelCache = "MISS"
-	GetDeploymentEventsDeploymentsResponseVercelCacheHit         GetDeploymentEventsDeploymentsResponseVercelCache = "HIT"
-	GetDeploymentEventsDeploymentsResponseVercelCacheStale       GetDeploymentEventsDeploymentsResponseVercelCache = "STALE"
-	GetDeploymentEventsDeploymentsResponseVercelCacheBypass      GetDeploymentEventsDeploymentsResponseVercelCache = "BYPASS"
-	GetDeploymentEventsDeploymentsResponseVercelCachePrerender   GetDeploymentEventsDeploymentsResponseVercelCache = "PRERENDER"
-	GetDeploymentEventsDeploymentsResponseVercelCacheRevalidated GetDeploymentEventsDeploymentsResponseVercelCache = "REVALIDATED"
+	GetDeploymentEventsResponseBodyVercelCacheMiss        GetDeploymentEventsResponseBodyVercelCache = "MISS"
+	GetDeploymentEventsResponseBodyVercelCacheHit         GetDeploymentEventsResponseBodyVercelCache = "HIT"
+	GetDeploymentEventsResponseBodyVercelCacheStale       GetDeploymentEventsResponseBodyVercelCache = "STALE"
+	GetDeploymentEventsResponseBodyVercelCacheBypass      GetDeploymentEventsResponseBodyVercelCache = "BYPASS"
+	GetDeploymentEventsResponseBodyVercelCachePrerender   GetDeploymentEventsResponseBodyVercelCache = "PRERENDER"
+	GetDeploymentEventsResponseBodyVercelCacheRevalidated GetDeploymentEventsResponseBodyVercelCache = "REVALIDATED"
 )
 
-func (e GetDeploymentEventsDeploymentsResponseVercelCache) ToPointer() *GetDeploymentEventsDeploymentsResponseVercelCache {
+func (e GetDeploymentEventsResponseBodyVercelCache) ToPointer() *GetDeploymentEventsResponseBodyVercelCache {
 	return &e
 }
-func (e *GetDeploymentEventsDeploymentsResponseVercelCache) UnmarshalJSON(data []byte) error {
+func (e *GetDeploymentEventsResponseBodyVercelCache) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1935,169 +1985,155 @@ func (e *GetDeploymentEventsDeploymentsResponseVercelCache) UnmarshalJSON(data [
 	case "PRERENDER":
 		fallthrough
 	case "REVALIDATED":
-		*e = GetDeploymentEventsDeploymentsResponseVercelCache(v)
+		*e = GetDeploymentEventsResponseBodyVercelCache(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeploymentEventsDeploymentsResponseVercelCache: %v", v)
+		return fmt.Errorf("invalid value for GetDeploymentEventsResponseBodyVercelCache: %v", v)
 	}
 }
 
-type GetDeploymentEventsDeploymentsResponseProxy struct {
-	CacheID          *string                                            `json:"cacheId,omitempty"`
-	ClientIP         string                                             `json:"clientIp"`
-	Host             string                                             `json:"host"`
-	LambdaRegion     *string                                            `json:"lambdaRegion,omitempty"`
-	Method           string                                             `json:"method"`
-	Path             string                                             `json:"path"`
-	PathType         *string                                            `json:"pathType,omitempty"`
-	Referer          string                                             `json:"referer"`
-	Region           string                                             `json:"region"`
-	ResponseByteSize *float64                                           `json:"responseByteSize,omitempty"`
-	Scheme           *string                                            `json:"scheme,omitempty"`
-	StatusCode       *float64                                           `json:"statusCode,omitempty"`
-	Timestamp        float64                                            `json:"timestamp"`
-	UserAgent        []string                                           `json:"userAgent"`
-	VercelCache      *GetDeploymentEventsDeploymentsResponseVercelCache `json:"vercelCache,omitempty"`
-	VercelID         *string                                            `json:"vercelId,omitempty"`
+type GetDeploymentEventsResponseBodyProxy struct {
+	Timestamp        float64                                     `json:"timestamp"`
+	Method           string                                      `json:"method"`
+	Host             string                                      `json:"host"`
+	Path             string                                      `json:"path"`
+	StatusCode       *float64                                    `json:"statusCode,omitempty"`
+	UserAgent        []string                                    `json:"userAgent"`
+	Referer          string                                      `json:"referer"`
+	ClientIP         string                                      `json:"clientIp"`
+	Region           string                                      `json:"region"`
+	Scheme           *string                                     `json:"scheme,omitempty"`
+	ResponseByteSize *float64                                    `json:"responseByteSize,omitempty"`
+	CacheID          *string                                     `json:"cacheId,omitempty"`
+	PathType         *string                                     `json:"pathType,omitempty"`
+	VercelID         *string                                     `json:"vercelId,omitempty"`
+	VercelCache      *GetDeploymentEventsResponseBodyVercelCache `json:"vercelCache,omitempty"`
+	LambdaRegion     *string                                     `json:"lambdaRegion,omitempty"`
 }
 
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetCacheID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CacheID
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetClientIP() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientIP
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetLambdaRegion() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LambdaRegion
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetMethod() string {
-	if o == nil {
-		return ""
-	}
-	return o.Method
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetPath() string {
-	if o == nil {
-		return ""
-	}
-	return o.Path
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetPathType() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PathType
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetReferer() string {
-	if o == nil {
-		return ""
-	}
-	return o.Referer
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetRegion() string {
-	if o == nil {
-		return ""
-	}
-	return o.Region
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetResponseByteSize() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.ResponseByteSize
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetScheme() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Scheme
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetStatusCode() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.StatusCode
-}
-
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetTimestamp() float64 {
+func (o *GetDeploymentEventsResponseBodyProxy) GetTimestamp() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.Timestamp
 }
 
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetUserAgent() []string {
+func (o *GetDeploymentEventsResponseBodyProxy) GetMethod() string {
+	if o == nil {
+		return ""
+	}
+	return o.Method
+}
+
+func (o *GetDeploymentEventsResponseBodyProxy) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *GetDeploymentEventsResponseBodyProxy) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *GetDeploymentEventsResponseBodyProxy) GetStatusCode() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
+func (o *GetDeploymentEventsResponseBodyProxy) GetUserAgent() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.UserAgent
 }
 
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetVercelCache() *GetDeploymentEventsDeploymentsResponseVercelCache {
+func (o *GetDeploymentEventsResponseBodyProxy) GetReferer() string {
+	if o == nil {
+		return ""
+	}
+	return o.Referer
+}
+
+func (o *GetDeploymentEventsResponseBodyProxy) GetClientIP() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientIP
+}
+
+func (o *GetDeploymentEventsResponseBodyProxy) GetRegion() string {
+	if o == nil {
+		return ""
+	}
+	return o.Region
+}
+
+func (o *GetDeploymentEventsResponseBodyProxy) GetScheme() *string {
 	if o == nil {
 		return nil
 	}
-	return o.VercelCache
+	return o.Scheme
 }
 
-func (o *GetDeploymentEventsDeploymentsResponseProxy) GetVercelID() *string {
+func (o *GetDeploymentEventsResponseBodyProxy) GetResponseByteSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.ResponseByteSize
+}
+
+func (o *GetDeploymentEventsResponseBodyProxy) GetCacheID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CacheID
+}
+
+func (o *GetDeploymentEventsResponseBodyProxy) GetPathType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PathType
+}
+
+func (o *GetDeploymentEventsResponseBodyProxy) GetVercelID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.VercelID
 }
 
-type Payload struct {
-	Created      *float64                                     `json:"created,omitempty"`
-	Date         float64                                      `json:"date"`
-	DeploymentID string                                       `json:"deploymentId"`
-	ID           string                                       `json:"id"`
-	Info         *GetDeploymentEventsDeploymentsResponseInfo  `json:"info,omitempty"`
-	Proxy        *GetDeploymentEventsDeploymentsResponseProxy `json:"proxy,omitempty"`
-	RequestID    *string                                      `json:"requestId,omitempty"`
-	Serial       string                                       `json:"serial"`
-	StatusCode   *float64                                     `json:"statusCode,omitempty"`
-	Text         *string                                      `json:"text,omitempty"`
-}
-
-func (o *Payload) GetCreated() *float64 {
+func (o *GetDeploymentEventsResponseBodyProxy) GetVercelCache() *GetDeploymentEventsResponseBodyVercelCache {
 	if o == nil {
 		return nil
 	}
-	return o.Created
+	return o.VercelCache
 }
 
-func (o *Payload) GetDate() float64 {
+func (o *GetDeploymentEventsResponseBodyProxy) GetLambdaRegion() *string {
 	if o == nil {
-		return 0.0
+		return nil
 	}
-	return o.Date
+	return o.LambdaRegion
+}
+
+type Payload struct {
+	DeploymentID string                                `json:"deploymentId"`
+	Info         *GetDeploymentEventsResponseBodyInfo  `json:"info,omitempty"`
+	Text         *string                               `json:"text,omitempty"`
+	ID           string                                `json:"id"`
+	Date         float64                               `json:"date"`
+	Serial       string                                `json:"serial"`
+	Created      *float64                              `json:"created,omitempty"`
+	StatusCode   *float64                              `json:"statusCode,omitempty"`
+	RequestID    *string                               `json:"requestId,omitempty"`
+	Proxy        *GetDeploymentEventsResponseBodyProxy `json:"proxy,omitempty"`
 }
 
 func (o *Payload) GetDeploymentID() string {
@@ -2107,46 +2143,11 @@ func (o *Payload) GetDeploymentID() string {
 	return o.DeploymentID
 }
 
-func (o *Payload) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *Payload) GetInfo() *GetDeploymentEventsDeploymentsResponseInfo {
+func (o *Payload) GetInfo() *GetDeploymentEventsResponseBodyInfo {
 	if o == nil {
 		return nil
 	}
 	return o.Info
-}
-
-func (o *Payload) GetProxy() *GetDeploymentEventsDeploymentsResponseProxy {
-	if o == nil {
-		return nil
-	}
-	return o.Proxy
-}
-
-func (o *Payload) GetRequestID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RequestID
-}
-
-func (o *Payload) GetSerial() string {
-	if o == nil {
-		return ""
-	}
-	return o.Serial
-}
-
-func (o *Payload) GetStatusCode() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.StatusCode
 }
 
 func (o *Payload) GetText() *string {
@@ -2156,97 +2157,96 @@ func (o *Payload) GetText() *string {
 	return o.Text
 }
 
-type GetDeploymentEventsDeploymentsType string
-
-const (
-	GetDeploymentEventsDeploymentsTypeCommand                GetDeploymentEventsDeploymentsType = "command"
-	GetDeploymentEventsDeploymentsTypeStdout                 GetDeploymentEventsDeploymentsType = "stdout"
-	GetDeploymentEventsDeploymentsTypeStderr                 GetDeploymentEventsDeploymentsType = "stderr"
-	GetDeploymentEventsDeploymentsTypeExit                   GetDeploymentEventsDeploymentsType = "exit"
-	GetDeploymentEventsDeploymentsTypeDeploymentState        GetDeploymentEventsDeploymentsType = "deployment-state"
-	GetDeploymentEventsDeploymentsTypeDelimiter              GetDeploymentEventsDeploymentsType = "delimiter"
-	GetDeploymentEventsDeploymentsTypeMiddleware             GetDeploymentEventsDeploymentsType = "middleware"
-	GetDeploymentEventsDeploymentsTypeMiddlewareInvocation   GetDeploymentEventsDeploymentsType = "middleware-invocation"
-	GetDeploymentEventsDeploymentsTypeEdgeFunctionInvocation GetDeploymentEventsDeploymentsType = "edge-function-invocation"
-	GetDeploymentEventsDeploymentsTypeFatal                  GetDeploymentEventsDeploymentsType = "fatal"
-)
-
-func (e GetDeploymentEventsDeploymentsType) ToPointer() *GetDeploymentEventsDeploymentsType {
-	return &e
-}
-func (e *GetDeploymentEventsDeploymentsType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *Payload) GetID() string {
+	if o == nil {
+		return ""
 	}
-	switch v {
-	case "command":
-		fallthrough
-	case "stdout":
-		fallthrough
-	case "stderr":
-		fallthrough
-	case "exit":
-		fallthrough
-	case "deployment-state":
-		fallthrough
-	case "delimiter":
-		fallthrough
-	case "middleware":
-		fallthrough
-	case "middleware-invocation":
-		fallthrough
-	case "edge-function-invocation":
-		fallthrough
-	case "fatal":
-		*e = GetDeploymentEventsDeploymentsType(v)
+	return o.ID
+}
+
+func (o *Payload) GetDate() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Date
+}
+
+func (o *Payload) GetSerial() string {
+	if o == nil {
+		return ""
+	}
+	return o.Serial
+}
+
+func (o *Payload) GetCreated() *float64 {
+	if o == nil {
 		return nil
-	default:
-		return fmt.Errorf("invalid value for GetDeploymentEventsDeploymentsType: %v", v)
 	}
+	return o.Created
 }
 
-type GetDeploymentEvents2 struct {
-	Created float64                            `json:"created"`
-	Payload Payload                            `json:"payload"`
-	Type    GetDeploymentEventsDeploymentsType `json:"type"`
+func (o *Payload) GetStatusCode() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
 }
 
-func (o *GetDeploymentEvents2) GetCreated() float64 {
+func (o *Payload) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
+func (o *Payload) GetProxy() *GetDeploymentEventsResponseBodyProxy {
+	if o == nil {
+		return nil
+	}
+	return o.Proxy
+}
+
+type ResponseBody2 struct {
+	Type    GetDeploymentEventsResponseBodyType `json:"type"`
+	Created float64                             `json:"created"`
+	Payload Payload                             `json:"payload"`
+}
+
+func (o *ResponseBody2) GetType() GetDeploymentEventsResponseBodyType {
+	if o == nil {
+		return GetDeploymentEventsResponseBodyType("")
+	}
+	return o.Type
+}
+
+func (o *ResponseBody2) GetCreated() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.Created
 }
 
-func (o *GetDeploymentEvents2) GetPayload() Payload {
+func (o *ResponseBody2) GetPayload() Payload {
 	if o == nil {
 		return Payload{}
 	}
 	return o.Payload
 }
 
-func (o *GetDeploymentEvents2) GetType() GetDeploymentEventsDeploymentsType {
+type Info struct {
+	Type       string  `json:"type"`
+	Name       string  `json:"name"`
+	Entrypoint *string `json:"entrypoint,omitempty"`
+	Path       *string `json:"path,omitempty"`
+	Step       *string `json:"step,omitempty"`
+	ReadyState *string `json:"readyState,omitempty"`
+}
+
+func (o *Info) GetType() string {
 	if o == nil {
-		return GetDeploymentEventsDeploymentsType("")
+		return ""
 	}
 	return o.Type
-}
-
-type Info struct {
-	Entrypoint *string `json:"entrypoint,omitempty"`
-	Name       string  `json:"name"`
-	Path       *string `json:"path,omitempty"`
-	ReadyState *string `json:"readyState,omitempty"`
-	Step       *string `json:"step,omitempty"`
-	Type       string  `json:"type"`
-}
-
-func (o *Info) GetEntrypoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Entrypoint
 }
 
 func (o *Info) GetName() string {
@@ -2256,18 +2256,18 @@ func (o *Info) GetName() string {
 	return o.Name
 }
 
+func (o *Info) GetEntrypoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Entrypoint
+}
+
 func (o *Info) GetPath() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Path
-}
-
-func (o *Info) GetReadyState() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ReadyState
 }
 
 func (o *Info) GetStep() *string {
@@ -2277,11 +2277,11 @@ func (o *Info) GetStep() *string {
 	return o.Step
 }
 
-func (o *Info) GetType() string {
+func (o *Info) GetReadyState() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Type
+	return o.ReadyState
 }
 
 type VercelCache string
@@ -2323,106 +2323,22 @@ func (e *VercelCache) UnmarshalJSON(data []byte) error {
 }
 
 type Proxy struct {
-	CacheID          *string      `json:"cacheId,omitempty"`
-	ClientIP         string       `json:"clientIp"`
-	Host             string       `json:"host"`
-	LambdaRegion     *string      `json:"lambdaRegion,omitempty"`
-	Method           string       `json:"method"`
-	Path             string       `json:"path"`
-	PathType         *string      `json:"pathType,omitempty"`
-	Referer          string       `json:"referer"`
-	Region           string       `json:"region"`
-	ResponseByteSize *float64     `json:"responseByteSize,omitempty"`
-	Scheme           *string      `json:"scheme,omitempty"`
-	StatusCode       *float64     `json:"statusCode,omitempty"`
 	Timestamp        float64      `json:"timestamp"`
+	Method           string       `json:"method"`
+	Host             string       `json:"host"`
+	Path             string       `json:"path"`
+	StatusCode       *float64     `json:"statusCode,omitempty"`
 	UserAgent        []string     `json:"userAgent"`
-	VercelCache      *VercelCache `json:"vercelCache,omitempty"`
+	Referer          string       `json:"referer"`
+	ClientIP         string       `json:"clientIp"`
+	Region           string       `json:"region"`
+	Scheme           *string      `json:"scheme,omitempty"`
+	ResponseByteSize *float64     `json:"responseByteSize,omitempty"`
+	CacheID          *string      `json:"cacheId,omitempty"`
+	PathType         *string      `json:"pathType,omitempty"`
 	VercelID         *string      `json:"vercelId,omitempty"`
-}
-
-func (o *Proxy) GetCacheID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CacheID
-}
-
-func (o *Proxy) GetClientIP() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientIP
-}
-
-func (o *Proxy) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *Proxy) GetLambdaRegion() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LambdaRegion
-}
-
-func (o *Proxy) GetMethod() string {
-	if o == nil {
-		return ""
-	}
-	return o.Method
-}
-
-func (o *Proxy) GetPath() string {
-	if o == nil {
-		return ""
-	}
-	return o.Path
-}
-
-func (o *Proxy) GetPathType() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PathType
-}
-
-func (o *Proxy) GetReferer() string {
-	if o == nil {
-		return ""
-	}
-	return o.Referer
-}
-
-func (o *Proxy) GetRegion() string {
-	if o == nil {
-		return ""
-	}
-	return o.Region
-}
-
-func (o *Proxy) GetResponseByteSize() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.ResponseByteSize
-}
-
-func (o *Proxy) GetScheme() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Scheme
-}
-
-func (o *Proxy) GetStatusCode() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.StatusCode
+	VercelCache      *VercelCache `json:"vercelCache,omitempty"`
+	LambdaRegion     *string      `json:"lambdaRegion,omitempty"`
 }
 
 func (o *Proxy) GetTimestamp() float64 {
@@ -2432,6 +2348,34 @@ func (o *Proxy) GetTimestamp() float64 {
 	return o.Timestamp
 }
 
+func (o *Proxy) GetMethod() string {
+	if o == nil {
+		return ""
+	}
+	return o.Method
+}
+
+func (o *Proxy) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *Proxy) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *Proxy) GetStatusCode() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.StatusCode
+}
+
 func (o *Proxy) GetUserAgent() []string {
 	if o == nil {
 		return []string{}
@@ -2439,11 +2383,53 @@ func (o *Proxy) GetUserAgent() []string {
 	return o.UserAgent
 }
 
-func (o *Proxy) GetVercelCache() *VercelCache {
+func (o *Proxy) GetReferer() string {
+	if o == nil {
+		return ""
+	}
+	return o.Referer
+}
+
+func (o *Proxy) GetClientIP() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientIP
+}
+
+func (o *Proxy) GetRegion() string {
+	if o == nil {
+		return ""
+	}
+	return o.Region
+}
+
+func (o *Proxy) GetScheme() *string {
 	if o == nil {
 		return nil
 	}
-	return o.VercelCache
+	return o.Scheme
+}
+
+func (o *Proxy) GetResponseByteSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.ResponseByteSize
+}
+
+func (o *Proxy) GetCacheID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CacheID
+}
+
+func (o *Proxy) GetPathType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PathType
 }
 
 func (o *Proxy) GetVercelID() *string {
@@ -2453,25 +2439,39 @@ func (o *Proxy) GetVercelID() *string {
 	return o.VercelID
 }
 
-type GetDeploymentEventsType string
+func (o *Proxy) GetVercelCache() *VercelCache {
+	if o == nil {
+		return nil
+	}
+	return o.VercelCache
+}
+
+func (o *Proxy) GetLambdaRegion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LambdaRegion
+}
+
+type ResponseBodyType string
 
 const (
-	GetDeploymentEventsTypeCommand                GetDeploymentEventsType = "command"
-	GetDeploymentEventsTypeStdout                 GetDeploymentEventsType = "stdout"
-	GetDeploymentEventsTypeStderr                 GetDeploymentEventsType = "stderr"
-	GetDeploymentEventsTypeExit                   GetDeploymentEventsType = "exit"
-	GetDeploymentEventsTypeDeploymentState        GetDeploymentEventsType = "deployment-state"
-	GetDeploymentEventsTypeDelimiter              GetDeploymentEventsType = "delimiter"
-	GetDeploymentEventsTypeMiddleware             GetDeploymentEventsType = "middleware"
-	GetDeploymentEventsTypeMiddlewareInvocation   GetDeploymentEventsType = "middleware-invocation"
-	GetDeploymentEventsTypeEdgeFunctionInvocation GetDeploymentEventsType = "edge-function-invocation"
-	GetDeploymentEventsTypeFatal                  GetDeploymentEventsType = "fatal"
+	ResponseBodyTypeCommand                ResponseBodyType = "command"
+	ResponseBodyTypeStdout                 ResponseBodyType = "stdout"
+	ResponseBodyTypeStderr                 ResponseBodyType = "stderr"
+	ResponseBodyTypeExit                   ResponseBodyType = "exit"
+	ResponseBodyTypeDeploymentState        ResponseBodyType = "deployment-state"
+	ResponseBodyTypeDelimiter              ResponseBodyType = "delimiter"
+	ResponseBodyTypeMiddleware             ResponseBodyType = "middleware"
+	ResponseBodyTypeMiddlewareInvocation   ResponseBodyType = "middleware-invocation"
+	ResponseBodyTypeEdgeFunctionInvocation ResponseBodyType = "edge-function-invocation"
+	ResponseBodyTypeFatal                  ResponseBodyType = "fatal"
 )
 
-func (e GetDeploymentEventsType) ToPointer() *GetDeploymentEventsType {
+func (e ResponseBodyType) ToPointer() *ResponseBodyType {
 	return &e
 }
-func (e *GetDeploymentEventsType) UnmarshalJSON(data []byte) error {
+func (e *ResponseBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2496,100 +2496,100 @@ func (e *GetDeploymentEventsType) UnmarshalJSON(data []byte) error {
 	case "edge-function-invocation":
 		fallthrough
 	case "fatal":
-		*e = GetDeploymentEventsType(v)
+		*e = ResponseBodyType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetDeploymentEventsType: %v", v)
+		return fmt.Errorf("invalid value for ResponseBodyType: %v", v)
 	}
 }
 
-type GetDeploymentEvents1 struct {
-	Created      float64                 `json:"created"`
-	Date         float64                 `json:"date"`
-	DeploymentID string                  `json:"deploymentId"`
-	ID           string                  `json:"id"`
-	Info         Info                    `json:"info"`
-	Proxy        *Proxy                  `json:"proxy,omitempty"`
-	RequestID    *string                 `json:"requestId,omitempty"`
-	Serial       string                  `json:"serial"`
-	StatusCode   *float64                `json:"statusCode,omitempty"`
-	Text         *string                 `json:"text,omitempty"`
-	Type         GetDeploymentEventsType `json:"type"`
+type ResponseBody1 struct {
+	Created      float64          `json:"created"`
+	Date         float64          `json:"date"`
+	DeploymentID string           `json:"deploymentId"`
+	ID           string           `json:"id"`
+	Info         Info             `json:"info"`
+	Proxy        *Proxy           `json:"proxy,omitempty"`
+	RequestID    *string          `json:"requestId,omitempty"`
+	Serial       string           `json:"serial"`
+	StatusCode   *float64         `json:"statusCode,omitempty"`
+	Text         *string          `json:"text,omitempty"`
+	Type         ResponseBodyType `json:"type"`
 }
 
-func (o *GetDeploymentEvents1) GetCreated() float64 {
+func (o *ResponseBody1) GetCreated() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.Created
 }
 
-func (o *GetDeploymentEvents1) GetDate() float64 {
+func (o *ResponseBody1) GetDate() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.Date
 }
 
-func (o *GetDeploymentEvents1) GetDeploymentID() string {
+func (o *ResponseBody1) GetDeploymentID() string {
 	if o == nil {
 		return ""
 	}
 	return o.DeploymentID
 }
 
-func (o *GetDeploymentEvents1) GetID() string {
+func (o *ResponseBody1) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetDeploymentEvents1) GetInfo() Info {
+func (o *ResponseBody1) GetInfo() Info {
 	if o == nil {
 		return Info{}
 	}
 	return o.Info
 }
 
-func (o *GetDeploymentEvents1) GetProxy() *Proxy {
+func (o *ResponseBody1) GetProxy() *Proxy {
 	if o == nil {
 		return nil
 	}
 	return o.Proxy
 }
 
-func (o *GetDeploymentEvents1) GetRequestID() *string {
+func (o *ResponseBody1) GetRequestID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.RequestID
 }
 
-func (o *GetDeploymentEvents1) GetSerial() string {
+func (o *ResponseBody1) GetSerial() string {
 	if o == nil {
 		return ""
 	}
 	return o.Serial
 }
 
-func (o *GetDeploymentEvents1) GetStatusCode() *float64 {
+func (o *ResponseBody1) GetStatusCode() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.StatusCode
 }
 
-func (o *GetDeploymentEvents1) GetText() *string {
+func (o *ResponseBody1) GetText() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Text
 }
 
-func (o *GetDeploymentEvents1) GetType() GetDeploymentEventsType {
+func (o *ResponseBody1) GetType() ResponseBodyType {
 	if o == nil {
-		return GetDeploymentEventsType("")
+		return ResponseBodyType("")
 	}
 	return o.Type
 }
@@ -2597,48 +2597,48 @@ func (o *GetDeploymentEvents1) GetType() GetDeploymentEventsType {
 type GetDeploymentEventsDeploymentsResponseBodyType string
 
 const (
-	GetDeploymentEventsDeploymentsResponseBodyTypeGetDeploymentEvents1 GetDeploymentEventsDeploymentsResponseBodyType = "getDeploymentEvents_1"
-	GetDeploymentEventsDeploymentsResponseBodyTypeGetDeploymentEvents2 GetDeploymentEventsDeploymentsResponseBodyType = "getDeploymentEvents_2"
+	GetDeploymentEventsDeploymentsResponseBodyTypeResponseBody1 GetDeploymentEventsDeploymentsResponseBodyType = "responseBody_1"
+	GetDeploymentEventsDeploymentsResponseBodyTypeResponseBody2 GetDeploymentEventsDeploymentsResponseBodyType = "responseBody_2"
 )
 
 type GetDeploymentEventsDeploymentsResponseBody struct {
-	GetDeploymentEvents1 *GetDeploymentEvents1
-	GetDeploymentEvents2 *GetDeploymentEvents2
+	ResponseBody1 *ResponseBody1
+	ResponseBody2 *ResponseBody2
 
 	Type GetDeploymentEventsDeploymentsResponseBodyType
 }
 
-func CreateGetDeploymentEventsDeploymentsResponseBodyGetDeploymentEvents1(getDeploymentEvents1 GetDeploymentEvents1) GetDeploymentEventsDeploymentsResponseBody {
-	typ := GetDeploymentEventsDeploymentsResponseBodyTypeGetDeploymentEvents1
+func CreateGetDeploymentEventsDeploymentsResponseBodyResponseBody1(responseBody1 ResponseBody1) GetDeploymentEventsDeploymentsResponseBody {
+	typ := GetDeploymentEventsDeploymentsResponseBodyTypeResponseBody1
 
 	return GetDeploymentEventsDeploymentsResponseBody{
-		GetDeploymentEvents1: &getDeploymentEvents1,
-		Type:                 typ,
+		ResponseBody1: &responseBody1,
+		Type:          typ,
 	}
 }
 
-func CreateGetDeploymentEventsDeploymentsResponseBodyGetDeploymentEvents2(getDeploymentEvents2 GetDeploymentEvents2) GetDeploymentEventsDeploymentsResponseBody {
-	typ := GetDeploymentEventsDeploymentsResponseBodyTypeGetDeploymentEvents2
+func CreateGetDeploymentEventsDeploymentsResponseBodyResponseBody2(responseBody2 ResponseBody2) GetDeploymentEventsDeploymentsResponseBody {
+	typ := GetDeploymentEventsDeploymentsResponseBodyTypeResponseBody2
 
 	return GetDeploymentEventsDeploymentsResponseBody{
-		GetDeploymentEvents2: &getDeploymentEvents2,
-		Type:                 typ,
+		ResponseBody2: &responseBody2,
+		Type:          typ,
 	}
 }
 
 func (u *GetDeploymentEventsDeploymentsResponseBody) UnmarshalJSON(data []byte) error {
 
-	var getDeploymentEvents2 GetDeploymentEvents2 = GetDeploymentEvents2{}
-	if err := utils.UnmarshalJSON(data, &getDeploymentEvents2, "", true, true); err == nil {
-		u.GetDeploymentEvents2 = &getDeploymentEvents2
-		u.Type = GetDeploymentEventsDeploymentsResponseBodyTypeGetDeploymentEvents2
+	var responseBody2 ResponseBody2 = ResponseBody2{}
+	if err := utils.UnmarshalJSON(data, &responseBody2, "", true, true); err == nil {
+		u.ResponseBody2 = &responseBody2
+		u.Type = GetDeploymentEventsDeploymentsResponseBodyTypeResponseBody2
 		return nil
 	}
 
-	var getDeploymentEvents1 GetDeploymentEvents1 = GetDeploymentEvents1{}
-	if err := utils.UnmarshalJSON(data, &getDeploymentEvents1, "", true, true); err == nil {
-		u.GetDeploymentEvents1 = &getDeploymentEvents1
-		u.Type = GetDeploymentEventsDeploymentsResponseBodyTypeGetDeploymentEvents1
+	var responseBody1 ResponseBody1 = ResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &responseBody1, "", true, true); err == nil {
+		u.ResponseBody1 = &responseBody1
+		u.Type = GetDeploymentEventsDeploymentsResponseBodyTypeResponseBody1
 		return nil
 	}
 
@@ -2646,12 +2646,12 @@ func (u *GetDeploymentEventsDeploymentsResponseBody) UnmarshalJSON(data []byte) 
 }
 
 func (u GetDeploymentEventsDeploymentsResponseBody) MarshalJSON() ([]byte, error) {
-	if u.GetDeploymentEvents1 != nil {
-		return utils.MarshalJSON(u.GetDeploymentEvents1, "", true)
+	if u.ResponseBody1 != nil {
+		return utils.MarshalJSON(u.ResponseBody1, "", true)
 	}
 
-	if u.GetDeploymentEvents2 != nil {
-		return utils.MarshalJSON(u.GetDeploymentEvents2, "", true)
+	if u.ResponseBody2 != nil {
+		return utils.MarshalJSON(u.ResponseBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type GetDeploymentEventsDeploymentsResponseBody: all fields are null")
@@ -2666,10 +2666,10 @@ type GetDeploymentEventsResponse struct {
 	RawResponse *http.Response
 	// A stream of jsonlines where each line is a deployment log item.
 	// Array of deployment logs for the provided query.
-	OneOf *GetDeploymentEventsResponseBody
+	ResponseBodies []GetDeploymentEventsDeploymentsResponseBody
 	// A stream of jsonlines where each line is a deployment log item.
 	// Array of deployment logs for the provided query.
-	Unions []GetDeploymentEventsDeploymentsResponseBody
+	OneOf *GetDeploymentEventsResponseBody
 }
 
 func (o *GetDeploymentEventsResponse) GetContentType() string {
@@ -2693,16 +2693,16 @@ func (o *GetDeploymentEventsResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
+func (o *GetDeploymentEventsResponse) GetResponseBodies() []GetDeploymentEventsDeploymentsResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.ResponseBodies
+}
+
 func (o *GetDeploymentEventsResponse) GetOneOf() *GetDeploymentEventsResponseBody {
 	if o == nil {
 		return nil
 	}
 	return o.OneOf
-}
-
-func (o *GetDeploymentEventsResponse) GetUnions() []GetDeploymentEventsDeploymentsResponseBody {
-	if o == nil {
-		return nil
-	}
-	return o.Unions
 }

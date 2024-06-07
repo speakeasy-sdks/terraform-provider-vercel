@@ -15,10 +15,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	speakeasy_stringplanmodifier "github.com/zchee/terraform-provider-vercel/internal/planmodifiers/stringplanmodifier"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	speakeasy_stringplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -31,7 +31,7 @@ func NewTeamResource() resource.Resource {
 
 // TeamResource defines the resource implementation.
 type TeamResource struct {
-	client *sdk.Vercel
+	client *sdk.SDK
 }
 
 // TeamResourceModel describes the resource data model.
@@ -2496,13 +2496,13 @@ func (r *TeamResource) Schema(ctx context.Context, req resource.SchemaRequest, r
 				Optional: true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
-						"description": schema.StringAttribute{
-							Required:    true,
-							Description: `Description of the reason why the team is being deleted.`,
-						},
 						"slug": schema.StringAttribute{
 							Required:    true,
 							Description: `Idenitifier slug of the reason why the team is being deleted.`,
+						},
+						"description": schema.StringAttribute{
+							Required:    true,
+							Description: `Description of the reason why the team is being deleted.`,
 						},
 					},
 				},
@@ -2526,12 +2526,12 @@ func (r *TeamResource) Configure(ctx context.Context, req resource.ConfigureRequ
 		return
 	}
 
-	client, ok := req.ProviderData.(*sdk.Vercel)
+	client, ok := req.ProviderData.(*sdk.SDK)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *sdk.Vercel, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sdk.SDK, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -2581,16 +2581,16 @@ func (r *TeamResource) Create(ctx context.Context, req resource.CreateRequest, r
 	}
 	data.RefreshFromOperationsCreateTeamResponseBody(res.Object)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	teamID := data.ID.ValueString()
 	slug := new(string)
 	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
 		*slug = data.Slug.ValueString()
 	} else {
 		slug = nil
 	}
-	teamID := data.ID.ValueString()
 	request1 := operations.GetTeamRequest{
-		Slug:   slug,
 		TeamID: teamID,
+		Slug:   slug,
 	}
 	res1, err := r.client.Teams.Get(ctx, request1)
 	if err != nil {
@@ -2637,16 +2637,16 @@ func (r *TeamResource) Read(ctx context.Context, req resource.ReadRequest, resp 
 		return
 	}
 
+	teamID := data.ID.ValueString()
 	slug := new(string)
 	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
 		*slug = data.Slug.ValueString()
 	} else {
 		slug = nil
 	}
-	teamID := data.ID.ValueString()
 	request := operations.GetTeamRequest{
-		Slug:   slug,
 		TeamID: teamID,
+		Slug:   slug,
 	}
 	res, err := r.client.Teams.Get(ctx, request)
 	if err != nil {
@@ -2716,25 +2716,25 @@ func (r *TeamResource) Delete(ctx context.Context, req resource.DeleteRequest, r
 		return
 	}
 
-	requestBody := data.ToOperationsDeleteTeamRequestBody()
 	newDefaultTeamID := new(string)
 	if !data.NewDefaultTeamID.IsUnknown() && !data.NewDefaultTeamID.IsNull() {
 		*newDefaultTeamID = data.NewDefaultTeamID.ValueString()
 	} else {
 		newDefaultTeamID = nil
 	}
+	teamID := data.ID.ValueString()
 	slug := new(string)
 	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
 		*slug = data.Slug.ValueString()
 	} else {
 		slug = nil
 	}
-	teamID := data.ID.ValueString()
+	requestBody := data.ToOperationsDeleteTeamRequestBody()
 	request := operations.DeleteTeamRequest{
-		RequestBody:      requestBody,
 		NewDefaultTeamID: newDefaultTeamID,
-		Slug:             slug,
 		TeamID:           teamID,
+		Slug:             slug,
+		RequestBody:      requestBody,
 	}
 	res, err := r.client.Teams.Delete(ctx, request)
 	if err != nil {

@@ -5,23 +5,23 @@ package operations
 import (
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 )
 
 type UploadFileRequest struct {
 	// The file size in bytes
 	ContentLength *float64 `header:"style=simple,explode=false,name=Content-Length"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The file SHA1 used to check the integrity
+	XVercelDigest *string `header:"style=simple,explode=false,name=x-vercel-digest"`
 	// The file SHA1 used to check the integrity
 	XNowDigest *string `header:"style=simple,explode=false,name=x-now-digest"`
 	// The file size as an alternative to `Content-Length`
 	XNowSize *float64 `header:"style=simple,explode=false,name=x-now-size"`
-	// The file SHA1 used to check the integrity
-	XVercelDigest *string `header:"style=simple,explode=false,name=x-vercel-digest"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *UploadFileRequest) GetContentLength() *float64 {
@@ -31,18 +31,11 @@ func (o *UploadFileRequest) GetContentLength() *float64 {
 	return o.ContentLength
 }
 
-func (o *UploadFileRequest) GetSlug() *string {
+func (o *UploadFileRequest) GetXVercelDigest() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Slug
-}
-
-func (o *UploadFileRequest) GetTeamID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TeamID
+	return o.XVercelDigest
 }
 
 func (o *UploadFileRequest) GetXNowDigest() *string {
@@ -59,22 +52,29 @@ func (o *UploadFileRequest) GetXNowSize() *float64 {
 	return o.XNowSize
 }
 
-func (o *UploadFileRequest) GetXVercelDigest() *string {
+func (o *UploadFileRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.XVercelDigest
+	return o.TeamID
 }
 
-type UploadFile2 struct {
+func (o *UploadFileRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
-type UploadFile1 struct {
+type UploadFileResponseBody2 struct {
+}
+
+type UploadFileResponseBody1 struct {
 	// Array of URLs where the file was updated
 	Urls []string `json:"urls"`
 }
 
-func (o *UploadFile1) GetUrls() []string {
+func (o *UploadFileResponseBody1) GetUrls() []string {
 	if o == nil {
 		return []string{}
 	}
@@ -84,50 +84,50 @@ func (o *UploadFile1) GetUrls() []string {
 type UploadFileResponseBodyType string
 
 const (
-	UploadFileResponseBodyTypeUploadFile1 UploadFileResponseBodyType = "uploadFile_1"
-	UploadFileResponseBodyTypeUploadFile2 UploadFileResponseBodyType = "uploadFile_2"
+	UploadFileResponseBodyTypeUploadFileResponseBody1 UploadFileResponseBodyType = "uploadFile_responseBody_1"
+	UploadFileResponseBodyTypeUploadFileResponseBody2 UploadFileResponseBodyType = "uploadFile_responseBody_2"
 )
 
 // UploadFileResponseBody - File already uploaded
 // File successfully uploaded
 type UploadFileResponseBody struct {
-	UploadFile1 *UploadFile1
-	UploadFile2 *UploadFile2
+	UploadFileResponseBody1 *UploadFileResponseBody1
+	UploadFileResponseBody2 *UploadFileResponseBody2
 
 	Type UploadFileResponseBodyType
 }
 
-func CreateUploadFileResponseBodyUploadFile1(uploadFile1 UploadFile1) UploadFileResponseBody {
-	typ := UploadFileResponseBodyTypeUploadFile1
+func CreateUploadFileResponseBodyUploadFileResponseBody1(uploadFileResponseBody1 UploadFileResponseBody1) UploadFileResponseBody {
+	typ := UploadFileResponseBodyTypeUploadFileResponseBody1
 
 	return UploadFileResponseBody{
-		UploadFile1: &uploadFile1,
-		Type:        typ,
+		UploadFileResponseBody1: &uploadFileResponseBody1,
+		Type:                    typ,
 	}
 }
 
-func CreateUploadFileResponseBodyUploadFile2(uploadFile2 UploadFile2) UploadFileResponseBody {
-	typ := UploadFileResponseBodyTypeUploadFile2
+func CreateUploadFileResponseBodyUploadFileResponseBody2(uploadFileResponseBody2 UploadFileResponseBody2) UploadFileResponseBody {
+	typ := UploadFileResponseBodyTypeUploadFileResponseBody2
 
 	return UploadFileResponseBody{
-		UploadFile2: &uploadFile2,
-		Type:        typ,
+		UploadFileResponseBody2: &uploadFileResponseBody2,
+		Type:                    typ,
 	}
 }
 
 func (u *UploadFileResponseBody) UnmarshalJSON(data []byte) error {
 
-	var uploadFile2 UploadFile2 = UploadFile2{}
-	if err := utils.UnmarshalJSON(data, &uploadFile2, "", true, true); err == nil {
-		u.UploadFile2 = &uploadFile2
-		u.Type = UploadFileResponseBodyTypeUploadFile2
+	var uploadFileResponseBody2 UploadFileResponseBody2 = UploadFileResponseBody2{}
+	if err := utils.UnmarshalJSON(data, &uploadFileResponseBody2, "", true, true); err == nil {
+		u.UploadFileResponseBody2 = &uploadFileResponseBody2
+		u.Type = UploadFileResponseBodyTypeUploadFileResponseBody2
 		return nil
 	}
 
-	var uploadFile1 UploadFile1 = UploadFile1{}
-	if err := utils.UnmarshalJSON(data, &uploadFile1, "", true, true); err == nil {
-		u.UploadFile1 = &uploadFile1
-		u.Type = UploadFileResponseBodyTypeUploadFile1
+	var uploadFileResponseBody1 UploadFileResponseBody1 = UploadFileResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &uploadFileResponseBody1, "", true, true); err == nil {
+		u.UploadFileResponseBody1 = &uploadFileResponseBody1
+		u.Type = UploadFileResponseBodyTypeUploadFileResponseBody1
 		return nil
 	}
 
@@ -135,12 +135,12 @@ func (u *UploadFileResponseBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u UploadFileResponseBody) MarshalJSON() ([]byte, error) {
-	if u.UploadFile1 != nil {
-		return utils.MarshalJSON(u.UploadFile1, "", true)
+	if u.UploadFileResponseBody1 != nil {
+		return utils.MarshalJSON(u.UploadFileResponseBody1, "", true)
 	}
 
-	if u.UploadFile2 != nil {
-		return utils.MarshalJSON(u.UploadFile2, "", true)
+	if u.UploadFileResponseBody2 != nil {
+		return utils.MarshalJSON(u.UploadFileResponseBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type UploadFileResponseBody: all fields are null")

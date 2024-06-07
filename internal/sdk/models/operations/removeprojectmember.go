@@ -9,12 +9,12 @@ import (
 type RemoveProjectMemberRequest struct {
 	// The ID or name of the Project.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// The user ID of the member.
 	UID string `pathParam:"style=simple,explode=false,name=uid"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *RemoveProjectMemberRequest) GetIDOrName() string {
@@ -24,11 +24,11 @@ func (o *RemoveProjectMemberRequest) GetIDOrName() string {
 	return o.IDOrName
 }
 
-func (o *RemoveProjectMemberRequest) GetSlug() *string {
+func (o *RemoveProjectMemberRequest) GetUID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Slug
+	return o.UID
 }
 
 func (o *RemoveProjectMemberRequest) GetTeamID() *string {
@@ -38,11 +38,11 @@ func (o *RemoveProjectMemberRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-func (o *RemoveProjectMemberRequest) GetUID() string {
+func (o *RemoveProjectMemberRequest) GetSlug() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.UID
+	return o.Slug
 }
 
 type RemoveProjectMemberResponseBody struct {

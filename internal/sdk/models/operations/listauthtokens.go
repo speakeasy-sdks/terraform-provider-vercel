@@ -3,23 +3,23 @@
 package operations
 
 import (
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
 
 type ListAuthTokensResponseBody struct {
+	Tokens []shared.AuthToken `json:"tokens"`
+	// Authentication token metadata.
+	TestingToken *shared.AuthToken `json:"testingToken,omitempty"`
 	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 	Pagination shared.Pagination `json:"pagination"`
-	// Authentication token metadata.
-	TestingToken *shared.AuthToken  `json:"testingToken,omitempty"`
-	Tokens       []shared.AuthToken `json:"tokens"`
 }
 
-func (o *ListAuthTokensResponseBody) GetPagination() shared.Pagination {
+func (o *ListAuthTokensResponseBody) GetTokens() []shared.AuthToken {
 	if o == nil {
-		return shared.Pagination{}
+		return []shared.AuthToken{}
 	}
-	return o.Pagination
+	return o.Tokens
 }
 
 func (o *ListAuthTokensResponseBody) GetTestingToken() *shared.AuthToken {
@@ -29,11 +29,11 @@ func (o *ListAuthTokensResponseBody) GetTestingToken() *shared.AuthToken {
 	return o.TestingToken
 }
 
-func (o *ListAuthTokensResponseBody) GetTokens() []shared.AuthToken {
+func (o *ListAuthTokensResponseBody) GetPagination() shared.Pagination {
 	if o == nil {
-		return []shared.AuthToken{}
+		return shared.Pagination{}
 	}
-	return o.Tokens
+	return o.Pagination
 }
 
 type ListAuthTokensResponse struct {

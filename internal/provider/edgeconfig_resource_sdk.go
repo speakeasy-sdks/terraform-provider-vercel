@@ -5,20 +5,20 @@ package provider
 import (
 	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/zchee/terraform-provider-vercel/internal/provider/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 	"math/big"
 )
 
 func (r *EdgeConfigResourceModel) ToOperationsCreateEdgeConfigRequestBody() *operations.CreateEdgeConfigRequestBody {
+	slug := r.Slug.ValueString()
 	var items interface{}
 	if !r.Items.IsUnknown() && !r.Items.IsNull() {
 		_ = json.Unmarshal([]byte(r.Items.ValueString()), &items)
 	}
-	slug := r.Slug.ValueString()
 	out := operations.CreateEdgeConfigRequestBody{
-		Items: items,
 		Slug:  slug,
+		Items: items,
 	}
 	return &out
 }
@@ -38,14 +38,14 @@ func (r *EdgeConfigResourceModel) RefreshFromOperationsCreateEdgeConfigResponseB
 		if resp.Schema == nil {
 			r.Schema = nil
 		} else {
-			r.Schema = &tfTypes.Schema{}
+			r.Schema = &tfTypes.GetEdgeConfigSchema{}
 		}
 		r.SizeInBytes = types.NumberValue(big.NewFloat(float64(resp.SizeInBytes)))
 		r.Slug = types.StringPointerValue(resp.Slug)
 		if resp.Transfer == nil {
 			r.Transfer = nil
 		} else {
-			r.Transfer = &tfTypes.Transfer{}
+			r.Transfer = &tfTypes.GetEdgeConfigTransfer{}
 			if resp.Transfer.DoneAt != nil {
 				r.Transfer.DoneAt = types.NumberValue(big.NewFloat(float64(*resp.Transfer.DoneAt)))
 			} else {
@@ -77,14 +77,14 @@ func (r *EdgeConfigResourceModel) RefreshFromOperationsGetEdgeConfigResponseBody
 		if resp.Schema == nil {
 			r.Schema = nil
 		} else {
-			r.Schema = &tfTypes.Schema{}
+			r.Schema = &tfTypes.GetEdgeConfigSchema{}
 		}
 		r.SizeInBytes = types.NumberValue(big.NewFloat(float64(resp.SizeInBytes)))
 		r.Slug = types.StringPointerValue(resp.Slug)
 		if resp.Transfer == nil {
 			r.Transfer = nil
 		} else {
-			r.Transfer = &tfTypes.Transfer{}
+			r.Transfer = &tfTypes.GetEdgeConfigTransfer{}
 			if resp.Transfer.DoneAt != nil {
 				r.Transfer.DoneAt = types.NumberValue(big.NewFloat(float64(*resp.Transfer.DoneAt)))
 			} else {

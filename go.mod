@@ -1,4 +1,4 @@
-module github.com/zchee/terraform-provider-vercel
+module github.com/speakeasy/terraform-provider-terraform
 
 go 1.20
 

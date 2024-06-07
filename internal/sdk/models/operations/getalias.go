@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 	"time"
 )
@@ -20,12 +20,12 @@ type GetAliasRequest struct {
 	ProjectID *string `queryParam:"style=form,explode=true,name=projectId"`
 	// Get the alias only if it was created after this JavaScript timestamp
 	Since *float64 `queryParam:"style=form,explode=true,name=since"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Get the alias only if it was created before this JavaScript timestamp
 	Until *float64 `queryParam:"style=form,explode=true,name=until"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetAliasRequest) GetFrom() *float64 {
@@ -56,11 +56,11 @@ func (o *GetAliasRequest) GetSince() *float64 {
 	return o.Since
 }
 
-func (o *GetAliasRequest) GetSlug() *string {
+func (o *GetAliasRequest) GetUntil() *float64 {
 	if o == nil {
 		return nil
 	}
-	return o.Slug
+	return o.Until
 }
 
 func (o *GetAliasRequest) GetTeamID() *string {
@@ -70,38 +70,38 @@ func (o *GetAliasRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-func (o *GetAliasRequest) GetUntil() *float64 {
+func (o *GetAliasRequest) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Until
+	return o.Slug
 }
 
-// Creator - Information of the user who created the alias
-type Creator struct {
-	// Email of the user who created the alias
-	Email string `json:"email"`
+// GetAliasCreator - Information of the user who created the alias
+type GetAliasCreator struct {
 	// ID of the user who created the alias
 	UID string `json:"uid"`
+	// Email of the user who created the alias
+	Email string `json:"email"`
 	// Username of the user who created the alias
 	Username string `json:"username"`
 }
 
-func (o *Creator) GetEmail() string {
-	if o == nil {
-		return ""
-	}
-	return o.Email
-}
-
-func (o *Creator) GetUID() string {
+func (o *GetAliasCreator) GetUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UID
 }
 
-func (o *Creator) GetUsername() string {
+func (o *GetAliasCreator) GetEmail() string {
+	if o == nil {
+		return ""
+	}
+	return o.Email
+}
+
+func (o *GetAliasCreator) GetUsername() string {
 	if o == nil {
 		return ""
 	}
@@ -112,10 +112,10 @@ func (o *Creator) GetUsername() string {
 type Deployment struct {
 	// The deployment unique identifier
 	ID string `json:"id"`
-	// The deployment metadata
-	Meta *string `json:"meta,omitempty"`
 	// The deployment unique URL
 	URL string `json:"url"`
+	// The deployment metadata
+	Meta *string `json:"meta,omitempty"`
 }
 
 func (o *Deployment) GetID() string {
@@ -125,13 +125,6 @@ func (o *Deployment) GetID() string {
 	return o.ID
 }
 
-func (o *Deployment) GetMeta() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Meta
-}
-
 func (o *Deployment) GetURL() string {
 	if o == nil {
 		return ""
@@ -139,112 +132,119 @@ func (o *Deployment) GetURL() string {
 	return o.URL
 }
 
-type GetAliasAliasesResponseScope string
+func (o *Deployment) GetMeta() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Meta
+}
+
+type GetAliasProtectionBypassAliasesResponseScope string
 
 const (
-	GetAliasAliasesResponseScopeEmailInvite GetAliasAliasesResponseScope = "email_invite"
+	GetAliasProtectionBypassAliasesResponseScopeEmailInvite GetAliasProtectionBypassAliasesResponseScope = "email_invite"
 )
 
-func (e GetAliasAliasesResponseScope) ToPointer() *GetAliasAliasesResponseScope {
+func (e GetAliasProtectionBypassAliasesResponseScope) ToPointer() *GetAliasProtectionBypassAliasesResponseScope {
 	return &e
 }
-func (e *GetAliasAliasesResponseScope) UnmarshalJSON(data []byte) error {
+func (e *GetAliasProtectionBypassAliasesResponseScope) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "email_invite":
-		*e = GetAliasAliasesResponseScope(v)
+		*e = GetAliasProtectionBypassAliasesResponseScope(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetAliasAliasesResponseScope: %v", v)
+		return fmt.Errorf("invalid value for GetAliasProtectionBypassAliasesResponseScope: %v", v)
 	}
 }
 
-// GetAlias4 - The protection bypass for the alias
-type GetAlias4 struct {
-	CreatedAt     float64                      `json:"createdAt"`
-	LastUpdatedAt float64                      `json:"lastUpdatedAt"`
-	LastUpdatedBy string                       `json:"lastUpdatedBy"`
-	Scope         GetAliasAliasesResponseScope `json:"scope"`
+// ProtectionBypass4 - The protection bypass for the alias
+type ProtectionBypass4 struct {
+	CreatedAt     float64                                      `json:"createdAt"`
+	LastUpdatedAt float64                                      `json:"lastUpdatedAt"`
+	LastUpdatedBy string                                       `json:"lastUpdatedBy"`
+	Scope         GetAliasProtectionBypassAliasesResponseScope `json:"scope"`
 }
 
-func (o *GetAlias4) GetCreatedAt() float64 {
+func (o *ProtectionBypass4) GetCreatedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetAlias4) GetLastUpdatedAt() float64 {
+func (o *ProtectionBypass4) GetLastUpdatedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.LastUpdatedAt
 }
 
-func (o *GetAlias4) GetLastUpdatedBy() string {
+func (o *ProtectionBypass4) GetLastUpdatedBy() string {
 	if o == nil {
 		return ""
 	}
 	return o.LastUpdatedBy
 }
 
-func (o *GetAlias4) GetScope() GetAliasAliasesResponseScope {
+func (o *ProtectionBypass4) GetScope() GetAliasProtectionBypassAliasesResponseScope {
 	if o == nil {
-		return GetAliasAliasesResponseScope("")
+		return GetAliasProtectionBypassAliasesResponseScope("")
 	}
 	return o.Scope
 }
 
-type GetAliasAliasesScope string
+type GetAliasProtectionBypassAliasesScope string
 
 const (
-	GetAliasAliasesScopeAliasProtectionOverride GetAliasAliasesScope = "alias-protection-override"
+	GetAliasProtectionBypassAliasesScopeAliasProtectionOverride GetAliasProtectionBypassAliasesScope = "alias-protection-override"
 )
 
-func (e GetAliasAliasesScope) ToPointer() *GetAliasAliasesScope {
+func (e GetAliasProtectionBypassAliasesScope) ToPointer() *GetAliasProtectionBypassAliasesScope {
 	return &e
 }
-func (e *GetAliasAliasesScope) UnmarshalJSON(data []byte) error {
+func (e *GetAliasProtectionBypassAliasesScope) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "alias-protection-override":
-		*e = GetAliasAliasesScope(v)
+		*e = GetAliasProtectionBypassAliasesScope(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetAliasAliasesScope: %v", v)
+		return fmt.Errorf("invalid value for GetAliasProtectionBypassAliasesScope: %v", v)
 	}
 }
 
-// GetAlias3 - The protection bypass for the alias
-type GetAlias3 struct {
-	CreatedAt float64              `json:"createdAt"`
-	CreatedBy string               `json:"createdBy"`
-	Scope     GetAliasAliasesScope `json:"scope"`
+// ProtectionBypass3 - The protection bypass for the alias
+type ProtectionBypass3 struct {
+	CreatedAt float64                              `json:"createdAt"`
+	CreatedBy string                               `json:"createdBy"`
+	Scope     GetAliasProtectionBypassAliasesScope `json:"scope"`
 }
 
-func (o *GetAlias3) GetCreatedAt() float64 {
+func (o *ProtectionBypass3) GetCreatedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetAlias3) GetCreatedBy() string {
+func (o *ProtectionBypass3) GetCreatedBy() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedBy
 }
 
-func (o *GetAlias3) GetScope() GetAliasAliasesScope {
+func (o *ProtectionBypass3) GetScope() GetAliasProtectionBypassAliasesScope {
 	if o == nil {
-		return GetAliasAliasesScope("")
+		return GetAliasProtectionBypassAliasesScope("")
 	}
 	return o.Scope
 }
@@ -275,229 +275,229 @@ func (e *Access) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type GetAliasScope string
+type GetAliasProtectionBypassScope string
 
 const (
-	GetAliasScopeUser GetAliasScope = "user"
+	GetAliasProtectionBypassScopeUser GetAliasProtectionBypassScope = "user"
 )
 
-func (e GetAliasScope) ToPointer() *GetAliasScope {
+func (e GetAliasProtectionBypassScope) ToPointer() *GetAliasProtectionBypassScope {
 	return &e
 }
-func (e *GetAliasScope) UnmarshalJSON(data []byte) error {
+func (e *GetAliasProtectionBypassScope) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "user":
-		*e = GetAliasScope(v)
+		*e = GetAliasProtectionBypassScope(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetAliasScope: %v", v)
+		return fmt.Errorf("invalid value for GetAliasProtectionBypassScope: %v", v)
 	}
 }
 
-// GetAlias2 - The protection bypass for the alias
-type GetAlias2 struct {
-	Access        Access        `json:"access"`
-	CreatedAt     float64       `json:"createdAt"`
-	LastUpdatedAt float64       `json:"lastUpdatedAt"`
-	LastUpdatedBy string        `json:"lastUpdatedBy"`
-	Scope         GetAliasScope `json:"scope"`
+// ProtectionBypass2 - The protection bypass for the alias
+type ProtectionBypass2 struct {
+	CreatedAt     float64                       `json:"createdAt"`
+	LastUpdatedAt float64                       `json:"lastUpdatedAt"`
+	LastUpdatedBy string                        `json:"lastUpdatedBy"`
+	Access        Access                        `json:"access"`
+	Scope         GetAliasProtectionBypassScope `json:"scope"`
 }
 
-func (o *GetAlias2) GetAccess() Access {
-	if o == nil {
-		return Access("")
-	}
-	return o.Access
-}
-
-func (o *GetAlias2) GetCreatedAt() float64 {
+func (o *ProtectionBypass2) GetCreatedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetAlias2) GetLastUpdatedAt() float64 {
+func (o *ProtectionBypass2) GetLastUpdatedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.LastUpdatedAt
 }
 
-func (o *GetAlias2) GetLastUpdatedBy() string {
+func (o *ProtectionBypass2) GetLastUpdatedBy() string {
 	if o == nil {
 		return ""
 	}
 	return o.LastUpdatedBy
 }
 
-func (o *GetAlias2) GetScope() GetAliasScope {
+func (o *ProtectionBypass2) GetAccess() Access {
 	if o == nil {
-		return GetAliasScope("")
+		return Access("")
+	}
+	return o.Access
+}
+
+func (o *ProtectionBypass2) GetScope() GetAliasProtectionBypassScope {
+	if o == nil {
+		return GetAliasProtectionBypassScope("")
 	}
 	return o.Scope
 }
 
-type GetAliasAliasesResponse200Scope string
+type ProtectionBypassScope string
 
 const (
-	GetAliasAliasesResponse200ScopeShareableLink GetAliasAliasesResponse200Scope = "shareable-link"
+	ProtectionBypassScopeShareableLink ProtectionBypassScope = "shareable-link"
 )
 
-func (e GetAliasAliasesResponse200Scope) ToPointer() *GetAliasAliasesResponse200Scope {
+func (e ProtectionBypassScope) ToPointer() *ProtectionBypassScope {
 	return &e
 }
-func (e *GetAliasAliasesResponse200Scope) UnmarshalJSON(data []byte) error {
+func (e *ProtectionBypassScope) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "shareable-link":
-		*e = GetAliasAliasesResponse200Scope(v)
+		*e = ProtectionBypassScope(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetAliasAliasesResponse200Scope: %v", v)
+		return fmt.Errorf("invalid value for ProtectionBypassScope: %v", v)
 	}
 }
 
-// GetAlias1 - The protection bypass for the alias
-type GetAlias1 struct {
-	CreatedAt float64                         `json:"createdAt"`
-	CreatedBy string                          `json:"createdBy"`
-	Scope     GetAliasAliasesResponse200Scope `json:"scope"`
+// ProtectionBypass1 - The protection bypass for the alias
+type ProtectionBypass1 struct {
+	CreatedAt float64               `json:"createdAt"`
+	CreatedBy string                `json:"createdBy"`
+	Scope     ProtectionBypassScope `json:"scope"`
 }
 
-func (o *GetAlias1) GetCreatedAt() float64 {
+func (o *ProtectionBypass1) GetCreatedAt() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetAlias1) GetCreatedBy() string {
+func (o *ProtectionBypass1) GetCreatedBy() string {
 	if o == nil {
 		return ""
 	}
 	return o.CreatedBy
 }
 
-func (o *GetAlias1) GetScope() GetAliasAliasesResponse200Scope {
+func (o *ProtectionBypass1) GetScope() ProtectionBypassScope {
 	if o == nil {
-		return GetAliasAliasesResponse200Scope("")
+		return ProtectionBypassScope("")
 	}
 	return o.Scope
 }
 
-type ProtectionBypassType string
+type GetAliasProtectionBypassType string
 
 const (
-	ProtectionBypassTypeGetAlias1 ProtectionBypassType = "getAlias_1"
-	ProtectionBypassTypeGetAlias2 ProtectionBypassType = "getAlias_2"
-	ProtectionBypassTypeGetAlias3 ProtectionBypassType = "getAlias_3"
-	ProtectionBypassTypeGetAlias4 ProtectionBypassType = "getAlias_4"
+	GetAliasProtectionBypassTypeProtectionBypass1 GetAliasProtectionBypassType = "protectionBypass_1"
+	GetAliasProtectionBypassTypeProtectionBypass2 GetAliasProtectionBypassType = "protectionBypass_2"
+	GetAliasProtectionBypassTypeProtectionBypass3 GetAliasProtectionBypassType = "protectionBypass_3"
+	GetAliasProtectionBypassTypeProtectionBypass4 GetAliasProtectionBypassType = "protectionBypass_4"
 )
 
-type ProtectionBypass struct {
-	GetAlias1 *GetAlias1
-	GetAlias2 *GetAlias2
-	GetAlias3 *GetAlias3
-	GetAlias4 *GetAlias4
+type GetAliasProtectionBypass struct {
+	ProtectionBypass1 *ProtectionBypass1
+	ProtectionBypass2 *ProtectionBypass2
+	ProtectionBypass3 *ProtectionBypass3
+	ProtectionBypass4 *ProtectionBypass4
 
-	Type ProtectionBypassType
+	Type GetAliasProtectionBypassType
 }
 
-func CreateProtectionBypassGetAlias1(getAlias1 GetAlias1) ProtectionBypass {
-	typ := ProtectionBypassTypeGetAlias1
+func CreateGetAliasProtectionBypassProtectionBypass1(protectionBypass1 ProtectionBypass1) GetAliasProtectionBypass {
+	typ := GetAliasProtectionBypassTypeProtectionBypass1
 
-	return ProtectionBypass{
-		GetAlias1: &getAlias1,
-		Type:      typ,
+	return GetAliasProtectionBypass{
+		ProtectionBypass1: &protectionBypass1,
+		Type:              typ,
 	}
 }
 
-func CreateProtectionBypassGetAlias2(getAlias2 GetAlias2) ProtectionBypass {
-	typ := ProtectionBypassTypeGetAlias2
+func CreateGetAliasProtectionBypassProtectionBypass2(protectionBypass2 ProtectionBypass2) GetAliasProtectionBypass {
+	typ := GetAliasProtectionBypassTypeProtectionBypass2
 
-	return ProtectionBypass{
-		GetAlias2: &getAlias2,
-		Type:      typ,
+	return GetAliasProtectionBypass{
+		ProtectionBypass2: &protectionBypass2,
+		Type:              typ,
 	}
 }
 
-func CreateProtectionBypassGetAlias3(getAlias3 GetAlias3) ProtectionBypass {
-	typ := ProtectionBypassTypeGetAlias3
+func CreateGetAliasProtectionBypassProtectionBypass3(protectionBypass3 ProtectionBypass3) GetAliasProtectionBypass {
+	typ := GetAliasProtectionBypassTypeProtectionBypass3
 
-	return ProtectionBypass{
-		GetAlias3: &getAlias3,
-		Type:      typ,
+	return GetAliasProtectionBypass{
+		ProtectionBypass3: &protectionBypass3,
+		Type:              typ,
 	}
 }
 
-func CreateProtectionBypassGetAlias4(getAlias4 GetAlias4) ProtectionBypass {
-	typ := ProtectionBypassTypeGetAlias4
+func CreateGetAliasProtectionBypassProtectionBypass4(protectionBypass4 ProtectionBypass4) GetAliasProtectionBypass {
+	typ := GetAliasProtectionBypassTypeProtectionBypass4
 
-	return ProtectionBypass{
-		GetAlias4: &getAlias4,
-		Type:      typ,
+	return GetAliasProtectionBypass{
+		ProtectionBypass4: &protectionBypass4,
+		Type:              typ,
 	}
 }
 
-func (u *ProtectionBypass) UnmarshalJSON(data []byte) error {
+func (u *GetAliasProtectionBypass) UnmarshalJSON(data []byte) error {
 
-	var getAlias1 GetAlias1 = GetAlias1{}
-	if err := utils.UnmarshalJSON(data, &getAlias1, "", true, true); err == nil {
-		u.GetAlias1 = &getAlias1
-		u.Type = ProtectionBypassTypeGetAlias1
+	var protectionBypass1 ProtectionBypass1 = ProtectionBypass1{}
+	if err := utils.UnmarshalJSON(data, &protectionBypass1, "", true, true); err == nil {
+		u.ProtectionBypass1 = &protectionBypass1
+		u.Type = GetAliasProtectionBypassTypeProtectionBypass1
 		return nil
 	}
 
-	var getAlias3 GetAlias3 = GetAlias3{}
-	if err := utils.UnmarshalJSON(data, &getAlias3, "", true, true); err == nil {
-		u.GetAlias3 = &getAlias3
-		u.Type = ProtectionBypassTypeGetAlias3
+	var protectionBypass3 ProtectionBypass3 = ProtectionBypass3{}
+	if err := utils.UnmarshalJSON(data, &protectionBypass3, "", true, true); err == nil {
+		u.ProtectionBypass3 = &protectionBypass3
+		u.Type = GetAliasProtectionBypassTypeProtectionBypass3
 		return nil
 	}
 
-	var getAlias4 GetAlias4 = GetAlias4{}
-	if err := utils.UnmarshalJSON(data, &getAlias4, "", true, true); err == nil {
-		u.GetAlias4 = &getAlias4
-		u.Type = ProtectionBypassTypeGetAlias4
+	var protectionBypass4 ProtectionBypass4 = ProtectionBypass4{}
+	if err := utils.UnmarshalJSON(data, &protectionBypass4, "", true, true); err == nil {
+		u.ProtectionBypass4 = &protectionBypass4
+		u.Type = GetAliasProtectionBypassTypeProtectionBypass4
 		return nil
 	}
 
-	var getAlias2 GetAlias2 = GetAlias2{}
-	if err := utils.UnmarshalJSON(data, &getAlias2, "", true, true); err == nil {
-		u.GetAlias2 = &getAlias2
-		u.Type = ProtectionBypassTypeGetAlias2
+	var protectionBypass2 ProtectionBypass2 = ProtectionBypass2{}
+	if err := utils.UnmarshalJSON(data, &protectionBypass2, "", true, true); err == nil {
+		u.ProtectionBypass2 = &protectionBypass2
+		u.Type = GetAliasProtectionBypassTypeProtectionBypass2
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProtectionBypass", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GetAliasProtectionBypass", string(data))
 }
 
-func (u ProtectionBypass) MarshalJSON() ([]byte, error) {
-	if u.GetAlias1 != nil {
-		return utils.MarshalJSON(u.GetAlias1, "", true)
+func (u GetAliasProtectionBypass) MarshalJSON() ([]byte, error) {
+	if u.ProtectionBypass1 != nil {
+		return utils.MarshalJSON(u.ProtectionBypass1, "", true)
 	}
 
-	if u.GetAlias2 != nil {
-		return utils.MarshalJSON(u.GetAlias2, "", true)
+	if u.ProtectionBypass2 != nil {
+		return utils.MarshalJSON(u.ProtectionBypass2, "", true)
 	}
 
-	if u.GetAlias3 != nil {
-		return utils.MarshalJSON(u.GetAlias3, "", true)
+	if u.ProtectionBypass3 != nil {
+		return utils.MarshalJSON(u.ProtectionBypass3, "", true)
 	}
 
-	if u.GetAlias4 != nil {
-		return utils.MarshalJSON(u.GetAlias4, "", true)
+	if u.ProtectionBypass4 != nil {
+		return utils.MarshalJSON(u.ProtectionBypass4, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type ProtectionBypass: all fields are null")
+	return nil, errors.New("could not marshal union type GetAliasProtectionBypass: all fields are null")
 }
 
 // GetAliasResponseBody - The alias information
@@ -509,7 +509,7 @@ type GetAliasResponseBody struct {
 	// The date when the alias was created in milliseconds since the UNIX epoch
 	CreatedAt *float64 `json:"createdAt,omitempty"`
 	// Information of the user who created the alias
-	Creator *Creator `json:"creator,omitempty"`
+	Creator *GetAliasCreator `json:"creator,omitempty"`
 	// The date when the alias was deleted in milliseconds since the UNIX epoch
 	DeletedAt *float64 `json:"deletedAt,omitempty"`
 	// A map with the deployment ID, URL and metadata
@@ -518,8 +518,6 @@ type GetAliasResponseBody struct {
 	DeploymentID *string `json:"deploymentId"`
 	// The unique identifier of the project
 	ProjectID *string `json:"projectId"`
-	// The protection bypass for the alias
-	ProtectionBypass map[string]ProtectionBypass `json:"protectionBypass,omitempty"`
 	// Target destination domain for redirect when the alias is a redirect
 	Redirect *string `json:"redirect,omitempty"`
 	// Status code to be used on redirect
@@ -528,6 +526,8 @@ type GetAliasResponseBody struct {
 	UID string `json:"uid"`
 	// The date when the alias was updated in milliseconds since the UNIX epoch
 	UpdatedAt *float64 `json:"updatedAt,omitempty"`
+	// The protection bypass for the alias
+	ProtectionBypass map[string]GetAliasProtectionBypass `json:"protectionBypass,omitempty"`
 }
 
 func (g GetAliasResponseBody) MarshalJSON() ([]byte, error) {
@@ -562,7 +562,7 @@ func (o *GetAliasResponseBody) GetCreatedAt() *float64 {
 	return o.CreatedAt
 }
 
-func (o *GetAliasResponseBody) GetCreator() *Creator {
+func (o *GetAliasResponseBody) GetCreator() *GetAliasCreator {
 	if o == nil {
 		return nil
 	}
@@ -597,13 +597,6 @@ func (o *GetAliasResponseBody) GetProjectID() *string {
 	return o.ProjectID
 }
 
-func (o *GetAliasResponseBody) GetProtectionBypass() map[string]ProtectionBypass {
-	if o == nil {
-		return nil
-	}
-	return o.ProtectionBypass
-}
-
 func (o *GetAliasResponseBody) GetRedirect() *string {
 	if o == nil {
 		return nil
@@ -630,6 +623,13 @@ func (o *GetAliasResponseBody) GetUpdatedAt() *float64 {
 		return nil
 	}
 	return o.UpdatedAt
+}
+
+func (o *GetAliasResponseBody) GetProtectionBypass() map[string]GetAliasProtectionBypass {
+	if o == nil {
+		return nil
+	}
+	return o.ProtectionBypass
 }
 
 type GetAliasResponse struct {

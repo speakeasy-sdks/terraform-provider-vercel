@@ -11,10 +11,10 @@ import (
 type GetDomainTransferRequest struct {
 	// The domain to check the transfer status for.
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetDomainTransferRequest) GetDomain() string {
@@ -24,6 +24,13 @@ func (o *GetDomainTransferRequest) GetDomain() string {
 	return o.Domain
 }
 
+func (o *GetDomainTransferRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 func (o *GetDomainTransferRequest) GetSlug() *string {
 	if o == nil {
 		return nil
@@ -31,11 +38,40 @@ func (o *GetDomainTransferRequest) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *GetDomainTransferRequest) GetTeamID() *string {
-	if o == nil {
-		return nil
+// TransferPolicy - The domain's transfer policy (depends on TLD requirements). `charge-and-renew`: transfer will charge for renewal and will renew the existing domain's registration. `no-charge-no-change`: transfer will have no change to registration period and does not require charge. `no-change`: transfer charge is required, but no change in registration period. `new-term`: transfer charge is required and a new registry term is set based on the transfer date. `not-supported`: transfers are not supported for this domain or TLD. `null`: This TLD is not supported by Vercel's Registrar.
+type TransferPolicy string
+
+const (
+	TransferPolicyChargeAndRenew   TransferPolicy = "charge-and-renew"
+	TransferPolicyNoChargeNoChange TransferPolicy = "no-charge-no-change"
+	TransferPolicyNoChange         TransferPolicy = "no-change"
+	TransferPolicyNewTerm          TransferPolicy = "new-term"
+	TransferPolicyNotSupported     TransferPolicy = "not-supported"
+)
+
+func (e TransferPolicy) ToPointer() *TransferPolicy {
+	return &e
+}
+func (e *TransferPolicy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return o.TeamID
+	switch v {
+	case "charge-and-renew":
+		fallthrough
+	case "no-charge-no-change":
+		fallthrough
+	case "no-change":
+		fallthrough
+	case "new-term":
+		fallthrough
+	case "not-supported":
+		*e = TransferPolicy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TransferPolicy: %v", v)
+	}
 }
 
 // GetDomainTransferStatus - The current state of an ongoing transfer. `pending_owner`: Awaiting approval by domain's admin contact (every transfer begins with this status). If approval is not given within five days, the transfer is cancelled. `pending_admin`: Waiting for approval by Vercel Registrar admin. `pending_registry`: Awaiting registry approval (the transfer completes after 7 days unless it is declined by the current registrar). `completed`: The transfer completed successfully. `cancelled`: The transfer was cancelled. `undef`: No transfer exists for this domain. `unknown`: This TLD is not supported by Vercel's Registrar.
@@ -80,51 +116,29 @@ func (e *GetDomainTransferStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// TransferPolicy - The domain's transfer policy (depends on TLD requirements). `charge-and-renew`: transfer will charge for renewal and will renew the existing domain's registration. `no-charge-no-change`: transfer will have no change to registration period and does not require charge. `no-change`: transfer charge is required, but no change in registration period. `new-term`: transfer charge is required and a new registry term is set based on the transfer date. `not-supported`: transfers are not supported for this domain or TLD. `null`: This TLD is not supported by Vercel's Registrar.
-type TransferPolicy string
-
-const (
-	TransferPolicyChargeAndRenew   TransferPolicy = "charge-and-renew"
-	TransferPolicyNoChargeNoChange TransferPolicy = "no-charge-no-change"
-	TransferPolicyNoChange         TransferPolicy = "no-change"
-	TransferPolicyNewTerm          TransferPolicy = "new-term"
-	TransferPolicyNotSupported     TransferPolicy = "not-supported"
-)
-
-func (e TransferPolicy) ToPointer() *TransferPolicy {
-	return &e
-}
-func (e *TransferPolicy) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "charge-and-renew":
-		fallthrough
-	case "no-charge-no-change":
-		fallthrough
-	case "no-change":
-		fallthrough
-	case "new-term":
-		fallthrough
-	case "not-supported":
-		*e = TransferPolicy(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for TransferPolicy: %v", v)
-	}
-}
-
 type GetDomainTransferResponseBody struct {
+	// Whether or not the domain is transferable
+	Transferable bool `json:"transferable"`
+	// The domain's transfer policy (depends on TLD requirements). `charge-and-renew`: transfer will charge for renewal and will renew the existing domain's registration. `no-charge-no-change`: transfer will have no change to registration period and does not require charge. `no-change`: transfer charge is required, but no change in registration period. `new-term`: transfer charge is required and a new registry term is set based on the transfer date. `not-supported`: transfers are not supported for this domain or TLD. `null`: This TLD is not supported by Vercel's Registrar.
+	TransferPolicy *TransferPolicy `json:"transferPolicy"`
 	// Description associated with transferable state.
 	Reason string `json:"reason"`
 	// The current state of an ongoing transfer. `pending_owner`: Awaiting approval by domain's admin contact (every transfer begins with this status). If approval is not given within five days, the transfer is cancelled. `pending_admin`: Waiting for approval by Vercel Registrar admin. `pending_registry`: Awaiting registry approval (the transfer completes after 7 days unless it is declined by the current registrar). `completed`: The transfer completed successfully. `cancelled`: The transfer was cancelled. `undef`: No transfer exists for this domain. `unknown`: This TLD is not supported by Vercel's Registrar.
 	Status GetDomainTransferStatus `json:"status"`
-	// The domain's transfer policy (depends on TLD requirements). `charge-and-renew`: transfer will charge for renewal and will renew the existing domain's registration. `no-charge-no-change`: transfer will have no change to registration period and does not require charge. `no-change`: transfer charge is required, but no change in registration period. `new-term`: transfer charge is required and a new registry term is set based on the transfer date. `not-supported`: transfers are not supported for this domain or TLD. `null`: This TLD is not supported by Vercel's Registrar.
-	TransferPolicy *TransferPolicy `json:"transferPolicy"`
-	// Whether or not the domain is transferable
-	Transferable bool `json:"transferable"`
+}
+
+func (o *GetDomainTransferResponseBody) GetTransferable() bool {
+	if o == nil {
+		return false
+	}
+	return o.Transferable
+}
+
+func (o *GetDomainTransferResponseBody) GetTransferPolicy() *TransferPolicy {
+	if o == nil {
+		return nil
+	}
+	return o.TransferPolicy
 }
 
 func (o *GetDomainTransferResponseBody) GetReason() string {
@@ -139,20 +153,6 @@ func (o *GetDomainTransferResponseBody) GetStatus() GetDomainTransferStatus {
 		return GetDomainTransferStatus("")
 	}
 	return o.Status
-}
-
-func (o *GetDomainTransferResponseBody) GetTransferPolicy() *TransferPolicy {
-	if o == nil {
-		return nil
-	}
-	return o.TransferPolicy
-}
-
-func (o *GetDomainTransferResponseBody) GetTransferable() bool {
-	if o == nil {
-		return false
-	}
-	return o.Transferable
 }
 
 type GetDomainTransferResponse struct {

@@ -18,27 +18,13 @@ func (o *PatchEdgeConfigSchemaRequestBody) GetDefinition() any {
 }
 
 type PatchEdgeConfigSchemaRequest struct {
-	RequestBody  *PatchEdgeConfigSchemaRequestBody `request:"mediaType=application/json"`
-	DryRun       *string                           `queryParam:"style=form,explode=true,name=dryRun"`
-	EdgeConfigID string                            `pathParam:"style=simple,explode=false,name=edgeConfigId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	EdgeConfigID string  `pathParam:"style=simple,explode=false,name=edgeConfigId"`
+	DryRun       *string `queryParam:"style=form,explode=true,name=dryRun"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *PatchEdgeConfigSchemaRequest) GetRequestBody() *PatchEdgeConfigSchemaRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
-}
-
-func (o *PatchEdgeConfigSchemaRequest) GetDryRun() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DryRun
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                           `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *PatchEdgeConfigSchemaRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *PatchEdgeConfigSchemaRequest) GetEdgeConfigID() string {
@@ -48,11 +34,11 @@ func (o *PatchEdgeConfigSchemaRequest) GetEdgeConfigID() string {
 	return o.EdgeConfigID
 }
 
-func (o *PatchEdgeConfigSchemaRequest) GetSlug() *string {
+func (o *PatchEdgeConfigSchemaRequest) GetDryRun() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Slug
+	return o.DryRun
 }
 
 func (o *PatchEdgeConfigSchemaRequest) GetTeamID() *string {
@@ -60,6 +46,20 @@ func (o *PatchEdgeConfigSchemaRequest) GetTeamID() *string {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *PatchEdgeConfigSchemaRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *PatchEdgeConfigSchemaRequest) GetRequestBody() *PatchEdgeConfigSchemaRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
 }
 
 // PatchEdgeConfigSchemaResponseBody - The JSON schema uploaded by the user

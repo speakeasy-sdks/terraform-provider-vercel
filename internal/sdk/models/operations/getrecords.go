@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 )
 
@@ -17,12 +17,12 @@ type GetRecordsRequest struct {
 	Limit *string `queryParam:"style=form,explode=true,name=limit"`
 	// Get records created after this JavaScript timestamp.
 	Since *string `queryParam:"style=form,explode=true,name=since"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Get records created before this JavaScript timestamp.
 	Until *string `queryParam:"style=form,explode=true,name=until"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetRecordsRequest) GetDomain() string {
@@ -46,11 +46,11 @@ func (o *GetRecordsRequest) GetSince() *string {
 	return o.Since
 }
 
-func (o *GetRecordsRequest) GetSlug() *string {
+func (o *GetRecordsRequest) GetUntil() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Slug
+	return o.Until
 }
 
 func (o *GetRecordsRequest) GetTeamID() *string {
@@ -60,32 +60,32 @@ func (o *GetRecordsRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-func (o *GetRecordsRequest) GetUntil() *string {
+func (o *GetRecordsRequest) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Until
+	return o.Slug
 }
 
-type GetRecordsDNSType string
+type GetRecordsResponseBodyDNSType string
 
 const (
-	GetRecordsDNSTypeA     GetRecordsDNSType = "A"
-	GetRecordsDNSTypeAaaa  GetRecordsDNSType = "AAAA"
-	GetRecordsDNSTypeAlias GetRecordsDNSType = "ALIAS"
-	GetRecordsDNSTypeCaa   GetRecordsDNSType = "CAA"
-	GetRecordsDNSTypeCname GetRecordsDNSType = "CNAME"
-	GetRecordsDNSTypeHTTPS GetRecordsDNSType = "HTTPS"
-	GetRecordsDNSTypeMx    GetRecordsDNSType = "MX"
-	GetRecordsDNSTypeSrv   GetRecordsDNSType = "SRV"
-	GetRecordsDNSTypeTxt   GetRecordsDNSType = "TXT"
-	GetRecordsDNSTypeNs    GetRecordsDNSType = "NS"
+	GetRecordsResponseBodyDNSTypeA     GetRecordsResponseBodyDNSType = "A"
+	GetRecordsResponseBodyDNSTypeAaaa  GetRecordsResponseBodyDNSType = "AAAA"
+	GetRecordsResponseBodyDNSTypeAlias GetRecordsResponseBodyDNSType = "ALIAS"
+	GetRecordsResponseBodyDNSTypeCaa   GetRecordsResponseBodyDNSType = "CAA"
+	GetRecordsResponseBodyDNSTypeCname GetRecordsResponseBodyDNSType = "CNAME"
+	GetRecordsResponseBodyDNSTypeHTTPS GetRecordsResponseBodyDNSType = "HTTPS"
+	GetRecordsResponseBodyDNSTypeMx    GetRecordsResponseBodyDNSType = "MX"
+	GetRecordsResponseBodyDNSTypeSrv   GetRecordsResponseBodyDNSType = "SRV"
+	GetRecordsResponseBodyDNSTypeTxt   GetRecordsResponseBodyDNSType = "TXT"
+	GetRecordsResponseBodyDNSTypeNs    GetRecordsResponseBodyDNSType = "NS"
 )
 
-func (e GetRecordsDNSType) ToPointer() *GetRecordsDNSType {
+func (e GetRecordsResponseBodyDNSType) ToPointer() *GetRecordsResponseBodyDNSType {
 	return &e
 }
-func (e *GetRecordsDNSType) UnmarshalJSON(data []byte) error {
+func (e *GetRecordsResponseBodyDNSType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -110,152 +110,152 @@ func (e *GetRecordsDNSType) UnmarshalJSON(data []byte) error {
 	case "TXT":
 		fallthrough
 	case "NS":
-		*e = GetRecordsDNSType(v)
+		*e = GetRecordsResponseBodyDNSType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetRecordsDNSType: %v", v)
+		return fmt.Errorf("invalid value for GetRecordsResponseBodyDNSType: %v", v)
 	}
 }
 
-type GetRecordsRecords struct {
-	Created    *float64          `json:"created"`
-	CreatedAt  *float64          `json:"createdAt"`
-	Creator    string            `json:"creator"`
-	ID         string            `json:"id"`
-	MxPriority *float64          `json:"mxPriority,omitempty"`
-	Name       string            `json:"name"`
-	Priority   *float64          `json:"priority,omitempty"`
-	Slug       string            `json:"slug"`
-	Type       GetRecordsDNSType `json:"type"`
-	Updated    *float64          `json:"updated"`
-	UpdatedAt  *float64          `json:"updatedAt"`
-	Value      string            `json:"value"`
+type ResponseBodyRecords struct {
+	ID         string                        `json:"id"`
+	Slug       string                        `json:"slug"`
+	Name       string                        `json:"name"`
+	Type       GetRecordsResponseBodyDNSType `json:"type"`
+	Value      string                        `json:"value"`
+	MxPriority *float64                      `json:"mxPriority,omitempty"`
+	Priority   *float64                      `json:"priority,omitempty"`
+	Creator    string                        `json:"creator"`
+	Created    *float64                      `json:"created"`
+	Updated    *float64                      `json:"updated"`
+	CreatedAt  *float64                      `json:"createdAt"`
+	UpdatedAt  *float64                      `json:"updatedAt"`
 }
 
-func (o *GetRecordsRecords) GetCreated() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Created
-}
-
-func (o *GetRecordsRecords) GetCreatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedAt
-}
-
-func (o *GetRecordsRecords) GetCreator() string {
-	if o == nil {
-		return ""
-	}
-	return o.Creator
-}
-
-func (o *GetRecordsRecords) GetID() string {
+func (o *ResponseBodyRecords) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *GetRecordsRecords) GetMxPriority() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.MxPriority
-}
-
-func (o *GetRecordsRecords) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *GetRecordsRecords) GetPriority() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Priority
-}
-
-func (o *GetRecordsRecords) GetSlug() string {
+func (o *ResponseBodyRecords) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *GetRecordsRecords) GetType() GetRecordsDNSType {
+func (o *ResponseBodyRecords) GetName() string {
 	if o == nil {
-		return GetRecordsDNSType("")
+		return ""
+	}
+	return o.Name
+}
+
+func (o *ResponseBodyRecords) GetType() GetRecordsResponseBodyDNSType {
+	if o == nil {
+		return GetRecordsResponseBodyDNSType("")
 	}
 	return o.Type
 }
 
-func (o *GetRecordsRecords) GetUpdated() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Updated
-}
-
-func (o *GetRecordsRecords) GetUpdatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.UpdatedAt
-}
-
-func (o *GetRecordsRecords) GetValue() string {
+func (o *ResponseBodyRecords) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-// GetRecords3 - Successful response retrieving a list of paginated DNS records.
-type GetRecords3 struct {
-	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
-	Pagination shared.Pagination   `json:"pagination"`
-	Records    []GetRecordsRecords `json:"records"`
+func (o *ResponseBodyRecords) GetMxPriority() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.MxPriority
 }
 
-func (o *GetRecords3) GetPagination() shared.Pagination {
+func (o *ResponseBodyRecords) GetPriority() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Priority
+}
+
+func (o *ResponseBodyRecords) GetCreator() string {
+	if o == nil {
+		return ""
+	}
+	return o.Creator
+}
+
+func (o *ResponseBodyRecords) GetCreated() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Created
+}
+
+func (o *ResponseBodyRecords) GetUpdated() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Updated
+}
+
+func (o *ResponseBodyRecords) GetCreatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *ResponseBodyRecords) GetUpdatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+// GetRecordsResponseBody3 - Successful response retrieving a list of paginated DNS records.
+type GetRecordsResponseBody3 struct {
+	Records []ResponseBodyRecords `json:"records"`
+	// This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
+	Pagination shared.Pagination `json:"pagination"`
+}
+
+func (o *GetRecordsResponseBody3) GetRecords() []ResponseBodyRecords {
+	if o == nil {
+		return []ResponseBodyRecords{}
+	}
+	return o.Records
+}
+
+func (o *GetRecordsResponseBody3) GetPagination() shared.Pagination {
 	if o == nil {
 		return shared.Pagination{}
 	}
 	return o.Pagination
 }
 
-func (o *GetRecords3) GetRecords() []GetRecordsRecords {
-	if o == nil {
-		return []GetRecordsRecords{}
-	}
-	return o.Records
-}
-
-type GetRecordsType string
+type GetRecordsResponseBodyType string
 
 const (
-	GetRecordsTypeA     GetRecordsType = "A"
-	GetRecordsTypeAaaa  GetRecordsType = "AAAA"
-	GetRecordsTypeAlias GetRecordsType = "ALIAS"
-	GetRecordsTypeCaa   GetRecordsType = "CAA"
-	GetRecordsTypeCname GetRecordsType = "CNAME"
-	GetRecordsTypeHTTPS GetRecordsType = "HTTPS"
-	GetRecordsTypeMx    GetRecordsType = "MX"
-	GetRecordsTypeSrv   GetRecordsType = "SRV"
-	GetRecordsTypeTxt   GetRecordsType = "TXT"
-	GetRecordsTypeNs    GetRecordsType = "NS"
+	GetRecordsResponseBodyTypeA     GetRecordsResponseBodyType = "A"
+	GetRecordsResponseBodyTypeAaaa  GetRecordsResponseBodyType = "AAAA"
+	GetRecordsResponseBodyTypeAlias GetRecordsResponseBodyType = "ALIAS"
+	GetRecordsResponseBodyTypeCaa   GetRecordsResponseBodyType = "CAA"
+	GetRecordsResponseBodyTypeCname GetRecordsResponseBodyType = "CNAME"
+	GetRecordsResponseBodyTypeHTTPS GetRecordsResponseBodyType = "HTTPS"
+	GetRecordsResponseBodyTypeMx    GetRecordsResponseBodyType = "MX"
+	GetRecordsResponseBodyTypeSrv   GetRecordsResponseBodyType = "SRV"
+	GetRecordsResponseBodyTypeTxt   GetRecordsResponseBodyType = "TXT"
+	GetRecordsResponseBodyTypeNs    GetRecordsResponseBodyType = "NS"
 )
 
-func (e GetRecordsType) ToPointer() *GetRecordsType {
+func (e GetRecordsResponseBodyType) ToPointer() *GetRecordsResponseBodyType {
 	return &e
 }
-func (e *GetRecordsType) UnmarshalJSON(data []byte) error {
+func (e *GetRecordsResponseBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -280,47 +280,26 @@ func (e *GetRecordsType) UnmarshalJSON(data []byte) error {
 	case "TXT":
 		fallthrough
 	case "NS":
-		*e = GetRecordsType(v)
+		*e = GetRecordsResponseBodyType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetRecordsType: %v", v)
+		return fmt.Errorf("invalid value for GetRecordsResponseBodyType: %v", v)
 	}
 }
 
 type Records struct {
-	Created    *float64       `json:"created"`
-	CreatedAt  *float64       `json:"createdAt"`
-	Creator    string         `json:"creator"`
-	ID         string         `json:"id"`
-	MxPriority *float64       `json:"mxPriority,omitempty"`
-	Name       string         `json:"name"`
-	Priority   *float64       `json:"priority,omitempty"`
-	Slug       string         `json:"slug"`
-	Type       GetRecordsType `json:"type"`
-	Updated    *float64       `json:"updated"`
-	UpdatedAt  *float64       `json:"updatedAt"`
-	Value      string         `json:"value"`
-}
-
-func (o *Records) GetCreated() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Created
-}
-
-func (o *Records) GetCreatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedAt
-}
-
-func (o *Records) GetCreator() string {
-	if o == nil {
-		return ""
-	}
-	return o.Creator
+	ID         string                     `json:"id"`
+	Slug       string                     `json:"slug"`
+	Name       string                     `json:"name"`
+	Type       GetRecordsResponseBodyType `json:"type"`
+	Value      string                     `json:"value"`
+	MxPriority *float64                   `json:"mxPriority,omitempty"`
+	Priority   *float64                   `json:"priority,omitempty"`
+	Creator    string                     `json:"creator"`
+	Created    *float64                   `json:"created"`
+	Updated    *float64                   `json:"updated"`
+	CreatedAt  *float64                   `json:"createdAt"`
+	UpdatedAt  *float64                   `json:"updatedAt"`
 }
 
 func (o *Records) GetID() string {
@@ -330,11 +309,11 @@ func (o *Records) GetID() string {
 	return o.ID
 }
 
-func (o *Records) GetMxPriority() *float64 {
+func (o *Records) GetSlug() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.MxPriority
+	return o.Slug
 }
 
 func (o *Records) GetName() string {
@@ -344,39 +323,11 @@ func (o *Records) GetName() string {
 	return o.Name
 }
 
-func (o *Records) GetPriority() *float64 {
+func (o *Records) GetType() GetRecordsResponseBodyType {
 	if o == nil {
-		return nil
-	}
-	return o.Priority
-}
-
-func (o *Records) GetSlug() string {
-	if o == nil {
-		return ""
-	}
-	return o.Slug
-}
-
-func (o *Records) GetType() GetRecordsType {
-	if o == nil {
-		return GetRecordsType("")
+		return GetRecordsResponseBodyType("")
 	}
 	return o.Type
-}
-
-func (o *Records) GetUpdated() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.Updated
-}
-
-func (o *Records) GetUpdatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.UpdatedAt
 }
 
 func (o *Records) GetValue() string {
@@ -386,36 +337,85 @@ func (o *Records) GetValue() string {
 	return o.Value
 }
 
-type GetRecords2 struct {
+func (o *Records) GetMxPriority() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.MxPriority
+}
+
+func (o *Records) GetPriority() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Priority
+}
+
+func (o *Records) GetCreator() string {
+	if o == nil {
+		return ""
+	}
+	return o.Creator
+}
+
+func (o *Records) GetCreated() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Created
+}
+
+func (o *Records) GetUpdated() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Updated
+}
+
+func (o *Records) GetCreatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *Records) GetUpdatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+type GetRecordsResponseBody2 struct {
 	Records []Records `json:"records"`
 }
 
-func (o *GetRecords2) GetRecords() []Records {
+func (o *GetRecordsResponseBody2) GetRecords() []Records {
 	if o == nil {
 		return []Records{}
 	}
 	return o.Records
 }
 
-type GetRecordsResponseBodyType string
+type GetRecordsResponseBodyUnionType string
 
 const (
-	GetRecordsResponseBodyTypeStr         GetRecordsResponseBodyType = "str"
-	GetRecordsResponseBodyTypeGetRecords2 GetRecordsResponseBodyType = "getRecords_2"
-	GetRecordsResponseBodyTypeGetRecords3 GetRecordsResponseBodyType = "getRecords_3"
+	GetRecordsResponseBodyUnionTypeStr                     GetRecordsResponseBodyUnionType = "str"
+	GetRecordsResponseBodyUnionTypeGetRecordsResponseBody2 GetRecordsResponseBodyUnionType = "getRecords_responseBody_2"
+	GetRecordsResponseBodyUnionTypeGetRecordsResponseBody3 GetRecordsResponseBodyUnionType = "getRecords_responseBody_3"
 )
 
 // GetRecordsResponseBody - Successful response retrieving a list of paginated DNS records.
 type GetRecordsResponseBody struct {
-	Str         *string
-	GetRecords2 *GetRecords2
-	GetRecords3 *GetRecords3
+	Str                     *string
+	GetRecordsResponseBody2 *GetRecordsResponseBody2
+	GetRecordsResponseBody3 *GetRecordsResponseBody3
 
-	Type GetRecordsResponseBodyType
+	Type GetRecordsResponseBodyUnionType
 }
 
 func CreateGetRecordsResponseBodyStr(str string) GetRecordsResponseBody {
-	typ := GetRecordsResponseBodyTypeStr
+	typ := GetRecordsResponseBodyUnionTypeStr
 
 	return GetRecordsResponseBody{
 		Str:  &str,
@@ -423,44 +423,44 @@ func CreateGetRecordsResponseBodyStr(str string) GetRecordsResponseBody {
 	}
 }
 
-func CreateGetRecordsResponseBodyGetRecords2(getRecords2 GetRecords2) GetRecordsResponseBody {
-	typ := GetRecordsResponseBodyTypeGetRecords2
+func CreateGetRecordsResponseBodyGetRecordsResponseBody2(getRecordsResponseBody2 GetRecordsResponseBody2) GetRecordsResponseBody {
+	typ := GetRecordsResponseBodyUnionTypeGetRecordsResponseBody2
 
 	return GetRecordsResponseBody{
-		GetRecords2: &getRecords2,
-		Type:        typ,
+		GetRecordsResponseBody2: &getRecordsResponseBody2,
+		Type:                    typ,
 	}
 }
 
-func CreateGetRecordsResponseBodyGetRecords3(getRecords3 GetRecords3) GetRecordsResponseBody {
-	typ := GetRecordsResponseBodyTypeGetRecords3
+func CreateGetRecordsResponseBodyGetRecordsResponseBody3(getRecordsResponseBody3 GetRecordsResponseBody3) GetRecordsResponseBody {
+	typ := GetRecordsResponseBodyUnionTypeGetRecordsResponseBody3
 
 	return GetRecordsResponseBody{
-		GetRecords3: &getRecords3,
-		Type:        typ,
+		GetRecordsResponseBody3: &getRecordsResponseBody3,
+		Type:                    typ,
 	}
 }
 
 func (u *GetRecordsResponseBody) UnmarshalJSON(data []byte) error {
 
-	var getRecords2 GetRecords2 = GetRecords2{}
-	if err := utils.UnmarshalJSON(data, &getRecords2, "", true, true); err == nil {
-		u.GetRecords2 = &getRecords2
-		u.Type = GetRecordsResponseBodyTypeGetRecords2
+	var getRecordsResponseBody2 GetRecordsResponseBody2 = GetRecordsResponseBody2{}
+	if err := utils.UnmarshalJSON(data, &getRecordsResponseBody2, "", true, true); err == nil {
+		u.GetRecordsResponseBody2 = &getRecordsResponseBody2
+		u.Type = GetRecordsResponseBodyUnionTypeGetRecordsResponseBody2
 		return nil
 	}
 
-	var getRecords3 GetRecords3 = GetRecords3{}
-	if err := utils.UnmarshalJSON(data, &getRecords3, "", true, true); err == nil {
-		u.GetRecords3 = &getRecords3
-		u.Type = GetRecordsResponseBodyTypeGetRecords3
+	var getRecordsResponseBody3 GetRecordsResponseBody3 = GetRecordsResponseBody3{}
+	if err := utils.UnmarshalJSON(data, &getRecordsResponseBody3, "", true, true); err == nil {
+		u.GetRecordsResponseBody3 = &getRecordsResponseBody3
+		u.Type = GetRecordsResponseBodyUnionTypeGetRecordsResponseBody3
 		return nil
 	}
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = GetRecordsResponseBodyTypeStr
+		u.Type = GetRecordsResponseBodyUnionTypeStr
 		return nil
 	}
 
@@ -472,12 +472,12 @@ func (u GetRecordsResponseBody) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.GetRecords2 != nil {
-		return utils.MarshalJSON(u.GetRecords2, "", true)
+	if u.GetRecordsResponseBody2 != nil {
+		return utils.MarshalJSON(u.GetRecordsResponseBody2, "", true)
 	}
 
-	if u.GetRecords3 != nil {
-		return utils.MarshalJSON(u.GetRecords3, "", true)
+	if u.GetRecordsResponseBody3 != nil {
+		return utils.MarshalJSON(u.GetRecordsResponseBody3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type GetRecordsResponseBody: all fields are null")

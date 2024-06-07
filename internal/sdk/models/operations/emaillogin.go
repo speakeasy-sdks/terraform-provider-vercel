@@ -5,7 +5,7 @@ package operations
 import (
 	"errors"
 	"fmt"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 )
 
@@ -30,92 +30,92 @@ func (o *EmailLoginRequestBody) GetTokenName() *string {
 	return o.TokenName
 }
 
-type EmailLogin2 struct {
-	// The code the user is going to receive on the email. **Must** be displayed to the user so they can verify the request is the correct.
-	SecurityCode string `json:"securityCode"`
+type EmailLoginResponseBody2 struct {
 	// The token used to verify the user accepted the login request
 	Token string `json:"token"`
-}
-
-func (o *EmailLogin2) GetSecurityCode() string {
-	if o == nil {
-		return ""
-	}
-	return o.SecurityCode
-}
-
-func (o *EmailLogin2) GetToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.Token
-}
-
-type EmailLogin1 struct {
+	// The code the user is going to receive on the email. **Must** be displayed to the user so they can verify the request is the correct.
 	SecurityCode string `json:"securityCode"`
-	Token        string `json:"token"`
 }
 
-func (o *EmailLogin1) GetSecurityCode() string {
+func (o *EmailLoginResponseBody2) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
+}
+
+func (o *EmailLoginResponseBody2) GetSecurityCode() string {
 	if o == nil {
 		return ""
 	}
 	return o.SecurityCode
 }
 
-func (o *EmailLogin1) GetToken() string {
+type EmailLoginResponseBody1 struct {
+	Token        string `json:"token"`
+	SecurityCode string `json:"securityCode"`
+}
+
+func (o *EmailLoginResponseBody1) GetToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.Token
+}
+
+func (o *EmailLoginResponseBody1) GetSecurityCode() string {
+	if o == nil {
+		return ""
+	}
+	return o.SecurityCode
 }
 
 type EmailLoginResponseBodyType string
 
 const (
-	EmailLoginResponseBodyTypeEmailLogin1 EmailLoginResponseBodyType = "emailLogin_1"
-	EmailLoginResponseBodyTypeEmailLogin2 EmailLoginResponseBodyType = "emailLogin_2"
+	EmailLoginResponseBodyTypeEmailLoginResponseBody1 EmailLoginResponseBodyType = "emailLogin_responseBody_1"
+	EmailLoginResponseBodyTypeEmailLoginResponseBody2 EmailLoginResponseBodyType = "emailLogin_responseBody_2"
 )
 
 // EmailLoginResponseBody - The request was successful and an email was sent
 type EmailLoginResponseBody struct {
-	EmailLogin1 *EmailLogin1
-	EmailLogin2 *EmailLogin2
+	EmailLoginResponseBody1 *EmailLoginResponseBody1
+	EmailLoginResponseBody2 *EmailLoginResponseBody2
 
 	Type EmailLoginResponseBodyType
 }
 
-func CreateEmailLoginResponseBodyEmailLogin1(emailLogin1 EmailLogin1) EmailLoginResponseBody {
-	typ := EmailLoginResponseBodyTypeEmailLogin1
+func CreateEmailLoginResponseBodyEmailLoginResponseBody1(emailLoginResponseBody1 EmailLoginResponseBody1) EmailLoginResponseBody {
+	typ := EmailLoginResponseBodyTypeEmailLoginResponseBody1
 
 	return EmailLoginResponseBody{
-		EmailLogin1: &emailLogin1,
-		Type:        typ,
+		EmailLoginResponseBody1: &emailLoginResponseBody1,
+		Type:                    typ,
 	}
 }
 
-func CreateEmailLoginResponseBodyEmailLogin2(emailLogin2 EmailLogin2) EmailLoginResponseBody {
-	typ := EmailLoginResponseBodyTypeEmailLogin2
+func CreateEmailLoginResponseBodyEmailLoginResponseBody2(emailLoginResponseBody2 EmailLoginResponseBody2) EmailLoginResponseBody {
+	typ := EmailLoginResponseBodyTypeEmailLoginResponseBody2
 
 	return EmailLoginResponseBody{
-		EmailLogin2: &emailLogin2,
-		Type:        typ,
+		EmailLoginResponseBody2: &emailLoginResponseBody2,
+		Type:                    typ,
 	}
 }
 
 func (u *EmailLoginResponseBody) UnmarshalJSON(data []byte) error {
 
-	var emailLogin1 EmailLogin1 = EmailLogin1{}
-	if err := utils.UnmarshalJSON(data, &emailLogin1, "", true, true); err == nil {
-		u.EmailLogin1 = &emailLogin1
-		u.Type = EmailLoginResponseBodyTypeEmailLogin1
+	var emailLoginResponseBody1 EmailLoginResponseBody1 = EmailLoginResponseBody1{}
+	if err := utils.UnmarshalJSON(data, &emailLoginResponseBody1, "", true, true); err == nil {
+		u.EmailLoginResponseBody1 = &emailLoginResponseBody1
+		u.Type = EmailLoginResponseBodyTypeEmailLoginResponseBody1
 		return nil
 	}
 
-	var emailLogin2 EmailLogin2 = EmailLogin2{}
-	if err := utils.UnmarshalJSON(data, &emailLogin2, "", true, true); err == nil {
-		u.EmailLogin2 = &emailLogin2
-		u.Type = EmailLoginResponseBodyTypeEmailLogin2
+	var emailLoginResponseBody2 EmailLoginResponseBody2 = EmailLoginResponseBody2{}
+	if err := utils.UnmarshalJSON(data, &emailLoginResponseBody2, "", true, true); err == nil {
+		u.EmailLoginResponseBody2 = &emailLoginResponseBody2
+		u.Type = EmailLoginResponseBodyTypeEmailLoginResponseBody2
 		return nil
 	}
 
@@ -123,12 +123,12 @@ func (u *EmailLoginResponseBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u EmailLoginResponseBody) MarshalJSON() ([]byte, error) {
-	if u.EmailLogin1 != nil {
-		return utils.MarshalJSON(u.EmailLogin1, "", true)
+	if u.EmailLoginResponseBody1 != nil {
+		return utils.MarshalJSON(u.EmailLoginResponseBody1, "", true)
 	}
 
-	if u.EmailLogin2 != nil {
-		return utils.MarshalJSON(u.EmailLogin2, "", true)
+	if u.EmailLoginResponseBody2 != nil {
+		return utils.MarshalJSON(u.EmailLoginResponseBody2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type EmailLoginResponseBody: all fields are null")

@@ -1,12 +1,12 @@
 terraform {
   required_providers {
-    vercel = {
-      source  = "zchee/vercel"
-      version = "0.14.0"
+    terraform = {
+      source  = "speakeasy/terraform"
+      version = "0.0.1"
     }
   }
 }
 
-provider "vercel" {
+provider "terraform" {
   # Configuration options
 }

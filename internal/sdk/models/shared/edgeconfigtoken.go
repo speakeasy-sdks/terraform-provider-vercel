@@ -4,33 +4,19 @@ package shared
 
 // EdgeConfigToken - The EdgeConfig.
 type EdgeConfigToken struct {
-	CreatedAt    float64 `json:"createdAt"`
-	EdgeConfigID string  `json:"edgeConfigId"`
-	// This is not the token itself, but rather an id to identify the token by
-	ID    string `json:"id"`
-	Label string `json:"label"`
 	Token string `json:"token"`
+	Label string `json:"label"`
+	// This is not the token itself, but rather an id to identify the token by
+	ID           string  `json:"id"`
+	EdgeConfigID string  `json:"edgeConfigId"`
+	CreatedAt    float64 `json:"createdAt"`
 }
 
-func (o *EdgeConfigToken) GetCreatedAt() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.CreatedAt
-}
-
-func (o *EdgeConfigToken) GetEdgeConfigID() string {
+func (o *EdgeConfigToken) GetToken() string {
 	if o == nil {
 		return ""
 	}
-	return o.EdgeConfigID
-}
-
-func (o *EdgeConfigToken) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
+	return o.Token
 }
 
 func (o *EdgeConfigToken) GetLabel() string {
@@ -40,9 +26,23 @@ func (o *EdgeConfigToken) GetLabel() string {
 	return o.Label
 }
 
-func (o *EdgeConfigToken) GetToken() string {
+func (o *EdgeConfigToken) GetID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Token
+	return o.ID
+}
+
+func (o *EdgeConfigToken) GetEdgeConfigID() string {
+	if o == nil {
+		return ""
+	}
+	return o.EdgeConfigID
+}
+
+func (o *EdgeConfigToken) GetCreatedAt() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.CreatedAt
 }

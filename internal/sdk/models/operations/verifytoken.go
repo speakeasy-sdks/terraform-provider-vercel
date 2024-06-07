@@ -38,29 +38,29 @@ func (e *TeamPlan) UnmarshalJSON(data []byte) error {
 type VerifyTokenRequest struct {
 	// Email to verify the login.
 	Email *string `queryParam:"style=form,explode=true,name=email"`
-	// The page on which the user started their session.
-	LandingPage *string `queryParam:"style=form,explode=true,name=landingPage"`
-	OppID       *string `queryParam:"style=form,explode=true,name=oppId"`
-	// The page that sent the user to the signup page.
-	PageBeforeConversionPage *string `queryParam:"style=form,explode=true,name=pageBeforeConversionPage"`
-	// Referrer to the session.
-	SessionReferrer *string `queryParam:"style=form,explode=true,name=sessionReferrer"`
+	// The token returned when the login was requested.
+	Token string `queryParam:"style=form,explode=true,name=token"`
+	// The desired name for the token. It will be displayed on the user account details.
+	TokenName *string `queryParam:"style=form,explode=true,name=tokenName"`
 	// The SAML Profile ID, when connecting a SAML Profile to a Team member for the first time.
 	SsoUserID *string `queryParam:"style=form,explode=true,name=ssoUserId"`
 	// The name of this user's team.
 	TeamName *string `queryParam:"style=form,explode=true,name=teamName"`
-	// The plan for this user's team (pro or hobby).
-	TeamPlan *TeamPlan `queryParam:"style=form,explode=true,name=teamPlan"`
 	// The slug for this user's team.
 	TeamSlug *string `queryParam:"style=form,explode=true,name=teamSlug"`
-	// The token returned when the login was requested.
-	Token string `queryParam:"style=form,explode=true,name=token"`
-	// The desired name for the token. It will be displayed on the user account details.
-	TokenName   *string `queryParam:"style=form,explode=true,name=tokenName"`
-	UtmCampaign *string `queryParam:"style=form,explode=true,name=utmCampaign"`
-	UtmMedium   *string `queryParam:"style=form,explode=true,name=utmMedium"`
-	UtmSource   *string `queryParam:"style=form,explode=true,name=utmSource"`
-	UtmTerm     *string `queryParam:"style=form,explode=true,name=utmTerm"`
+	// The plan for this user's team (pro or hobby).
+	TeamPlan *TeamPlan `queryParam:"style=form,explode=true,name=teamPlan"`
+	// Referrer to the session.
+	SessionReferrer *string `queryParam:"style=form,explode=true,name=sessionReferrer"`
+	// The page on which the user started their session.
+	LandingPage *string `queryParam:"style=form,explode=true,name=landingPage"`
+	// The page that sent the user to the signup page.
+	PageBeforeConversionPage *string `queryParam:"style=form,explode=true,name=pageBeforeConversionPage"`
+	UtmSource                *string `queryParam:"style=form,explode=true,name=utmSource"`
+	UtmMedium                *string `queryParam:"style=form,explode=true,name=utmMedium"`
+	UtmCampaign              *string `queryParam:"style=form,explode=true,name=utmCampaign"`
+	UtmTerm                  *string `queryParam:"style=form,explode=true,name=utmTerm"`
+	OppID                    *string `queryParam:"style=form,explode=true,name=oppId"`
 }
 
 func (o *VerifyTokenRequest) GetEmail() *string {
@@ -68,62 +68,6 @@ func (o *VerifyTokenRequest) GetEmail() *string {
 		return nil
 	}
 	return o.Email
-}
-
-func (o *VerifyTokenRequest) GetLandingPage() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LandingPage
-}
-
-func (o *VerifyTokenRequest) GetOppID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.OppID
-}
-
-func (o *VerifyTokenRequest) GetPageBeforeConversionPage() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PageBeforeConversionPage
-}
-
-func (o *VerifyTokenRequest) GetSessionReferrer() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SessionReferrer
-}
-
-func (o *VerifyTokenRequest) GetSsoUserID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SsoUserID
-}
-
-func (o *VerifyTokenRequest) GetTeamName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TeamName
-}
-
-func (o *VerifyTokenRequest) GetTeamPlan() *TeamPlan {
-	if o == nil {
-		return nil
-	}
-	return o.TeamPlan
-}
-
-func (o *VerifyTokenRequest) GetTeamSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TeamSlug
 }
 
 func (o *VerifyTokenRequest) GetToken() string {
@@ -140,18 +84,53 @@ func (o *VerifyTokenRequest) GetTokenName() *string {
 	return o.TokenName
 }
 
-func (o *VerifyTokenRequest) GetUtmCampaign() *string {
+func (o *VerifyTokenRequest) GetSsoUserID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.UtmCampaign
+	return o.SsoUserID
 }
 
-func (o *VerifyTokenRequest) GetUtmMedium() *string {
+func (o *VerifyTokenRequest) GetTeamName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.UtmMedium
+	return o.TeamName
+}
+
+func (o *VerifyTokenRequest) GetTeamSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamSlug
+}
+
+func (o *VerifyTokenRequest) GetTeamPlan() *TeamPlan {
+	if o == nil {
+		return nil
+	}
+	return o.TeamPlan
+}
+
+func (o *VerifyTokenRequest) GetSessionReferrer() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SessionReferrer
+}
+
+func (o *VerifyTokenRequest) GetLandingPage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LandingPage
+}
+
+func (o *VerifyTokenRequest) GetPageBeforeConversionPage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageBeforeConversionPage
 }
 
 func (o *VerifyTokenRequest) GetUtmSource() *string {
@@ -161,6 +140,20 @@ func (o *VerifyTokenRequest) GetUtmSource() *string {
 	return o.UtmSource
 }
 
+func (o *VerifyTokenRequest) GetUtmMedium() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UtmMedium
+}
+
+func (o *VerifyTokenRequest) GetUtmCampaign() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UtmCampaign
+}
+
 func (o *VerifyTokenRequest) GetUtmTerm() *string {
 	if o == nil {
 		return nil
@@ -168,14 +161,28 @@ func (o *VerifyTokenRequest) GetUtmTerm() *string {
 	return o.UtmTerm
 }
 
+func (o *VerifyTokenRequest) GetOppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OppID
+}
+
 // VerifyTokenResponseBody - The verification was successful.
 type VerifyTokenResponseBody struct {
+	// The user authentication token that can be used to perform API requests.
+	Token string `json:"token"`
 	// Email address of the authenticated user.
 	Email string `json:"email"`
 	// When completing SAML Single Sign-On authentication, this will be the ID of the Team that was authenticated for.
 	TeamID *string `json:"teamId,omitempty"`
-	// The user authentication token that can be used to perform API requests.
-	Token string `json:"token"`
+}
+
+func (o *VerifyTokenResponseBody) GetToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.Token
 }
 
 func (o *VerifyTokenResponseBody) GetEmail() string {
@@ -190,13 +197,6 @@ func (o *VerifyTokenResponseBody) GetTeamID() *string {
 		return nil
 	}
 	return o.TeamID
-}
-
-func (o *VerifyTokenResponseBody) GetToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.Token
 }
 
 type VerifyTokenResponse struct {

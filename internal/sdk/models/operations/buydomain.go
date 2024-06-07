@@ -7,19 +7,12 @@ import (
 )
 
 type BuyDomainRequestBody struct {
-	// The price you expect to be charged for the purchase.
-	ExpectedPrice *float64 `json:"expectedPrice,omitempty"`
 	// The domain name to purchase.
 	Name string `json:"name"`
+	// The price you expect to be charged for the purchase.
+	ExpectedPrice *float64 `json:"expectedPrice,omitempty"`
 	// Indicates whether the domain should be automatically renewed.
 	Renew *bool `json:"renew,omitempty"`
-}
-
-func (o *BuyDomainRequestBody) GetExpectedPrice() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.ExpectedPrice
 }
 
 func (o *BuyDomainRequestBody) GetName() string {
@@ -27,6 +20,13 @@ func (o *BuyDomainRequestBody) GetName() string {
 		return ""
 	}
 	return o.Name
+}
+
+func (o *BuyDomainRequestBody) GetExpectedPrice() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.ExpectedPrice
 }
 
 func (o *BuyDomainRequestBody) GetRenew() *bool {
@@ -37,25 +37,11 @@ func (o *BuyDomainRequestBody) GetRenew() *bool {
 }
 
 type BuyDomainRequest struct {
-	RequestBody *BuyDomainRequestBody `request:"mediaType=application/json"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *BuyDomainRequest) GetRequestBody() *BuyDomainRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
-}
-
-func (o *BuyDomainRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
+	// The Team slug to perform the request on behalf of.
+	Slug        *string               `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *BuyDomainRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *BuyDomainRequest) GetTeamID() *string {
@@ -65,88 +51,26 @@ func (o *BuyDomainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type BuyDomainDomainsDomain struct {
-	Created  float64  `json:"created"`
-	Ns       []string `json:"ns"`
-	Pending  bool     `json:"pending"`
-	UID      string   `json:"uid"`
-	Verified bool     `json:"verified"`
-}
-
-func (o *BuyDomainDomainsDomain) GetCreated() float64 {
+func (o *BuyDomainRequest) GetSlug() *string {
 	if o == nil {
-		return 0.0
+		return nil
 	}
-	return o.Created
+	return o.Slug
 }
 
-func (o *BuyDomainDomainsDomain) GetNs() []string {
+func (o *BuyDomainRequest) GetRequestBody() *BuyDomainRequestBody {
 	if o == nil {
-		return []string{}
+		return nil
 	}
-	return o.Ns
-}
-
-func (o *BuyDomainDomainsDomain) GetPending() bool {
-	if o == nil {
-		return false
-	}
-	return o.Pending
-}
-
-func (o *BuyDomainDomainsDomain) GetUID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UID
-}
-
-func (o *BuyDomainDomainsDomain) GetVerified() bool {
-	if o == nil {
-		return false
-	}
-	return o.Verified
-}
-
-// BuyDomainDomainsResponseBody - Domain purchase is being processed asynchronously.
-type BuyDomainDomainsResponseBody struct {
-	Domain BuyDomainDomainsDomain `json:"domain"`
-}
-
-func (o *BuyDomainDomainsResponseBody) GetDomain() BuyDomainDomainsDomain {
-	if o == nil {
-		return BuyDomainDomainsDomain{}
-	}
-	return o.Domain
+	return o.RequestBody
 }
 
 type BuyDomainDomain struct {
-	Created  float64  `json:"created"`
-	Ns       []string `json:"ns"`
-	Pending  bool     `json:"pending"`
 	UID      string   `json:"uid"`
+	Ns       []string `json:"ns"`
 	Verified bool     `json:"verified"`
-}
-
-func (o *BuyDomainDomain) GetCreated() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Created
-}
-
-func (o *BuyDomainDomain) GetNs() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.Ns
-}
-
-func (o *BuyDomainDomain) GetPending() bool {
-	if o == nil {
-		return false
-	}
-	return o.Pending
+	Created  float64  `json:"created"`
+	Pending  bool     `json:"pending"`
 }
 
 func (o *BuyDomainDomain) GetUID() string {
@@ -156,6 +80,13 @@ func (o *BuyDomainDomain) GetUID() string {
 	return o.UID
 }
 
+func (o *BuyDomainDomain) GetNs() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Ns
+}
+
 func (o *BuyDomainDomain) GetVerified() bool {
 	if o == nil {
 		return false
@@ -163,43 +94,98 @@ func (o *BuyDomainDomain) GetVerified() bool {
 	return o.Verified
 }
 
-// BuyDomainResponseBody - Successful response for purchasing a Domain.
-type BuyDomainResponseBody struct {
+func (o *BuyDomainDomain) GetCreated() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Created
+}
+
+func (o *BuyDomainDomain) GetPending() bool {
+	if o == nil {
+		return false
+	}
+	return o.Pending
+}
+
+// BuyDomainDomainsResponseBody - Domain purchase is being processed asynchronously.
+type BuyDomainDomainsResponseBody struct {
 	Domain BuyDomainDomain `json:"domain"`
 }
 
-func (o *BuyDomainResponseBody) GetDomain() BuyDomainDomain {
+func (o *BuyDomainDomainsResponseBody) GetDomain() BuyDomainDomain {
 	if o == nil {
 		return BuyDomainDomain{}
 	}
 	return o.Domain
 }
 
+type BuyDomainDomainsDomain struct {
+	UID      string   `json:"uid"`
+	Ns       []string `json:"ns"`
+	Verified bool     `json:"verified"`
+	Created  float64  `json:"created"`
+	Pending  bool     `json:"pending"`
+}
+
+func (o *BuyDomainDomainsDomain) GetUID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UID
+}
+
+func (o *BuyDomainDomainsDomain) GetNs() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Ns
+}
+
+func (o *BuyDomainDomainsDomain) GetVerified() bool {
+	if o == nil {
+		return false
+	}
+	return o.Verified
+}
+
+func (o *BuyDomainDomainsDomain) GetCreated() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Created
+}
+
+func (o *BuyDomainDomainsDomain) GetPending() bool {
+	if o == nil {
+		return false
+	}
+	return o.Pending
+}
+
+// BuyDomainResponseBody - Successful response for purchasing a Domain.
+type BuyDomainResponseBody struct {
+	Domain BuyDomainDomainsDomain `json:"domain"`
+}
+
+func (o *BuyDomainResponseBody) GetDomain() BuyDomainDomainsDomain {
+	if o == nil {
+		return BuyDomainDomainsDomain{}
+	}
+	return o.Domain
+}
+
 type BuyDomainResponse struct {
-	// Successful response for purchasing a Domain.
-	TwoHundredAndOneApplicationJSONObject *BuyDomainResponseBody
-	// Domain purchase is being processed asynchronously.
-	TwoHundredAndTwoApplicationJSONObject *BuyDomainDomainsResponseBody
 	// HTTP response content type for this operation
 	ContentType string
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-}
-
-func (o *BuyDomainResponse) GetTwoHundredAndOneApplicationJSONObject() *BuyDomainResponseBody {
-	if o == nil {
-		return nil
-	}
-	return o.TwoHundredAndOneApplicationJSONObject
-}
-
-func (o *BuyDomainResponse) GetTwoHundredAndTwoApplicationJSONObject() *BuyDomainDomainsResponseBody {
-	if o == nil {
-		return nil
-	}
-	return o.TwoHundredAndTwoApplicationJSONObject
+	// Successful response for purchasing a Domain.
+	TwoHundredAndOneApplicationJSONObject *BuyDomainResponseBody
+	// Domain purchase is being processed asynchronously.
+	TwoHundredAndTwoApplicationJSONObject *BuyDomainDomainsResponseBody
 }
 
 func (o *BuyDomainResponse) GetContentType() string {
@@ -221,4 +207,18 @@ func (o *BuyDomainResponse) GetRawResponse() *http.Response {
 		return nil
 	}
 	return o.RawResponse
+}
+
+func (o *BuyDomainResponse) GetTwoHundredAndOneApplicationJSONObject() *BuyDomainResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.TwoHundredAndOneApplicationJSONObject
+}
+
+func (o *BuyDomainResponse) GetTwoHundredAndTwoApplicationJSONObject() *BuyDomainDomainsResponseBody {
+	if o == nil {
+		return nil
+	}
+	return o.TwoHundredAndTwoApplicationJSONObject
 }

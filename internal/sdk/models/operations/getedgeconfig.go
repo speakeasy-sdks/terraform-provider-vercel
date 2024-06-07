@@ -8,10 +8,10 @@ import (
 
 type GetEdgeConfigRequest struct {
 	EdgeConfigID string `pathParam:"style=simple,explode=false,name=edgeConfigId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetEdgeConfigRequest) GetEdgeConfigID() string {
@@ -21,13 +21,6 @@ func (o *GetEdgeConfigRequest) GetEdgeConfigID() string {
 	return o.EdgeConfigID
 }
 
-func (o *GetEdgeConfigRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *GetEdgeConfigRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -35,21 +28,18 @@ func (o *GetEdgeConfigRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type GetEdgeConfigSchema struct {
+func (o *GetEdgeConfigRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 // GetEdgeConfigTransfer - Keeps track of the current state of the Edge Config while it gets transferred.
 type GetEdgeConfigTransfer struct {
-	DoneAt        *float64 `json:"doneAt"`
 	FromAccountID string   `json:"fromAccountId"`
 	StartedAt     float64  `json:"startedAt"`
-}
-
-func (o *GetEdgeConfigTransfer) GetDoneAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.DoneAt
+	DoneAt        *float64 `json:"doneAt"`
 }
 
 func (o *GetEdgeConfigTransfer) GetFromAccountID() string {
@@ -66,20 +56,30 @@ func (o *GetEdgeConfigTransfer) GetStartedAt() float64 {
 	return o.StartedAt
 }
 
+func (o *GetEdgeConfigTransfer) GetDoneAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DoneAt
+}
+
+type GetEdgeConfigSchema struct {
+}
+
 // GetEdgeConfigResponseBody - The EdgeConfig.
 type GetEdgeConfigResponseBody struct {
-	CreatedAt   *float64             `json:"createdAt,omitempty"`
-	Digest      *string              `json:"digest,omitempty"`
-	ID          *string              `json:"id,omitempty"`
-	ItemCount   float64              `json:"itemCount"`
-	OwnerID     *string              `json:"ownerId,omitempty"`
-	Schema      *GetEdgeConfigSchema `json:"schema,omitempty"`
-	SizeInBytes float64              `json:"sizeInBytes"`
+	CreatedAt *float64 `json:"createdAt,omitempty"`
+	UpdatedAt *float64 `json:"updatedAt,omitempty"`
+	ID        *string  `json:"id,omitempty"`
 	// Name for the Edge Config Names are not unique. Must start with an alphabetic character and can contain only alphanumeric characters and underscores).
-	Slug *string `json:"slug,omitempty"`
+	Slug    *string `json:"slug,omitempty"`
+	OwnerID *string `json:"ownerId,omitempty"`
+	Digest  *string `json:"digest,omitempty"`
 	// Keeps track of the current state of the Edge Config while it gets transferred.
-	Transfer  *GetEdgeConfigTransfer `json:"transfer,omitempty"`
-	UpdatedAt *float64               `json:"updatedAt,omitempty"`
+	Transfer    *GetEdgeConfigTransfer `json:"transfer,omitempty"`
+	Schema      *GetEdgeConfigSchema   `json:"schema,omitempty"`
+	SizeInBytes float64                `json:"sizeInBytes"`
+	ItemCount   float64                `json:"itemCount"`
 }
 
 func (o *GetEdgeConfigResponseBody) GetCreatedAt() *float64 {
@@ -89,11 +89,11 @@ func (o *GetEdgeConfigResponseBody) GetCreatedAt() *float64 {
 	return o.CreatedAt
 }
 
-func (o *GetEdgeConfigResponseBody) GetDigest() *string {
+func (o *GetEdgeConfigResponseBody) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
-	return o.Digest
+	return o.UpdatedAt
 }
 
 func (o *GetEdgeConfigResponseBody) GetID() *string {
@@ -103,11 +103,11 @@ func (o *GetEdgeConfigResponseBody) GetID() *string {
 	return o.ID
 }
 
-func (o *GetEdgeConfigResponseBody) GetItemCount() float64 {
+func (o *GetEdgeConfigResponseBody) GetSlug() *string {
 	if o == nil {
-		return 0.0
+		return nil
 	}
-	return o.ItemCount
+	return o.Slug
 }
 
 func (o *GetEdgeConfigResponseBody) GetOwnerID() *string {
@@ -115,6 +115,20 @@ func (o *GetEdgeConfigResponseBody) GetOwnerID() *string {
 		return nil
 	}
 	return o.OwnerID
+}
+
+func (o *GetEdgeConfigResponseBody) GetDigest() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Digest
+}
+
+func (o *GetEdgeConfigResponseBody) GetTransfer() *GetEdgeConfigTransfer {
+	if o == nil {
+		return nil
+	}
+	return o.Transfer
 }
 
 func (o *GetEdgeConfigResponseBody) GetSchema() *GetEdgeConfigSchema {
@@ -131,25 +145,11 @@ func (o *GetEdgeConfigResponseBody) GetSizeInBytes() float64 {
 	return o.SizeInBytes
 }
 
-func (o *GetEdgeConfigResponseBody) GetSlug() *string {
+func (o *GetEdgeConfigResponseBody) GetItemCount() float64 {
 	if o == nil {
-		return nil
+		return 0.0
 	}
-	return o.Slug
-}
-
-func (o *GetEdgeConfigResponseBody) GetTransfer() *GetEdgeConfigTransfer {
-	if o == nil {
-		return nil
-	}
-	return o.Transfer
-}
-
-func (o *GetEdgeConfigResponseBody) GetUpdatedAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.UpdatedAt
+	return o.ItemCount
 }
 
 type GetEdgeConfigResponse struct {

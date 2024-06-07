@@ -10,10 +10,10 @@ import (
 
 type GetConfigurableLogDrainRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetConfigurableLogDrainRequest) GetID() string {
@@ -23,13 +23,6 @@ func (o *GetConfigurableLogDrainRequest) GetID() string {
 	return o.ID
 }
 
-func (o *GetConfigurableLogDrainRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *GetConfigurableLogDrainRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -37,56 +30,11 @@ func (o *GetConfigurableLogDrainRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type GetConfigurableLogDrainCompression string
-
-const (
-	GetConfigurableLogDrainCompressionGzip GetConfigurableLogDrainCompression = "gzip"
-	GetConfigurableLogDrainCompressionZstd GetConfigurableLogDrainCompression = "zstd"
-	GetConfigurableLogDrainCompressionNone GetConfigurableLogDrainCompression = "none"
-)
-
-func (e GetConfigurableLogDrainCompression) ToPointer() *GetConfigurableLogDrainCompression {
-	return &e
-}
-func (e *GetConfigurableLogDrainCompression) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "gzip":
-		fallthrough
-	case "zstd":
-		fallthrough
-	case "none":
-		*e = GetConfigurableLogDrainCompression(v)
+func (o *GetConfigurableLogDrainRequest) GetSlug() *string {
+	if o == nil {
 		return nil
-	default:
-		return fmt.Errorf("invalid value for GetConfigurableLogDrainCompression: %v", v)
 	}
-}
-
-type GetConfigurableLogDrainCreatedFrom string
-
-const (
-	GetConfigurableLogDrainCreatedFromSelfServed GetConfigurableLogDrainCreatedFrom = "self-served"
-)
-
-func (e GetConfigurableLogDrainCreatedFrom) ToPointer() *GetConfigurableLogDrainCreatedFrom {
-	return &e
-}
-func (e *GetConfigurableLogDrainCreatedFrom) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "self-served":
-		*e = GetConfigurableLogDrainCreatedFrom(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetConfigurableLogDrainCreatedFrom: %v", v)
-	}
+	return o.Slug
 }
 
 type GetConfigurableLogDrainDeliveryFormat string
@@ -115,61 +63,6 @@ func (e *GetConfigurableLogDrainDeliveryFormat) UnmarshalJSON(data []byte) error
 		return nil
 	default:
 		return fmt.Errorf("invalid value for GetConfigurableLogDrainDeliveryFormat: %v", v)
-	}
-}
-
-type GetConfigurableLogDrainDisabledReason string
-
-const (
-	GetConfigurableLogDrainDisabledReasonDisabledByOwner     GetConfigurableLogDrainDisabledReason = "disabled-by-owner"
-	GetConfigurableLogDrainDisabledReasonFeatureNotAvailable GetConfigurableLogDrainDisabledReason = "feature-not-available"
-	GetConfigurableLogDrainDisabledReasonDisabledByAdmin     GetConfigurableLogDrainDisabledReason = "disabled-by-admin"
-)
-
-func (e GetConfigurableLogDrainDisabledReason) ToPointer() *GetConfigurableLogDrainDisabledReason {
-	return &e
-}
-func (e *GetConfigurableLogDrainDisabledReason) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "disabled-by-owner":
-		fallthrough
-	case "feature-not-available":
-		fallthrough
-	case "disabled-by-admin":
-		*e = GetConfigurableLogDrainDisabledReason(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetConfigurableLogDrainDisabledReason: %v", v)
-	}
-}
-
-type GetConfigurableLogDrainEnvironments string
-
-const (
-	GetConfigurableLogDrainEnvironmentsProduction GetConfigurableLogDrainEnvironments = "production"
-	GetConfigurableLogDrainEnvironmentsPreview    GetConfigurableLogDrainEnvironments = "preview"
-)
-
-func (e GetConfigurableLogDrainEnvironments) ToPointer() *GetConfigurableLogDrainEnvironments {
-	return &e
-}
-func (e *GetConfigurableLogDrainEnvironments) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "production":
-		fallthrough
-	case "preview":
-		*e = GetConfigurableLogDrainEnvironments(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetConfigurableLogDrainEnvironments: %v", v)
 	}
 }
 
@@ -208,6 +101,32 @@ func (e *GetConfigurableLogDrainSources) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type GetConfigurableLogDrainEnvironments string
+
+const (
+	GetConfigurableLogDrainEnvironmentsProduction GetConfigurableLogDrainEnvironments = "production"
+	GetConfigurableLogDrainEnvironmentsPreview    GetConfigurableLogDrainEnvironments = "preview"
+)
+
+func (e GetConfigurableLogDrainEnvironments) ToPointer() *GetConfigurableLogDrainEnvironments {
+	return &e
+}
+func (e *GetConfigurableLogDrainEnvironments) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "production":
+		fallthrough
+	case "preview":
+		*e = GetConfigurableLogDrainEnvironments(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetConfigurableLogDrainEnvironments: %v", v)
+	}
+}
+
 type GetConfigurableLogDrainStatus string
 
 const (
@@ -237,113 +156,110 @@ func (e *GetConfigurableLogDrainStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type DisabledReason string
+
+const (
+	DisabledReasonDisabledByOwner     DisabledReason = "disabled-by-owner"
+	DisabledReasonFeatureNotAvailable DisabledReason = "feature-not-available"
+	DisabledReasonDisabledByAdmin     DisabledReason = "disabled-by-admin"
+)
+
+func (e DisabledReason) ToPointer() *DisabledReason {
+	return &e
+}
+func (e *DisabledReason) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "disabled-by-owner":
+		fallthrough
+	case "feature-not-available":
+		fallthrough
+	case "disabled-by-admin":
+		*e = DisabledReason(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DisabledReason: %v", v)
+	}
+}
+
+type Compression string
+
+const (
+	CompressionGzip Compression = "gzip"
+	CompressionZstd Compression = "zstd"
+	CompressionNone Compression = "none"
+)
+
+func (e Compression) ToPointer() *Compression {
+	return &e
+}
+func (e *Compression) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "gzip":
+		fallthrough
+	case "zstd":
+		fallthrough
+	case "none":
+		*e = Compression(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Compression: %v", v)
+	}
+}
+
+type GetConfigurableLogDrainCreatedFrom string
+
+const (
+	GetConfigurableLogDrainCreatedFromSelfServed GetConfigurableLogDrainCreatedFrom = "self-served"
+)
+
+func (e GetConfigurableLogDrainCreatedFrom) ToPointer() *GetConfigurableLogDrainCreatedFrom {
+	return &e
+}
+func (e *GetConfigurableLogDrainCreatedFrom) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "self-served":
+		*e = GetConfigurableLogDrainCreatedFrom(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetConfigurableLogDrainCreatedFrom: %v", v)
+	}
+}
+
 type GetConfigurableLogDrainResponseBody struct {
-	ClientID            *string                                `json:"clientId,omitempty"`
-	Compression         *GetConfigurableLogDrainCompression    `json:"compression,omitempty"`
-	ConfigurationID     *string                                `json:"configurationId,omitempty"`
-	CreatedAt           float64                                `json:"createdAt"`
-	CreatedFrom         *GetConfigurableLogDrainCreatedFrom    `json:"createdFrom,omitempty"`
-	DeliveryFormat      GetConfigurableLogDrainDeliveryFormat  `json:"deliveryFormat"`
-	DisabledAt          *float64                               `json:"disabledAt,omitempty"`
-	DisabledBy          *string                                `json:"disabledBy,omitempty"`
-	DisabledReason      *GetConfigurableLogDrainDisabledReason `json:"disabledReason,omitempty"`
-	Environments        []GetConfigurableLogDrainEnvironments  `json:"environments"`
-	FirstErrorTimestamp *float64                               `json:"firstErrorTimestamp,omitempty"`
-	Headers             map[string]string                      `json:"headers,omitempty"`
-	ID                  string                                 `json:"id"`
-	Name                string                                 `json:"name"`
-	OwnerID             string                                 `json:"ownerId"`
-	ProjectIds          []string                               `json:"projectIds,omitempty"`
-	SamplingRate        *float64                               `json:"samplingRate,omitempty"`
-	Secret              string                                 `json:"secret"`
-	Sources             []GetConfigurableLogDrainSources       `json:"sources,omitempty"`
-	Status              *GetConfigurableLogDrainStatus         `json:"status,omitempty"`
-	TeamID              *string                                `json:"teamId,omitempty"`
-	URL                 string                                 `json:"url"`
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetClientID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientID
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetCompression() *GetConfigurableLogDrainCompression {
-	if o == nil {
-		return nil
-	}
-	return o.Compression
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetConfigurationID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ConfigurationID
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetCreatedAt() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.CreatedAt
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetCreatedFrom() *GetConfigurableLogDrainCreatedFrom {
-	if o == nil {
-		return nil
-	}
-	return o.CreatedFrom
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetDeliveryFormat() GetConfigurableLogDrainDeliveryFormat {
-	if o == nil {
-		return GetConfigurableLogDrainDeliveryFormat("")
-	}
-	return o.DeliveryFormat
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetDisabledAt() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.DisabledAt
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetDisabledBy() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DisabledBy
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetDisabledReason() *GetConfigurableLogDrainDisabledReason {
-	if o == nil {
-		return nil
-	}
-	return o.DisabledReason
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetEnvironments() []GetConfigurableLogDrainEnvironments {
-	if o == nil {
-		return []GetConfigurableLogDrainEnvironments{}
-	}
-	return o.Environments
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetFirstErrorTimestamp() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.FirstErrorTimestamp
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetHeaders() map[string]string {
-	if o == nil {
-		return nil
-	}
-	return o.Headers
+	ID                  string                                `json:"id"`
+	DeliveryFormat      GetConfigurableLogDrainDeliveryFormat `json:"deliveryFormat"`
+	URL                 string                                `json:"url"`
+	Name                string                                `json:"name"`
+	ClientID            *string                               `json:"clientId,omitempty"`
+	ConfigurationID     *string                               `json:"configurationId,omitempty"`
+	TeamID              *string                               `json:"teamId,omitempty"`
+	OwnerID             string                                `json:"ownerId"`
+	ProjectIds          []string                              `json:"projectIds,omitempty"`
+	CreatedAt           float64                               `json:"createdAt"`
+	Sources             []GetConfigurableLogDrainSources      `json:"sources,omitempty"`
+	Headers             map[string]string                     `json:"headers,omitempty"`
+	Environments        []GetConfigurableLogDrainEnvironments `json:"environments"`
+	Status              *GetConfigurableLogDrainStatus        `json:"status,omitempty"`
+	DisabledAt          *float64                              `json:"disabledAt,omitempty"`
+	DisabledReason      *DisabledReason                       `json:"disabledReason,omitempty"`
+	DisabledBy          *string                               `json:"disabledBy,omitempty"`
+	FirstErrorTimestamp *float64                              `json:"firstErrorTimestamp,omitempty"`
+	SamplingRate        *float64                              `json:"samplingRate,omitempty"`
+	Compression         *Compression                          `json:"compression,omitempty"`
+	Secret              string                                `json:"secret"`
+	CreatedFrom         *GetConfigurableLogDrainCreatedFrom   `json:"createdFrom,omitempty"`
 }
 
 func (o *GetConfigurableLogDrainResponseBody) GetID() string {
@@ -353,11 +269,46 @@ func (o *GetConfigurableLogDrainResponseBody) GetID() string {
 	return o.ID
 }
 
+func (o *GetConfigurableLogDrainResponseBody) GetDeliveryFormat() GetConfigurableLogDrainDeliveryFormat {
+	if o == nil {
+		return GetConfigurableLogDrainDeliveryFormat("")
+	}
+	return o.DeliveryFormat
+}
+
+func (o *GetConfigurableLogDrainResponseBody) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 func (o *GetConfigurableLogDrainResponseBody) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
+}
+
+func (o *GetConfigurableLogDrainResponseBody) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *GetConfigurableLogDrainResponseBody) GetConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ConfigurationID
+}
+
+func (o *GetConfigurableLogDrainResponseBody) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
 }
 
 func (o *GetConfigurableLogDrainResponseBody) GetOwnerID() string {
@@ -374,18 +325,11 @@ func (o *GetConfigurableLogDrainResponseBody) GetProjectIds() []string {
 	return o.ProjectIds
 }
 
-func (o *GetConfigurableLogDrainResponseBody) GetSamplingRate() *float64 {
+func (o *GetConfigurableLogDrainResponseBody) GetCreatedAt() float64 {
 	if o == nil {
-		return nil
+		return 0.0
 	}
-	return o.SamplingRate
-}
-
-func (o *GetConfigurableLogDrainResponseBody) GetSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.Secret
+	return o.CreatedAt
 }
 
 func (o *GetConfigurableLogDrainResponseBody) GetSources() []GetConfigurableLogDrainSources {
@@ -395,6 +339,20 @@ func (o *GetConfigurableLogDrainResponseBody) GetSources() []GetConfigurableLogD
 	return o.Sources
 }
 
+func (o *GetConfigurableLogDrainResponseBody) GetHeaders() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Headers
+}
+
+func (o *GetConfigurableLogDrainResponseBody) GetEnvironments() []GetConfigurableLogDrainEnvironments {
+	if o == nil {
+		return []GetConfigurableLogDrainEnvironments{}
+	}
+	return o.Environments
+}
+
 func (o *GetConfigurableLogDrainResponseBody) GetStatus() *GetConfigurableLogDrainStatus {
 	if o == nil {
 		return nil
@@ -402,18 +360,60 @@ func (o *GetConfigurableLogDrainResponseBody) GetStatus() *GetConfigurableLogDra
 	return o.Status
 }
 
-func (o *GetConfigurableLogDrainResponseBody) GetTeamID() *string {
+func (o *GetConfigurableLogDrainResponseBody) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
-	return o.TeamID
+	return o.DisabledAt
 }
 
-func (o *GetConfigurableLogDrainResponseBody) GetURL() string {
+func (o *GetConfigurableLogDrainResponseBody) GetDisabledReason() *DisabledReason {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledReason
+}
+
+func (o *GetConfigurableLogDrainResponseBody) GetDisabledBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledBy
+}
+
+func (o *GetConfigurableLogDrainResponseBody) GetFirstErrorTimestamp() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.FirstErrorTimestamp
+}
+
+func (o *GetConfigurableLogDrainResponseBody) GetSamplingRate() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.SamplingRate
+}
+
+func (o *GetConfigurableLogDrainResponseBody) GetCompression() *Compression {
+	if o == nil {
+		return nil
+	}
+	return o.Compression
+}
+
+func (o *GetConfigurableLogDrainResponseBody) GetSecret() string {
 	if o == nil {
 		return ""
 	}
-	return o.URL
+	return o.Secret
+}
+
+func (o *GetConfigurableLogDrainResponseBody) GetCreatedFrom() *GetConfigurableLogDrainCreatedFrom {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedFrom
 }
 
 type GetConfigurableLogDrainResponse struct {

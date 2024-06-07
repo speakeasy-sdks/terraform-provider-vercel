@@ -18,19 +18,12 @@ func (o *CreateEdgeConfigTokenRequestBody) GetLabel() string {
 }
 
 type CreateEdgeConfigTokenRequest struct {
-	RequestBody  *CreateEdgeConfigTokenRequestBody `request:"mediaType=application/json"`
-	EdgeConfigID string                            `pathParam:"style=simple,explode=false,name=edgeConfigId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	EdgeConfigID string `pathParam:"style=simple,explode=false,name=edgeConfigId"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *CreateEdgeConfigTokenRequest) GetRequestBody() *CreateEdgeConfigTokenRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                           `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *CreateEdgeConfigTokenRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *CreateEdgeConfigTokenRequest) GetEdgeConfigID() string {
@@ -40,13 +33,6 @@ func (o *CreateEdgeConfigTokenRequest) GetEdgeConfigID() string {
 	return o.EdgeConfigID
 }
 
-func (o *CreateEdgeConfigTokenRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *CreateEdgeConfigTokenRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -54,16 +40,23 @@ func (o *CreateEdgeConfigTokenRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-type CreateEdgeConfigTokenResponseBody struct {
-	ID    string `json:"id"`
-	Token string `json:"token"`
+func (o *CreateEdgeConfigTokenRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
-func (o *CreateEdgeConfigTokenResponseBody) GetID() string {
+func (o *CreateEdgeConfigTokenRequest) GetRequestBody() *CreateEdgeConfigTokenRequestBody {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.ID
+	return o.RequestBody
+}
+
+type CreateEdgeConfigTokenResponseBody struct {
+	Token string `json:"token"`
+	ID    string `json:"id"`
 }
 
 func (o *CreateEdgeConfigTokenResponseBody) GetToken() string {
@@ -71,6 +64,13 @@ func (o *CreateEdgeConfigTokenResponseBody) GetToken() string {
 		return ""
 	}
 	return o.Token
+}
+
+func (o *CreateEdgeConfigTokenResponseBody) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 type CreateEdgeConfigTokenResponse struct {

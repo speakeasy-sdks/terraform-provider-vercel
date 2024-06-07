@@ -18,19 +18,12 @@ func (o *DeleteTokensRequestBody) GetTokens() []string {
 }
 
 type DeleteTokensRequest struct {
-	RequestBody  *DeleteTokensRequestBody `request:"mediaType=application/json"`
-	EdgeConfigID string                   `pathParam:"style=simple,explode=false,name=edgeConfigId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	EdgeConfigID string `pathParam:"style=simple,explode=false,name=edgeConfigId"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *DeleteTokensRequest) GetRequestBody() *DeleteTokensRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                  `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *DeleteTokensRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *DeleteTokensRequest) GetEdgeConfigID() string {
@@ -40,6 +33,13 @@ func (o *DeleteTokensRequest) GetEdgeConfigID() string {
 	return o.EdgeConfigID
 }
 
+func (o *DeleteTokensRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 func (o *DeleteTokensRequest) GetSlug() *string {
 	if o == nil {
 		return nil
@@ -47,11 +47,11 @@ func (o *DeleteTokensRequest) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *DeleteTokensRequest) GetTeamID() *string {
+func (o *DeleteTokensRequest) GetRequestBody() *DeleteTokensRequestBody {
 	if o == nil {
 		return nil
 	}
-	return o.TeamID
+	return o.RequestBody
 }
 
 type DeleteTokensResponse struct {

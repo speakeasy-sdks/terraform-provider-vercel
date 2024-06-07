@@ -8,68 +8,6 @@ import (
 	"net/http"
 )
 
-type HTTPS struct {
-	Params   *string `json:"params,omitempty"`
-	Priority *int64  `json:"priority"`
-	Target   *string `json:"target"`
-}
-
-func (o *HTTPS) GetParams() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Params
-}
-
-func (o *HTTPS) GetPriority() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Priority
-}
-
-func (o *HTTPS) GetTarget() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Target
-}
-
-type Srv struct {
-	Port     *int64  `json:"port"`
-	Priority *int64  `json:"priority"`
-	Target   *string `json:"target"`
-	Weight   *int64  `json:"weight"`
-}
-
-func (o *Srv) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
-func (o *Srv) GetPriority() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Priority
-}
-
-func (o *Srv) GetTarget() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Target
-}
-
-func (o *Srv) GetWeight() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Weight
-}
-
 // UpdateRecordType - The type of the DNS record
 type UpdateRecordType string
 
@@ -121,42 +59,83 @@ func (e *UpdateRecordType) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type Srv struct {
+	Target   *string `json:"target"`
+	Weight   *int64  `json:"weight"`
+	Port     *int64  `json:"port"`
+	Priority *int64  `json:"priority"`
+}
+
+func (o *Srv) GetTarget() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *Srv) GetWeight() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Weight
+}
+
+func (o *Srv) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *Srv) GetPriority() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Priority
+}
+
+type HTTPS struct {
+	Priority *int64  `json:"priority"`
+	Target   *string `json:"target"`
+	Params   *string `json:"params,omitempty"`
+}
+
+func (o *HTTPS) GetPriority() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Priority
+}
+
+func (o *HTTPS) GetTarget() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
+func (o *HTTPS) GetParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Params
+}
+
 type UpdateRecordRequestBody struct {
-	// A comment to add context on what this DNS record is for
-	Comment *string `json:"comment,omitempty"`
-	HTTPS   *HTTPS  `json:"https,omitempty"`
-	// The MX priority value of the DNS record
-	MxPriority *int64 `json:"mxPriority,omitempty"`
 	// The name of the DNS record
 	Name *string `json:"name,omitempty"`
-	Srv  *Srv    `json:"srv,omitempty"`
-	// The Time to live (TTL) value of the DNS record
-	TTL *int64 `json:"ttl,omitempty"`
-	// The type of the DNS record
-	Type *UpdateRecordType `json:"type,omitempty"`
 	// The value of the DNS record
 	Value *string `json:"value,omitempty"`
-}
-
-func (o *UpdateRecordRequestBody) GetComment() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Comment
-}
-
-func (o *UpdateRecordRequestBody) GetHTTPS() *HTTPS {
-	if o == nil {
-		return nil
-	}
-	return o.HTTPS
-}
-
-func (o *UpdateRecordRequestBody) GetMxPriority() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.MxPriority
+	// The type of the DNS record
+	Type *UpdateRecordType `json:"type,omitempty"`
+	// The Time to live (TTL) value of the DNS record
+	TTL *int64 `json:"ttl,omitempty"`
+	// The MX priority value of the DNS record
+	MxPriority *int64 `json:"mxPriority,omitempty"`
+	Srv        *Srv   `json:"srv,omitempty"`
+	HTTPS      *HTTPS `json:"https,omitempty"`
+	// A comment to add context on what this DNS record is for
+	Comment *string `json:"comment,omitempty"`
 }
 
 func (o *UpdateRecordRequestBody) GetName() *string {
@@ -166,18 +145,11 @@ func (o *UpdateRecordRequestBody) GetName() *string {
 	return o.Name
 }
 
-func (o *UpdateRecordRequestBody) GetSrv() *Srv {
+func (o *UpdateRecordRequestBody) GetValue() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Srv
-}
-
-func (o *UpdateRecordRequestBody) GetTTL() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.TTL
+	return o.Value
 }
 
 func (o *UpdateRecordRequestBody) GetType() *UpdateRecordType {
@@ -187,28 +159,49 @@ func (o *UpdateRecordRequestBody) GetType() *UpdateRecordType {
 	return o.Type
 }
 
-func (o *UpdateRecordRequestBody) GetValue() *string {
+func (o *UpdateRecordRequestBody) GetTTL() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.Value
+	return o.TTL
+}
+
+func (o *UpdateRecordRequestBody) GetMxPriority() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MxPriority
+}
+
+func (o *UpdateRecordRequestBody) GetSrv() *Srv {
+	if o == nil {
+		return nil
+	}
+	return o.Srv
+}
+
+func (o *UpdateRecordRequestBody) GetHTTPS() *HTTPS {
+	if o == nil {
+		return nil
+	}
+	return o.HTTPS
+}
+
+func (o *UpdateRecordRequestBody) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
 }
 
 type UpdateRecordRequest struct {
-	RequestBody *UpdateRecordRequestBody `request:"mediaType=application/json"`
 	// The id of the DNS record
 	RecordID string `pathParam:"style=simple,explode=false,name=recordId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *UpdateRecordRequest) GetRequestBody() *UpdateRecordRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                  `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *UpdateRecordRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *UpdateRecordRequest) GetRecordID() string {
@@ -218,6 +211,13 @@ func (o *UpdateRecordRequest) GetRecordID() string {
 	return o.RecordID
 }
 
+func (o *UpdateRecordRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
 func (o *UpdateRecordRequest) GetSlug() *string {
 	if o == nil {
 		return nil
@@ -225,11 +225,11 @@ func (o *UpdateRecordRequest) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *UpdateRecordRequest) GetTeamID() *string {
+func (o *UpdateRecordRequest) GetRequestBody() *UpdateRecordRequestBody {
 	if o == nil {
 		return nil
 	}
-	return o.TeamID
+	return o.RequestBody
 }
 
 type RecordType string
@@ -309,7 +309,6 @@ func (e *UpdateRecordDNSType) UnmarshalJSON(data []byte) error {
 }
 
 type UpdateRecordResponseBody struct {
-	Comment    *string             `json:"comment,omitempty"`
 	CreatedAt  *float64            `json:"createdAt,omitempty"`
 	Creator    string              `json:"creator"`
 	Domain     string              `json:"domain"`
@@ -319,13 +318,7 @@ type UpdateRecordResponseBody struct {
 	TTL        *float64            `json:"ttl,omitempty"`
 	Type       UpdateRecordDNSType `json:"type"`
 	Value      string              `json:"value"`
-}
-
-func (o *UpdateRecordResponseBody) GetComment() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Comment
+	Comment    *string             `json:"comment,omitempty"`
 }
 
 func (o *UpdateRecordResponseBody) GetCreatedAt() *float64 {
@@ -389,6 +382,13 @@ func (o *UpdateRecordResponseBody) GetValue() string {
 		return ""
 	}
 	return o.Value
+}
+
+func (o *UpdateRecordResponseBody) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
 }
 
 type UpdateRecordResponse struct {

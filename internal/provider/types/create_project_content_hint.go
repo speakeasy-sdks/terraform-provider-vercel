@@ -3,18 +3,18 @@
 package types
 
 type CreateProjectContentHint struct {
-	One      *CreateProjectProjectsResponse2001 `tfsdk:"one" tfPlanOnly:"true"`
-	Ten      *CreateProject10                   `tfsdk:"ten" tfPlanOnly:"true"`
-	Eleven   *CreateProject11                   `tfsdk:"eleven" tfPlanOnly:"true"`
-	Twelve   *CreateProject12                   `tfsdk:"twelve" tfPlanOnly:"true"`
-	Thirteen *CreateProject13                   `tfsdk:"thirteen" tfPlanOnly:"true"`
-	Fourteen *CreateProject14                   `tfsdk:"fourteen" tfPlanOnly:"true"`
-	Two      *CreateProjectProjectsResponse2002 `tfsdk:"two" tfPlanOnly:"true"`
-	Three    *CreateProjectProjects3            `tfsdk:"three" tfPlanOnly:"true"`
-	Four     *CreateProject4                    `tfsdk:"four" tfPlanOnly:"true"`
-	Five     *CreateProject5                    `tfsdk:"five" tfPlanOnly:"true"`
-	Six      *CreateProject6                    `tfsdk:"six" tfPlanOnly:"true"`
-	Seven    *CreateProject7                    `tfsdk:"seven" tfPlanOnly:"true"`
-	Eight    *CreateProject8                    `tfsdk:"eight" tfPlanOnly:"true"`
-	Nine     *CreateProject9                    `tfsdk:"nine" tfPlanOnly:"true"`
+	One      *CreateProjectContentHint1  `tfsdk:"one" tfPlanOnly:"true"`
+	Ten      *CreateProjectContentHint10 `tfsdk:"ten" tfPlanOnly:"true"`
+	Eleven   *ContentHint11              `tfsdk:"eleven" tfPlanOnly:"true"`
+	Twelve   *ContentHint12              `tfsdk:"twelve" tfPlanOnly:"true"`
+	Thirteen *ContentHint13              `tfsdk:"thirteen" tfPlanOnly:"true"`
+	Fourteen *ContentHint14              `tfsdk:"fourteen" tfPlanOnly:"true"`
+	Two      *CreateProjectContentHint2  `tfsdk:"two" tfPlanOnly:"true"`
+	Three    *CreateProjectContentHint3  `tfsdk:"three" tfPlanOnly:"true"`
+	Four     *CreateProjectContentHint4  `tfsdk:"four" tfPlanOnly:"true"`
+	Five     *CreateProjectContentHint5  `tfsdk:"five" tfPlanOnly:"true"`
+	Six      *CreateProjectContentHint6  `tfsdk:"six" tfPlanOnly:"true"`
+	Seven    *CreateProjectContentHint7  `tfsdk:"seven" tfPlanOnly:"true"`
+	Eight    *CreateProjectContentHint8  `tfsdk:"eight" tfPlanOnly:"true"`
+	Nine     *CreateProjectContentHint9  `tfsdk:"nine" tfPlanOnly:"true"`
 }

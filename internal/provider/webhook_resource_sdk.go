@@ -4,11 +4,12 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/operations"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
 	"math/big"
 )
 
 func (r *WebhookResourceModel) ToOperationsCreateWebhookRequestBody() *operations.CreateWebhookRequestBody {
+	url := r.URL.ValueString()
 	var events []operations.Events = []operations.Events{}
 	for _, eventsItem := range r.Events {
 		events = append(events, operations.Events(eventsItem.ValueString()))
@@ -17,11 +18,10 @@ func (r *WebhookResourceModel) ToOperationsCreateWebhookRequestBody() *operation
 	for _, projectIdsItem := range r.ProjectIds {
 		projectIds = append(projectIds, projectIdsItem.ValueString())
 	}
-	url := r.URL.ValueString()
 	out := operations.CreateWebhookRequestBody{
+		URL:        url,
 		Events:     events,
 		ProjectIds: projectIds,
-		URL:        url,
 	}
 	return &out
 }

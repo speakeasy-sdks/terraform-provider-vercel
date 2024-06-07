@@ -11,12 +11,12 @@ import (
 type DeleteDeploymentRequest struct {
 	// The ID of the deployment to be deleted
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// A Deployment or Alias URL. In case it is passed, the ID will be ignored
 	URL *string `queryParam:"style=form,explode=true,name=url"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *DeleteDeploymentRequest) GetID() string {
@@ -26,11 +26,11 @@ func (o *DeleteDeploymentRequest) GetID() string {
 	return o.ID
 }
 
-func (o *DeleteDeploymentRequest) GetSlug() *string {
+func (o *DeleteDeploymentRequest) GetURL() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Slug
+	return o.URL
 }
 
 func (o *DeleteDeploymentRequest) GetTeamID() *string {
@@ -40,11 +40,11 @@ func (o *DeleteDeploymentRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-func (o *DeleteDeploymentRequest) GetURL() *string {
+func (o *DeleteDeploymentRequest) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
-	return o.URL
+	return o.Slug
 }
 
 // State - A constant with the final state of the deployment.
@@ -73,17 +73,10 @@ func (e *State) UnmarshalJSON(data []byte) error {
 
 // DeleteDeploymentResponseBody - The deployment was successfully deleted
 type DeleteDeploymentResponseBody struct {
-	// A constant with the final state of the deployment.
-	State State `json:"state"`
 	// The removed deployment ID.
 	UID string `json:"uid"`
-}
-
-func (o *DeleteDeploymentResponseBody) GetState() State {
-	if o == nil {
-		return State("")
-	}
-	return o.State
+	// A constant with the final state of the deployment.
+	State State `json:"state"`
 }
 
 func (o *DeleteDeploymentResponseBody) GetUID() string {
@@ -91,6 +84,13 @@ func (o *DeleteDeploymentResponseBody) GetUID() string {
 		return ""
 	}
 	return o.UID
+}
+
+func (o *DeleteDeploymentResponseBody) GetState() State {
+	if o == nil {
+		return State("")
+	}
+	return o.State
 }
 
 type DeleteDeploymentResponse struct {

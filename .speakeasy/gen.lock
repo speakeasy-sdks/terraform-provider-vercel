@@ -5,8 +5,8 @@ management:
   docVersion: 0.0.1
   speakeasyVersion: 1.300.1
   generationVersion: 2.339.1
-  releaseVersion: 0.14.0
-  configChecksum: ec253fd1e0a0f1e69950ec7f18205fa3
+  releaseVersion: 0.0.1
+  configChecksum: 6d0cc40a2a88fdee96d9397b33b82c12
   repoURL: https://github.com/speakeasy-sdks/terraform-provider-vercel.git
   repoSubDirectory: .
   published: true
@@ -25,24 +25,24 @@ features:
     typeOverrides: 2.81.1
     unions: 2.81.14
 generatedFiles:
-  - internal\sdk\authentication.go
-  - internal\sdk\projects.go
+  - internal\sdk\artifacts.go
   - internal\sdk\checks.go
-  - internal\sdk\dns.go
+  - internal\sdk\projects.go
+  - internal\sdk\deployments.go
   - internal\sdk\domains.go
+  - internal\sdk\dns.go
   - internal\sdk\edgeconfig.go
+  - internal\sdk\user.go
   - internal\sdk\integrations.go
   - internal\sdk\logdrains.go
   - internal\sdk\projectmembers.go
   - internal\sdk\teams.go
-  - internal\sdk\user.go
+  - internal\sdk\authentication.go
   - internal\sdk\webhooks.go
-  - internal\sdk\deployments.go
   - internal\sdk\aliases.go
-  - internal\sdk\secrets.go
   - internal\sdk\certs.go
-  - internal\sdk\artifacts.go
-  - internal\sdk\vercel.go
+  - internal\sdk\secrets.go
+  - internal\sdk\sdk.go
   - internal\sdk\models\errors\sdkerror.go
   - internal\sdk\types\bigint.go
   - internal\sdk\types\date.go
@@ -62,142 +62,143 @@ generatedFiles:
   - internal\sdk\models\operations\getdeploymentbuilds.go
   - internal\sdk\models\operations\purgedatacache.go
   - internal\sdk\models\operations\updatebillingsettings.go
-  - internal\sdk\models\operations\createauthtoken.go
-  - internal\sdk\models\operations\deleteauthtoken.go
-  - internal\sdk\models\operations\emaillogin.go
-  - internal\sdk\models\operations\getauthtoken.go
-  - internal\sdk\models\operations\listauthtokens.go
-  - internal\sdk\models\operations\verifytoken.go
-  - internal\sdk\models\operations\addprojectdomain.go
-  - internal\sdk\models\operations\createproject.go
-  - internal\sdk\models\operations\createprojectenv.go
-  - internal\sdk\models\operations\deleteproject.go
-  - internal\sdk\models\operations\editprojectenv.go
-  - internal\sdk\models\operations\filterprojectenvs.go
-  - internal\sdk\models\operations\getprojects.go
-  - internal\sdk\models\operations\getprojectdomain.go
-  - internal\sdk\models\operations\getprojectenv.go
-  - internal\sdk\models\operations\geteequestpromotealiases.go
-  - internal\sdk\models\operations\pauseproject.go
-  - internal\sdk\models\operations\removeprojectdomain.go
-  - internal\sdk\models\operations\removeprojectenv.go
-  - internal\sdk\models\operations\requestpromote.go
-  - internal\sdk\models\operations\unpauseproject.go
-  - internal\sdk\models\operations\updateproject.go
-  - internal\sdk\models\operations\updateprojectdomain.go
-  - internal\sdk\models\operations\updateprojectdatacache.go
-  - internal\sdk\models\operations\verifyprojectdomain.go
-  - internal\sdk\models\operations\createcheck.go
-  - internal\sdk\models\operations\getcheck.go
-  - internal\sdk\models\operations\getallchecks.go
-  - internal\sdk\models\operations\rerequestcheck.go
-  - internal\sdk\models\operations\updatecheck.go
-  - internal\sdk\models\operations\createrecord.go
-  - internal\sdk\models\operations\getrecords.go
-  - internal\sdk\models\operations\removerecord.go
-  - internal\sdk\models\operations\updaterecord.go
-  - internal\sdk\models\operations\buydomain.go
-  - internal\sdk\models\operations\checkdomainprice.go
-  - internal\sdk\models\operations\checkdomainstatus.go
-  - internal\sdk\models\operations\createortransferdomain.go
-  - internal\sdk\models\operations\deletedomain.go
-  - internal\sdk\models\operations\getdomainconfig.go
-  - internal\sdk\models\operations\getdomain.go
-  - internal\sdk\models\operations\getdomaintransfer.go
-  - internal\sdk\models\operations\getdomains.go
-  - internal\sdk\models\operations\patchdomain.go
-  - internal\sdk\models\operations\createedgeconfig.go
-  - internal\sdk\models\operations\createedgeconfigtoken.go
-  - internal\sdk\models\operations\deleteedgeconfig.go
-  - internal\sdk\models\operations\deleteedgeconfigschema.go
-  - internal\sdk\models\operations\deletetokens.go
-  - internal\sdk\models\operations\getedgeconfig.go
-  - internal\sdk\models\operations\getedgeconfigitem.go
-  - internal\sdk\models\operations\getedgeconfigschema.go
-  - internal\sdk\models\operations\getedgeconfigtoken.go
-  - internal\sdk\models\operations\getedgeconfigs.go
-  - internal\sdk\models\operations\getedgeconfigitems.go
-  - internal\sdk\models\operations\getedgeconfigtokens.go
-  - internal\sdk\models\operations\updateedgeconfig.go
-  - internal\sdk\models\operations\patchedgeconfigschema.go
-  - internal\sdk\models\operations\deleteconfiguration.go
-  - internal\sdk\models\operations\getconfiguration.go
-  - internal\sdk\models\operations\getconfigurations.go
-  - internal\sdk\models\operations\gitnamespaces.go
-  - internal\sdk\models\operations\listgitrepos.go
-  - internal\sdk\models\operations\createlogdrain.go
-  - internal\sdk\models\operations\createconfigurablelogdrain.go
-  - internal\sdk\models\operations\deleteintegrationlogdrain.go
-  - internal\sdk\models\operations\deleteconfigurablelogdrain.go
-  - internal\sdk\models\operations\getconfigurablelogdrain.go
-  - internal\sdk\models\operations\getintegrationlogdrains.go
-  - internal\sdk\models\operations\getalllogdrains.go
-  - internal\sdk\models\operations\addprojectmember.go
-  - internal\sdk\models\operations\removeprojectmember.go
-  - internal\sdk\models\operations\getprojectmembers.go
-  - internal\sdk\models\operations\createteam.go
-  - internal\sdk\models\operations\deleteteam.go
-  - internal\sdk\models\operations\deleteteaminvitecode.go
-  - internal\sdk\models\operations\getteam.go
-  - internal\sdk\models\operations\getteamaccessrequest.go
-  - internal\sdk\models\operations\inviteusertoteam.go
-  - internal\sdk\models\operations\jointeam.go
-  - internal\sdk\models\operations\getteams.go
-  - internal\sdk\models\operations\getteammembers.go
-  - internal\sdk\models\operations\removeteammember.go
-  - internal\sdk\models\operations\requestaccesstoteam.go
-  - internal\sdk\models\operations\patchteam.go
-  - internal\sdk\models\operations\updateteammember.go
-  - internal\sdk\models\operations\getauthuser.go
-  - internal\sdk\models\operations\listuserevent.go
-  - internal\sdk\models\operations\requestdelete.go
-  - internal\sdk\models\operations\createwebhook.go
-  - internal\sdk\models\operations\deletewebhook.go
-  - internal\sdk\models\operations\getwebhook.go
-  - internal\sdk\models\operations\getwebhooks.go
-  - internal\sdk\models\operations\canceldeployment.go
-  - internal\sdk\models\operations\createdeployment.go
-  - internal\sdk\models\operations\deletedeployment.go
-  - internal\sdk\models\operations\getdeployment.go
-  - internal\sdk\models\operations\getdeploymentevents.go
-  - internal\sdk\models\operations\getdeploymentfilecontents.go
-  - internal\sdk\models\operations\getdeployments.go
-  - internal\sdk\models\operations\listdeploymentfiles.go
-  - internal\sdk\models\operations\uploadfile.go
-  - internal\sdk\models\operations\assignalias.go
-  - internal\sdk\models\operations\deletealias.go
-  - internal\sdk\models\operations\getalias.go
-  - internal\sdk\models\operations\listaliases.go
-  - internal\sdk\models\operations\listdeploymentaliases.go
-  - internal\sdk\models\operations\createsecret.go
-  - internal\sdk\models\operations\deletesecret.go
-  - internal\sdk\models\operations\getsecret.go
-  - internal\sdk\models\operations\getsecrets.go
-  - internal\sdk\models\operations\renamesecret.go
-  - internal\sdk\models\operations\getcertbyid.go
-  - internal\sdk\models\operations\issuecert.go
-  - internal\sdk\models\operations\removecert.go
-  - internal\sdk\models\operations\uploadcert.go
-  - internal\sdk\models\operations\downloadartifact.go
-  - internal\sdk\models\operations\artifactexists.go
-  - internal\sdk\models\operations\artifactquery.go
   - internal\sdk\models\operations\recordevents.go
   - internal\sdk\models\operations\status.go
   - internal\sdk\models\operations\uploadartifact.go
-  - internal\sdk\models\shared\authtoken.go
-  - internal\sdk\models\shared\pagination.go
+  - internal\sdk\models\operations\downloadartifact.go
+  - internal\sdk\models\operations\artifactexists.go
+  - internal\sdk\models\operations\artifactquery.go
+  - internal\sdk\models\operations\createcheck.go
+  - internal\sdk\models\operations\getallchecks.go
+  - internal\sdk\models\operations\getcheck.go
+  - internal\sdk\models\operations\updatecheck.go
+  - internal\sdk\models\operations\rerequestcheck.go
+  - internal\sdk\models\operations\updateprojectdatacache.go
+  - internal\sdk\models\operations\getprojects.go
+  - internal\sdk\models\operations\createproject.go
+  - internal\sdk\models\operations\updateproject.go
+  - internal\sdk\models\operations\deleteproject.go
+  - internal\sdk\models\operations\getprojectdomain.go
+  - internal\sdk\models\operations\updateprojectdomain.go
+  - internal\sdk\models\operations\removeprojectdomain.go
+  - internal\sdk\models\operations\addprojectdomain.go
+  - internal\sdk\models\operations\verifyprojectdomain.go
+  - internal\sdk\models\operations\filterprojectenvs.go
+  - internal\sdk\models\operations\getprojectenv.go
+  - internal\sdk\models\operations\createprojectenv.go
+  - internal\sdk\models\operations\removeprojectenv.go
+  - internal\sdk\models\operations\editprojectenv.go
+  - internal\sdk\models\operations\requestpromote.go
+  - internal\sdk\models\operations\geteequestpromotealiases.go
+  - internal\sdk\models\operations\pauseproject.go
+  - internal\sdk\models\operations\unpauseproject.go
+  - internal\sdk\models\operations\getdeploymentevents.go
+  - internal\sdk\models\operations\getdeployment.go
+  - internal\sdk\models\operations\createdeployment.go
+  - internal\sdk\models\operations\canceldeployment.go
+  - internal\sdk\models\operations\uploadfile.go
+  - internal\sdk\models\operations\listdeploymentfiles.go
+  - internal\sdk\models\operations\getdeploymentfilecontents.go
+  - internal\sdk\models\operations\getdeployments.go
+  - internal\sdk\models\operations\deletedeployment.go
+  - internal\sdk\models\operations\buydomain.go
+  - internal\sdk\models\operations\checkdomainprice.go
+  - internal\sdk\models\operations\checkdomainstatus.go
+  - internal\sdk\models\operations\getdomaintransfer.go
+  - internal\sdk\models\operations\getdomainconfig.go
+  - internal\sdk\models\operations\getdomain.go
+  - internal\sdk\models\operations\getdomains.go
+  - internal\sdk\models\operations\createortransferdomain.go
+  - internal\sdk\models\operations\patchdomain.go
+  - internal\sdk\models\operations\deletedomain.go
+  - internal\sdk\models\operations\getrecords.go
+  - internal\sdk\models\operations\createrecord.go
+  - internal\sdk\models\operations\updaterecord.go
+  - internal\sdk\models\operations\removerecord.go
+  - internal\sdk\models\operations\getedgeconfigs.go
+  - internal\sdk\models\operations\createedgeconfig.go
+  - internal\sdk\models\operations\getedgeconfig.go
+  - internal\sdk\models\operations\updateedgeconfig.go
+  - internal\sdk\models\operations\deleteedgeconfig.go
+  - internal\sdk\models\operations\getedgeconfigitems.go
+  - internal\sdk\models\operations\getedgeconfigschema.go
+  - internal\sdk\models\operations\patchedgeconfigschema.go
+  - internal\sdk\models\operations\deleteedgeconfigschema.go
+  - internal\sdk\models\operations\getedgeconfigitem.go
+  - internal\sdk\models\operations\getedgeconfigtokens.go
+  - internal\sdk\models\operations\deletetokens.go
+  - internal\sdk\models\operations\getedgeconfigtoken.go
+  - internal\sdk\models\operations\createedgeconfigtoken.go
+  - internal\sdk\models\operations\listuserevent.go
+  - internal\sdk\models\operations\getauthuser.go
+  - internal\sdk\models\operations\requestdelete.go
+  - internal\sdk\models\operations\getconfigurations.go
+  - internal\sdk\models\operations\getconfiguration.go
+  - internal\sdk\models\operations\deleteconfiguration.go
+  - internal\sdk\models\operations\gitnamespaces.go
+  - internal\sdk\models\operations\listgitrepos.go
+  - internal\sdk\models\operations\getintegrationlogdrains.go
+  - internal\sdk\models\operations\createlogdrain.go
+  - internal\sdk\models\operations\deleteintegrationlogdrain.go
+  - internal\sdk\models\operations\getconfigurablelogdrain.go
+  - internal\sdk\models\operations\deleteconfigurablelogdrain.go
+  - internal\sdk\models\operations\getalllogdrains.go
+  - internal\sdk\models\operations\createconfigurablelogdrain.go
+  - internal\sdk\models\operations\getprojectmembers.go
+  - internal\sdk\models\operations\addprojectmember.go
+  - internal\sdk\models\operations\removeprojectmember.go
+  - internal\sdk\models\operations\getteammembers.go
+  - internal\sdk\models\operations\inviteusertoteam.go
+  - internal\sdk\models\operations\requestaccesstoteam.go
+  - internal\sdk\models\operations\getteamaccessrequest.go
+  - internal\sdk\models\operations\jointeam.go
+  - internal\sdk\models\operations\updateteammember.go
+  - internal\sdk\models\operations\removeteammember.go
+  - internal\sdk\models\operations\getteam.go
+  - internal\sdk\models\operations\patchteam.go
+  - internal\sdk\models\operations\getteams.go
+  - internal\sdk\models\operations\createteam.go
+  - internal\sdk\models\operations\deleteteam.go
+  - internal\sdk\models\operations\deleteteaminvitecode.go
+  - internal\sdk\models\operations\listauthtokens.go
+  - internal\sdk\models\operations\createauthtoken.go
+  - internal\sdk\models\operations\getauthtoken.go
+  - internal\sdk\models\operations\deleteauthtoken.go
+  - internal\sdk\models\operations\verifytoken.go
+  - internal\sdk\models\operations\emaillogin.go
+  - internal\sdk\models\operations\createwebhook.go
+  - internal\sdk\models\operations\getwebhooks.go
+  - internal\sdk\models\operations\getwebhook.go
+  - internal\sdk\models\operations\deletewebhook.go
+  - internal\sdk\models\operations\listaliases.go
+  - internal\sdk\models\operations\getalias.go
+  - internal\sdk\models\operations\deletealias.go
+  - internal\sdk\models\operations\listdeploymentaliases.go
+  - internal\sdk\models\operations\assignalias.go
+  - internal\sdk\models\operations\getcertbyid.go
+  - internal\sdk\models\operations\removecert.go
+  - internal\sdk\models\operations\issuecert.go
+  - internal\sdk\models\operations\uploadcert.go
+  - internal\sdk\models\operations\getsecrets.go
+  - internal\sdk\models\operations\createsecret.go
+  - internal\sdk\models\operations\renamesecret.go
+  - internal\sdk\models\operations\getsecret.go
+  - internal\sdk\models\operations\deletesecret.go
   - internal\sdk\models\shared\aclaction.go
+  - internal\sdk\models\shared\pagination.go
+  - internal\sdk\models\shared\filetree.go
   - internal\sdk\models\shared\edgeconfigtoken.go
-  - internal\sdk\models\shared\team.go
-  - internal\sdk\models\shared\teamlimited.go
+  - internal\sdk\models\shared\userevent.go
   - internal\sdk\models\shared\authuser.go
   - internal\sdk\models\shared\authuserlimited.go
-  - internal\sdk\models\shared\userevent.go
-  - internal\sdk\models\shared\filetree.go
+  - internal\sdk\models\shared\team.go
+  - internal\sdk\models\shared\teamlimited.go
+  - internal\sdk\models\shared\authtoken.go
   - internal\sdk\models\shared\security.go
   - internal\sdk\.gitignore
   - internal\sdk\models\operations\options.go
   - internal\sdk\.gitattributes
+  - internal\sdk\internal\hooks\registration.go
   - internal\sdk\internal\hooks\hooks.go
   - examples/README.md
   - go.mod
@@ -243,128 +244,128 @@ generatedFiles:
   - main.go
   - terraform-registry-manifest.json
   - tools/tools.go
-  - internal/provider/types/create_deployment_alias_assigned_at.go
-  - internal/provider/types/create_deployment_alias_error.go
-  - internal/provider/types/create_deployment_alias_warning.go
-  - internal/provider/types/create_deployment_build.go
-  - internal/provider/types/create_deployment_creator.go
+  - internal/provider/types/alias_assigned_at.go
+  - internal/provider/types/alias_error.go
+  - internal/provider/types/alias_warning.go
+  - internal/provider/types/build.go
+  - internal/provider/types/creator.go
   - internal/provider/types/create_deployment_crons.go
   - internal/provider/types/inlined_file.go
   - internal/provider/types/uploaded_file.go
   - internal/provider/types/files.go
-  - internal/provider/types/create_deployment_functions.go
+  - internal/provider/types/functions.go
   - internal/provider/types/git_metadata.go
-  - internal/provider/types/create_deployment1.go
-  - internal/provider/types/create_deployment2.go
-  - internal/provider/types/create_deployment3.go
-  - internal/provider/types/create_deployment_git_repo.go
+  - internal/provider/types/git_repo1.go
+  - internal/provider/types/git_repo2.go
+  - internal/provider/types/git_repo3.go
+  - internal/provider/types/git_repo.go
   - internal/provider/types/repo_id.go
   - internal/provider/types/one.go
   - internal/provider/types/two.go
   - internal/provider/types/three.go
   - internal/provider/types/four.go
   - internal/provider/types/five.go
-  - internal/provider/types/create_deployment6.go
-  - internal/provider/types/create_deployment7.go
-  - internal/provider/types/create_deployment8.go
-  - internal/provider/types/create_deployment9.go
+  - internal/provider/types/create_deployment_git_source6.go
+  - internal/provider/types/create_deployment_git_source7.go
+  - internal/provider/types/create_deployment_git_source8.go
+  - internal/provider/types/create_deployment_git_source9.go
   - internal/provider/types/git_source.go
   - internal/provider/types/create_deployment_output.go
-  - internal/provider/types/create_deployment_lambdas.go
-  - internal/provider/types/get_deployment_deployments_response1.go
-  - internal/provider/types/get_deployment_deployments_response2.go
-  - internal/provider/types/get_deployment_deployments3.go
-  - internal/provider/types/get_deployment4.go
-  - internal/provider/types/get_deployment5.go
-  - internal/provider/types/get_deployment_git_source.go
-  - internal/provider/types/get_deployment_project.go
-  - internal/provider/types/get_deployment_deployments_response200_application_json_response_body11.go
-  - internal/provider/types/get_deployment_deployments_response200_application_json_response_body12.go
-  - internal/provider/types/get_deployment_has.go
-  - internal/provider/types/get_deployment_locale.go
-  - internal/provider/types/get_deployment_deployments_response2001.go
-  - internal/provider/types/get_deployment_deployments_response2002.go
-  - internal/provider/types/get_deployment_deployments_response3.go
-  - internal/provider/types/get_deployment_routes.go
-  - internal/provider/types/get_deployment_team.go
-  - internal/provider/types/get_deployment1.go
+  - internal/provider/types/lambdas.go
+  - internal/provider/types/get_deployment_has1.go
+  - internal/provider/types/get_deployment_has2.go
+  - internal/provider/types/get_deployment_routes_has.go
+  - internal/provider/types/get_deployment_routes_locale.go
+  - internal/provider/types/get_deployment_routes1.go
+  - internal/provider/types/get_deployment_routes2.go
+  - internal/provider/types/get_deployment_routes3.go
+  - internal/provider/types/response_body_routes.go
+  - internal/provider/types/get_deployment_response_body_project.go
+  - internal/provider/types/get_deployment_response_body_team.go
+  - internal/provider/types/get_deployment_git_source_deployments1.go
+  - internal/provider/types/get_deployment_git_source_deployments2.go
+  - internal/provider/types/get_deployment_git_source_deployments3.go
+  - internal/provider/types/get_deployment_git_source_deployments4.go
+  - internal/provider/types/get_deployment_git_source_deployments5.go
+  - internal/provider/types/get_deployment_response_body_git_source.go
+  - internal/provider/types/get_deployment_response_body1.go
   - internal/provider/types/project_settings.go
-  - internal/provider/types/get_deployment2.go
+  - internal/provider/types/get_deployment_response_body2.go
   - internal/provider/types/eight.go
-  - internal/provider/types/create_record5.go
-  - internal/provider/types/create_record1.go
-  - internal/provider/types/create_record_srv.go
+  - internal/provider/types/request_body5.go
+  - internal/provider/types/request_body1.go
+  - internal/provider/types/request_body_srv.go
   - internal/provider/types/seven.go
   - internal/provider/types/six.go
-  - internal/provider/types/create_record_https.go
+  - internal/provider/types/request_body_https.go
   - internal/provider/types/ten.go
-  - internal/provider/types/create_record2.go
-  - internal/provider/types/schema.go
-  - internal/provider/types/transfer.go
-  - internal/provider/types/add_project_member1.go
-  - internal/provider/types/add_project_member3.go
-  - internal/provider/types/add_project_member2.go
-  - internal/provider/types/analytics.go
-  - internal/provider/types/definitions.go
+  - internal/provider/types/request_body2.go
+  - internal/provider/types/get_edge_config_schema.go
+  - internal/provider/types/get_edge_config_transfer.go
+  - internal/provider/types/add_project_member_request_body1.go
+  - internal/provider/types/add_project_member_request_body3.go
+  - internal/provider/types/add_project_member_request_body2.go
+  - internal/provider/types/create_project_analytics.go
+  - internal/provider/types/create_project_definitions.go
   - internal/provider/types/create_project_crons.go
-  - internal/provider/types/data_cache.go
-  - internal/provider/types/create_project_projects_response2001.go
-  - internal/provider/types/create_project10.go
-  - internal/provider/types/create_project11.go
-  - internal/provider/types/create_project12.go
-  - internal/provider/types/create_project13.go
-  - internal/provider/types/create_project14.go
-  - internal/provider/types/create_project_projects_response2002.go
-  - internal/provider/types/create_project_projects3.go
-  - internal/provider/types/create_project4.go
-  - internal/provider/types/create_project5.go
-  - internal/provider/types/create_project6.go
-  - internal/provider/types/create_project7.go
-  - internal/provider/types/create_project8.go
-  - internal/provider/types/create_project9.go
+  - internal/provider/types/create_project_data_cache.go
+  - internal/provider/types/create_project_content_hint1.go
+  - internal/provider/types/create_project_content_hint10.go
+  - internal/provider/types/content_hint11.go
+  - internal/provider/types/content_hint12.go
+  - internal/provider/types/content_hint13.go
+  - internal/provider/types/content_hint14.go
+  - internal/provider/types/create_project_content_hint2.go
+  - internal/provider/types/create_project_content_hint3.go
+  - internal/provider/types/create_project_content_hint4.go
+  - internal/provider/types/create_project_content_hint5.go
+  - internal/provider/types/create_project_content_hint6.go
+  - internal/provider/types/create_project_content_hint7.go
+  - internal/provider/types/create_project_content_hint8.go
+  - internal/provider/types/create_project_content_hint9.go
   - internal/provider/types/create_project_content_hint.go
   - internal/provider/types/create_project_internal_content_hint.go
   - internal/provider/types/create_project_projects_target.go
-  - internal/provider/types/env.go
+  - internal/provider/types/create_project_env.go
   - internal/provider/types/create_project_target.go
   - internal/provider/types/environment_variables.go
-  - internal/provider/types/git_comments.go
+  - internal/provider/types/create_project_git_comments.go
   - internal/provider/types/git_repository.go
-  - internal/provider/types/last_alias_request.go
+  - internal/provider/types/create_project_last_alias_request.go
   - internal/provider/types/create_project_builds.go
   - internal/provider/types/create_project_creator.go
-  - internal/provider/types/oidc_token_claims.go
-  - internal/provider/types/latest_deployments.go
-  - internal/provider/types/deploy_hooks.go
-  - internal/provider/types/create_project_projects1.go
-  - internal/provider/types/create_project_projects2.go
-  - internal/provider/types/create_project3.go
-  - internal/provider/types/link.go
-  - internal/provider/types/oidc_token_config.go
+  - internal/provider/types/create_project_oidc_token_claims.go
+  - internal/provider/types/create_project_latest_deployments.go
+  - internal/provider/types/create_project_link_deploy_hooks.go
+  - internal/provider/types/create_project_link1.go
+  - internal/provider/types/create_project_link2.go
+  - internal/provider/types/create_project_link3.go
+  - internal/provider/types/create_project_link.go
+  - internal/provider/types/create_project_oidc_token_config.go
   - internal/provider/types/create_project_paths.go
   - internal/provider/types/create_project_options_allowlist.go
-  - internal/provider/types/permissions.go
+  - internal/provider/types/create_project_permissions.go
   - internal/provider/types/create_project_protection_bypass.go
-  - internal/provider/types/create_project_projects_response200_application_json_response_body_security2.go
-  - internal/provider/types/create_project_projects_value.go
+  - internal/provider/types/create_project_value2.go
+  - internal/provider/types/create_project_value.go
   - internal/provider/types/create_project_has.go
-  - internal/provider/types/erl.go
-  - internal/provider/types/mitigate.go
-  - internal/provider/types/firewall_routes.go
-  - internal/provider/types/security.go
-  - internal/provider/types/speed_insights.go
+  - internal/provider/types/create_project_erl.go
+  - internal/provider/types/create_project_mitigate.go
+  - internal/provider/types/create_project_firewall_routes.go
+  - internal/provider/types/create_project_security.go
+  - internal/provider/types/create_project_speed_insights.go
   - internal/provider/types/create_project_sso_protection.go
-  - internal/provider/types/create_project_addresses.go
-  - internal/provider/types/create_project_projects_response1.go
-  - internal/provider/types/create_project_projects_response2.go
+  - internal/provider/types/trusted_ips_addresses.go
+  - internal/provider/types/create_project_trusted_ips1.go
+  - internal/provider/types/create_project_trusted_ips2.go
   - internal/provider/types/create_project_trusted_ips.go
-  - internal/provider/types/web_analytics.go
+  - internal/provider/types/create_project_web_analytics.go
   - internal/provider/types/utm.go
   - internal/provider/types/attribution.go
   - internal/provider/types/address.go
   - internal/provider/types/contract.go
   - internal/provider/types/controls.go
-  - internal/provider/types/create_team_teams_response200_application_json_response_body_billing_invoice_items_analytics_frequency.go
+  - internal/provider/types/create_team_teams_frequency.go
   - internal/provider/types/create_team_analytics.go
   - internal/provider/types/matrix.go
   - internal/provider/types/analytics_usage.go
@@ -379,13 +380,13 @@ generatedFiles:
   - internal/provider/types/billing.go
   - internal/provider/types/reasons.go
   - internal/provider/types/active_dashboard_views.go
-  - internal/provider/types/data_cache1.go
+  - internal/provider/types/data_cache.go
   - internal/provider/types/dismissals.go
   - internal/provider/types/dismissed_toasts.go
-  - internal/provider/types/auth_user1.go
-  - internal/provider/types/auth_user2.go
+  - internal/provider/types/favorite_projects_and_spaces1.go
+  - internal/provider/types/favorite_projects_and_spaces2.go
   - internal/provider/types/favorite_projects_and_spaces.go
-  - internal/provider/types/web_analytics1.go
+  - internal/provider/types/web_analytics.go
   - internal/provider/types/feature_blocks.go
   - internal/provider/types/migration.go
   - internal/provider/types/northstar.go
@@ -400,51 +401,51 @@ generatedFiles:
   - USAGE.md
   - internal/provider/provider.go
   - examples/provider/provider.tf
-  - examples/resources/vercel_deployment/import.sh
+  - examples/resources/terraform_deployment/import.sh
   - internal/provider/deployment_resource.go
   - internal/provider/deployment_resource_sdk.go
-  - examples/resources/vercel_deployment/resource.tf
+  - examples/resources/terraform_deployment/resource.tf
   - internal/provider/dns_resource.go
   - internal/provider/dns_resource_sdk.go
-  - examples/resources/vercel_dns/resource.tf
-  - examples/resources/vercel_edge_config/import.sh
+  - examples/resources/terraform_dns/resource.tf
+  - examples/resources/terraform_edge_config/import.sh
   - internal/provider/edgeconfig_resource.go
   - internal/provider/edgeconfig_resource_sdk.go
-  - examples/resources/vercel_edge_config/resource.tf
-  - examples/resources/vercel_edge_config_schema/import.sh
+  - examples/resources/terraform_edge_config/resource.tf
+  - examples/resources/terraform_edge_config_schema/import.sh
   - internal/provider/edgeconfigschema_resource.go
   - internal/provider/edgeconfigschema_resource_sdk.go
-  - examples/resources/vercel_edge_config_schema/resource.tf
+  - examples/resources/terraform_edge_config_schema/resource.tf
   - internal/provider/member_resource.go
   - internal/provider/member_resource_sdk.go
-  - examples/resources/vercel_member/resource.tf
+  - examples/resources/terraform_member/resource.tf
   - internal/provider/project_resource.go
   - internal/provider/project_resource_sdk.go
-  - examples/resources/vercel_project/resource.tf
-  - examples/resources/vercel_team/import.sh
+  - examples/resources/terraform_project/resource.tf
+  - examples/resources/terraform_team/import.sh
   - internal/provider/team_resource.go
   - internal/provider/team_resource_sdk.go
-  - examples/resources/vercel_team/resource.tf
-  - examples/resources/vercel_webhook/import.sh
+  - examples/resources/terraform_team/resource.tf
+  - examples/resources/terraform_webhook/import.sh
   - internal/provider/webhook_resource.go
   - internal/provider/webhook_resource_sdk.go
-  - examples/resources/vercel_webhook/resource.tf
+  - examples/resources/terraform_webhook/resource.tf
   - internal/provider/deployment_data_source.go
   - internal/provider/deployment_data_source_sdk.go
-  - examples/data-sources/vercel_deployment/data-source.tf
+  - examples/data-sources/terraform_deployment/data-source.tf
   - internal/provider/edgeconfig_data_source.go
   - internal/provider/edgeconfig_data_source_sdk.go
-  - examples/data-sources/vercel_edge_config/data-source.tf
+  - examples/data-sources/terraform_edge_config/data-source.tf
   - internal/provider/edgeconfigschema_data_source.go
   - internal/provider/edgeconfigschema_data_source_sdk.go
-  - examples/data-sources/vercel_edge_config_schema/data-source.tf
+  - examples/data-sources/terraform_edge_config_schema/data-source.tf
   - internal/provider/team_data_source.go
   - internal/provider/team_data_source_sdk.go
-  - examples/data-sources/vercel_team/data-source.tf
+  - examples/data-sources/terraform_team/data-source.tf
   - internal/provider/user_data_source.go
   - internal/provider/user_data_source_sdk.go
-  - examples/data-sources/vercel_user/data-source.tf
+  - examples/data-sources/terraform_user/data-source.tf
   - internal/provider/webhook_data_source.go
   - internal/provider/webhook_data_source_sdk.go
-  - examples/data-sources/vercel_webhook/data-source.tf
+  - examples/data-sources/terraform_webhook/data-source.tf
   - .gitattributes

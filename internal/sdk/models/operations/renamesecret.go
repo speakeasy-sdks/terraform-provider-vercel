@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 	"time"
 )
@@ -21,20 +21,13 @@ func (o *RenameSecretRequestBody) GetName() string {
 }
 
 type RenameSecretRequest struct {
-	RequestBody *RenameSecretRequestBody `request:"mediaType=application/json"`
 	// The name of the secret.
 	Name string `pathParam:"style=simple,explode=false,name=name"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
-}
-
-func (o *RenameSecretRequest) GetRequestBody() *RenameSecretRequestBody {
-	if o == nil {
-		return nil
-	}
-	return o.RequestBody
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                  `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *RenameSecretRequestBody `request:"mediaType=application/json"`
 }
 
 func (o *RenameSecretRequest) GetName() string {
@@ -44,13 +37,6 @@ func (o *RenameSecretRequest) GetName() string {
 	return o.Name
 }
 
-func (o *RenameSecretRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *RenameSecretRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -58,11 +44,25 @@ func (o *RenameSecretRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
+func (o *RenameSecretRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *RenameSecretRequest) GetRequestBody() *RenameSecretRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
 type RenameSecretResponseBody struct {
-	Created time.Time `json:"created"`
-	Name    string    `json:"name"`
-	OldName string    `json:"oldName"`
 	UID     string    `json:"uid"`
+	Name    string    `json:"name"`
+	Created time.Time `json:"created"`
+	OldName string    `json:"oldName"`
 }
 
 func (r RenameSecretResponseBody) MarshalJSON() ([]byte, error) {
@@ -76,11 +76,11 @@ func (r *RenameSecretResponseBody) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *RenameSecretResponseBody) GetCreated() time.Time {
+func (o *RenameSecretResponseBody) GetUID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.Created
+	return o.UID
 }
 
 func (o *RenameSecretResponseBody) GetName() string {
@@ -90,18 +90,18 @@ func (o *RenameSecretResponseBody) GetName() string {
 	return o.Name
 }
 
+func (o *RenameSecretResponseBody) GetCreated() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Created
+}
+
 func (o *RenameSecretResponseBody) GetOldName() string {
 	if o == nil {
 		return ""
 	}
 	return o.OldName
-}
-
-func (o *RenameSecretResponseBody) GetUID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UID
 }
 
 type RenameSecretResponse struct {

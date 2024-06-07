@@ -113,9 +113,16 @@ func (e *Events) UnmarshalJSON(data []byte) error {
 }
 
 type CreateWebhookRequestBody struct {
+	URL        string   `json:"url"`
 	Events     []Events `json:"events"`
 	ProjectIds []string `json:"projectIds,omitempty"`
-	URL        string   `json:"url"`
+}
+
+func (o *CreateWebhookRequestBody) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }
 
 func (o *CreateWebhookRequestBody) GetEvents() []Events {
@@ -132,26 +139,19 @@ func (o *CreateWebhookRequestBody) GetProjectIds() []string {
 	return o.ProjectIds
 }
 
-func (o *CreateWebhookRequestBody) GetURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.URL
-}
-
 type CreateWebhookRequest struct {
-	RequestBody *CreateWebhookRequestBody `request:"mediaType=application/json"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug        *string                   `queryParam:"style=form,explode=true,name=slug"`
+	RequestBody *CreateWebhookRequestBody `request:"mediaType=application/json"`
 }
 
-func (o *CreateWebhookRequest) GetRequestBody() *CreateWebhookRequestBody {
+func (o *CreateWebhookRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.RequestBody
+	return o.TeamID
 }
 
 func (o *CreateWebhookRequest) GetSlug() *string {
@@ -161,11 +161,11 @@ func (o *CreateWebhookRequest) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *CreateWebhookRequest) GetTeamID() *string {
+func (o *CreateWebhookRequest) GetRequestBody() *CreateWebhookRequestBody {
 	if o == nil {
 		return nil
 	}
-	return o.TeamID
+	return o.RequestBody
 }
 
 // CreateWebhookEvents - The webhooks events
@@ -274,29 +274,29 @@ func (e *CreateWebhookEvents) UnmarshalJSON(data []byte) error {
 }
 
 type CreateWebhookResponseBody struct {
-	// A number containing the date when the webhook was created in in milliseconds
-	CreatedAt float64 `json:"createdAt"`
+	// The webhook secret used to sign the payload
+	Secret string `json:"secret"`
 	// The webhooks events
 	Events []CreateWebhookEvents `json:"events"`
 	// The webhook id
 	ID string `json:"id"`
-	// The unique ID of the team the webhook belongs to
-	OwnerID string `json:"ownerId"`
-	// The ID of the projects the webhook is associated with
-	ProjectIds []string `json:"projectIds,omitempty"`
-	// The webhook secret used to sign the payload
-	Secret string `json:"secret"`
-	// A number containing the date when the webhook was updated in in milliseconds
-	UpdatedAt float64 `json:"updatedAt"`
 	// A string with the URL of the webhook
 	URL string `json:"url"`
+	// The unique ID of the team the webhook belongs to
+	OwnerID string `json:"ownerId"`
+	// A number containing the date when the webhook was created in in milliseconds
+	CreatedAt float64 `json:"createdAt"`
+	// A number containing the date when the webhook was updated in in milliseconds
+	UpdatedAt float64 `json:"updatedAt"`
+	// The ID of the projects the webhook is associated with
+	ProjectIds []string `json:"projectIds,omitempty"`
 }
 
-func (o *CreateWebhookResponseBody) GetCreatedAt() float64 {
+func (o *CreateWebhookResponseBody) GetSecret() string {
 	if o == nil {
-		return 0.0
+		return ""
 	}
-	return o.CreatedAt
+	return o.Secret
 }
 
 func (o *CreateWebhookResponseBody) GetEvents() []CreateWebhookEvents {
@@ -313,6 +313,13 @@ func (o *CreateWebhookResponseBody) GetID() string {
 	return o.ID
 }
 
+func (o *CreateWebhookResponseBody) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 func (o *CreateWebhookResponseBody) GetOwnerID() string {
 	if o == nil {
 		return ""
@@ -320,18 +327,11 @@ func (o *CreateWebhookResponseBody) GetOwnerID() string {
 	return o.OwnerID
 }
 
-func (o *CreateWebhookResponseBody) GetProjectIds() []string {
+func (o *CreateWebhookResponseBody) GetCreatedAt() float64 {
 	if o == nil {
-		return nil
+		return 0.0
 	}
-	return o.ProjectIds
-}
-
-func (o *CreateWebhookResponseBody) GetSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.Secret
+	return o.CreatedAt
 }
 
 func (o *CreateWebhookResponseBody) GetUpdatedAt() float64 {
@@ -341,11 +341,11 @@ func (o *CreateWebhookResponseBody) GetUpdatedAt() float64 {
 	return o.UpdatedAt
 }
 
-func (o *CreateWebhookResponseBody) GetURL() string {
+func (o *CreateWebhookResponseBody) GetProjectIds() []string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.URL
+	return o.ProjectIds
 }
 
 type CreateWebhookResponse struct {

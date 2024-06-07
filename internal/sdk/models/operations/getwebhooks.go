@@ -10,10 +10,10 @@ import (
 
 type GetWebhooksRequest struct {
 	ProjectID *string `queryParam:"style=form,explode=true,name=projectId"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *GetWebhooksRequest) GetProjectID() *string {
@@ -23,13 +23,6 @@ func (o *GetWebhooksRequest) GetProjectID() *string {
 	return o.ProjectID
 }
 
-func (o *GetWebhooksRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *GetWebhooksRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -37,163 +30,65 @@ func (o *GetWebhooksRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// GetWebhooksEvents - The webhooks events
-type GetWebhooksEvents string
-
-const (
-	GetWebhooksEventsBudgetReached                                    GetWebhooksEvents = "budget.reached"
-	GetWebhooksEventsBudgetReset                                      GetWebhooksEvents = "budget.reset"
-	GetWebhooksEventsDomainCreated                                    GetWebhooksEvents = "domain.created"
-	GetWebhooksEventsDeploymentCreated                                GetWebhooksEvents = "deployment.created"
-	GetWebhooksEventsDeploymentError                                  GetWebhooksEvents = "deployment.error"
-	GetWebhooksEventsDeploymentCanceled                               GetWebhooksEvents = "deployment.canceled"
-	GetWebhooksEventsDeploymentSucceeded                              GetWebhooksEvents = "deployment.succeeded"
-	GetWebhooksEventsDeploymentReady                                  GetWebhooksEvents = "deployment.ready"
-	GetWebhooksEventsDeploymentCheckRerequested                       GetWebhooksEvents = "deployment.check-rerequested"
-	GetWebhooksEventsIntegrationConfigurationPermissionUpgraded       GetWebhooksEvents = "integration-configuration.permission-upgraded"
-	GetWebhooksEventsIntegrationConfigurationRemoved                  GetWebhooksEvents = "integration-configuration.removed"
-	GetWebhooksEventsIntegrationConfigurationScopeChangeConfirmed     GetWebhooksEvents = "integration-configuration.scope-change-confirmed"
-	GetWebhooksEventsProjectCreated                                   GetWebhooksEvents = "project.created"
-	GetWebhooksEventsProjectRemoved                                   GetWebhooksEvents = "project.removed"
-	GetWebhooksEventsDeploymentChecksCompleted                        GetWebhooksEvents = "deployment-checks-completed"
-	GetWebhooksEventsDeploymentDashReady                              GetWebhooksEvents = "deployment-ready"
-	GetWebhooksEventsDeploymentDashPrepared                           GetWebhooksEvents = "deployment-prepared"
-	GetWebhooksEventsDeploymentDashError                              GetWebhooksEvents = "deployment-error"
-	GetWebhooksEventsDeploymentDashCheckRerequested                   GetWebhooksEvents = "deployment-check-rerequested"
-	GetWebhooksEventsDeploymentDashCanceled                           GetWebhooksEvents = "deployment-canceled"
-	GetWebhooksEventsProjectDashCreated                               GetWebhooksEvents = "project-created"
-	GetWebhooksEventsProjectDashRemoved                               GetWebhooksEvents = "project-removed"
-	GetWebhooksEventsDomainDashCreated                                GetWebhooksEvents = "domain-created"
-	GetWebhooksEventsDeployment                                       GetWebhooksEvents = "deployment"
-	GetWebhooksEventsIntegrationConfigurationDashPermissionUpdated    GetWebhooksEvents = "integration-configuration-permission-updated"
-	GetWebhooksEventsIntegrationConfigurationDashRemoved              GetWebhooksEvents = "integration-configuration-removed"
-	GetWebhooksEventsIntegrationConfigurationDashScopeChangeConfirmed GetWebhooksEvents = "integration-configuration-scope-change-confirmed"
-	GetWebhooksEventsTestWebhook                                      GetWebhooksEvents = "test-webhook"
-)
-
-func (e GetWebhooksEvents) ToPointer() *GetWebhooksEvents {
-	return &e
-}
-func (e *GetWebhooksEvents) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "budget.reached":
-		fallthrough
-	case "budget.reset":
-		fallthrough
-	case "domain.created":
-		fallthrough
-	case "deployment.created":
-		fallthrough
-	case "deployment.error":
-		fallthrough
-	case "deployment.canceled":
-		fallthrough
-	case "deployment.succeeded":
-		fallthrough
-	case "deployment.ready":
-		fallthrough
-	case "deployment.check-rerequested":
-		fallthrough
-	case "integration-configuration.permission-upgraded":
-		fallthrough
-	case "integration-configuration.removed":
-		fallthrough
-	case "integration-configuration.scope-change-confirmed":
-		fallthrough
-	case "project.created":
-		fallthrough
-	case "project.removed":
-		fallthrough
-	case "deployment-checks-completed":
-		fallthrough
-	case "deployment-ready":
-		fallthrough
-	case "deployment-prepared":
-		fallthrough
-	case "deployment-error":
-		fallthrough
-	case "deployment-check-rerequested":
-		fallthrough
-	case "deployment-canceled":
-		fallthrough
-	case "project-created":
-		fallthrough
-	case "project-removed":
-		fallthrough
-	case "domain-created":
-		fallthrough
-	case "deployment":
-		fallthrough
-	case "integration-configuration-permission-updated":
-		fallthrough
-	case "integration-configuration-removed":
-		fallthrough
-	case "integration-configuration-scope-change-confirmed":
-		fallthrough
-	case "test-webhook":
-		*e = GetWebhooksEvents(v)
+func (o *GetWebhooksRequest) GetSlug() *string {
+	if o == nil {
 		return nil
-	default:
-		return fmt.Errorf("invalid value for GetWebhooksEvents: %v", v)
 	}
+	return o.Slug
 }
 
-type GetWebhooksFramework string
+type ResponseBodyFramework string
 
 const (
-	GetWebhooksFrameworkBlitzjs        GetWebhooksFramework = "blitzjs"
-	GetWebhooksFrameworkNextjs         GetWebhooksFramework = "nextjs"
-	GetWebhooksFrameworkGatsby         GetWebhooksFramework = "gatsby"
-	GetWebhooksFrameworkRemix          GetWebhooksFramework = "remix"
-	GetWebhooksFrameworkAstro          GetWebhooksFramework = "astro"
-	GetWebhooksFrameworkHexo           GetWebhooksFramework = "hexo"
-	GetWebhooksFrameworkEleventy       GetWebhooksFramework = "eleventy"
-	GetWebhooksFrameworkDocusaurus2    GetWebhooksFramework = "docusaurus-2"
-	GetWebhooksFrameworkDocusaurus     GetWebhooksFramework = "docusaurus"
-	GetWebhooksFrameworkPreact         GetWebhooksFramework = "preact"
-	GetWebhooksFrameworkSolidstart1    GetWebhooksFramework = "solidstart-1"
-	GetWebhooksFrameworkSolidstart     GetWebhooksFramework = "solidstart"
-	GetWebhooksFrameworkDojo           GetWebhooksFramework = "dojo"
-	GetWebhooksFrameworkEmber          GetWebhooksFramework = "ember"
-	GetWebhooksFrameworkVue            GetWebhooksFramework = "vue"
-	GetWebhooksFrameworkScully         GetWebhooksFramework = "scully"
-	GetWebhooksFrameworkIonicAngular   GetWebhooksFramework = "ionic-angular"
-	GetWebhooksFrameworkAngular        GetWebhooksFramework = "angular"
-	GetWebhooksFrameworkPolymer        GetWebhooksFramework = "polymer"
-	GetWebhooksFrameworkSvelte         GetWebhooksFramework = "svelte"
-	GetWebhooksFrameworkSveltekit      GetWebhooksFramework = "sveltekit"
-	GetWebhooksFrameworkSveltekit1     GetWebhooksFramework = "sveltekit-1"
-	GetWebhooksFrameworkIonicReact     GetWebhooksFramework = "ionic-react"
-	GetWebhooksFrameworkCreateReactApp GetWebhooksFramework = "create-react-app"
-	GetWebhooksFrameworkGridsome       GetWebhooksFramework = "gridsome"
-	GetWebhooksFrameworkUmijs          GetWebhooksFramework = "umijs"
-	GetWebhooksFrameworkSapper         GetWebhooksFramework = "sapper"
-	GetWebhooksFrameworkSaber          GetWebhooksFramework = "saber"
-	GetWebhooksFrameworkStencil        GetWebhooksFramework = "stencil"
-	GetWebhooksFrameworkNuxtjs         GetWebhooksFramework = "nuxtjs"
-	GetWebhooksFrameworkRedwoodjs      GetWebhooksFramework = "redwoodjs"
-	GetWebhooksFrameworkHugo           GetWebhooksFramework = "hugo"
-	GetWebhooksFrameworkJekyll         GetWebhooksFramework = "jekyll"
-	GetWebhooksFrameworkBrunch         GetWebhooksFramework = "brunch"
-	GetWebhooksFrameworkMiddleman      GetWebhooksFramework = "middleman"
-	GetWebhooksFrameworkZola           GetWebhooksFramework = "zola"
-	GetWebhooksFrameworkHydrogen       GetWebhooksFramework = "hydrogen"
-	GetWebhooksFrameworkVite           GetWebhooksFramework = "vite"
-	GetWebhooksFrameworkVitepress      GetWebhooksFramework = "vitepress"
-	GetWebhooksFrameworkVuepress       GetWebhooksFramework = "vuepress"
-	GetWebhooksFrameworkParcel         GetWebhooksFramework = "parcel"
-	GetWebhooksFrameworkSanity         GetWebhooksFramework = "sanity"
-	GetWebhooksFrameworkStorybook      GetWebhooksFramework = "storybook"
+	ResponseBodyFrameworkBlitzjs        ResponseBodyFramework = "blitzjs"
+	ResponseBodyFrameworkNextjs         ResponseBodyFramework = "nextjs"
+	ResponseBodyFrameworkGatsby         ResponseBodyFramework = "gatsby"
+	ResponseBodyFrameworkRemix          ResponseBodyFramework = "remix"
+	ResponseBodyFrameworkAstro          ResponseBodyFramework = "astro"
+	ResponseBodyFrameworkHexo           ResponseBodyFramework = "hexo"
+	ResponseBodyFrameworkEleventy       ResponseBodyFramework = "eleventy"
+	ResponseBodyFrameworkDocusaurus2    ResponseBodyFramework = "docusaurus-2"
+	ResponseBodyFrameworkDocusaurus     ResponseBodyFramework = "docusaurus"
+	ResponseBodyFrameworkPreact         ResponseBodyFramework = "preact"
+	ResponseBodyFrameworkSolidstart1    ResponseBodyFramework = "solidstart-1"
+	ResponseBodyFrameworkSolidstart     ResponseBodyFramework = "solidstart"
+	ResponseBodyFrameworkDojo           ResponseBodyFramework = "dojo"
+	ResponseBodyFrameworkEmber          ResponseBodyFramework = "ember"
+	ResponseBodyFrameworkVue            ResponseBodyFramework = "vue"
+	ResponseBodyFrameworkScully         ResponseBodyFramework = "scully"
+	ResponseBodyFrameworkIonicAngular   ResponseBodyFramework = "ionic-angular"
+	ResponseBodyFrameworkAngular        ResponseBodyFramework = "angular"
+	ResponseBodyFrameworkPolymer        ResponseBodyFramework = "polymer"
+	ResponseBodyFrameworkSvelte         ResponseBodyFramework = "svelte"
+	ResponseBodyFrameworkSveltekit      ResponseBodyFramework = "sveltekit"
+	ResponseBodyFrameworkSveltekit1     ResponseBodyFramework = "sveltekit-1"
+	ResponseBodyFrameworkIonicReact     ResponseBodyFramework = "ionic-react"
+	ResponseBodyFrameworkCreateReactApp ResponseBodyFramework = "create-react-app"
+	ResponseBodyFrameworkGridsome       ResponseBodyFramework = "gridsome"
+	ResponseBodyFrameworkUmijs          ResponseBodyFramework = "umijs"
+	ResponseBodyFrameworkSapper         ResponseBodyFramework = "sapper"
+	ResponseBodyFrameworkSaber          ResponseBodyFramework = "saber"
+	ResponseBodyFrameworkStencil        ResponseBodyFramework = "stencil"
+	ResponseBodyFrameworkNuxtjs         ResponseBodyFramework = "nuxtjs"
+	ResponseBodyFrameworkRedwoodjs      ResponseBodyFramework = "redwoodjs"
+	ResponseBodyFrameworkHugo           ResponseBodyFramework = "hugo"
+	ResponseBodyFrameworkJekyll         ResponseBodyFramework = "jekyll"
+	ResponseBodyFrameworkBrunch         ResponseBodyFramework = "brunch"
+	ResponseBodyFrameworkMiddleman      ResponseBodyFramework = "middleman"
+	ResponseBodyFrameworkZola           ResponseBodyFramework = "zola"
+	ResponseBodyFrameworkHydrogen       ResponseBodyFramework = "hydrogen"
+	ResponseBodyFrameworkVite           ResponseBodyFramework = "vite"
+	ResponseBodyFrameworkVitepress      ResponseBodyFramework = "vitepress"
+	ResponseBodyFrameworkVuepress       ResponseBodyFramework = "vuepress"
+	ResponseBodyFrameworkParcel         ResponseBodyFramework = "parcel"
+	ResponseBodyFrameworkSanity         ResponseBodyFramework = "sanity"
+	ResponseBodyFrameworkStorybook      ResponseBodyFramework = "storybook"
 )
 
-func (e GetWebhooksFramework) ToPointer() *GetWebhooksFramework {
+func (e ResponseBodyFramework) ToPointer() *ResponseBodyFramework {
 	return &e
 }
-func (e *GetWebhooksFramework) UnmarshalJSON(data []byte) error {
+func (e *ResponseBodyFramework) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -284,25 +179,18 @@ func (e *GetWebhooksFramework) UnmarshalJSON(data []byte) error {
 	case "sanity":
 		fallthrough
 	case "storybook":
-		*e = GetWebhooksFramework(v)
+		*e = ResponseBodyFramework(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetWebhooksFramework: %v", v)
+		return fmt.Errorf("invalid value for ResponseBodyFramework: %v", v)
 	}
 }
 
 type ProjectsMetadata struct {
-	Framework        *GetWebhooksFramework `json:"framework,omitempty"`
-	ID               string                `json:"id"`
-	LatestDeployment *string               `json:"latestDeployment,omitempty"`
-	Name             string                `json:"name"`
-}
-
-func (o *ProjectsMetadata) GetFramework() *GetWebhooksFramework {
-	if o == nil {
-		return nil
-	}
-	return o.Framework
+	ID               string                 `json:"id"`
+	Name             string                 `json:"name"`
+	Framework        *ResponseBodyFramework `json:"framework,omitempty"`
+	LatestDeployment *string                `json:"latestDeployment,omitempty"`
 }
 
 func (o *ProjectsMetadata) GetID() string {
@@ -312,13 +200,6 @@ func (o *ProjectsMetadata) GetID() string {
 	return o.ID
 }
 
-func (o *ProjectsMetadata) GetLatestDeployment() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LatestDeployment
-}
-
 func (o *ProjectsMetadata) GetName() string {
 	if o == nil {
 		return ""
@@ -326,34 +207,153 @@ func (o *ProjectsMetadata) GetName() string {
 	return o.Name
 }
 
+func (o *ProjectsMetadata) GetFramework() *ResponseBodyFramework {
+	if o == nil {
+		return nil
+	}
+	return o.Framework
+}
+
+func (o *ProjectsMetadata) GetLatestDeployment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LatestDeployment
+}
+
+// ResponseBodyEvents - The webhooks events
+type ResponseBodyEvents string
+
+const (
+	ResponseBodyEventsBudgetReached                                    ResponseBodyEvents = "budget.reached"
+	ResponseBodyEventsBudgetReset                                      ResponseBodyEvents = "budget.reset"
+	ResponseBodyEventsDomainCreated                                    ResponseBodyEvents = "domain.created"
+	ResponseBodyEventsDeploymentCreated                                ResponseBodyEvents = "deployment.created"
+	ResponseBodyEventsDeploymentError                                  ResponseBodyEvents = "deployment.error"
+	ResponseBodyEventsDeploymentCanceled                               ResponseBodyEvents = "deployment.canceled"
+	ResponseBodyEventsDeploymentSucceeded                              ResponseBodyEvents = "deployment.succeeded"
+	ResponseBodyEventsDeploymentReady                                  ResponseBodyEvents = "deployment.ready"
+	ResponseBodyEventsDeploymentCheckRerequested                       ResponseBodyEvents = "deployment.check-rerequested"
+	ResponseBodyEventsIntegrationConfigurationPermissionUpgraded       ResponseBodyEvents = "integration-configuration.permission-upgraded"
+	ResponseBodyEventsIntegrationConfigurationRemoved                  ResponseBodyEvents = "integration-configuration.removed"
+	ResponseBodyEventsIntegrationConfigurationScopeChangeConfirmed     ResponseBodyEvents = "integration-configuration.scope-change-confirmed"
+	ResponseBodyEventsProjectCreated                                   ResponseBodyEvents = "project.created"
+	ResponseBodyEventsProjectRemoved                                   ResponseBodyEvents = "project.removed"
+	ResponseBodyEventsDeploymentChecksCompleted                        ResponseBodyEvents = "deployment-checks-completed"
+	ResponseBodyEventsDeploymentDashReady                              ResponseBodyEvents = "deployment-ready"
+	ResponseBodyEventsDeploymentDashPrepared                           ResponseBodyEvents = "deployment-prepared"
+	ResponseBodyEventsDeploymentDashError                              ResponseBodyEvents = "deployment-error"
+	ResponseBodyEventsDeploymentDashCheckRerequested                   ResponseBodyEvents = "deployment-check-rerequested"
+	ResponseBodyEventsDeploymentDashCanceled                           ResponseBodyEvents = "deployment-canceled"
+	ResponseBodyEventsProjectDashCreated                               ResponseBodyEvents = "project-created"
+	ResponseBodyEventsProjectDashRemoved                               ResponseBodyEvents = "project-removed"
+	ResponseBodyEventsDomainDashCreated                                ResponseBodyEvents = "domain-created"
+	ResponseBodyEventsDeployment                                       ResponseBodyEvents = "deployment"
+	ResponseBodyEventsIntegrationConfigurationDashPermissionUpdated    ResponseBodyEvents = "integration-configuration-permission-updated"
+	ResponseBodyEventsIntegrationConfigurationDashRemoved              ResponseBodyEvents = "integration-configuration-removed"
+	ResponseBodyEventsIntegrationConfigurationDashScopeChangeConfirmed ResponseBodyEvents = "integration-configuration-scope-change-confirmed"
+	ResponseBodyEventsTestWebhook                                      ResponseBodyEvents = "test-webhook"
+)
+
+func (e ResponseBodyEvents) ToPointer() *ResponseBodyEvents {
+	return &e
+}
+func (e *ResponseBodyEvents) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "budget.reached":
+		fallthrough
+	case "budget.reset":
+		fallthrough
+	case "domain.created":
+		fallthrough
+	case "deployment.created":
+		fallthrough
+	case "deployment.error":
+		fallthrough
+	case "deployment.canceled":
+		fallthrough
+	case "deployment.succeeded":
+		fallthrough
+	case "deployment.ready":
+		fallthrough
+	case "deployment.check-rerequested":
+		fallthrough
+	case "integration-configuration.permission-upgraded":
+		fallthrough
+	case "integration-configuration.removed":
+		fallthrough
+	case "integration-configuration.scope-change-confirmed":
+		fallthrough
+	case "project.created":
+		fallthrough
+	case "project.removed":
+		fallthrough
+	case "deployment-checks-completed":
+		fallthrough
+	case "deployment-ready":
+		fallthrough
+	case "deployment-prepared":
+		fallthrough
+	case "deployment-error":
+		fallthrough
+	case "deployment-check-rerequested":
+		fallthrough
+	case "deployment-canceled":
+		fallthrough
+	case "project-created":
+		fallthrough
+	case "project-removed":
+		fallthrough
+	case "domain-created":
+		fallthrough
+	case "deployment":
+		fallthrough
+	case "integration-configuration-permission-updated":
+		fallthrough
+	case "integration-configuration-removed":
+		fallthrough
+	case "integration-configuration-scope-change-confirmed":
+		fallthrough
+	case "test-webhook":
+		*e = ResponseBodyEvents(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ResponseBodyEvents: %v", v)
+	}
+}
+
 type GetWebhooksResponseBody struct {
-	// A number containing the date when the webhook was created in in milliseconds
-	CreatedAt float64 `json:"createdAt"`
+	ProjectsMetadata []ProjectsMetadata `json:"projectsMetadata"`
 	// The webhooks events
-	Events []GetWebhooksEvents `json:"events"`
+	Events []ResponseBodyEvents `json:"events"`
 	// The webhook id
 	ID string `json:"id"`
-	// The unique ID of the team the webhook belongs to
-	OwnerID string `json:"ownerId"`
-	// The ID of the projects the webhook is associated with
-	ProjectIds       []string           `json:"projectIds,omitempty"`
-	ProjectsMetadata []ProjectsMetadata `json:"projectsMetadata"`
-	// A number containing the date when the webhook was updated in in milliseconds
-	UpdatedAt float64 `json:"updatedAt"`
 	// A string with the URL of the webhook
 	URL string `json:"url"`
+	// The unique ID of the team the webhook belongs to
+	OwnerID string `json:"ownerId"`
+	// A number containing the date when the webhook was created in in milliseconds
+	CreatedAt float64 `json:"createdAt"`
+	// A number containing the date when the webhook was updated in in milliseconds
+	UpdatedAt float64 `json:"updatedAt"`
+	// The ID of the projects the webhook is associated with
+	ProjectIds []string `json:"projectIds,omitempty"`
 }
 
-func (o *GetWebhooksResponseBody) GetCreatedAt() float64 {
+func (o *GetWebhooksResponseBody) GetProjectsMetadata() []ProjectsMetadata {
 	if o == nil {
-		return 0.0
+		return nil
 	}
-	return o.CreatedAt
+	return o.ProjectsMetadata
 }
 
-func (o *GetWebhooksResponseBody) GetEvents() []GetWebhooksEvents {
+func (o *GetWebhooksResponseBody) GetEvents() []ResponseBodyEvents {
 	if o == nil {
-		return []GetWebhooksEvents{}
+		return []ResponseBodyEvents{}
 	}
 	return o.Events
 }
@@ -365,6 +365,13 @@ func (o *GetWebhooksResponseBody) GetID() string {
 	return o.ID
 }
 
+func (o *GetWebhooksResponseBody) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
+}
+
 func (o *GetWebhooksResponseBody) GetOwnerID() string {
 	if o == nil {
 		return ""
@@ -372,18 +379,11 @@ func (o *GetWebhooksResponseBody) GetOwnerID() string {
 	return o.OwnerID
 }
 
-func (o *GetWebhooksResponseBody) GetProjectIds() []string {
+func (o *GetWebhooksResponseBody) GetCreatedAt() float64 {
 	if o == nil {
-		return nil
+		return 0.0
 	}
-	return o.ProjectIds
-}
-
-func (o *GetWebhooksResponseBody) GetProjectsMetadata() []ProjectsMetadata {
-	if o == nil {
-		return nil
-	}
-	return o.ProjectsMetadata
+	return o.CreatedAt
 }
 
 func (o *GetWebhooksResponseBody) GetUpdatedAt() float64 {
@@ -393,11 +393,11 @@ func (o *GetWebhooksResponseBody) GetUpdatedAt() float64 {
 	return o.UpdatedAt
 }
 
-func (o *GetWebhooksResponseBody) GetURL() string {
+func (o *GetWebhooksResponseBody) GetProjectIds() []string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.URL
+	return o.ProjectIds
 }
 
 type GetWebhooksResponse struct {
@@ -406,8 +406,8 @@ type GetWebhooksResponse struct {
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
-	RawResponse *http.Response
-	Classes     []GetWebhooksResponseBody
+	RawResponse    *http.Response
+	ResponseBodies []GetWebhooksResponseBody
 }
 
 func (o *GetWebhooksResponse) GetContentType() string {
@@ -431,9 +431,9 @@ func (o *GetWebhooksResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetWebhooksResponse) GetClasses() []GetWebhooksResponseBody {
+func (o *GetWebhooksResponse) GetResponseBodies() []GetWebhooksResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.Classes
+	return o.ResponseBodies
 }

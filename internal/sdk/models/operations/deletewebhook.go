@@ -8,10 +8,10 @@ import (
 
 type DeleteWebhookRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *DeleteWebhookRequest) GetID() string {
@@ -21,18 +21,18 @@ func (o *DeleteWebhookRequest) GetID() string {
 	return o.ID
 }
 
-func (o *DeleteWebhookRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
 func (o *DeleteWebhookRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
+}
+
+func (o *DeleteWebhookRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 type DeleteWebhookResponse struct {

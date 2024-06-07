@@ -7,37 +7,16 @@ import (
 )
 
 type DownloadArtifactRequest struct {
-	// The artifact hash
-	Hash string `pathParam:"style=simple,explode=false,name=hash"`
-	// The Team slug to perform the request on behalf of.
-	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier to perform the request on behalf of.
-	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// The continuous integration or delivery environment where this artifact is downloaded.
 	XArtifactClientCi *string `header:"style=simple,explode=false,name=x-artifact-client-ci"`
 	// 1 if the client is an interactive shell. Otherwise 0
 	XArtifactClientInteractive *int64 `header:"style=simple,explode=false,name=x-artifact-client-interactive"`
-}
-
-func (o *DownloadArtifactRequest) GetHash() string {
-	if o == nil {
-		return ""
-	}
-	return o.Hash
-}
-
-func (o *DownloadArtifactRequest) GetSlug() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Slug
-}
-
-func (o *DownloadArtifactRequest) GetTeamID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TeamID
+	// The artifact hash
+	Hash string `pathParam:"style=simple,explode=false,name=hash"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
 }
 
 func (o *DownloadArtifactRequest) GetXArtifactClientCi() *string {
@@ -52,6 +31,27 @@ func (o *DownloadArtifactRequest) GetXArtifactClientInteractive() *int64 {
 		return nil
 	}
 	return o.XArtifactClientInteractive
+}
+
+func (o *DownloadArtifactRequest) GetHash() string {
+	if o == nil {
+		return ""
+	}
+	return o.Hash
+}
+
+func (o *DownloadArtifactRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+func (o *DownloadArtifactRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 type DownloadArtifactResponse struct {

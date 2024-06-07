@@ -7,17 +7,10 @@ import (
 )
 
 type DeleteTeamInviteCodeRequest struct {
-	// The Team invite code ID.
-	InviteID string `pathParam:"style=simple,explode=false,name=inviteId"`
 	// the team id related to the invite code
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
-}
-
-func (o *DeleteTeamInviteCodeRequest) GetInviteID() string {
-	if o == nil {
-		return ""
-	}
-	return o.InviteID
+	// The Team invite code ID.
+	InviteID string `pathParam:"style=simple,explode=false,name=inviteId"`
 }
 
 func (o *DeleteTeamInviteCodeRequest) GetTeamID() string {
@@ -25,6 +18,13 @@ func (o *DeleteTeamInviteCodeRequest) GetTeamID() string {
 		return ""
 	}
 	return o.TeamID
+}
+
+func (o *DeleteTeamInviteCodeRequest) GetInviteID() string {
+	if o == nil {
+		return ""
+	}
+	return o.InviteID
 }
 
 // DeleteTeamInviteCodeResponseBody - Successfully deleted Team invite code.
