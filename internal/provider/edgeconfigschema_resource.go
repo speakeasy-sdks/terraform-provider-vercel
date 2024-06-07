@@ -13,9 +13,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
-	"github.com/speakeasy/terraform-provider-terraform/internal/validators"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
+	"github.com/vercel/terraform-provider-terraform/internal/validators"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.

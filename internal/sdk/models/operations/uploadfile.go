@@ -5,7 +5,7 @@ package operations
 import (
 	"errors"
 	"fmt"
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
 	"net/http"
 )
 

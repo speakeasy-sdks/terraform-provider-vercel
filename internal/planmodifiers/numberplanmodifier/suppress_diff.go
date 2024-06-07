@@ -4,7 +4,7 @@ package numberplanmodifier
 
 import (
 	"context"
-	"github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/utils"
+	"github.com/vercel/terraform-provider-terraform/internal/planmodifiers/utils"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 )

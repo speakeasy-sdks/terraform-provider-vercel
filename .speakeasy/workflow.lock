@@ -2,7 +2,7 @@ speakeasyVersion: 1.300.1
 sources:
     my-source:
         sourceNamespace: my-source
-        sourceRevisionDigest: sha256:cf6ea2078f1e647177fb9686c5062869ec95d15191db32008f0987395e5f77b9
+        sourceRevisionDigest: sha256:efe0fd51ba62494f8cde03e36912d70bb6cd0f38bbe1728ad2f9dabb59558cda
         sourceBlobDigest: sha256:de923806cc8f4b060a593af74d943dadf02909438f071a747bf5540ade3503cf
         tags:
             - latest
@@ -10,7 +10,7 @@ targets:
     Vercel-Terraform:
         source: my-source
         sourceNamespace: my-source
-        sourceRevisionDigest: sha256:cf6ea2078f1e647177fb9686c5062869ec95d15191db32008f0987395e5f77b9
+        sourceRevisionDigest: sha256:efe0fd51ba62494f8cde03e36912d70bb6cd0f38bbe1728ad2f9dabb59558cda
         sourceBlobDigest: sha256:de923806cc8f4b060a593af74d943dadf02909438f071a747bf5540ade3503cf
         outLocation: C:\Users\Luke\Documents\GitHub\terraform-provider-vercel-og
 workflow:

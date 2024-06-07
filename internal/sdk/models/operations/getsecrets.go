@@ -3,8 +3,8 @@
 package operations
 
 import (
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/internal/utils"
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/shared"
 	"net/http"
 	"time"
 )

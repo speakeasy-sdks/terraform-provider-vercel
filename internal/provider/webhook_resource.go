@@ -15,10 +15,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	speakeasy_listplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/listplanmodifier"
-	speakeasy_stringplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
+	speakeasy_listplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/listplanmodifier"
+	speakeasy_stringplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.

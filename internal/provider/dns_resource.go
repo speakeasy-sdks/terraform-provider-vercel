@@ -17,13 +17,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	speakeasy_numberplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/numberplanmodifier"
-	speakeasy_objectplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/objectplanmodifier"
-	speakeasy_stringplanmodifier "github.com/speakeasy/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
-	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk"
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
-	speakeasy_stringvalidators "github.com/speakeasy/terraform-provider-terraform/internal/validators/stringvalidators"
+	speakeasy_numberplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/numberplanmodifier"
+	speakeasy_objectplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/vercel/terraform-provider-terraform/internal/provider/types"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
+	speakeasy_stringvalidators "github.com/vercel/terraform-provider-terraform/internal/validators/stringvalidators"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.

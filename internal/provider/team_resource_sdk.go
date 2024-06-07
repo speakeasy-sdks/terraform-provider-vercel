@@ -4,9 +4,9 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/speakeasy/terraform-provider-terraform/internal/provider/types"
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/shared"
+	tfTypes "github.com/vercel/terraform-provider-terraform/internal/provider/types"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/shared"
 	"math/big"
 )
 

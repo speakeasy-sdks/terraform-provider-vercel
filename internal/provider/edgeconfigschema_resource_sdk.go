@@ -4,7 +4,7 @@ package provider
 
 import (
 	"encoding/json"
-	"github.com/speakeasy/terraform-provider-terraform/internal/sdk/models/operations"
+	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
 )
 
 func (r *EdgeConfigSchemaResourceModel) ToOperationsPatchEdgeConfigSchemaRequestBody() *operations.PatchEdgeConfigSchemaRequestBody {

@@ -6,16 +6,17 @@
     
 </div>
 
-<no value>
-<!-- Start SDK <no value> -->
+<!-- Start SDK Installation [installation] -->
+## SDK Installation
+
 To install this provider, copy and paste this code into your Terraform configuration. Then, run `terraform init`.
 
 ```hcl
 terraform {
   required_providers {
     terraform = {
-      source  = "speakeasy/terraform"
-      version = "0.0.1"
+      source  = "vercel/terraform"
+      version = "0.0.2"
     }
   }
 }
@@ -24,10 +25,11 @@ provider "terraform" {
   # Configuration options
 }
 ```
-<!-- End SDK <no value> -->
+<!-- End SDK Installation [installation] -->
 
-<no value>
-<!-- Start SDK <no value> -->
+<!-- Start SDK Example Usage [usage] -->
+## SDK Example Usage
+
 ### Testing the provider locally
 
 Should you want to validate a change locally, the `--debug` flag allows you to execute the provider against a terraform instance locally.
@@ -44,12 +46,13 @@ cd examples/your-example
 TF_REATTACH_PROVIDERS=... terraform init
 TF_REATTACH_PROVIDERS=... terraform apply
 ```
-<!-- End SDK <no value> -->
+<!-- End SDK Example Usage [usage] -->
 
-<no value>
-<!-- Start SDK <no value> -->
+<!-- Start Available Resources and Operations [operations] -->
+## Available Resources and Operations
 
-<!-- End SDK <no value> -->
+
+<!-- End Available Resources and Operations [operations] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
