@@ -17,7 +17,9 @@ type GetRecordsRequest struct {
 	Limit *string `queryParam:"style=form,explode=true,name=limit"`
 	// Get records created after this JavaScript timestamp.
 	Since *string `queryParam:"style=form,explode=true,name=since"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Get records created before this JavaScript timestamp.
 	Until *string `queryParam:"style=form,explode=true,name=until"`
@@ -44,6 +46,13 @@ func (o *GetRecordsRequest) GetSince() *string {
 	return o.Since
 }
 
+func (o *GetRecordsRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 func (o *GetRecordsRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -66,6 +75,7 @@ const (
 	GetRecordsDNSTypeAlias GetRecordsDNSType = "ALIAS"
 	GetRecordsDNSTypeCaa   GetRecordsDNSType = "CAA"
 	GetRecordsDNSTypeCname GetRecordsDNSType = "CNAME"
+	GetRecordsDNSTypeHTTPS GetRecordsDNSType = "HTTPS"
 	GetRecordsDNSTypeMx    GetRecordsDNSType = "MX"
 	GetRecordsDNSTypeSrv   GetRecordsDNSType = "SRV"
 	GetRecordsDNSTypeTxt   GetRecordsDNSType = "TXT"
@@ -75,7 +85,6 @@ const (
 func (e GetRecordsDNSType) ToPointer() *GetRecordsDNSType {
 	return &e
 }
-
 func (e *GetRecordsDNSType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -92,6 +101,8 @@ func (e *GetRecordsDNSType) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "CNAME":
 		fallthrough
+	case "HTTPS":
+		fallthrough
 	case "MX":
 		fallthrough
 	case "SRV":
@@ -107,28 +118,28 @@ func (e *GetRecordsDNSType) UnmarshalJSON(data []byte) error {
 }
 
 type GetRecordsRecords struct {
-	Created    *int64            `json:"created"`
-	CreatedAt  *int64            `json:"createdAt"`
+	Created    *float64          `json:"created"`
+	CreatedAt  *float64          `json:"createdAt"`
 	Creator    string            `json:"creator"`
 	ID         string            `json:"id"`
-	MxPriority *int64            `json:"mxPriority,omitempty"`
+	MxPriority *float64          `json:"mxPriority,omitempty"`
 	Name       string            `json:"name"`
-	Priority   *int64            `json:"priority,omitempty"`
+	Priority   *float64          `json:"priority,omitempty"`
 	Slug       string            `json:"slug"`
 	Type       GetRecordsDNSType `json:"type"`
-	Updated    *int64            `json:"updated"`
-	UpdatedAt  *int64            `json:"updatedAt"`
+	Updated    *float64          `json:"updated"`
+	UpdatedAt  *float64          `json:"updatedAt"`
 	Value      string            `json:"value"`
 }
 
-func (o *GetRecordsRecords) GetCreated() *int64 {
+func (o *GetRecordsRecords) GetCreated() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Created
 }
 
-func (o *GetRecordsRecords) GetCreatedAt() *int64 {
+func (o *GetRecordsRecords) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -149,7 +160,7 @@ func (o *GetRecordsRecords) GetID() string {
 	return o.ID
 }
 
-func (o *GetRecordsRecords) GetMxPriority() *int64 {
+func (o *GetRecordsRecords) GetMxPriority() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -163,7 +174,7 @@ func (o *GetRecordsRecords) GetName() string {
 	return o.Name
 }
 
-func (o *GetRecordsRecords) GetPriority() *int64 {
+func (o *GetRecordsRecords) GetPriority() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -184,14 +195,14 @@ func (o *GetRecordsRecords) GetType() GetRecordsDNSType {
 	return o.Type
 }
 
-func (o *GetRecordsRecords) GetUpdated() *int64 {
+func (o *GetRecordsRecords) GetUpdated() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Updated
 }
 
-func (o *GetRecordsRecords) GetUpdatedAt() *int64 {
+func (o *GetRecordsRecords) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -234,6 +245,7 @@ const (
 	GetRecordsTypeAlias GetRecordsType = "ALIAS"
 	GetRecordsTypeCaa   GetRecordsType = "CAA"
 	GetRecordsTypeCname GetRecordsType = "CNAME"
+	GetRecordsTypeHTTPS GetRecordsType = "HTTPS"
 	GetRecordsTypeMx    GetRecordsType = "MX"
 	GetRecordsTypeSrv   GetRecordsType = "SRV"
 	GetRecordsTypeTxt   GetRecordsType = "TXT"
@@ -243,7 +255,6 @@ const (
 func (e GetRecordsType) ToPointer() *GetRecordsType {
 	return &e
 }
-
 func (e *GetRecordsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -260,6 +271,8 @@ func (e *GetRecordsType) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "CNAME":
 		fallthrough
+	case "HTTPS":
+		fallthrough
 	case "MX":
 		fallthrough
 	case "SRV":
@@ -275,28 +288,28 @@ func (e *GetRecordsType) UnmarshalJSON(data []byte) error {
 }
 
 type Records struct {
-	Created    *int64         `json:"created"`
-	CreatedAt  *int64         `json:"createdAt"`
+	Created    *float64       `json:"created"`
+	CreatedAt  *float64       `json:"createdAt"`
 	Creator    string         `json:"creator"`
 	ID         string         `json:"id"`
-	MxPriority *int64         `json:"mxPriority,omitempty"`
+	MxPriority *float64       `json:"mxPriority,omitempty"`
 	Name       string         `json:"name"`
-	Priority   *int64         `json:"priority,omitempty"`
+	Priority   *float64       `json:"priority,omitempty"`
 	Slug       string         `json:"slug"`
 	Type       GetRecordsType `json:"type"`
-	Updated    *int64         `json:"updated"`
-	UpdatedAt  *int64         `json:"updatedAt"`
+	Updated    *float64       `json:"updated"`
+	UpdatedAt  *float64       `json:"updatedAt"`
 	Value      string         `json:"value"`
 }
 
-func (o *Records) GetCreated() *int64 {
+func (o *Records) GetCreated() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Created
 }
 
-func (o *Records) GetCreatedAt() *int64 {
+func (o *Records) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -317,7 +330,7 @@ func (o *Records) GetID() string {
 	return o.ID
 }
 
-func (o *Records) GetMxPriority() *int64 {
+func (o *Records) GetMxPriority() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -331,7 +344,7 @@ func (o *Records) GetName() string {
 	return o.Name
 }
 
-func (o *Records) GetPriority() *int64 {
+func (o *Records) GetPriority() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -352,14 +365,14 @@ func (o *Records) GetType() GetRecordsType {
 	return o.Type
 }
 
-func (o *Records) GetUpdated() *int64 {
+func (o *Records) GetUpdated() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Updated
 }
 
-func (o *Records) GetUpdatedAt() *int64 {
+func (o *Records) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -430,28 +443,28 @@ func CreateGetRecordsResponseBodyGetRecords3(getRecords3 GetRecords3) GetRecords
 
 func (u *GetRecordsResponseBody) UnmarshalJSON(data []byte) error {
 
-	getRecords2 := GetRecords2{}
+	var getRecords2 GetRecords2 = GetRecords2{}
 	if err := utils.UnmarshalJSON(data, &getRecords2, "", true, true); err == nil {
 		u.GetRecords2 = &getRecords2
 		u.Type = GetRecordsResponseBodyTypeGetRecords2
 		return nil
 	}
 
-	getRecords3 := GetRecords3{}
+	var getRecords3 GetRecords3 = GetRecords3{}
 	if err := utils.UnmarshalJSON(data, &getRecords3, "", true, true); err == nil {
 		u.GetRecords3 = &getRecords3
 		u.Type = GetRecordsResponseBodyTypeGetRecords3
 		return nil
 	}
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = GetRecordsResponseBodyTypeStr
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GetRecordsResponseBody", string(data))
 }
 
 func (u GetRecordsResponseBody) MarshalJSON() ([]byte, error) {
@@ -467,7 +480,7 @@ func (u GetRecordsResponseBody) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.GetRecords3, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type GetRecordsResponseBody: all fields are null")
 }
 
 type GetRecordsResponse struct {

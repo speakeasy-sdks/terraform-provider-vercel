@@ -69,7 +69,9 @@ type CreateCheckRequest struct {
 	RequestBody *CreateCheckRequestBody `request:"mediaType=application/json"`
 	// The deployment to create the check for.
 	DeploymentID string `pathParam:"style=simple,explode=false,name=deploymentId"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -85,6 +87,13 @@ func (o *CreateCheckRequest) GetDeploymentID() string {
 		return ""
 	}
 	return o.DeploymentID
+}
+
+func (o *CreateCheckRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *CreateCheckRequest) GetTeamID() *string {
@@ -108,7 +117,6 @@ const (
 func (e CreateCheckConclusion) ToPointer() *CreateCheckConclusion {
 	return &e
 }
-
 func (e *CreateCheckConclusion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -142,7 +150,6 @@ const (
 func (e CreateCheckSource) ToPointer() *CreateCheckSource {
 	return &e
 }
-
 func (e *CreateCheckSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -158,12 +165,12 @@ func (e *CreateCheckSource) UnmarshalJSON(data []byte) error {
 }
 
 type CreateCheckCLS struct {
-	PreviousValue *int64            `json:"previousValue,omitempty"`
+	PreviousValue *float64          `json:"previousValue,omitempty"`
 	Source        CreateCheckSource `json:"source"`
-	Value         *int64            `json:"value"`
+	Value         *float64          `json:"value"`
 }
 
-func (o *CreateCheckCLS) GetPreviousValue() *int64 {
+func (o *CreateCheckCLS) GetPreviousValue() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -177,7 +184,7 @@ func (o *CreateCheckCLS) GetSource() CreateCheckSource {
 	return o.Source
 }
 
-func (o *CreateCheckCLS) GetValue() *int64 {
+func (o *CreateCheckCLS) GetValue() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -193,7 +200,6 @@ const (
 func (e CreateCheckChecksSource) ToPointer() *CreateCheckChecksSource {
 	return &e
 }
-
 func (e *CreateCheckChecksSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -209,12 +215,12 @@ func (e *CreateCheckChecksSource) UnmarshalJSON(data []byte) error {
 }
 
 type CreateCheckFCP struct {
-	PreviousValue *int64                  `json:"previousValue,omitempty"`
+	PreviousValue *float64                `json:"previousValue,omitempty"`
 	Source        CreateCheckChecksSource `json:"source"`
-	Value         *int64                  `json:"value"`
+	Value         *float64                `json:"value"`
 }
 
-func (o *CreateCheckFCP) GetPreviousValue() *int64 {
+func (o *CreateCheckFCP) GetPreviousValue() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -228,7 +234,7 @@ func (o *CreateCheckFCP) GetSource() CreateCheckChecksSource {
 	return o.Source
 }
 
-func (o *CreateCheckFCP) GetValue() *int64 {
+func (o *CreateCheckFCP) GetValue() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -244,7 +250,6 @@ const (
 func (e CreateCheckChecksResponseSource) ToPointer() *CreateCheckChecksResponseSource {
 	return &e
 }
-
 func (e *CreateCheckChecksResponseSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -260,12 +265,12 @@ func (e *CreateCheckChecksResponseSource) UnmarshalJSON(data []byte) error {
 }
 
 type CreateCheckLCP struct {
-	PreviousValue *int64                          `json:"previousValue,omitempty"`
+	PreviousValue *float64                        `json:"previousValue,omitempty"`
 	Source        CreateCheckChecksResponseSource `json:"source"`
-	Value         *int64                          `json:"value"`
+	Value         *float64                        `json:"value"`
 }
 
-func (o *CreateCheckLCP) GetPreviousValue() *int64 {
+func (o *CreateCheckLCP) GetPreviousValue() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -279,7 +284,7 @@ func (o *CreateCheckLCP) GetSource() CreateCheckChecksResponseSource {
 	return o.Source
 }
 
-func (o *CreateCheckLCP) GetValue() *int64 {
+func (o *CreateCheckLCP) GetValue() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -295,7 +300,6 @@ const (
 func (e CreateCheckChecksResponse200Source) ToPointer() *CreateCheckChecksResponse200Source {
 	return &e
 }
-
 func (e *CreateCheckChecksResponse200Source) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -311,12 +315,12 @@ func (e *CreateCheckChecksResponse200Source) UnmarshalJSON(data []byte) error {
 }
 
 type CreateCheckTBT struct {
-	PreviousValue *int64                             `json:"previousValue,omitempty"`
+	PreviousValue *float64                           `json:"previousValue,omitempty"`
 	Source        CreateCheckChecksResponse200Source `json:"source"`
-	Value         *int64                             `json:"value"`
+	Value         *float64                           `json:"value"`
 }
 
-func (o *CreateCheckTBT) GetPreviousValue() *int64 {
+func (o *CreateCheckTBT) GetPreviousValue() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -330,7 +334,7 @@ func (o *CreateCheckTBT) GetSource() CreateCheckChecksResponse200Source {
 	return o.Source
 }
 
-func (o *CreateCheckTBT) GetValue() *int64 {
+func (o *CreateCheckTBT) GetValue() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -346,7 +350,6 @@ const (
 func (e CreateCheckChecksResponse200ApplicationJSONSource) ToPointer() *CreateCheckChecksResponse200ApplicationJSONSource {
 	return &e
 }
-
 func (e *CreateCheckChecksResponse200ApplicationJSONSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -362,12 +365,12 @@ func (e *CreateCheckChecksResponse200ApplicationJSONSource) UnmarshalJSON(data [
 }
 
 type CreateCheckVirtualExperienceScore struct {
-	PreviousValue *int64                                            `json:"previousValue,omitempty"`
+	PreviousValue *float64                                          `json:"previousValue,omitempty"`
 	Source        CreateCheckChecksResponse200ApplicationJSONSource `json:"source"`
-	Value         *int64                                            `json:"value"`
+	Value         *float64                                          `json:"value"`
 }
 
-func (o *CreateCheckVirtualExperienceScore) GetPreviousValue() *int64 {
+func (o *CreateCheckVirtualExperienceScore) GetPreviousValue() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -381,7 +384,7 @@ func (o *CreateCheckVirtualExperienceScore) GetSource() CreateCheckChecksRespons
 	return o.Source
 }
 
-func (o *CreateCheckVirtualExperienceScore) GetValue() *int64 {
+func (o *CreateCheckVirtualExperienceScore) GetValue() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -453,7 +456,6 @@ const (
 func (e CreateCheckStatus) ToPointer() *CreateCheckStatus {
 	return &e
 }
-
 func (e *CreateCheckStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -474,9 +476,9 @@ func (e *CreateCheckStatus) UnmarshalJSON(data []byte) error {
 
 type CreateCheckResponseBody struct {
 	Blocking      bool                   `json:"blocking"`
-	CompletedAt   *int64                 `json:"completedAt,omitempty"`
+	CompletedAt   *float64               `json:"completedAt,omitempty"`
 	Conclusion    *CreateCheckConclusion `json:"conclusion,omitempty"`
-	CreatedAt     int64                  `json:"createdAt"`
+	CreatedAt     float64                `json:"createdAt"`
 	DeploymentID  string                 `json:"deploymentId"`
 	DetailsURL    *string                `json:"detailsUrl,omitempty"`
 	ExternalID    *string                `json:"externalId,omitempty"`
@@ -486,9 +488,9 @@ type CreateCheckResponseBody struct {
 	Output        *CreateCheckOutput     `json:"output,omitempty"`
 	Path          *string                `json:"path,omitempty"`
 	Rerequestable *bool                  `json:"rerequestable,omitempty"`
-	StartedAt     *int64                 `json:"startedAt,omitempty"`
+	StartedAt     *float64               `json:"startedAt,omitempty"`
 	Status        CreateCheckStatus      `json:"status"`
-	UpdatedAt     int64                  `json:"updatedAt"`
+	UpdatedAt     float64                `json:"updatedAt"`
 }
 
 func (o *CreateCheckResponseBody) GetBlocking() bool {
@@ -498,7 +500,7 @@ func (o *CreateCheckResponseBody) GetBlocking() bool {
 	return o.Blocking
 }
 
-func (o *CreateCheckResponseBody) GetCompletedAt() *int64 {
+func (o *CreateCheckResponseBody) GetCompletedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -512,9 +514,9 @@ func (o *CreateCheckResponseBody) GetConclusion() *CreateCheckConclusion {
 	return o.Conclusion
 }
 
-func (o *CreateCheckResponseBody) GetCreatedAt() int64 {
+func (o *CreateCheckResponseBody) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -582,7 +584,7 @@ func (o *CreateCheckResponseBody) GetRerequestable() *bool {
 	return o.Rerequestable
 }
 
-func (o *CreateCheckResponseBody) GetStartedAt() *int64 {
+func (o *CreateCheckResponseBody) GetStartedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -596,9 +598,9 @@ func (o *CreateCheckResponseBody) GetStatus() CreateCheckStatus {
 	return o.Status
 }
 
-func (o *CreateCheckResponseBody) GetUpdatedAt() int64 {
+func (o *CreateCheckResponseBody) GetUpdatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.UpdatedAt
 }

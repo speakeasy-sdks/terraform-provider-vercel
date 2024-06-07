@@ -18,12 +18,12 @@ const (
 	AuthTokenOriginBitbucket AuthTokenOrigin = "bitbucket"
 	AuthTokenOriginEmail     AuthTokenOrigin = "email"
 	AuthTokenOriginManual    AuthTokenOrigin = "manual"
+	AuthTokenOriginPasskey   AuthTokenOrigin = "passkey"
 )
 
 func (e AuthTokenOrigin) ToPointer() *AuthTokenOrigin {
 	return &e
 }
-
 func (e *AuthTokenOrigin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -41,6 +41,8 @@ func (e *AuthTokenOrigin) UnmarshalJSON(data []byte) error {
 	case "email":
 		fallthrough
 	case "manual":
+		fallthrough
+	case "passkey":
 		*e = AuthTokenOrigin(v)
 		return nil
 	default:
@@ -57,7 +59,6 @@ const (
 func (e AuthTokenType) ToPointer() *AuthTokenType {
 	return &e
 }
-
 func (e *AuthTokenType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -74,21 +75,21 @@ func (e *AuthTokenType) UnmarshalJSON(data []byte) error {
 
 // Two - The access scopes granted to the token.
 type Two struct {
-	CreatedAt int64           `json:"createdAt"`
-	ExpiresAt *int64          `json:"expiresAt,omitempty"`
+	CreatedAt float64         `json:"createdAt"`
+	ExpiresAt *float64        `json:"expiresAt,omitempty"`
 	Origin    AuthTokenOrigin `json:"origin"`
 	TeamID    string          `json:"teamId"`
 	Type      AuthTokenType   `json:"type"`
 }
 
-func (o *Two) GetCreatedAt() int64 {
+func (o *Two) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
 
-func (o *Two) GetExpiresAt() *int64 {
+func (o *Two) GetExpiresAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -125,12 +126,12 @@ const (
 	OriginBitbucket Origin = "bitbucket"
 	OriginEmail     Origin = "email"
 	OriginManual    Origin = "manual"
+	OriginPasskey   Origin = "passkey"
 )
 
 func (e Origin) ToPointer() *Origin {
 	return &e
 }
-
 func (e *Origin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -148,6 +149,8 @@ func (e *Origin) UnmarshalJSON(data []byte) error {
 	case "email":
 		fallthrough
 	case "manual":
+		fallthrough
+	case "passkey":
 		*e = Origin(v)
 		return nil
 	default:
@@ -164,7 +167,6 @@ const (
 func (e AuthTokenSchemasType) ToPointer() *AuthTokenSchemasType {
 	return &e
 }
-
 func (e *AuthTokenSchemasType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -181,20 +183,20 @@ func (e *AuthTokenSchemasType) UnmarshalJSON(data []byte) error {
 
 // One - The access scopes granted to the token.
 type One struct {
-	CreatedAt int64                `json:"createdAt"`
-	ExpiresAt *int64               `json:"expiresAt,omitempty"`
+	CreatedAt float64              `json:"createdAt"`
+	ExpiresAt *float64             `json:"expiresAt,omitempty"`
 	Origin    Origin               `json:"origin"`
 	Type      AuthTokenSchemasType `json:"type"`
 }
 
-func (o *One) GetCreatedAt() int64 {
+func (o *One) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
 
-func (o *One) GetExpiresAt() *int64 {
+func (o *One) GetExpiresAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -249,21 +251,21 @@ func CreateScopesTwo(two Two) Scopes {
 
 func (u *Scopes) UnmarshalJSON(data []byte) error {
 
-	one := One{}
+	var one One = One{}
 	if err := utils.UnmarshalJSON(data, &one, "", true, true); err == nil {
 		u.One = &one
 		u.Type = ScopesTypeOne
 		return nil
 	}
 
-	two := Two{}
+	var two Two = Two{}
 	if err := utils.UnmarshalJSON(data, &two, "", true, true); err == nil {
 		u.Two = &two
 		u.Type = ScopesTypeTwo
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Scopes", string(data))
 }
 
 func (u Scopes) MarshalJSON() ([]byte, error) {
@@ -275,17 +277,17 @@ func (u Scopes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Two, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Scopes: all fields are null")
 }
 
 // AuthToken - Authentication token metadata.
 type AuthToken struct {
 	// Timestamp (in milliseconds) of when the token was most recently used.
-	ActiveAt int64 `json:"activeAt"`
+	ActiveAt float64 `json:"activeAt"`
 	// Timestamp (in milliseconds) of when the token was created.
-	CreatedAt int64 `json:"createdAt"`
+	CreatedAt float64 `json:"createdAt"`
 	// Timestamp (in milliseconds) of when the token expires.
-	ExpiresAt *int64 `json:"expiresAt,omitempty"`
+	ExpiresAt *float64 `json:"expiresAt,omitempty"`
 	// The unique identifier of the token.
 	ID string `json:"id"`
 	// The human-readable name of the token.
@@ -298,21 +300,21 @@ type AuthToken struct {
 	Type string `json:"type"`
 }
 
-func (o *AuthToken) GetActiveAt() int64 {
+func (o *AuthToken) GetActiveAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ActiveAt
 }
 
-func (o *AuthToken) GetCreatedAt() int64 {
+func (o *AuthToken) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
 
-func (o *AuthToken) GetExpiresAt() *int64 {
+func (o *AuthToken) GetExpiresAt() *float64 {
 	if o == nil {
 		return nil
 	}

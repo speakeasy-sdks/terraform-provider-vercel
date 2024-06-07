@@ -7,9 +7,18 @@ import (
 )
 
 type RemoveTeamMemberRequest struct {
-	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
+	// The ID of the team to set as the new default team for the Northstar user.
+	NewDefaultTeamID *string `queryParam:"style=form,explode=true,name=newDefaultTeamId"`
+	TeamID           string  `pathParam:"style=simple,explode=false,name=teamId"`
 	// The user ID of the member.
 	UID string `pathParam:"style=simple,explode=false,name=uid"`
+}
+
+func (o *RemoveTeamMemberRequest) GetNewDefaultTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NewDefaultTeamID
 }
 
 func (o *RemoveTeamMemberRequest) GetTeamID() string {

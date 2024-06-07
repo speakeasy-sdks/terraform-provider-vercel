@@ -9,26 +9,77 @@ import (
 	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
 )
 
+type FavoritesViewPreference string
+
+const (
+	FavoritesViewPreferenceOpen   FavoritesViewPreference = "open"
+	FavoritesViewPreferenceClosed FavoritesViewPreference = "closed"
+)
+
+func (e FavoritesViewPreference) ToPointer() *FavoritesViewPreference {
+	return &e
+}
+func (e *FavoritesViewPreference) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "open":
+		fallthrough
+	case "closed":
+		*e = FavoritesViewPreference(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for FavoritesViewPreference: %v", v)
+	}
+}
+
+type RecentsViewPreference string
+
+const (
+	RecentsViewPreferenceOpen   RecentsViewPreference = "open"
+	RecentsViewPreferenceClosed RecentsViewPreference = "closed"
+)
+
+func (e RecentsViewPreference) ToPointer() *RecentsViewPreference {
+	return &e
+}
+func (e *RecentsViewPreference) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "open":
+		fallthrough
+	case "closed":
+		*e = RecentsViewPreference(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RecentsViewPreference: %v", v)
+	}
+}
+
 type ViewPreference string
 
 const (
-	ViewPreferenceCards ViewPreference = "cards"
 	ViewPreferenceList  ViewPreference = "list"
+	ViewPreferenceCards ViewPreference = "cards"
 )
 
 func (e ViewPreference) ToPointer() *ViewPreference {
 	return &e
 }
-
 func (e *ViewPreference) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "cards":
-		fallthrough
 	case "list":
+		fallthrough
+	case "cards":
 		*e = ViewPreference(v)
 		return nil
 	default:
@@ -38,8 +89,24 @@ func (e *ViewPreference) UnmarshalJSON(data []byte) error {
 
 // ActiveDashboardViews - set of dashboard view preferences (cards or list) per scopeId
 type ActiveDashboardViews struct {
-	ScopeID        string         `json:"scopeId"`
-	ViewPreference ViewPreference `json:"viewPreference"`
+	FavoritesViewPreference *FavoritesViewPreference `json:"favoritesViewPreference,omitempty"`
+	RecentsViewPreference   *RecentsViewPreference   `json:"recentsViewPreference,omitempty"`
+	ScopeID                 string                   `json:"scopeId"`
+	ViewPreference          *ViewPreference          `json:"viewPreference,omitempty"`
+}
+
+func (o *ActiveDashboardViews) GetFavoritesViewPreference() *FavoritesViewPreference {
+	if o == nil {
+		return nil
+	}
+	return o.FavoritesViewPreference
+}
+
+func (o *ActiveDashboardViews) GetRecentsViewPreference() *RecentsViewPreference {
+	if o == nil {
+		return nil
+	}
+	return o.RecentsViewPreference
 }
 
 func (o *ActiveDashboardViews) GetScopeID() string {
@@ -49,9 +116,9 @@ func (o *ActiveDashboardViews) GetScopeID() string {
 	return o.ScopeID
 }
 
-func (o *ActiveDashboardViews) GetViewPreference() ViewPreference {
+func (o *ActiveDashboardViews) GetViewPreference() *ViewPreference {
 	if o == nil {
-		return ViewPreference("")
+		return nil
 	}
 	return o.ViewPreference
 }
@@ -59,7 +126,7 @@ func (o *ActiveDashboardViews) GetViewPreference() ViewPreference {
 type Address struct {
 	City       *string `json:"city,omitempty"`
 	Country    *string `json:"country,omitempty"`
-	Line1      string  `json:"line1"`
+	Line1      *string `json:"line1,omitempty"`
 	Line2      *string `json:"line2,omitempty"`
 	PostalCode *string `json:"postalCode,omitempty"`
 	State      *string `json:"state,omitempty"`
@@ -79,9 +146,9 @@ func (o *Address) GetCountry() *string {
 	return o.Country
 }
 
-func (o *Address) GetLine1() string {
+func (o *Address) GetLine1() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Line1
 }
@@ -108,37 +175,37 @@ func (o *Address) GetState() *string {
 }
 
 type Contract struct {
-	End   int64 `json:"end"`
-	Start int64 `json:"start"`
+	End   float64 `json:"end"`
+	Start float64 `json:"start"`
 }
 
-func (o *Contract) GetEnd() int64 {
+func (o *Contract) GetEnd() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.End
 }
 
-func (o *Contract) GetStart() int64 {
+func (o *Contract) GetStart() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Start
 }
 
 type Controls struct {
-	AnalyticsSampleRateInPercent *int64 `json:"analyticsSampleRateInPercent,omitempty"`
-	AnalyticsSpendLimitInDollars *int64 `json:"analyticsSpendLimitInDollars,omitempty"`
+	AnalyticsSampleRateInPercent *float64 `json:"analyticsSampleRateInPercent,omitempty"`
+	AnalyticsSpendLimitInDollars *float64 `json:"analyticsSpendLimitInDollars,omitempty"`
 }
 
-func (o *Controls) GetAnalyticsSampleRateInPercent() *int64 {
+func (o *Controls) GetAnalyticsSampleRateInPercent() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.AnalyticsSampleRateInPercent
 }
 
-func (o *Controls) GetAnalyticsSpendLimitInDollars() *int64 {
+func (o *Controls) GetAnalyticsSpendLimitInDollars() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -155,7 +222,6 @@ const (
 func (e Currency) ToPointer() *Currency {
 	return &e
 }
-
 func (e *Currency) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -181,7 +247,6 @@ const (
 func (e AuthUserSchemasBillingInvoiceItemsAnalyticsInterval) ToPointer() *AuthUserSchemasBillingInvoiceItemsAnalyticsInterval {
 	return &e
 }
-
 func (e *AuthUserSchemasBillingInvoiceItemsAnalyticsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -196,45 +261,9 @@ func (e *AuthUserSchemasBillingInvoiceItemsAnalyticsInterval) UnmarshalJSON(data
 	}
 }
 
-type IntervalCount int64
-
-const (
-	IntervalCountOne    IntervalCount = 1
-	IntervalCountTwo    IntervalCount = 2
-	IntervalCountThree  IntervalCount = 3
-	IntervalCountSix    IntervalCount = 6
-	IntervalCountTwelve IntervalCount = 12
-)
-
-func (e IntervalCount) ToPointer() *IntervalCount {
-	return &e
-}
-
-func (e *IntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		fallthrough
-	case 12:
-		*e = IntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for IntervalCount: %v", v)
-	}
-}
-
 type AuthUserSchemasBillingInvoiceItemsAnalyticsFrequency struct {
 	Interval      AuthUserSchemasBillingInvoiceItemsAnalyticsInterval `json:"interval"`
-	IntervalCount IntervalCount                                       `json:"intervalCount"`
+	IntervalCount float64                                             `json:"intervalCount"`
 }
 
 func (o *AuthUserSchemasBillingInvoiceItemsAnalyticsFrequency) GetInterval() AuthUserSchemasBillingInvoiceItemsAnalyticsInterval {
@@ -244,34 +273,35 @@ func (o *AuthUserSchemasBillingInvoiceItemsAnalyticsFrequency) GetInterval() Aut
 	return o.Interval
 }
 
-func (o *AuthUserSchemasBillingInvoiceItemsAnalyticsFrequency) GetIntervalCount() IntervalCount {
+func (o *AuthUserSchemasBillingInvoiceItemsAnalyticsFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return IntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // Analytics - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type Analytics struct {
-	CreatedAt   *int64                                                `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                `json:"disabledAt,omitempty"`
-	Frequency   *AuthUserSchemasBillingInvoiceItemsAnalyticsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                  `json:"hidden"`
-	MaxQuantity *int64                                                `json:"maxQuantity,omitempty"`
-	Name        *string                                               `json:"name,omitempty"`
-	Price       int64                                                 `json:"price"`
-	Quantity    int64                                                 `json:"quantity"`
-	Tier        *int64                                                `json:"tier,omitempty"`
+	CreatedAt       *float64                                              `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                              `json:"disabledAt,omitempty"`
+	Frequency       *AuthUserSchemasBillingInvoiceItemsAnalyticsFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                                  `json:"hidden"`
+	HighestQuantity *float64                                              `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                              `json:"maxQuantity,omitempty"`
+	Name            *string                                               `json:"name,omitempty"`
+	Price           float64                                               `json:"price"`
+	Quantity        float64                                               `json:"quantity"`
+	Tier            *float64                                              `json:"tier,omitempty"`
 }
 
-func (o *Analytics) GetCreatedAt() *int64 {
+func (o *Analytics) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *Analytics) GetDisabledAt() *int64 {
+func (o *Analytics) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -292,7 +322,14 @@ func (o *Analytics) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *Analytics) GetMaxQuantity() *int64 {
+func (o *Analytics) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *Analytics) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -306,53 +343,73 @@ func (o *Analytics) GetName() *string {
 	return o.Name
 }
 
-func (o *Analytics) GetPrice() int64 {
+func (o *Analytics) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *Analytics) GetQuantity() int64 {
+func (o *Analytics) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *Analytics) GetTier() *int64 {
+func (o *Analytics) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type AnalyticsUsage struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type Matrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *AnalyticsUsage) GetBatch() int64 {
+func (o *Matrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *Matrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type AnalyticsUsage struct {
+	Batch      float64  `json:"batch"`
+	DisabledAt *float64 `json:"disabledAt,omitempty"`
+	EnabledAt  *float64 `json:"enabledAt,omitempty"`
+	Hidden     bool     `json:"hidden"`
+	Matrix     *Matrix  `json:"matrix,omitempty"`
+	Name       *string  `json:"name,omitempty"`
+	Price      float64  `json:"price"`
+	Threshold  float64  `json:"threshold"`
+	Tier       *float64 `json:"tier,omitempty"`
+}
+
+func (o *AnalyticsUsage) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *AnalyticsUsage) GetDisabledAt() *int64 {
+func (o *AnalyticsUsage) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *AnalyticsUsage) GetEnabledAt() *int64 {
+func (o *AnalyticsUsage) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -366,6 +423,13 @@ func (o *AnalyticsUsage) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *AnalyticsUsage) GetMatrix() *Matrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *AnalyticsUsage) GetName() *string {
 	if o == nil {
 		return nil
@@ -373,53 +437,73 @@ func (o *AnalyticsUsage) GetName() *string {
 	return o.Name
 }
 
-func (o *AnalyticsUsage) GetPrice() int64 {
+func (o *AnalyticsUsage) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *AnalyticsUsage) GetThreshold() int64 {
+func (o *AnalyticsUsage) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *AnalyticsUsage) GetTier() *int64 {
+func (o *AnalyticsUsage) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type Artifacts struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *Artifacts) GetBatch() int64 {
+func (o *AuthUserMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type Artifacts struct {
+	Batch      float64         `json:"batch"`
+	DisabledAt *float64        `json:"disabledAt,omitempty"`
+	EnabledAt  *float64        `json:"enabledAt,omitempty"`
+	Hidden     bool            `json:"hidden"`
+	Matrix     *AuthUserMatrix `json:"matrix,omitempty"`
+	Name       *string         `json:"name,omitempty"`
+	Price      float64         `json:"price"`
+	Threshold  float64         `json:"threshold"`
+	Tier       *float64        `json:"tier,omitempty"`
+}
+
+func (o *Artifacts) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *Artifacts) GetDisabledAt() *int64 {
+func (o *Artifacts) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *Artifacts) GetEnabledAt() *int64 {
+func (o *Artifacts) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -433,6 +517,13 @@ func (o *Artifacts) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *Artifacts) GetMatrix() *AuthUserMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *Artifacts) GetName() *string {
 	if o == nil {
 		return nil
@@ -440,53 +531,73 @@ func (o *Artifacts) GetName() *string {
 	return o.Name
 }
 
-func (o *Artifacts) GetPrice() int64 {
+func (o *Artifacts) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *Artifacts) GetThreshold() int64 {
+func (o *Artifacts) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *Artifacts) GetTier() *int64 {
+func (o *Artifacts) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type Bandwidth struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *Bandwidth) GetBatch() int64 {
+func (o *AuthUserSchemasMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type Bandwidth struct {
+	Batch      float64                `json:"batch"`
+	DisabledAt *float64               `json:"disabledAt,omitempty"`
+	EnabledAt  *float64               `json:"enabledAt,omitempty"`
+	Hidden     bool                   `json:"hidden"`
+	Matrix     *AuthUserSchemasMatrix `json:"matrix,omitempty"`
+	Name       *string                `json:"name,omitempty"`
+	Price      float64                `json:"price"`
+	Threshold  float64                `json:"threshold"`
+	Tier       *float64               `json:"tier,omitempty"`
+}
+
+func (o *Bandwidth) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *Bandwidth) GetDisabledAt() *int64 {
+func (o *Bandwidth) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *Bandwidth) GetEnabledAt() *int64 {
+func (o *Bandwidth) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -500,6 +611,13 @@ func (o *Bandwidth) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *Bandwidth) GetMatrix() *AuthUserSchemasMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *Bandwidth) GetName() *string {
 	if o == nil {
 		return nil
@@ -507,21 +625,585 @@ func (o *Bandwidth) GetName() *string {
 	return o.Name
 }
 
-func (o *Bandwidth) GetPrice() int64 {
+func (o *Bandwidth) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *Bandwidth) GetThreshold() int64 {
+func (o *Bandwidth) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *Bandwidth) GetTier() *int64 {
+func (o *Bandwidth) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BlobStores struct {
+	Batch      float64                       `json:"batch"`
+	DisabledAt *float64                      `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                      `json:"enabledAt,omitempty"`
+	Hidden     bool                          `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingMatrix `json:"matrix,omitempty"`
+	Name       *string                       `json:"name,omitempty"`
+	Price      float64                       `json:"price"`
+	Threshold  float64                       `json:"threshold"`
+	Tier       *float64                      `json:"tier,omitempty"`
+}
+
+func (o *BlobStores) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BlobStores) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BlobStores) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BlobStores) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BlobStores) GetMatrix() *AuthUserSchemasBillingMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BlobStores) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BlobStores) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BlobStores) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BlobStores) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BlobTotalAdvancedRequests struct {
+	Batch      float64                                   `json:"batch"`
+	DisabledAt *float64                                  `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                  `json:"enabledAt,omitempty"`
+	Hidden     bool                                      `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsMatrix `json:"matrix,omitempty"`
+	Name       *string                                   `json:"name,omitempty"`
+	Price      float64                                   `json:"price"`
+	Threshold  float64                                   `json:"threshold"`
+	Tier       *float64                                  `json:"tier,omitempty"`
+}
+
+func (o *BlobTotalAdvancedRequests) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BlobTotalAdvancedRequests) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BlobTotalAdvancedRequests) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BlobTotalAdvancedRequests) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BlobTotalAdvancedRequests) GetMatrix() *AuthUserSchemasBillingInvoiceItemsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BlobTotalAdvancedRequests) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BlobTotalAdvancedRequests) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BlobTotalAdvancedRequests) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BlobTotalAdvancedRequests) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsBlobTotalAvgSizeInBytesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsBlobTotalAvgSizeInBytesMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsBlobTotalAvgSizeInBytesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BlobTotalAvgSizeInBytes struct {
+	Batch      float64                                                          `json:"batch"`
+	DisabledAt *float64                                                         `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                         `json:"enabledAt,omitempty"`
+	Hidden     bool                                                             `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsBlobTotalAvgSizeInBytesMatrix `json:"matrix,omitempty"`
+	Name       *string                                                          `json:"name,omitempty"`
+	Price      float64                                                          `json:"price"`
+	Threshold  float64                                                          `json:"threshold"`
+	Tier       *float64                                                         `json:"tier,omitempty"`
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetMatrix() *AuthUserSchemasBillingInvoiceItemsBlobTotalAvgSizeInBytesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytesMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BlobTotalGetResponseObjectSizeInBytes struct {
+	Batch      float64                                                                        `json:"batch"`
+	DisabledAt *float64                                                                       `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                       `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                           `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytesMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                        `json:"name,omitempty"`
+	Price      float64                                                                        `json:"price"`
+	Threshold  float64                                                                        `json:"threshold"`
+	Tier       *float64                                                                       `json:"tier,omitempty"`
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetMatrix() *AuthUserSchemasBillingInvoiceItemsBlobTotalGetResponseObjectSizeInBytesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsBlobTotalSimpleRequestsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsBlobTotalSimpleRequestsMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsBlobTotalSimpleRequestsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BlobTotalSimpleRequests struct {
+	Batch      float64                                                          `json:"batch"`
+	DisabledAt *float64                                                         `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                         `json:"enabledAt,omitempty"`
+	Hidden     bool                                                             `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsBlobTotalSimpleRequestsMatrix `json:"matrix,omitempty"`
+	Name       *string                                                          `json:"name,omitempty"`
+	Price      float64                                                          `json:"price"`
+	Threshold  float64                                                          `json:"threshold"`
+	Tier       *float64                                                         `json:"tier,omitempty"`
+}
+
+func (o *BlobTotalSimpleRequests) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BlobTotalSimpleRequests) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BlobTotalSimpleRequests) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BlobTotalSimpleRequests) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BlobTotalSimpleRequests) GetMatrix() *AuthUserSchemasBillingInvoiceItemsBlobTotalSimpleRequestsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BlobTotalSimpleRequests) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BlobTotalSimpleRequests) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BlobTotalSimpleRequests) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BlobTotalSimpleRequests) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsBuildMinuteMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsBuildMinuteMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsBuildMinuteMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BuildMinute struct {
+	Batch      float64                                              `json:"batch"`
+	DisabledAt *float64                                             `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                             `json:"enabledAt,omitempty"`
+	Hidden     bool                                                 `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsBuildMinuteMatrix `json:"matrix,omitempty"`
+	Name       *string                                              `json:"name,omitempty"`
+	Price      float64                                              `json:"price"`
+	Threshold  float64                                              `json:"threshold"`
+	Tier       *float64                                             `json:"tier,omitempty"`
+}
+
+func (o *BuildMinute) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BuildMinute) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BuildMinute) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BuildMinute) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BuildMinute) GetMatrix() *AuthUserSchemasBillingInvoiceItemsBuildMinuteMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BuildMinute) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BuildMinute) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BuildMinute) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BuildMinute) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -537,7 +1219,6 @@ const (
 func (e AuthUserInterval) ToPointer() *AuthUserInterval {
 	return &e
 }
-
 func (e *AuthUserInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -552,45 +1233,9 @@ func (e *AuthUserInterval) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type AuthUserIntervalCount int64
-
-const (
-	AuthUserIntervalCountOne    AuthUserIntervalCount = 1
-	AuthUserIntervalCountTwo    AuthUserIntervalCount = 2
-	AuthUserIntervalCountThree  AuthUserIntervalCount = 3
-	AuthUserIntervalCountSix    AuthUserIntervalCount = 6
-	AuthUserIntervalCountTwelve AuthUserIntervalCount = 12
-)
-
-func (e AuthUserIntervalCount) ToPointer() *AuthUserIntervalCount {
-	return &e
-}
-
-func (e *AuthUserIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		fallthrough
-	case 12:
-		*e = AuthUserIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AuthUserIntervalCount: %v", v)
-	}
-}
-
 type AuthUserFrequency struct {
-	Interval      AuthUserInterval      `json:"interval"`
-	IntervalCount AuthUserIntervalCount `json:"intervalCount"`
+	Interval      AuthUserInterval `json:"interval"`
+	IntervalCount float64          `json:"intervalCount"`
 }
 
 func (o *AuthUserFrequency) GetInterval() AuthUserInterval {
@@ -600,34 +1245,35 @@ func (o *AuthUserFrequency) GetInterval() AuthUserInterval {
 	return o.Interval
 }
 
-func (o *AuthUserFrequency) GetIntervalCount() AuthUserIntervalCount {
+func (o *AuthUserFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return AuthUserIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // ConcurrentBuilds - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type ConcurrentBuilds struct {
-	CreatedAt   *int64             `json:"createdAt,omitempty"`
-	DisabledAt  *int64             `json:"disabledAt,omitempty"`
-	Frequency   *AuthUserFrequency `json:"frequency,omitempty"`
-	Hidden      bool               `json:"hidden"`
-	MaxQuantity *int64             `json:"maxQuantity,omitempty"`
-	Name        *string            `json:"name,omitempty"`
-	Price       int64              `json:"price"`
-	Quantity    int64              `json:"quantity"`
-	Tier        *int64             `json:"tier,omitempty"`
+	CreatedAt       *float64           `json:"createdAt,omitempty"`
+	DisabledAt      *float64           `json:"disabledAt,omitempty"`
+	Frequency       *AuthUserFrequency `json:"frequency,omitempty"`
+	Hidden          bool               `json:"hidden"`
+	HighestQuantity *float64           `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64           `json:"maxQuantity,omitempty"`
+	Name            *string            `json:"name,omitempty"`
+	Price           float64            `json:"price"`
+	Quantity        float64            `json:"quantity"`
+	Tier            *float64           `json:"tier,omitempty"`
 }
 
-func (o *ConcurrentBuilds) GetCreatedAt() *int64 {
+func (o *ConcurrentBuilds) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *ConcurrentBuilds) GetDisabledAt() *int64 {
+func (o *ConcurrentBuilds) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -648,7 +1294,14 @@ func (o *ConcurrentBuilds) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *ConcurrentBuilds) GetMaxQuantity() *int64 {
+func (o *ConcurrentBuilds) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *ConcurrentBuilds) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -662,120 +1315,73 @@ func (o *ConcurrentBuilds) GetName() *string {
 	return o.Name
 }
 
-func (o *ConcurrentBuilds) GetPrice() int64 {
+func (o *ConcurrentBuilds) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *ConcurrentBuilds) GetQuantity() int64 {
+func (o *ConcurrentBuilds) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *ConcurrentBuilds) GetTier() *int64 {
+func (o *ConcurrentBuilds) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CronJobInvocation struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsDataCacheReadMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *CronJobInvocation) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsDataCacheReadMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
 	}
-	return o.Batch
+	return o.DefaultUnitPrice
 }
 
-func (o *CronJobInvocation) GetDisabledAt() *int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsDataCacheReadMatrix) GetDimensionPrices() map[string]string {
 	if o == nil {
-		return nil
+		return map[string]string{}
 	}
-	return o.DisabledAt
-}
-
-func (o *CronJobInvocation) GetEnabledAt() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.EnabledAt
-}
-
-func (o *CronJobInvocation) GetHidden() bool {
-	if o == nil {
-		return false
-	}
-	return o.Hidden
-}
-
-func (o *CronJobInvocation) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *CronJobInvocation) GetPrice() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Price
-}
-
-func (o *CronJobInvocation) GetThreshold() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Threshold
-}
-
-func (o *CronJobInvocation) GetTier() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Tier
+	return o.DimensionPrices
 }
 
 type DataCacheRead struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+	Batch      float64                                                `json:"batch"`
+	DisabledAt *float64                                               `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                               `json:"enabledAt,omitempty"`
+	Hidden     bool                                                   `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsDataCacheReadMatrix `json:"matrix,omitempty"`
+	Name       *string                                                `json:"name,omitempty"`
+	Price      float64                                                `json:"price"`
+	Threshold  float64                                                `json:"threshold"`
+	Tier       *float64                                               `json:"tier,omitempty"`
 }
 
-func (o *DataCacheRead) GetBatch() int64 {
+func (o *DataCacheRead) GetBatch() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *DataCacheRead) GetDisabledAt() *int64 {
+func (o *DataCacheRead) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *DataCacheRead) GetEnabledAt() *int64 {
+func (o *DataCacheRead) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -789,6 +1395,13 @@ func (o *DataCacheRead) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *DataCacheRead) GetMatrix() *AuthUserSchemasBillingInvoiceItemsDataCacheReadMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *DataCacheRead) GetName() *string {
 	if o == nil {
 		return nil
@@ -796,53 +1409,73 @@ func (o *DataCacheRead) GetName() *string {
 	return o.Name
 }
 
-func (o *DataCacheRead) GetPrice() int64 {
+func (o *DataCacheRead) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *DataCacheRead) GetThreshold() int64 {
+func (o *DataCacheRead) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *DataCacheRead) GetTier() *int64 {
+func (o *DataCacheRead) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type DataCacheRevalidation struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsDataCacheRevalidationMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *DataCacheRevalidation) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsDataCacheRevalidationMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsDataCacheRevalidationMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type DataCacheRevalidation struct {
+	Batch      float64                                                        `json:"batch"`
+	DisabledAt *float64                                                       `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                       `json:"enabledAt,omitempty"`
+	Hidden     bool                                                           `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsDataCacheRevalidationMatrix `json:"matrix,omitempty"`
+	Name       *string                                                        `json:"name,omitempty"`
+	Price      float64                                                        `json:"price"`
+	Threshold  float64                                                        `json:"threshold"`
+	Tier       *float64                                                       `json:"tier,omitempty"`
+}
+
+func (o *DataCacheRevalidation) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *DataCacheRevalidation) GetDisabledAt() *int64 {
+func (o *DataCacheRevalidation) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *DataCacheRevalidation) GetEnabledAt() *int64 {
+func (o *DataCacheRevalidation) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -856,6 +1489,13 @@ func (o *DataCacheRevalidation) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *DataCacheRevalidation) GetMatrix() *AuthUserSchemasBillingInvoiceItemsDataCacheRevalidationMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *DataCacheRevalidation) GetName() *string {
 	if o == nil {
 		return nil
@@ -863,53 +1503,73 @@ func (o *DataCacheRevalidation) GetName() *string {
 	return o.Name
 }
 
-func (o *DataCacheRevalidation) GetPrice() int64 {
+func (o *DataCacheRevalidation) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *DataCacheRevalidation) GetThreshold() int64 {
+func (o *DataCacheRevalidation) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *DataCacheRevalidation) GetTier() *int64 {
+func (o *DataCacheRevalidation) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type DataCacheWrite struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsDataCacheWriteMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *DataCacheWrite) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsDataCacheWriteMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsDataCacheWriteMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type DataCacheWrite struct {
+	Batch      float64                                                 `json:"batch"`
+	DisabledAt *float64                                                `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                `json:"enabledAt,omitempty"`
+	Hidden     bool                                                    `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsDataCacheWriteMatrix `json:"matrix,omitempty"`
+	Name       *string                                                 `json:"name,omitempty"`
+	Price      float64                                                 `json:"price"`
+	Threshold  float64                                                 `json:"threshold"`
+	Tier       *float64                                                `json:"tier,omitempty"`
+}
+
+func (o *DataCacheWrite) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *DataCacheWrite) GetDisabledAt() *int64 {
+func (o *DataCacheWrite) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *DataCacheWrite) GetEnabledAt() *int64 {
+func (o *DataCacheWrite) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -923,6 +1583,13 @@ func (o *DataCacheWrite) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *DataCacheWrite) GetMatrix() *AuthUserSchemasBillingInvoiceItemsDataCacheWriteMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *DataCacheWrite) GetName() *string {
 	if o == nil {
 		return nil
@@ -930,53 +1597,73 @@ func (o *DataCacheWrite) GetName() *string {
 	return o.Name
 }
 
-func (o *DataCacheWrite) GetPrice() int64 {
+func (o *DataCacheWrite) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *DataCacheWrite) GetThreshold() int64 {
+func (o *DataCacheWrite) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *DataCacheWrite) GetTier() *int64 {
+func (o *DataCacheWrite) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type EdgeConfigRead struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsEdgeConfigReadMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *EdgeConfigRead) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeConfigReadMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeConfigReadMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeConfigRead struct {
+	Batch      float64                                                 `json:"batch"`
+	DisabledAt *float64                                                `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                `json:"enabledAt,omitempty"`
+	Hidden     bool                                                    `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsEdgeConfigReadMatrix `json:"matrix,omitempty"`
+	Name       *string                                                 `json:"name,omitempty"`
+	Price      float64                                                 `json:"price"`
+	Threshold  float64                                                 `json:"threshold"`
+	Tier       *float64                                                `json:"tier,omitempty"`
+}
+
+func (o *EdgeConfigRead) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *EdgeConfigRead) GetDisabledAt() *int64 {
+func (o *EdgeConfigRead) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *EdgeConfigRead) GetEnabledAt() *int64 {
+func (o *EdgeConfigRead) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -990,6 +1677,13 @@ func (o *EdgeConfigRead) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *EdgeConfigRead) GetMatrix() *AuthUserSchemasBillingInvoiceItemsEdgeConfigReadMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *EdgeConfigRead) GetName() *string {
 	if o == nil {
 		return nil
@@ -997,53 +1691,73 @@ func (o *EdgeConfigRead) GetName() *string {
 	return o.Name
 }
 
-func (o *EdgeConfigRead) GetPrice() int64 {
+func (o *EdgeConfigRead) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *EdgeConfigRead) GetThreshold() int64 {
+func (o *EdgeConfigRead) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *EdgeConfigRead) GetTier() *int64 {
+func (o *EdgeConfigRead) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type EdgeConfigWrite struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsEdgeConfigWriteMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *EdgeConfigWrite) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeConfigWriteMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeConfigWriteMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeConfigWrite struct {
+	Batch      float64                                                  `json:"batch"`
+	DisabledAt *float64                                                 `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                 `json:"enabledAt,omitempty"`
+	Hidden     bool                                                     `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsEdgeConfigWriteMatrix `json:"matrix,omitempty"`
+	Name       *string                                                  `json:"name,omitempty"`
+	Price      float64                                                  `json:"price"`
+	Threshold  float64                                                  `json:"threshold"`
+	Tier       *float64                                                 `json:"tier,omitempty"`
+}
+
+func (o *EdgeConfigWrite) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *EdgeConfigWrite) GetDisabledAt() *int64 {
+func (o *EdgeConfigWrite) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *EdgeConfigWrite) GetEnabledAt() *int64 {
+func (o *EdgeConfigWrite) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1057,6 +1771,13 @@ func (o *EdgeConfigWrite) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *EdgeConfigWrite) GetMatrix() *AuthUserSchemasBillingInvoiceItemsEdgeConfigWriteMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *EdgeConfigWrite) GetName() *string {
 	if o == nil {
 		return nil
@@ -1064,53 +1785,73 @@ func (o *EdgeConfigWrite) GetName() *string {
 	return o.Name
 }
 
-func (o *EdgeConfigWrite) GetPrice() int64 {
+func (o *EdgeConfigWrite) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *EdgeConfigWrite) GetThreshold() int64 {
+func (o *EdgeConfigWrite) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *EdgeConfigWrite) GetTier() *int64 {
+func (o *EdgeConfigWrite) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type EdgeFunctionExecutionUnits struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *EdgeFunctionExecutionUnits) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeFunctionExecutionUnits struct {
+	Batch      float64                                                             `json:"batch"`
+	DisabledAt *float64                                                            `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                            `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix `json:"matrix,omitempty"`
+	Name       *string                                                             `json:"name,omitempty"`
+	Price      float64                                                             `json:"price"`
+	Threshold  float64                                                             `json:"threshold"`
+	Tier       *float64                                                            `json:"tier,omitempty"`
+}
+
+func (o *EdgeFunctionExecutionUnits) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *EdgeFunctionExecutionUnits) GetDisabledAt() *int64 {
+func (o *EdgeFunctionExecutionUnits) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *EdgeFunctionExecutionUnits) GetEnabledAt() *int64 {
+func (o *EdgeFunctionExecutionUnits) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1124,6 +1865,13 @@ func (o *EdgeFunctionExecutionUnits) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *EdgeFunctionExecutionUnits) GetMatrix() *AuthUserSchemasBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *EdgeFunctionExecutionUnits) GetName() *string {
 	if o == nil {
 		return nil
@@ -1131,53 +1879,73 @@ func (o *EdgeFunctionExecutionUnits) GetName() *string {
 	return o.Name
 }
 
-func (o *EdgeFunctionExecutionUnits) GetPrice() int64 {
+func (o *EdgeFunctionExecutionUnits) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *EdgeFunctionExecutionUnits) GetThreshold() int64 {
+func (o *EdgeFunctionExecutionUnits) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *EdgeFunctionExecutionUnits) GetTier() *int64 {
+func (o *EdgeFunctionExecutionUnits) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type EdgeMiddlewareInvocations struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *EdgeMiddlewareInvocations) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeMiddlewareInvocations struct {
+	Batch      float64                                                            `json:"batch"`
+	DisabledAt *float64                                                           `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                           `json:"enabledAt,omitempty"`
+	Hidden     bool                                                               `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix `json:"matrix,omitempty"`
+	Name       *string                                                            `json:"name,omitempty"`
+	Price      float64                                                            `json:"price"`
+	Threshold  float64                                                            `json:"threshold"`
+	Tier       *float64                                                           `json:"tier,omitempty"`
+}
+
+func (o *EdgeMiddlewareInvocations) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *EdgeMiddlewareInvocations) GetDisabledAt() *int64 {
+func (o *EdgeMiddlewareInvocations) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *EdgeMiddlewareInvocations) GetEnabledAt() *int64 {
+func (o *EdgeMiddlewareInvocations) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1191,6 +1959,13 @@ func (o *EdgeMiddlewareInvocations) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *EdgeMiddlewareInvocations) GetMatrix() *AuthUserSchemasBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *EdgeMiddlewareInvocations) GetName() *string {
 	if o == nil {
 		return nil
@@ -1198,21 +1973,209 @@ func (o *EdgeMiddlewareInvocations) GetName() *string {
 	return o.Name
 }
 
-func (o *EdgeMiddlewareInvocations) GetPrice() int64 {
+func (o *EdgeMiddlewareInvocations) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *EdgeMiddlewareInvocations) GetThreshold() int64 {
+func (o *EdgeMiddlewareInvocations) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *EdgeMiddlewareInvocations) GetTier() *int64 {
+func (o *EdgeMiddlewareInvocations) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsEdgeRequestMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeRequestMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeRequestMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeRequest struct {
+	Batch      float64                                              `json:"batch"`
+	DisabledAt *float64                                             `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                             `json:"enabledAt,omitempty"`
+	Hidden     bool                                                 `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsEdgeRequestMatrix `json:"matrix,omitempty"`
+	Name       *string                                              `json:"name,omitempty"`
+	Price      float64                                              `json:"price"`
+	Threshold  float64                                              `json:"threshold"`
+	Tier       *float64                                             `json:"tier,omitempty"`
+}
+
+func (o *EdgeRequest) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *EdgeRequest) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *EdgeRequest) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *EdgeRequest) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *EdgeRequest) GetMatrix() *AuthUserSchemasBillingInvoiceItemsEdgeRequestMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *EdgeRequest) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *EdgeRequest) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *EdgeRequest) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *EdgeRequest) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsEdgeRequestAdditionalCPUDurationMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeRequestAdditionalCPUDurationMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsEdgeRequestAdditionalCPUDurationMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeRequestAdditionalCPUDuration struct {
+	Batch      float64                                                                   `json:"batch"`
+	DisabledAt *float64                                                                  `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                  `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                      `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsEdgeRequestAdditionalCPUDurationMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                   `json:"name,omitempty"`
+	Price      float64                                                                   `json:"price"`
+	Threshold  float64                                                                   `json:"threshold"`
+	Tier       *float64                                                                  `json:"tier,omitempty"`
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetMatrix() *AuthUserSchemasBillingInvoiceItemsEdgeRequestAdditionalCPUDurationMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1228,7 +2191,6 @@ const (
 func (e AuthUserSchemasInterval) ToPointer() *AuthUserSchemasInterval {
 	return &e
 }
-
 func (e *AuthUserSchemasInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1243,45 +2205,9 @@ func (e *AuthUserSchemasInterval) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type AuthUserSchemasIntervalCount int64
-
-const (
-	AuthUserSchemasIntervalCountOne    AuthUserSchemasIntervalCount = 1
-	AuthUserSchemasIntervalCountTwo    AuthUserSchemasIntervalCount = 2
-	AuthUserSchemasIntervalCountThree  AuthUserSchemasIntervalCount = 3
-	AuthUserSchemasIntervalCountSix    AuthUserSchemasIntervalCount = 6
-	AuthUserSchemasIntervalCountTwelve AuthUserSchemasIntervalCount = 12
-)
-
-func (e AuthUserSchemasIntervalCount) ToPointer() *AuthUserSchemasIntervalCount {
-	return &e
-}
-
-func (e *AuthUserSchemasIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		fallthrough
-	case 12:
-		*e = AuthUserSchemasIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AuthUserSchemasIntervalCount: %v", v)
-	}
-}
-
 type AuthUserSchemasFrequency struct {
-	Interval      AuthUserSchemasInterval      `json:"interval"`
-	IntervalCount AuthUserSchemasIntervalCount `json:"intervalCount"`
+	Interval      AuthUserSchemasInterval `json:"interval"`
+	IntervalCount float64                 `json:"intervalCount"`
 }
 
 func (o *AuthUserSchemasFrequency) GetInterval() AuthUserSchemasInterval {
@@ -1291,34 +2217,35 @@ func (o *AuthUserSchemasFrequency) GetInterval() AuthUserSchemasInterval {
 	return o.Interval
 }
 
-func (o *AuthUserSchemasFrequency) GetIntervalCount() AuthUserSchemasIntervalCount {
+func (o *AuthUserSchemasFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return AuthUserSchemasIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // Enterprise - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type Enterprise struct {
-	CreatedAt   *int64                    `json:"createdAt,omitempty"`
-	DisabledAt  *int64                    `json:"disabledAt,omitempty"`
-	Frequency   *AuthUserSchemasFrequency `json:"frequency,omitempty"`
-	Hidden      bool                      `json:"hidden"`
-	MaxQuantity *int64                    `json:"maxQuantity,omitempty"`
-	Name        *string                   `json:"name,omitempty"`
-	Price       int64                     `json:"price"`
-	Quantity    int64                     `json:"quantity"`
-	Tier        *int64                    `json:"tier,omitempty"`
+	CreatedAt       *float64                  `json:"createdAt,omitempty"`
+	DisabledAt      *float64                  `json:"disabledAt,omitempty"`
+	Frequency       *AuthUserSchemasFrequency `json:"frequency,omitempty"`
+	Hidden          bool                      `json:"hidden"`
+	HighestQuantity *float64                  `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                  `json:"maxQuantity,omitempty"`
+	Name            *string                   `json:"name,omitempty"`
+	Price           float64                   `json:"price"`
+	Quantity        float64                   `json:"quantity"`
+	Tier            *float64                  `json:"tier,omitempty"`
 }
 
-func (o *Enterprise) GetCreatedAt() *int64 {
+func (o *Enterprise) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *Enterprise) GetDisabledAt() *int64 {
+func (o *Enterprise) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1339,7 +2266,14 @@ func (o *Enterprise) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *Enterprise) GetMaxQuantity() *int64 {
+func (o *Enterprise) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *Enterprise) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1353,21 +2287,491 @@ func (o *Enterprise) GetName() *string {
 	return o.Name
 }
 
-func (o *Enterprise) GetPrice() int64 {
+func (o *Enterprise) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *Enterprise) GetQuantity() int64 {
+func (o *Enterprise) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *Enterprise) GetTier() *int64 {
+func (o *Enterprise) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsFastDataTransferMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsFastDataTransferMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsFastDataTransferMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type FastDataTransfer struct {
+	Batch      float64                                                   `json:"batch"`
+	DisabledAt *float64                                                  `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                  `json:"enabledAt,omitempty"`
+	Hidden     bool                                                      `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsFastDataTransferMatrix `json:"matrix,omitempty"`
+	Name       *string                                                   `json:"name,omitempty"`
+	Price      float64                                                   `json:"price"`
+	Threshold  float64                                                   `json:"threshold"`
+	Tier       *float64                                                  `json:"tier,omitempty"`
+}
+
+func (o *FastDataTransfer) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *FastDataTransfer) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *FastDataTransfer) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *FastDataTransfer) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *FastDataTransfer) GetMatrix() *AuthUserSchemasBillingInvoiceItemsFastDataTransferMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *FastDataTransfer) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *FastDataTransfer) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *FastDataTransfer) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *FastDataTransfer) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsFastOriginTransferMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsFastOriginTransferMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsFastOriginTransferMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type FastOriginTransfer struct {
+	Batch      float64                                                     `json:"batch"`
+	DisabledAt *float64                                                    `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                    `json:"enabledAt,omitempty"`
+	Hidden     bool                                                        `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsFastOriginTransferMatrix `json:"matrix,omitempty"`
+	Name       *string                                                     `json:"name,omitempty"`
+	Price      float64                                                     `json:"price"`
+	Threshold  float64                                                     `json:"threshold"`
+	Tier       *float64                                                    `json:"tier,omitempty"`
+}
+
+func (o *FastOriginTransfer) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *FastOriginTransfer) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *FastOriginTransfer) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *FastOriginTransfer) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *FastOriginTransfer) GetMatrix() *AuthUserSchemasBillingInvoiceItemsFastOriginTransferMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *FastOriginTransfer) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *FastOriginTransfer) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *FastOriginTransfer) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *FastOriginTransfer) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsFunctionDurationMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsFunctionDurationMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsFunctionDurationMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type FunctionDuration struct {
+	Batch      float64                                                   `json:"batch"`
+	DisabledAt *float64                                                  `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                  `json:"enabledAt,omitempty"`
+	Hidden     bool                                                      `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsFunctionDurationMatrix `json:"matrix,omitempty"`
+	Name       *string                                                   `json:"name,omitempty"`
+	Price      float64                                                   `json:"price"`
+	Threshold  float64                                                   `json:"threshold"`
+	Tier       *float64                                                  `json:"tier,omitempty"`
+}
+
+func (o *FunctionDuration) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *FunctionDuration) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *FunctionDuration) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *FunctionDuration) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *FunctionDuration) GetMatrix() *AuthUserSchemasBillingInvoiceItemsFunctionDurationMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *FunctionDuration) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *FunctionDuration) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *FunctionDuration) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *FunctionDuration) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsFunctionInvocationMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsFunctionInvocationMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsFunctionInvocationMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type FunctionInvocation struct {
+	Batch      float64                                                     `json:"batch"`
+	DisabledAt *float64                                                    `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                    `json:"enabledAt,omitempty"`
+	Hidden     bool                                                        `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsFunctionInvocationMatrix `json:"matrix,omitempty"`
+	Name       *string                                                     `json:"name,omitempty"`
+	Price      float64                                                     `json:"price"`
+	Threshold  float64                                                     `json:"threshold"`
+	Tier       *float64                                                    `json:"tier,omitempty"`
+}
+
+func (o *FunctionInvocation) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *FunctionInvocation) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *FunctionInvocation) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *FunctionInvocation) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *FunctionInvocation) GetMatrix() *AuthUserSchemasBillingInvoiceItemsFunctionInvocationMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *FunctionInvocation) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *FunctionInvocation) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *FunctionInvocation) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *FunctionInvocation) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsLogDrainsVolumeMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsLogDrainsVolumeMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsLogDrainsVolumeMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type LogDrainsVolume struct {
+	Batch      float64                                                  `json:"batch"`
+	DisabledAt *float64                                                 `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                 `json:"enabledAt,omitempty"`
+	Hidden     bool                                                     `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsLogDrainsVolumeMatrix `json:"matrix,omitempty"`
+	Name       *string                                                  `json:"name,omitempty"`
+	Price      float64                                                  `json:"price"`
+	Threshold  float64                                                  `json:"threshold"`
+	Tier       *float64                                                 `json:"tier,omitempty"`
+}
+
+func (o *LogDrainsVolume) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *LogDrainsVolume) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *LogDrainsVolume) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *LogDrainsVolume) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *LogDrainsVolume) GetMatrix() *AuthUserSchemasBillingInvoiceItemsLogDrainsVolumeMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *LogDrainsVolume) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *LogDrainsVolume) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *LogDrainsVolume) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *LogDrainsVolume) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1383,7 +2787,6 @@ const (
 func (e AuthUserSchemasBillingInterval) ToPointer() *AuthUserSchemasBillingInterval {
 	return &e
 }
-
 func (e *AuthUserSchemasBillingInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1398,45 +2801,9 @@ func (e *AuthUserSchemasBillingInterval) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type AuthUserSchemasBillingIntervalCount int64
-
-const (
-	AuthUserSchemasBillingIntervalCountOne    AuthUserSchemasBillingIntervalCount = 1
-	AuthUserSchemasBillingIntervalCountTwo    AuthUserSchemasBillingIntervalCount = 2
-	AuthUserSchemasBillingIntervalCountThree  AuthUserSchemasBillingIntervalCount = 3
-	AuthUserSchemasBillingIntervalCountSix    AuthUserSchemasBillingIntervalCount = 6
-	AuthUserSchemasBillingIntervalCountTwelve AuthUserSchemasBillingIntervalCount = 12
-)
-
-func (e AuthUserSchemasBillingIntervalCount) ToPointer() *AuthUserSchemasBillingIntervalCount {
-	return &e
-}
-
-func (e *AuthUserSchemasBillingIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		fallthrough
-	case 12:
-		*e = AuthUserSchemasBillingIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AuthUserSchemasBillingIntervalCount: %v", v)
-	}
-}
-
 type AuthUserSchemasBillingFrequency struct {
-	Interval      AuthUserSchemasBillingInterval      `json:"interval"`
-	IntervalCount AuthUserSchemasBillingIntervalCount `json:"intervalCount"`
+	Interval      AuthUserSchemasBillingInterval `json:"interval"`
+	IntervalCount float64                        `json:"intervalCount"`
 }
 
 func (o *AuthUserSchemasBillingFrequency) GetInterval() AuthUserSchemasBillingInterval {
@@ -1446,34 +2813,35 @@ func (o *AuthUserSchemasBillingFrequency) GetInterval() AuthUserSchemasBillingIn
 	return o.Interval
 }
 
-func (o *AuthUserSchemasBillingFrequency) GetIntervalCount() AuthUserSchemasBillingIntervalCount {
+func (o *AuthUserSchemasBillingFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return AuthUserSchemasBillingIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // Monitoring - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type Monitoring struct {
-	CreatedAt   *int64                           `json:"createdAt,omitempty"`
-	DisabledAt  *int64                           `json:"disabledAt,omitempty"`
-	Frequency   *AuthUserSchemasBillingFrequency `json:"frequency,omitempty"`
-	Hidden      bool                             `json:"hidden"`
-	MaxQuantity *int64                           `json:"maxQuantity,omitempty"`
-	Name        *string                          `json:"name,omitempty"`
-	Price       int64                            `json:"price"`
-	Quantity    int64                            `json:"quantity"`
-	Tier        *int64                           `json:"tier,omitempty"`
+	CreatedAt       *float64                         `json:"createdAt,omitempty"`
+	DisabledAt      *float64                         `json:"disabledAt,omitempty"`
+	Frequency       *AuthUserSchemasBillingFrequency `json:"frequency,omitempty"`
+	Hidden          bool                             `json:"hidden"`
+	HighestQuantity *float64                         `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                         `json:"maxQuantity,omitempty"`
+	Name            *string                          `json:"name,omitempty"`
+	Price           float64                          `json:"price"`
+	Quantity        float64                          `json:"quantity"`
+	Tier            *float64                         `json:"tier,omitempty"`
 }
 
-func (o *Monitoring) GetCreatedAt() *int64 {
+func (o *Monitoring) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *Monitoring) GetDisabledAt() *int64 {
+func (o *Monitoring) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1494,7 +2862,14 @@ func (o *Monitoring) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *Monitoring) GetMaxQuantity() *int64 {
+func (o *Monitoring) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *Monitoring) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1508,53 +2883,73 @@ func (o *Monitoring) GetName() *string {
 	return o.Name
 }
 
-func (o *Monitoring) GetPrice() int64 {
+func (o *Monitoring) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *Monitoring) GetQuantity() int64 {
+func (o *Monitoring) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *Monitoring) GetTier() *int64 {
+func (o *Monitoring) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type MonitoringMetric struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsMonitoringMetricMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *MonitoringMetric) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsMonitoringMetricMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsMonitoringMetricMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type MonitoringMetric struct {
+	Batch      float64                                                   `json:"batch"`
+	DisabledAt *float64                                                  `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                  `json:"enabledAt,omitempty"`
+	Hidden     bool                                                      `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsMonitoringMetricMatrix `json:"matrix,omitempty"`
+	Name       *string                                                   `json:"name,omitempty"`
+	Price      float64                                                   `json:"price"`
+	Threshold  float64                                                   `json:"threshold"`
+	Tier       *float64                                                  `json:"tier,omitempty"`
+}
+
+func (o *MonitoringMetric) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *MonitoringMetric) GetDisabledAt() *int64 {
+func (o *MonitoringMetric) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *MonitoringMetric) GetEnabledAt() *int64 {
+func (o *MonitoringMetric) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1568,6 +2963,13 @@ func (o *MonitoringMetric) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *MonitoringMetric) GetMatrix() *AuthUserSchemasBillingInvoiceItemsMonitoringMetricMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *MonitoringMetric) GetName() *string {
 	if o == nil {
 		return nil
@@ -1575,21 +2977,21 @@ func (o *MonitoringMetric) GetName() *string {
 	return o.Name
 }
 
-func (o *MonitoringMetric) GetPrice() int64 {
+func (o *MonitoringMetric) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *MonitoringMetric) GetThreshold() int64 {
+func (o *MonitoringMetric) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *MonitoringMetric) GetTier() *int64 {
+func (o *MonitoringMetric) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1605,7 +3007,6 @@ const (
 func (e AuthUserSchemasBillingInvoiceItemsInterval) ToPointer() *AuthUserSchemasBillingInvoiceItemsInterval {
 	return &e
 }
-
 func (e *AuthUserSchemasBillingInvoiceItemsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1620,45 +3021,9 @@ func (e *AuthUserSchemasBillingInvoiceItemsInterval) UnmarshalJSON(data []byte) 
 	}
 }
 
-type AuthUserSchemasBillingInvoiceItemsIntervalCount int64
-
-const (
-	AuthUserSchemasBillingInvoiceItemsIntervalCountOne    AuthUserSchemasBillingInvoiceItemsIntervalCount = 1
-	AuthUserSchemasBillingInvoiceItemsIntervalCountTwo    AuthUserSchemasBillingInvoiceItemsIntervalCount = 2
-	AuthUserSchemasBillingInvoiceItemsIntervalCountThree  AuthUserSchemasBillingInvoiceItemsIntervalCount = 3
-	AuthUserSchemasBillingInvoiceItemsIntervalCountSix    AuthUserSchemasBillingInvoiceItemsIntervalCount = 6
-	AuthUserSchemasBillingInvoiceItemsIntervalCountTwelve AuthUserSchemasBillingInvoiceItemsIntervalCount = 12
-)
-
-func (e AuthUserSchemasBillingInvoiceItemsIntervalCount) ToPointer() *AuthUserSchemasBillingInvoiceItemsIntervalCount {
-	return &e
-}
-
-func (e *AuthUserSchemasBillingInvoiceItemsIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		fallthrough
-	case 12:
-		*e = AuthUserSchemasBillingInvoiceItemsIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AuthUserSchemasBillingInvoiceItemsIntervalCount: %v", v)
-	}
-}
-
 type AuthUserSchemasBillingInvoiceItemsFrequency struct {
-	Interval      AuthUserSchemasBillingInvoiceItemsInterval      `json:"interval"`
-	IntervalCount AuthUserSchemasBillingInvoiceItemsIntervalCount `json:"intervalCount"`
+	Interval      AuthUserSchemasBillingInvoiceItemsInterval `json:"interval"`
+	IntervalCount float64                                    `json:"intervalCount"`
 }
 
 func (o *AuthUserSchemasBillingInvoiceItemsFrequency) GetInterval() AuthUserSchemasBillingInvoiceItemsInterval {
@@ -1668,34 +3033,35 @@ func (o *AuthUserSchemasBillingInvoiceItemsFrequency) GetInterval() AuthUserSche
 	return o.Interval
 }
 
-func (o *AuthUserSchemasBillingInvoiceItemsFrequency) GetIntervalCount() AuthUserSchemasBillingInvoiceItemsIntervalCount {
+func (o *AuthUserSchemasBillingInvoiceItemsFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return AuthUserSchemasBillingInvoiceItemsIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // PasswordProtection - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type PasswordProtection struct {
-	CreatedAt   *int64                                       `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                       `json:"disabledAt,omitempty"`
-	Frequency   *AuthUserSchemasBillingInvoiceItemsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                         `json:"hidden"`
-	MaxQuantity *int64                                       `json:"maxQuantity,omitempty"`
-	Name        *string                                      `json:"name,omitempty"`
-	Price       int64                                        `json:"price"`
-	Quantity    int64                                        `json:"quantity"`
-	Tier        *int64                                       `json:"tier,omitempty"`
+	CreatedAt       *float64                                     `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                     `json:"disabledAt,omitempty"`
+	Frequency       *AuthUserSchemasBillingInvoiceItemsFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                         `json:"hidden"`
+	HighestQuantity *float64                                     `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                     `json:"maxQuantity,omitempty"`
+	Name            *string                                      `json:"name,omitempty"`
+	Price           float64                                      `json:"price"`
+	Quantity        float64                                      `json:"quantity"`
+	Tier            *float64                                     `json:"tier,omitempty"`
 }
 
-func (o *PasswordProtection) GetCreatedAt() *int64 {
+func (o *PasswordProtection) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *PasswordProtection) GetDisabledAt() *int64 {
+func (o *PasswordProtection) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1716,7 +3082,14 @@ func (o *PasswordProtection) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *PasswordProtection) GetMaxQuantity() *int64 {
+func (o *PasswordProtection) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *PasswordProtection) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1730,53 +3103,73 @@ func (o *PasswordProtection) GetName() *string {
 	return o.Name
 }
 
-func (o *PasswordProtection) GetPrice() int64 {
+func (o *PasswordProtection) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PasswordProtection) GetQuantity() int64 {
+func (o *PasswordProtection) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *PasswordProtection) GetTier() *int64 {
+func (o *PasswordProtection) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type PostgresComputeTime struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsPostgresComputeTimeMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *PostgresComputeTime) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsPostgresComputeTimeMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsPostgresComputeTimeMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type PostgresComputeTime struct {
+	Batch      float64                                                      `json:"batch"`
+	DisabledAt *float64                                                     `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                     `json:"enabledAt,omitempty"`
+	Hidden     bool                                                         `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsPostgresComputeTimeMatrix `json:"matrix,omitempty"`
+	Name       *string                                                      `json:"name,omitempty"`
+	Price      float64                                                      `json:"price"`
+	Threshold  float64                                                      `json:"threshold"`
+	Tier       *float64                                                     `json:"tier,omitempty"`
+}
+
+func (o *PostgresComputeTime) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *PostgresComputeTime) GetDisabledAt() *int64 {
+func (o *PostgresComputeTime) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *PostgresComputeTime) GetEnabledAt() *int64 {
+func (o *PostgresComputeTime) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1790,6 +3183,13 @@ func (o *PostgresComputeTime) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *PostgresComputeTime) GetMatrix() *AuthUserSchemasBillingInvoiceItemsPostgresComputeTimeMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *PostgresComputeTime) GetName() *string {
 	if o == nil {
 		return nil
@@ -1797,53 +3197,73 @@ func (o *PostgresComputeTime) GetName() *string {
 	return o.Name
 }
 
-func (o *PostgresComputeTime) GetPrice() int64 {
+func (o *PostgresComputeTime) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PostgresComputeTime) GetThreshold() int64 {
+func (o *PostgresComputeTime) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *PostgresComputeTime) GetTier() *int64 {
+func (o *PostgresComputeTime) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type PostgresDataStorage struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsPostgresDataStorageMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *PostgresDataStorage) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsPostgresDataStorageMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsPostgresDataStorageMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type PostgresDataStorage struct {
+	Batch      float64                                                      `json:"batch"`
+	DisabledAt *float64                                                     `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                     `json:"enabledAt,omitempty"`
+	Hidden     bool                                                         `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsPostgresDataStorageMatrix `json:"matrix,omitempty"`
+	Name       *string                                                      `json:"name,omitempty"`
+	Price      float64                                                      `json:"price"`
+	Threshold  float64                                                      `json:"threshold"`
+	Tier       *float64                                                     `json:"tier,omitempty"`
+}
+
+func (o *PostgresDataStorage) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *PostgresDataStorage) GetDisabledAt() *int64 {
+func (o *PostgresDataStorage) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *PostgresDataStorage) GetEnabledAt() *int64 {
+func (o *PostgresDataStorage) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1857,6 +3277,13 @@ func (o *PostgresDataStorage) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *PostgresDataStorage) GetMatrix() *AuthUserSchemasBillingInvoiceItemsPostgresDataStorageMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *PostgresDataStorage) GetName() *string {
 	if o == nil {
 		return nil
@@ -1864,53 +3291,73 @@ func (o *PostgresDataStorage) GetName() *string {
 	return o.Name
 }
 
-func (o *PostgresDataStorage) GetPrice() int64 {
+func (o *PostgresDataStorage) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PostgresDataStorage) GetThreshold() int64 {
+func (o *PostgresDataStorage) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *PostgresDataStorage) GetTier() *int64 {
+func (o *PostgresDataStorage) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type PostgresDataTransfer struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsPostgresDataTransferMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *PostgresDataTransfer) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsPostgresDataTransferMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsPostgresDataTransferMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type PostgresDataTransfer struct {
+	Batch      float64                                                       `json:"batch"`
+	DisabledAt *float64                                                      `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                      `json:"enabledAt,omitempty"`
+	Hidden     bool                                                          `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsPostgresDataTransferMatrix `json:"matrix,omitempty"`
+	Name       *string                                                       `json:"name,omitempty"`
+	Price      float64                                                       `json:"price"`
+	Threshold  float64                                                       `json:"threshold"`
+	Tier       *float64                                                      `json:"tier,omitempty"`
+}
+
+func (o *PostgresDataTransfer) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *PostgresDataTransfer) GetDisabledAt() *int64 {
+func (o *PostgresDataTransfer) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *PostgresDataTransfer) GetEnabledAt() *int64 {
+func (o *PostgresDataTransfer) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1924,6 +3371,13 @@ func (o *PostgresDataTransfer) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *PostgresDataTransfer) GetMatrix() *AuthUserSchemasBillingInvoiceItemsPostgresDataTransferMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *PostgresDataTransfer) GetName() *string {
 	if o == nil {
 		return nil
@@ -1931,53 +3385,73 @@ func (o *PostgresDataTransfer) GetName() *string {
 	return o.Name
 }
 
-func (o *PostgresDataTransfer) GetPrice() int64 {
+func (o *PostgresDataTransfer) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PostgresDataTransfer) GetThreshold() int64 {
+func (o *PostgresDataTransfer) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *PostgresDataTransfer) GetTier() *int64 {
+func (o *PostgresDataTransfer) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type PostgresDatabase struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsPostgresDatabaseMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *PostgresDatabase) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsPostgresDatabaseMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsPostgresDatabaseMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type PostgresDatabase struct {
+	Batch      float64                                                   `json:"batch"`
+	DisabledAt *float64                                                  `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                  `json:"enabledAt,omitempty"`
+	Hidden     bool                                                      `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsPostgresDatabaseMatrix `json:"matrix,omitempty"`
+	Name       *string                                                   `json:"name,omitempty"`
+	Price      float64                                                   `json:"price"`
+	Threshold  float64                                                   `json:"threshold"`
+	Tier       *float64                                                  `json:"tier,omitempty"`
+}
+
+func (o *PostgresDatabase) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *PostgresDatabase) GetDisabledAt() *int64 {
+func (o *PostgresDatabase) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *PostgresDatabase) GetEnabledAt() *int64 {
+func (o *PostgresDatabase) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1991,6 +3465,13 @@ func (o *PostgresDatabase) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *PostgresDatabase) GetMatrix() *AuthUserSchemasBillingInvoiceItemsPostgresDatabaseMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *PostgresDatabase) GetName() *string {
 	if o == nil {
 		return nil
@@ -1998,53 +3479,73 @@ func (o *PostgresDatabase) GetName() *string {
 	return o.Name
 }
 
-func (o *PostgresDatabase) GetPrice() int64 {
+func (o *PostgresDatabase) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PostgresDatabase) GetThreshold() int64 {
+func (o *PostgresDatabase) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *PostgresDatabase) GetTier() *int64 {
+func (o *PostgresDatabase) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type PostgresWrittenData struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsPostgresWrittenDataMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *PostgresWrittenData) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsPostgresWrittenDataMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsPostgresWrittenDataMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type PostgresWrittenData struct {
+	Batch      float64                                                      `json:"batch"`
+	DisabledAt *float64                                                     `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                     `json:"enabledAt,omitempty"`
+	Hidden     bool                                                         `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsPostgresWrittenDataMatrix `json:"matrix,omitempty"`
+	Name       *string                                                      `json:"name,omitempty"`
+	Price      float64                                                      `json:"price"`
+	Threshold  float64                                                      `json:"threshold"`
+	Tier       *float64                                                     `json:"tier,omitempty"`
+}
+
+func (o *PostgresWrittenData) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *PostgresWrittenData) GetDisabledAt() *int64 {
+func (o *PostgresWrittenData) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *PostgresWrittenData) GetEnabledAt() *int64 {
+func (o *PostgresWrittenData) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2058,6 +3559,13 @@ func (o *PostgresWrittenData) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *PostgresWrittenData) GetMatrix() *AuthUserSchemasBillingInvoiceItemsPostgresWrittenDataMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *PostgresWrittenData) GetName() *string {
 	if o == nil {
 		return nil
@@ -2065,21 +3573,21 @@ func (o *PostgresWrittenData) GetName() *string {
 	return o.Name
 }
 
-func (o *PostgresWrittenData) GetPrice() int64 {
+func (o *PostgresWrittenData) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PostgresWrittenData) GetThreshold() int64 {
+func (o *PostgresWrittenData) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *PostgresWrittenData) GetTier() *int64 {
+func (o *PostgresWrittenData) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2095,7 +3603,6 @@ const (
 func (e AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixInterval) ToPointer() *AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixInterval {
 	return &e
 }
-
 func (e *AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2110,45 +3617,9 @@ func (e *AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixInterval) Unma
 	}
 }
 
-type AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount int64
-
-const (
-	AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCountOne    AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount = 1
-	AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCountTwo    AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount = 2
-	AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCountThree  AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount = 3
-	AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCountSix    AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount = 6
-	AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCountTwelve AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount = 12
-)
-
-func (e AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount) ToPointer() *AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount {
-	return &e
-}
-
-func (e *AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		fallthrough
-	case 12:
-		*e = AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount: %v", v)
-	}
-}
-
 type AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixFrequency struct {
-	Interval      AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixInterval      `json:"interval"`
-	IntervalCount AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount `json:"intervalCount"`
+	Interval      AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixInterval `json:"interval"`
+	IntervalCount float64                                                           `json:"intervalCount"`
 }
 
 func (o *AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixFrequency) GetInterval() AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixInterval {
@@ -2158,34 +3629,35 @@ func (o *AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixFrequency) Get
 	return o.Interval
 }
 
-func (o *AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixFrequency) GetIntervalCount() AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount {
+func (o *AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // PreviewDeploymentSuffix - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type PreviewDeploymentSuffix struct {
-	CreatedAt   *int64                                                              `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                              `json:"disabledAt,omitempty"`
-	Frequency   *AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                                `json:"hidden"`
-	MaxQuantity *int64                                                              `json:"maxQuantity,omitempty"`
-	Name        *string                                                             `json:"name,omitempty"`
-	Price       int64                                                               `json:"price"`
-	Quantity    int64                                                               `json:"quantity"`
-	Tier        *int64                                                              `json:"tier,omitempty"`
+	CreatedAt       *float64                                                            `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                                            `json:"disabledAt,omitempty"`
+	Frequency       *AuthUserSchemasBillingInvoiceItemsPreviewDeploymentSuffixFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                                                `json:"hidden"`
+	HighestQuantity *float64                                                            `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                                            `json:"maxQuantity,omitempty"`
+	Name            *string                                                             `json:"name,omitempty"`
+	Price           float64                                                             `json:"price"`
+	Quantity        float64                                                             `json:"quantity"`
+	Tier            *float64                                                            `json:"tier,omitempty"`
 }
 
-func (o *PreviewDeploymentSuffix) GetCreatedAt() *int64 {
+func (o *PreviewDeploymentSuffix) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *PreviewDeploymentSuffix) GetDisabledAt() *int64 {
+func (o *PreviewDeploymentSuffix) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2206,7 +3678,14 @@ func (o *PreviewDeploymentSuffix) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *PreviewDeploymentSuffix) GetMaxQuantity() *int64 {
+func (o *PreviewDeploymentSuffix) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *PreviewDeploymentSuffix) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2220,21 +3699,21 @@ func (o *PreviewDeploymentSuffix) GetName() *string {
 	return o.Name
 }
 
-func (o *PreviewDeploymentSuffix) GetPrice() int64 {
+func (o *PreviewDeploymentSuffix) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PreviewDeploymentSuffix) GetQuantity() int64 {
+func (o *PreviewDeploymentSuffix) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *PreviewDeploymentSuffix) GetTier() *int64 {
+func (o *PreviewDeploymentSuffix) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2250,7 +3729,6 @@ const (
 func (e AuthUserSchemasBillingInvoiceItemsProInterval) ToPointer() *AuthUserSchemasBillingInvoiceItemsProInterval {
 	return &e
 }
-
 func (e *AuthUserSchemasBillingInvoiceItemsProInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2265,45 +3743,9 @@ func (e *AuthUserSchemasBillingInvoiceItemsProInterval) UnmarshalJSON(data []byt
 	}
 }
 
-type AuthUserSchemasBillingInvoiceItemsProIntervalCount int64
-
-const (
-	AuthUserSchemasBillingInvoiceItemsProIntervalCountOne    AuthUserSchemasBillingInvoiceItemsProIntervalCount = 1
-	AuthUserSchemasBillingInvoiceItemsProIntervalCountTwo    AuthUserSchemasBillingInvoiceItemsProIntervalCount = 2
-	AuthUserSchemasBillingInvoiceItemsProIntervalCountThree  AuthUserSchemasBillingInvoiceItemsProIntervalCount = 3
-	AuthUserSchemasBillingInvoiceItemsProIntervalCountSix    AuthUserSchemasBillingInvoiceItemsProIntervalCount = 6
-	AuthUserSchemasBillingInvoiceItemsProIntervalCountTwelve AuthUserSchemasBillingInvoiceItemsProIntervalCount = 12
-)
-
-func (e AuthUserSchemasBillingInvoiceItemsProIntervalCount) ToPointer() *AuthUserSchemasBillingInvoiceItemsProIntervalCount {
-	return &e
-}
-
-func (e *AuthUserSchemasBillingInvoiceItemsProIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		fallthrough
-	case 12:
-		*e = AuthUserSchemasBillingInvoiceItemsProIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AuthUserSchemasBillingInvoiceItemsProIntervalCount: %v", v)
-	}
-}
-
 type AuthUserSchemasBillingInvoiceItemsProFrequency struct {
-	Interval      AuthUserSchemasBillingInvoiceItemsProInterval      `json:"interval"`
-	IntervalCount AuthUserSchemasBillingInvoiceItemsProIntervalCount `json:"intervalCount"`
+	Interval      AuthUserSchemasBillingInvoiceItemsProInterval `json:"interval"`
+	IntervalCount float64                                       `json:"intervalCount"`
 }
 
 func (o *AuthUserSchemasBillingInvoiceItemsProFrequency) GetInterval() AuthUserSchemasBillingInvoiceItemsProInterval {
@@ -2313,34 +3755,35 @@ func (o *AuthUserSchemasBillingInvoiceItemsProFrequency) GetInterval() AuthUserS
 	return o.Interval
 }
 
-func (o *AuthUserSchemasBillingInvoiceItemsProFrequency) GetIntervalCount() AuthUserSchemasBillingInvoiceItemsProIntervalCount {
+func (o *AuthUserSchemasBillingInvoiceItemsProFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return AuthUserSchemasBillingInvoiceItemsProIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // Pro - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type Pro struct {
-	CreatedAt   *int64                                          `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                          `json:"disabledAt,omitempty"`
-	Frequency   *AuthUserSchemasBillingInvoiceItemsProFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                            `json:"hidden"`
-	MaxQuantity *int64                                          `json:"maxQuantity,omitempty"`
-	Name        *string                                         `json:"name,omitempty"`
-	Price       int64                                           `json:"price"`
-	Quantity    int64                                           `json:"quantity"`
-	Tier        *int64                                          `json:"tier,omitempty"`
+	CreatedAt       *float64                                        `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                        `json:"disabledAt,omitempty"`
+	Frequency       *AuthUserSchemasBillingInvoiceItemsProFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                            `json:"hidden"`
+	HighestQuantity *float64                                        `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                        `json:"maxQuantity,omitempty"`
+	Name            *string                                         `json:"name,omitempty"`
+	Price           float64                                         `json:"price"`
+	Quantity        float64                                         `json:"quantity"`
+	Tier            *float64                                        `json:"tier,omitempty"`
 }
 
-func (o *Pro) GetCreatedAt() *int64 {
+func (o *Pro) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *Pro) GetDisabledAt() *int64 {
+func (o *Pro) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2361,7 +3804,14 @@ func (o *Pro) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *Pro) GetMaxQuantity() *int64 {
+func (o *Pro) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *Pro) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2375,21 +3825,21 @@ func (o *Pro) GetName() *string {
 	return o.Name
 }
 
-func (o *Pro) GetPrice() int64 {
+func (o *Pro) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *Pro) GetQuantity() int64 {
+func (o *Pro) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *Pro) GetTier() *int64 {
+func (o *Pro) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2405,7 +3855,6 @@ const (
 func (e AuthUserSchemasBillingInvoiceItemsSamlInterval) ToPointer() *AuthUserSchemasBillingInvoiceItemsSamlInterval {
 	return &e
 }
-
 func (e *AuthUserSchemasBillingInvoiceItemsSamlInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2420,45 +3869,9 @@ func (e *AuthUserSchemasBillingInvoiceItemsSamlInterval) UnmarshalJSON(data []by
 	}
 }
 
-type AuthUserSchemasBillingInvoiceItemsSamlIntervalCount int64
-
-const (
-	AuthUserSchemasBillingInvoiceItemsSamlIntervalCountOne    AuthUserSchemasBillingInvoiceItemsSamlIntervalCount = 1
-	AuthUserSchemasBillingInvoiceItemsSamlIntervalCountTwo    AuthUserSchemasBillingInvoiceItemsSamlIntervalCount = 2
-	AuthUserSchemasBillingInvoiceItemsSamlIntervalCountThree  AuthUserSchemasBillingInvoiceItemsSamlIntervalCount = 3
-	AuthUserSchemasBillingInvoiceItemsSamlIntervalCountSix    AuthUserSchemasBillingInvoiceItemsSamlIntervalCount = 6
-	AuthUserSchemasBillingInvoiceItemsSamlIntervalCountTwelve AuthUserSchemasBillingInvoiceItemsSamlIntervalCount = 12
-)
-
-func (e AuthUserSchemasBillingInvoiceItemsSamlIntervalCount) ToPointer() *AuthUserSchemasBillingInvoiceItemsSamlIntervalCount {
-	return &e
-}
-
-func (e *AuthUserSchemasBillingInvoiceItemsSamlIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		fallthrough
-	case 12:
-		*e = AuthUserSchemasBillingInvoiceItemsSamlIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AuthUserSchemasBillingInvoiceItemsSamlIntervalCount: %v", v)
-	}
-}
-
 type AuthUserSchemasBillingInvoiceItemsSamlFrequency struct {
-	Interval      AuthUserSchemasBillingInvoiceItemsSamlInterval      `json:"interval"`
-	IntervalCount AuthUserSchemasBillingInvoiceItemsSamlIntervalCount `json:"intervalCount"`
+	Interval      AuthUserSchemasBillingInvoiceItemsSamlInterval `json:"interval"`
+	IntervalCount float64                                        `json:"intervalCount"`
 }
 
 func (o *AuthUserSchemasBillingInvoiceItemsSamlFrequency) GetInterval() AuthUserSchemasBillingInvoiceItemsSamlInterval {
@@ -2468,34 +3881,35 @@ func (o *AuthUserSchemasBillingInvoiceItemsSamlFrequency) GetInterval() AuthUser
 	return o.Interval
 }
 
-func (o *AuthUserSchemasBillingInvoiceItemsSamlFrequency) GetIntervalCount() AuthUserSchemasBillingInvoiceItemsSamlIntervalCount {
+func (o *AuthUserSchemasBillingInvoiceItemsSamlFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return AuthUserSchemasBillingInvoiceItemsSamlIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // AuthUserSaml - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserSaml struct {
-	CreatedAt   *int64                                           `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                           `json:"disabledAt,omitempty"`
-	Frequency   *AuthUserSchemasBillingInvoiceItemsSamlFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                             `json:"hidden"`
-	MaxQuantity *int64                                           `json:"maxQuantity,omitempty"`
-	Name        *string                                          `json:"name,omitempty"`
-	Price       int64                                            `json:"price"`
-	Quantity    int64                                            `json:"quantity"`
-	Tier        *int64                                           `json:"tier,omitempty"`
+	CreatedAt       *float64                                         `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                         `json:"disabledAt,omitempty"`
+	Frequency       *AuthUserSchemasBillingInvoiceItemsSamlFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                             `json:"hidden"`
+	HighestQuantity *float64                                         `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                         `json:"maxQuantity,omitempty"`
+	Name            *string                                          `json:"name,omitempty"`
+	Price           float64                                          `json:"price"`
+	Quantity        float64                                          `json:"quantity"`
+	Tier            *float64                                         `json:"tier,omitempty"`
 }
 
-func (o *AuthUserSaml) GetCreatedAt() *int64 {
+func (o *AuthUserSaml) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *AuthUserSaml) GetDisabledAt() *int64 {
+func (o *AuthUserSaml) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2516,7 +3930,14 @@ func (o *AuthUserSaml) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *AuthUserSaml) GetMaxQuantity() *int64 {
+func (o *AuthUserSaml) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *AuthUserSaml) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2530,53 +3951,73 @@ func (o *AuthUserSaml) GetName() *string {
 	return o.Name
 }
 
-func (o *AuthUserSaml) GetPrice() int64 {
+func (o *AuthUserSaml) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *AuthUserSaml) GetQuantity() int64 {
+func (o *AuthUserSaml) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *AuthUserSaml) GetTier() *int64 {
+func (o *AuthUserSaml) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type ServerlessFunctionExecution struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsServerlessFunctionExecutionMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *ServerlessFunctionExecution) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsServerlessFunctionExecutionMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsServerlessFunctionExecutionMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type ServerlessFunctionExecution struct {
+	Batch      float64                                                              `json:"batch"`
+	DisabledAt *float64                                                             `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                             `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                 `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsServerlessFunctionExecutionMatrix `json:"matrix,omitempty"`
+	Name       *string                                                              `json:"name,omitempty"`
+	Price      float64                                                              `json:"price"`
+	Threshold  float64                                                              `json:"threshold"`
+	Tier       *float64                                                             `json:"tier,omitempty"`
+}
+
+func (o *ServerlessFunctionExecution) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *ServerlessFunctionExecution) GetDisabledAt() *int64 {
+func (o *ServerlessFunctionExecution) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *ServerlessFunctionExecution) GetEnabledAt() *int64 {
+func (o *ServerlessFunctionExecution) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2590,6 +4031,13 @@ func (o *ServerlessFunctionExecution) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *ServerlessFunctionExecution) GetMatrix() *AuthUserSchemasBillingInvoiceItemsServerlessFunctionExecutionMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *ServerlessFunctionExecution) GetName() *string {
 	if o == nil {
 		return nil
@@ -2597,53 +4045,73 @@ func (o *ServerlessFunctionExecution) GetName() *string {
 	return o.Name
 }
 
-func (o *ServerlessFunctionExecution) GetPrice() int64 {
+func (o *ServerlessFunctionExecution) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *ServerlessFunctionExecution) GetThreshold() int64 {
+func (o *ServerlessFunctionExecution) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *ServerlessFunctionExecution) GetTier() *int64 {
+func (o *ServerlessFunctionExecution) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type SourceImages struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsSourceImagesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *SourceImages) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsSourceImagesMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsSourceImagesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type SourceImages struct {
+	Batch      float64                                               `json:"batch"`
+	DisabledAt *float64                                              `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                              `json:"enabledAt,omitempty"`
+	Hidden     bool                                                  `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsSourceImagesMatrix `json:"matrix,omitempty"`
+	Name       *string                                               `json:"name,omitempty"`
+	Price      float64                                               `json:"price"`
+	Threshold  float64                                               `json:"threshold"`
+	Tier       *float64                                              `json:"tier,omitempty"`
+}
+
+func (o *SourceImages) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *SourceImages) GetDisabledAt() *int64 {
+func (o *SourceImages) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *SourceImages) GetEnabledAt() *int64 {
+func (o *SourceImages) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2657,6 +4125,13 @@ func (o *SourceImages) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *SourceImages) GetMatrix() *AuthUserSchemasBillingInvoiceItemsSourceImagesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *SourceImages) GetName() *string {
 	if o == nil {
 		return nil
@@ -2664,53 +4139,73 @@ func (o *SourceImages) GetName() *string {
 	return o.Name
 }
 
-func (o *SourceImages) GetPrice() int64 {
+func (o *SourceImages) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *SourceImages) GetThreshold() int64 {
+func (o *SourceImages) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *SourceImages) GetTier() *int64 {
+func (o *SourceImages) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type StorageRedisTotalBandwidthInBytes struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type StorageRedisTotalBandwidthInBytes struct {
+	Batch      float64                                                                    `json:"batch"`
+	DisabledAt *float64                                                                   `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                   `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                       `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                    `json:"name,omitempty"`
+	Price      float64                                                                    `json:"price"`
+	Threshold  float64                                                                    `json:"threshold"`
+	Tier       *float64                                                                   `json:"tier,omitempty"`
+}
+
+func (o *StorageRedisTotalBandwidthInBytes) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2724,6 +4219,13 @@ func (o *StorageRedisTotalBandwidthInBytes) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *StorageRedisTotalBandwidthInBytes) GetMatrix() *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *StorageRedisTotalBandwidthInBytes) GetName() *string {
 	if o == nil {
 		return nil
@@ -2731,53 +4233,73 @@ func (o *StorageRedisTotalBandwidthInBytes) GetName() *string {
 	return o.Name
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetPrice() int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetThreshold() int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetTier() *int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type StorageRedisTotalCommands struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsStorageRedisTotalCommandsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *StorageRedisTotalCommands) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalCommandsMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalCommandsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type StorageRedisTotalCommands struct {
+	Batch      float64                                                            `json:"batch"`
+	DisabledAt *float64                                                           `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                           `json:"enabledAt,omitempty"`
+	Hidden     bool                                                               `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalCommandsMatrix `json:"matrix,omitempty"`
+	Name       *string                                                            `json:"name,omitempty"`
+	Price      float64                                                            `json:"price"`
+	Threshold  float64                                                            `json:"threshold"`
+	Tier       *float64                                                           `json:"tier,omitempty"`
+}
+
+func (o *StorageRedisTotalCommands) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *StorageRedisTotalCommands) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalCommands) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *StorageRedisTotalCommands) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalCommands) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2791,6 +4313,13 @@ func (o *StorageRedisTotalCommands) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *StorageRedisTotalCommands) GetMatrix() *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalCommandsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *StorageRedisTotalCommands) GetName() *string {
 	if o == nil {
 		return nil
@@ -2798,53 +4327,73 @@ func (o *StorageRedisTotalCommands) GetName() *string {
 	return o.Name
 }
 
-func (o *StorageRedisTotalCommands) GetPrice() int64 {
+func (o *StorageRedisTotalCommands) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *StorageRedisTotalCommands) GetThreshold() int64 {
+func (o *StorageRedisTotalCommands) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *StorageRedisTotalCommands) GetTier() *int64 {
+func (o *StorageRedisTotalCommands) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type StorageRedisTotalDailyAvgStorageInBytes struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type StorageRedisTotalDailyAvgStorageInBytes struct {
+	Batch      float64                                                                          `json:"batch"`
+	DisabledAt *float64                                                                         `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                         `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                             `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                          `json:"name,omitempty"`
+	Price      float64                                                                          `json:"price"`
+	Threshold  float64                                                                          `json:"threshold"`
+	Tier       *float64                                                                         `json:"tier,omitempty"`
+}
+
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2858,6 +4407,13 @@ func (o *StorageRedisTotalDailyAvgStorageInBytes) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetMatrix() *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *StorageRedisTotalDailyAvgStorageInBytes) GetName() *string {
 	if o == nil {
 		return nil
@@ -2865,53 +4421,73 @@ func (o *StorageRedisTotalDailyAvgStorageInBytes) GetName() *string {
 	return o.Name
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetPrice() int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetThreshold() int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetTier() *int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type StorageRedisTotalDatabases struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsStorageRedisTotalDatabasesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *StorageRedisTotalDatabases) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalDatabasesMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalDatabasesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type StorageRedisTotalDatabases struct {
+	Batch      float64                                                             `json:"batch"`
+	DisabledAt *float64                                                            `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                            `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalDatabasesMatrix `json:"matrix,omitempty"`
+	Name       *string                                                             `json:"name,omitempty"`
+	Price      float64                                                             `json:"price"`
+	Threshold  float64                                                             `json:"threshold"`
+	Tier       *float64                                                            `json:"tier,omitempty"`
+}
+
+func (o *StorageRedisTotalDatabases) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *StorageRedisTotalDatabases) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalDatabases) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *StorageRedisTotalDatabases) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalDatabases) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2925,6 +4501,13 @@ func (o *StorageRedisTotalDatabases) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *StorageRedisTotalDatabases) GetMatrix() *AuthUserSchemasBillingInvoiceItemsStorageRedisTotalDatabasesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *StorageRedisTotalDatabases) GetName() *string {
 	if o == nil {
 		return nil
@@ -2932,21 +4515,21 @@ func (o *StorageRedisTotalDatabases) GetName() *string {
 	return o.Name
 }
 
-func (o *StorageRedisTotalDatabases) GetPrice() int64 {
+func (o *StorageRedisTotalDatabases) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *StorageRedisTotalDatabases) GetThreshold() int64 {
+func (o *StorageRedisTotalDatabases) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *StorageRedisTotalDatabases) GetTier() *int64 {
+func (o *StorageRedisTotalDatabases) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2962,7 +4545,6 @@ const (
 func (e AuthUserSchemasBillingInvoiceItemsTeamSeatsInterval) ToPointer() *AuthUserSchemasBillingInvoiceItemsTeamSeatsInterval {
 	return &e
 }
-
 func (e *AuthUserSchemasBillingInvoiceItemsTeamSeatsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2977,45 +4559,9 @@ func (e *AuthUserSchemasBillingInvoiceItemsTeamSeatsInterval) UnmarshalJSON(data
 	}
 }
 
-type AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount int64
-
-const (
-	AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCountOne    AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount = 1
-	AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCountTwo    AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount = 2
-	AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCountThree  AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount = 3
-	AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCountSix    AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount = 6
-	AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCountTwelve AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount = 12
-)
-
-func (e AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount) ToPointer() *AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount {
-	return &e
-}
-
-func (e *AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		fallthrough
-	case 12:
-		*e = AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount: %v", v)
-	}
-}
-
 type AuthUserSchemasBillingInvoiceItemsTeamSeatsFrequency struct {
-	Interval      AuthUserSchemasBillingInvoiceItemsTeamSeatsInterval      `json:"interval"`
-	IntervalCount AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount `json:"intervalCount"`
+	Interval      AuthUserSchemasBillingInvoiceItemsTeamSeatsInterval `json:"interval"`
+	IntervalCount float64                                             `json:"intervalCount"`
 }
 
 func (o *AuthUserSchemasBillingInvoiceItemsTeamSeatsFrequency) GetInterval() AuthUserSchemasBillingInvoiceItemsTeamSeatsInterval {
@@ -3025,34 +4571,35 @@ func (o *AuthUserSchemasBillingInvoiceItemsTeamSeatsFrequency) GetInterval() Aut
 	return o.Interval
 }
 
-func (o *AuthUserSchemasBillingInvoiceItemsTeamSeatsFrequency) GetIntervalCount() AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount {
+func (o *AuthUserSchemasBillingInvoiceItemsTeamSeatsFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return AuthUserSchemasBillingInvoiceItemsTeamSeatsIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // TeamSeats - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type TeamSeats struct {
-	CreatedAt   *int64                                                `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                `json:"disabledAt,omitempty"`
-	Frequency   *AuthUserSchemasBillingInvoiceItemsTeamSeatsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                  `json:"hidden"`
-	MaxQuantity *int64                                                `json:"maxQuantity,omitempty"`
-	Name        *string                                               `json:"name,omitempty"`
-	Price       int64                                                 `json:"price"`
-	Quantity    int64                                                 `json:"quantity"`
-	Tier        *int64                                                `json:"tier,omitempty"`
+	CreatedAt       *float64                                              `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                              `json:"disabledAt,omitempty"`
+	Frequency       *AuthUserSchemasBillingInvoiceItemsTeamSeatsFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                                  `json:"hidden"`
+	HighestQuantity *float64                                              `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                              `json:"maxQuantity,omitempty"`
+	Name            *string                                               `json:"name,omitempty"`
+	Price           float64                                               `json:"price"`
+	Quantity        float64                                               `json:"quantity"`
+	Tier            *float64                                              `json:"tier,omitempty"`
 }
 
-func (o *TeamSeats) GetCreatedAt() *int64 {
+func (o *TeamSeats) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *TeamSeats) GetDisabledAt() *int64 {
+func (o *TeamSeats) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3073,7 +4620,14 @@ func (o *TeamSeats) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *TeamSeats) GetMaxQuantity() *int64 {
+func (o *TeamSeats) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *TeamSeats) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3087,21 +4641,209 @@ func (o *TeamSeats) GetName() *string {
 	return o.Name
 }
 
-func (o *TeamSeats) GetPrice() int64 {
+func (o *TeamSeats) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *TeamSeats) GetQuantity() int64 {
+func (o *TeamSeats) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *TeamSeats) GetTier() *int64 {
+func (o *TeamSeats) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsWafOwaspExcessBytesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsWafOwaspExcessBytesMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsWafOwaspExcessBytesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type WafOwaspExcessBytes struct {
+	Batch      float64                                                      `json:"batch"`
+	DisabledAt *float64                                                     `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                     `json:"enabledAt,omitempty"`
+	Hidden     bool                                                         `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsWafOwaspExcessBytesMatrix `json:"matrix,omitempty"`
+	Name       *string                                                      `json:"name,omitempty"`
+	Price      float64                                                      `json:"price"`
+	Threshold  float64                                                      `json:"threshold"`
+	Tier       *float64                                                     `json:"tier,omitempty"`
+}
+
+func (o *WafOwaspExcessBytes) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *WafOwaspExcessBytes) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *WafOwaspExcessBytes) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *WafOwaspExcessBytes) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *WafOwaspExcessBytes) GetMatrix() *AuthUserSchemasBillingInvoiceItemsWafOwaspExcessBytesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *WafOwaspExcessBytes) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *WafOwaspExcessBytes) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *WafOwaspExcessBytes) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *WafOwaspExcessBytes) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type AuthUserSchemasBillingInvoiceItemsWafOwaspRequestsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsWafOwaspRequestsMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsWafOwaspRequestsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type WafOwaspRequests struct {
+	Batch      float64                                                   `json:"batch"`
+	DisabledAt *float64                                                  `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                  `json:"enabledAt,omitempty"`
+	Hidden     bool                                                      `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsWafOwaspRequestsMatrix `json:"matrix,omitempty"`
+	Name       *string                                                   `json:"name,omitempty"`
+	Price      float64                                                   `json:"price"`
+	Threshold  float64                                                   `json:"threshold"`
+	Tier       *float64                                                  `json:"tier,omitempty"`
+}
+
+func (o *WafOwaspRequests) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *WafOwaspRequests) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *WafOwaspRequests) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *WafOwaspRequests) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *WafOwaspRequests) GetMatrix() *AuthUserSchemasBillingInvoiceItemsWafOwaspRequestsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *WafOwaspRequests) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *WafOwaspRequests) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *WafOwaspRequests) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *WafOwaspRequests) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3117,7 +4859,6 @@ const (
 func (e AuthUserSchemasBillingInvoiceItemsWebAnalyticsInterval) ToPointer() *AuthUserSchemasBillingInvoiceItemsWebAnalyticsInterval {
 	return &e
 }
-
 func (e *AuthUserSchemasBillingInvoiceItemsWebAnalyticsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3132,45 +4873,9 @@ func (e *AuthUserSchemasBillingInvoiceItemsWebAnalyticsInterval) UnmarshalJSON(d
 	}
 }
 
-type AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount int64
-
-const (
-	AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCountOne    AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount = 1
-	AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCountTwo    AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount = 2
-	AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCountThree  AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount = 3
-	AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCountSix    AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount = 6
-	AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCountTwelve AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount = 12
-)
-
-func (e AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount) ToPointer() *AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount {
-	return &e
-}
-
-func (e *AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		fallthrough
-	case 12:
-		*e = AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount: %v", v)
-	}
-}
-
 type AuthUserSchemasBillingInvoiceItemsWebAnalyticsFrequency struct {
-	Interval      AuthUserSchemasBillingInvoiceItemsWebAnalyticsInterval      `json:"interval"`
-	IntervalCount AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount `json:"intervalCount"`
+	Interval      AuthUserSchemasBillingInvoiceItemsWebAnalyticsInterval `json:"interval"`
+	IntervalCount float64                                                `json:"intervalCount"`
 }
 
 func (o *AuthUserSchemasBillingInvoiceItemsWebAnalyticsFrequency) GetInterval() AuthUserSchemasBillingInvoiceItemsWebAnalyticsInterval {
@@ -3180,34 +4885,35 @@ func (o *AuthUserSchemasBillingInvoiceItemsWebAnalyticsFrequency) GetInterval() 
 	return o.Interval
 }
 
-func (o *AuthUserSchemasBillingInvoiceItemsWebAnalyticsFrequency) GetIntervalCount() AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount {
+func (o *AuthUserSchemasBillingInvoiceItemsWebAnalyticsFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return AuthUserSchemasBillingInvoiceItemsWebAnalyticsIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // AuthUserWebAnalytics - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type AuthUserWebAnalytics struct {
-	CreatedAt   *int64                                                   `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                   `json:"disabledAt,omitempty"`
-	Frequency   *AuthUserSchemasBillingInvoiceItemsWebAnalyticsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                     `json:"hidden"`
-	MaxQuantity *int64                                                   `json:"maxQuantity,omitempty"`
-	Name        *string                                                  `json:"name,omitempty"`
-	Price       int64                                                    `json:"price"`
-	Quantity    int64                                                    `json:"quantity"`
-	Tier        *int64                                                   `json:"tier,omitempty"`
+	CreatedAt       *float64                                                 `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                                 `json:"disabledAt,omitempty"`
+	Frequency       *AuthUserSchemasBillingInvoiceItemsWebAnalyticsFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                                     `json:"hidden"`
+	HighestQuantity *float64                                                 `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                                 `json:"maxQuantity,omitempty"`
+	Name            *string                                                  `json:"name,omitempty"`
+	Price           float64                                                  `json:"price"`
+	Quantity        float64                                                  `json:"quantity"`
+	Tier            *float64                                                 `json:"tier,omitempty"`
 }
 
-func (o *AuthUserWebAnalytics) GetCreatedAt() *int64 {
+func (o *AuthUserWebAnalytics) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *AuthUserWebAnalytics) GetDisabledAt() *int64 {
+func (o *AuthUserWebAnalytics) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3228,7 +4934,14 @@ func (o *AuthUserWebAnalytics) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *AuthUserWebAnalytics) GetMaxQuantity() *int64 {
+func (o *AuthUserWebAnalytics) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *AuthUserWebAnalytics) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3242,53 +4955,73 @@ func (o *AuthUserWebAnalytics) GetName() *string {
 	return o.Name
 }
 
-func (o *AuthUserWebAnalytics) GetPrice() int64 {
+func (o *AuthUserWebAnalytics) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *AuthUserWebAnalytics) GetQuantity() int64 {
+func (o *AuthUserWebAnalytics) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *AuthUserWebAnalytics) GetTier() *int64 {
+func (o *AuthUserWebAnalytics) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type WebAnalyticsEvent struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type AuthUserSchemasBillingInvoiceItemsWebAnalyticsEventMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *WebAnalyticsEvent) GetBatch() int64 {
+func (o *AuthUserSchemasBillingInvoiceItemsWebAnalyticsEventMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *AuthUserSchemasBillingInvoiceItemsWebAnalyticsEventMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type WebAnalyticsEvent struct {
+	Batch      float64                                                    `json:"batch"`
+	DisabledAt *float64                                                   `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                   `json:"enabledAt,omitempty"`
+	Hidden     bool                                                       `json:"hidden"`
+	Matrix     *AuthUserSchemasBillingInvoiceItemsWebAnalyticsEventMatrix `json:"matrix,omitempty"`
+	Name       *string                                                    `json:"name,omitempty"`
+	Price      float64                                                    `json:"price"`
+	Threshold  float64                                                    `json:"threshold"`
+	Tier       *float64                                                   `json:"tier,omitempty"`
+}
+
+func (o *WebAnalyticsEvent) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *WebAnalyticsEvent) GetDisabledAt() *int64 {
+func (o *WebAnalyticsEvent) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *WebAnalyticsEvent) GetEnabledAt() *int64 {
+func (o *WebAnalyticsEvent) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3302,6 +5035,13 @@ func (o *WebAnalyticsEvent) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *WebAnalyticsEvent) GetMatrix() *AuthUserSchemasBillingInvoiceItemsWebAnalyticsEventMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *WebAnalyticsEvent) GetName() *string {
 	if o == nil {
 		return nil
@@ -3309,21 +5049,21 @@ func (o *WebAnalyticsEvent) GetName() *string {
 	return o.Name
 }
 
-func (o *WebAnalyticsEvent) GetPrice() int64 {
+func (o *WebAnalyticsEvent) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *WebAnalyticsEvent) GetThreshold() int64 {
+func (o *WebAnalyticsEvent) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *WebAnalyticsEvent) GetTier() *int64 {
+func (o *WebAnalyticsEvent) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3332,22 +5072,34 @@ func (o *WebAnalyticsEvent) GetTier() *int64 {
 
 type InvoiceItems struct {
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	Analytics      *Analytics      `json:"analytics,omitempty"`
-	AnalyticsUsage *AnalyticsUsage `json:"analyticsUsage,omitempty"`
-	Artifacts      *Artifacts      `json:"artifacts,omitempty"`
-	Bandwidth      *Bandwidth      `json:"bandwidth,omitempty"`
+	Analytics                             *Analytics                             `json:"analytics,omitempty"`
+	AnalyticsUsage                        *AnalyticsUsage                        `json:"analyticsUsage,omitempty"`
+	Artifacts                             *Artifacts                             `json:"artifacts,omitempty"`
+	Bandwidth                             *Bandwidth                             `json:"bandwidth,omitempty"`
+	BlobStores                            *BlobStores                            `json:"blobStores,omitempty"`
+	BlobTotalAdvancedRequests             *BlobTotalAdvancedRequests             `json:"blobTotalAdvancedRequests,omitempty"`
+	BlobTotalAvgSizeInBytes               *BlobTotalAvgSizeInBytes               `json:"blobTotalAvgSizeInBytes,omitempty"`
+	BlobTotalGetResponseObjectSizeInBytes *BlobTotalGetResponseObjectSizeInBytes `json:"blobTotalGetResponseObjectSizeInBytes,omitempty"`
+	BlobTotalSimpleRequests               *BlobTotalSimpleRequests               `json:"blobTotalSimpleRequests,omitempty"`
+	BuildMinute                           *BuildMinute                           `json:"buildMinute,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	ConcurrentBuilds           *ConcurrentBuilds           `json:"concurrentBuilds,omitempty"`
-	CronJobInvocation          *CronJobInvocation          `json:"cronJobInvocation,omitempty"`
-	DataCacheRead              *DataCacheRead              `json:"dataCacheRead,omitempty"`
-	DataCacheRevalidation      *DataCacheRevalidation      `json:"dataCacheRevalidation,omitempty"`
-	DataCacheWrite             *DataCacheWrite             `json:"dataCacheWrite,omitempty"`
-	EdgeConfigRead             *EdgeConfigRead             `json:"edgeConfigRead,omitempty"`
-	EdgeConfigWrite            *EdgeConfigWrite            `json:"edgeConfigWrite,omitempty"`
-	EdgeFunctionExecutionUnits *EdgeFunctionExecutionUnits `json:"edgeFunctionExecutionUnits,omitempty"`
-	EdgeMiddlewareInvocations  *EdgeMiddlewareInvocations  `json:"edgeMiddlewareInvocations,omitempty"`
+	ConcurrentBuilds                 *ConcurrentBuilds                 `json:"concurrentBuilds,omitempty"`
+	DataCacheRead                    *DataCacheRead                    `json:"dataCacheRead,omitempty"`
+	DataCacheRevalidation            *DataCacheRevalidation            `json:"dataCacheRevalidation,omitempty"`
+	DataCacheWrite                   *DataCacheWrite                   `json:"dataCacheWrite,omitempty"`
+	EdgeConfigRead                   *EdgeConfigRead                   `json:"edgeConfigRead,omitempty"`
+	EdgeConfigWrite                  *EdgeConfigWrite                  `json:"edgeConfigWrite,omitempty"`
+	EdgeFunctionExecutionUnits       *EdgeFunctionExecutionUnits       `json:"edgeFunctionExecutionUnits,omitempty"`
+	EdgeMiddlewareInvocations        *EdgeMiddlewareInvocations        `json:"edgeMiddlewareInvocations,omitempty"`
+	EdgeRequest                      *EdgeRequest                      `json:"edgeRequest,omitempty"`
+	EdgeRequestAdditionalCPUDuration *EdgeRequestAdditionalCPUDuration `json:"edgeRequestAdditionalCpuDuration,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	Enterprise *Enterprise `json:"enterprise,omitempty"`
+	Enterprise         *Enterprise         `json:"enterprise,omitempty"`
+	FastDataTransfer   *FastDataTransfer   `json:"fastDataTransfer,omitempty"`
+	FastOriginTransfer *FastOriginTransfer `json:"fastOriginTransfer,omitempty"`
+	FunctionDuration   *FunctionDuration   `json:"functionDuration,omitempty"`
+	FunctionInvocation *FunctionInvocation `json:"functionInvocation,omitempty"`
+	LogDrainsVolume    *LogDrainsVolume    `json:"logDrainsVolume,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 	Monitoring       *Monitoring       `json:"monitoring,omitempty"`
 	MonitoringMetric *MonitoringMetric `json:"monitoringMetric,omitempty"`
@@ -3371,7 +5123,9 @@ type InvoiceItems struct {
 	StorageRedisTotalDailyAvgStorageInBytes *StorageRedisTotalDailyAvgStorageInBytes `json:"storageRedisTotalDailyAvgStorageInBytes,omitempty"`
 	StorageRedisTotalDatabases              *StorageRedisTotalDatabases              `json:"storageRedisTotalDatabases,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	TeamSeats *TeamSeats `json:"teamSeats,omitempty"`
+	TeamSeats           *TeamSeats           `json:"teamSeats,omitempty"`
+	WafOwaspExcessBytes *WafOwaspExcessBytes `json:"wafOwaspExcessBytes,omitempty"`
+	WafOwaspRequests    *WafOwaspRequests    `json:"wafOwaspRequests,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 	WebAnalytics      *AuthUserWebAnalytics `json:"webAnalytics,omitempty"`
 	WebAnalyticsEvent *WebAnalyticsEvent    `json:"webAnalyticsEvent,omitempty"`
@@ -3405,18 +5159,53 @@ func (o *InvoiceItems) GetBandwidth() *Bandwidth {
 	return o.Bandwidth
 }
 
+func (o *InvoiceItems) GetBlobStores() *BlobStores {
+	if o == nil {
+		return nil
+	}
+	return o.BlobStores
+}
+
+func (o *InvoiceItems) GetBlobTotalAdvancedRequests() *BlobTotalAdvancedRequests {
+	if o == nil {
+		return nil
+	}
+	return o.BlobTotalAdvancedRequests
+}
+
+func (o *InvoiceItems) GetBlobTotalAvgSizeInBytes() *BlobTotalAvgSizeInBytes {
+	if o == nil {
+		return nil
+	}
+	return o.BlobTotalAvgSizeInBytes
+}
+
+func (o *InvoiceItems) GetBlobTotalGetResponseObjectSizeInBytes() *BlobTotalGetResponseObjectSizeInBytes {
+	if o == nil {
+		return nil
+	}
+	return o.BlobTotalGetResponseObjectSizeInBytes
+}
+
+func (o *InvoiceItems) GetBlobTotalSimpleRequests() *BlobTotalSimpleRequests {
+	if o == nil {
+		return nil
+	}
+	return o.BlobTotalSimpleRequests
+}
+
+func (o *InvoiceItems) GetBuildMinute() *BuildMinute {
+	if o == nil {
+		return nil
+	}
+	return o.BuildMinute
+}
+
 func (o *InvoiceItems) GetConcurrentBuilds() *ConcurrentBuilds {
 	if o == nil {
 		return nil
 	}
 	return o.ConcurrentBuilds
-}
-
-func (o *InvoiceItems) GetCronJobInvocation() *CronJobInvocation {
-	if o == nil {
-		return nil
-	}
-	return o.CronJobInvocation
 }
 
 func (o *InvoiceItems) GetDataCacheRead() *DataCacheRead {
@@ -3468,11 +5257,60 @@ func (o *InvoiceItems) GetEdgeMiddlewareInvocations() *EdgeMiddlewareInvocations
 	return o.EdgeMiddlewareInvocations
 }
 
+func (o *InvoiceItems) GetEdgeRequest() *EdgeRequest {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeRequest
+}
+
+func (o *InvoiceItems) GetEdgeRequestAdditionalCPUDuration() *EdgeRequestAdditionalCPUDuration {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeRequestAdditionalCPUDuration
+}
+
 func (o *InvoiceItems) GetEnterprise() *Enterprise {
 	if o == nil {
 		return nil
 	}
 	return o.Enterprise
+}
+
+func (o *InvoiceItems) GetFastDataTransfer() *FastDataTransfer {
+	if o == nil {
+		return nil
+	}
+	return o.FastDataTransfer
+}
+
+func (o *InvoiceItems) GetFastOriginTransfer() *FastOriginTransfer {
+	if o == nil {
+		return nil
+	}
+	return o.FastOriginTransfer
+}
+
+func (o *InvoiceItems) GetFunctionDuration() *FunctionDuration {
+	if o == nil {
+		return nil
+	}
+	return o.FunctionDuration
+}
+
+func (o *InvoiceItems) GetFunctionInvocation() *FunctionInvocation {
+	if o == nil {
+		return nil
+	}
+	return o.FunctionInvocation
+}
+
+func (o *InvoiceItems) GetLogDrainsVolume() *LogDrainsVolume {
+	if o == nil {
+		return nil
+	}
+	return o.LogDrainsVolume
 }
 
 func (o *InvoiceItems) GetMonitoring() *Monitoring {
@@ -3601,6 +5439,20 @@ func (o *InvoiceItems) GetTeamSeats() *TeamSeats {
 	return o.TeamSeats
 }
 
+func (o *InvoiceItems) GetWafOwaspExcessBytes() *WafOwaspExcessBytes {
+	if o == nil {
+		return nil
+	}
+	return o.WafOwaspExcessBytes
+}
+
+func (o *InvoiceItems) GetWafOwaspRequests() *WafOwaspRequests {
+	if o == nil {
+		return nil
+	}
+	return o.WafOwaspRequests
+}
+
 func (o *InvoiceItems) GetWebAnalytics() *AuthUserWebAnalytics {
 	if o == nil {
 		return nil
@@ -3627,20 +5479,20 @@ func (o *InvoiceSettings) GetFooter() *string {
 }
 
 type Period struct {
-	End   int64 `json:"end"`
-	Start int64 `json:"start"`
+	End   float64 `json:"end"`
+	Start float64 `json:"start"`
 }
 
-func (o *Period) GetEnd() int64 {
+func (o *Period) GetEnd() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.End
 }
 
-func (o *Period) GetStart() int64 {
+func (o *Period) GetStart() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Start
 }
@@ -3656,7 +5508,6 @@ const (
 func (e Plan) ToPointer() *Plan {
 	return &e
 }
-
 func (e *Plan) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3685,7 +5536,6 @@ const (
 func (e Platform) ToPointer() *Platform {
 	return &e
 }
-
 func (e *Platform) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3711,7 +5561,6 @@ const (
 func (e PricingExperiment) ToPointer() *PricingExperiment {
 	return &e
 }
-
 func (e *PricingExperiment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3736,7 +5585,6 @@ const (
 func (e ProgramType) ToPointer() *ProgramType {
 	return &e
 }
-
 func (e *ProgramType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3766,7 +5614,6 @@ const (
 func (e Status) ToPointer() *Status {
 	return &e
 }
-
 func (e *Status) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3800,7 +5647,6 @@ const (
 func (e Duration) ToPointer() *Duration {
 	return &e
 }
-
 func (e *Duration) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3820,15 +5666,15 @@ func (e *Duration) UnmarshalJSON(data []byte) error {
 }
 
 type Coupon struct {
-	AmountOff        *int64   `json:"amountOff"`
+	AmountOff        *float64 `json:"amountOff"`
 	Duration         Duration `json:"duration"`
-	DurationInMonths *int64   `json:"durationInMonths"`
+	DurationInMonths *float64 `json:"durationInMonths"`
 	ID               string   `json:"id"`
 	Name             *string  `json:"name"`
-	PercentageOff    *int64   `json:"percentageOff"`
+	PercentageOff    *float64 `json:"percentageOff"`
 }
 
-func (o *Coupon) GetAmountOff() *int64 {
+func (o *Coupon) GetAmountOff() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3842,7 +5688,7 @@ func (o *Coupon) GetDuration() Duration {
 	return o.Duration
 }
 
-func (o *Coupon) GetDurationInMonths() *int64 {
+func (o *Coupon) GetDurationInMonths() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3863,7 +5709,7 @@ func (o *Coupon) GetName() *string {
 	return o.Name
 }
 
-func (o *Coupon) GetPercentageOff() *int64 {
+func (o *Coupon) GetPercentageOff() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3901,7 +5747,6 @@ const (
 func (e Interval) ToPointer() *Interval {
 	return &e
 }
-
 func (e *Interval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3924,7 +5769,7 @@ func (e *Interval) UnmarshalJSON(data []byte) error {
 
 type Frequency struct {
 	Interval      Interval `json:"interval"`
-	IntervalCount int64    `json:"intervalCount"`
+	IntervalCount float64  `json:"intervalCount"`
 }
 
 func (o *Frequency) GetInterval() Interval {
@@ -3934,24 +5779,24 @@ func (o *Frequency) GetInterval() Interval {
 	return o.Interval
 }
 
-func (o *Frequency) GetIntervalCount() int64 {
+func (o *Frequency) GetIntervalCount() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 type Items struct {
-	Amount    int64  `json:"amount"`
-	ID        string `json:"id"`
-	PriceID   string `json:"priceId"`
-	ProductID string `json:"productId"`
-	Quantity  int64  `json:"quantity"`
+	Amount    float64 `json:"amount"`
+	ID        string  `json:"id"`
+	PriceID   string  `json:"priceId"`
+	ProductID string  `json:"productId"`
+	Quantity  float64 `json:"quantity"`
 }
 
-func (o *Items) GetAmount() int64 {
+func (o *Items) GetAmount() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Amount
 }
@@ -3977,47 +5822,47 @@ func (o *Items) GetProductID() string {
 	return o.ProductID
 }
 
-func (o *Items) GetQuantity() int64 {
+func (o *Items) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
 type AuthUserPeriod struct {
-	End   int64 `json:"end"`
-	Start int64 `json:"start"`
+	End   float64 `json:"end"`
+	Start float64 `json:"start"`
 }
 
-func (o *AuthUserPeriod) GetEnd() int64 {
+func (o *AuthUserPeriod) GetEnd() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.End
 }
 
-func (o *AuthUserPeriod) GetStart() int64 {
+func (o *AuthUserPeriod) GetStart() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Start
 }
 
 type AuthUserTrial struct {
-	End   int64 `json:"end"`
-	Start int64 `json:"start"`
+	End   float64 `json:"end"`
+	Start float64 `json:"start"`
 }
 
-func (o *AuthUserTrial) GetEnd() int64 {
+func (o *AuthUserTrial) GetEnd() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.End
 }
 
-func (o *AuthUserTrial) GetStart() int64 {
+func (o *AuthUserTrial) GetStart() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Start
 }
@@ -4093,20 +5938,20 @@ func (o *Tax) GetType() string {
 }
 
 type Trial struct {
-	End   int64 `json:"end"`
-	Start int64 `json:"start"`
+	End   float64 `json:"end"`
+	Start float64 `json:"start"`
 }
 
-func (o *Trial) GetEnd() int64 {
+func (o *Trial) GetEnd() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.End
 }
 
-func (o *Trial) GetStart() int64 {
+func (o *Trial) GetStart() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Start
 }
@@ -4114,7 +5959,7 @@ func (o *Trial) GetStart() int64 {
 // Billing - An object containing billing infomation associated with the User account.
 type Billing struct {
 	Address                 *Address           `json:"address,omitempty"`
-	Cancelation             *int64             `json:"cancelation,omitempty"`
+	Cancelation             *float64           `json:"cancelation,omitempty"`
 	Contract                *Contract          `json:"contract,omitempty"`
 	Controls                *Controls          `json:"controls,omitempty"`
 	Currency                *Currency          `json:"currency,omitempty"`
@@ -4124,16 +5969,17 @@ type Billing struct {
 	Language                *string            `json:"language,omitempty"`
 	Name                    *string            `json:"name,omitempty"`
 	OrbCustomerID           *string            `json:"orbCustomerId,omitempty"`
-	OrbMigrationScheduledAt *int64             `json:"orbMigrationScheduledAt,omitempty"`
+	OrbMigrationScheduledAt *float64           `json:"orbMigrationScheduledAt,omitempty"`
 	Period                  *Period            `json:"period"`
 	Plan                    Plan               `json:"plan"`
+	PlanIteration           *string            `json:"planIteration,omitempty"`
 	Platform                *Platform          `json:"platform,omitempty"`
 	PricingExperiment       *PricingExperiment `json:"pricingExperiment,omitempty"`
 	ProgramType             *ProgramType       `json:"programType,omitempty"`
 	PurchaseOrder           *string            `json:"purchaseOrder,omitempty"`
 	Status                  *Status            `json:"status,omitempty"`
 	Subscriptions           []Subscriptions    `json:"subscriptions,omitempty"`
-	SyncedAt                *int64             `json:"syncedAt,omitempty"`
+	SyncedAt                *float64           `json:"syncedAt,omitempty"`
 	Tax                     *Tax               `json:"tax,omitempty"`
 	Trial                   *Trial             `json:"trial,omitempty"`
 }
@@ -4145,7 +5991,7 @@ func (o *Billing) GetAddress() *Address {
 	return o.Address
 }
 
-func (o *Billing) GetCancelation() *int64 {
+func (o *Billing) GetCancelation() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -4215,7 +6061,7 @@ func (o *Billing) GetOrbCustomerID() *string {
 	return o.OrbCustomerID
 }
 
-func (o *Billing) GetOrbMigrationScheduledAt() *int64 {
+func (o *Billing) GetOrbMigrationScheduledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -4234,6 +6080,13 @@ func (o *Billing) GetPlan() Plan {
 		return Plan("")
 	}
 	return o.Plan
+}
+
+func (o *Billing) GetPlanIteration() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PlanIteration
 }
 
 func (o *Billing) GetPlatform() *Platform {
@@ -4278,7 +6131,7 @@ func (o *Billing) GetSubscriptions() []Subscriptions {
 	return o.Subscriptions
 }
 
-func (o *Billing) GetSyncedAt() *int64 {
+func (o *Billing) GetSyncedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -4312,13 +6165,13 @@ func (o *DataCache) GetExcessBillingEnabled() *bool {
 }
 
 type Dismissals struct {
-	CreatedAt int64  `json:"createdAt"`
-	ScopeID   string `json:"scopeId"`
+	CreatedAt float64 `json:"createdAt"`
+	ScopeID   string  `json:"scopeId"`
 }
 
-func (o *Dismissals) GetCreatedAt() int64 {
+func (o *Dismissals) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -4440,21 +6293,21 @@ func CreateFavoriteProjectsAndSpacesAuthUser2(authUser2 AuthUser2) FavoriteProje
 
 func (u *FavoriteProjectsAndSpaces) UnmarshalJSON(data []byte) error {
 
-	authUser1 := AuthUser1{}
+	var authUser1 AuthUser1 = AuthUser1{}
 	if err := utils.UnmarshalJSON(data, &authUser1, "", true, true); err == nil {
 		u.AuthUser1 = &authUser1
 		u.Type = FavoriteProjectsAndSpacesTypeAuthUser1
 		return nil
 	}
 
-	authUser2 := AuthUser2{}
+	var authUser2 AuthUser2 = AuthUser2{}
 	if err := utils.UnmarshalJSON(data, &authUser2, "", true, true); err == nil {
 		u.AuthUser2 = &authUser2
 		u.Type = FavoriteProjectsAndSpacesTypeAuthUser2
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for FavoriteProjectsAndSpaces", string(data))
 }
 
 func (u FavoriteProjectsAndSpaces) MarshalJSON() ([]byte, error) {
@@ -4466,23 +6319,23 @@ func (u FavoriteProjectsAndSpaces) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.AuthUser2, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type FavoriteProjectsAndSpaces: all fields are null")
 }
 
 type WebAnalytics struct {
-	BlockedFrom        *int64 `json:"blockedFrom,omitempty"`
-	BlockedUntil       *int64 `json:"blockedUntil,omitempty"`
-	IsCurrentlyBlocked bool   `json:"isCurrentlyBlocked"`
+	BlockedFrom        *float64 `json:"blockedFrom,omitempty"`
+	BlockedUntil       *float64 `json:"blockedUntil,omitempty"`
+	IsCurrentlyBlocked bool     `json:"isCurrentlyBlocked"`
 }
 
-func (o *WebAnalytics) GetBlockedFrom() *int64 {
+func (o *WebAnalytics) GetBlockedFrom() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.BlockedFrom
 }
 
-func (o *WebAnalytics) GetBlockedUntil() *int64 {
+func (o *WebAnalytics) GetBlockedUntil() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -4511,13 +6364,13 @@ func (o *FeatureBlocks) GetWebAnalytics() *WebAnalytics {
 type ImportFlowGitNamespaceType string
 
 const (
-	ImportFlowGitNamespaceTypeStr     ImportFlowGitNamespaceType = "str"
-	ImportFlowGitNamespaceTypeInteger ImportFlowGitNamespaceType = "integer"
+	ImportFlowGitNamespaceTypeStr    ImportFlowGitNamespaceType = "str"
+	ImportFlowGitNamespaceTypeNumber ImportFlowGitNamespaceType = "number"
 )
 
 type ImportFlowGitNamespace struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type ImportFlowGitNamespaceType
 }
@@ -4531,32 +6384,32 @@ func CreateImportFlowGitNamespaceStr(str string) ImportFlowGitNamespace {
 	}
 }
 
-func CreateImportFlowGitNamespaceInteger(integer int64) ImportFlowGitNamespace {
-	typ := ImportFlowGitNamespaceTypeInteger
+func CreateImportFlowGitNamespaceNumber(number float64) ImportFlowGitNamespace {
+	typ := ImportFlowGitNamespaceTypeNumber
 
 	return ImportFlowGitNamespace{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *ImportFlowGitNamespace) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = ImportFlowGitNamespaceTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = ImportFlowGitNamespaceTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = ImportFlowGitNamespaceTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ImportFlowGitNamespace", string(data))
 }
 
 func (u ImportFlowGitNamespace) MarshalJSON() ([]byte, error) {
@@ -4564,23 +6417,23 @@ func (u ImportFlowGitNamespace) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type ImportFlowGitNamespace: all fields are null")
 }
 
 type ImportFlowGitNamespaceIDType string
 
 const (
-	ImportFlowGitNamespaceIDTypeStr     ImportFlowGitNamespaceIDType = "str"
-	ImportFlowGitNamespaceIDTypeInteger ImportFlowGitNamespaceIDType = "integer"
+	ImportFlowGitNamespaceIDTypeStr    ImportFlowGitNamespaceIDType = "str"
+	ImportFlowGitNamespaceIDTypeNumber ImportFlowGitNamespaceIDType = "number"
 )
 
 type ImportFlowGitNamespaceID struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type ImportFlowGitNamespaceIDType
 }
@@ -4594,32 +6447,32 @@ func CreateImportFlowGitNamespaceIDStr(str string) ImportFlowGitNamespaceID {
 	}
 }
 
-func CreateImportFlowGitNamespaceIDInteger(integer int64) ImportFlowGitNamespaceID {
-	typ := ImportFlowGitNamespaceIDTypeInteger
+func CreateImportFlowGitNamespaceIDNumber(number float64) ImportFlowGitNamespaceID {
+	typ := ImportFlowGitNamespaceIDTypeNumber
 
 	return ImportFlowGitNamespaceID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *ImportFlowGitNamespaceID) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = ImportFlowGitNamespaceIDTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = ImportFlowGitNamespaceIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = ImportFlowGitNamespaceIDTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ImportFlowGitNamespaceID", string(data))
 }
 
 func (u ImportFlowGitNamespaceID) MarshalJSON() ([]byte, error) {
@@ -4627,11 +6480,11 @@ func (u ImportFlowGitNamespaceID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type ImportFlowGitNamespaceID: all fields are null")
 }
 
 type ImportFlowGitProvider string
@@ -4645,7 +6498,6 @@ const (
 func (e ImportFlowGitProvider) ToPointer() *ImportFlowGitProvider {
 	return &e
 }
-
 func (e *ImportFlowGitProvider) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4664,16 +6516,147 @@ func (e *ImportFlowGitProvider) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// AuthUserStatus - - `will-migrate`: Show dashboard toast saying "your account will be migrated soon" - `migrating`: Show dashboard toast saying "your account is currently migrating to `teamId`" - `completed`: Show dashboard toast saying "your account has been migrated to `teamId`" - `failed`: Show dashboard toast saying "your account migration has failed `teamId`"
+type AuthUserStatus string
+
+const (
+	AuthUserStatusMigrating   AuthUserStatus = "migrating"
+	AuthUserStatusCompleted   AuthUserStatus = "completed"
+	AuthUserStatusFailed      AuthUserStatus = "failed"
+	AuthUserStatusWillMigrate AuthUserStatus = "will-migrate"
+)
+
+func (e AuthUserStatus) ToPointer() *AuthUserStatus {
+	return &e
+}
+func (e *AuthUserStatus) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "migrating":
+		fallthrough
+	case "completed":
+		fallthrough
+	case "failed":
+		fallthrough
+	case "will-migrate":
+		*e = AuthUserStatus(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for AuthUserStatus: %v", v)
+	}
+}
+
+type Migration struct {
+	// - `will-migrate`: Show dashboard toast saying "your account will be migrated soon" - `migrating`: Show dashboard toast saying "your account is currently migrating to `teamId`" - `completed`: Show dashboard toast saying "your account has been migrated to `teamId`" - `failed`: Show dashboard toast saying "your account migration has failed `teamId`"
+	Status AuthUserStatus `json:"status"`
+	TeamID *string        `json:"teamId,omitempty"`
+}
+
+func (o *Migration) GetStatus() AuthUserStatus {
+	if o == nil {
+		return AuthUserStatus("")
+	}
+	return o.Status
+}
+
+func (o *Migration) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+// Northstar migration specific data
+type Northstar struct {
+	Migration *Migration `json:"migration,omitempty"`
+}
+
+func (o *Northstar) GetMigration() *Migration {
+	if o == nil {
+		return nil
+	}
+	return o.Migration
+}
+
+type NorthstarMigration struct {
+	// The migration end time timestamp for this user.
+	EndTime float64 `json:"endTime"`
+	// The number of integration clients migrated for this user.
+	IntegrationClients float64 `json:"integrationClients"`
+	// The number of integration configurations migrated for this user.
+	IntegrationConfigurations float64 `json:"integrationConfigurations"`
+	// The number of projects migrated for this user.
+	Projects float64 `json:"projects"`
+	// The migration start time timestamp for this user.
+	StartTime float64 `json:"startTime"`
+	// The number of stores migrated for this user.
+	Stores float64 `json:"stores"`
+	// The ID of the team we created for this user.
+	TeamID string `json:"teamId"`
+}
+
+func (o *NorthstarMigration) GetEndTime() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.EndTime
+}
+
+func (o *NorthstarMigration) GetIntegrationClients() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.IntegrationClients
+}
+
+func (o *NorthstarMigration) GetIntegrationConfigurations() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.IntegrationConfigurations
+}
+
+func (o *NorthstarMigration) GetProjects() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Projects
+}
+
+func (o *NorthstarMigration) GetStartTime() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.StartTime
+}
+
+func (o *NorthstarMigration) GetStores() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Stores
+}
+
+func (o *NorthstarMigration) GetTeamID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TeamID
+}
+
 type GitNamespaceIDType string
 
 const (
-	GitNamespaceIDTypeStr     GitNamespaceIDType = "str"
-	GitNamespaceIDTypeInteger GitNamespaceIDType = "integer"
+	GitNamespaceIDTypeStr    GitNamespaceIDType = "str"
+	GitNamespaceIDTypeNumber GitNamespaceIDType = "number"
 )
 
 type GitNamespaceID struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type GitNamespaceIDType
 }
@@ -4687,32 +6670,32 @@ func CreateGitNamespaceIDStr(str string) GitNamespaceID {
 	}
 }
 
-func CreateGitNamespaceIDInteger(integer int64) GitNamespaceID {
-	typ := GitNamespaceIDTypeInteger
+func CreateGitNamespaceIDNumber(number float64) GitNamespaceID {
+	typ := GitNamespaceIDTypeNumber
 
 	return GitNamespaceID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *GitNamespaceID) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = GitNamespaceIDTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = GitNamespaceIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = GitNamespaceIDTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GitNamespaceID", string(data))
 }
 
 func (u GitNamespaceID) MarshalJSON() ([]byte, error) {
@@ -4720,11 +6703,11 @@ func (u GitNamespaceID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type GitNamespaceID: all fields are null")
 }
 
 type PreferredScopesAndGitNamespaces struct {
@@ -4765,27 +6748,33 @@ type ResourceConfig struct {
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
 	AwsAccountType *string `json:"awsAccountType,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
-	BlobStores *int64 `json:"blobStores,omitempty"`
+	BlobStores *float64 `json:"blobStores,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
 	CfZoneName *string `json:"cfZoneName,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
-	ConcurrentBuilds *int64 `json:"concurrentBuilds,omitempty"`
+	ConcurrentBuilds *float64 `json:"concurrentBuilds,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
-	EdgeConfigSize *int64 `json:"edgeConfigSize,omitempty"`
+	CronJobs *float64 `json:"cronJobs,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
-	EdgeConfigs *int64 `json:"edgeConfigs,omitempty"`
+	CronJobsPerProject *float64 `json:"cronJobsPerProject,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
-	EdgeFunctionExecutionTimeoutMs *int64 `json:"edgeFunctionExecutionTimeoutMs,omitempty"`
+	EdgeConfigSize *float64 `json:"edgeConfigSize,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
-	EdgeFunctionMaxSizeBytes *int64 `json:"edgeFunctionMaxSizeBytes,omitempty"`
+	EdgeConfigs *float64 `json:"edgeConfigs,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
-	KvDatabases *int64 `json:"kvDatabases,omitempty"`
+	EdgeFunctionExecutionTimeoutMs *float64 `json:"edgeFunctionExecutionTimeoutMs,omitempty"`
+	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
+	EdgeFunctionMaxSizeBytes *float64 `json:"edgeFunctionMaxSizeBytes,omitempty"`
+	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
+	IntegrationStores *float64 `json:"integrationStores,omitempty"`
+	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
+	KvDatabases *float64 `json:"kvDatabases,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
 	NodeType *string `json:"nodeType,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
-	PostgresDatabases *int64 `json:"postgresDatabases,omitempty"`
+	PostgresDatabases *float64 `json:"postgresDatabases,omitempty"`
 	// An object containing infomation related to the amount of platform resources may be allocated to the User account.
-	ServerlessFunctionDefaultMaxExecutionTime *int64 `json:"serverlessFunctionDefaultMaxExecutionTime,omitempty"`
+	ServerlessFunctionDefaultMaxExecutionTime *float64 `json:"serverlessFunctionDefaultMaxExecutionTime,omitempty"`
 }
 
 func (o *ResourceConfig) GetAwsAccountIds() []string {
@@ -4802,7 +6791,7 @@ func (o *ResourceConfig) GetAwsAccountType() *string {
 	return o.AwsAccountType
 }
 
-func (o *ResourceConfig) GetBlobStores() *int64 {
+func (o *ResourceConfig) GetBlobStores() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -4816,42 +6805,63 @@ func (o *ResourceConfig) GetCfZoneName() *string {
 	return o.CfZoneName
 }
 
-func (o *ResourceConfig) GetConcurrentBuilds() *int64 {
+func (o *ResourceConfig) GetConcurrentBuilds() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.ConcurrentBuilds
 }
 
-func (o *ResourceConfig) GetEdgeConfigSize() *int64 {
+func (o *ResourceConfig) GetCronJobs() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CronJobs
+}
+
+func (o *ResourceConfig) GetCronJobsPerProject() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CronJobsPerProject
+}
+
+func (o *ResourceConfig) GetEdgeConfigSize() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigSize
 }
 
-func (o *ResourceConfig) GetEdgeConfigs() *int64 {
+func (o *ResourceConfig) GetEdgeConfigs() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeConfigs
 }
 
-func (o *ResourceConfig) GetEdgeFunctionExecutionTimeoutMs() *int64 {
+func (o *ResourceConfig) GetEdgeFunctionExecutionTimeoutMs() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeFunctionExecutionTimeoutMs
 }
 
-func (o *ResourceConfig) GetEdgeFunctionMaxSizeBytes() *int64 {
+func (o *ResourceConfig) GetEdgeFunctionMaxSizeBytes() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.EdgeFunctionMaxSizeBytes
 }
 
-func (o *ResourceConfig) GetKvDatabases() *int64 {
+func (o *ResourceConfig) GetIntegrationStores() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.IntegrationStores
+}
+
+func (o *ResourceConfig) GetKvDatabases() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -4865,14 +6875,14 @@ func (o *ResourceConfig) GetNodeType() *string {
 	return o.NodeType
 }
 
-func (o *ResourceConfig) GetPostgresDatabases() *int64 {
+func (o *ResourceConfig) GetPostgresDatabases() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.PostgresDatabases
 }
 
-func (o *ResourceConfig) GetServerlessFunctionDefaultMaxExecutionTime() *int64 {
+func (o *ResourceConfig) GetServerlessFunctionDefaultMaxExecutionTime() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -4885,7 +6895,12 @@ const (
 	BlockedDueToOverageTypeAnalyticsUsage                          BlockedDueToOverageType = "analyticsUsage"
 	BlockedDueToOverageTypeArtifacts                               BlockedDueToOverageType = "artifacts"
 	BlockedDueToOverageTypeBandwidth                               BlockedDueToOverageType = "bandwidth"
-	BlockedDueToOverageTypeCronJobInvocation                       BlockedDueToOverageType = "cronJobInvocation"
+	BlockedDueToOverageTypeBlobStores                              BlockedDueToOverageType = "blobStores"
+	BlockedDueToOverageTypeBlobTotalAdvancedRequests               BlockedDueToOverageType = "blobTotalAdvancedRequests"
+	BlockedDueToOverageTypeBlobTotalAvgSizeInBytes                 BlockedDueToOverageType = "blobTotalAvgSizeInBytes"
+	BlockedDueToOverageTypeBlobTotalGetResponseObjectSizeInBytes   BlockedDueToOverageType = "blobTotalGetResponseObjectSizeInBytes"
+	BlockedDueToOverageTypeBlobTotalSimpleRequests                 BlockedDueToOverageType = "blobTotalSimpleRequests"
+	BlockedDueToOverageTypeBuildMinute                             BlockedDueToOverageType = "buildMinute"
 	BlockedDueToOverageTypeDataCacheRead                           BlockedDueToOverageType = "dataCacheRead"
 	BlockedDueToOverageTypeDataCacheRevalidation                   BlockedDueToOverageType = "dataCacheRevalidation"
 	BlockedDueToOverageTypeDataCacheWrite                          BlockedDueToOverageType = "dataCacheWrite"
@@ -4893,11 +6908,18 @@ const (
 	BlockedDueToOverageTypeEdgeConfigWrite                         BlockedDueToOverageType = "edgeConfigWrite"
 	BlockedDueToOverageTypeEdgeFunctionExecutionUnits              BlockedDueToOverageType = "edgeFunctionExecutionUnits"
 	BlockedDueToOverageTypeEdgeMiddlewareInvocations               BlockedDueToOverageType = "edgeMiddlewareInvocations"
+	BlockedDueToOverageTypeEdgeRequest                             BlockedDueToOverageType = "edgeRequest"
+	BlockedDueToOverageTypeEdgeRequestAdditionalCPUDuration        BlockedDueToOverageType = "edgeRequestAdditionalCpuDuration"
+	BlockedDueToOverageTypeFastDataTransfer                        BlockedDueToOverageType = "fastDataTransfer"
+	BlockedDueToOverageTypeFastOriginTransfer                      BlockedDueToOverageType = "fastOriginTransfer"
+	BlockedDueToOverageTypeFunctionDuration                        BlockedDueToOverageType = "functionDuration"
+	BlockedDueToOverageTypeFunctionInvocation                      BlockedDueToOverageType = "functionInvocation"
+	BlockedDueToOverageTypeLogDrainsVolume                         BlockedDueToOverageType = "logDrainsVolume"
 	BlockedDueToOverageTypeMonitoringMetric                        BlockedDueToOverageType = "monitoringMetric"
 	BlockedDueToOverageTypePostgresComputeTime                     BlockedDueToOverageType = "postgresComputeTime"
-	BlockedDueToOverageTypePostgresDatabase                        BlockedDueToOverageType = "postgresDatabase"
 	BlockedDueToOverageTypePostgresDataStorage                     BlockedDueToOverageType = "postgresDataStorage"
 	BlockedDueToOverageTypePostgresDataTransfer                    BlockedDueToOverageType = "postgresDataTransfer"
+	BlockedDueToOverageTypePostgresDatabase                        BlockedDueToOverageType = "postgresDatabase"
 	BlockedDueToOverageTypePostgresWrittenData                     BlockedDueToOverageType = "postgresWrittenData"
 	BlockedDueToOverageTypeServerlessFunctionExecution             BlockedDueToOverageType = "serverlessFunctionExecution"
 	BlockedDueToOverageTypeSourceImages                            BlockedDueToOverageType = "sourceImages"
@@ -4905,13 +6927,14 @@ const (
 	BlockedDueToOverageTypeStorageRedisTotalCommands               BlockedDueToOverageType = "storageRedisTotalCommands"
 	BlockedDueToOverageTypeStorageRedisTotalDailyAvgStorageInBytes BlockedDueToOverageType = "storageRedisTotalDailyAvgStorageInBytes"
 	BlockedDueToOverageTypeStorageRedisTotalDatabases              BlockedDueToOverageType = "storageRedisTotalDatabases"
+	BlockedDueToOverageTypeWafOwaspExcessBytes                     BlockedDueToOverageType = "wafOwaspExcessBytes"
+	BlockedDueToOverageTypeWafOwaspRequests                        BlockedDueToOverageType = "wafOwaspRequests"
 	BlockedDueToOverageTypeWebAnalyticsEvent                       BlockedDueToOverageType = "webAnalyticsEvent"
 )
 
 func (e BlockedDueToOverageType) ToPointer() *BlockedDueToOverageType {
 	return &e
 }
-
 func (e *BlockedDueToOverageType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4924,7 +6947,17 @@ func (e *BlockedDueToOverageType) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "bandwidth":
 		fallthrough
-	case "cronJobInvocation":
+	case "blobStores":
+		fallthrough
+	case "blobTotalAdvancedRequests":
+		fallthrough
+	case "blobTotalAvgSizeInBytes":
+		fallthrough
+	case "blobTotalGetResponseObjectSizeInBytes":
+		fallthrough
+	case "blobTotalSimpleRequests":
+		fallthrough
+	case "buildMinute":
 		fallthrough
 	case "dataCacheRead":
 		fallthrough
@@ -4940,15 +6973,29 @@ func (e *BlockedDueToOverageType) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "edgeMiddlewareInvocations":
 		fallthrough
+	case "edgeRequest":
+		fallthrough
+	case "edgeRequestAdditionalCpuDuration":
+		fallthrough
+	case "fastDataTransfer":
+		fallthrough
+	case "fastOriginTransfer":
+		fallthrough
+	case "functionDuration":
+		fallthrough
+	case "functionInvocation":
+		fallthrough
+	case "logDrainsVolume":
+		fallthrough
 	case "monitoringMetric":
 		fallthrough
 	case "postgresComputeTime":
 		fallthrough
-	case "postgresDatabase":
-		fallthrough
 	case "postgresDataStorage":
 		fallthrough
 	case "postgresDataTransfer":
+		fallthrough
+	case "postgresDatabase":
 		fallthrough
 	case "postgresWrittenData":
 		fallthrough
@@ -4963,6 +7010,10 @@ func (e *BlockedDueToOverageType) UnmarshalJSON(data []byte) error {
 	case "storageRedisTotalDailyAvgStorageInBytes":
 		fallthrough
 	case "storageRedisTotalDatabases":
+		fallthrough
+	case "wafOwaspExcessBytes":
+		fallthrough
+	case "wafOwaspRequests":
 		fallthrough
 	case "webAnalyticsEvent":
 		*e = BlockedDueToOverageType(v)
@@ -4986,7 +7037,6 @@ const (
 func (e Reason) ToPointer() *Reason {
 	return &e
 }
-
 func (e *Reason) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5013,14 +7063,14 @@ func (e *Reason) UnmarshalJSON(data []byte) error {
 
 // SoftBlock - When the User account has been "soft blocked", this property will contain the date when the restriction was enacted, and the identifier for why.
 type SoftBlock struct {
-	BlockedAt               int64                    `json:"blockedAt"`
+	BlockedAt               float64                  `json:"blockedAt"`
 	BlockedDueToOverageType *BlockedDueToOverageType `json:"blockedDueToOverageType,omitempty"`
 	Reason                  Reason                   `json:"reason"`
 }
 
-func (o *SoftBlock) GetBlockedAt() int64 {
+func (o *SoftBlock) GetBlockedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.BlockedAt
 }
@@ -5049,7 +7099,6 @@ const (
 func (e Version) ToPointer() *Version {
 	return &e
 }
-
 func (e *Version) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5073,7 +7122,7 @@ type AuthUser struct {
 	// An object containing billing infomation associated with the User account.
 	Billing *Billing `json:"billing"`
 	// UNIX timestamp (in milliseconds) when the User account was created.
-	CreatedAt int64 `json:"createdAt"`
+	CreatedAt float64 `json:"createdAt"`
 	// data cache settings
 	DataCache *DataCache `json:"dataCache,omitempty"`
 	// The user's default team. Only applies if the user's `version` is `'northstar'`.
@@ -5094,7 +7143,10 @@ type AuthUser struct {
 	ImportFlowGitNamespaceID *ImportFlowGitNamespaceID `json:"importFlowGitNamespaceId,omitempty"`
 	ImportFlowGitProvider    *ImportFlowGitProvider    `json:"importFlowGitProvider,omitempty"`
 	// Name associated with the User account, or `null` if none has been provided.
-	Name                            *string                           `json:"name"`
+	Name *string `json:"name"`
+	// Northstar migration specific data
+	Northstar                       *Northstar                        `json:"northstar,omitempty"`
+	NorthstarMigration              *NorthstarMigration               `json:"northstarMigration,omitempty"`
 	PreferredScopesAndGitNamespaces []PreferredScopesAndGitNamespaces `json:"preferredScopesAndGitNamespaces,omitempty"`
 	// remote caching settings
 	RemoteCaching *RemoteCaching `json:"remoteCaching,omitempty"`
@@ -5131,9 +7183,9 @@ func (o *AuthUser) GetBilling() *Billing {
 	return o.Billing
 }
 
-func (o *AuthUser) GetCreatedAt() int64 {
+func (o *AuthUser) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -5220,6 +7272,20 @@ func (o *AuthUser) GetName() *string {
 		return nil
 	}
 	return o.Name
+}
+
+func (o *AuthUser) GetNorthstar() *Northstar {
+	if o == nil {
+		return nil
+	}
+	return o.Northstar
+}
+
+func (o *AuthUser) GetNorthstarMigration() *NorthstarMigration {
+	if o == nil {
+		return nil
+	}
+	return o.NorthstarMigration
 }
 
 func (o *AuthUser) GetPreferredScopesAndGitNamespaces() []PreferredScopesAndGitNamespaces {

@@ -3,8 +3,6 @@
 package operations
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -13,7 +11,9 @@ type GetProjectDomainRequest struct {
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
 	// The unique project identifier or the project name
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -31,44 +31,18 @@ func (o *GetProjectDomainRequest) GetIDOrName() string {
 	return o.IDOrName
 }
 
+func (o *GetProjectDomainRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 func (o *GetProjectDomainRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
-}
-
-type GetProjectDomainRedirectStatusCode int64
-
-const (
-	GetProjectDomainRedirectStatusCodeThreeHundredAndSeven GetProjectDomainRedirectStatusCode = 307
-	GetProjectDomainRedirectStatusCodeThreeHundredAndOne   GetProjectDomainRedirectStatusCode = 301
-	GetProjectDomainRedirectStatusCodeThreeHundredAndTwo   GetProjectDomainRedirectStatusCode = 302
-	GetProjectDomainRedirectStatusCodeThreeHundredAndEight GetProjectDomainRedirectStatusCode = 308
-)
-
-func (e GetProjectDomainRedirectStatusCode) ToPointer() *GetProjectDomainRedirectStatusCode {
-	return &e
-}
-
-func (e *GetProjectDomainRedirectStatusCode) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 307:
-		fallthrough
-	case 301:
-		fallthrough
-	case 302:
-		fallthrough
-	case 308:
-		*e = GetProjectDomainRedirectStatusCode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetProjectDomainRedirectStatusCode: %v", v)
-	}
 }
 
 // GetProjectDomainVerification - A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
@@ -108,14 +82,15 @@ func (o *GetProjectDomainVerification) GetValue() string {
 }
 
 type GetProjectDomainResponseBody struct {
-	ApexName           string                              `json:"apexName"`
-	CreatedAt          *int64                              `json:"createdAt,omitempty"`
-	GitBranch          *string                             `json:"gitBranch,omitempty"`
-	Name               string                              `json:"name"`
-	ProjectID          string                              `json:"projectId"`
-	Redirect           *string                             `json:"redirect,omitempty"`
-	RedirectStatusCode *GetProjectDomainRedirectStatusCode `json:"redirectStatusCode,omitempty"`
-	UpdatedAt          *int64                              `json:"updatedAt,omitempty"`
+	ApexName            string   `json:"apexName"`
+	CreatedAt           *float64 `json:"createdAt,omitempty"`
+	CustomEnvironmentID *string  `json:"customEnvironmentId,omitempty"`
+	GitBranch           *string  `json:"gitBranch,omitempty"`
+	Name                string   `json:"name"`
+	ProjectID           string   `json:"projectId"`
+	Redirect            *string  `json:"redirect,omitempty"`
+	RedirectStatusCode  *float64 `json:"redirectStatusCode,omitempty"`
+	UpdatedAt           *float64 `json:"updatedAt,omitempty"`
 	// A list of verification challenges, one of which must be completed to verify the domain for use on the project. After the challenge is complete `POST /projects/:idOrName/domains/:domain/verify` to verify the domain. Possible challenges: - If `verification.type = TXT` the `verification.domain` will be checked for a TXT record matching `verification.value`.
 	Verification []GetProjectDomainVerification `json:"verification,omitempty"`
 	// `true` if the domain is verified for use with the project. If `false` it will not be used as an alias on this project until the challenge in `verification` is completed.
@@ -129,11 +104,18 @@ func (o *GetProjectDomainResponseBody) GetApexName() string {
 	return o.ApexName
 }
 
-func (o *GetProjectDomainResponseBody) GetCreatedAt() *int64 {
+func (o *GetProjectDomainResponseBody) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
+}
+
+func (o *GetProjectDomainResponseBody) GetCustomEnvironmentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomEnvironmentID
 }
 
 func (o *GetProjectDomainResponseBody) GetGitBranch() *string {
@@ -164,14 +146,14 @@ func (o *GetProjectDomainResponseBody) GetRedirect() *string {
 	return o.Redirect
 }
 
-func (o *GetProjectDomainResponseBody) GetRedirectStatusCode() *GetProjectDomainRedirectStatusCode {
+func (o *GetProjectDomainResponseBody) GetRedirectStatusCode() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.RedirectStatusCode
 }
 
-func (o *GetProjectDomainResponseBody) GetUpdatedAt() *int64 {
+func (o *GetProjectDomainResponseBody) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
 	}

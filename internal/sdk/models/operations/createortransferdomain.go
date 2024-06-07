@@ -15,7 +15,7 @@ type CreateOrTransferDomain3 struct {
 	// The authorization code assigned to the domain.
 	AuthCode *string `json:"authCode,omitempty"`
 	// The price you expect to be charged for the required 1 year renewal.
-	ExpectedPrice *int64 `json:"expectedPrice,omitempty"`
+	ExpectedPrice *float64 `json:"expectedPrice,omitempty"`
 	// The domain operation to perform. It can be either `add` or `transfer-in`.
 	Method string `json:"method"`
 	// The domain name you want to add.
@@ -29,7 +29,7 @@ func (o *CreateOrTransferDomain3) GetAuthCode() *string {
 	return o.AuthCode
 }
 
-func (o *CreateOrTransferDomain3) GetExpectedPrice() *int64 {
+func (o *CreateOrTransferDomain3) GetExpectedPrice() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -165,28 +165,28 @@ func CreateCreateOrTransferDomainRequestBodyCreateOrTransferDomain3(createOrTran
 
 func (u *CreateOrTransferDomainRequestBody) UnmarshalJSON(data []byte) error {
 
-	createOrTransferDomain2 := CreateOrTransferDomain2{}
+	var createOrTransferDomain2 CreateOrTransferDomain2 = CreateOrTransferDomain2{}
 	if err := utils.UnmarshalJSON(data, &createOrTransferDomain2, "", true, true); err == nil {
 		u.CreateOrTransferDomain2 = &createOrTransferDomain2
 		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain2
 		return nil
 	}
 
-	createOrTransferDomain1 := CreateOrTransferDomain1{}
+	var createOrTransferDomain1 CreateOrTransferDomain1 = CreateOrTransferDomain1{}
 	if err := utils.UnmarshalJSON(data, &createOrTransferDomain1, "", true, true); err == nil {
 		u.CreateOrTransferDomain1 = &createOrTransferDomain1
 		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain1
 		return nil
 	}
 
-	createOrTransferDomain3 := CreateOrTransferDomain3{}
+	var createOrTransferDomain3 CreateOrTransferDomain3 = CreateOrTransferDomain3{}
 	if err := utils.UnmarshalJSON(data, &createOrTransferDomain3, "", true, true); err == nil {
 		u.CreateOrTransferDomain3 = &createOrTransferDomain3
 		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomain3
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreateOrTransferDomainRequestBody", string(data))
 }
 
 func (u CreateOrTransferDomainRequestBody) MarshalJSON() ([]byte, error) {
@@ -202,12 +202,14 @@ func (u CreateOrTransferDomainRequestBody) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CreateOrTransferDomain3, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CreateOrTransferDomainRequestBody: all fields are null")
 }
 
 type CreateOrTransferDomainRequest struct {
 	RequestBody *CreateOrTransferDomainRequestBody `request:"mediaType=application/json"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -216,6 +218,13 @@ func (o *CreateOrTransferDomainRequest) GetRequestBody() *CreateOrTransferDomain
 		return nil
 	}
 	return o.RequestBody
+}
+
+func (o *CreateOrTransferDomainRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *CreateOrTransferDomainRequest) GetTeamID() *string {
@@ -281,7 +290,6 @@ const (
 func (e ServiceType) ToPointer() *ServiceType {
 	return &e
 }
-
 func (e *ServiceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -302,15 +310,15 @@ func (e *ServiceType) UnmarshalJSON(data []byte) error {
 
 type CreateOrTransferDomainDomain struct {
 	// If it was purchased through Vercel, the timestamp in milliseconds when it was purchased.
-	BoughtAt *int64 `json:"boughtAt"`
+	BoughtAt *float64 `json:"boughtAt"`
 	// Timestamp in milliseconds when the domain was created in the registry.
-	CreatedAt int64 `json:"createdAt"`
+	CreatedAt float64 `json:"createdAt"`
 	// An object containing information of the domain creator, including the user's id, username, and email.
 	Creator CreateOrTransferDomainCreator `json:"creator"`
 	// A list of custom nameservers for the domain to point to. Only applies to domains purchased with Vercel.
 	CustomNameservers []string `json:"customNameservers,omitempty"`
 	// Timestamp in milliseconds at which the domain is set to expire. `null` if not bought with Vercel.
-	ExpiresAt *int64 `json:"expiresAt"`
+	ExpiresAt *float64 `json:"expiresAt"`
 	// The unique identifier of the domain.
 	ID string `json:"id"`
 	// A list of the intended nameservers for the domain to point to Vercel DNS.
@@ -320,29 +328,29 @@ type CreateOrTransferDomainDomain struct {
 	// A list of the current nameservers of the domain.
 	Nameservers []string `json:"nameservers"`
 	// Timestamp in milliseconds at which the domain was ordered.
-	OrderedAt *int64 `json:"orderedAt,omitempty"`
+	OrderedAt *float64 `json:"orderedAt,omitempty"`
 	// Indicates whether the domain is set to automatically renew.
 	Renew *bool `json:"renew,omitempty"`
 	// The type of service the domain is handled by. `external` if the DNS is externally handled, `zeit.world` if handled with Vercel, or `na` if the service is not available.
 	ServiceType ServiceType `json:"serviceType"`
 	// If transferred into Vercel, timestamp in milliseconds when the domain transfer was initiated.
-	TransferStartedAt *int64 `json:"transferStartedAt,omitempty"`
+	TransferStartedAt *float64 `json:"transferStartedAt,omitempty"`
 	// Timestamp in milliseconds at which the domain was successfully transferred into Vercel. `null` if the transfer is still processing or was never transferred in.
-	TransferredAt *int64 `json:"transferredAt,omitempty"`
+	TransferredAt *float64 `json:"transferredAt,omitempty"`
 	// If the domain has the ownership verified.
 	Verified bool `json:"verified"`
 }
 
-func (o *CreateOrTransferDomainDomain) GetBoughtAt() *int64 {
+func (o *CreateOrTransferDomainDomain) GetBoughtAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.BoughtAt
 }
 
-func (o *CreateOrTransferDomainDomain) GetCreatedAt() int64 {
+func (o *CreateOrTransferDomainDomain) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -361,7 +369,7 @@ func (o *CreateOrTransferDomainDomain) GetCustomNameservers() []string {
 	return o.CustomNameservers
 }
 
-func (o *CreateOrTransferDomainDomain) GetExpiresAt() *int64 {
+func (o *CreateOrTransferDomainDomain) GetExpiresAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -396,7 +404,7 @@ func (o *CreateOrTransferDomainDomain) GetNameservers() []string {
 	return o.Nameservers
 }
 
-func (o *CreateOrTransferDomainDomain) GetOrderedAt() *int64 {
+func (o *CreateOrTransferDomainDomain) GetOrderedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -417,14 +425,14 @@ func (o *CreateOrTransferDomainDomain) GetServiceType() ServiceType {
 	return o.ServiceType
 }
 
-func (o *CreateOrTransferDomainDomain) GetTransferStartedAt() *int64 {
+func (o *CreateOrTransferDomainDomain) GetTransferStartedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TransferStartedAt
 }
 
-func (o *CreateOrTransferDomainDomain) GetTransferredAt() *int64 {
+func (o *CreateOrTransferDomainDomain) GetTransferredAt() *float64 {
 	if o == nil {
 		return nil
 	}

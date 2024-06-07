@@ -8,10 +8,41 @@ import (
 	"net/http"
 )
 
+// Strict - When true, the response will only include the nameservers assigned directly to the specified domain. When false and there are no nameservers assigned directly to the specified domain, the response will include the nameservers of the domain's parent zone.
+type Strict string
+
+const (
+	StrictTrue  Strict = "true"
+	StrictFalse Strict = "false"
+)
+
+func (e Strict) ToPointer() *Strict {
+	return &e
+}
+func (e *Strict) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "true":
+		fallthrough
+	case "false":
+		*e = Strict(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Strict: %v", v)
+	}
+}
+
 type GetDomainConfigRequest struct {
 	// The name of the domain.
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// When true, the response will only include the nameservers assigned directly to the specified domain. When false and there are no nameservers assigned directly to the specified domain, the response will include the nameservers of the domain's parent zone.
+	Strict *Strict `queryParam:"style=form,explode=true,name=strict"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -20,6 +51,20 @@ func (o *GetDomainConfigRequest) GetDomain() string {
 		return ""
 	}
 	return o.Domain
+}
+
+func (o *GetDomainConfigRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *GetDomainConfigRequest) GetStrict() *Strict {
+	if o == nil {
+		return nil
+	}
+	return o.Strict
 }
 
 func (o *GetDomainConfigRequest) GetTeamID() *string {
@@ -40,7 +85,6 @@ const (
 func (e AcceptedChallenges) ToPointer() *AcceptedChallenges {
 	return &e
 }
-
 func (e *AcceptedChallenges) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -57,19 +101,19 @@ func (e *AcceptedChallenges) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// ConfiguredBy - How we see the domain's configuration. - `CNAME`: Domain has a CNAME pointing to Vercel. - `A`: Domain's A record is resolving to Vercel. - `http`: Domain is resolving to Vercel but may be behind a Proxy. - `null`: Domain is not resolving to Vercel.
+// ConfiguredBy - How we see the domain's configuration. - `CNAME`: Domain has a CNAME pointing to Vercel. - `A`: Domain's A record is resolving to Vercel. - `http`: Domain is resolving to Vercel but may be behind a Proxy. - `dns-01`: Domain is not resolving to Vercel but dns-01 challenge is enabled. - `null`: Domain is not resolving to Vercel.
 type ConfiguredBy string
 
 const (
 	ConfiguredByCname ConfiguredBy = "CNAME"
 	ConfiguredByA     ConfiguredBy = "A"
 	ConfiguredByHTTP  ConfiguredBy = "http"
+	ConfiguredByDns01 ConfiguredBy = "dns-01"
 )
 
 func (e ConfiguredBy) ToPointer() *ConfiguredBy {
 	return &e
 }
-
 func (e *ConfiguredBy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -81,6 +125,8 @@ func (e *ConfiguredBy) UnmarshalJSON(data []byte) error {
 	case "A":
 		fallthrough
 	case "http":
+		fallthrough
+	case "dns-01":
 		*e = ConfiguredBy(v)
 		return nil
 	default:
@@ -91,7 +137,7 @@ func (e *ConfiguredBy) UnmarshalJSON(data []byte) error {
 type GetDomainConfigResponseBody struct {
 	// Which challenge types the domain can use for issuing certs.
 	AcceptedChallenges []AcceptedChallenges `json:"acceptedChallenges,omitempty"`
-	// How we see the domain's configuration. - `CNAME`: Domain has a CNAME pointing to Vercel. - `A`: Domain's A record is resolving to Vercel. - `http`: Domain is resolving to Vercel but may be behind a Proxy. - `null`: Domain is not resolving to Vercel.
+	// How we see the domain's configuration. - `CNAME`: Domain has a CNAME pointing to Vercel. - `A`: Domain's A record is resolving to Vercel. - `http`: Domain is resolving to Vercel but may be behind a Proxy. - `dns-01`: Domain is not resolving to Vercel but dns-01 challenge is enabled. - `null`: Domain is not resolving to Vercel.
 	ConfiguredBy *ConfiguredBy `json:"configuredBy,omitempty"`
 	// Whether or not the domain is configured AND we can automatically generate a TLS certificate.
 	Misconfigured bool `json:"misconfigured"`

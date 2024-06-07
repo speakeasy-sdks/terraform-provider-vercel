@@ -9,7 +9,9 @@ import (
 type DeleteDomainRequest struct {
 	// The name of the domain.
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -18,6 +20,13 @@ func (o *DeleteDomainRequest) GetDomain() string {
 		return ""
 	}
 	return o.Domain
+}
+
+func (o *DeleteDomainRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *DeleteDomainRequest) GetTeamID() *string {

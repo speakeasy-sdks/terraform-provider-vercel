@@ -9,7 +9,9 @@ import (
 type RemoveRecordRequest struct {
 	Domain   string `pathParam:"style=simple,explode=false,name=domain"`
 	RecordID string `pathParam:"style=simple,explode=false,name=recordId"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -25,6 +27,13 @@ func (o *RemoveRecordRequest) GetRecordID() string {
 		return ""
 	}
 	return o.RecordID
+}
+
+func (o *RemoveRecordRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *RemoveRecordRequest) GetTeamID() *string {

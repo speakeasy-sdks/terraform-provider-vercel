@@ -14,7 +14,9 @@ type GetSecretsRequest struct {
 	ID *string `queryParam:"style=form,explode=true,name=id"`
 	// Filter out secrets that belong to a project.
 	ProjectID *string `queryParam:"style=form,explode=true,name=projectId"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -32,6 +34,13 @@ func (o *GetSecretsRequest) GetProjectID() *string {
 	return o.ProjectID
 }
 
+func (o *GetSecretsRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 func (o *GetSecretsRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -44,7 +53,7 @@ type Secrets struct {
 	// The date when the secret was created.
 	Created time.Time `json:"created"`
 	// Timestamp for when the secret was created.
-	CreatedAt *int64 `json:"createdAt,omitempty"`
+	CreatedAt *float64 `json:"createdAt,omitempty"`
 	// Indicates whether the secret value can be decrypted after it has been created.
 	Decryptable *bool `json:"decryptable,omitempty"`
 	// The name of the secret.
@@ -79,7 +88,7 @@ func (o *Secrets) GetCreated() time.Time {
 	return o.Created
 }
 
-func (o *Secrets) GetCreatedAt() *int64 {
+func (o *Secrets) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}

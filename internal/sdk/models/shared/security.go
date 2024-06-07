@@ -4,6 +4,7 @@ package shared
 
 type Security struct {
 	BearerToken *string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
+	Oauth2      *string `security:"scheme,type=oauth2,name=Authorization"`
 }
 
 func (o *Security) GetBearerToken() *string {
@@ -11,4 +12,11 @@ func (o *Security) GetBearerToken() *string {
 		return nil
 	}
 	return o.BearerToken
+}
+
+func (o *Security) GetOauth2() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Oauth2
 }

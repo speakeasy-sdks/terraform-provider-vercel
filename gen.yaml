@@ -10,8 +10,13 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
 terraform:
-  version: 0.13.0
+  version: 0.14.0
+  additionalDataSources: []
+  additionalDependencies: {}
+  additionalResources: []
+  allowUnknownFieldsInWeakUnions: false
   author: zchee
+  environmentVariables: []
   imports:
     option: openapi
     paths:

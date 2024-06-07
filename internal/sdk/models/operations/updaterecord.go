@@ -8,6 +8,33 @@ import (
 	"net/http"
 )
 
+type HTTPS struct {
+	Params   *string `json:"params,omitempty"`
+	Priority *int64  `json:"priority"`
+	Target   *string `json:"target"`
+}
+
+func (o *HTTPS) GetParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Params
+}
+
+func (o *HTTPS) GetPriority() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Priority
+}
+
+func (o *HTTPS) GetTarget() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Target
+}
+
 type Srv struct {
 	Port     *int64  `json:"port"`
 	Priority *int64  `json:"priority"`
@@ -52,6 +79,7 @@ const (
 	UpdateRecordTypeAlias UpdateRecordType = "ALIAS"
 	UpdateRecordTypeCaa   UpdateRecordType = "CAA"
 	UpdateRecordTypeCname UpdateRecordType = "CNAME"
+	UpdateRecordTypeHTTPS UpdateRecordType = "HTTPS"
 	UpdateRecordTypeMx    UpdateRecordType = "MX"
 	UpdateRecordTypeSrv   UpdateRecordType = "SRV"
 	UpdateRecordTypeTxt   UpdateRecordType = "TXT"
@@ -61,7 +89,6 @@ const (
 func (e UpdateRecordType) ToPointer() *UpdateRecordType {
 	return &e
 }
-
 func (e *UpdateRecordType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -77,6 +104,8 @@ func (e *UpdateRecordType) UnmarshalJSON(data []byte) error {
 	case "CAA":
 		fallthrough
 	case "CNAME":
+		fallthrough
+	case "HTTPS":
 		fallthrough
 	case "MX":
 		fallthrough
@@ -95,6 +124,7 @@ func (e *UpdateRecordType) UnmarshalJSON(data []byte) error {
 type UpdateRecordRequestBody struct {
 	// A comment to add context on what this DNS record is for
 	Comment *string `json:"comment,omitempty"`
+	HTTPS   *HTTPS  `json:"https,omitempty"`
 	// The MX priority value of the DNS record
 	MxPriority *int64 `json:"mxPriority,omitempty"`
 	// The name of the DNS record
@@ -113,6 +143,13 @@ func (o *UpdateRecordRequestBody) GetComment() *string {
 		return nil
 	}
 	return o.Comment
+}
+
+func (o *UpdateRecordRequestBody) GetHTTPS() *HTTPS {
+	if o == nil {
+		return nil
+	}
+	return o.HTTPS
 }
 
 func (o *UpdateRecordRequestBody) GetMxPriority() *int64 {
@@ -161,7 +198,9 @@ type UpdateRecordRequest struct {
 	RequestBody *UpdateRecordRequestBody `request:"mediaType=application/json"`
 	// The id of the DNS record
 	RecordID string `pathParam:"style=simple,explode=false,name=recordId"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -179,6 +218,13 @@ func (o *UpdateRecordRequest) GetRecordID() string {
 	return o.RecordID
 }
 
+func (o *UpdateRecordRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 func (o *UpdateRecordRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -194,6 +240,7 @@ const (
 	RecordTypeAlias RecordType = "ALIAS"
 	RecordTypeCaa   RecordType = "CAA"
 	RecordTypeCname RecordType = "CNAME"
+	RecordTypeHTTPS RecordType = "HTTPS"
 	RecordTypeMx    RecordType = "MX"
 	RecordTypeSrv   RecordType = "SRV"
 	RecordTypeTxt   RecordType = "TXT"
@@ -203,7 +250,6 @@ const (
 func (e RecordType) ToPointer() *RecordType {
 	return &e
 }
-
 func (e *RecordType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -219,6 +265,8 @@ func (e *RecordType) UnmarshalJSON(data []byte) error {
 	case "CAA":
 		fallthrough
 	case "CNAME":
+		fallthrough
+	case "HTTPS":
 		fallthrough
 	case "MX":
 		fallthrough
@@ -244,7 +292,6 @@ const (
 func (e UpdateRecordDNSType) ToPointer() *UpdateRecordDNSType {
 	return &e
 }
-
 func (e *UpdateRecordDNSType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -263,13 +310,13 @@ func (e *UpdateRecordDNSType) UnmarshalJSON(data []byte) error {
 
 type UpdateRecordResponseBody struct {
 	Comment    *string             `json:"comment,omitempty"`
-	CreatedAt  *int64              `json:"createdAt,omitempty"`
+	CreatedAt  *float64            `json:"createdAt,omitempty"`
 	Creator    string              `json:"creator"`
 	Domain     string              `json:"domain"`
 	ID         string              `json:"id"`
 	Name       string              `json:"name"`
 	RecordType RecordType          `json:"recordType"`
-	TTL        *int64              `json:"ttl,omitempty"`
+	TTL        *float64            `json:"ttl,omitempty"`
 	Type       UpdateRecordDNSType `json:"type"`
 	Value      string              `json:"value"`
 }
@@ -281,7 +328,7 @@ func (o *UpdateRecordResponseBody) GetComment() *string {
 	return o.Comment
 }
 
-func (o *UpdateRecordResponseBody) GetCreatedAt() *int64 {
+func (o *UpdateRecordResponseBody) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -323,7 +370,7 @@ func (o *UpdateRecordResponseBody) GetRecordType() RecordType {
 	return o.RecordType
 }
 
-func (o *UpdateRecordResponseBody) GetTTL() *int64 {
+func (o *UpdateRecordResponseBody) GetTTL() *float64 {
 	if o == nil {
 		return nil
 	}

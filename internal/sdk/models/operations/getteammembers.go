@@ -25,7 +25,6 @@ const (
 func (e QueryParamRole) ToPointer() *QueryParamRole {
 	return &e
 }
-
 func (e *QueryParamRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -56,16 +55,16 @@ type GetTeamMembersRequest struct {
 	// Exclude members who belong to the specified project.
 	ExcludeProject *string `queryParam:"style=form,explode=true,name=excludeProject"`
 	// Limit how many teams should be returned
-	Limit *int64 `queryParam:"style=form,explode=true,name=limit"`
+	Limit *float64 `queryParam:"style=form,explode=true,name=limit"`
 	// Only return members with the specified team role.
 	Role *QueryParamRole `queryParam:"style=form,explode=true,name=role"`
 	// Search team members by their name, username, and email.
 	Search *string `queryParam:"style=form,explode=true,name=search"`
 	// Timestamp in milliseconds to only include members added since then.
-	Since  *int64 `queryParam:"style=form,explode=true,name=since"`
-	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
+	Since  *float64 `queryParam:"style=form,explode=true,name=since"`
+	TeamID string   `pathParam:"style=simple,explode=false,name=teamId"`
 	// Timestamp in milliseconds to only include members added until then.
-	Until *int64 `queryParam:"style=form,explode=true,name=until"`
+	Until *float64 `queryParam:"style=form,explode=true,name=until"`
 }
 
 func (o *GetTeamMembersRequest) GetEligibleMembersForProjectID() *string {
@@ -82,7 +81,7 @@ func (o *GetTeamMembersRequest) GetExcludeProject() *string {
 	return o.ExcludeProject
 }
 
-func (o *GetTeamMembersRequest) GetLimit() *int64 {
+func (o *GetTeamMembersRequest) GetLimit() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -103,7 +102,7 @@ func (o *GetTeamMembersRequest) GetSearch() *string {
 	return o.Search
 }
 
-func (o *GetTeamMembersRequest) GetSince() *int64 {
+func (o *GetTeamMembersRequest) GetSince() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -117,26 +116,25 @@ func (o *GetTeamMembersRequest) GetTeamID() string {
 	return o.TeamID
 }
 
-func (o *GetTeamMembersRequest) GetUntil() *int64 {
+func (o *GetTeamMembersRequest) GetUntil() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Until
 }
 
-type GetTeamMembersProjects string
+type GetTeamMembersTeamsProjects string
 
 const (
-	GetTeamMembersProjectsAdmin            GetTeamMembersProjects = "ADMIN"
-	GetTeamMembersProjectsProjectDeveloper GetTeamMembersProjects = "PROJECT_DEVELOPER"
-	GetTeamMembersProjectsProjectViewer    GetTeamMembersProjects = "PROJECT_VIEWER"
+	GetTeamMembersTeamsProjectsAdmin            GetTeamMembersTeamsProjects = "ADMIN"
+	GetTeamMembersTeamsProjectsProjectDeveloper GetTeamMembersTeamsProjects = "PROJECT_DEVELOPER"
+	GetTeamMembersTeamsProjectsProjectViewer    GetTeamMembersTeamsProjects = "PROJECT_VIEWER"
 )
 
-func (e GetTeamMembersProjects) ToPointer() *GetTeamMembersProjects {
+func (e GetTeamMembersTeamsProjects) ToPointer() *GetTeamMembersTeamsProjects {
 	return &e
 }
-
-func (e *GetTeamMembersProjects) UnmarshalJSON(data []byte) error {
+func (e *GetTeamMembersTeamsProjects) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -147,29 +145,28 @@ func (e *GetTeamMembersProjects) UnmarshalJSON(data []byte) error {
 	case "PROJECT_DEVELOPER":
 		fallthrough
 	case "PROJECT_VIEWER":
-		*e = GetTeamMembersProjects(v)
+		*e = GetTeamMembersTeamsProjects(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetTeamMembersProjects: %v", v)
+		return fmt.Errorf("invalid value for GetTeamMembersTeamsProjects: %v", v)
 	}
 }
 
-type GetTeamMembersRole string
+type GetTeamMembersTeamsRole string
 
 const (
-	GetTeamMembersRoleOwner       GetTeamMembersRole = "OWNER"
-	GetTeamMembersRoleMember      GetTeamMembersRole = "MEMBER"
-	GetTeamMembersRoleDeveloper   GetTeamMembersRole = "DEVELOPER"
-	GetTeamMembersRoleViewer      GetTeamMembersRole = "VIEWER"
-	GetTeamMembersRoleBilling     GetTeamMembersRole = "BILLING"
-	GetTeamMembersRoleContributor GetTeamMembersRole = "CONTRIBUTOR"
+	GetTeamMembersTeamsRoleOwner       GetTeamMembersTeamsRole = "OWNER"
+	GetTeamMembersTeamsRoleMember      GetTeamMembersTeamsRole = "MEMBER"
+	GetTeamMembersTeamsRoleDeveloper   GetTeamMembersTeamsRole = "DEVELOPER"
+	GetTeamMembersTeamsRoleBilling     GetTeamMembersTeamsRole = "BILLING"
+	GetTeamMembersTeamsRoleViewer      GetTeamMembersTeamsRole = "VIEWER"
+	GetTeamMembersTeamsRoleContributor GetTeamMembersTeamsRole = "CONTRIBUTOR"
 )
 
-func (e GetTeamMembersRole) ToPointer() *GetTeamMembersRole {
+func (e GetTeamMembersTeamsRole) ToPointer() *GetTeamMembersTeamsRole {
 	return &e
 }
-
-func (e *GetTeamMembersRole) UnmarshalJSON(data []byte) error {
+func (e *GetTeamMembersTeamsRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -181,75 +178,272 @@ func (e *GetTeamMembersRole) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "DEVELOPER":
 		fallthrough
-	case "VIEWER":
-		fallthrough
 	case "BILLING":
 		fallthrough
+	case "VIEWER":
+		fallthrough
 	case "CONTRIBUTOR":
-		*e = GetTeamMembersRole(v)
+		*e = GetTeamMembersTeamsRole(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetTeamMembersRole: %v", v)
+		return fmt.Errorf("invalid value for GetTeamMembersTeamsRole: %v", v)
 	}
 }
 
-type EmailInviteCodes struct {
-	CreatedAt   *int64                            `json:"createdAt,omitempty"`
-	Email       *string                           `json:"email,omitempty"`
-	Expired     *bool                             `json:"expired,omitempty"`
-	ID          string                            `json:"id"`
-	IsDSyncUser bool                              `json:"isDSyncUser"`
-	Projects    map[string]GetTeamMembersProjects `json:"projects,omitempty"`
-	Role        *GetTeamMembersRole               `json:"role,omitempty"`
+type GetTeamMembers2 struct {
+	AccessGroups []string                               `json:"accessGroups,omitempty"`
+	CreatedAt    *float64                               `json:"createdAt,omitempty"`
+	Email        *string                                `json:"email,omitempty"`
+	Expired      *bool                                  `json:"expired,omitempty"`
+	ID           string                                 `json:"id"`
+	IsDSyncUser  bool                                   `json:"isDSyncUser"`
+	Projects     map[string]GetTeamMembersTeamsProjects `json:"projects,omitempty"`
+	Role         *GetTeamMembersTeamsRole               `json:"role,omitempty"`
 }
 
-func (o *EmailInviteCodes) GetCreatedAt() *int64 {
+func (o *GetTeamMembers2) GetAccessGroups() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessGroups
+}
+
+func (o *GetTeamMembers2) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *EmailInviteCodes) GetEmail() *string {
+func (o *GetTeamMembers2) GetEmail() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Email
 }
 
-func (o *EmailInviteCodes) GetExpired() *bool {
+func (o *GetTeamMembers2) GetExpired() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Expired
 }
 
-func (o *EmailInviteCodes) GetID() string {
+func (o *GetTeamMembers2) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *EmailInviteCodes) GetIsDSyncUser() bool {
+func (o *GetTeamMembers2) GetIsDSyncUser() bool {
 	if o == nil {
 		return false
 	}
 	return o.IsDSyncUser
 }
 
-func (o *EmailInviteCodes) GetProjects() map[string]GetTeamMembersProjects {
+func (o *GetTeamMembers2) GetProjects() map[string]GetTeamMembersTeamsProjects {
 	if o == nil {
 		return nil
 	}
 	return o.Projects
 }
 
-func (o *EmailInviteCodes) GetRole() *GetTeamMembersRole {
+func (o *GetTeamMembers2) GetRole() *GetTeamMembersTeamsRole {
 	if o == nil {
 		return nil
 	}
 	return o.Role
+}
+
+type GetTeamMembersTeamsResponseProjects string
+
+const (
+	GetTeamMembersTeamsResponseProjectsAdmin            GetTeamMembersTeamsResponseProjects = "ADMIN"
+	GetTeamMembersTeamsResponseProjectsProjectDeveloper GetTeamMembersTeamsResponseProjects = "PROJECT_DEVELOPER"
+	GetTeamMembersTeamsResponseProjectsProjectViewer    GetTeamMembersTeamsResponseProjects = "PROJECT_VIEWER"
+)
+
+func (e GetTeamMembersTeamsResponseProjects) ToPointer() *GetTeamMembersTeamsResponseProjects {
+	return &e
+}
+func (e *GetTeamMembersTeamsResponseProjects) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ADMIN":
+		fallthrough
+	case "PROJECT_DEVELOPER":
+		fallthrough
+	case "PROJECT_VIEWER":
+		*e = GetTeamMembersTeamsResponseProjects(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetTeamMembersTeamsResponseProjects: %v", v)
+	}
+}
+
+type GetTeamMembersTeamsResponse200Role string
+
+const (
+	GetTeamMembersTeamsResponse200RoleOwner       GetTeamMembersTeamsResponse200Role = "OWNER"
+	GetTeamMembersTeamsResponse200RoleMember      GetTeamMembersTeamsResponse200Role = "MEMBER"
+	GetTeamMembersTeamsResponse200RoleDeveloper   GetTeamMembersTeamsResponse200Role = "DEVELOPER"
+	GetTeamMembersTeamsResponse200RoleBilling     GetTeamMembersTeamsResponse200Role = "BILLING"
+	GetTeamMembersTeamsResponse200RoleViewer      GetTeamMembersTeamsResponse200Role = "VIEWER"
+	GetTeamMembersTeamsResponse200RoleContributor GetTeamMembersTeamsResponse200Role = "CONTRIBUTOR"
+)
+
+func (e GetTeamMembersTeamsResponse200Role) ToPointer() *GetTeamMembersTeamsResponse200Role {
+	return &e
+}
+func (e *GetTeamMembersTeamsResponse200Role) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "OWNER":
+		fallthrough
+	case "MEMBER":
+		fallthrough
+	case "DEVELOPER":
+		fallthrough
+	case "BILLING":
+		fallthrough
+	case "VIEWER":
+		fallthrough
+	case "CONTRIBUTOR":
+		*e = GetTeamMembersTeamsResponse200Role(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for GetTeamMembersTeamsResponse200Role: %v", v)
+	}
+}
+
+type GetTeamMembers1 struct {
+	CreatedAt   *float64                                       `json:"createdAt,omitempty"`
+	Email       *string                                        `json:"email,omitempty"`
+	Expired     *bool                                          `json:"expired,omitempty"`
+	ID          string                                         `json:"id"`
+	IsDSyncUser bool                                           `json:"isDSyncUser"`
+	Projects    map[string]GetTeamMembersTeamsResponseProjects `json:"projects,omitempty"`
+	Role        *GetTeamMembersTeamsResponse200Role            `json:"role,omitempty"`
+}
+
+func (o *GetTeamMembers1) GetCreatedAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *GetTeamMembers1) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *GetTeamMembers1) GetExpired() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Expired
+}
+
+func (o *GetTeamMembers1) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *GetTeamMembers1) GetIsDSyncUser() bool {
+	if o == nil {
+		return false
+	}
+	return o.IsDSyncUser
+}
+
+func (o *GetTeamMembers1) GetProjects() map[string]GetTeamMembersTeamsResponseProjects {
+	if o == nil {
+		return nil
+	}
+	return o.Projects
+}
+
+func (o *GetTeamMembers1) GetRole() *GetTeamMembersTeamsResponse200Role {
+	if o == nil {
+		return nil
+	}
+	return o.Role
+}
+
+type EmailInviteCodesType string
+
+const (
+	EmailInviteCodesTypeGetTeamMembers1 EmailInviteCodesType = "getTeamMembers_1"
+	EmailInviteCodesTypeGetTeamMembers2 EmailInviteCodesType = "getTeamMembers_2"
+)
+
+type EmailInviteCodes struct {
+	GetTeamMembers1 *GetTeamMembers1
+	GetTeamMembers2 *GetTeamMembers2
+
+	Type EmailInviteCodesType
+}
+
+func CreateEmailInviteCodesGetTeamMembers1(getTeamMembers1 GetTeamMembers1) EmailInviteCodes {
+	typ := EmailInviteCodesTypeGetTeamMembers1
+
+	return EmailInviteCodes{
+		GetTeamMembers1: &getTeamMembers1,
+		Type:            typ,
+	}
+}
+
+func CreateEmailInviteCodesGetTeamMembers2(getTeamMembers2 GetTeamMembers2) EmailInviteCodes {
+	typ := EmailInviteCodesTypeGetTeamMembers2
+
+	return EmailInviteCodes{
+		GetTeamMembers2: &getTeamMembers2,
+		Type:            typ,
+	}
+}
+
+func (u *EmailInviteCodes) UnmarshalJSON(data []byte) error {
+
+	var getTeamMembers1 GetTeamMembers1 = GetTeamMembers1{}
+	if err := utils.UnmarshalJSON(data, &getTeamMembers1, "", true, true); err == nil {
+		u.GetTeamMembers1 = &getTeamMembers1
+		u.Type = EmailInviteCodesTypeGetTeamMembers1
+		return nil
+	}
+
+	var getTeamMembers2 GetTeamMembers2 = GetTeamMembers2{}
+	if err := utils.UnmarshalJSON(data, &getTeamMembers2, "", true, true); err == nil {
+		u.GetTeamMembers2 = &getTeamMembers2
+		u.Type = EmailInviteCodesTypeGetTeamMembers2
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for EmailInviteCodes", string(data))
+}
+
+func (u EmailInviteCodes) MarshalJSON() ([]byte, error) {
+	if u.GetTeamMembers1 != nil {
+		return utils.MarshalJSON(u.GetTeamMembers1, "", true)
+	}
+
+	if u.GetTeamMembers2 != nil {
+		return utils.MarshalJSON(u.GetTeamMembers2, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type EmailInviteCodes: all fields are null")
 }
 
 // GetTeamMembersBitbucket - Information about the Bitbucket account of this user.
@@ -291,13 +485,13 @@ func (o *GetTeamMembersGitlab) GetLogin() *string {
 type GetTeamMembersGitUserIDType string
 
 const (
-	GetTeamMembersGitUserIDTypeStr     GetTeamMembersGitUserIDType = "str"
-	GetTeamMembersGitUserIDTypeInteger GetTeamMembersGitUserIDType = "integer"
+	GetTeamMembersGitUserIDTypeStr    GetTeamMembersGitUserIDType = "str"
+	GetTeamMembersGitUserIDTypeNumber GetTeamMembersGitUserIDType = "number"
 )
 
 type GetTeamMembersGitUserID struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type GetTeamMembersGitUserIDType
 }
@@ -311,32 +505,32 @@ func CreateGetTeamMembersGitUserIDStr(str string) GetTeamMembersGitUserID {
 	}
 }
 
-func CreateGetTeamMembersGitUserIDInteger(integer int64) GetTeamMembersGitUserID {
-	typ := GetTeamMembersGitUserIDTypeInteger
+func CreateGetTeamMembersGitUserIDNumber(number float64) GetTeamMembersGitUserID {
+	typ := GetTeamMembersGitUserIDTypeNumber
 
 	return GetTeamMembersGitUserID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *GetTeamMembersGitUserID) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = GetTeamMembersGitUserIDTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = GetTeamMembersGitUserIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = GetTeamMembersGitUserIDTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GetTeamMembersGitUserID", string(data))
 }
 
 func (u GetTeamMembersGitUserID) MarshalJSON() ([]byte, error) {
@@ -344,20 +538,20 @@ func (u GetTeamMembersGitUserID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type GetTeamMembersGitUserID: all fields are null")
 }
 
 type GetTeamMembersOrigin string
 
 const (
+	GetTeamMembersOriginTeams             GetTeamMembersOrigin = "teams"
 	GetTeamMembersOriginLink              GetTeamMembersOrigin = "link"
 	GetTeamMembersOriginMail              GetTeamMembersOrigin = "mail"
 	GetTeamMembersOriginImport            GetTeamMembersOrigin = "import"
-	GetTeamMembersOriginTeams             GetTeamMembersOrigin = "teams"
 	GetTeamMembersOriginGithub            GetTeamMembersOrigin = "github"
 	GetTeamMembersOriginGitlab            GetTeamMembersOrigin = "gitlab"
 	GetTeamMembersOriginBitbucket         GetTeamMembersOrigin = "bitbucket"
@@ -370,20 +564,19 @@ const (
 func (e GetTeamMembersOrigin) ToPointer() *GetTeamMembersOrigin {
 	return &e
 }
-
 func (e *GetTeamMembersOrigin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
+	case "teams":
+		fallthrough
 	case "link":
 		fallthrough
 	case "mail":
 		fallthrough
 	case "import":
-		fallthrough
-	case "teams":
 		fallthrough
 	case "github":
 		fallthrough
@@ -408,7 +601,7 @@ func (e *GetTeamMembersOrigin) UnmarshalJSON(data []byte) error {
 // GetTeamMembersJoinedFrom - Map with information about the members origin if they joined by requesting access.
 type GetTeamMembersJoinedFrom struct {
 	CommitID         *string                  `json:"commitId,omitempty"`
-	DsyncConnectedAt *int64                   `json:"dsyncConnectedAt,omitempty"`
+	DsyncConnectedAt *float64                 `json:"dsyncConnectedAt,omitempty"`
 	DsyncUserID      *string                  `json:"dsyncUserId,omitempty"`
 	GitUserID        *GetTeamMembersGitUserID `json:"gitUserId,omitempty"`
 	GitUserLogin     *string                  `json:"gitUserLogin,omitempty"`
@@ -416,7 +609,7 @@ type GetTeamMembersJoinedFrom struct {
 	Origin           GetTeamMembersOrigin     `json:"origin"`
 	RepoID           *string                  `json:"repoId,omitempty"`
 	RepoPath         *string                  `json:"repoPath,omitempty"`
-	SsoConnectedAt   *int64                   `json:"ssoConnectedAt,omitempty"`
+	SsoConnectedAt   *float64                 `json:"ssoConnectedAt,omitempty"`
 	SsoUserID        *string                  `json:"ssoUserId,omitempty"`
 }
 
@@ -427,7 +620,7 @@ func (o *GetTeamMembersJoinedFrom) GetCommitID() *string {
 	return o.CommitID
 }
 
-func (o *GetTeamMembersJoinedFrom) GetDsyncConnectedAt() *int64 {
+func (o *GetTeamMembersJoinedFrom) GetDsyncConnectedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -483,7 +676,7 @@ func (o *GetTeamMembersJoinedFrom) GetRepoPath() *string {
 	return o.RepoPath
 }
 
-func (o *GetTeamMembersJoinedFrom) GetSsoConnectedAt() *int64 {
+func (o *GetTeamMembersJoinedFrom) GetSsoConnectedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -508,7 +701,6 @@ const (
 func (e GetTeamMembersTeamsResponseRole) ToPointer() *GetTeamMembersTeamsResponseRole {
 	return &e
 }
-
 func (e *GetTeamMembersTeamsResponseRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -527,51 +719,50 @@ func (e *GetTeamMembersTeamsResponseRole) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// GetTeamMembersTeamsProjects - Array of project memberships
-type GetTeamMembersTeamsProjects struct {
+// GetTeamMembersProjects - Array of project memberships
+type GetTeamMembersProjects struct {
 	ID   *string                          `json:"id,omitempty"`
 	Name *string                          `json:"name,omitempty"`
 	Role *GetTeamMembersTeamsResponseRole `json:"role,omitempty"`
 }
 
-func (o *GetTeamMembersTeamsProjects) GetID() *string {
+func (o *GetTeamMembersProjects) GetID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ID
 }
 
-func (o *GetTeamMembersTeamsProjects) GetName() *string {
+func (o *GetTeamMembersProjects) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *GetTeamMembersTeamsProjects) GetRole() *GetTeamMembersTeamsResponseRole {
+func (o *GetTeamMembersProjects) GetRole() *GetTeamMembersTeamsResponseRole {
 	if o == nil {
 		return nil
 	}
 	return o.Role
 }
 
-// GetTeamMembersTeamsRole - Role of this user in the team.
-type GetTeamMembersTeamsRole string
+// GetTeamMembersRole - Role of this user in the team.
+type GetTeamMembersRole string
 
 const (
-	GetTeamMembersTeamsRoleOwner       GetTeamMembersTeamsRole = "OWNER"
-	GetTeamMembersTeamsRoleMember      GetTeamMembersTeamsRole = "MEMBER"
-	GetTeamMembersTeamsRoleDeveloper   GetTeamMembersTeamsRole = "DEVELOPER"
-	GetTeamMembersTeamsRoleViewer      GetTeamMembersTeamsRole = "VIEWER"
-	GetTeamMembersTeamsRoleBilling     GetTeamMembersTeamsRole = "BILLING"
-	GetTeamMembersTeamsRoleContributor GetTeamMembersTeamsRole = "CONTRIBUTOR"
+	GetTeamMembersRoleOwner       GetTeamMembersRole = "OWNER"
+	GetTeamMembersRoleMember      GetTeamMembersRole = "MEMBER"
+	GetTeamMembersRoleDeveloper   GetTeamMembersRole = "DEVELOPER"
+	GetTeamMembersRoleBilling     GetTeamMembersRole = "BILLING"
+	GetTeamMembersRoleViewer      GetTeamMembersRole = "VIEWER"
+	GetTeamMembersRoleContributor GetTeamMembersRole = "CONTRIBUTOR"
 )
 
-func (e GetTeamMembersTeamsRole) ToPointer() *GetTeamMembersTeamsRole {
+func (e GetTeamMembersRole) ToPointer() *GetTeamMembersRole {
 	return &e
 }
-
-func (e *GetTeamMembersTeamsRole) UnmarshalJSON(data []byte) error {
+func (e *GetTeamMembersRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -583,21 +774,21 @@ func (e *GetTeamMembersTeamsRole) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "DEVELOPER":
 		fallthrough
-	case "VIEWER":
-		fallthrough
 	case "BILLING":
 		fallthrough
+	case "VIEWER":
+		fallthrough
 	case "CONTRIBUTOR":
-		*e = GetTeamMembersTeamsRole(v)
+		*e = GetTeamMembersRole(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetTeamMembersTeamsRole: %v", v)
+		return fmt.Errorf("invalid value for GetTeamMembersRole: %v", v)
 	}
 }
 
 type Members struct {
 	// Timestamp in milliseconds for when this team member was accepted by an owner.
-	AccessRequestedAt *int64 `json:"accessRequestedAt,omitempty"`
+	AccessRequestedAt *float64 `json:"accessRequestedAt,omitempty"`
 	// ID of the file for the Avatar of this member.
 	Avatar *string `json:"avatar,omitempty"`
 	// Information about the Bitbucket account of this user.
@@ -605,7 +796,7 @@ type Members struct {
 	// Boolean that indicates if this member was confirmed by an owner.
 	Confirmed bool `json:"confirmed"`
 	// Timestamp in milliseconds when this member was added.
-	CreatedAt int64 `json:"createdAt"`
+	CreatedAt float64 `json:"createdAt"`
 	// The email of this member.
 	Email string `json:"email"`
 	// Information about the GitHub account for this user.
@@ -617,16 +808,16 @@ type Members struct {
 	// The name of this user.
 	Name *string `json:"name,omitempty"`
 	// Array of project memberships
-	Projects []GetTeamMembersTeamsProjects `json:"projects,omitempty"`
+	Projects []GetTeamMembersProjects `json:"projects,omitempty"`
 	// Role of this user in the team.
-	Role GetTeamMembersTeamsRole `json:"role"`
+	Role GetTeamMembersRole `json:"role"`
 	// The ID of this user.
 	UID string `json:"uid"`
 	// The unique username of this user.
 	Username string `json:"username"`
 }
 
-func (o *Members) GetAccessRequestedAt() *int64 {
+func (o *Members) GetAccessRequestedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -654,9 +845,9 @@ func (o *Members) GetConfirmed() bool {
 	return o.Confirmed
 }
 
-func (o *Members) GetCreatedAt() int64 {
+func (o *Members) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -696,16 +887,16 @@ func (o *Members) GetName() *string {
 	return o.Name
 }
 
-func (o *Members) GetProjects() []GetTeamMembersTeamsProjects {
+func (o *Members) GetProjects() []GetTeamMembersProjects {
 	if o == nil {
 		return nil
 	}
 	return o.Projects
 }
 
-func (o *Members) GetRole() GetTeamMembersTeamsRole {
+func (o *Members) GetRole() GetTeamMembersRole {
 	if o == nil {
-		return GetTeamMembersTeamsRole("")
+		return GetTeamMembersRole("")
 	}
 	return o.Role
 }
@@ -724,38 +915,38 @@ func (o *Members) GetUsername() string {
 	return o.Username
 }
 
-type GetTeamMembersPagination struct {
+type Pagination struct {
 	// Amount of items in the current page.
-	Count   int64 `json:"count"`
-	HasNext bool  `json:"hasNext"`
+	Count   float64 `json:"count"`
+	HasNext bool    `json:"hasNext"`
 	// Timestamp that must be used to request the next page.
-	Next *int64 `json:"next"`
+	Next *float64 `json:"next"`
 	// Timestamp that must be used to request the previous page.
-	Prev *int64 `json:"prev"`
+	Prev *float64 `json:"prev"`
 }
 
-func (o *GetTeamMembersPagination) GetCount() int64 {
+func (o *Pagination) GetCount() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Count
 }
 
-func (o *GetTeamMembersPagination) GetHasNext() bool {
+func (o *Pagination) GetHasNext() bool {
 	if o == nil {
 		return false
 	}
 	return o.HasNext
 }
 
-func (o *GetTeamMembersPagination) GetNext() *int64 {
+func (o *Pagination) GetNext() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Next
 }
 
-func (o *GetTeamMembersPagination) GetPrev() *int64 {
+func (o *Pagination) GetPrev() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -763,9 +954,9 @@ func (o *GetTeamMembersPagination) GetPrev() *int64 {
 }
 
 type GetTeamMembersResponseBody struct {
-	EmailInviteCodes []EmailInviteCodes       `json:"emailInviteCodes,omitempty"`
-	Members          []Members                `json:"members"`
-	Pagination       GetTeamMembersPagination `json:"pagination"`
+	EmailInviteCodes []EmailInviteCodes `json:"emailInviteCodes,omitempty"`
+	Members          []Members          `json:"members"`
+	Pagination       Pagination         `json:"pagination"`
 }
 
 func (o *GetTeamMembersResponseBody) GetEmailInviteCodes() []EmailInviteCodes {
@@ -782,9 +973,9 @@ func (o *GetTeamMembersResponseBody) GetMembers() []Members {
 	return o.Members
 }
 
-func (o *GetTeamMembersResponseBody) GetPagination() GetTeamMembersPagination {
+func (o *GetTeamMembersResponseBody) GetPagination() Pagination {
 	if o == nil {
-		return GetTeamMembersPagination{}
+		return Pagination{}
 	}
 	return o.Pagination
 }

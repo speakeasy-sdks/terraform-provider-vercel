@@ -24,12 +24,13 @@ func newDNS(sdkConfig sdkConfiguration) *DNS {
 	}
 }
 
-// CreateRecord - Create a DNS record
+// Create a DNS record
 // Creates a DNS record for a domain.
-func (s *DNS) CreateRecord(ctx context.Context, request operations.CreateRecordRequest) (*operations.CreateRecordResponse, error) {
+func (s *DNS) Create(ctx context.Context, request operations.CreateRecordRequest) (*operations.CreateRecordResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "createRecord",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -76,9 +77,11 @@ func (s *DNS) CreateRecord(ctx context.Context, request operations.CreateRecordR
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -129,14 +132,16 @@ func (s *DNS) CreateRecord(ctx context.Context, request operations.CreateRecordR
 	}
 
 	return res, nil
+
 }
 
-// GetRecords - List existing DNS records
+// Get - List existing DNS records
 // Retrieves a list of DNS records created for a domain name. By default it returns 20 records if no limit is provided. The rest can be retrieved using the pagination options.
-func (s *DNS) GetRecords(ctx context.Context, request operations.GetRecordsRequest) (*operations.GetRecordsResponse, error) {
+func (s *DNS) Get(ctx context.Context, request operations.GetRecordsRequest) (*operations.GetRecordsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "getRecords",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -177,9 +182,11 @@ func (s *DNS) GetRecords(ctx context.Context, request operations.GetRecordsReque
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -226,14 +233,16 @@ func (s *DNS) GetRecords(ctx context.Context, request operations.GetRecordsReque
 	}
 
 	return res, nil
+
 }
 
-// RemoveRecord - Delete a DNS record
+// Remove - Delete a DNS record
 // Removes an existing DNS record from a domain name.
-func (s *DNS) RemoveRecord(ctx context.Context, request operations.RemoveRecordRequest) (*operations.RemoveRecordResponse, error) {
+func (s *DNS) Remove(ctx context.Context, request operations.RemoveRecordRequest) (*operations.RemoveRecordResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "removeRecord",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -274,9 +283,11 @@ func (s *DNS) RemoveRecord(ctx context.Context, request operations.RemoveRecordR
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -323,14 +334,16 @@ func (s *DNS) RemoveRecord(ctx context.Context, request operations.RemoveRecordR
 	}
 
 	return res, nil
+
 }
 
-// UpdateRecord - Update an existing DNS record
+// Update an existing DNS record
 // Updates an existing DNS record for a domain name.
-func (s *DNS) UpdateRecord(ctx context.Context, request operations.UpdateRecordRequest) (*operations.UpdateRecordResponse, error) {
+func (s *DNS) Update(ctx context.Context, request operations.UpdateRecordRequest) (*operations.UpdateRecordResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "updateRecord",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -377,9 +390,11 @@ func (s *DNS) UpdateRecord(ctx context.Context, request operations.UpdateRecordR
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -430,4 +445,5 @@ func (s *DNS) UpdateRecord(ctx context.Context, request operations.UpdateRecordR
 	}
 
 	return res, nil
+
 }

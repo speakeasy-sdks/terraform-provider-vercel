@@ -7,8 +7,17 @@ import (
 )
 
 type GetEdgeConfigsRequest struct {
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *GetEdgeConfigsRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *GetEdgeConfigsRequest) GetTeamID() *string {
@@ -18,14 +27,17 @@ func (o *GetEdgeConfigsRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-// GetEdgeConfigsTransfer - Keeps track of the current state of the Edge Config while it gets transferred.
-type GetEdgeConfigsTransfer struct {
-	DoneAt        *int64 `json:"doneAt"`
-	FromAccountID string `json:"fromAccountId"`
-	StartedAt     int64  `json:"startedAt"`
+type GetEdgeConfigsSchema struct {
 }
 
-func (o *GetEdgeConfigsTransfer) GetDoneAt() *int64 {
+// GetEdgeConfigsTransfer - Keeps track of the current state of the Edge Config while it gets transferred.
+type GetEdgeConfigsTransfer struct {
+	DoneAt        *float64 `json:"doneAt"`
+	FromAccountID string   `json:"fromAccountId"`
+	StartedAt     float64  `json:"startedAt"`
+}
+
+func (o *GetEdgeConfigsTransfer) GetDoneAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -39,29 +51,30 @@ func (o *GetEdgeConfigsTransfer) GetFromAccountID() string {
 	return o.FromAccountID
 }
 
-func (o *GetEdgeConfigsTransfer) GetStartedAt() int64 {
+func (o *GetEdgeConfigsTransfer) GetStartedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.StartedAt
 }
 
 // GetEdgeConfigsResponseBody - List of all edge configs.
 type GetEdgeConfigsResponseBody struct {
-	CreatedAt   *int64  `json:"createdAt,omitempty"`
-	Digest      *string `json:"digest,omitempty"`
-	ID          *string `json:"id,omitempty"`
-	ItemCount   int64   `json:"itemCount"`
-	OwnerID     *string `json:"ownerId,omitempty"`
-	SizeInBytes int64   `json:"sizeInBytes"`
+	CreatedAt   *float64              `json:"createdAt,omitempty"`
+	Digest      *string               `json:"digest,omitempty"`
+	ID          *string               `json:"id,omitempty"`
+	ItemCount   float64               `json:"itemCount"`
+	OwnerID     *string               `json:"ownerId,omitempty"`
+	Schema      *GetEdgeConfigsSchema `json:"schema,omitempty"`
+	SizeInBytes float64               `json:"sizeInBytes"`
 	// Name for the Edge Config Names are not unique. Must start with an alphabetic character and can contain only alphanumeric characters and underscores).
 	Slug *string `json:"slug,omitempty"`
 	// Keeps track of the current state of the Edge Config while it gets transferred.
 	Transfer  *GetEdgeConfigsTransfer `json:"transfer,omitempty"`
-	UpdatedAt *int64                  `json:"updatedAt,omitempty"`
+	UpdatedAt *float64                `json:"updatedAt,omitempty"`
 }
 
-func (o *GetEdgeConfigsResponseBody) GetCreatedAt() *int64 {
+func (o *GetEdgeConfigsResponseBody) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -82,9 +95,9 @@ func (o *GetEdgeConfigsResponseBody) GetID() *string {
 	return o.ID
 }
 
-func (o *GetEdgeConfigsResponseBody) GetItemCount() int64 {
+func (o *GetEdgeConfigsResponseBody) GetItemCount() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ItemCount
 }
@@ -96,9 +109,16 @@ func (o *GetEdgeConfigsResponseBody) GetOwnerID() *string {
 	return o.OwnerID
 }
 
-func (o *GetEdgeConfigsResponseBody) GetSizeInBytes() int64 {
+func (o *GetEdgeConfigsResponseBody) GetSchema() *GetEdgeConfigsSchema {
 	if o == nil {
-		return 0
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *GetEdgeConfigsResponseBody) GetSizeInBytes() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.SizeInBytes
 }
@@ -117,7 +137,7 @@ func (o *GetEdgeConfigsResponseBody) GetTransfer() *GetEdgeConfigsTransfer {
 	return o.Transfer
 }
 
-func (o *GetEdgeConfigsResponseBody) GetUpdatedAt() *int64 {
+func (o *GetEdgeConfigsResponseBody) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
 	}

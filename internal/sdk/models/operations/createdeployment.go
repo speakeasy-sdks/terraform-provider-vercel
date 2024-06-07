@@ -10,561 +10,6 @@ import (
 	"net/http"
 )
 
-type CurrentState string
-
-const (
-	CurrentStateInit  CurrentState = "init"
-	CurrentStateReady CurrentState = "ready"
-)
-
-func (e CurrentState) ToPointer() *CurrentState {
-	return &e
-}
-
-func (e *CurrentState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "init":
-		fallthrough
-	case "ready":
-		*e = CurrentState(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CurrentState: %v", v)
-	}
-}
-
-type Branch struct {
-	CreatedAt    string       `json:"created_at"`
-	CurrentState CurrentState `json:"current_state"`
-	ID           string       `json:"id"`
-	Name         string       `json:"name"`
-	ParentID     *string      `json:"parent_id,omitempty"`
-	Primary      bool         `json:"primary"`
-	ProjectID    string       `json:"project_id"`
-	UpdatedAt    string       `json:"updated_at"`
-}
-
-func (o *Branch) GetCreatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.CreatedAt
-}
-
-func (o *Branch) GetCurrentState() CurrentState {
-	if o == nil {
-		return CurrentState("")
-	}
-	return o.CurrentState
-}
-
-func (o *Branch) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *Branch) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *Branch) GetParentID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ParentID
-}
-
-func (o *Branch) GetPrimary() bool {
-	if o == nil {
-		return false
-	}
-	return o.Primary
-}
-
-func (o *Branch) GetProjectID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ProjectID
-}
-
-func (o *Branch) GetUpdatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.UpdatedAt
-}
-
-// Build - An object containing another object with information to be passed to the Build Process
-//
-// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
-type Build struct {
-	// An object containing the deployment's environment variable names and values to be passed to Builds. Secrets can be referenced by prefixing the value with `@`
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Env map[string]string `json:"env,omitempty"`
-}
-
-func (o *Build) GetEnv() map[string]string {
-	if o == nil {
-		return nil
-	}
-	return o.Env
-}
-
-// Config - Optionally, an object including arbitrary metadata to be passed to the Builder
-type Config struct {
-}
-
-type Builds struct {
-	// Optionally, an object including arbitrary metadata to be passed to the Builder
-	Config *Config `json:"config,omitempty"`
-	// A glob expression or pathname. If more than one file is resolved, one build will be created per matched file. It can include `*` and `**`
-	Src *string `json:"src,omitempty"`
-	// An npm module to be installed by the build process. It can include a semver compatible version (e.g.: `@org/proj@1`)
-	Use string `json:"use"`
-}
-
-func (o *Builds) GetConfig() *Config {
-	if o == nil {
-		return nil
-	}
-	return o.Config
-}
-
-func (o *Builds) GetSrc() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Src
-}
-
-func (o *Builds) GetUse() string {
-	if o == nil {
-		return ""
-	}
-	return o.Use
-}
-
-type ConnectionUris struct {
-	ConnectionURI string `json:"connection_uri"`
-}
-
-func (o *ConnectionUris) GetConnectionURI() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionURI
-}
-
-type Crons struct {
-	Path     string `json:"path"`
-	Schedule string `json:"schedule"`
-}
-
-func (o *Crons) GetPath() string {
-	if o == nil {
-		return ""
-	}
-	return o.Path
-}
-
-func (o *Crons) GetSchedule() string {
-	if o == nil {
-		return ""
-	}
-	return o.Schedule
-}
-
-type Database struct {
-	BranchID  string `json:"branch_id"`
-	CreatedAt string `json:"created_at"`
-	ID        int64  `json:"id"`
-	Name      string `json:"name"`
-	OwnerName string `json:"owner_name"`
-	UpdatedAt string `json:"updated_at"`
-}
-
-func (o *Database) GetBranchID() string {
-	if o == nil {
-		return ""
-	}
-	return o.BranchID
-}
-
-func (o *Database) GetCreatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.CreatedAt
-}
-
-func (o *Database) GetID() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.ID
-}
-
-func (o *Database) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *Database) GetOwnerName() string {
-	if o == nil {
-		return ""
-	}
-	return o.OwnerName
-}
-
-func (o *Database) GetUpdatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.UpdatedAt
-}
-
-type Databases struct {
-	BranchID  string `json:"branch_id"`
-	CreatedAt string `json:"created_at"`
-	ID        int64  `json:"id"`
-	Name      string `json:"name"`
-	OwnerName string `json:"owner_name"`
-	UpdatedAt string `json:"updated_at"`
-}
-
-func (o *Databases) GetBranchID() string {
-	if o == nil {
-		return ""
-	}
-	return o.BranchID
-}
-
-func (o *Databases) GetCreatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.CreatedAt
-}
-
-func (o *Databases) GetID() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.ID
-}
-
-func (o *Databases) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *Databases) GetOwnerName() string {
-	if o == nil {
-		return ""
-	}
-	return o.OwnerName
-}
-
-func (o *Databases) GetUpdatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.UpdatedAt
-}
-
-type Endpoint struct {
-	AutoscalingLimitMaxCu int64   `json:"autoscaling_limit_max_cu"`
-	AutoscalingLimitMinCu int64   `json:"autoscaling_limit_min_cu"`
-	BranchID              string  `json:"branch_id"`
-	CreatedAt             string  `json:"created_at"`
-	CurrentState          string  `json:"current_state"`
-	Disabled              bool    `json:"disabled"`
-	Host                  string  `json:"host"`
-	ID                    string  `json:"id"`
-	LastActive            *string `json:"last_active,omitempty"`
-	PasswordlessAccess    bool    `json:"passwordless_access"`
-	PoolerEnabled         bool    `json:"pooler_enabled"`
-	PoolerMode            string  `json:"pooler_mode"`
-	ProjectID             string  `json:"project_id"`
-	RegionID              string  `json:"region_id"`
-	SuspendTimeoutSeconds int64   `json:"suspend_timeout_seconds"`
-	Type                  string  `json:"type"`
-	UpdatedAt             string  `json:"updated_at"`
-}
-
-func (o *Endpoint) GetAutoscalingLimitMaxCu() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.AutoscalingLimitMaxCu
-}
-
-func (o *Endpoint) GetAutoscalingLimitMinCu() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.AutoscalingLimitMinCu
-}
-
-func (o *Endpoint) GetBranchID() string {
-	if o == nil {
-		return ""
-	}
-	return o.BranchID
-}
-
-func (o *Endpoint) GetCreatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.CreatedAt
-}
-
-func (o *Endpoint) GetCurrentState() string {
-	if o == nil {
-		return ""
-	}
-	return o.CurrentState
-}
-
-func (o *Endpoint) GetDisabled() bool {
-	if o == nil {
-		return false
-	}
-	return o.Disabled
-}
-
-func (o *Endpoint) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *Endpoint) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *Endpoint) GetLastActive() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LastActive
-}
-
-func (o *Endpoint) GetPasswordlessAccess() bool {
-	if o == nil {
-		return false
-	}
-	return o.PasswordlessAccess
-}
-
-func (o *Endpoint) GetPoolerEnabled() bool {
-	if o == nil {
-		return false
-	}
-	return o.PoolerEnabled
-}
-
-func (o *Endpoint) GetPoolerMode() string {
-	if o == nil {
-		return ""
-	}
-	return o.PoolerMode
-}
-
-func (o *Endpoint) GetProjectID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ProjectID
-}
-
-func (o *Endpoint) GetRegionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.RegionID
-}
-
-func (o *Endpoint) GetSuspendTimeoutSeconds() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.SuspendTimeoutSeconds
-}
-
-func (o *Endpoint) GetType() string {
-	if o == nil {
-		return ""
-	}
-	return o.Type
-}
-
-func (o *Endpoint) GetUpdatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.UpdatedAt
-}
-
-type Endpoints struct {
-	AutoscalingLimitMaxCu int64   `json:"autoscaling_limit_max_cu"`
-	AutoscalingLimitMinCu int64   `json:"autoscaling_limit_min_cu"`
-	BranchID              string  `json:"branch_id"`
-	CreatedAt             string  `json:"created_at"`
-	CurrentState          string  `json:"current_state"`
-	Disabled              bool    `json:"disabled"`
-	Host                  string  `json:"host"`
-	ID                    string  `json:"id"`
-	LastActive            *string `json:"last_active,omitempty"`
-	PasswordlessAccess    bool    `json:"passwordless_access"`
-	PoolerEnabled         bool    `json:"pooler_enabled"`
-	PoolerMode            string  `json:"pooler_mode"`
-	ProjectID             string  `json:"project_id"`
-	RegionID              string  `json:"region_id"`
-	SuspendTimeoutSeconds int64   `json:"suspend_timeout_seconds"`
-	Type                  string  `json:"type"`
-	UpdatedAt             string  `json:"updated_at"`
-}
-
-func (o *Endpoints) GetAutoscalingLimitMaxCu() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.AutoscalingLimitMaxCu
-}
-
-func (o *Endpoints) GetAutoscalingLimitMinCu() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.AutoscalingLimitMinCu
-}
-
-func (o *Endpoints) GetBranchID() string {
-	if o == nil {
-		return ""
-	}
-	return o.BranchID
-}
-
-func (o *Endpoints) GetCreatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.CreatedAt
-}
-
-func (o *Endpoints) GetCurrentState() string {
-	if o == nil {
-		return ""
-	}
-	return o.CurrentState
-}
-
-func (o *Endpoints) GetDisabled() bool {
-	if o == nil {
-		return false
-	}
-	return o.Disabled
-}
-
-func (o *Endpoints) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *Endpoints) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *Endpoints) GetLastActive() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LastActive
-}
-
-func (o *Endpoints) GetPasswordlessAccess() bool {
-	if o == nil {
-		return false
-	}
-	return o.PasswordlessAccess
-}
-
-func (o *Endpoints) GetPoolerEnabled() bool {
-	if o == nil {
-		return false
-	}
-	return o.PoolerEnabled
-}
-
-func (o *Endpoints) GetPoolerMode() string {
-	if o == nil {
-		return ""
-	}
-	return o.PoolerMode
-}
-
-func (o *Endpoints) GetProjectID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ProjectID
-}
-
-func (o *Endpoints) GetRegionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.RegionID
-}
-
-func (o *Endpoints) GetSuspendTimeoutSeconds() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.SuspendTimeoutSeconds
-}
-
-func (o *Endpoints) GetType() string {
-	if o == nil {
-		return ""
-	}
-	return o.Type
-}
-
-func (o *Endpoints) GetUpdatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.UpdatedAt
-}
-
 // UploadedFile - Used in the case you want to reference a file that was already uploaded
 type UploadedFile struct {
 	// The file path relative to the project root
@@ -607,7 +52,6 @@ const (
 func (e Encoding) ToPointer() *Encoding {
 	return &e
 }
-
 func (e *Encoding) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -689,21 +133,21 @@ func CreateFilesUploadedFile(uploadedFile UploadedFile) Files {
 
 func (u *Files) UnmarshalJSON(data []byte) error {
 
-	inlinedFile := InlinedFile{}
+	var inlinedFile InlinedFile = InlinedFile{}
 	if err := utils.UnmarshalJSON(data, &inlinedFile, "", true, true); err == nil {
 		u.InlinedFile = &inlinedFile
 		u.Type = FilesTypeInlinedFile
 		return nil
 	}
 
-	uploadedFile := UploadedFile{}
+	var uploadedFile UploadedFile = UploadedFile{}
 	if err := utils.UnmarshalJSON(data, &uploadedFile, "", true, true); err == nil {
 		u.UploadedFile = &uploadedFile
 		u.Type = FilesTypeUploadedFile
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Files", string(data))
 }
 
 func (u Files) MarshalJSON() ([]byte, error) {
@@ -715,279 +159,7 @@ func (u Files) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.UploadedFile, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
-// Framework - The framework that is being used for this project. When `null` is used no framework is selected
-type Framework string
-
-const (
-	FrameworkBlitzjs        Framework = "blitzjs"
-	FrameworkNextjs         Framework = "nextjs"
-	FrameworkGatsby         Framework = "gatsby"
-	FrameworkRemix          Framework = "remix"
-	FrameworkAstro          Framework = "astro"
-	FrameworkHexo           Framework = "hexo"
-	FrameworkEleventy       Framework = "eleventy"
-	FrameworkDocusaurus2    Framework = "docusaurus-2"
-	FrameworkDocusaurus     Framework = "docusaurus"
-	FrameworkPreact         Framework = "preact"
-	FrameworkSolidstart     Framework = "solidstart"
-	FrameworkDojo           Framework = "dojo"
-	FrameworkEmber          Framework = "ember"
-	FrameworkVue            Framework = "vue"
-	FrameworkScully         Framework = "scully"
-	FrameworkIonicAngular   Framework = "ionic-angular"
-	FrameworkAngular        Framework = "angular"
-	FrameworkPolymer        Framework = "polymer"
-	FrameworkSvelte         Framework = "svelte"
-	FrameworkSveltekit      Framework = "sveltekit"
-	FrameworkSveltekit1     Framework = "sveltekit-1"
-	FrameworkIonicReact     Framework = "ionic-react"
-	FrameworkCreateReactApp Framework = "create-react-app"
-	FrameworkGridsome       Framework = "gridsome"
-	FrameworkUmijs          Framework = "umijs"
-	FrameworkSapper         Framework = "sapper"
-	FrameworkSaber          Framework = "saber"
-	FrameworkStencil        Framework = "stencil"
-	FrameworkNuxtjs         Framework = "nuxtjs"
-	FrameworkRedwoodjs      Framework = "redwoodjs"
-	FrameworkHugo           Framework = "hugo"
-	FrameworkJekyll         Framework = "jekyll"
-	FrameworkBrunch         Framework = "brunch"
-	FrameworkMiddleman      Framework = "middleman"
-	FrameworkZola           Framework = "zola"
-	FrameworkHydrogen       Framework = "hydrogen"
-	FrameworkVite           Framework = "vite"
-	FrameworkVitepress      Framework = "vitepress"
-	FrameworkVuepress       Framework = "vuepress"
-	FrameworkParcel         Framework = "parcel"
-	FrameworkSanity         Framework = "sanity"
-	FrameworkStorybook      Framework = "storybook"
-)
-
-func (e Framework) ToPointer() *Framework {
-	return &e
-}
-
-func (e *Framework) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "blitzjs":
-		fallthrough
-	case "nextjs":
-		fallthrough
-	case "gatsby":
-		fallthrough
-	case "remix":
-		fallthrough
-	case "astro":
-		fallthrough
-	case "hexo":
-		fallthrough
-	case "eleventy":
-		fallthrough
-	case "docusaurus-2":
-		fallthrough
-	case "docusaurus":
-		fallthrough
-	case "preact":
-		fallthrough
-	case "solidstart":
-		fallthrough
-	case "dojo":
-		fallthrough
-	case "ember":
-		fallthrough
-	case "vue":
-		fallthrough
-	case "scully":
-		fallthrough
-	case "ionic-angular":
-		fallthrough
-	case "angular":
-		fallthrough
-	case "polymer":
-		fallthrough
-	case "svelte":
-		fallthrough
-	case "sveltekit":
-		fallthrough
-	case "sveltekit-1":
-		fallthrough
-	case "ionic-react":
-		fallthrough
-	case "create-react-app":
-		fallthrough
-	case "gridsome":
-		fallthrough
-	case "umijs":
-		fallthrough
-	case "sapper":
-		fallthrough
-	case "saber":
-		fallthrough
-	case "stencil":
-		fallthrough
-	case "nuxtjs":
-		fallthrough
-	case "redwoodjs":
-		fallthrough
-	case "hugo":
-		fallthrough
-	case "jekyll":
-		fallthrough
-	case "brunch":
-		fallthrough
-	case "middleman":
-		fallthrough
-	case "zola":
-		fallthrough
-	case "hydrogen":
-		fallthrough
-	case "vite":
-		fallthrough
-	case "vitepress":
-		fallthrough
-	case "vuepress":
-		fallthrough
-	case "parcel":
-		fallthrough
-	case "sanity":
-		fallthrough
-	case "storybook":
-		*e = Framework(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Framework: %v", v)
-	}
-}
-
-type Functions struct {
-	// A glob pattern to match files that should be excluded from your Serverless Function. If you’re using a Community Runtime, the behavior might vary.
-	ExcludeFiles *string `json:"excludeFiles,omitempty"`
-	// A glob pattern to match files that should be included in your Serverless Function. If you’re using a Community Runtime, the behavior might vary.
-	IncludeFiles *string `json:"includeFiles,omitempty"`
-	// An integer defining how long your Serverless Function should be allowed to run on every request in seconds (between 1 and the maximum limit of your plan).
-	MaxDuration *int64 `json:"maxDuration,omitempty"`
-	// An integer defining the memory your Serverless Function should be provided with (between 128 and 3008).
-	Memory *int64 `json:"memory,omitempty"`
-	// The npm package name of a Runtime, including its version
-	Runtime *string `json:"runtime,omitempty"`
-}
-
-func (o *Functions) GetExcludeFiles() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ExcludeFiles
-}
-
-func (o *Functions) GetIncludeFiles() *string {
-	if o == nil {
-		return nil
-	}
-	return o.IncludeFiles
-}
-
-func (o *Functions) GetMaxDuration() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.MaxDuration
-}
-
-func (o *Functions) GetMemory() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Memory
-}
-
-func (o *Functions) GetRuntime() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Runtime
-}
-
-type DeploymentEnabledType string
-
-const (
-	DeploymentEnabledTypeBoolean      DeploymentEnabledType = "boolean"
-	DeploymentEnabledTypeMapOfboolean DeploymentEnabledType = "mapOfboolean"
-)
-
-// DeploymentEnabled - Specifies the branches that will not trigger an auto-deployment when committing to them. Any non specified branch is `true` by default.
-type DeploymentEnabled struct {
-	Boolean      *bool
-	MapOfboolean map[string]bool
-
-	Type DeploymentEnabledType
-}
-
-func CreateDeploymentEnabledBoolean(boolean bool) DeploymentEnabled {
-	typ := DeploymentEnabledTypeBoolean
-
-	return DeploymentEnabled{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func CreateDeploymentEnabledMapOfboolean(mapOfboolean map[string]bool) DeploymentEnabled {
-	typ := DeploymentEnabledTypeMapOfboolean
-
-	return DeploymentEnabled{
-		MapOfboolean: mapOfboolean,
-		Type:         typ,
-	}
-}
-
-func (u *DeploymentEnabled) UnmarshalJSON(data []byte) error {
-
-	boolean := false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
-		u.Boolean = &boolean
-		u.Type = DeploymentEnabledTypeBoolean
-		return nil
-	}
-
-	mapOfboolean := map[string]bool{}
-	if err := utils.UnmarshalJSON(data, &mapOfboolean, "", true, true); err == nil {
-		u.MapOfboolean = mapOfboolean
-		u.Type = DeploymentEnabledTypeMapOfboolean
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u DeploymentEnabled) MarshalJSON() ([]byte, error) {
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	if u.MapOfboolean != nil {
-		return utils.MarshalJSON(u.MapOfboolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
-type Git struct {
-	// Specifies the branches that will not trigger an auto-deployment when committing to them. Any non specified branch is `true` by default.
-	DeploymentEnabled *DeploymentEnabled `json:"deploymentEnabled,omitempty"`
-}
-
-func (o *Git) GetDeploymentEnabled() *DeploymentEnabled {
-	if o == nil {
-		return nil
-	}
-	return o.DeploymentEnabled
+	return nil, errors.New("could not marshal union type Files: all fields are null")
 }
 
 // GitMetadata - Populates initial git metadata for different git providers.
@@ -1057,7 +229,6 @@ const (
 func (e CreateDeploymentDeploymentsRequestRequestBodyType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsRequestRequestBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1124,7 +295,6 @@ const (
 func (e CreateDeploymentDeploymentsRequestType) ToPointer() *CreateDeploymentDeploymentsRequestType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsRequestType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1185,23 +355,23 @@ func (o *Four) GetWorkspaceUUID() *string {
 type ProjectIDType string
 
 const (
-	ProjectIDTypeInteger ProjectIDType = "integer"
-	ProjectIDTypeStr     ProjectIDType = "str"
+	ProjectIDTypeNumber ProjectIDType = "number"
+	ProjectIDTypeStr    ProjectIDType = "str"
 )
 
 type ProjectID struct {
-	Integer *int64
-	Str     *string
+	Number *float64
+	Str    *string
 
 	Type ProjectIDType
 }
 
-func CreateProjectIDInteger(integer int64) ProjectID {
-	typ := ProjectIDTypeInteger
+func CreateProjectIDNumber(number float64) ProjectID {
+	typ := ProjectIDTypeNumber
 
 	return ProjectID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -1216,33 +386,33 @@ func CreateProjectIDStr(str string) ProjectID {
 
 func (u *ProjectID) UnmarshalJSON(data []byte) error {
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = ProjectIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = ProjectIDTypeNumber
 		return nil
 	}
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = ProjectIDTypeStr
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProjectID", string(data))
 }
 
 func (u ProjectID) MarshalJSON() ([]byte, error) {
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type ProjectID: all fields are null")
 }
 
 type CreateDeploymentDeploymentsType string
@@ -1254,7 +424,6 @@ const (
 func (e CreateDeploymentDeploymentsType) ToPointer() *CreateDeploymentDeploymentsType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1313,7 +482,6 @@ const (
 func (e CreateDeploymentType) ToPointer() *CreateDeploymentType {
 	return &e
 }
-
 func (e *CreateDeploymentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1374,23 +542,23 @@ func (o *Two) GetType() CreateDeploymentType {
 type RepoIDType string
 
 const (
-	RepoIDTypeInteger RepoIDType = "integer"
-	RepoIDTypeStr     RepoIDType = "str"
+	RepoIDTypeNumber RepoIDType = "number"
+	RepoIDTypeStr    RepoIDType = "str"
 )
 
 type RepoID struct {
-	Integer *int64
-	Str     *string
+	Number *float64
+	Str    *string
 
 	Type RepoIDType
 }
 
-func CreateRepoIDInteger(integer int64) RepoID {
-	typ := RepoIDTypeInteger
+func CreateRepoIDNumber(number float64) RepoID {
+	typ := RepoIDTypeNumber
 
 	return RepoID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -1405,33 +573,33 @@ func CreateRepoIDStr(str string) RepoID {
 
 func (u *RepoID) UnmarshalJSON(data []byte) error {
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = RepoIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = RepoIDTypeNumber
 		return nil
 	}
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = RepoIDTypeStr
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for RepoID", string(data))
 }
 
 func (u RepoID) MarshalJSON() ([]byte, error) {
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type RepoID: all fields are null")
 }
 
 type Type string
@@ -1443,7 +611,6 @@ const (
 func (e Type) ToPointer() *Type {
 	return &e
 }
-
 func (e *Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1561,42 +728,42 @@ func CreateGitSourceFive(five Five) GitSource {
 
 func (u *GitSource) UnmarshalJSON(data []byte) error {
 
-	one := One{}
+	var one One = One{}
 	if err := utils.UnmarshalJSON(data, &one, "", true, true); err == nil {
 		u.One = &one
 		u.Type = GitSourceTypeOne
 		return nil
 	}
 
-	three := Three{}
+	var three Three = Three{}
 	if err := utils.UnmarshalJSON(data, &three, "", true, true); err == nil {
 		u.Three = &three
 		u.Type = GitSourceTypeThree
 		return nil
 	}
 
-	two := Two{}
+	var two Two = Two{}
 	if err := utils.UnmarshalJSON(data, &two, "", true, true); err == nil {
 		u.Two = &two
 		u.Type = GitSourceTypeTwo
 		return nil
 	}
 
-	four := Four{}
+	var four Four = Four{}
 	if err := utils.UnmarshalJSON(data, &four, "", true, true); err == nil {
 		u.Four = &four
 		u.Type = GitSourceTypeFour
 		return nil
 	}
 
-	five := Five{}
+	var five Five = Five{}
 	if err := utils.UnmarshalJSON(data, &five, "", true, true); err == nil {
 		u.Five = &five
 		u.Type = GitSourceTypeFive
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GitSource", string(data))
 }
 
 func (u GitSource) MarshalJSON() ([]byte, error) {
@@ -1620,877 +787,62 @@ func (u GitSource) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Five, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type GitSource: all fields are null")
 }
 
-// CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType string
+// Framework - The framework that is being used for this project. When `null` is used no framework is selected
+type Framework string
 
 const (
-	CreateDeploymentDeploymentsRequestRequestBodyHeadersHasTypeHeader CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType = "header"
-	CreateDeploymentDeploymentsRequestRequestBodyHeadersHasTypeCookie CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType = "cookie"
-	CreateDeploymentDeploymentsRequestRequestBodyHeadersHasTypeQuery  CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType = "query"
+	FrameworkBlitzjs        Framework = "blitzjs"
+	FrameworkNextjs         Framework = "nextjs"
+	FrameworkGatsby         Framework = "gatsby"
+	FrameworkRemix          Framework = "remix"
+	FrameworkAstro          Framework = "astro"
+	FrameworkHexo           Framework = "hexo"
+	FrameworkEleventy       Framework = "eleventy"
+	FrameworkDocusaurus2    Framework = "docusaurus-2"
+	FrameworkDocusaurus     Framework = "docusaurus"
+	FrameworkPreact         Framework = "preact"
+	FrameworkSolidstart1    Framework = "solidstart-1"
+	FrameworkSolidstart     Framework = "solidstart"
+	FrameworkDojo           Framework = "dojo"
+	FrameworkEmber          Framework = "ember"
+	FrameworkVue            Framework = "vue"
+	FrameworkScully         Framework = "scully"
+	FrameworkIonicAngular   Framework = "ionic-angular"
+	FrameworkAngular        Framework = "angular"
+	FrameworkPolymer        Framework = "polymer"
+	FrameworkSvelte         Framework = "svelte"
+	FrameworkSveltekit      Framework = "sveltekit"
+	FrameworkSveltekit1     Framework = "sveltekit-1"
+	FrameworkIonicReact     Framework = "ionic-react"
+	FrameworkCreateReactApp Framework = "create-react-app"
+	FrameworkGridsome       Framework = "gridsome"
+	FrameworkUmijs          Framework = "umijs"
+	FrameworkSapper         Framework = "sapper"
+	FrameworkSaber          Framework = "saber"
+	FrameworkStencil        Framework = "stencil"
+	FrameworkNuxtjs         Framework = "nuxtjs"
+	FrameworkRedwoodjs      Framework = "redwoodjs"
+	FrameworkHugo           Framework = "hugo"
+	FrameworkJekyll         Framework = "jekyll"
+	FrameworkBrunch         Framework = "brunch"
+	FrameworkMiddleman      Framework = "middleman"
+	FrameworkZola           Framework = "zola"
+	FrameworkHydrogen       Framework = "hydrogen"
+	FrameworkVite           Framework = "vite"
+	FrameworkVitepress      Framework = "vitepress"
+	FrameworkVuepress       Framework = "vuepress"
+	FrameworkParcel         Framework = "parcel"
+	FrameworkSanity         Framework = "sanity"
+	FrameworkStorybook      Framework = "storybook"
 )
 
-func (e CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType {
+func (e Framework) ToPointer() *Framework {
 	return &e
 }
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "header":
-		fallthrough
-	case "cookie":
-		fallthrough
-	case "query":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBody2 struct {
-	// The name of the element contained in the particular type
-	Key string `json:"key"`
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value *string `json:"value,omitempty"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBody2) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBody2) GetType() CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyHeadersHasType("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBody2) GetValue() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyHeadersType - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyHeadersType string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyHeadersTypeHost CreateDeploymentDeploymentsRequestRequestBodyHeadersType = "host"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyHeadersType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyHeadersType {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyHeadersType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "host":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyHeadersType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyHeadersType: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBody1 struct {
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyHeadersType `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value string `json:"value"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBody1) GetType() CreateDeploymentDeploymentsRequestRequestBodyHeadersType {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyHeadersType("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBody1) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
-type CreateDeploymentHasType string
-
-const (
-	CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody1 CreateDeploymentHasType = "createDeployment_deployments_request_requestBody_1"
-	CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody2 CreateDeploymentHasType = "createDeployment_deployments_request_requestBody_2"
-)
-
-type CreateDeploymentHas struct {
-	CreateDeploymentDeploymentsRequestRequestBody1 *CreateDeploymentDeploymentsRequestRequestBody1
-	CreateDeploymentDeploymentsRequestRequestBody2 *CreateDeploymentDeploymentsRequestRequestBody2
-
-	Type CreateDeploymentHasType
-}
-
-func CreateCreateDeploymentHasCreateDeploymentDeploymentsRequestRequestBody1(createDeploymentDeploymentsRequestRequestBody1 CreateDeploymentDeploymentsRequestRequestBody1) CreateDeploymentHas {
-	typ := CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody1
-
-	return CreateDeploymentHas{
-		CreateDeploymentDeploymentsRequestRequestBody1: &createDeploymentDeploymentsRequestRequestBody1,
-		Type: typ,
-	}
-}
-
-func CreateCreateDeploymentHasCreateDeploymentDeploymentsRequestRequestBody2(createDeploymentDeploymentsRequestRequestBody2 CreateDeploymentDeploymentsRequestRequestBody2) CreateDeploymentHas {
-	typ := CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody2
-
-	return CreateDeploymentHas{
-		CreateDeploymentDeploymentsRequestRequestBody2: &createDeploymentDeploymentsRequestRequestBody2,
-		Type: typ,
-	}
-}
-
-func (u *CreateDeploymentHas) UnmarshalJSON(data []byte) error {
-
-	createDeploymentDeploymentsRequestRequestBody1 := CreateDeploymentDeploymentsRequestRequestBody1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBody1, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBody1 = &createDeploymentDeploymentsRequestRequestBody1
-		u.Type = CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody1
-		return nil
-	}
-
-	createDeploymentDeploymentsRequestRequestBody2 := CreateDeploymentDeploymentsRequestRequestBody2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBody2, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBody2 = &createDeploymentDeploymentsRequestRequestBody2
-		u.Type = CreateDeploymentHasTypeCreateDeploymentDeploymentsRequestRequestBody2
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u CreateDeploymentHas) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsRequestRequestBody1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBody1, "", true)
-	}
-
-	if u.CreateDeploymentDeploymentsRequestRequestBody2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBody2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
-type CreateDeploymentHeaders struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
-}
-
-func (o *CreateDeploymentHeaders) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
-func (o *CreateDeploymentHeaders) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2TypeHeader CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type = "header"
-	CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2TypeCookie CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type = "cookie"
-	CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2TypeQuery  CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type = "query"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "header":
-		fallthrough
-	case "cookie":
-		fallthrough
-	case "query":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBodyHeaders2 struct {
-	// The name of the element contained in the particular type
-	Key string `json:"key"`
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value *string `json:"value,omitempty"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyHeaders2) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyHeaders2) GetType() CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyHeadersMissing2Type("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyHeaders2) GetValue() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingTypeHost CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType = "host"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "host":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBodyHeaders1 struct {
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value string `json:"value"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyHeaders1) GetType() CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyHeadersMissingType("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyHeaders1) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
-type CreateDeploymentMissingType string
-
-const (
-	CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders1 CreateDeploymentMissingType = "createDeployment_deployments_request_requestBody_headers_1"
-	CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders2 CreateDeploymentMissingType = "createDeployment_deployments_request_requestBody_headers_2"
-)
-
-type CreateDeploymentMissing struct {
-	CreateDeploymentDeploymentsRequestRequestBodyHeaders1 *CreateDeploymentDeploymentsRequestRequestBodyHeaders1
-	CreateDeploymentDeploymentsRequestRequestBodyHeaders2 *CreateDeploymentDeploymentsRequestRequestBodyHeaders2
-
-	Type CreateDeploymentMissingType
-}
-
-func CreateCreateDeploymentMissingCreateDeploymentDeploymentsRequestRequestBodyHeaders1(createDeploymentDeploymentsRequestRequestBodyHeaders1 CreateDeploymentDeploymentsRequestRequestBodyHeaders1) CreateDeploymentMissing {
-	typ := CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders1
-
-	return CreateDeploymentMissing{
-		CreateDeploymentDeploymentsRequestRequestBodyHeaders1: &createDeploymentDeploymentsRequestRequestBodyHeaders1,
-		Type: typ,
-	}
-}
-
-func CreateCreateDeploymentMissingCreateDeploymentDeploymentsRequestRequestBodyHeaders2(createDeploymentDeploymentsRequestRequestBodyHeaders2 CreateDeploymentDeploymentsRequestRequestBodyHeaders2) CreateDeploymentMissing {
-	typ := CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders2
-
-	return CreateDeploymentMissing{
-		CreateDeploymentDeploymentsRequestRequestBodyHeaders2: &createDeploymentDeploymentsRequestRequestBodyHeaders2,
-		Type: typ,
-	}
-}
-
-func (u *CreateDeploymentMissing) UnmarshalJSON(data []byte) error {
-
-	createDeploymentDeploymentsRequestRequestBodyHeaders1 := CreateDeploymentDeploymentsRequestRequestBodyHeaders1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyHeaders1, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBodyHeaders1 = &createDeploymentDeploymentsRequestRequestBodyHeaders1
-		u.Type = CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders1
-		return nil
-	}
-
-	createDeploymentDeploymentsRequestRequestBodyHeaders2 := CreateDeploymentDeploymentsRequestRequestBodyHeaders2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyHeaders2, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBodyHeaders2 = &createDeploymentDeploymentsRequestRequestBodyHeaders2
-		u.Type = CreateDeploymentMissingTypeCreateDeploymentDeploymentsRequestRequestBodyHeaders2
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u CreateDeploymentMissing) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsRequestRequestBodyHeaders1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyHeaders1, "", true)
-	}
-
-	if u.CreateDeploymentDeploymentsRequestRequestBodyHeaders2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyHeaders2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
-type Headers struct {
-	// An array of requirements that are needed to match
-	Has []CreateDeploymentHas `json:"has,omitempty"`
-	// An array of key/value pairs representing each response header.
-	Headers []CreateDeploymentHeaders `json:"headers"`
-	// An array of requirements that are needed to match
-	Missing []CreateDeploymentMissing `json:"missing,omitempty"`
-	// A pattern that matches each incoming pathname (excluding querystring)
-	Source string `json:"source"`
-}
-
-func (o *Headers) GetHas() []CreateDeploymentHas {
-	if o == nil {
-		return nil
-	}
-	return o.Has
-}
-
-func (o *Headers) GetHeaders() []CreateDeploymentHeaders {
-	if o == nil {
-		return []CreateDeploymentHeaders{}
-	}
-	return o.Headers
-}
-
-func (o *Headers) GetMissing() []CreateDeploymentMissing {
-	if o == nil {
-		return nil
-	}
-	return o.Missing
-}
-
-func (o *Headers) GetSource() string {
-	if o == nil {
-		return ""
-	}
-	return o.Source
-}
-
-type ContentDispositionType string
-
-const (
-	ContentDispositionTypeInline     ContentDispositionType = "inline"
-	ContentDispositionTypeAttachment ContentDispositionType = "attachment"
-)
-
-func (e ContentDispositionType) ToPointer() *ContentDispositionType {
-	return &e
-}
-
-func (e *ContentDispositionType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "inline":
-		fallthrough
-	case "attachment":
-		*e = ContentDispositionType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ContentDispositionType: %v", v)
-	}
-}
-
-type Formats string
-
-const (
-	FormatsImageAvif Formats = "image/avif"
-	FormatsImageWebp Formats = "image/webp"
-	FormatsImageJpeg Formats = "image/jpeg"
-	FormatsImagePng  Formats = "image/png"
-)
-
-func (e Formats) ToPointer() *Formats {
-	return &e
-}
-
-func (e *Formats) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "image/avif":
-		fallthrough
-	case "image/webp":
-		fallthrough
-	case "image/jpeg":
-		fallthrough
-	case "image/png":
-		*e = Formats(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Formats: %v", v)
-	}
-}
-
-type Protocol string
-
-const (
-	ProtocolHTTP  Protocol = "http"
-	ProtocolHTTPS Protocol = "https"
-)
-
-func (e Protocol) ToPointer() *Protocol {
-	return &e
-}
-
-func (e *Protocol) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "http":
-		fallthrough
-	case "https":
-		*e = Protocol(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Protocol: %v", v)
-	}
-}
-
-type RemotePatterns struct {
-	Hostname string    `json:"hostname"`
-	Pathname *string   `json:"pathname,omitempty"`
-	Port     *string   `json:"port,omitempty"`
-	Protocol *Protocol `json:"protocol,omitempty"`
-}
-
-func (o *RemotePatterns) GetHostname() string {
-	if o == nil {
-		return ""
-	}
-	return o.Hostname
-}
-
-func (o *RemotePatterns) GetPathname() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Pathname
-}
-
-func (o *RemotePatterns) GetPort() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
-func (o *RemotePatterns) GetProtocol() *Protocol {
-	if o == nil {
-		return nil
-	}
-	return o.Protocol
-}
-
-type Images struct {
-	ContentDispositionType *ContentDispositionType `json:"contentDispositionType,omitempty"`
-	ContentSecurityPolicy  *string                 `json:"contentSecurityPolicy,omitempty"`
-	DangerouslyAllowSVG    *bool                   `json:"dangerouslyAllowSVG,omitempty"`
-	Domains                []string                `json:"domains,omitempty"`
-	Formats                []Formats               `json:"formats,omitempty"`
-	MinimumCacheTTL        *int64                  `json:"minimumCacheTTL,omitempty"`
-	RemotePatterns         []RemotePatterns        `json:"remotePatterns,omitempty"`
-	Sizes                  []int64                 `json:"sizes"`
-}
-
-func (o *Images) GetContentDispositionType() *ContentDispositionType {
-	if o == nil {
-		return nil
-	}
-	return o.ContentDispositionType
-}
-
-func (o *Images) GetContentSecurityPolicy() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ContentSecurityPolicy
-}
-
-func (o *Images) GetDangerouslyAllowSVG() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.DangerouslyAllowSVG
-}
-
-func (o *Images) GetDomains() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Domains
-}
-
-func (o *Images) GetFormats() []Formats {
-	if o == nil {
-		return nil
-	}
-	return o.Formats
-}
-
-func (o *Images) GetMinimumCacheTTL() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.MinimumCacheTTL
-}
-
-func (o *Images) GetRemotePatterns() []RemotePatterns {
-	if o == nil {
-		return nil
-	}
-	return o.RemotePatterns
-}
-
-func (o *Images) GetSizes() []int64 {
-	if o == nil {
-		return []int64{}
-	}
-	return o.Sizes
-}
-
-type Pagination struct {
-	Cursor string `json:"cursor"`
-}
-
-func (o *Pagination) GetCursor() string {
-	if o == nil {
-		return ""
-	}
-	return o.Cursor
-}
-
-type Quota struct {
-	// The total amount of wall-clock time allowed to be spent by a project's compute endpoints.
-	ActiveTimeSeconds *int64 `json:"active_time_seconds,omitempty"`
-	// The total amount of CPU seconds allowed to be spent by a project's compute endpoints.
-	ComputeTimeSeconds *int64 `json:"compute_time_seconds,omitempty"`
-	// The total amount of data transferred from all project's branches using proxy.
-	DataTransferBytes *int64 `json:"data_transfer_bytes,omitempty"`
-	// The logical size of every project's branch.
-	LogicalSizeBytes *int64 `json:"logical_size_bytes,omitempty"`
-	// The total amount of data written to all project's branches.
-	WrittenDataBytes *int64 `json:"written_data_bytes,omitempty"`
-}
-
-func (o *Quota) GetActiveTimeSeconds() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.ActiveTimeSeconds
-}
-
-func (o *Quota) GetComputeTimeSeconds() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.ComputeTimeSeconds
-}
-
-func (o *Quota) GetDataTransferBytes() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.DataTransferBytes
-}
-
-func (o *Quota) GetLogicalSizeBytes() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.LogicalSizeBytes
-}
-
-func (o *Quota) GetWrittenDataBytes() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.WrittenDataBytes
-}
-
-type Settings struct {
-	Quota *Quota `json:"quota,omitempty"`
-}
-
-func (o *Settings) GetQuota() *Quota {
-	if o == nil {
-		return nil
-	}
-	return o.Quota
-}
-
-type Project struct {
-	ActiveTimeSeconds *int64 `json:"active_time_seconds,omitempty"`
-	// The logical size limit for a branch in MiB.
-	BranchLogicalSizeLimit int64 `json:"branch_logical_size_limit"`
-	// The logical size limit for a branch in bytes.
-	BranchLogicalSizeLimitBytes int64     `json:"branch_logical_size_limit_bytes"`
-	ComputeTimeSeconds          *int64    `json:"compute_time_seconds,omitempty"`
-	CreatedAt                   string    `json:"created_at"`
-	DataStorageBytesHour        *int64    `json:"data_storage_bytes_hour,omitempty"`
-	DataTransferBytes           *int64    `json:"data_transfer_bytes,omitempty"`
-	ID                          string    `json:"id"`
-	Name                        string    `json:"name"`
-	OwnerID                     string    `json:"owner_id"`
-	PgVersion                   int64     `json:"pg_version"`
-	ProxyHost                   string    `json:"proxy_host"`
-	QuotaResetAt                *string   `json:"quota_reset_at,omitempty"`
-	RegionID                    string    `json:"region_id"`
-	Settings                    *Settings `json:"settings,omitempty"`
-	StorePasswords              bool      `json:"store_passwords"`
-	// The data storage size in bytes.
-	SyntheticStorageSize *int64 `json:"synthetic_storage_size,omitempty"`
-	UpdatedAt            string `json:"updated_at"`
-	WrittenDataBytes     *int64 `json:"written_data_bytes,omitempty"`
-}
-
-func (o *Project) GetActiveTimeSeconds() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.ActiveTimeSeconds
-}
-
-func (o *Project) GetBranchLogicalSizeLimit() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.BranchLogicalSizeLimit
-}
-
-func (o *Project) GetBranchLogicalSizeLimitBytes() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.BranchLogicalSizeLimitBytes
-}
-
-func (o *Project) GetComputeTimeSeconds() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.ComputeTimeSeconds
-}
-
-func (o *Project) GetCreatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.CreatedAt
-}
-
-func (o *Project) GetDataStorageBytesHour() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.DataStorageBytesHour
-}
-
-func (o *Project) GetDataTransferBytes() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.DataTransferBytes
-}
-
-func (o *Project) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *Project) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *Project) GetOwnerID() string {
-	if o == nil {
-		return ""
-	}
-	return o.OwnerID
-}
-
-func (o *Project) GetPgVersion() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.PgVersion
-}
-
-func (o *Project) GetProxyHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.ProxyHost
-}
-
-func (o *Project) GetQuotaResetAt() *string {
-	if o == nil {
-		return nil
-	}
-	return o.QuotaResetAt
-}
-
-func (o *Project) GetRegionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.RegionID
-}
-
-func (o *Project) GetSettings() *Settings {
-	if o == nil {
-		return nil
-	}
-	return o.Settings
-}
-
-func (o *Project) GetStorePasswords() bool {
-	if o == nil {
-		return false
-	}
-	return o.StorePasswords
-}
-
-func (o *Project) GetSyntheticStorageSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SyntheticStorageSize
-}
-
-func (o *Project) GetUpdatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.UpdatedAt
-}
-
-func (o *Project) GetWrittenDataBytes() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.WrittenDataBytes
-}
-
-// CreateDeploymentFramework - The framework that is being used for this project. When `null` is used no framework is selected
-type CreateDeploymentFramework string
-
-const (
-	CreateDeploymentFrameworkBlitzjs        CreateDeploymentFramework = "blitzjs"
-	CreateDeploymentFrameworkNextjs         CreateDeploymentFramework = "nextjs"
-	CreateDeploymentFrameworkGatsby         CreateDeploymentFramework = "gatsby"
-	CreateDeploymentFrameworkRemix          CreateDeploymentFramework = "remix"
-	CreateDeploymentFrameworkAstro          CreateDeploymentFramework = "astro"
-	CreateDeploymentFrameworkHexo           CreateDeploymentFramework = "hexo"
-	CreateDeploymentFrameworkEleventy       CreateDeploymentFramework = "eleventy"
-	CreateDeploymentFrameworkDocusaurus2    CreateDeploymentFramework = "docusaurus-2"
-	CreateDeploymentFrameworkDocusaurus     CreateDeploymentFramework = "docusaurus"
-	CreateDeploymentFrameworkPreact         CreateDeploymentFramework = "preact"
-	CreateDeploymentFrameworkSolidstart     CreateDeploymentFramework = "solidstart"
-	CreateDeploymentFrameworkDojo           CreateDeploymentFramework = "dojo"
-	CreateDeploymentFrameworkEmber          CreateDeploymentFramework = "ember"
-	CreateDeploymentFrameworkVue            CreateDeploymentFramework = "vue"
-	CreateDeploymentFrameworkScully         CreateDeploymentFramework = "scully"
-	CreateDeploymentFrameworkIonicAngular   CreateDeploymentFramework = "ionic-angular"
-	CreateDeploymentFrameworkAngular        CreateDeploymentFramework = "angular"
-	CreateDeploymentFrameworkPolymer        CreateDeploymentFramework = "polymer"
-	CreateDeploymentFrameworkSvelte         CreateDeploymentFramework = "svelte"
-	CreateDeploymentFrameworkSveltekit      CreateDeploymentFramework = "sveltekit"
-	CreateDeploymentFrameworkSveltekit1     CreateDeploymentFramework = "sveltekit-1"
-	CreateDeploymentFrameworkIonicReact     CreateDeploymentFramework = "ionic-react"
-	CreateDeploymentFrameworkCreateReactApp CreateDeploymentFramework = "create-react-app"
-	CreateDeploymentFrameworkGridsome       CreateDeploymentFramework = "gridsome"
-	CreateDeploymentFrameworkUmijs          CreateDeploymentFramework = "umijs"
-	CreateDeploymentFrameworkSapper         CreateDeploymentFramework = "sapper"
-	CreateDeploymentFrameworkSaber          CreateDeploymentFramework = "saber"
-	CreateDeploymentFrameworkStencil        CreateDeploymentFramework = "stencil"
-	CreateDeploymentFrameworkNuxtjs         CreateDeploymentFramework = "nuxtjs"
-	CreateDeploymentFrameworkRedwoodjs      CreateDeploymentFramework = "redwoodjs"
-	CreateDeploymentFrameworkHugo           CreateDeploymentFramework = "hugo"
-	CreateDeploymentFrameworkJekyll         CreateDeploymentFramework = "jekyll"
-	CreateDeploymentFrameworkBrunch         CreateDeploymentFramework = "brunch"
-	CreateDeploymentFrameworkMiddleman      CreateDeploymentFramework = "middleman"
-	CreateDeploymentFrameworkZola           CreateDeploymentFramework = "zola"
-	CreateDeploymentFrameworkHydrogen       CreateDeploymentFramework = "hydrogen"
-	CreateDeploymentFrameworkVite           CreateDeploymentFramework = "vite"
-	CreateDeploymentFrameworkVitepress      CreateDeploymentFramework = "vitepress"
-	CreateDeploymentFrameworkVuepress       CreateDeploymentFramework = "vuepress"
-	CreateDeploymentFrameworkParcel         CreateDeploymentFramework = "parcel"
-	CreateDeploymentFrameworkSanity         CreateDeploymentFramework = "sanity"
-	CreateDeploymentFrameworkStorybook      CreateDeploymentFramework = "storybook"
-)
-
-func (e CreateDeploymentFramework) ToPointer() *CreateDeploymentFramework {
-	return &e
-}
-
-func (e *CreateDeploymentFramework) UnmarshalJSON(data []byte) error {
+func (e *Framework) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2515,6 +867,8 @@ func (e *CreateDeploymentFramework) UnmarshalJSON(data []byte) error {
 	case "docusaurus":
 		fallthrough
 	case "preact":
+		fallthrough
+	case "solidstart-1":
 		fallthrough
 	case "solidstart":
 		fallthrough
@@ -2579,10 +933,40 @@ func (e *CreateDeploymentFramework) UnmarshalJSON(data []byte) error {
 	case "sanity":
 		fallthrough
 	case "storybook":
-		*e = CreateDeploymentFramework(v)
+		*e = Framework(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateDeploymentFramework: %v", v)
+		return fmt.Errorf("invalid value for Framework: %v", v)
+	}
+}
+
+// NodeVersion - Override the Node.js version that should be used for this deployment
+type NodeVersion string
+
+const (
+	NodeVersionTwentyX   NodeVersion = "20.x"
+	NodeVersionEighteenX NodeVersion = "18.x"
+	NodeVersionSixteenX  NodeVersion = "16.x"
+)
+
+func (e NodeVersion) ToPointer() *NodeVersion {
+	return &e
+}
+func (e *NodeVersion) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "20.x":
+		fallthrough
+	case "18.x":
+		fallthrough
+	case "16.x":
+		*e = NodeVersion(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for NodeVersion: %v", v)
 	}
 }
 
@@ -2594,9 +978,11 @@ type ProjectSettings struct {
 	// The dev command for this project. When `null` is used this value will be automatically detected
 	DevCommand *string `json:"devCommand,omitempty"`
 	// The framework that is being used for this project. When `null` is used no framework is selected
-	Framework *CreateDeploymentFramework `json:"framework,omitempty"`
+	Framework *Framework `json:"framework,omitempty"`
 	// The install command for this project. When `null` is used this value will be automatically detected
 	InstallCommand *string `json:"installCommand,omitempty"`
+	// Override the Node.js version that should be used for this deployment
+	NodeVersion *NodeVersion `json:"nodeVersion,omitempty"`
 	// The output directory of the project. When `null` is used this value will be automatically detected
 	OutputDirectory *string `json:"outputDirectory,omitempty"`
 	// The name of a directory or relative path to the source code of your project. When `null` is used it will default to the project root
@@ -2632,7 +1018,7 @@ func (o *ProjectSettings) GetDevCommand() *string {
 	return o.DevCommand
 }
 
-func (o *ProjectSettings) GetFramework() *CreateDeploymentFramework {
+func (o *ProjectSettings) GetFramework() *Framework {
 	if o == nil {
 		return nil
 	}
@@ -2644,6 +1030,13 @@ func (o *ProjectSettings) GetInstallCommand() *string {
 		return nil
 	}
 	return o.InstallCommand
+}
+
+func (o *ProjectSettings) GetNodeVersion() *NodeVersion {
+	if o == nil {
+		return nil
+	}
+	return o.NodeVersion
 }
 
 func (o *ProjectSettings) GetOutputDirectory() *string {
@@ -2681,1611 +1074,6 @@ func (o *ProjectSettings) GetSourceFilesOutsideRootDirectory() *bool {
 	return o.SourceFilesOutsideRootDirectory
 }
 
-type Projects struct {
-	ComputeTimeSeconds            int64   `json:"compute_time_seconds"`
-	ComputeTimeSecondsUpdatedAt   *string `json:"compute_time_seconds_updated_at,omitempty"`
-	DataStorageBytesHour          int64   `json:"data_storage_bytes_hour"`
-	DataStorageBytesHourUpdatedAt *string `json:"data_storage_bytes_hour_updated_at,omitempty"`
-	DataTransferBytes             int64   `json:"data_transfer_bytes"`
-	DataTransferBytesUpdatedAt    *string `json:"data_transfer_bytes_updated_at,omitempty"`
-	ID                            string  `json:"id"`
-	SyntheticStorageSize          int64   `json:"synthetic_storage_size"`
-	SyntheticStorageSizeUpdatedAt *string `json:"synthetic_storage_size_updated_at,omitempty"`
-	WrittenDataBytes              int64   `json:"written_data_bytes"`
-	WrittenDataBytesUpdatedAt     *string `json:"written_data_bytes_updated_at,omitempty"`
-}
-
-func (o *Projects) GetComputeTimeSeconds() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.ComputeTimeSeconds
-}
-
-func (o *Projects) GetComputeTimeSecondsUpdatedAt() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ComputeTimeSecondsUpdatedAt
-}
-
-func (o *Projects) GetDataStorageBytesHour() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.DataStorageBytesHour
-}
-
-func (o *Projects) GetDataStorageBytesHourUpdatedAt() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DataStorageBytesHourUpdatedAt
-}
-
-func (o *Projects) GetDataTransferBytes() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.DataTransferBytes
-}
-
-func (o *Projects) GetDataTransferBytesUpdatedAt() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DataTransferBytesUpdatedAt
-}
-
-func (o *Projects) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *Projects) GetSyntheticStorageSize() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.SyntheticStorageSize
-}
-
-func (o *Projects) GetSyntheticStorageSizeUpdatedAt() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SyntheticStorageSizeUpdatedAt
-}
-
-func (o *Projects) GetWrittenDataBytes() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.WrittenDataBytes
-}
-
-func (o *Projects) GetWrittenDataBytesUpdatedAt() *string {
-	if o == nil {
-		return nil
-	}
-	return o.WrittenDataBytesUpdatedAt
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasTypeHeader CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType = "header"
-	CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasTypeCookie CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType = "cookie"
-	CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasTypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType = "query"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "header":
-		fallthrough
-	case "cookie":
-		fallthrough
-	case "query":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBodyRedirects2 struct {
-	// The name of the element contained in the particular type
-	Key string `json:"key"`
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value *string `json:"value,omitempty"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirects2) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirects2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRedirectsHasType("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirects2) GetValue() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRedirectsType - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRedirectsType string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRedirectsTypeHost CreateDeploymentDeploymentsRequestRequestBodyRedirectsType = "host"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRedirectsType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRedirectsType {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRedirectsType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "host":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRedirectsType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRedirectsType: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBodyRedirects1 struct {
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRedirectsType `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value string `json:"value"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirects1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRedirectsType {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRedirectsType("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirects1) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
-type CreateDeploymentDeploymentsHasType string
-
-const (
-	CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects1 CreateDeploymentDeploymentsHasType = "createDeployment_deployments_request_requestBody_redirects_1"
-	CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects2 CreateDeploymentDeploymentsHasType = "createDeployment_deployments_request_requestBody_redirects_2"
-)
-
-type CreateDeploymentDeploymentsHas struct {
-	CreateDeploymentDeploymentsRequestRequestBodyRedirects1 *CreateDeploymentDeploymentsRequestRequestBodyRedirects1
-	CreateDeploymentDeploymentsRequestRequestBodyRedirects2 *CreateDeploymentDeploymentsRequestRequestBodyRedirects2
-
-	Type CreateDeploymentDeploymentsHasType
-}
-
-func CreateCreateDeploymentDeploymentsHasCreateDeploymentDeploymentsRequestRequestBodyRedirects1(createDeploymentDeploymentsRequestRequestBodyRedirects1 CreateDeploymentDeploymentsRequestRequestBodyRedirects1) CreateDeploymentDeploymentsHas {
-	typ := CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects1
-
-	return CreateDeploymentDeploymentsHas{
-		CreateDeploymentDeploymentsRequestRequestBodyRedirects1: &createDeploymentDeploymentsRequestRequestBodyRedirects1,
-		Type: typ,
-	}
-}
-
-func CreateCreateDeploymentDeploymentsHasCreateDeploymentDeploymentsRequestRequestBodyRedirects2(createDeploymentDeploymentsRequestRequestBodyRedirects2 CreateDeploymentDeploymentsRequestRequestBodyRedirects2) CreateDeploymentDeploymentsHas {
-	typ := CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects2
-
-	return CreateDeploymentDeploymentsHas{
-		CreateDeploymentDeploymentsRequestRequestBodyRedirects2: &createDeploymentDeploymentsRequestRequestBodyRedirects2,
-		Type: typ,
-	}
-}
-
-func (u *CreateDeploymentDeploymentsHas) UnmarshalJSON(data []byte) error {
-
-	createDeploymentDeploymentsRequestRequestBodyRedirects1 := CreateDeploymentDeploymentsRequestRequestBodyRedirects1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRedirects1, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBodyRedirects1 = &createDeploymentDeploymentsRequestRequestBodyRedirects1
-		u.Type = CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects1
-		return nil
-	}
-
-	createDeploymentDeploymentsRequestRequestBodyRedirects2 := CreateDeploymentDeploymentsRequestRequestBodyRedirects2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRedirects2, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBodyRedirects2 = &createDeploymentDeploymentsRequestRequestBodyRedirects2
-		u.Type = CreateDeploymentDeploymentsHasTypeCreateDeploymentDeploymentsRequestRequestBodyRedirects2
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u CreateDeploymentDeploymentsHas) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsRequestRequestBodyRedirects1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRedirects1, "", true)
-	}
-
-	if u.CreateDeploymentDeploymentsRequestRequestBodyRedirects2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRedirects2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2TypeHeader CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type = "header"
-	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2TypeCookie CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type = "cookie"
-	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2TypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type = "query"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "header":
-		fallthrough
-	case "cookie":
-		fallthrough
-	case "query":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 struct {
-	// The name of the element contained in the particular type
-	Key string `json:"key"`
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value *string `json:"value,omitempty"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2Type("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2) GetValue() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingTypeHost CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType = "host"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "host":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 struct {
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value string `json:"value"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissingType("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
-type CreateDeploymentDeploymentsMissingType string
-
-const (
-	CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 CreateDeploymentDeploymentsMissingType = "createDeployment_deployments_request_requestBody_redirects_missing_1"
-	CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 CreateDeploymentDeploymentsMissingType = "createDeployment_deployments_request_requestBody_redirects_missing_2"
-)
-
-type CreateDeploymentDeploymentsMissing struct {
-	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1
-	CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 *CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2
-
-	Type CreateDeploymentDeploymentsMissingType
-}
-
-func CreateCreateDeploymentDeploymentsMissingCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1(createDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1) CreateDeploymentDeploymentsMissing {
-	typ := CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1
-
-	return CreateDeploymentDeploymentsMissing{
-		CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1: &createDeploymentDeploymentsRequestRequestBodyRedirectsMissing1,
-		Type: typ,
-	}
-}
-
-func CreateCreateDeploymentDeploymentsMissingCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2(createDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2) CreateDeploymentDeploymentsMissing {
-	typ := CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2
-
-	return CreateDeploymentDeploymentsMissing{
-		CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2: &createDeploymentDeploymentsRequestRequestBodyRedirectsMissing2,
-		Type: typ,
-	}
-}
-
-func (u *CreateDeploymentDeploymentsMissing) UnmarshalJSON(data []byte) error {
-
-	createDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 := CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRedirectsMissing1, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 = &createDeploymentDeploymentsRequestRequestBodyRedirectsMissing1
-		u.Type = CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1
-		return nil
-	}
-
-	createDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 := CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRedirectsMissing2, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 = &createDeploymentDeploymentsRequestRequestBodyRedirectsMissing2
-		u.Type = CreateDeploymentDeploymentsMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u CreateDeploymentDeploymentsMissing) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing1, "", true)
-	}
-
-	if u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRedirectsMissing2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
-type Redirects struct {
-	// A location destination defined as an absolute pathname or external URL.
-	Destination string `json:"destination"`
-	// An array of requirements that are needed to match
-	Has []CreateDeploymentDeploymentsHas `json:"has,omitempty"`
-	// An array of requirements that are needed to match
-	Missing []CreateDeploymentDeploymentsMissing `json:"missing,omitempty"`
-	// A boolean to toggle between permanent and temporary redirect. When `true`, the status code is `308`. When `false` the status code is `307`.
-	Permanent *bool `json:"permanent,omitempty"`
-	// A pattern that matches each incoming pathname (excluding querystring).
-	Source string `json:"source"`
-}
-
-func (o *Redirects) GetDestination() string {
-	if o == nil {
-		return ""
-	}
-	return o.Destination
-}
-
-func (o *Redirects) GetHas() []CreateDeploymentDeploymentsHas {
-	if o == nil {
-		return nil
-	}
-	return o.Has
-}
-
-func (o *Redirects) GetMissing() []CreateDeploymentDeploymentsMissing {
-	if o == nil {
-		return nil
-	}
-	return o.Missing
-}
-
-func (o *Redirects) GetPermanent() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Permanent
-}
-
-func (o *Redirects) GetSource() string {
-	if o == nil {
-		return ""
-	}
-	return o.Source
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRewritesHasTypeHeader CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType = "header"
-	CreateDeploymentDeploymentsRequestRequestBodyRewritesHasTypeCookie CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType = "cookie"
-	CreateDeploymentDeploymentsRequestRequestBodyRewritesHasTypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType = "query"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "header":
-		fallthrough
-	case "cookie":
-		fallthrough
-	case "query":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBodyRewrites2 struct {
-	// The name of the element contained in the particular type
-	Key string `json:"key"`
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value *string `json:"value,omitempty"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRewrites2) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRewrites2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRewritesHasType("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRewrites2) GetValue() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRewritesType - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRewritesType string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRewritesTypeHost CreateDeploymentDeploymentsRequestRequestBodyRewritesType = "host"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRewritesType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRewritesType {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRewritesType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "host":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRewritesType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRewritesType: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBodyRewrites1 struct {
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRewritesType `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value string `json:"value"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRewrites1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRewritesType {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRewritesType("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRewrites1) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
-type CreateDeploymentDeploymentsRequestHasType string
-
-const (
-	CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites1 CreateDeploymentDeploymentsRequestHasType = "createDeployment_deployments_request_requestBody_rewrites_1"
-	CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites2 CreateDeploymentDeploymentsRequestHasType = "createDeployment_deployments_request_requestBody_rewrites_2"
-)
-
-type CreateDeploymentDeploymentsRequestHas struct {
-	CreateDeploymentDeploymentsRequestRequestBodyRewrites1 *CreateDeploymentDeploymentsRequestRequestBodyRewrites1
-	CreateDeploymentDeploymentsRequestRequestBodyRewrites2 *CreateDeploymentDeploymentsRequestRequestBodyRewrites2
-
-	Type CreateDeploymentDeploymentsRequestHasType
-}
-
-func CreateCreateDeploymentDeploymentsRequestHasCreateDeploymentDeploymentsRequestRequestBodyRewrites1(createDeploymentDeploymentsRequestRequestBodyRewrites1 CreateDeploymentDeploymentsRequestRequestBodyRewrites1) CreateDeploymentDeploymentsRequestHas {
-	typ := CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites1
-
-	return CreateDeploymentDeploymentsRequestHas{
-		CreateDeploymentDeploymentsRequestRequestBodyRewrites1: &createDeploymentDeploymentsRequestRequestBodyRewrites1,
-		Type: typ,
-	}
-}
-
-func CreateCreateDeploymentDeploymentsRequestHasCreateDeploymentDeploymentsRequestRequestBodyRewrites2(createDeploymentDeploymentsRequestRequestBodyRewrites2 CreateDeploymentDeploymentsRequestRequestBodyRewrites2) CreateDeploymentDeploymentsRequestHas {
-	typ := CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites2
-
-	return CreateDeploymentDeploymentsRequestHas{
-		CreateDeploymentDeploymentsRequestRequestBodyRewrites2: &createDeploymentDeploymentsRequestRequestBodyRewrites2,
-		Type: typ,
-	}
-}
-
-func (u *CreateDeploymentDeploymentsRequestHas) UnmarshalJSON(data []byte) error {
-
-	createDeploymentDeploymentsRequestRequestBodyRewrites1 := CreateDeploymentDeploymentsRequestRequestBodyRewrites1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRewrites1, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBodyRewrites1 = &createDeploymentDeploymentsRequestRequestBodyRewrites1
-		u.Type = CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites1
-		return nil
-	}
-
-	createDeploymentDeploymentsRequestRequestBodyRewrites2 := CreateDeploymentDeploymentsRequestRequestBodyRewrites2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRewrites2, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBodyRewrites2 = &createDeploymentDeploymentsRequestRequestBodyRewrites2
-		u.Type = CreateDeploymentDeploymentsRequestHasTypeCreateDeploymentDeploymentsRequestRequestBodyRewrites2
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u CreateDeploymentDeploymentsRequestHas) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsRequestRequestBodyRewrites1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRewrites1, "", true)
-	}
-
-	if u.CreateDeploymentDeploymentsRequestRequestBodyRewrites2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRewrites2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2TypeHeader CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type = "header"
-	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2TypeCookie CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type = "cookie"
-	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2TypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type = "query"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "header":
-		fallthrough
-	case "cookie":
-		fallthrough
-	case "query":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2 struct {
-	// The name of the element contained in the particular type
-	Key string `json:"key"`
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value *string `json:"value,omitempty"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2Type("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2) GetValue() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingTypeHost CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType = "host"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "host":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1 struct {
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value string `json:"value"`
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRewritesMissingType("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
-type CreateDeploymentDeploymentsRequestMissingType string
-
-const (
-	CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1 CreateDeploymentDeploymentsRequestMissingType = "createDeployment_deployments_request_requestBody_rewrites_missing_1"
-	CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2 CreateDeploymentDeploymentsRequestMissingType = "createDeployment_deployments_request_requestBody_rewrites_missing_2"
-)
-
-type CreateDeploymentDeploymentsRequestMissing struct {
-	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1 *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1
-	CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2 *CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2
-
-	Type CreateDeploymentDeploymentsRequestMissingType
-}
-
-func CreateCreateDeploymentDeploymentsRequestMissingCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1(createDeploymentDeploymentsRequestRequestBodyRewritesMissing1 CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1) CreateDeploymentDeploymentsRequestMissing {
-	typ := CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1
-
-	return CreateDeploymentDeploymentsRequestMissing{
-		CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1: &createDeploymentDeploymentsRequestRequestBodyRewritesMissing1,
-		Type: typ,
-	}
-}
-
-func CreateCreateDeploymentDeploymentsRequestMissingCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2(createDeploymentDeploymentsRequestRequestBodyRewritesMissing2 CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2) CreateDeploymentDeploymentsRequestMissing {
-	typ := CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2
-
-	return CreateDeploymentDeploymentsRequestMissing{
-		CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2: &createDeploymentDeploymentsRequestRequestBodyRewritesMissing2,
-		Type: typ,
-	}
-}
-
-func (u *CreateDeploymentDeploymentsRequestMissing) UnmarshalJSON(data []byte) error {
-
-	createDeploymentDeploymentsRequestRequestBodyRewritesMissing1 := CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRewritesMissing1, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1 = &createDeploymentDeploymentsRequestRequestBodyRewritesMissing1
-		u.Type = CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1
-		return nil
-	}
-
-	createDeploymentDeploymentsRequestRequestBodyRewritesMissing2 := CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequestRequestBodyRewritesMissing2, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2 = &createDeploymentDeploymentsRequestRequestBodyRewritesMissing2
-		u.Type = CreateDeploymentDeploymentsRequestMissingTypeCreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u CreateDeploymentDeploymentsRequestMissing) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing1, "", true)
-	}
-
-	if u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequestRequestBodyRewritesMissing2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
-type Rewrites struct {
-	// An absolute pathname to an existing resource or an external URL.
-	Destination string `json:"destination"`
-	// An array of requirements that are needed to match
-	Has []CreateDeploymentDeploymentsRequestHas `json:"has,omitempty"`
-	// An array of requirements that are needed to match
-	Missing []CreateDeploymentDeploymentsRequestMissing `json:"missing,omitempty"`
-	// A pattern that matches each incoming pathname (excluding querystring).
-	Source string `json:"source"`
-}
-
-func (o *Rewrites) GetDestination() string {
-	if o == nil {
-		return ""
-	}
-	return o.Destination
-}
-
-func (o *Rewrites) GetHas() []CreateDeploymentDeploymentsRequestHas {
-	if o == nil {
-		return nil
-	}
-	return o.Has
-}
-
-func (o *Rewrites) GetMissing() []CreateDeploymentDeploymentsRequestMissing {
-	if o == nil {
-		return nil
-	}
-	return o.Missing
-}
-
-func (o *Rewrites) GetSource() string {
-	if o == nil {
-		return ""
-	}
-	return o.Source
-}
-
-type Role struct {
-	BranchID  string  `json:"branch_id"`
-	CreatedAt string  `json:"created_at"`
-	Name      string  `json:"name"`
-	Password  *string `json:"password,omitempty"`
-	Protected *bool   `json:"protected,omitempty"`
-	UpdatedAt string  `json:"updated_at"`
-}
-
-func (o *Role) GetBranchID() string {
-	if o == nil {
-		return ""
-	}
-	return o.BranchID
-}
-
-func (o *Role) GetCreatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.CreatedAt
-}
-
-func (o *Role) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *Role) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
-}
-
-func (o *Role) GetProtected() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Protected
-}
-
-func (o *Role) GetUpdatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.UpdatedAt
-}
-
-type Roles struct {
-	BranchID  string  `json:"branch_id"`
-	CreatedAt string  `json:"created_at"`
-	Name      string  `json:"name"`
-	Password  *string `json:"password,omitempty"`
-	Protected *bool   `json:"protected,omitempty"`
-	UpdatedAt string  `json:"updated_at"`
-}
-
-func (o *Roles) GetBranchID() string {
-	if o == nil {
-		return ""
-	}
-	return o.BranchID
-}
-
-func (o *Roles) GetCreatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.CreatedAt
-}
-
-func (o *Roles) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *Roles) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
-}
-
-func (o *Roles) GetProtected() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Protected
-}
-
-func (o *Roles) GetUpdatedAt() string {
-	if o == nil {
-		return ""
-	}
-	return o.UpdatedAt
-}
-
-type Handle string
-
-const (
-	HandleError      Handle = "error"
-	HandleFilesystem Handle = "filesystem"
-	HandleHit        Handle = "hit"
-	HandleMiss       Handle = "miss"
-	HandleResource   Handle = "resource"
-	HandleRewrite    Handle = "rewrite"
-)
-
-func (e Handle) ToPointer() *Handle {
-	return &e
-}
-
-func (e *Handle) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "error":
-		fallthrough
-	case "filesystem":
-		fallthrough
-	case "hit":
-		fallthrough
-	case "miss":
-		fallthrough
-	case "resource":
-		fallthrough
-	case "rewrite":
-		*e = Handle(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Handle: %v", v)
-	}
-}
-
-type CreateDeployment2 struct {
-	Handle Handle `json:"handle"`
-}
-
-func (o *CreateDeployment2) GetHandle() Handle {
-	if o == nil {
-		return Handle("")
-	}
-	return o.Handle
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRoutes1TypeHeader CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type = "header"
-	CreateDeploymentDeploymentsRequestRequestBodyRoutes1TypeCookie CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type = "cookie"
-	CreateDeploymentDeploymentsRequestRequestBodyRoutes1TypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type = "query"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "header":
-		fallthrough
-	case "cookie":
-		fallthrough
-	case "query":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type: %v", v)
-	}
-}
-
-type CreateDeploymentDeployments2 struct {
-	// The name of the element contained in the particular type
-	Key string `json:"key"`
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value *string `json:"value,omitempty"`
-}
-
-func (o *CreateDeploymentDeployments2) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
-func (o *CreateDeploymentDeployments2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRoutes1Type("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeployments2) GetValue() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRoutesType - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRoutesType string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRoutesTypeHost CreateDeploymentDeploymentsRequestRequestBodyRoutesType = "host"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRoutesType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRoutesType {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRoutesType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "host":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRoutesType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRoutesType: %v", v)
-	}
-}
-
-type CreateDeploymentDeployments1 struct {
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRoutesType `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value string `json:"value"`
-}
-
-func (o *CreateDeploymentDeployments1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRoutesType {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRoutesType("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeployments1) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
-type HasType string
-
-const (
-	HasTypeCreateDeploymentDeployments1 HasType = "createDeployment_deployments_1"
-	HasTypeCreateDeploymentDeployments2 HasType = "createDeployment_deployments_2"
-)
-
-type Has struct {
-	CreateDeploymentDeployments1 *CreateDeploymentDeployments1
-	CreateDeploymentDeployments2 *CreateDeploymentDeployments2
-
-	Type HasType
-}
-
-func CreateHasCreateDeploymentDeployments1(createDeploymentDeployments1 CreateDeploymentDeployments1) Has {
-	typ := HasTypeCreateDeploymentDeployments1
-
-	return Has{
-		CreateDeploymentDeployments1: &createDeploymentDeployments1,
-		Type:                         typ,
-	}
-}
-
-func CreateHasCreateDeploymentDeployments2(createDeploymentDeployments2 CreateDeploymentDeployments2) Has {
-	typ := HasTypeCreateDeploymentDeployments2
-
-	return Has{
-		CreateDeploymentDeployments2: &createDeploymentDeployments2,
-		Type:                         typ,
-	}
-}
-
-func (u *Has) UnmarshalJSON(data []byte) error {
-
-	createDeploymentDeployments1 := CreateDeploymentDeployments1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeployments1, "", true, true); err == nil {
-		u.CreateDeploymentDeployments1 = &createDeploymentDeployments1
-		u.Type = HasTypeCreateDeploymentDeployments1
-		return nil
-	}
-
-	createDeploymentDeployments2 := CreateDeploymentDeployments2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeployments2, "", true, true); err == nil {
-		u.CreateDeploymentDeployments2 = &createDeploymentDeployments2
-		u.Type = HasTypeCreateDeploymentDeployments2
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u Has) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeployments1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeployments1, "", true)
-	}
-
-	if u.CreateDeploymentDeployments2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeployments2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
-type Locale struct {
-	Cookie   *string           `json:"cookie,omitempty"`
-	Default  *string           `json:"default,omitempty"`
-	Path     *string           `json:"path,omitempty"`
-	Redirect map[string]string `json:"redirect,omitempty"`
-	Value    *string           `json:"value,omitempty"`
-}
-
-func (o *Locale) GetCookie() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Cookie
-}
-
-func (o *Locale) GetDefault() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Default
-}
-
-func (o *Locale) GetPath() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Path
-}
-
-func (o *Locale) GetRedirect() map[string]string {
-	if o == nil {
-		return nil
-	}
-	return o.Redirect
-}
-
-func (o *Locale) GetValue() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2TypeHeader CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type = "header"
-	CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2TypeCookie CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type = "cookie"
-	CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2TypeQuery  CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type = "query"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "header":
-		fallthrough
-	case "cookie":
-		fallthrough
-	case "query":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequest2 struct {
-	// The name of the element contained in the particular type
-	Key string `json:"key"`
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value *string `json:"value,omitempty"`
-}
-
-func (o *CreateDeploymentDeploymentsRequest2) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
-func (o *CreateDeploymentDeploymentsRequest2) GetType() CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRoutes1Missing2Type("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequest2) GetValue() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Value
-}
-
-// CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType - The type of request element to check
-type CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType string
-
-const (
-	CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingTypeHost CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType = "host"
-)
-
-func (e CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType) ToPointer() *CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType {
-	return &e
-}
-
-func (e *CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "host":
-		*e = CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType: %v", v)
-	}
-}
-
-type CreateDeploymentDeploymentsRequest1 struct {
-	// The type of request element to check
-	Type CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType `json:"type"`
-	// A regular expression used to match the value. Named groups can be used in the destination
-	Value string `json:"value"`
-}
-
-func (o *CreateDeploymentDeploymentsRequest1) GetType() CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType {
-	if o == nil {
-		return CreateDeploymentDeploymentsRequestRequestBodyRoutes1MissingType("")
-	}
-	return o.Type
-}
-
-func (o *CreateDeploymentDeploymentsRequest1) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
-type MissingType string
-
-const (
-	MissingTypeCreateDeploymentDeploymentsRequest1 MissingType = "createDeployment_deployments_request_1"
-	MissingTypeCreateDeploymentDeploymentsRequest2 MissingType = "createDeployment_deployments_request_2"
-)
-
-type Missing struct {
-	CreateDeploymentDeploymentsRequest1 *CreateDeploymentDeploymentsRequest1
-	CreateDeploymentDeploymentsRequest2 *CreateDeploymentDeploymentsRequest2
-
-	Type MissingType
-}
-
-func CreateMissingCreateDeploymentDeploymentsRequest1(createDeploymentDeploymentsRequest1 CreateDeploymentDeploymentsRequest1) Missing {
-	typ := MissingTypeCreateDeploymentDeploymentsRequest1
-
-	return Missing{
-		CreateDeploymentDeploymentsRequest1: &createDeploymentDeploymentsRequest1,
-		Type:                                typ,
-	}
-}
-
-func CreateMissingCreateDeploymentDeploymentsRequest2(createDeploymentDeploymentsRequest2 CreateDeploymentDeploymentsRequest2) Missing {
-	typ := MissingTypeCreateDeploymentDeploymentsRequest2
-
-	return Missing{
-		CreateDeploymentDeploymentsRequest2: &createDeploymentDeploymentsRequest2,
-		Type:                                typ,
-	}
-}
-
-func (u *Missing) UnmarshalJSON(data []byte) error {
-
-	createDeploymentDeploymentsRequest1 := CreateDeploymentDeploymentsRequest1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequest1, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequest1 = &createDeploymentDeploymentsRequest1
-		u.Type = MissingTypeCreateDeploymentDeploymentsRequest1
-		return nil
-	}
-
-	createDeploymentDeploymentsRequest2 := CreateDeploymentDeploymentsRequest2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsRequest2, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsRequest2 = &createDeploymentDeploymentsRequest2
-		u.Type = MissingTypeCreateDeploymentDeploymentsRequest2
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u Missing) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsRequest1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequest1, "", true)
-	}
-
-	if u.CreateDeploymentDeploymentsRequest2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsRequest2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
-type CreateDeployment1 struct {
-	CaseSensitive *bool   `json:"caseSensitive,omitempty"`
-	Check         *bool   `json:"check,omitempty"`
-	Continue      *bool   `json:"continue,omitempty"`
-	Dest          *string `json:"dest,omitempty"`
-	// An array of requirements that are needed to match
-	Has              []Has             `json:"has,omitempty"`
-	Headers          map[string]string `json:"headers,omitempty"`
-	Important        *bool             `json:"important,omitempty"`
-	IsInternal       *bool             `json:"isInternal,omitempty"`
-	Locale           *Locale           `json:"locale,omitempty"`
-	Methods          []string          `json:"methods,omitempty"`
-	Middleware       *int64            `json:"middleware,omitempty"`
-	MiddlewarePath   *string           `json:"middlewarePath,omitempty"`
-	MiddlewareRawSrc []string          `json:"middlewareRawSrc,omitempty"`
-	// An array of requirements that are needed to match
-	Missing  []Missing `json:"missing,omitempty"`
-	Override *bool     `json:"override,omitempty"`
-	Src      string    `json:"src"`
-	Status   *int64    `json:"status,omitempty"`
-	User     *bool     `json:"user,omitempty"`
-}
-
-func (o *CreateDeployment1) GetCaseSensitive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.CaseSensitive
-}
-
-func (o *CreateDeployment1) GetCheck() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Check
-}
-
-func (o *CreateDeployment1) GetContinue() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Continue
-}
-
-func (o *CreateDeployment1) GetDest() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Dest
-}
-
-func (o *CreateDeployment1) GetHas() []Has {
-	if o == nil {
-		return nil
-	}
-	return o.Has
-}
-
-func (o *CreateDeployment1) GetHeaders() map[string]string {
-	if o == nil {
-		return nil
-	}
-	return o.Headers
-}
-
-func (o *CreateDeployment1) GetImportant() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Important
-}
-
-func (o *CreateDeployment1) GetIsInternal() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IsInternal
-}
-
-func (o *CreateDeployment1) GetLocale() *Locale {
-	if o == nil {
-		return nil
-	}
-	return o.Locale
-}
-
-func (o *CreateDeployment1) GetMethods() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Methods
-}
-
-func (o *CreateDeployment1) GetMiddleware() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Middleware
-}
-
-func (o *CreateDeployment1) GetMiddlewarePath() *string {
-	if o == nil {
-		return nil
-	}
-	return o.MiddlewarePath
-}
-
-func (o *CreateDeployment1) GetMiddlewareRawSrc() []string {
-	if o == nil {
-		return nil
-	}
-	return o.MiddlewareRawSrc
-}
-
-func (o *CreateDeployment1) GetMissing() []Missing {
-	if o == nil {
-		return nil
-	}
-	return o.Missing
-}
-
-func (o *CreateDeployment1) GetOverride() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Override
-}
-
-func (o *CreateDeployment1) GetSrc() string {
-	if o == nil {
-		return ""
-	}
-	return o.Src
-}
-
-func (o *CreateDeployment1) GetStatus() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Status
-}
-
-func (o *CreateDeployment1) GetUser() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.User
-}
-
-type RoutesType string
-
-const (
-	RoutesTypeCreateDeployment1 RoutesType = "createDeployment_1"
-	RoutesTypeCreateDeployment2 RoutesType = "createDeployment_2"
-)
-
-type Routes struct {
-	CreateDeployment1 *CreateDeployment1
-	CreateDeployment2 *CreateDeployment2
-
-	Type RoutesType
-}
-
-func CreateRoutesCreateDeployment1(createDeployment1 CreateDeployment1) Routes {
-	typ := RoutesTypeCreateDeployment1
-
-	return Routes{
-		CreateDeployment1: &createDeployment1,
-		Type:              typ,
-	}
-}
-
-func CreateRoutesCreateDeployment2(createDeployment2 CreateDeployment2) Routes {
-	typ := RoutesTypeCreateDeployment2
-
-	return Routes{
-		CreateDeployment2: &createDeployment2,
-		Type:              typ,
-	}
-}
-
-func (u *Routes) UnmarshalJSON(data []byte) error {
-
-	createDeployment2 := CreateDeployment2{}
-	if err := utils.UnmarshalJSON(data, &createDeployment2, "", true, true); err == nil {
-		u.CreateDeployment2 = &createDeployment2
-		u.Type = RoutesTypeCreateDeployment2
-		return nil
-	}
-
-	createDeployment1 := CreateDeployment1{}
-	if err := utils.UnmarshalJSON(data, &createDeployment1, "", true, true); err == nil {
-		u.CreateDeployment1 = &createDeployment1
-		u.Type = RoutesTypeCreateDeployment1
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u Routes) MarshalJSON() ([]byte, error) {
-	if u.CreateDeployment1 != nil {
-		return utils.MarshalJSON(u.CreateDeployment1, "", true)
-	}
-
-	if u.CreateDeployment2 != nil {
-		return utils.MarshalJSON(u.CreateDeployment2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
 // Target - Either not defined, `staging`, or `production`. If `staging`, a staging alias in the format `<project>-<team>.vercel.app` will be assigned. If `production`, any aliases defined in `alias` will be assigned. If omitted, the target will be `preview`
 type Target string
 
@@ -4297,7 +1085,6 @@ const (
 func (e Target) ToPointer() *Target {
 	return &e
 }
-
 func (e *Target) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4315,166 +1102,37 @@ func (e *Target) UnmarshalJSON(data []byte) error {
 }
 
 type CreateDeploymentRequestBody struct {
-	// Ignored. Can be set to get completions, validations and documentation in some editors.
-	DollarSchema *string `json:"$schema,omitempty"`
-	// Aliases that will get assigned when the deployment is `READY` and the target is `production`. The client needs to make a `GET` request to its API to ensure the assignment
-	Alias  []string `json:"alias,omitempty"`
-	Branch Branch   `json:"branch"`
-	// An object containing another object with information to be passed to the Build Process
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Build *Build `json:"build,omitempty"`
-	// The build command for this project. When `null` is used this value will be automatically detected
-	BuildCommand *string `json:"buildCommand,omitempty"`
-	// A list of build descriptions whose src references valid source files.
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Builds []Builds `json:"builds,omitempty"`
-	// When set to `true`, all HTML files and Serverless Functions will have their extension removed. When visiting a path that ends with the extension, a 308 response will redirect the client to the extensionless path.
-	CleanUrls      *bool            `json:"cleanUrls,omitempty"`
-	ConnectionUris []ConnectionUris `json:"connection_uris"`
-	// An array of cron jobs that should be created for production Deployments.
-	Crons     []Crons     `json:"crons,omitempty"`
-	Database  Database    `json:"database"`
-	Databases []Databases `json:"databases"`
+	// Deploy to a custom environment, which will override the default environment
+	CustomEnvironmentSlugOrID *string `json:"customEnvironmentSlugOrId,omitempty"`
 	// An deployment id for an existing deployment to redeploy
 	DeploymentID *string `json:"deploymentId,omitempty"`
-	// The dev command for this project. When `null` is used this value will be automatically detected
-	DevCommand *string     `json:"devCommand,omitempty"`
-	Endpoint   Endpoint    `json:"endpoint"`
-	Endpoints  []Endpoints `json:"endpoints"`
-	// An object containing the deployment's environment variable names and values. Secrets can be referenced by prefixing the value with `@`
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Env map[string]string `json:"env,omitempty"`
 	// A list of objects with the files to be deployed
 	Files []Files `json:"files,omitempty"`
-	// The framework that is being used for this project. When `null` is used no framework is selected
-	Framework *Framework `json:"framework,omitempty"`
-	// An object describing custom options for your Serverless Functions. Each key must be glob pattern that matches the paths of the Serverless Functions you would like to customize (like `api/*.js` or `api/test.js`).
-	Functions map[string]Functions `json:"functions,omitempty"`
-	Git       *Git                 `json:"git,omitempty"`
 	// Populates initial git metadata for different git providers.
 	GitMetadata *GitMetadata `json:"gitMetadata,omitempty"`
 	// Defines the Git Repository source to be deployed. This property can not be used in combination with `files`.
 	GitSource *GitSource `json:"gitSource,omitempty"`
-	// A list of header definitions.
-	Headers       []Headers `json:"headers,omitempty"`
-	IgnoreCommand *string   `json:"ignoreCommand,omitempty"`
-	Images        *Images   `json:"images,omitempty"`
-	// The install command for this project. When `null` is used this value will be automatically detected
-	InstallCommand *string `json:"installCommand,omitempty"`
 	// An object containing the deployment's metadata. Multiple key-value pairs can be attached to a deployment
 	Meta map[string]string `json:"meta,omitempty"`
 	// The monorepo manager that is being used for this deployment. When `null` is used no monorepo manager is selected
 	MonorepoManager *string `json:"monorepoManager,omitempty"`
 	// A string with the project name used in the deployment URL
 	Name string `json:"name"`
-	// The output directory of the project. When `null` is used this value will be automatically detected
-	OutputDirectory *string    `json:"outputDirectory,omitempty"`
-	Pagination      Pagination `json:"pagination"`
-	Password        string     `json:"password"`
-	Project         Project    `json:"project"`
+	// The target project identifier in which the deployment will be created. When defined, this parameter overrides name
+	Project *string `json:"project,omitempty"`
 	// Project settings that will be applied to the deployment. It is required for the first deployment of a project and will be saved for any following deployments
 	ProjectSettings *ProjectSettings `json:"projectSettings,omitempty"`
-	Projects        []Projects       `json:"projects"`
-	// Whether a deployment's source and logs are available publicly
-	Public *bool `json:"public,omitempty"`
-	// A list of redirect definitions.
-	Redirects []Redirects `json:"redirects,omitempty"`
-	// An array of the regions the deployment's Serverless Functions should be deployed to
-	Regions []string `json:"regions,omitempty"`
-	// A list of rewrite definitions.
-	Rewrites []Rewrites `json:"rewrites,omitempty"`
-	Role     Role       `json:"role"`
-	Roles    []Roles    `json:"roles"`
-	// A list of routes objects used to rewrite paths to point towards other internal or external paths
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Routes []Routes `json:"routes,omitempty"`
 	// Either not defined, `staging`, or `production`. If `staging`, a staging alias in the format `<project>-<team>.vercel.app` will be assigned. If `production`, any aliases defined in `alias` will be assigned. If omitted, the target will be `preview`
 	Target *Target `json:"target,omitempty"`
-	// When `false`, visiting a path that ends with a forward slash will respond with a `308` status code and redirect to the path without the trailing slash.
-	TrailingSlash *bool `json:"trailingSlash,omitempty"`
 	// When `true` and `deploymentId` is passed in, the sha from the previous deployment's `gitSource` is removed forcing the latest commit to be used.
 	WithLatestCommit *bool `json:"withLatestCommit,omitempty"`
 }
 
-func (o *CreateDeploymentRequestBody) GetDollarSchema() *string {
+func (o *CreateDeploymentRequestBody) GetCustomEnvironmentSlugOrID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.DollarSchema
-}
-
-func (o *CreateDeploymentRequestBody) GetAlias() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Alias
-}
-
-func (o *CreateDeploymentRequestBody) GetBranch() Branch {
-	if o == nil {
-		return Branch{}
-	}
-	return o.Branch
-}
-
-func (o *CreateDeploymentRequestBody) GetBuild() *Build {
-	if o == nil {
-		return nil
-	}
-	return o.Build
-}
-
-func (o *CreateDeploymentRequestBody) GetBuildCommand() *string {
-	if o == nil {
-		return nil
-	}
-	return o.BuildCommand
-}
-
-func (o *CreateDeploymentRequestBody) GetBuilds() []Builds {
-	if o == nil {
-		return nil
-	}
-	return o.Builds
-}
-
-func (o *CreateDeploymentRequestBody) GetCleanUrls() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.CleanUrls
-}
-
-func (o *CreateDeploymentRequestBody) GetConnectionUris() []ConnectionUris {
-	if o == nil {
-		return []ConnectionUris{}
-	}
-	return o.ConnectionUris
-}
-
-func (o *CreateDeploymentRequestBody) GetCrons() []Crons {
-	if o == nil {
-		return nil
-	}
-	return o.Crons
-}
-
-func (o *CreateDeploymentRequestBody) GetDatabase() Database {
-	if o == nil {
-		return Database{}
-	}
-	return o.Database
-}
-
-func (o *CreateDeploymentRequestBody) GetDatabases() []Databases {
-	if o == nil {
-		return []Databases{}
-	}
-	return o.Databases
+	return o.CustomEnvironmentSlugOrID
 }
 
 func (o *CreateDeploymentRequestBody) GetDeploymentID() *string {
@@ -4484,60 +1142,11 @@ func (o *CreateDeploymentRequestBody) GetDeploymentID() *string {
 	return o.DeploymentID
 }
 
-func (o *CreateDeploymentRequestBody) GetDevCommand() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DevCommand
-}
-
-func (o *CreateDeploymentRequestBody) GetEndpoint() Endpoint {
-	if o == nil {
-		return Endpoint{}
-	}
-	return o.Endpoint
-}
-
-func (o *CreateDeploymentRequestBody) GetEndpoints() []Endpoints {
-	if o == nil {
-		return []Endpoints{}
-	}
-	return o.Endpoints
-}
-
-func (o *CreateDeploymentRequestBody) GetEnv() map[string]string {
-	if o == nil {
-		return nil
-	}
-	return o.Env
-}
-
 func (o *CreateDeploymentRequestBody) GetFiles() []Files {
 	if o == nil {
 		return nil
 	}
 	return o.Files
-}
-
-func (o *CreateDeploymentRequestBody) GetFramework() *Framework {
-	if o == nil {
-		return nil
-	}
-	return o.Framework
-}
-
-func (o *CreateDeploymentRequestBody) GetFunctions() map[string]Functions {
-	if o == nil {
-		return nil
-	}
-	return o.Functions
-}
-
-func (o *CreateDeploymentRequestBody) GetGit() *Git {
-	if o == nil {
-		return nil
-	}
-	return o.Git
 }
 
 func (o *CreateDeploymentRequestBody) GetGitMetadata() *GitMetadata {
@@ -4552,34 +1161,6 @@ func (o *CreateDeploymentRequestBody) GetGitSource() *GitSource {
 		return nil
 	}
 	return o.GitSource
-}
-
-func (o *CreateDeploymentRequestBody) GetHeaders() []Headers {
-	if o == nil {
-		return nil
-	}
-	return o.Headers
-}
-
-func (o *CreateDeploymentRequestBody) GetIgnoreCommand() *string {
-	if o == nil {
-		return nil
-	}
-	return o.IgnoreCommand
-}
-
-func (o *CreateDeploymentRequestBody) GetImages() *Images {
-	if o == nil {
-		return nil
-	}
-	return o.Images
-}
-
-func (o *CreateDeploymentRequestBody) GetInstallCommand() *string {
-	if o == nil {
-		return nil
-	}
-	return o.InstallCommand
 }
 
 func (o *CreateDeploymentRequestBody) GetMeta() map[string]string {
@@ -4603,30 +1184,9 @@ func (o *CreateDeploymentRequestBody) GetName() string {
 	return o.Name
 }
 
-func (o *CreateDeploymentRequestBody) GetOutputDirectory() *string {
+func (o *CreateDeploymentRequestBody) GetProject() *string {
 	if o == nil {
 		return nil
-	}
-	return o.OutputDirectory
-}
-
-func (o *CreateDeploymentRequestBody) GetPagination() Pagination {
-	if o == nil {
-		return Pagination{}
-	}
-	return o.Pagination
-}
-
-func (o *CreateDeploymentRequestBody) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
-}
-
-func (o *CreateDeploymentRequestBody) GetProject() Project {
-	if o == nil {
-		return Project{}
 	}
 	return o.Project
 }
@@ -4638,74 +1198,11 @@ func (o *CreateDeploymentRequestBody) GetProjectSettings() *ProjectSettings {
 	return o.ProjectSettings
 }
 
-func (o *CreateDeploymentRequestBody) GetProjects() []Projects {
-	if o == nil {
-		return []Projects{}
-	}
-	return o.Projects
-}
-
-func (o *CreateDeploymentRequestBody) GetPublic() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Public
-}
-
-func (o *CreateDeploymentRequestBody) GetRedirects() []Redirects {
-	if o == nil {
-		return nil
-	}
-	return o.Redirects
-}
-
-func (o *CreateDeploymentRequestBody) GetRegions() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Regions
-}
-
-func (o *CreateDeploymentRequestBody) GetRewrites() []Rewrites {
-	if o == nil {
-		return nil
-	}
-	return o.Rewrites
-}
-
-func (o *CreateDeploymentRequestBody) GetRole() Role {
-	if o == nil {
-		return Role{}
-	}
-	return o.Role
-}
-
-func (o *CreateDeploymentRequestBody) GetRoles() []Roles {
-	if o == nil {
-		return []Roles{}
-	}
-	return o.Roles
-}
-
-func (o *CreateDeploymentRequestBody) GetRoutes() []Routes {
-	if o == nil {
-		return nil
-	}
-	return o.Routes
-}
-
 func (o *CreateDeploymentRequestBody) GetTarget() *Target {
 	if o == nil {
 		return nil
 	}
 	return o.Target
-}
-
-func (o *CreateDeploymentRequestBody) GetTrailingSlash() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.TrailingSlash
 }
 
 func (o *CreateDeploymentRequestBody) GetWithLatestCommit() *bool {
@@ -4715,26 +1212,155 @@ func (o *CreateDeploymentRequestBody) GetWithLatestCommit() *bool {
 	return o.WithLatestCommit
 }
 
+// ForceNew - Forces a new deployment even if there is a previous similar deployment
+type ForceNew string
+
+const (
+	ForceNewZero ForceNew = "0"
+	ForceNewOne  ForceNew = "1"
+)
+
+func (e ForceNew) ToPointer() *ForceNew {
+	return &e
+}
+func (e *ForceNew) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "0":
+		fallthrough
+	case "1":
+		*e = ForceNew(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ForceNew: %v", v)
+	}
+}
+
+// SkipAutoDetectionConfirmation - Allows to skip framework detection so the API would not fail to ask for confirmation
+type SkipAutoDetectionConfirmation string
+
+const (
+	SkipAutoDetectionConfirmationZero SkipAutoDetectionConfirmation = "0"
+	SkipAutoDetectionConfirmationOne  SkipAutoDetectionConfirmation = "1"
+)
+
+func (e SkipAutoDetectionConfirmation) ToPointer() *SkipAutoDetectionConfirmation {
+	return &e
+}
+func (e *SkipAutoDetectionConfirmation) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "0":
+		fallthrough
+	case "1":
+		*e = SkipAutoDetectionConfirmation(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SkipAutoDetectionConfirmation: %v", v)
+	}
+}
+
+type CreateDeploymentRequest struct {
+	RequestBody *CreateDeploymentRequestBody `request:"mediaType=application/json"`
+	// Forces a new deployment even if there is a previous similar deployment
+	ForceNew *ForceNew `queryParam:"style=form,explode=true,name=forceNew"`
+	// Allows to skip framework detection so the API would not fail to ask for confirmation
+	SkipAutoDetectionConfirmation *SkipAutoDetectionConfirmation `queryParam:"style=form,explode=true,name=skipAutoDetectionConfirmation"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
+	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *CreateDeploymentRequest) GetRequestBody() *CreateDeploymentRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBody
+}
+
+func (o *CreateDeploymentRequest) GetForceNew() *ForceNew {
+	if o == nil {
+		return nil
+	}
+	return o.ForceNew
+}
+
+func (o *CreateDeploymentRequest) GetSkipAutoDetectionConfirmation() *SkipAutoDetectionConfirmation {
+	if o == nil {
+		return nil
+	}
+	return o.SkipAutoDetectionConfirmation
+}
+
+func (o *CreateDeploymentRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *CreateDeploymentRequest) GetTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TeamID
+}
+
+// ProjectObj - The public project information associated with the deployment.
+type ProjectObj struct {
+	Framework *string `json:"framework,omitempty"`
+	ID        string  `json:"id"`
+	Name      string  `json:"name"`
+}
+
+func (o *ProjectObj) GetFramework() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Framework
+}
+
+func (o *ProjectObj) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *ProjectObj) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
 type CreateDeploymentAliasAssignedAtType string
 
 const (
-	CreateDeploymentAliasAssignedAtTypeInteger CreateDeploymentAliasAssignedAtType = "integer"
+	CreateDeploymentAliasAssignedAtTypeNumber  CreateDeploymentAliasAssignedAtType = "number"
 	CreateDeploymentAliasAssignedAtTypeBoolean CreateDeploymentAliasAssignedAtType = "boolean"
 )
 
 type CreateDeploymentAliasAssignedAt struct {
-	Integer *int64
+	Number  *float64
 	Boolean *bool
 
 	Type CreateDeploymentAliasAssignedAtType
 }
 
-func CreateCreateDeploymentAliasAssignedAtInteger(integer int64) CreateDeploymentAliasAssignedAt {
-	typ := CreateDeploymentAliasAssignedAtTypeInteger
+func CreateCreateDeploymentAliasAssignedAtNumber(number float64) CreateDeploymentAliasAssignedAt {
+	typ := CreateDeploymentAliasAssignedAtTypeNumber
 
 	return CreateDeploymentAliasAssignedAt{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -4749,33 +1375,33 @@ func CreateCreateDeploymentAliasAssignedAtBoolean(boolean bool) CreateDeployment
 
 func (u *CreateDeploymentAliasAssignedAt) UnmarshalJSON(data []byte) error {
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = CreateDeploymentAliasAssignedAtTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CreateDeploymentAliasAssignedAtTypeNumber
 		return nil
 	}
 
-	boolean := false
+	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
 		u.Type = CreateDeploymentAliasAssignedAtTypeBoolean
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreateDeploymentAliasAssignedAt", string(data))
 }
 
 func (u CreateDeploymentAliasAssignedAt) MarshalJSON() ([]byte, error) {
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CreateDeploymentAliasAssignedAt: all fields are null")
 }
 
 // CreateDeploymentAliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
@@ -4860,7 +1486,6 @@ const (
 func (e CreateDeploymentChecksConclusion) ToPointer() *CreateDeploymentChecksConclusion {
 	return &e
 }
-
 func (e *CreateDeploymentChecksConclusion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4892,7 +1517,6 @@ const (
 func (e CreateDeploymentChecksState) ToPointer() *CreateDeploymentChecksState {
 	return &e
 }
-
 func (e *CreateDeploymentChecksState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4913,10 +1537,19 @@ func (e *CreateDeploymentChecksState) UnmarshalJSON(data []byte) error {
 
 // CreateDeploymentCreator - Information about the deployment creator
 type CreateDeploymentCreator struct {
+	// The avatar of the user that created the deployment
+	Avatar *string `json:"avatar,omitempty"`
 	// The ID of the user that created the deployment
 	UID string `json:"uid"`
 	// The username of the user that created the deployment
 	Username *string `json:"username,omitempty"`
+}
+
+func (o *CreateDeploymentCreator) GetAvatar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Avatar
 }
 
 func (o *CreateDeploymentCreator) GetUID() string {
@@ -4933,13 +1566,33 @@ func (o *CreateDeploymentCreator) GetUsername() *string {
 	return o.Username
 }
 
+// CreateDeploymentCrons - The cron jobs associated with this deployment. Note that preview deployments are also allowed to have this property, but only production deployments create cron jobs. If a preview deployment is promoted to production, only then they'll take effect.
+type CreateDeploymentCrons struct {
+	Path     string `json:"path"`
+	Schedule string `json:"schedule"`
+}
+
+func (o *CreateDeploymentCrons) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *CreateDeploymentCrons) GetSchedule() string {
+	if o == nil {
+		return ""
+	}
+	return o.Schedule
+}
+
 // CreateDeploymentFunctions - An object used to configure your Serverless Functions
 type CreateDeploymentFunctions struct {
-	ExcludeFiles *string `json:"excludeFiles,omitempty"`
-	IncludeFiles *string `json:"includeFiles,omitempty"`
-	MaxDuration  *int64  `json:"maxDuration,omitempty"`
-	Memory       *int64  `json:"memory,omitempty"`
-	Runtime      *string `json:"runtime,omitempty"`
+	ExcludeFiles *string  `json:"excludeFiles,omitempty"`
+	IncludeFiles *string  `json:"includeFiles,omitempty"`
+	MaxDuration  *float64 `json:"maxDuration,omitempty"`
+	Memory       *float64 `json:"memory,omitempty"`
+	Runtime      *string  `json:"runtime,omitempty"`
 }
 
 func (o *CreateDeploymentFunctions) GetExcludeFiles() *string {
@@ -4956,14 +1609,14 @@ func (o *CreateDeploymentFunctions) GetIncludeFiles() *string {
 	return o.IncludeFiles
 }
 
-func (o *CreateDeploymentFunctions) GetMaxDuration() *int64 {
+func (o *CreateDeploymentFunctions) GetMaxDuration() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxDuration
 }
 
-func (o *CreateDeploymentFunctions) GetMemory() *int64 {
+func (o *CreateDeploymentFunctions) GetMemory() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -4980,23 +1633,22 @@ func (o *CreateDeploymentFunctions) GetRuntime() *string {
 type CreateDeploymentDeploymentsResponseOwnerType string
 
 const (
-	CreateDeploymentDeploymentsResponseOwnerTypeTeam CreateDeploymentDeploymentsResponseOwnerType = "team"
 	CreateDeploymentDeploymentsResponseOwnerTypeUser CreateDeploymentDeploymentsResponseOwnerType = "user"
+	CreateDeploymentDeploymentsResponseOwnerTypeTeam CreateDeploymentDeploymentsResponseOwnerType = "team"
 )
 
 func (e CreateDeploymentDeploymentsResponseOwnerType) ToPointer() *CreateDeploymentDeploymentsResponseOwnerType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponseOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "team":
-		fallthrough
 	case "user":
+		fallthrough
+	case "team":
 		*e = CreateDeploymentDeploymentsResponseOwnerType(v)
 		return nil
 	default:
@@ -5013,7 +1665,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5114,23 +1765,22 @@ func (o *CreateDeployment3) GetWorkspaceUUID() string {
 type CreateDeploymentDeploymentsOwnerType string
 
 const (
-	CreateDeploymentDeploymentsOwnerTypeTeam CreateDeploymentDeploymentsOwnerType = "team"
 	CreateDeploymentDeploymentsOwnerTypeUser CreateDeploymentDeploymentsOwnerType = "user"
+	CreateDeploymentDeploymentsOwnerTypeTeam CreateDeploymentDeploymentsOwnerType = "team"
 )
 
 func (e CreateDeploymentDeploymentsOwnerType) ToPointer() *CreateDeploymentDeploymentsOwnerType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "team":
-		fallthrough
 	case "user":
+		fallthrough
+	case "team":
 		*e = CreateDeploymentDeploymentsOwnerType(v)
 		return nil
 	default:
@@ -5147,7 +1797,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200Type) ToPointer() *CreateDeploymentDeploymentsResponse200Type {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5162,7 +1811,7 @@ func (e *CreateDeploymentDeploymentsResponse200Type) UnmarshalJSON(data []byte) 
 	}
 }
 
-type CreateDeploymentDeploymentsResponse2 struct {
+type CreateDeployment2 struct {
 	DefaultBranch string                                     `json:"defaultBranch"`
 	Name          string                                     `json:"name"`
 	Org           string                                     `json:"org"`
@@ -5170,75 +1819,75 @@ type CreateDeploymentDeploymentsResponse2 struct {
 	Path          string                                     `json:"path"`
 	Private       bool                                       `json:"private"`
 	Repo          string                                     `json:"repo"`
-	RepoID        int64                                      `json:"repoId"`
+	RepoID        float64                                    `json:"repoId"`
 	RepoOwnerID   string                                     `json:"repoOwnerId"`
 	Type          CreateDeploymentDeploymentsResponse200Type `json:"type"`
 }
 
-func (o *CreateDeploymentDeploymentsResponse2) GetDefaultBranch() string {
+func (o *CreateDeployment2) GetDefaultBranch() string {
 	if o == nil {
 		return ""
 	}
 	return o.DefaultBranch
 }
 
-func (o *CreateDeploymentDeploymentsResponse2) GetName() string {
+func (o *CreateDeployment2) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeploymentDeploymentsResponse2) GetOrg() string {
+func (o *CreateDeployment2) GetOrg() string {
 	if o == nil {
 		return ""
 	}
 	return o.Org
 }
 
-func (o *CreateDeploymentDeploymentsResponse2) GetOwnerType() CreateDeploymentDeploymentsOwnerType {
+func (o *CreateDeployment2) GetOwnerType() CreateDeploymentDeploymentsOwnerType {
 	if o == nil {
 		return CreateDeploymentDeploymentsOwnerType("")
 	}
 	return o.OwnerType
 }
 
-func (o *CreateDeploymentDeploymentsResponse2) GetPath() string {
+func (o *CreateDeployment2) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *CreateDeploymentDeploymentsResponse2) GetPrivate() bool {
+func (o *CreateDeployment2) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *CreateDeploymentDeploymentsResponse2) GetRepo() string {
+func (o *CreateDeployment2) GetRepo() string {
 	if o == nil {
 		return ""
 	}
 	return o.Repo
 }
 
-func (o *CreateDeploymentDeploymentsResponse2) GetRepoID() int64 {
+func (o *CreateDeployment2) GetRepoID() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.RepoID
 }
 
-func (o *CreateDeploymentDeploymentsResponse2) GetRepoOwnerID() string {
+func (o *CreateDeployment2) GetRepoOwnerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoOwnerID
 }
 
-func (o *CreateDeploymentDeploymentsResponse2) GetType() CreateDeploymentDeploymentsResponse200Type {
+func (o *CreateDeployment2) GetType() CreateDeploymentDeploymentsResponse200Type {
 	if o == nil {
 		return CreateDeploymentDeploymentsResponse200Type("")
 	}
@@ -5248,23 +1897,22 @@ func (o *CreateDeploymentDeploymentsResponse2) GetType() CreateDeploymentDeploym
 type CreateDeploymentOwnerType string
 
 const (
-	CreateDeploymentOwnerTypeTeam CreateDeploymentOwnerType = "team"
 	CreateDeploymentOwnerTypeUser CreateDeploymentOwnerType = "user"
+	CreateDeploymentOwnerTypeTeam CreateDeploymentOwnerType = "team"
 )
 
 func (e CreateDeploymentOwnerType) ToPointer() *CreateDeploymentOwnerType {
 	return &e
 }
-
 func (e *CreateDeploymentOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "team":
-		fallthrough
 	case "user":
+		fallthrough
+	case "team":
 		*e = CreateDeploymentOwnerType(v)
 		return nil
 	default:
@@ -5281,7 +1929,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5296,75 +1943,75 @@ func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRep
 	}
 }
 
-type CreateDeploymentDeploymentsResponse1 struct {
+type CreateDeployment1 struct {
 	DefaultBranch string                                                                       `json:"defaultBranch"`
 	Name          string                                                                       `json:"name"`
 	Namespace     string                                                                       `json:"namespace"`
 	OwnerType     CreateDeploymentOwnerType                                                    `json:"ownerType"`
 	Path          string                                                                       `json:"path"`
 	Private       bool                                                                         `json:"private"`
-	ProjectID     int64                                                                        `json:"projectId"`
+	ProjectID     float64                                                                      `json:"projectId"`
 	Type          CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType `json:"type"`
 	URL           string                                                                       `json:"url"`
 }
 
-func (o *CreateDeploymentDeploymentsResponse1) GetDefaultBranch() string {
+func (o *CreateDeployment1) GetDefaultBranch() string {
 	if o == nil {
 		return ""
 	}
 	return o.DefaultBranch
 }
 
-func (o *CreateDeploymentDeploymentsResponse1) GetName() string {
+func (o *CreateDeployment1) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateDeploymentDeploymentsResponse1) GetNamespace() string {
+func (o *CreateDeployment1) GetNamespace() string {
 	if o == nil {
 		return ""
 	}
 	return o.Namespace
 }
 
-func (o *CreateDeploymentDeploymentsResponse1) GetOwnerType() CreateDeploymentOwnerType {
+func (o *CreateDeployment1) GetOwnerType() CreateDeploymentOwnerType {
 	if o == nil {
 		return CreateDeploymentOwnerType("")
 	}
 	return o.OwnerType
 }
 
-func (o *CreateDeploymentDeploymentsResponse1) GetPath() string {
+func (o *CreateDeployment1) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *CreateDeploymentDeploymentsResponse1) GetPrivate() bool {
+func (o *CreateDeployment1) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *CreateDeploymentDeploymentsResponse1) GetProjectID() int64 {
+func (o *CreateDeployment1) GetProjectID() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ProjectID
 }
 
-func (o *CreateDeploymentDeploymentsResponse1) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType {
+func (o *CreateDeployment1) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType {
 	if o == nil {
 		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentDeploymentsResponse1) GetURL() string {
+func (o *CreateDeployment1) GetURL() string {
 	if o == nil {
 		return ""
 	}
@@ -5374,34 +2021,34 @@ func (o *CreateDeploymentDeploymentsResponse1) GetURL() string {
 type CreateDeploymentGitRepoType string
 
 const (
-	CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse1 CreateDeploymentGitRepoType = "createDeployment_deployments_response_1"
-	CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse2 CreateDeploymentGitRepoType = "createDeployment_deployments_response_2"
-	CreateDeploymentGitRepoTypeCreateDeployment3                    CreateDeploymentGitRepoType = "createDeployment_3"
+	CreateDeploymentGitRepoTypeCreateDeployment1 CreateDeploymentGitRepoType = "createDeployment_1"
+	CreateDeploymentGitRepoTypeCreateDeployment2 CreateDeploymentGitRepoType = "createDeployment_2"
+	CreateDeploymentGitRepoTypeCreateDeployment3 CreateDeploymentGitRepoType = "createDeployment_3"
 )
 
 type CreateDeploymentGitRepo struct {
-	CreateDeploymentDeploymentsResponse1 *CreateDeploymentDeploymentsResponse1
-	CreateDeploymentDeploymentsResponse2 *CreateDeploymentDeploymentsResponse2
-	CreateDeployment3                    *CreateDeployment3
+	CreateDeployment1 *CreateDeployment1
+	CreateDeployment2 *CreateDeployment2
+	CreateDeployment3 *CreateDeployment3
 
 	Type CreateDeploymentGitRepoType
 }
 
-func CreateCreateDeploymentGitRepoCreateDeploymentDeploymentsResponse1(createDeploymentDeploymentsResponse1 CreateDeploymentDeploymentsResponse1) CreateDeploymentGitRepo {
-	typ := CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse1
+func CreateCreateDeploymentGitRepoCreateDeployment1(createDeployment1 CreateDeployment1) CreateDeploymentGitRepo {
+	typ := CreateDeploymentGitRepoTypeCreateDeployment1
 
 	return CreateDeploymentGitRepo{
-		CreateDeploymentDeploymentsResponse1: &createDeploymentDeploymentsResponse1,
-		Type:                                 typ,
+		CreateDeployment1: &createDeployment1,
+		Type:              typ,
 	}
 }
 
-func CreateCreateDeploymentGitRepoCreateDeploymentDeploymentsResponse2(createDeploymentDeploymentsResponse2 CreateDeploymentDeploymentsResponse2) CreateDeploymentGitRepo {
-	typ := CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse2
+func CreateCreateDeploymentGitRepoCreateDeployment2(createDeployment2 CreateDeployment2) CreateDeploymentGitRepo {
+	typ := CreateDeploymentGitRepoTypeCreateDeployment2
 
 	return CreateDeploymentGitRepo{
-		CreateDeploymentDeploymentsResponse2: &createDeploymentDeploymentsResponse2,
-		Type:                                 typ,
+		CreateDeployment2: &createDeployment2,
+		Type:              typ,
 	}
 }
 
@@ -5416,44 +2063,44 @@ func CreateCreateDeploymentGitRepoCreateDeployment3(createDeployment3 CreateDepl
 
 func (u *CreateDeploymentGitRepo) UnmarshalJSON(data []byte) error {
 
-	createDeploymentDeploymentsResponse1 := CreateDeploymentDeploymentsResponse1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse1, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsResponse1 = &createDeploymentDeploymentsResponse1
-		u.Type = CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse1
+	var createDeployment1 CreateDeployment1 = CreateDeployment1{}
+	if err := utils.UnmarshalJSON(data, &createDeployment1, "", true, true); err == nil {
+		u.CreateDeployment1 = &createDeployment1
+		u.Type = CreateDeploymentGitRepoTypeCreateDeployment1
 		return nil
 	}
 
-	createDeploymentDeploymentsResponse2 := CreateDeploymentDeploymentsResponse2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse2, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsResponse2 = &createDeploymentDeploymentsResponse2
-		u.Type = CreateDeploymentGitRepoTypeCreateDeploymentDeploymentsResponse2
+	var createDeployment2 CreateDeployment2 = CreateDeployment2{}
+	if err := utils.UnmarshalJSON(data, &createDeployment2, "", true, true); err == nil {
+		u.CreateDeployment2 = &createDeployment2
+		u.Type = CreateDeploymentGitRepoTypeCreateDeployment2
 		return nil
 	}
 
-	createDeployment3 := CreateDeployment3{}
+	var createDeployment3 CreateDeployment3 = CreateDeployment3{}
 	if err := utils.UnmarshalJSON(data, &createDeployment3, "", true, true); err == nil {
 		u.CreateDeployment3 = &createDeployment3
 		u.Type = CreateDeploymentGitRepoTypeCreateDeployment3
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreateDeploymentGitRepo", string(data))
 }
 
 func (u CreateDeploymentGitRepo) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsResponse1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse1, "", true)
+	if u.CreateDeployment1 != nil {
+		return utils.MarshalJSON(u.CreateDeployment1, "", true)
 	}
 
-	if u.CreateDeploymentDeploymentsResponse2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse2, "", true)
+	if u.CreateDeployment2 != nil {
+		return utils.MarshalJSON(u.CreateDeployment2, "", true)
 	}
 
 	if u.CreateDeployment3 != nil {
 		return utils.MarshalJSON(u.CreateDeployment3, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CreateDeploymentGitRepo: all fields are null")
 }
 
 type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type string
@@ -5465,7 +2112,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5548,7 +2194,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5564,15 +2209,15 @@ func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSou
 }
 
 type CreateDeployment8 struct {
-	ProjectID int64                                                                           `json:"projectId"`
+	ProjectID float64                                                                         `json:"projectId"`
 	Ref       string                                                                          `json:"ref"`
 	Sha       string                                                                          `json:"sha"`
 	Type      CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type `json:"type"`
 }
 
-func (o *CreateDeployment8) GetProjectID() int64 {
+func (o *CreateDeployment8) GetProjectID() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ProjectID
 }
@@ -5607,7 +2252,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5626,7 +2270,7 @@ type CreateDeployment7 struct {
 	Org    *string                                                                         `json:"org,omitempty"`
 	Ref    string                                                                          `json:"ref"`
 	Repo   *string                                                                         `json:"repo,omitempty"`
-	RepoID int64                                                                           `json:"repoId"`
+	RepoID float64                                                                         `json:"repoId"`
 	Sha    string                                                                          `json:"sha"`
 	Type   CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type `json:"type"`
 }
@@ -5652,9 +2296,9 @@ func (o *CreateDeployment7) GetRepo() *string {
 	return o.Repo
 }
 
-func (o *CreateDeployment7) GetRepoID() int64 {
+func (o *CreateDeployment7) GetRepoID() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.RepoID
 }
@@ -5682,7 +2326,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5741,7 +2384,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5758,7 +2400,7 @@ func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSou
 
 type CreateDeployment5 struct {
 	Owner string                                                                          `json:"owner"`
-	PrID  *int64                                                                          `json:"prId,omitempty"`
+	PrID  *float64                                                                        `json:"prId,omitempty"`
 	Ref   *string                                                                         `json:"ref,omitempty"`
 	Sha   *string                                                                         `json:"sha,omitempty"`
 	Slug  string                                                                          `json:"slug"`
@@ -5772,7 +2414,7 @@ func (o *CreateDeployment5) GetOwner() string {
 	return o.Owner
 }
 
-func (o *CreateDeployment5) GetPrID() *int64 {
+func (o *CreateDeployment5) GetPrID() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -5816,7 +2458,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource4Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5832,7 +2473,7 @@ func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSou
 }
 
 type CreateDeployment4 struct {
-	PrID          *int64                                                                          `json:"prId,omitempty"`
+	PrID          *float64                                                                        `json:"prId,omitempty"`
 	Ref           *string                                                                         `json:"ref,omitempty"`
 	RepoUUID      string                                                                          `json:"repoUuid"`
 	Sha           *string                                                                         `json:"sha,omitempty"`
@@ -5840,7 +2481,7 @@ type CreateDeployment4 struct {
 	WorkspaceUUID *string                                                                         `json:"workspaceUuid,omitempty"`
 }
 
-func (o *CreateDeployment4) GetPrID() *int64 {
+func (o *CreateDeployment4) GetPrID() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -5885,13 +2526,13 @@ func (o *CreateDeployment4) GetWorkspaceUUID() *string {
 type CreateDeploymentProjectIDType string
 
 const (
-	CreateDeploymentProjectIDTypeStr     CreateDeploymentProjectIDType = "str"
-	CreateDeploymentProjectIDTypeInteger CreateDeploymentProjectIDType = "integer"
+	CreateDeploymentProjectIDTypeStr    CreateDeploymentProjectIDType = "str"
+	CreateDeploymentProjectIDTypeNumber CreateDeploymentProjectIDType = "number"
 )
 
 type CreateDeploymentProjectID struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type CreateDeploymentProjectIDType
 }
@@ -5905,32 +2546,32 @@ func CreateCreateDeploymentProjectIDStr(str string) CreateDeploymentProjectID {
 	}
 }
 
-func CreateCreateDeploymentProjectIDInteger(integer int64) CreateDeploymentProjectID {
-	typ := CreateDeploymentProjectIDTypeInteger
+func CreateCreateDeploymentProjectIDNumber(number float64) CreateDeploymentProjectID {
+	typ := CreateDeploymentProjectIDTypeNumber
 
 	return CreateDeploymentProjectID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *CreateDeploymentProjectID) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = CreateDeploymentProjectIDTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = CreateDeploymentProjectIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CreateDeploymentProjectIDTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreateDeploymentProjectID", string(data))
 }
 
 func (u CreateDeploymentProjectID) MarshalJSON() ([]byte, error) {
@@ -5938,11 +2579,11 @@ func (u CreateDeploymentProjectID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CreateDeploymentProjectID: all fields are null")
 }
 
 type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type string
@@ -5954,7 +2595,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5970,14 +2610,14 @@ func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSou
 }
 
 type CreateDeploymentDeployments3 struct {
-	PrID      *int64                                                                          `json:"prId,omitempty"`
+	PrID      *float64                                                                        `json:"prId,omitempty"`
 	ProjectID CreateDeploymentProjectID                                                       `json:"projectId"`
 	Ref       *string                                                                         `json:"ref,omitempty"`
 	Sha       *string                                                                         `json:"sha,omitempty"`
 	Type      CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource3Type `json:"type"`
 }
 
-func (o *CreateDeploymentDeployments3) GetPrID() *int64 {
+func (o *CreateDeploymentDeployments3) GetPrID() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -6021,7 +2661,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6036,51 +2675,51 @@ func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSou
 	}
 }
 
-type CreateDeploymentDeploymentsResponse2002 struct {
+type CreateDeploymentDeployments2 struct {
 	Org  string                                                                         `json:"org"`
-	PrID *int64                                                                         `json:"prId,omitempty"`
+	PrID *float64                                                                       `json:"prId,omitempty"`
 	Ref  *string                                                                        `json:"ref,omitempty"`
 	Repo string                                                                         `json:"repo"`
 	Sha  *string                                                                        `json:"sha,omitempty"`
 	Type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType `json:"type"`
 }
 
-func (o *CreateDeploymentDeploymentsResponse2002) GetOrg() string {
+func (o *CreateDeploymentDeployments2) GetOrg() string {
 	if o == nil {
 		return ""
 	}
 	return o.Org
 }
 
-func (o *CreateDeploymentDeploymentsResponse2002) GetPrID() *int64 {
+func (o *CreateDeploymentDeployments2) GetPrID() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *CreateDeploymentDeploymentsResponse2002) GetRef() *string {
+func (o *CreateDeploymentDeployments2) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *CreateDeploymentDeploymentsResponse2002) GetRepo() string {
+func (o *CreateDeploymentDeployments2) GetRepo() string {
 	if o == nil {
 		return ""
 	}
 	return o.Repo
 }
 
-func (o *CreateDeploymentDeploymentsResponse2002) GetSha() *string {
+func (o *CreateDeploymentDeployments2) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentDeploymentsResponse2002) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType {
+func (o *CreateDeploymentDeployments2) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType {
 	if o == nil {
 		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType("")
 	}
@@ -6090,13 +2729,13 @@ func (o *CreateDeploymentDeploymentsResponse2002) GetType() CreateDeploymentDepl
 type CreateDeploymentRepoIDType string
 
 const (
-	CreateDeploymentRepoIDTypeStr     CreateDeploymentRepoIDType = "str"
-	CreateDeploymentRepoIDTypeInteger CreateDeploymentRepoIDType = "integer"
+	CreateDeploymentRepoIDTypeStr    CreateDeploymentRepoIDType = "str"
+	CreateDeploymentRepoIDTypeNumber CreateDeploymentRepoIDType = "number"
 )
 
 type CreateDeploymentRepoID struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type CreateDeploymentRepoIDType
 }
@@ -6110,32 +2749,32 @@ func CreateCreateDeploymentRepoIDStr(str string) CreateDeploymentRepoID {
 	}
 }
 
-func CreateCreateDeploymentRepoIDInteger(integer int64) CreateDeploymentRepoID {
-	typ := CreateDeploymentRepoIDTypeInteger
+func CreateCreateDeploymentRepoIDNumber(number float64) CreateDeploymentRepoID {
+	typ := CreateDeploymentRepoIDTypeNumber
 
 	return CreateDeploymentRepoID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *CreateDeploymentRepoID) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = CreateDeploymentRepoIDTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = CreateDeploymentRepoIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CreateDeploymentRepoIDTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreateDeploymentRepoID", string(data))
 }
 
 func (u CreateDeploymentRepoID) MarshalJSON() ([]byte, error) {
@@ -6143,11 +2782,11 @@ func (u CreateDeploymentRepoID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CreateDeploymentRepoID: all fields are null")
 }
 
 type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType string
@@ -6159,7 +2798,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6174,43 +2812,43 @@ func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType) 
 	}
 }
 
-type CreateDeploymentDeploymentsResponse2001 struct {
-	PrID   *int64                                                                `json:"prId,omitempty"`
+type CreateDeploymentDeployments1 struct {
+	PrID   *float64                                                              `json:"prId,omitempty"`
 	Ref    *string                                                               `json:"ref,omitempty"`
 	RepoID CreateDeploymentRepoID                                                `json:"repoId"`
 	Sha    *string                                                               `json:"sha,omitempty"`
 	Type   CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType `json:"type"`
 }
 
-func (o *CreateDeploymentDeploymentsResponse2001) GetPrID() *int64 {
+func (o *CreateDeploymentDeployments1) GetPrID() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *CreateDeploymentDeploymentsResponse2001) GetRef() *string {
+func (o *CreateDeploymentDeployments1) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *CreateDeploymentDeploymentsResponse2001) GetRepoID() CreateDeploymentRepoID {
+func (o *CreateDeploymentDeployments1) GetRepoID() CreateDeploymentRepoID {
 	if o == nil {
 		return CreateDeploymentRepoID{}
 	}
 	return o.RepoID
 }
 
-func (o *CreateDeploymentDeploymentsResponse2001) GetSha() *string {
+func (o *CreateDeploymentDeployments1) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentDeploymentsResponse2001) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType {
+func (o *CreateDeploymentDeployments1) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType {
 	if o == nil {
 		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType("")
 	}
@@ -6220,46 +2858,46 @@ func (o *CreateDeploymentDeploymentsResponse2001) GetType() CreateDeploymentDepl
 type CreateDeploymentGitSourceType string
 
 const (
-	CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2001 CreateDeploymentGitSourceType = "createDeployment_deployments_response_200_1"
-	CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2002 CreateDeploymentGitSourceType = "createDeployment_deployments_response_200_2"
-	CreateDeploymentGitSourceTypeCreateDeploymentDeployments3            CreateDeploymentGitSourceType = "createDeployment_deployments_3"
-	CreateDeploymentGitSourceTypeCreateDeployment4                       CreateDeploymentGitSourceType = "createDeployment_4"
-	CreateDeploymentGitSourceTypeCreateDeployment5                       CreateDeploymentGitSourceType = "createDeployment_5"
-	CreateDeploymentGitSourceTypeCreateDeployment6                       CreateDeploymentGitSourceType = "createDeployment_6"
-	CreateDeploymentGitSourceTypeCreateDeployment7                       CreateDeploymentGitSourceType = "createDeployment_7"
-	CreateDeploymentGitSourceTypeCreateDeployment8                       CreateDeploymentGitSourceType = "createDeployment_8"
-	CreateDeploymentGitSourceTypeCreateDeployment9                       CreateDeploymentGitSourceType = "createDeployment_9"
+	CreateDeploymentGitSourceTypeCreateDeploymentDeployments1 CreateDeploymentGitSourceType = "createDeployment_deployments_1"
+	CreateDeploymentGitSourceTypeCreateDeploymentDeployments2 CreateDeploymentGitSourceType = "createDeployment_deployments_2"
+	CreateDeploymentGitSourceTypeCreateDeploymentDeployments3 CreateDeploymentGitSourceType = "createDeployment_deployments_3"
+	CreateDeploymentGitSourceTypeCreateDeployment4            CreateDeploymentGitSourceType = "createDeployment_4"
+	CreateDeploymentGitSourceTypeCreateDeployment5            CreateDeploymentGitSourceType = "createDeployment_5"
+	CreateDeploymentGitSourceTypeCreateDeployment6            CreateDeploymentGitSourceType = "createDeployment_6"
+	CreateDeploymentGitSourceTypeCreateDeployment7            CreateDeploymentGitSourceType = "createDeployment_7"
+	CreateDeploymentGitSourceTypeCreateDeployment8            CreateDeploymentGitSourceType = "createDeployment_8"
+	CreateDeploymentGitSourceTypeCreateDeployment9            CreateDeploymentGitSourceType = "createDeployment_9"
 )
 
 type CreateDeploymentGitSource struct {
-	CreateDeploymentDeploymentsResponse2001 *CreateDeploymentDeploymentsResponse2001
-	CreateDeploymentDeploymentsResponse2002 *CreateDeploymentDeploymentsResponse2002
-	CreateDeploymentDeployments3            *CreateDeploymentDeployments3
-	CreateDeployment4                       *CreateDeployment4
-	CreateDeployment5                       *CreateDeployment5
-	CreateDeployment6                       *CreateDeployment6
-	CreateDeployment7                       *CreateDeployment7
-	CreateDeployment8                       *CreateDeployment8
-	CreateDeployment9                       *CreateDeployment9
+	CreateDeploymentDeployments1 *CreateDeploymentDeployments1
+	CreateDeploymentDeployments2 *CreateDeploymentDeployments2
+	CreateDeploymentDeployments3 *CreateDeploymentDeployments3
+	CreateDeployment4            *CreateDeployment4
+	CreateDeployment5            *CreateDeployment5
+	CreateDeployment6            *CreateDeployment6
+	CreateDeployment7            *CreateDeployment7
+	CreateDeployment8            *CreateDeployment8
+	CreateDeployment9            *CreateDeployment9
 
 	Type CreateDeploymentGitSourceType
 }
 
-func CreateCreateDeploymentGitSourceCreateDeploymentDeploymentsResponse2001(createDeploymentDeploymentsResponse2001 CreateDeploymentDeploymentsResponse2001) CreateDeploymentGitSource {
-	typ := CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2001
+func CreateCreateDeploymentGitSourceCreateDeploymentDeployments1(createDeploymentDeployments1 CreateDeploymentDeployments1) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceTypeCreateDeploymentDeployments1
 
 	return CreateDeploymentGitSource{
-		CreateDeploymentDeploymentsResponse2001: &createDeploymentDeploymentsResponse2001,
-		Type:                                    typ,
+		CreateDeploymentDeployments1: &createDeploymentDeployments1,
+		Type:                         typ,
 	}
 }
 
-func CreateCreateDeploymentGitSourceCreateDeploymentDeploymentsResponse2002(createDeploymentDeploymentsResponse2002 CreateDeploymentDeploymentsResponse2002) CreateDeploymentGitSource {
-	typ := CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2002
+func CreateCreateDeploymentGitSourceCreateDeploymentDeployments2(createDeploymentDeployments2 CreateDeploymentDeployments2) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceTypeCreateDeploymentDeployments2
 
 	return CreateDeploymentGitSource{
-		CreateDeploymentDeploymentsResponse2002: &createDeploymentDeploymentsResponse2002,
-		Type:                                    typ,
+		CreateDeploymentDeployments2: &createDeploymentDeployments2,
+		Type:                         typ,
 	}
 }
 
@@ -6328,79 +2966,79 @@ func CreateCreateDeploymentGitSourceCreateDeployment9(createDeployment9 CreateDe
 
 func (u *CreateDeploymentGitSource) UnmarshalJSON(data []byte) error {
 
-	createDeployment6 := CreateDeployment6{}
+	var createDeployment6 CreateDeployment6 = CreateDeployment6{}
 	if err := utils.UnmarshalJSON(data, &createDeployment6, "", true, true); err == nil {
 		u.CreateDeployment6 = &createDeployment6
 		u.Type = CreateDeploymentGitSourceTypeCreateDeployment6
 		return nil
 	}
 
-	createDeployment8 := CreateDeployment8{}
+	var createDeployment8 CreateDeployment8 = CreateDeployment8{}
 	if err := utils.UnmarshalJSON(data, &createDeployment8, "", true, true); err == nil {
 		u.CreateDeployment8 = &createDeployment8
 		u.Type = CreateDeploymentGitSourceTypeCreateDeployment8
 		return nil
 	}
 
-	createDeploymentDeploymentsResponse2001 := CreateDeploymentDeploymentsResponse2001{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse2001, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsResponse2001 = &createDeploymentDeploymentsResponse2001
-		u.Type = CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2001
+	var createDeploymentDeployments1 CreateDeploymentDeployments1 = CreateDeploymentDeployments1{}
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeployments1, "", true, true); err == nil {
+		u.CreateDeploymentDeployments1 = &createDeploymentDeployments1
+		u.Type = CreateDeploymentGitSourceTypeCreateDeploymentDeployments1
 		return nil
 	}
 
-	createDeploymentDeployments3 := CreateDeploymentDeployments3{}
+	var createDeploymentDeployments3 CreateDeploymentDeployments3 = CreateDeploymentDeployments3{}
 	if err := utils.UnmarshalJSON(data, &createDeploymentDeployments3, "", true, true); err == nil {
 		u.CreateDeploymentDeployments3 = &createDeploymentDeployments3
 		u.Type = CreateDeploymentGitSourceTypeCreateDeploymentDeployments3
 		return nil
 	}
 
-	createDeploymentDeploymentsResponse2002 := CreateDeploymentDeploymentsResponse2002{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse2002, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsResponse2002 = &createDeploymentDeploymentsResponse2002
-		u.Type = CreateDeploymentGitSourceTypeCreateDeploymentDeploymentsResponse2002
+	var createDeploymentDeployments2 CreateDeploymentDeployments2 = CreateDeploymentDeployments2{}
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeployments2, "", true, true); err == nil {
+		u.CreateDeploymentDeployments2 = &createDeploymentDeployments2
+		u.Type = CreateDeploymentGitSourceTypeCreateDeploymentDeployments2
 		return nil
 	}
 
-	createDeployment4 := CreateDeployment4{}
+	var createDeployment4 CreateDeployment4 = CreateDeployment4{}
 	if err := utils.UnmarshalJSON(data, &createDeployment4, "", true, true); err == nil {
 		u.CreateDeployment4 = &createDeployment4
 		u.Type = CreateDeploymentGitSourceTypeCreateDeployment4
 		return nil
 	}
 
-	createDeployment5 := CreateDeployment5{}
+	var createDeployment5 CreateDeployment5 = CreateDeployment5{}
 	if err := utils.UnmarshalJSON(data, &createDeployment5, "", true, true); err == nil {
 		u.CreateDeployment5 = &createDeployment5
 		u.Type = CreateDeploymentGitSourceTypeCreateDeployment5
 		return nil
 	}
 
-	createDeployment7 := CreateDeployment7{}
+	var createDeployment7 CreateDeployment7 = CreateDeployment7{}
 	if err := utils.UnmarshalJSON(data, &createDeployment7, "", true, true); err == nil {
 		u.CreateDeployment7 = &createDeployment7
 		u.Type = CreateDeploymentGitSourceTypeCreateDeployment7
 		return nil
 	}
 
-	createDeployment9 := CreateDeployment9{}
+	var createDeployment9 CreateDeployment9 = CreateDeployment9{}
 	if err := utils.UnmarshalJSON(data, &createDeployment9, "", true, true); err == nil {
 		u.CreateDeployment9 = &createDeployment9
 		u.Type = CreateDeploymentGitSourceTypeCreateDeployment9
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreateDeploymentGitSource", string(data))
 }
 
 func (u CreateDeploymentGitSource) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsResponse2001 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse2001, "", true)
+	if u.CreateDeploymentDeployments1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeployments1, "", true)
 	}
 
-	if u.CreateDeploymentDeploymentsResponse2002 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse2002, "", true)
+	if u.CreateDeploymentDeployments2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeployments2, "", true)
 	}
 
 	if u.CreateDeploymentDeployments3 != nil {
@@ -6431,7 +3069,7 @@ func (u CreateDeploymentGitSource) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CreateDeployment9, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CreateDeploymentGitSource: all fields are null")
 }
 
 type CreateDeploymentOutput struct {
@@ -6456,8 +3094,8 @@ func (o *CreateDeploymentOutput) GetPath() string {
 type CreateDeploymentDeploymentsReadyState string
 
 const (
-	CreateDeploymentDeploymentsReadyStateBuilding     CreateDeploymentDeploymentsReadyState = "BUILDING"
 	CreateDeploymentDeploymentsReadyStateError        CreateDeploymentDeploymentsReadyState = "ERROR"
+	CreateDeploymentDeploymentsReadyStateBuilding     CreateDeploymentDeploymentsReadyState = "BUILDING"
 	CreateDeploymentDeploymentsReadyStateInitializing CreateDeploymentDeploymentsReadyState = "INITIALIZING"
 	CreateDeploymentDeploymentsReadyStateReady        CreateDeploymentDeploymentsReadyState = "READY"
 )
@@ -6465,16 +3103,15 @@ const (
 func (e CreateDeploymentDeploymentsReadyState) ToPointer() *CreateDeploymentDeploymentsReadyState {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "BUILDING":
-		fallthrough
 	case "ERROR":
+		fallthrough
+	case "BUILDING":
 		fallthrough
 	case "INITIALIZING":
 		fallthrough
@@ -6487,15 +3124,15 @@ func (e *CreateDeploymentDeploymentsReadyState) UnmarshalJSON(data []byte) error
 }
 
 type CreateDeploymentLambdas struct {
-	CreatedAt    *int64                                 `json:"createdAt,omitempty"`
+	CreatedAt    *float64                               `json:"createdAt,omitempty"`
 	Entrypoint   *string                                `json:"entrypoint,omitempty"`
 	ID           string                                 `json:"id"`
 	Output       []CreateDeploymentOutput               `json:"output"`
 	ReadyState   *CreateDeploymentDeploymentsReadyState `json:"readyState,omitempty"`
-	ReadyStateAt *int64                                 `json:"readyStateAt,omitempty"`
+	ReadyStateAt *float64                               `json:"readyStateAt,omitempty"`
 }
 
-func (o *CreateDeploymentLambdas) GetCreatedAt() *int64 {
+func (o *CreateDeploymentLambdas) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -6530,7 +3167,7 @@ func (o *CreateDeploymentLambdas) GetReadyState() *CreateDeploymentDeploymentsRe
 	return o.ReadyState
 }
 
-func (o *CreateDeploymentLambdas) GetReadyStateAt() *int64 {
+func (o *CreateDeploymentLambdas) GetReadyStateAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -6544,13 +3181,11 @@ const (
 	CreateDeploymentPlanPro        CreateDeploymentPlan = "pro"
 	CreateDeploymentPlanEnterprise CreateDeploymentPlan = "enterprise"
 	CreateDeploymentPlanHobby      CreateDeploymentPlan = "hobby"
-	CreateDeploymentPlanOss        CreateDeploymentPlan = "oss"
 )
 
 func (e CreateDeploymentPlan) ToPointer() *CreateDeploymentPlan {
 	return &e
 }
-
 func (e *CreateDeploymentPlan) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6562,8 +3197,6 @@ func (e *CreateDeploymentPlan) UnmarshalJSON(data []byte) error {
 	case "enterprise":
 		fallthrough
 	case "hobby":
-		fallthrough
-	case "oss":
 		*e = CreateDeploymentPlan(v)
 		return nil
 	default:
@@ -6575,35 +3208,34 @@ func (e *CreateDeploymentPlan) UnmarshalJSON(data []byte) error {
 type CreateDeploymentReadyState string
 
 const (
+	CreateDeploymentReadyStateCanceled     CreateDeploymentReadyState = "CANCELED"
+	CreateDeploymentReadyStateError        CreateDeploymentReadyState = "ERROR"
 	CreateDeploymentReadyStateQueued       CreateDeploymentReadyState = "QUEUED"
 	CreateDeploymentReadyStateBuilding     CreateDeploymentReadyState = "BUILDING"
-	CreateDeploymentReadyStateError        CreateDeploymentReadyState = "ERROR"
 	CreateDeploymentReadyStateInitializing CreateDeploymentReadyState = "INITIALIZING"
 	CreateDeploymentReadyStateReady        CreateDeploymentReadyState = "READY"
-	CreateDeploymentReadyStateCanceled     CreateDeploymentReadyState = "CANCELED"
 )
 
 func (e CreateDeploymentReadyState) ToPointer() *CreateDeploymentReadyState {
 	return &e
 }
-
 func (e *CreateDeploymentReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
+	case "CANCELED":
+		fallthrough
+	case "ERROR":
+		fallthrough
 	case "QUEUED":
 		fallthrough
 	case "BUILDING":
 		fallthrough
-	case "ERROR":
-		fallthrough
 	case "INITIALIZING":
 		fallthrough
 	case "READY":
-		fallthrough
-	case "CANCELED":
 		*e = CreateDeploymentReadyState(v)
 		return nil
 	default:
@@ -6622,7 +3254,6 @@ const (
 func (e CreateDeploymentReadySubstate) ToPointer() *CreateDeploymentReadySubstate {
 	return &e
 }
-
 func (e *CreateDeploymentReadySubstate) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6639,35 +3270,11 @@ func (e *CreateDeploymentReadySubstate) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type CreateDeploymentMiddleware int64
-
-const (
-	CreateDeploymentMiddlewareZero CreateDeploymentMiddleware = 0
-)
-
-func (e CreateDeploymentMiddleware) ToPointer() *CreateDeploymentMiddleware {
-	return &e
-}
-
-func (e *CreateDeploymentMiddleware) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 0:
-		*e = CreateDeploymentMiddleware(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentMiddleware: %v", v)
-	}
-}
-
 // CreateDeploymentDeploymentsResponse3 - A list of routes objects used to rewrite paths to point towards other internal or external paths
 type CreateDeploymentDeploymentsResponse3 struct {
-	Continue   bool                       `json:"continue"`
-	Middleware CreateDeploymentMiddleware `json:"middleware"`
-	Src        string                     `json:"src"`
+	Continue   bool    `json:"continue"`
+	Middleware float64 `json:"middleware"`
+	Src        string  `json:"src"`
 }
 
 func (o *CreateDeploymentDeploymentsResponse3) GetContinue() bool {
@@ -6677,9 +3284,9 @@ func (o *CreateDeploymentDeploymentsResponse3) GetContinue() bool {
 	return o.Continue
 }
 
-func (o *CreateDeploymentDeploymentsResponse3) GetMiddleware() CreateDeploymentMiddleware {
+func (o *CreateDeploymentDeploymentsResponse3) GetMiddleware() float64 {
 	if o == nil {
-		return CreateDeploymentMiddleware(0)
+		return 0.0
 	}
 	return o.Middleware
 }
@@ -6698,14 +3305,13 @@ const (
 	CreateDeploymentHandleFilesystem CreateDeploymentHandle = "filesystem"
 	CreateDeploymentHandleHit        CreateDeploymentHandle = "hit"
 	CreateDeploymentHandleMiss       CreateDeploymentHandle = "miss"
-	CreateDeploymentHandleRewrite    CreateDeploymentHandle = "rewrite"
 	CreateDeploymentHandleResource   CreateDeploymentHandle = "resource"
+	CreateDeploymentHandleRewrite    CreateDeploymentHandle = "rewrite"
 )
 
 func (e CreateDeploymentHandle) ToPointer() *CreateDeploymentHandle {
 	return &e
 }
-
 func (e *CreateDeploymentHandle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6720,9 +3326,9 @@ func (e *CreateDeploymentHandle) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "miss":
 		fallthrough
-	case "rewrite":
-		fallthrough
 	case "resource":
+		fallthrough
+	case "rewrite":
 		*e = CreateDeploymentHandle(v)
 		return nil
 	default:
@@ -6730,36 +3336,36 @@ func (e *CreateDeploymentHandle) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// CreateDeploymentDeploymentsResponse200ApplicationJSON2 - A list of routes objects used to rewrite paths to point towards other internal or external paths
-type CreateDeploymentDeploymentsResponse200ApplicationJSON2 struct {
+// CreateDeploymentDeploymentsResponse2 - A list of routes objects used to rewrite paths to point towards other internal or external paths
+type CreateDeploymentDeploymentsResponse2 struct {
 	Dest   *string                `json:"dest,omitempty"`
 	Handle CreateDeploymentHandle `json:"handle"`
 	Src    *string                `json:"src,omitempty"`
-	Status *int64                 `json:"status,omitempty"`
+	Status *float64               `json:"status,omitempty"`
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON2) GetDest() *string {
+func (o *CreateDeploymentDeploymentsResponse2) GetDest() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dest
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON2) GetHandle() CreateDeploymentHandle {
+func (o *CreateDeploymentDeploymentsResponse2) GetHandle() CreateDeploymentHandle {
 	if o == nil {
 		return CreateDeploymentHandle("")
 	}
 	return o.Handle
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON2) GetSrc() *string {
+func (o *CreateDeploymentDeploymentsResponse2) GetSrc() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Src
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON2) GetStatus() *int64 {
+func (o *CreateDeploymentDeploymentsResponse2) GetStatus() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -6777,7 +3383,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6796,27 +3401,27 @@ func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes
 	}
 }
 
-type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 struct {
+type CreateDeploymentDeploymentsResponse2002 struct {
 	Key   string                                                                       `json:"key"`
 	Type  CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type `json:"type"`
 	Value *string                                                                      `json:"value,omitempty"`
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) GetKey() string {
+func (o *CreateDeploymentDeploymentsResponse2002) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type {
+func (o *CreateDeploymentDeploymentsResponse2002) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type {
 	if o == nil {
 		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) GetValue() *string {
+func (o *CreateDeploymentDeploymentsResponse2002) GetValue() *string {
 	if o == nil {
 		return nil
 	}
@@ -6832,7 +3437,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6847,86 +3451,86 @@ func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes
 	}
 }
 
-type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 struct {
+type CreateDeploymentDeploymentsResponse2001 struct {
 	Type  CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType `json:"type"`
 	Value string                                                                      `json:"value"`
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType {
+func (o *CreateDeploymentDeploymentsResponse2001) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType {
 	if o == nil {
 		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1) GetValue() string {
+func (o *CreateDeploymentDeploymentsResponse2001) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeploymentDeploymentsResponseHasType string
+type CreateDeploymentHasType string
 
 const (
-	CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 CreateDeploymentDeploymentsResponseHasType = "createDeployment_deployments_response_200_ApplicationJSON_responseBody_1"
-	CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 CreateDeploymentDeploymentsResponseHasType = "createDeployment_deployments_response_200_ApplicationJSON_responseBody_2"
+	CreateDeploymentHasTypeCreateDeploymentDeploymentsResponse2001 CreateDeploymentHasType = "createDeployment_deployments_response_200_1"
+	CreateDeploymentHasTypeCreateDeploymentDeploymentsResponse2002 CreateDeploymentHasType = "createDeployment_deployments_response_200_2"
 )
 
-type CreateDeploymentDeploymentsResponseHas struct {
-	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
-	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
+type CreateDeploymentHas struct {
+	CreateDeploymentDeploymentsResponse2001 *CreateDeploymentDeploymentsResponse2001
+	CreateDeploymentDeploymentsResponse2002 *CreateDeploymentDeploymentsResponse2002
 
-	Type CreateDeploymentDeploymentsResponseHasType
+	Type CreateDeploymentHasType
 }
 
-func CreateCreateDeploymentDeploymentsResponseHasCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1(createDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1) CreateDeploymentDeploymentsResponseHas {
-	typ := CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
+func CreateCreateDeploymentHasCreateDeploymentDeploymentsResponse2001(createDeploymentDeploymentsResponse2001 CreateDeploymentDeploymentsResponse2001) CreateDeploymentHas {
+	typ := CreateDeploymentHasTypeCreateDeploymentDeploymentsResponse2001
 
-	return CreateDeploymentDeploymentsResponseHas{
-		CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1: &createDeploymentDeploymentsResponse200ApplicationJSONResponseBody1,
-		Type: typ,
+	return CreateDeploymentHas{
+		CreateDeploymentDeploymentsResponse2001: &createDeploymentDeploymentsResponse2001,
+		Type:                                    typ,
 	}
 }
 
-func CreateCreateDeploymentDeploymentsResponseHasCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2(createDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2) CreateDeploymentDeploymentsResponseHas {
-	typ := CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
+func CreateCreateDeploymentHasCreateDeploymentDeploymentsResponse2002(createDeploymentDeploymentsResponse2002 CreateDeploymentDeploymentsResponse2002) CreateDeploymentHas {
+	typ := CreateDeploymentHasTypeCreateDeploymentDeploymentsResponse2002
 
-	return CreateDeploymentDeploymentsResponseHas{
-		CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2: &createDeploymentDeploymentsResponse200ApplicationJSONResponseBody2,
-		Type: typ,
+	return CreateDeploymentHas{
+		CreateDeploymentDeploymentsResponse2002: &createDeploymentDeploymentsResponse2002,
+		Type:                                    typ,
 	}
 }
 
-func (u *CreateDeploymentDeploymentsResponseHas) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentHas) UnmarshalJSON(data []byte) error {
 
-	createDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 := CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSONResponseBody1, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 = &createDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
-		u.Type = CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1
+	var createDeploymentDeploymentsResponse2001 CreateDeploymentDeploymentsResponse2001 = CreateDeploymentDeploymentsResponse2001{}
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse2001, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse2001 = &createDeploymentDeploymentsResponse2001
+		u.Type = CreateDeploymentHasTypeCreateDeploymentDeploymentsResponse2001
 		return nil
 	}
 
-	createDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 := CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSONResponseBody2, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 = &createDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
-		u.Type = CreateDeploymentDeploymentsResponseHasTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2
+	var createDeploymentDeploymentsResponse2002 CreateDeploymentDeploymentsResponse2002 = CreateDeploymentDeploymentsResponse2002{}
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse2002, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse2002 = &createDeploymentDeploymentsResponse2002
+		u.Type = CreateDeploymentHasTypeCreateDeploymentDeploymentsResponse2002
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreateDeploymentHas", string(data))
 }
 
-func (u CreateDeploymentDeploymentsResponseHas) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody1, "", true)
+func (u CreateDeploymentHas) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsResponse2001 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse2001, "", true)
 	}
 
-	if u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBody2, "", true)
+	if u.CreateDeploymentDeploymentsResponse2002 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse2002, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CreateDeploymentHas: all fields are null")
 }
 
 type CreateDeploymentLocale struct {
@@ -6959,7 +3563,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6978,27 +3581,27 @@ func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes
 	}
 }
 
-type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 struct {
+type CreateDeploymentDeploymentsResponse200ApplicationJSON2 struct {
 	Key   string                                                                               `json:"key"`
 	Type  CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type `json:"type"`
 	Value *string                                                                              `json:"value,omitempty"`
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2) GetKey() string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON2) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON2) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type {
 	if o == nil {
 		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2) GetValue() *string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON2) GetValue() *string {
 	if o == nil {
 		return nil
 	}
@@ -7014,7 +3617,6 @@ const (
 func (e CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType) ToPointer() *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7029,217 +3631,217 @@ func (e *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes
 	}
 }
 
-type CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 struct {
+type CreateDeploymentDeploymentsResponse200ApplicationJSON1 struct {
 	Type  CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType `json:"type"`
 	Value string                                                                              `json:"value"`
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetType() CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType {
 	if o == nil {
 		return CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1) GetValue() string {
+func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-type CreateDeploymentDeploymentsResponseMissingType string
+type CreateDeploymentMissingType string
 
 const (
-	CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 CreateDeploymentDeploymentsResponseMissingType = "createDeployment_deployments_response_200_ApplicationJSON_responseBody_routes_1"
-	CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 CreateDeploymentDeploymentsResponseMissingType = "createDeployment_deployments_response_200_ApplicationJSON_responseBody_routes_2"
+	CreateDeploymentMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSON1 CreateDeploymentMissingType = "createDeployment_deployments_response_200_ApplicationJSON_1"
+	CreateDeploymentMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSON2 CreateDeploymentMissingType = "createDeployment_deployments_response_200_ApplicationJSON_2"
 )
 
-type CreateDeploymentDeploymentsResponseMissing struct {
-	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1
-	CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 *CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2
+type CreateDeploymentMissing struct {
+	CreateDeploymentDeploymentsResponse200ApplicationJSON1 *CreateDeploymentDeploymentsResponse200ApplicationJSON1
+	CreateDeploymentDeploymentsResponse200ApplicationJSON2 *CreateDeploymentDeploymentsResponse200ApplicationJSON2
 
-	Type CreateDeploymentDeploymentsResponseMissingType
+	Type CreateDeploymentMissingType
 }
 
-func CreateCreateDeploymentDeploymentsResponseMissingCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1(createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1) CreateDeploymentDeploymentsResponseMissing {
-	typ := CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1
+func CreateCreateDeploymentMissingCreateDeploymentDeploymentsResponse200ApplicationJSON1(createDeploymentDeploymentsResponse200ApplicationJSON1 CreateDeploymentDeploymentsResponse200ApplicationJSON1) CreateDeploymentMissing {
+	typ := CreateDeploymentMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSON1
 
-	return CreateDeploymentDeploymentsResponseMissing{
-		CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1: &createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1,
+	return CreateDeploymentMissing{
+		CreateDeploymentDeploymentsResponse200ApplicationJSON1: &createDeploymentDeploymentsResponse200ApplicationJSON1,
 		Type: typ,
 	}
 }
 
-func CreateCreateDeploymentDeploymentsResponseMissingCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2(createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2) CreateDeploymentDeploymentsResponseMissing {
-	typ := CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2
+func CreateCreateDeploymentMissingCreateDeploymentDeploymentsResponse200ApplicationJSON2(createDeploymentDeploymentsResponse200ApplicationJSON2 CreateDeploymentDeploymentsResponse200ApplicationJSON2) CreateDeploymentMissing {
+	typ := CreateDeploymentMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSON2
 
-	return CreateDeploymentDeploymentsResponseMissing{
-		CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2: &createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2,
+	return CreateDeploymentMissing{
+		CreateDeploymentDeploymentsResponse200ApplicationJSON2: &createDeploymentDeploymentsResponse200ApplicationJSON2,
 		Type: typ,
 	}
 }
 
-func (u *CreateDeploymentDeploymentsResponseMissing) UnmarshalJSON(data []byte) error {
+func (u *CreateDeploymentMissing) UnmarshalJSON(data []byte) error {
 
-	createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 := CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 = &createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1
-		u.Type = CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1
+	var createDeploymentDeploymentsResponse200ApplicationJSON1 CreateDeploymentDeploymentsResponse200ApplicationJSON1 = CreateDeploymentDeploymentsResponse200ApplicationJSON1{}
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSON1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse200ApplicationJSON1 = &createDeploymentDeploymentsResponse200ApplicationJSON1
+		u.Type = CreateDeploymentMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSON1
 		return nil
 	}
 
-	createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 := CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 = &createDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2
-		u.Type = CreateDeploymentDeploymentsResponseMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2
+	var createDeploymentDeploymentsResponse200ApplicationJSON2 CreateDeploymentDeploymentsResponse200ApplicationJSON2 = CreateDeploymentDeploymentsResponse200ApplicationJSON2{}
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSON2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse200ApplicationJSON2 = &createDeploymentDeploymentsResponse200ApplicationJSON2
+		u.Type = CreateDeploymentMissingTypeCreateDeploymentDeploymentsResponse200ApplicationJSON2
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreateDeploymentMissing", string(data))
 }
 
-func (u CreateDeploymentDeploymentsResponseMissing) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1, "", true)
+func (u CreateDeploymentMissing) MarshalJSON() ([]byte, error) {
+	if u.CreateDeploymentDeploymentsResponse200ApplicationJSON1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSON1, "", true)
 	}
 
-	if u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes2, "", true)
+	if u.CreateDeploymentDeploymentsResponse200ApplicationJSON2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSON2, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CreateDeploymentMissing: all fields are null")
 }
 
-// CreateDeploymentDeploymentsResponse200ApplicationJSON1 - A list of routes objects used to rewrite paths to point towards other internal or external paths
-type CreateDeploymentDeploymentsResponse200ApplicationJSON1 struct {
-	CaseSensitive *bool                                    `json:"caseSensitive,omitempty"`
-	Check         *bool                                    `json:"check,omitempty"`
-	Continue      *bool                                    `json:"continue,omitempty"`
-	Dest          *string                                  `json:"dest,omitempty"`
-	Has           []CreateDeploymentDeploymentsResponseHas `json:"has,omitempty"`
-	Headers       map[string]string                        `json:"headers,omitempty"`
-	Important     *bool                                    `json:"important,omitempty"`
-	Locale        *CreateDeploymentLocale                  `json:"locale,omitempty"`
-	Methods       []string                                 `json:"methods,omitempty"`
+// CreateDeploymentDeploymentsResponse1 - A list of routes objects used to rewrite paths to point towards other internal or external paths
+type CreateDeploymentDeploymentsResponse1 struct {
+	CaseSensitive *bool                   `json:"caseSensitive,omitempty"`
+	Check         *bool                   `json:"check,omitempty"`
+	Continue      *bool                   `json:"continue,omitempty"`
+	Dest          *string                 `json:"dest,omitempty"`
+	Has           []CreateDeploymentHas   `json:"has,omitempty"`
+	Headers       map[string]string       `json:"headers,omitempty"`
+	Important     *bool                   `json:"important,omitempty"`
+	Locale        *CreateDeploymentLocale `json:"locale,omitempty"`
+	Methods       []string                `json:"methods,omitempty"`
 	// A middleware index in the `middleware` key under the build result
-	Middleware *int64 `json:"middleware,omitempty"`
+	Middleware *float64 `json:"middleware,omitempty"`
 	// A middleware key within the `output` key under the build result. Overrides a `middleware` definition.
 	MiddlewarePath *string `json:"middlewarePath,omitempty"`
 	// The original middleware matchers.
-	MiddlewareRawSrc []string                                     `json:"middlewareRawSrc,omitempty"`
-	Missing          []CreateDeploymentDeploymentsResponseMissing `json:"missing,omitempty"`
-	Override         *bool                                        `json:"override,omitempty"`
-	Src              string                                       `json:"src"`
-	Status           *int64                                       `json:"status,omitempty"`
+	MiddlewareRawSrc []string                  `json:"middlewareRawSrc,omitempty"`
+	Missing          []CreateDeploymentMissing `json:"missing,omitempty"`
+	Override         *bool                     `json:"override,omitempty"`
+	Src              string                    `json:"src"`
+	Status           *float64                  `json:"status,omitempty"`
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetCaseSensitive() *bool {
+func (o *CreateDeploymentDeploymentsResponse1) GetCaseSensitive() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.CaseSensitive
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetCheck() *bool {
+func (o *CreateDeploymentDeploymentsResponse1) GetCheck() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Check
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetContinue() *bool {
+func (o *CreateDeploymentDeploymentsResponse1) GetContinue() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Continue
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetDest() *string {
+func (o *CreateDeploymentDeploymentsResponse1) GetDest() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dest
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetHas() []CreateDeploymentDeploymentsResponseHas {
+func (o *CreateDeploymentDeploymentsResponse1) GetHas() []CreateDeploymentHas {
 	if o == nil {
 		return nil
 	}
 	return o.Has
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetHeaders() map[string]string {
+func (o *CreateDeploymentDeploymentsResponse1) GetHeaders() map[string]string {
 	if o == nil {
 		return nil
 	}
 	return o.Headers
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetImportant() *bool {
+func (o *CreateDeploymentDeploymentsResponse1) GetImportant() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Important
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetLocale() *CreateDeploymentLocale {
+func (o *CreateDeploymentDeploymentsResponse1) GetLocale() *CreateDeploymentLocale {
 	if o == nil {
 		return nil
 	}
 	return o.Locale
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetMethods() []string {
+func (o *CreateDeploymentDeploymentsResponse1) GetMethods() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Methods
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetMiddleware() *int64 {
+func (o *CreateDeploymentDeploymentsResponse1) GetMiddleware() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Middleware
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetMiddlewarePath() *string {
+func (o *CreateDeploymentDeploymentsResponse1) GetMiddlewarePath() *string {
 	if o == nil {
 		return nil
 	}
 	return o.MiddlewarePath
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetMiddlewareRawSrc() []string {
+func (o *CreateDeploymentDeploymentsResponse1) GetMiddlewareRawSrc() []string {
 	if o == nil {
 		return nil
 	}
 	return o.MiddlewareRawSrc
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetMissing() []CreateDeploymentDeploymentsResponseMissing {
+func (o *CreateDeploymentDeploymentsResponse1) GetMissing() []CreateDeploymentMissing {
 	if o == nil {
 		return nil
 	}
 	return o.Missing
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetOverride() *bool {
+func (o *CreateDeploymentDeploymentsResponse1) GetOverride() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Override
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetSrc() string {
+func (o *CreateDeploymentDeploymentsResponse1) GetSrc() string {
 	if o == nil {
 		return ""
 	}
 	return o.Src
 }
 
-func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetStatus() *int64 {
+func (o *CreateDeploymentDeploymentsResponse1) GetStatus() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -7249,34 +3851,34 @@ func (o *CreateDeploymentDeploymentsResponse200ApplicationJSON1) GetStatus() *in
 type CreateDeploymentRoutesType string
 
 const (
-	CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON1 CreateDeploymentRoutesType = "createDeployment_deployments_response_200_ApplicationJSON_1"
-	CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON2 CreateDeploymentRoutesType = "createDeployment_deployments_response_200_ApplicationJSON_2"
-	CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse3                   CreateDeploymentRoutesType = "createDeployment_deployments_response_3"
+	CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse1 CreateDeploymentRoutesType = "createDeployment_deployments_response_1"
+	CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse2 CreateDeploymentRoutesType = "createDeployment_deployments_response_2"
+	CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse3 CreateDeploymentRoutesType = "createDeployment_deployments_response_3"
 )
 
 type CreateDeploymentRoutes struct {
-	CreateDeploymentDeploymentsResponse200ApplicationJSON1 *CreateDeploymentDeploymentsResponse200ApplicationJSON1
-	CreateDeploymentDeploymentsResponse200ApplicationJSON2 *CreateDeploymentDeploymentsResponse200ApplicationJSON2
-	CreateDeploymentDeploymentsResponse3                   *CreateDeploymentDeploymentsResponse3
+	CreateDeploymentDeploymentsResponse1 *CreateDeploymentDeploymentsResponse1
+	CreateDeploymentDeploymentsResponse2 *CreateDeploymentDeploymentsResponse2
+	CreateDeploymentDeploymentsResponse3 *CreateDeploymentDeploymentsResponse3
 
 	Type CreateDeploymentRoutesType
 }
 
-func CreateCreateDeploymentRoutesCreateDeploymentDeploymentsResponse200ApplicationJSON1(createDeploymentDeploymentsResponse200ApplicationJSON1 CreateDeploymentDeploymentsResponse200ApplicationJSON1) CreateDeploymentRoutes {
-	typ := CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON1
+func CreateCreateDeploymentRoutesCreateDeploymentDeploymentsResponse1(createDeploymentDeploymentsResponse1 CreateDeploymentDeploymentsResponse1) CreateDeploymentRoutes {
+	typ := CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse1
 
 	return CreateDeploymentRoutes{
-		CreateDeploymentDeploymentsResponse200ApplicationJSON1: &createDeploymentDeploymentsResponse200ApplicationJSON1,
-		Type: typ,
+		CreateDeploymentDeploymentsResponse1: &createDeploymentDeploymentsResponse1,
+		Type:                                 typ,
 	}
 }
 
-func CreateCreateDeploymentRoutesCreateDeploymentDeploymentsResponse200ApplicationJSON2(createDeploymentDeploymentsResponse200ApplicationJSON2 CreateDeploymentDeploymentsResponse200ApplicationJSON2) CreateDeploymentRoutes {
-	typ := CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON2
+func CreateCreateDeploymentRoutesCreateDeploymentDeploymentsResponse2(createDeploymentDeploymentsResponse2 CreateDeploymentDeploymentsResponse2) CreateDeploymentRoutes {
+	typ := CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse2
 
 	return CreateDeploymentRoutes{
-		CreateDeploymentDeploymentsResponse200ApplicationJSON2: &createDeploymentDeploymentsResponse200ApplicationJSON2,
-		Type: typ,
+		CreateDeploymentDeploymentsResponse2: &createDeploymentDeploymentsResponse2,
+		Type:                                 typ,
 	}
 }
 
@@ -7291,61 +3893,61 @@ func CreateCreateDeploymentRoutesCreateDeploymentDeploymentsResponse3(createDepl
 
 func (u *CreateDeploymentRoutes) UnmarshalJSON(data []byte) error {
 
-	createDeploymentDeploymentsResponse3 := CreateDeploymentDeploymentsResponse3{}
+	var createDeploymentDeploymentsResponse3 CreateDeploymentDeploymentsResponse3 = CreateDeploymentDeploymentsResponse3{}
 	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse3, "", true, true); err == nil {
 		u.CreateDeploymentDeploymentsResponse3 = &createDeploymentDeploymentsResponse3
 		u.Type = CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse3
 		return nil
 	}
 
-	createDeploymentDeploymentsResponse200ApplicationJSON2 := CreateDeploymentDeploymentsResponse200ApplicationJSON2{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSON2, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsResponse200ApplicationJSON2 = &createDeploymentDeploymentsResponse200ApplicationJSON2
-		u.Type = CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON2
+	var createDeploymentDeploymentsResponse2 CreateDeploymentDeploymentsResponse2 = CreateDeploymentDeploymentsResponse2{}
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse2, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse2 = &createDeploymentDeploymentsResponse2
+		u.Type = CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse2
 		return nil
 	}
 
-	createDeploymentDeploymentsResponse200ApplicationJSON1 := CreateDeploymentDeploymentsResponse200ApplicationJSON1{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse200ApplicationJSON1, "", true, true); err == nil {
-		u.CreateDeploymentDeploymentsResponse200ApplicationJSON1 = &createDeploymentDeploymentsResponse200ApplicationJSON1
-		u.Type = CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse200ApplicationJSON1
+	var createDeploymentDeploymentsResponse1 CreateDeploymentDeploymentsResponse1 = CreateDeploymentDeploymentsResponse1{}
+	if err := utils.UnmarshalJSON(data, &createDeploymentDeploymentsResponse1, "", true, true); err == nil {
+		u.CreateDeploymentDeploymentsResponse1 = &createDeploymentDeploymentsResponse1
+		u.Type = CreateDeploymentRoutesTypeCreateDeploymentDeploymentsResponse1
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreateDeploymentRoutes", string(data))
 }
 
 func (u CreateDeploymentRoutes) MarshalJSON() ([]byte, error) {
-	if u.CreateDeploymentDeploymentsResponse200ApplicationJSON1 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSON1, "", true)
+	if u.CreateDeploymentDeploymentsResponse1 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse1, "", true)
 	}
 
-	if u.CreateDeploymentDeploymentsResponse200ApplicationJSON2 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse200ApplicationJSON2, "", true)
+	if u.CreateDeploymentDeploymentsResponse2 != nil {
+		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse2, "", true)
 	}
 
 	if u.CreateDeploymentDeploymentsResponse3 != nil {
 		return utils.MarshalJSON(u.CreateDeploymentDeploymentsResponse3, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CreateDeploymentRoutes: all fields are null")
 }
 
 // CreateDeploymentSource - Where was the deployment created from
 type CreateDeploymentSource string
 
 const (
-	CreateDeploymentSourceCli        CreateDeploymentSource = "cli"
-	CreateDeploymentSourceGit        CreateDeploymentSource = "git"
-	CreateDeploymentSourceImport     CreateDeploymentSource = "import"
-	CreateDeploymentSourceImportRepo CreateDeploymentSource = "import/repo"
-	CreateDeploymentSourceCloneRepo  CreateDeploymentSource = "clone/repo"
+	CreateDeploymentSourceCli                 CreateDeploymentSource = "cli"
+	CreateDeploymentSourceGit                 CreateDeploymentSource = "git"
+	CreateDeploymentSourceImport              CreateDeploymentSource = "import"
+	CreateDeploymentSourceImportRepo          CreateDeploymentSource = "import/repo"
+	CreateDeploymentSourceCloneRepo           CreateDeploymentSource = "clone/repo"
+	CreateDeploymentSourceAPITriggerGitDeploy CreateDeploymentSource = "api-trigger-git-deploy"
 )
 
 func (e CreateDeploymentSource) ToPointer() *CreateDeploymentSource {
 	return &e
 }
-
 func (e *CreateDeploymentSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7361,6 +3963,8 @@ func (e *CreateDeploymentSource) UnmarshalJSON(data []byte) error {
 	case "import/repo":
 		fallthrough
 	case "clone/repo":
+		fallthrough
+	case "api-trigger-git-deploy":
 		*e = CreateDeploymentSource(v)
 		return nil
 	default:
@@ -7379,7 +3983,6 @@ const (
 func (e CreateDeploymentTarget) ToPointer() *CreateDeploymentTarget {
 	return &e
 }
-
 func (e *CreateDeploymentTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7398,12 +4001,21 @@ func (e *CreateDeploymentTarget) UnmarshalJSON(data []byte) error {
 
 // CreateDeploymentTeam - The team that owns the deployment if any
 type CreateDeploymentTeam struct {
+	// The avatar of the team owner
+	Avatar *string `json:"avatar,omitempty"`
 	// The ID of the team owner
 	ID string `json:"id"`
 	// The name of the team owner
 	Name string `json:"name"`
 	// The slug of the team owner
 	Slug string `json:"slug"`
+}
+
+func (o *CreateDeploymentTeam) GetAvatar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Avatar
 }
 
 func (o *CreateDeploymentTeam) GetID() string {
@@ -7436,7 +4048,6 @@ const (
 func (e CreateDeploymentDeploymentsResponseType) ToPointer() *CreateDeploymentDeploymentsResponseType {
 	return &e
 }
-
 func (e *CreateDeploymentDeploymentsResponseType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7451,33 +4062,10 @@ func (e *CreateDeploymentDeploymentsResponseType) UnmarshalJSON(data []byte) err
 	}
 }
 
-// CreateDeploymentVersion - The platform version that was used to create the deployment.
-type CreateDeploymentVersion int64
-
-const (
-	CreateDeploymentVersionTwo CreateDeploymentVersion = 2
-)
-
-func (e CreateDeploymentVersion) ToPointer() *CreateDeploymentVersion {
-	return &e
-}
-
-func (e *CreateDeploymentVersion) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 2:
-		*e = CreateDeploymentVersion(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateDeploymentVersion: %v", v)
-	}
-}
-
 // CreateDeploymentResponseBody - The successfully created deployment
 type CreateDeploymentResponseBody struct {
+	// The public project information associated with the deployment.
+	ProjectObj *ProjectObj `json:"project,omitempty"`
 	// A list of all the aliases (default aliases, staging aliases and production aliases) that were assigned upon deployment creation
 	Alias []string `json:"alias"`
 	// A boolean that will be true when the aliases from the alias property were assigned successfully
@@ -7489,12 +4077,12 @@ type CreateDeploymentResponseBody struct {
 	AliasWarning            *CreateDeploymentAliasWarning     `json:"aliasWarning,omitempty"`
 	AutoAssignCustomDomains *bool                             `json:"autoAssignCustomDomains,omitempty"`
 	AutomaticAliases        []string                          `json:"automaticAliases,omitempty"`
-	BootedAt                int64                             `json:"bootedAt"`
+	BootedAt                float64                           `json:"bootedAt"`
 	Build                   CreateDeploymentBuild             `json:"build"`
-	BuildErrorAt            *int64                            `json:"buildErrorAt,omitempty"`
-	BuildingAt              int64                             `json:"buildingAt"`
+	BuildErrorAt            *float64                          `json:"buildErrorAt,omitempty"`
+	BuildingAt              float64                           `json:"buildingAt"`
 	Builds                  []CreateDeploymentBuilds          `json:"builds,omitempty"`
-	CanceledAt              *int64                            `json:"canceledAt,omitempty"`
+	CanceledAt              *float64                          `json:"canceledAt,omitempty"`
 	ChecksConclusion        *CreateDeploymentChecksConclusion `json:"checksConclusion,omitempty"`
 	ChecksState             *CreateDeploymentChecksState      `json:"checksState,omitempty"`
 	// The flag saying if Vercel Connect configuration is used for builds
@@ -7502,11 +4090,13 @@ type CreateDeploymentResponseBody struct {
 	// The ID of Vercel Connect configuration used for this deployment
 	ConnectConfigurationID *string `json:"connectConfigurationId,omitempty"`
 	// A number containing the date when the deployment was created in milliseconds
-	CreatedAt int64 `json:"createdAt"`
+	CreatedAt float64 `json:"createdAt"`
 	// The region where the deployment was first created
 	CreatedIn string `json:"createdIn"`
 	// Information about the deployment creator
 	Creator CreateDeploymentCreator `json:"creator"`
+	// The cron jobs associated with this deployment. Note that preview deployments are also allowed to have this property, but only production deployments create cron jobs. If a preview deployment is promoted to production, only then they'll take effect.
+	Crons []CreateDeploymentCrons `json:"crons,omitempty"`
 	// The keys of the environment variables that were assigned during runtime
 	Env          []string `json:"env"`
 	ErrorCode    *string  `json:"errorCode,omitempty"`
@@ -7532,6 +4122,9 @@ type CreateDeploymentResponseBody struct {
 	Name string `json:"name"`
 	// The unique ID of the user or team the deployment belongs to
 	OwnerID string `json:"ownerId"`
+	// The connect configuration ID used to deploy passive lambdas into for secure compute enabled deployments.
+	PassiveConnectConfigurationID *string  `json:"passiveConnectConfigurationId,omitempty"`
+	PassiveRegions                []string `json:"passiveRegions,omitempty"`
 	// The pricing plan the deployment was made under
 	Plan CreateDeploymentPlan `json:"plan"`
 	// Whether or not preview comments are enabled for the deployment
@@ -7560,7 +4153,14 @@ type CreateDeploymentResponseBody struct {
 	// An array of domains that were provided by the user when creating the Deployment.
 	UserAliases []string `json:"userAliases,omitempty"`
 	// The platform version that was used to create the deployment.
-	Version CreateDeploymentVersion `json:"version"`
+	Version float64 `json:"version"`
+}
+
+func (o *CreateDeploymentResponseBody) GetProjectObj() *ProjectObj {
+	if o == nil {
+		return nil
+	}
+	return o.ProjectObj
 }
 
 func (o *CreateDeploymentResponseBody) GetAlias() []string {
@@ -7619,9 +4219,9 @@ func (o *CreateDeploymentResponseBody) GetAutomaticAliases() []string {
 	return o.AutomaticAliases
 }
 
-func (o *CreateDeploymentResponseBody) GetBootedAt() int64 {
+func (o *CreateDeploymentResponseBody) GetBootedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.BootedAt
 }
@@ -7633,16 +4233,16 @@ func (o *CreateDeploymentResponseBody) GetBuild() CreateDeploymentBuild {
 	return o.Build
 }
 
-func (o *CreateDeploymentResponseBody) GetBuildErrorAt() *int64 {
+func (o *CreateDeploymentResponseBody) GetBuildErrorAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.BuildErrorAt
 }
 
-func (o *CreateDeploymentResponseBody) GetBuildingAt() int64 {
+func (o *CreateDeploymentResponseBody) GetBuildingAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.BuildingAt
 }
@@ -7654,7 +4254,7 @@ func (o *CreateDeploymentResponseBody) GetBuilds() []CreateDeploymentBuilds {
 	return o.Builds
 }
 
-func (o *CreateDeploymentResponseBody) GetCanceledAt() *int64 {
+func (o *CreateDeploymentResponseBody) GetCanceledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -7689,9 +4289,9 @@ func (o *CreateDeploymentResponseBody) GetConnectConfigurationID() *string {
 	return o.ConnectConfigurationID
 }
 
-func (o *CreateDeploymentResponseBody) GetCreatedAt() int64 {
+func (o *CreateDeploymentResponseBody) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -7708,6 +4308,13 @@ func (o *CreateDeploymentResponseBody) GetCreator() CreateDeploymentCreator {
 		return CreateDeploymentCreator{}
 	}
 	return o.Creator
+}
+
+func (o *CreateDeploymentResponseBody) GetCrons() []CreateDeploymentCrons {
+	if o == nil {
+		return nil
+	}
+	return o.Crons
 }
 
 func (o *CreateDeploymentResponseBody) GetEnv() []string {
@@ -7822,6 +4429,20 @@ func (o *CreateDeploymentResponseBody) GetOwnerID() string {
 	return o.OwnerID
 }
 
+func (o *CreateDeploymentResponseBody) GetPassiveConnectConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PassiveConnectConfigurationID
+}
+
+func (o *CreateDeploymentResponseBody) GetPassiveRegions() []string {
+	if o == nil {
+		return nil
+	}
+	return o.PassiveRegions
+}
+
 func (o *CreateDeploymentResponseBody) GetPlan() CreateDeploymentPlan {
 	if o == nil {
 		return CreateDeploymentPlan("")
@@ -7920,9 +4541,9 @@ func (o *CreateDeploymentResponseBody) GetUserAliases() []string {
 	return o.UserAliases
 }
 
-func (o *CreateDeploymentResponseBody) GetVersion() CreateDeploymentVersion {
+func (o *CreateDeploymentResponseBody) GetVersion() float64 {
 	if o == nil {
-		return CreateDeploymentVersion(0)
+		return 0.0
 	}
 	return o.Version
 }

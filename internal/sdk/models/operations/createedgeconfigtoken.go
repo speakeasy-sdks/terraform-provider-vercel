@@ -20,7 +20,9 @@ func (o *CreateEdgeConfigTokenRequestBody) GetLabel() string {
 type CreateEdgeConfigTokenRequest struct {
 	RequestBody  *CreateEdgeConfigTokenRequestBody `request:"mediaType=application/json"`
 	EdgeConfigID string                            `pathParam:"style=simple,explode=false,name=edgeConfigId"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -36,6 +38,13 @@ func (o *CreateEdgeConfigTokenRequest) GetEdgeConfigID() string {
 		return ""
 	}
 	return o.EdgeConfigID
+}
+
+func (o *CreateEdgeConfigTokenRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *CreateEdgeConfigTokenRequest) GetTeamID() *string {

@@ -21,7 +21,6 @@ const (
 func (e EditProjectEnvTarget) ToPointer() *EditProjectEnvTarget {
 	return &e
 }
-
 func (e *EditProjectEnvTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -54,7 +53,6 @@ const (
 func (e EditProjectEnvType) ToPointer() *EditProjectEnvType {
 	return &e
 }
-
 func (e *EditProjectEnvType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -78,7 +76,10 @@ func (e *EditProjectEnvType) UnmarshalJSON(data []byte) error {
 }
 
 type EditProjectEnvRequestBody struct {
-	// The git branch of the environment variable
+	// A comment to add context on what this env var is for
+	Comment             *string `json:"comment,omitempty"`
+	CustomEnvironmentID *string `json:"customEnvironmentId,omitempty"`
+	// If defined, the git branch of the environment variable (must have target=preview)
 	GitBranch *string `json:"gitBranch,omitempty"`
 	// The name of the environment variable
 	Key *string `json:"key,omitempty"`
@@ -88,6 +89,20 @@ type EditProjectEnvRequestBody struct {
 	Type *EditProjectEnvType `json:"type,omitempty"`
 	// The value of the environment variable
 	Value *string `json:"value,omitempty"`
+}
+
+func (o *EditProjectEnvRequestBody) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *EditProjectEnvRequestBody) GetCustomEnvironmentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomEnvironmentID
 }
 
 func (o *EditProjectEnvRequestBody) GetGitBranch() *string {
@@ -131,7 +146,9 @@ type EditProjectEnvRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 	// The unique project identifier or the project name
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -156,11 +173,102 @@ func (o *EditProjectEnvRequest) GetIDOrName() string {
 	return o.IDOrName
 }
 
+func (o *EditProjectEnvRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 func (o *EditProjectEnvRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
+}
+
+type EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType string
+
+const (
+	EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyTypeIntegrationStoreSecret EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType = "integration-store-secret"
+)
+
+func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType {
+	return &e
+}
+func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "integration-store-secret":
+		*e = EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType: %v", v)
+	}
+}
+
+type Fourteen struct {
+	StoreID string                                                           `json:"storeId"`
+	Type    EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType `json:"type"`
+}
+
+func (o *Fourteen) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *Fourteen) GetType() EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType {
+	if o == nil {
+		return EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType("")
+	}
+	return o.Type
+}
+
+type EditProjectEnvProjectsResponse200ApplicationJSONType string
+
+const (
+	EditProjectEnvProjectsResponse200ApplicationJSONTypePostgresURLNoSsl EditProjectEnvProjectsResponse200ApplicationJSONType = "postgres-url-no-ssl"
+)
+
+func (e EditProjectEnvProjectsResponse200ApplicationJSONType) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONType {
+	return &e
+}
+func (e *EditProjectEnvProjectsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-url-no-ssl":
+		*e = EditProjectEnvProjectsResponse200ApplicationJSONType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for EditProjectEnvProjectsResponse200ApplicationJSONType: %v", v)
+	}
+}
+
+type Thirteen struct {
+	StoreID string                                               `json:"storeId"`
+	Type    EditProjectEnvProjectsResponse200ApplicationJSONType `json:"type"`
+}
+
+func (o *Thirteen) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *Thirteen) GetType() EditProjectEnvProjectsResponse200ApplicationJSONType {
+	if o == nil {
+		return EditProjectEnvProjectsResponse200ApplicationJSONType("")
+	}
+	return o.Type
 }
 
 type EditProjectEnvProjectsResponse200Type string
@@ -172,7 +280,6 @@ const (
 func (e EditProjectEnvProjectsResponse200Type) ToPointer() *EditProjectEnvProjectsResponse200Type {
 	return &e
 }
-
 func (e *EditProjectEnvProjectsResponse200Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -206,33 +313,32 @@ func (o *Twelve) GetType() EditProjectEnvProjectsResponse200Type {
 	return o.Type
 }
 
-type EditProjectEnvProjectsResponseType string
+type EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint11Type string
 
 const (
-	EditProjectEnvProjectsResponseTypePostgresPassword EditProjectEnvProjectsResponseType = "postgres-password"
+	EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint11TypePostgresPassword EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint11Type = "postgres-password"
 )
 
-func (e EditProjectEnvProjectsResponseType) ToPointer() *EditProjectEnvProjectsResponseType {
+func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint11Type) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint11Type {
 	return &e
 }
-
-func (e *EditProjectEnvProjectsResponseType) UnmarshalJSON(data []byte) error {
+func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint11Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres-password":
-		*e = EditProjectEnvProjectsResponseType(v)
+		*e = EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint11Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for EditProjectEnvProjectsResponseType: %v", v)
+		return fmt.Errorf("invalid value for EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint11Type: %v", v)
 	}
 }
 
 type Eleven struct {
-	StoreID string                             `json:"storeId"`
-	Type    EditProjectEnvProjectsResponseType `json:"type"`
+	StoreID string                                                                        `json:"storeId"`
+	Type    EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint11Type `json:"type"`
 }
 
 func (o *Eleven) GetStoreID() string {
@@ -242,9 +348,9 @@ func (o *Eleven) GetStoreID() string {
 	return o.StoreID
 }
 
-func (o *Eleven) GetType() EditProjectEnvProjectsResponseType {
+func (o *Eleven) GetType() EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint11Type {
 	if o == nil {
-		return EditProjectEnvProjectsResponseType("")
+		return EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint11Type("")
 	}
 	return o.Type
 }
@@ -258,7 +364,6 @@ const (
 func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint10Type) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint10Type {
 	return &e
 }
-
 func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint10Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -273,19 +378,19 @@ func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint
 	}
 }
 
-type Ten struct {
+type EditProjectEnv10 struct {
 	StoreID string                                                                        `json:"storeId"`
 	Type    EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint10Type `json:"type"`
 }
 
-func (o *Ten) GetStoreID() string {
+func (o *EditProjectEnv10) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
 	return o.StoreID
 }
 
-func (o *Ten) GetType() EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint10Type {
+func (o *EditProjectEnv10) GetType() EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint10Type {
 	if o == nil {
 		return EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint10Type("")
 	}
@@ -301,7 +406,6 @@ const (
 func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint9Type) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint9Type {
 	return &e
 }
-
 func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -344,7 +448,6 @@ const (
 func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint8Type) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint8Type {
 	return &e
 }
-
 func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -387,7 +490,6 @@ const (
 func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint7Type) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint7Type {
 	return &e
 }
-
 func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -430,7 +532,6 @@ const (
 func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint6Type) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint6Type {
 	return &e
 }
-
 func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -473,7 +574,6 @@ const (
 func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint5Type) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint5Type {
 	return &e
 }
-
 func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -516,7 +616,6 @@ const (
 func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint4Type) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint4Type {
 	return &e
 }
-
 func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint4Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -550,33 +649,32 @@ func (o *EditProjectEnv4) GetType() EditProjectEnvProjectsResponse200Application
 	return o.Type
 }
 
-type EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType string
+type EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint3Type string
 
 const (
-	EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintTypeRedisRestAPIToken EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType = "redis-rest-api-token"
+	EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint3TypeRedisRestAPIToken EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint3Type = "redis-rest-api-token"
 )
 
-func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType {
+func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint3Type) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint3Type {
 	return &e
 }
-
-func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType) UnmarshalJSON(data []byte) error {
+func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-token":
-		*e = EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType(v)
+		*e = EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint3Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType: %v", v)
+		return fmt.Errorf("invalid value for EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint3Type: %v", v)
 	}
 }
 
 type EditProjectEnv3 struct {
-	StoreID string                                                                      `json:"storeId"`
-	Type    EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType `json:"type"`
+	StoreID string                                                                       `json:"storeId"`
+	Type    EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint3Type `json:"type"`
 }
 
 func (o *EditProjectEnv3) GetStoreID() string {
@@ -586,40 +684,39 @@ func (o *EditProjectEnv3) GetStoreID() string {
 	return o.StoreID
 }
 
-func (o *EditProjectEnv3) GetType() EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType {
+func (o *EditProjectEnv3) GetType() EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint3Type {
 	if o == nil {
-		return EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType("")
+		return EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint3Type("")
 	}
 	return o.Type
 }
 
-type EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType string
+type EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint2Type string
 
 const (
-	EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyTypeRedisRestAPIURL EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType = "redis-rest-api-url"
+	EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint2TypeRedisRestAPIURL EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint2Type = "redis-rest-api-url"
 )
 
-func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType {
+func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint2Type) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint2Type {
 	return &e
 }
-
-func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
+func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-url":
-		*e = EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType(v)
+		*e = EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint2Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType: %v", v)
+		return fmt.Errorf("invalid value for EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint2Type: %v", v)
 	}
 }
 
 type EditProjectEnv2 struct {
-	StoreID string                                                           `json:"storeId"`
-	Type    EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType `json:"type"`
+	StoreID string                                                                       `json:"storeId"`
+	Type    EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint2Type `json:"type"`
 }
 
 func (o *EditProjectEnv2) GetStoreID() string {
@@ -629,40 +726,39 @@ func (o *EditProjectEnv2) GetStoreID() string {
 	return o.StoreID
 }
 
-func (o *EditProjectEnv2) GetType() EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType {
+func (o *EditProjectEnv2) GetType() EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint2Type {
 	if o == nil {
-		return EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyType("")
+		return EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHint2Type("")
 	}
 	return o.Type
 }
 
-type EditProjectEnvProjectsResponse200ApplicationJSONType string
+type EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType string
 
 const (
-	EditProjectEnvProjectsResponse200ApplicationJSONTypeRedisURL EditProjectEnvProjectsResponse200ApplicationJSONType = "redis-url"
+	EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintTypeRedisURL EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType = "redis-url"
 )
 
-func (e EditProjectEnvProjectsResponse200ApplicationJSONType) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONType {
+func (e EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType) ToPointer() *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType {
 	return &e
 }
-
-func (e *EditProjectEnvProjectsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
+func (e *EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-url":
-		*e = EditProjectEnvProjectsResponse200ApplicationJSONType(v)
+		*e = EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for EditProjectEnvProjectsResponse200ApplicationJSONType: %v", v)
+		return fmt.Errorf("invalid value for EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType: %v", v)
 	}
 }
 
 type EditProjectEnv1 struct {
-	StoreID string                                               `json:"storeId"`
-	Type    EditProjectEnvProjectsResponse200ApplicationJSONType `json:"type"`
+	StoreID string                                                                      `json:"storeId"`
+	Type    EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType `json:"type"`
 }
 
 func (o *EditProjectEnv1) GetStoreID() string {
@@ -672,9 +768,9 @@ func (o *EditProjectEnv1) GetStoreID() string {
 	return o.StoreID
 }
 
-func (o *EditProjectEnv1) GetType() EditProjectEnvProjectsResponse200ApplicationJSONType {
+func (o *EditProjectEnv1) GetType() EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType {
 	if o == nil {
-		return EditProjectEnvProjectsResponse200ApplicationJSONType("")
+		return EditProjectEnvProjectsResponse200ApplicationJSONResponseBodyContentHintType("")
 	}
 	return o.Type
 }
@@ -682,33 +778,37 @@ func (o *EditProjectEnv1) GetType() EditProjectEnvProjectsResponse200Application
 type ContentHintType string
 
 const (
-	ContentHintTypeEditProjectEnv1 ContentHintType = "editProjectEnv_1"
-	ContentHintTypeEditProjectEnv2 ContentHintType = "editProjectEnv_2"
-	ContentHintTypeEditProjectEnv3 ContentHintType = "editProjectEnv_3"
-	ContentHintTypeEditProjectEnv4 ContentHintType = "editProjectEnv_4"
-	ContentHintTypeEditProjectEnv5 ContentHintType = "editProjectEnv_5"
-	ContentHintTypeEditProjectEnv6 ContentHintType = "editProjectEnv_6"
-	ContentHintTypeEditProjectEnv7 ContentHintType = "editProjectEnv_7"
-	ContentHintTypeEditProjectEnv8 ContentHintType = "editProjectEnv_8"
-	ContentHintTypeEditProjectEnv9 ContentHintType = "editProjectEnv_9"
-	ContentHintTypeTen             ContentHintType = "10"
-	ContentHintTypeEleven          ContentHintType = "11"
-	ContentHintTypeTwelve          ContentHintType = "12"
+	ContentHintTypeEditProjectEnv1  ContentHintType = "editProjectEnv_1"
+	ContentHintTypeEditProjectEnv2  ContentHintType = "editProjectEnv_2"
+	ContentHintTypeEditProjectEnv3  ContentHintType = "editProjectEnv_3"
+	ContentHintTypeEditProjectEnv4  ContentHintType = "editProjectEnv_4"
+	ContentHintTypeEditProjectEnv5  ContentHintType = "editProjectEnv_5"
+	ContentHintTypeEditProjectEnv6  ContentHintType = "editProjectEnv_6"
+	ContentHintTypeEditProjectEnv7  ContentHintType = "editProjectEnv_7"
+	ContentHintTypeEditProjectEnv8  ContentHintType = "editProjectEnv_8"
+	ContentHintTypeEditProjectEnv9  ContentHintType = "editProjectEnv_9"
+	ContentHintTypeEditProjectEnv10 ContentHintType = "editProjectEnv_10"
+	ContentHintTypeEleven           ContentHintType = "11"
+	ContentHintTypeTwelve           ContentHintType = "12"
+	ContentHintTypeThirteen         ContentHintType = "13"
+	ContentHintTypeFourteen         ContentHintType = "14"
 )
 
 type ContentHint struct {
-	EditProjectEnv1 *EditProjectEnv1
-	EditProjectEnv2 *EditProjectEnv2
-	EditProjectEnv3 *EditProjectEnv3
-	EditProjectEnv4 *EditProjectEnv4
-	EditProjectEnv5 *EditProjectEnv5
-	EditProjectEnv6 *EditProjectEnv6
-	EditProjectEnv7 *EditProjectEnv7
-	EditProjectEnv8 *EditProjectEnv8
-	EditProjectEnv9 *EditProjectEnv9
-	Ten             *Ten
-	Eleven          *Eleven
-	Twelve          *Twelve
+	EditProjectEnv1  *EditProjectEnv1
+	EditProjectEnv2  *EditProjectEnv2
+	EditProjectEnv3  *EditProjectEnv3
+	EditProjectEnv4  *EditProjectEnv4
+	EditProjectEnv5  *EditProjectEnv5
+	EditProjectEnv6  *EditProjectEnv6
+	EditProjectEnv7  *EditProjectEnv7
+	EditProjectEnv8  *EditProjectEnv8
+	EditProjectEnv9  *EditProjectEnv9
+	EditProjectEnv10 *EditProjectEnv10
+	Eleven           *Eleven
+	Twelve           *Twelve
+	Thirteen         *Thirteen
+	Fourteen         *Fourteen
 
 	Type ContentHintType
 }
@@ -794,12 +894,12 @@ func CreateContentHintEditProjectEnv9(editProjectEnv9 EditProjectEnv9) ContentHi
 	}
 }
 
-func CreateContentHintTen(ten Ten) ContentHint {
-	typ := ContentHintTypeTen
+func CreateContentHintEditProjectEnv10(editProjectEnv10 EditProjectEnv10) ContentHint {
+	typ := ContentHintTypeEditProjectEnv10
 
 	return ContentHint{
-		Ten:  &ten,
-		Type: typ,
+		EditProjectEnv10: &editProjectEnv10,
+		Type:             typ,
 	}
 }
 
@@ -821,93 +921,125 @@ func CreateContentHintTwelve(twelve Twelve) ContentHint {
 	}
 }
 
+func CreateContentHintThirteen(thirteen Thirteen) ContentHint {
+	typ := ContentHintTypeThirteen
+
+	return ContentHint{
+		Thirteen: &thirteen,
+		Type:     typ,
+	}
+}
+
+func CreateContentHintFourteen(fourteen Fourteen) ContentHint {
+	typ := ContentHintTypeFourteen
+
+	return ContentHint{
+		Fourteen: &fourteen,
+		Type:     typ,
+	}
+}
+
 func (u *ContentHint) UnmarshalJSON(data []byte) error {
 
-	editProjectEnv1 := EditProjectEnv1{}
+	var editProjectEnv1 EditProjectEnv1 = EditProjectEnv1{}
 	if err := utils.UnmarshalJSON(data, &editProjectEnv1, "", true, true); err == nil {
 		u.EditProjectEnv1 = &editProjectEnv1
 		u.Type = ContentHintTypeEditProjectEnv1
 		return nil
 	}
 
-	editProjectEnv2 := EditProjectEnv2{}
+	var editProjectEnv2 EditProjectEnv2 = EditProjectEnv2{}
 	if err := utils.UnmarshalJSON(data, &editProjectEnv2, "", true, true); err == nil {
 		u.EditProjectEnv2 = &editProjectEnv2
 		u.Type = ContentHintTypeEditProjectEnv2
 		return nil
 	}
 
-	editProjectEnv3 := EditProjectEnv3{}
+	var editProjectEnv3 EditProjectEnv3 = EditProjectEnv3{}
 	if err := utils.UnmarshalJSON(data, &editProjectEnv3, "", true, true); err == nil {
 		u.EditProjectEnv3 = &editProjectEnv3
 		u.Type = ContentHintTypeEditProjectEnv3
 		return nil
 	}
 
-	editProjectEnv4 := EditProjectEnv4{}
+	var editProjectEnv4 EditProjectEnv4 = EditProjectEnv4{}
 	if err := utils.UnmarshalJSON(data, &editProjectEnv4, "", true, true); err == nil {
 		u.EditProjectEnv4 = &editProjectEnv4
 		u.Type = ContentHintTypeEditProjectEnv4
 		return nil
 	}
 
-	editProjectEnv5 := EditProjectEnv5{}
+	var editProjectEnv5 EditProjectEnv5 = EditProjectEnv5{}
 	if err := utils.UnmarshalJSON(data, &editProjectEnv5, "", true, true); err == nil {
 		u.EditProjectEnv5 = &editProjectEnv5
 		u.Type = ContentHintTypeEditProjectEnv5
 		return nil
 	}
 
-	editProjectEnv6 := EditProjectEnv6{}
+	var editProjectEnv6 EditProjectEnv6 = EditProjectEnv6{}
 	if err := utils.UnmarshalJSON(data, &editProjectEnv6, "", true, true); err == nil {
 		u.EditProjectEnv6 = &editProjectEnv6
 		u.Type = ContentHintTypeEditProjectEnv6
 		return nil
 	}
 
-	editProjectEnv7 := EditProjectEnv7{}
+	var editProjectEnv7 EditProjectEnv7 = EditProjectEnv7{}
 	if err := utils.UnmarshalJSON(data, &editProjectEnv7, "", true, true); err == nil {
 		u.EditProjectEnv7 = &editProjectEnv7
 		u.Type = ContentHintTypeEditProjectEnv7
 		return nil
 	}
 
-	editProjectEnv8 := EditProjectEnv8{}
+	var editProjectEnv8 EditProjectEnv8 = EditProjectEnv8{}
 	if err := utils.UnmarshalJSON(data, &editProjectEnv8, "", true, true); err == nil {
 		u.EditProjectEnv8 = &editProjectEnv8
 		u.Type = ContentHintTypeEditProjectEnv8
 		return nil
 	}
 
-	editProjectEnv9 := EditProjectEnv9{}
+	var editProjectEnv9 EditProjectEnv9 = EditProjectEnv9{}
 	if err := utils.UnmarshalJSON(data, &editProjectEnv9, "", true, true); err == nil {
 		u.EditProjectEnv9 = &editProjectEnv9
 		u.Type = ContentHintTypeEditProjectEnv9
 		return nil
 	}
 
-	ten := Ten{}
-	if err := utils.UnmarshalJSON(data, &ten, "", true, true); err == nil {
-		u.Ten = &ten
-		u.Type = ContentHintTypeTen
+	var editProjectEnv10 EditProjectEnv10 = EditProjectEnv10{}
+	if err := utils.UnmarshalJSON(data, &editProjectEnv10, "", true, true); err == nil {
+		u.EditProjectEnv10 = &editProjectEnv10
+		u.Type = ContentHintTypeEditProjectEnv10
 		return nil
 	}
 
-	eleven := Eleven{}
+	var eleven Eleven = Eleven{}
 	if err := utils.UnmarshalJSON(data, &eleven, "", true, true); err == nil {
 		u.Eleven = &eleven
 		u.Type = ContentHintTypeEleven
 		return nil
 	}
 
-	twelve := Twelve{}
+	var twelve Twelve = Twelve{}
 	if err := utils.UnmarshalJSON(data, &twelve, "", true, true); err == nil {
 		u.Twelve = &twelve
 		u.Type = ContentHintTypeTwelve
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	var thirteen Thirteen = Thirteen{}
+	if err := utils.UnmarshalJSON(data, &thirteen, "", true, true); err == nil {
+		u.Thirteen = &thirteen
+		u.Type = ContentHintTypeThirteen
+		return nil
+	}
+
+	var fourteen Fourteen = Fourteen{}
+	if err := utils.UnmarshalJSON(data, &fourteen, "", true, true); err == nil {
+		u.Fourteen = &fourteen
+		u.Type = ContentHintTypeFourteen
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ContentHint", string(data))
 }
 
 func (u ContentHint) MarshalJSON() ([]byte, error) {
@@ -947,8 +1079,8 @@ func (u ContentHint) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.EditProjectEnv9, "", true)
 	}
 
-	if u.Ten != nil {
-		return utils.MarshalJSON(u.Ten, "", true)
+	if u.EditProjectEnv10 != nil {
+		return utils.MarshalJSON(u.EditProjectEnv10, "", true)
 	}
 
 	if u.Eleven != nil {
@@ -959,7 +1091,59 @@ func (u ContentHint) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Twelve, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	if u.Thirteen != nil {
+		return utils.MarshalJSON(u.Thirteen, "", true)
+	}
+
+	if u.Fourteen != nil {
+		return utils.MarshalJSON(u.Fourteen, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type ContentHint: all fields are null")
+}
+
+type EditProjectEnvProjectsResponseType string
+
+const (
+	EditProjectEnvProjectsResponseTypeFlagsSecret EditProjectEnvProjectsResponseType = "flags-secret"
+)
+
+func (e EditProjectEnvProjectsResponseType) ToPointer() *EditProjectEnvProjectsResponseType {
+	return &e
+}
+func (e *EditProjectEnvProjectsResponseType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "flags-secret":
+		*e = EditProjectEnvProjectsResponseType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for EditProjectEnvProjectsResponseType: %v", v)
+	}
+}
+
+// InternalContentHint - Similar to `contentHints`, but should not be exposed to the user.
+type InternalContentHint struct {
+	// Contains the `value` of the env variable, encrypted with a special key to make decryption possible in the subscriber Lambda.
+	EncryptedValue string                             `json:"encryptedValue"`
+	Type           EditProjectEnvProjectsResponseType `json:"type"`
+}
+
+func (o *InternalContentHint) GetEncryptedValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.EncryptedValue
+}
+
+func (o *InternalContentHint) GetType() EditProjectEnvProjectsResponseType {
+	if o == nil {
+		return EditProjectEnvProjectsResponseType("")
+	}
+	return o.Type
 }
 
 type EditProjectEnvProjects2 string
@@ -973,7 +1157,6 @@ const (
 func (e EditProjectEnvProjects2) ToPointer() *EditProjectEnvProjects2 {
 	return &e
 }
-
 func (e *EditProjectEnvProjects2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1003,7 +1186,6 @@ const (
 func (e EditProjectEnvProjects1) ToPointer() *EditProjectEnvProjects1 {
 	return &e
 }
-
 func (e *EditProjectEnvProjects1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1025,22 +1207,22 @@ func (e *EditProjectEnvProjects1) UnmarshalJSON(data []byte) error {
 type EditProjectEnvProjectsTargetType string
 
 const (
-	EditProjectEnvProjectsTargetTypeArrayOfeditProjectEnvProjects1 EditProjectEnvProjectsTargetType = "arrayOfeditProjectEnv_projects_1"
+	EditProjectEnvProjectsTargetTypeArrayOfEditProjectEnvProjects1 EditProjectEnvProjectsTargetType = "arrayOfEditProjectEnvProjects1"
 	EditProjectEnvProjectsTargetTypeEditProjectEnvProjects2        EditProjectEnvProjectsTargetType = "editProjectEnv_projects_2"
 )
 
 type EditProjectEnvProjectsTarget struct {
-	ArrayOfeditProjectEnvProjects1 []EditProjectEnvProjects1
+	ArrayOfEditProjectEnvProjects1 []EditProjectEnvProjects1
 	EditProjectEnvProjects2        *EditProjectEnvProjects2
 
 	Type EditProjectEnvProjectsTargetType
 }
 
-func CreateEditProjectEnvProjectsTargetArrayOfeditProjectEnvProjects1(arrayOfeditProjectEnvProjects1 []EditProjectEnvProjects1) EditProjectEnvProjectsTarget {
-	typ := EditProjectEnvProjectsTargetTypeArrayOfeditProjectEnvProjects1
+func CreateEditProjectEnvProjectsTargetArrayOfEditProjectEnvProjects1(arrayOfEditProjectEnvProjects1 []EditProjectEnvProjects1) EditProjectEnvProjectsTarget {
+	typ := EditProjectEnvProjectsTargetTypeArrayOfEditProjectEnvProjects1
 
 	return EditProjectEnvProjectsTarget{
-		ArrayOfeditProjectEnvProjects1: arrayOfeditProjectEnvProjects1,
+		ArrayOfEditProjectEnvProjects1: arrayOfEditProjectEnvProjects1,
 		Type:                           typ,
 	}
 }
@@ -1056,33 +1238,33 @@ func CreateEditProjectEnvProjectsTargetEditProjectEnvProjects2(editProjectEnvPro
 
 func (u *EditProjectEnvProjectsTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfeditProjectEnvProjects1 := []EditProjectEnvProjects1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfeditProjectEnvProjects1, "", true, true); err == nil {
-		u.ArrayOfeditProjectEnvProjects1 = arrayOfeditProjectEnvProjects1
-		u.Type = EditProjectEnvProjectsTargetTypeArrayOfeditProjectEnvProjects1
+	var arrayOfEditProjectEnvProjects1 []EditProjectEnvProjects1 = []EditProjectEnvProjects1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfEditProjectEnvProjects1, "", true, true); err == nil {
+		u.ArrayOfEditProjectEnvProjects1 = arrayOfEditProjectEnvProjects1
+		u.Type = EditProjectEnvProjectsTargetTypeArrayOfEditProjectEnvProjects1
 		return nil
 	}
 
-	editProjectEnvProjects2 := EditProjectEnvProjects2("")
+	var editProjectEnvProjects2 EditProjectEnvProjects2 = EditProjectEnvProjects2("")
 	if err := utils.UnmarshalJSON(data, &editProjectEnvProjects2, "", true, true); err == nil {
 		u.EditProjectEnvProjects2 = &editProjectEnvProjects2
 		u.Type = EditProjectEnvProjectsTargetTypeEditProjectEnvProjects2
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for EditProjectEnvProjectsTarget", string(data))
 }
 
 func (u EditProjectEnvProjectsTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfeditProjectEnvProjects1 != nil {
-		return utils.MarshalJSON(u.ArrayOfeditProjectEnvProjects1, "", true)
+	if u.ArrayOfEditProjectEnvProjects1 != nil {
+		return utils.MarshalJSON(u.ArrayOfEditProjectEnvProjects1, "", true)
 	}
 
 	if u.EditProjectEnvProjects2 != nil {
 		return utils.MarshalJSON(u.EditProjectEnvProjects2, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type EditProjectEnvProjectsTarget: all fields are null")
 }
 
 type EditProjectEnvProjectsType string
@@ -1098,7 +1280,6 @@ const (
 func (e EditProjectEnvProjectsType) ToPointer() *EditProjectEnvProjectsType {
 	return &e
 }
-
 func (e *EditProjectEnvProjectsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1123,22 +1304,33 @@ func (e *EditProjectEnvProjectsType) UnmarshalJSON(data []byte) error {
 
 // EditProjectEnvResponseBody - The environment variable was successfully edited
 type EditProjectEnvResponseBody struct {
-	ConfigurationID *string      `json:"configurationId,omitempty"`
-	ContentHint     *ContentHint `json:"contentHint,omitempty"`
-	CreatedAt       *int64       `json:"createdAt,omitempty"`
-	CreatedBy       *string      `json:"createdBy,omitempty"`
+	Comment             *string      `json:"comment,omitempty"`
+	ConfigurationID     *string      `json:"configurationId,omitempty"`
+	ContentHint         *ContentHint `json:"contentHint,omitempty"`
+	CreatedAt           *float64     `json:"createdAt,omitempty"`
+	CreatedBy           *string      `json:"createdBy,omitempty"`
+	CustomEnvironmentID *string      `json:"customEnvironmentId,omitempty"`
 	// Whether `value` is decrypted.
-	Decrypted         *bool                         `json:"decrypted,omitempty"`
-	EdgeConfigID      *string                       `json:"edgeConfigId,omitempty"`
-	EdgeConfigTokenID *string                       `json:"edgeConfigTokenId,omitempty"`
-	GitBranch         *string                       `json:"gitBranch,omitempty"`
-	ID                *string                       `json:"id,omitempty"`
-	Key               string                        `json:"key"`
-	Target            *EditProjectEnvProjectsTarget `json:"target,omitempty"`
-	Type              EditProjectEnvProjectsType    `json:"type"`
-	UpdatedAt         *int64                        `json:"updatedAt,omitempty"`
-	UpdatedBy         *string                       `json:"updatedBy,omitempty"`
-	Value             string                        `json:"value"`
+	Decrypted         *bool   `json:"decrypted,omitempty"`
+	EdgeConfigID      *string `json:"edgeConfigId,omitempty"`
+	EdgeConfigTokenID *string `json:"edgeConfigTokenId,omitempty"`
+	GitBranch         *string `json:"gitBranch,omitempty"`
+	ID                *string `json:"id,omitempty"`
+	// Similar to `contentHints`, but should not be exposed to the user.
+	InternalContentHint *InternalContentHint          `json:"internalContentHint,omitempty"`
+	Key                 string                        `json:"key"`
+	Target              *EditProjectEnvProjectsTarget `json:"target,omitempty"`
+	Type                EditProjectEnvProjectsType    `json:"type"`
+	UpdatedAt           *float64                      `json:"updatedAt,omitempty"`
+	UpdatedBy           *string                       `json:"updatedBy,omitempty"`
+	Value               string                        `json:"value"`
+}
+
+func (o *EditProjectEnvResponseBody) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
 }
 
 func (o *EditProjectEnvResponseBody) GetConfigurationID() *string {
@@ -1155,7 +1347,7 @@ func (o *EditProjectEnvResponseBody) GetContentHint() *ContentHint {
 	return o.ContentHint
 }
 
-func (o *EditProjectEnvResponseBody) GetCreatedAt() *int64 {
+func (o *EditProjectEnvResponseBody) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1167,6 +1359,13 @@ func (o *EditProjectEnvResponseBody) GetCreatedBy() *string {
 		return nil
 	}
 	return o.CreatedBy
+}
+
+func (o *EditProjectEnvResponseBody) GetCustomEnvironmentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomEnvironmentID
 }
 
 func (o *EditProjectEnvResponseBody) GetDecrypted() *bool {
@@ -1204,6 +1403,13 @@ func (o *EditProjectEnvResponseBody) GetID() *string {
 	return o.ID
 }
 
+func (o *EditProjectEnvResponseBody) GetInternalContentHint() *InternalContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.InternalContentHint
+}
+
 func (o *EditProjectEnvResponseBody) GetKey() string {
 	if o == nil {
 		return ""
@@ -1225,7 +1431,7 @@ func (o *EditProjectEnvResponseBody) GetType() EditProjectEnvProjectsType {
 	return o.Type
 }
 
-func (o *EditProjectEnvResponseBody) GetUpdatedAt() *int64 {
+func (o *EditProjectEnvResponseBody) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
 	}

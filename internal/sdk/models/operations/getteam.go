@@ -8,8 +8,9 @@ import (
 )
 
 type GetTeamRequest struct {
+	// The Team slug to perform the request on behalf of.
 	Slug *string `queryParam:"style=form,explode=true,name=slug"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team identifier to perform the request on behalf of.
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 }
 

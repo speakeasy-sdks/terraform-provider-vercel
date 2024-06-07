@@ -11,7 +11,9 @@ import (
 type DeleteAliasRequest struct {
 	// The ID or alias that will be removed
 	AliasID string `pathParam:"style=simple,explode=false,name=aliasId"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -20,6 +22,13 @@ func (o *DeleteAliasRequest) GetAliasID() string {
 		return ""
 	}
 	return o.AliasID
+}
+
+func (o *DeleteAliasRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *DeleteAliasRequest) GetTeamID() *string {
@@ -38,7 +47,6 @@ const (
 func (e DeleteAliasStatus) ToPointer() *DeleteAliasStatus {
 	return &e
 }
-
 func (e *DeleteAliasStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -5,28 +5,28 @@ package shared
 // Pagination - This object contains information related to the pagination of the current request, including the necessary parameters to get the next or previous page of data.
 type Pagination struct {
 	// Amount of items in the current page.
-	Count int64 `json:"count"`
+	Count float64 `json:"count"`
 	// Timestamp that must be used to request the next page.
-	Next *int64 `json:"next"`
+	Next *float64 `json:"next"`
 	// Timestamp that must be used to request the previous page.
-	Prev *int64 `json:"prev"`
+	Prev *float64 `json:"prev"`
 }
 
-func (o *Pagination) GetCount() int64 {
+func (o *Pagination) GetCount() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Count
 }
 
-func (o *Pagination) GetNext() *int64 {
+func (o *Pagination) GetNext() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Next
 }
 
-func (o *Pagination) GetPrev() *int64 {
+func (o *Pagination) GetPrev() *float64 {
 	if o == nil {
 		return nil
 	}

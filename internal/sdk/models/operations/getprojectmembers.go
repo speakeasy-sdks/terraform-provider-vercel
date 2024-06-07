@@ -19,7 +19,9 @@ type GetProjectMembersRequest struct {
 	Search *string `queryParam:"style=form,explode=true,name=search"`
 	// Timestamp in milliseconds to only include members added since then.
 	Since *int64 `queryParam:"style=form,explode=true,name=since"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Timestamp in milliseconds to only include members added until then.
 	Until *int64 `queryParam:"style=form,explode=true,name=until"`
@@ -53,6 +55,13 @@ func (o *GetProjectMembersRequest) GetSince() *int64 {
 	return o.Since
 }
 
+func (o *GetProjectMembersRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 func (o *GetProjectMembersRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -67,6 +76,36 @@ func (o *GetProjectMembersRequest) GetUntil() *int64 {
 	return o.Until
 }
 
+// ComputedProjectRole - Role of this user in the project.
+type ComputedProjectRole string
+
+const (
+	ComputedProjectRoleAdmin            ComputedProjectRole = "ADMIN"
+	ComputedProjectRoleProjectDeveloper ComputedProjectRole = "PROJECT_DEVELOPER"
+	ComputedProjectRoleProjectViewer    ComputedProjectRole = "PROJECT_VIEWER"
+)
+
+func (e ComputedProjectRole) ToPointer() *ComputedProjectRole {
+	return &e
+}
+func (e *ComputedProjectRole) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ADMIN":
+		fallthrough
+	case "PROJECT_DEVELOPER":
+		fallthrough
+	case "PROJECT_VIEWER":
+		*e = ComputedProjectRole(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ComputedProjectRole: %v", v)
+	}
+}
+
 // GetProjectMembersRole - Role of this user in the project.
 type GetProjectMembersRole string
 
@@ -79,7 +118,6 @@ const (
 func (e GetProjectMembersRole) ToPointer() *GetProjectMembersRole {
 	return &e
 }
-
 func (e *GetProjectMembersRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -98,17 +136,60 @@ func (e *GetProjectMembersRole) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// TeamRole - The role of this user in the team.
+type TeamRole string
+
+const (
+	TeamRoleOwner       TeamRole = "OWNER"
+	TeamRoleMember      TeamRole = "MEMBER"
+	TeamRoleDeveloper   TeamRole = "DEVELOPER"
+	TeamRoleBilling     TeamRole = "BILLING"
+	TeamRoleViewer      TeamRole = "VIEWER"
+	TeamRoleContributor TeamRole = "CONTRIBUTOR"
+)
+
+func (e TeamRole) ToPointer() *TeamRole {
+	return &e
+}
+func (e *TeamRole) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "OWNER":
+		fallthrough
+	case "MEMBER":
+		fallthrough
+	case "DEVELOPER":
+		fallthrough
+	case "BILLING":
+		fallthrough
+	case "VIEWER":
+		fallthrough
+	case "CONTRIBUTOR":
+		*e = TeamRole(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TeamRole: %v", v)
+	}
+}
+
 type GetProjectMembersMembers struct {
 	// ID of the file for the Avatar of this member.
 	Avatar *string `json:"avatar,omitempty"`
+	// Role of this user in the project.
+	ComputedProjectRole ComputedProjectRole `json:"computedProjectRole"`
 	// Timestamp in milliseconds when this member was added.
-	CreatedAt int64 `json:"createdAt"`
+	CreatedAt float64 `json:"createdAt"`
 	// The email of this member.
 	Email string `json:"email"`
 	// The name of this user.
 	Name *string `json:"name,omitempty"`
 	// Role of this user in the project.
 	Role GetProjectMembersRole `json:"role"`
+	// The role of this user in the team.
+	TeamRole TeamRole `json:"teamRole"`
 	// The ID of this user.
 	UID string `json:"uid"`
 	// The unique username of this user.
@@ -122,9 +203,16 @@ func (o *GetProjectMembersMembers) GetAvatar() *string {
 	return o.Avatar
 }
 
-func (o *GetProjectMembersMembers) GetCreatedAt() int64 {
+func (o *GetProjectMembersMembers) GetComputedProjectRole() ComputedProjectRole {
 	if o == nil {
-		return 0
+		return ComputedProjectRole("")
+	}
+	return o.ComputedProjectRole
+}
+
+func (o *GetProjectMembersMembers) GetCreatedAt() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -150,6 +238,13 @@ func (o *GetProjectMembersMembers) GetRole() GetProjectMembersRole {
 	return o.Role
 }
 
+func (o *GetProjectMembersMembers) GetTeamRole() TeamRole {
+	if o == nil {
+		return TeamRole("")
+	}
+	return o.TeamRole
+}
+
 func (o *GetProjectMembersMembers) GetUID() string {
 	if o == nil {
 		return ""
@@ -166,17 +261,17 @@ func (o *GetProjectMembersMembers) GetUsername() string {
 
 type GetProjectMembersPagination struct {
 	// Amount of items in the current page.
-	Count   int64 `json:"count"`
-	HasNext bool  `json:"hasNext"`
+	Count   float64 `json:"count"`
+	HasNext bool    `json:"hasNext"`
 	// Timestamp that must be used to request the next page.
-	Next *int64 `json:"next"`
+	Next *float64 `json:"next"`
 	// Timestamp that must be used to request the previous page.
-	Prev *int64 `json:"prev"`
+	Prev *float64 `json:"prev"`
 }
 
-func (o *GetProjectMembersPagination) GetCount() int64 {
+func (o *GetProjectMembersPagination) GetCount() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Count
 }
@@ -188,14 +283,14 @@ func (o *GetProjectMembersPagination) GetHasNext() bool {
 	return o.HasNext
 }
 
-func (o *GetProjectMembersPagination) GetNext() *int64 {
+func (o *GetProjectMembersPagination) GetNext() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Next
 }
 
-func (o *GetProjectMembersPagination) GetPrev() *int64 {
+func (o *GetProjectMembersPagination) GetPrev() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -260,21 +355,21 @@ func CreateGetProjectMembersResponseBodyGetProjectMembers2(getProjectMembers2 Ge
 
 func (u *GetProjectMembersResponseBody) UnmarshalJSON(data []byte) error {
 
-	getProjectMembers1 := GetProjectMembers1{}
+	var getProjectMembers1 GetProjectMembers1 = GetProjectMembers1{}
 	if err := utils.UnmarshalJSON(data, &getProjectMembers1, "", true, true); err == nil {
 		u.GetProjectMembers1 = &getProjectMembers1
 		u.Type = GetProjectMembersResponseBodyTypeGetProjectMembers1
 		return nil
 	}
 
-	getProjectMembers2 := GetProjectMembers2{}
+	var getProjectMembers2 GetProjectMembers2 = GetProjectMembers2{}
 	if err := utils.UnmarshalJSON(data, &getProjectMembers2, "", true, true); err == nil {
 		u.GetProjectMembers2 = &getProjectMembers2
 		u.Type = GetProjectMembersResponseBodyTypeGetProjectMembers2
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GetProjectMembersResponseBody", string(data))
 }
 
 func (u GetProjectMembersResponseBody) MarshalJSON() ([]byte, error) {
@@ -286,7 +381,7 @@ func (u GetProjectMembersResponseBody) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.GetProjectMembers2, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type GetProjectMembersResponseBody: all fields are null")
 }
 
 type GetProjectMembersResponse struct {

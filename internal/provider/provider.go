@@ -27,6 +27,7 @@ type VercelProvider struct {
 type VercelProviderModel struct {
 	ServerURL   types.String `tfsdk:"server_url"`
 	BearerToken types.String `tfsdk:"bearer_token"`
+	Oauth2      types.String `tfsdk:"oauth2"`
 }
 
 func (p *VercelProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -44,6 +45,10 @@ func (p *VercelProvider) Schema(ctx context.Context, req provider.SchemaRequest,
 				Required:            false,
 			},
 			"bearer_token": schema.StringAttribute{
+				Optional:  true,
+				Sensitive: true,
+			},
+			"oauth2": schema.StringAttribute{
 				Optional:  true,
 				Sensitive: true,
 			},
@@ -72,8 +77,15 @@ func (p *VercelProvider) Configure(ctx context.Context, req provider.ConfigureRe
 	} else {
 		bearerToken = nil
 	}
+	oauth2 := new(string)
+	if !data.Oauth2.IsUnknown() && !data.Oauth2.IsNull() {
+		*oauth2 = data.Oauth2.ValueString()
+	} else {
+		oauth2 = nil
+	}
 	security := shared.Security{
 		BearerToken: bearerToken,
+		Oauth2:      oauth2,
 	}
 
 	opts := []sdk.SDKOption{
@@ -88,11 +100,27 @@ func (p *VercelProvider) Configure(ctx context.Context, req provider.ConfigureRe
 }
 
 func (p *VercelProvider) Resources(ctx context.Context) []func() resource.Resource {
-	return []func() resource.Resource{}
+	return []func() resource.Resource{
+		NewDeploymentResource,
+		NewDNSResource,
+		NewEdgeConfigResource,
+		NewEdgeConfigSchemaResource,
+		NewMemberResource,
+		NewProjectResource,
+		NewTeamResource,
+		NewWebhookResource,
+	}
 }
 
 func (p *VercelProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{}
+	return []func() datasource.DataSource{
+		NewDeploymentDataSource,
+		NewEdgeConfigDataSource,
+		NewEdgeConfigSchemaDataSource,
+		NewTeamDataSource,
+		NewUserDataSource,
+		NewWebhookDataSource,
+	}
 }
 
 func New(version string) func() provider.Provider {

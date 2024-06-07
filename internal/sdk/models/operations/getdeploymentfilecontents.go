@@ -13,7 +13,9 @@ type GetDeploymentFileContentsRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 	// Path to the file to fetch (only for Git deployments)
 	Path *string `queryParam:"style=form,explode=true,name=path"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -36,6 +38,13 @@ func (o *GetDeploymentFileContentsRequest) GetPath() *string {
 		return nil
 	}
 	return o.Path
+}
+
+func (o *GetDeploymentFileContentsRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *GetDeploymentFileContentsRequest) GetTeamID() *string {

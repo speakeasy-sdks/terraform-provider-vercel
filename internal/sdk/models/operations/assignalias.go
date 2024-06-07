@@ -33,7 +33,9 @@ type AssignAliasRequest struct {
 	RequestBody *AssignAliasRequestBody `request:"mediaType=application/json"`
 	// The ID of the deployment the aliases should be listed for
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -49,6 +51,13 @@ func (o *AssignAliasRequest) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *AssignAliasRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *AssignAliasRequest) GetTeamID() *string {

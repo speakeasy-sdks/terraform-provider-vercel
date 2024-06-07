@@ -4,17 +4,17 @@ package shared
 
 // EdgeConfigToken - The EdgeConfig.
 type EdgeConfigToken struct {
-	CreatedAt    int64  `json:"createdAt"`
-	EdgeConfigID string `json:"edgeConfigId"`
+	CreatedAt    float64 `json:"createdAt"`
+	EdgeConfigID string  `json:"edgeConfigId"`
 	// This is not the token itself, but rather an id to identify the token by
 	ID    string `json:"id"`
 	Label string `json:"label"`
 	Token string `json:"token"`
 }
 
-func (o *EdgeConfigToken) GetCreatedAt() int64 {
+func (o *EdgeConfigToken) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }

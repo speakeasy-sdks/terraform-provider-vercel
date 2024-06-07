@@ -8,11 +8,98 @@ import (
 	"net/http"
 )
 
+type Utm struct {
+	// UTM campaign
+	UtmCampaign *string `json:"utmCampaign,omitempty"`
+	// UTM medium
+	UtmMedium *string `json:"utmMedium,omitempty"`
+	// UTM source
+	UtmSource *string `json:"utmSource,omitempty"`
+	// UTM term
+	UtmTerm *string `json:"utmTerm,omitempty"`
+}
+
+func (o *Utm) GetUtmCampaign() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UtmCampaign
+}
+
+func (o *Utm) GetUtmMedium() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UtmMedium
+}
+
+func (o *Utm) GetUtmSource() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UtmSource
+}
+
+func (o *Utm) GetUtmTerm() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UtmTerm
+}
+
+// Attribution information for the session or current page
+type Attribution struct {
+	// Session landing page
+	LandingPage *string `json:"landingPage,omitempty"`
+	// Referrer to the signup page
+	PageBeforeConversionPage *string `json:"pageBeforeConversionPage,omitempty"`
+	// Session referrer
+	SessionReferrer *string `json:"sessionReferrer,omitempty"`
+	Utm             *Utm    `json:"utm,omitempty"`
+}
+
+func (o *Attribution) GetLandingPage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LandingPage
+}
+
+func (o *Attribution) GetPageBeforeConversionPage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageBeforeConversionPage
+}
+
+func (o *Attribution) GetSessionReferrer() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SessionReferrer
+}
+
+func (o *Attribution) GetUtm() *Utm {
+	if o == nil {
+		return nil
+	}
+	return o.Utm
+}
+
 type CreateTeamRequestBody struct {
+	// Attribution information for the session or current page
+	Attribution *Attribution `json:"attribution,omitempty"`
 	// The desired name for the Team. It will be generated from the provided slug if nothing is provided
 	Name *string `json:"name,omitempty"`
 	// The desired slug for the Team
 	Slug string `json:"slug"`
+}
+
+func (o *CreateTeamRequestBody) GetAttribution() *Attribution {
+	if o == nil {
+		return nil
+	}
+	return o.Attribution
 }
 
 func (o *CreateTeamRequestBody) GetName() *string {
@@ -32,7 +119,7 @@ func (o *CreateTeamRequestBody) GetSlug() string {
 type Address struct {
 	City       *string `json:"city,omitempty"`
 	Country    *string `json:"country,omitempty"`
-	Line1      string  `json:"line1"`
+	Line1      *string `json:"line1,omitempty"`
 	Line2      *string `json:"line2,omitempty"`
 	PostalCode *string `json:"postalCode,omitempty"`
 	State      *string `json:"state,omitempty"`
@@ -52,9 +139,9 @@ func (o *Address) GetCountry() *string {
 	return o.Country
 }
 
-func (o *Address) GetLine1() string {
+func (o *Address) GetLine1() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Line1
 }
@@ -81,37 +168,37 @@ func (o *Address) GetState() *string {
 }
 
 type Contract struct {
-	End   int64 `json:"end"`
-	Start int64 `json:"start"`
+	End   float64 `json:"end"`
+	Start float64 `json:"start"`
 }
 
-func (o *Contract) GetEnd() int64 {
+func (o *Contract) GetEnd() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.End
 }
 
-func (o *Contract) GetStart() int64 {
+func (o *Contract) GetStart() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Start
 }
 
 type Controls struct {
-	AnalyticsSampleRateInPercent *int64 `json:"analyticsSampleRateInPercent,omitempty"`
-	AnalyticsSpendLimitInDollars *int64 `json:"analyticsSpendLimitInDollars,omitempty"`
+	AnalyticsSampleRateInPercent *float64 `json:"analyticsSampleRateInPercent,omitempty"`
+	AnalyticsSpendLimitInDollars *float64 `json:"analyticsSpendLimitInDollars,omitempty"`
 }
 
-func (o *Controls) GetAnalyticsSampleRateInPercent() *int64 {
+func (o *Controls) GetAnalyticsSampleRateInPercent() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.AnalyticsSampleRateInPercent
 }
 
-func (o *Controls) GetAnalyticsSpendLimitInDollars() *int64 {
+func (o *Controls) GetAnalyticsSpendLimitInDollars() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -128,7 +215,6 @@ const (
 func (e Currency) ToPointer() *Currency {
 	return &e
 }
-
 func (e *Currency) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -154,7 +240,6 @@ const (
 func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval {
 	return &e
 }
-
 func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -169,45 +254,9 @@ func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItem
 	}
 }
 
-type IntervalCount int64
-
-const (
-	IntervalCountOne    IntervalCount = 1
-	IntervalCountTwelve IntervalCount = 12
-	IntervalCountTwo    IntervalCount = 2
-	IntervalCountThree  IntervalCount = 3
-	IntervalCountSix    IntervalCount = 6
-)
-
-func (e IntervalCount) ToPointer() *IntervalCount {
-	return &e
-}
-
-func (e *IntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 12:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		*e = IntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for IntervalCount: %v", v)
-	}
-}
-
 type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency struct {
 	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval `json:"interval"`
-	IntervalCount IntervalCount                                                                             `json:"intervalCount"`
+	IntervalCount float64                                                                                   `json:"intervalCount"`
 }
 
 func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsInterval {
@@ -217,34 +266,35 @@ func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItem
 	return o.Interval
 }
 
-func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency) GetIntervalCount() IntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return IntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // CreateTeamAnalytics - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type CreateTeamAnalytics struct {
-	CreatedAt   *int64                                                                                      `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                                                      `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                                                        `json:"hidden"`
-	MaxQuantity *int64                                                                                      `json:"maxQuantity,omitempty"`
-	Name        *string                                                                                     `json:"name,omitempty"`
-	Price       int64                                                                                       `json:"price"`
-	Quantity    int64                                                                                       `json:"quantity"`
-	Tier        *int64                                                                                      `json:"tier,omitempty"`
+	CreatedAt       *float64                                                                                    `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                                                                    `json:"disabledAt,omitempty"`
+	Frequency       *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsAnalyticsFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                                                                        `json:"hidden"`
+	HighestQuantity *float64                                                                                    `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                                                                    `json:"maxQuantity,omitempty"`
+	Name            *string                                                                                     `json:"name,omitempty"`
+	Price           float64                                                                                     `json:"price"`
+	Quantity        float64                                                                                     `json:"quantity"`
+	Tier            *float64                                                                                    `json:"tier,omitempty"`
 }
 
-func (o *CreateTeamAnalytics) GetCreatedAt() *int64 {
+func (o *CreateTeamAnalytics) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeamAnalytics) GetDisabledAt() *int64 {
+func (o *CreateTeamAnalytics) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -265,7 +315,14 @@ func (o *CreateTeamAnalytics) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *CreateTeamAnalytics) GetMaxQuantity() *int64 {
+func (o *CreateTeamAnalytics) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *CreateTeamAnalytics) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -279,53 +336,73 @@ func (o *CreateTeamAnalytics) GetName() *string {
 	return o.Name
 }
 
-func (o *CreateTeamAnalytics) GetPrice() int64 {
+func (o *CreateTeamAnalytics) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *CreateTeamAnalytics) GetQuantity() int64 {
+func (o *CreateTeamAnalytics) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeamAnalytics) GetTier() *int64 {
+func (o *CreateTeamAnalytics) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type AnalyticsUsage struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type Matrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *AnalyticsUsage) GetBatch() int64 {
+func (o *Matrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *Matrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type AnalyticsUsage struct {
+	Batch      float64  `json:"batch"`
+	DisabledAt *float64 `json:"disabledAt,omitempty"`
+	EnabledAt  *float64 `json:"enabledAt,omitempty"`
+	Hidden     bool     `json:"hidden"`
+	Matrix     *Matrix  `json:"matrix,omitempty"`
+	Name       *string  `json:"name,omitempty"`
+	Price      float64  `json:"price"`
+	Threshold  float64  `json:"threshold"`
+	Tier       *float64 `json:"tier,omitempty"`
+}
+
+func (o *AnalyticsUsage) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *AnalyticsUsage) GetDisabledAt() *int64 {
+func (o *AnalyticsUsage) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *AnalyticsUsage) GetEnabledAt() *int64 {
+func (o *AnalyticsUsage) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -339,6 +416,13 @@ func (o *AnalyticsUsage) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *AnalyticsUsage) GetMatrix() *Matrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *AnalyticsUsage) GetName() *string {
 	if o == nil {
 		return nil
@@ -346,53 +430,73 @@ func (o *AnalyticsUsage) GetName() *string {
 	return o.Name
 }
 
-func (o *AnalyticsUsage) GetPrice() int64 {
+func (o *AnalyticsUsage) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *AnalyticsUsage) GetThreshold() int64 {
+func (o *AnalyticsUsage) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *AnalyticsUsage) GetTier() *int64 {
+func (o *AnalyticsUsage) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type Artifacts struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *Artifacts) GetBatch() int64 {
+func (o *CreateTeamMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type Artifacts struct {
+	Batch      float64           `json:"batch"`
+	DisabledAt *float64          `json:"disabledAt,omitempty"`
+	EnabledAt  *float64          `json:"enabledAt,omitempty"`
+	Hidden     bool              `json:"hidden"`
+	Matrix     *CreateTeamMatrix `json:"matrix,omitempty"`
+	Name       *string           `json:"name,omitempty"`
+	Price      float64           `json:"price"`
+	Threshold  float64           `json:"threshold"`
+	Tier       *float64          `json:"tier,omitempty"`
+}
+
+func (o *Artifacts) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *Artifacts) GetDisabledAt() *int64 {
+func (o *Artifacts) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *Artifacts) GetEnabledAt() *int64 {
+func (o *Artifacts) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -406,6 +510,13 @@ func (o *Artifacts) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *Artifacts) GetMatrix() *CreateTeamMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *Artifacts) GetName() *string {
 	if o == nil {
 		return nil
@@ -413,53 +524,73 @@ func (o *Artifacts) GetName() *string {
 	return o.Name
 }
 
-func (o *Artifacts) GetPrice() int64 {
+func (o *Artifacts) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *Artifacts) GetThreshold() int64 {
+func (o *Artifacts) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *Artifacts) GetTier() *int64 {
+func (o *Artifacts) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type Bandwidth struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *Bandwidth) GetBatch() int64 {
+func (o *CreateTeamTeamsMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type Bandwidth struct {
+	Batch      float64                `json:"batch"`
+	DisabledAt *float64               `json:"disabledAt,omitempty"`
+	EnabledAt  *float64               `json:"enabledAt,omitempty"`
+	Hidden     bool                   `json:"hidden"`
+	Matrix     *CreateTeamTeamsMatrix `json:"matrix,omitempty"`
+	Name       *string                `json:"name,omitempty"`
+	Price      float64                `json:"price"`
+	Threshold  float64                `json:"threshold"`
+	Tier       *float64               `json:"tier,omitempty"`
+}
+
+func (o *Bandwidth) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *Bandwidth) GetDisabledAt() *int64 {
+func (o *Bandwidth) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *Bandwidth) GetEnabledAt() *int64 {
+func (o *Bandwidth) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -473,6 +604,13 @@ func (o *Bandwidth) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *Bandwidth) GetMatrix() *CreateTeamTeamsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *Bandwidth) GetName() *string {
 	if o == nil {
 		return nil
@@ -480,21 +618,585 @@ func (o *Bandwidth) GetName() *string {
 	return o.Name
 }
 
-func (o *Bandwidth) GetPrice() int64 {
+func (o *Bandwidth) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *Bandwidth) GetThreshold() int64 {
+func (o *Bandwidth) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *Bandwidth) GetTier() *int64 {
+func (o *Bandwidth) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponseMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponseMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponseMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BlobStores struct {
+	Batch      float64                        `json:"batch"`
+	DisabledAt *float64                       `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                       `json:"enabledAt,omitempty"`
+	Hidden     bool                           `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponseMatrix `json:"matrix,omitempty"`
+	Name       *string                        `json:"name,omitempty"`
+	Price      float64                        `json:"price"`
+	Threshold  float64                        `json:"threshold"`
+	Tier       *float64                       `json:"tier,omitempty"`
+}
+
+func (o *BlobStores) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BlobStores) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BlobStores) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BlobStores) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BlobStores) GetMatrix() *CreateTeamTeamsResponseMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BlobStores) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BlobStores) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BlobStores) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BlobStores) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200Matrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200Matrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200Matrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BlobTotalAdvancedRequests struct {
+	Batch      float64                           `json:"batch"`
+	DisabledAt *float64                          `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                          `json:"enabledAt,omitempty"`
+	Hidden     bool                              `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200Matrix `json:"matrix,omitempty"`
+	Name       *string                           `json:"name,omitempty"`
+	Price      float64                           `json:"price"`
+	Threshold  float64                           `json:"threshold"`
+	Tier       *float64                          `json:"tier,omitempty"`
+}
+
+func (o *BlobTotalAdvancedRequests) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BlobTotalAdvancedRequests) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BlobTotalAdvancedRequests) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BlobTotalAdvancedRequests) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BlobTotalAdvancedRequests) GetMatrix() *CreateTeamTeamsResponse200Matrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BlobTotalAdvancedRequests) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BlobTotalAdvancedRequests) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BlobTotalAdvancedRequests) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BlobTotalAdvancedRequests) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BlobTotalAvgSizeInBytes struct {
+	Batch      float64                                          `json:"batch"`
+	DisabledAt *float64                                         `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                         `json:"enabledAt,omitempty"`
+	Hidden     bool                                             `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONMatrix `json:"matrix,omitempty"`
+	Name       *string                                          `json:"name,omitempty"`
+	Price      float64                                          `json:"price"`
+	Threshold  float64                                          `json:"threshold"`
+	Tier       *float64                                         `json:"tier,omitempty"`
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BlobTotalAvgSizeInBytes) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BlobTotalGetResponseObjectSizeInBytes struct {
+	Batch      float64                                                      `json:"batch"`
+	DisabledAt *float64                                                     `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                     `json:"enabledAt,omitempty"`
+	Hidden     bool                                                         `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyMatrix `json:"matrix,omitempty"`
+	Name       *string                                                      `json:"name,omitempty"`
+	Price      float64                                                      `json:"price"`
+	Threshold  float64                                                      `json:"threshold"`
+	Tier       *float64                                                     `json:"tier,omitempty"`
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BlobTotalGetResponseObjectSizeInBytes) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BlobTotalSimpleRequests struct {
+	Batch      float64                                                             `json:"batch"`
+	DisabledAt *float64                                                            `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                            `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingMatrix `json:"matrix,omitempty"`
+	Name       *string                                                             `json:"name,omitempty"`
+	Price      float64                                                             `json:"price"`
+	Threshold  float64                                                             `json:"threshold"`
+	Tier       *float64                                                            `json:"tier,omitempty"`
+}
+
+func (o *BlobTotalSimpleRequests) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BlobTotalSimpleRequests) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BlobTotalSimpleRequests) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BlobTotalSimpleRequests) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BlobTotalSimpleRequests) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BlobTotalSimpleRequests) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BlobTotalSimpleRequests) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BlobTotalSimpleRequests) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BlobTotalSimpleRequests) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type BuildMinute struct {
+	Batch      float64                                                                         `json:"batch"`
+	DisabledAt *float64                                                                        `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                        `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                            `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                         `json:"name,omitempty"`
+	Price      float64                                                                         `json:"price"`
+	Threshold  float64                                                                         `json:"threshold"`
+	Tier       *float64                                                                        `json:"tier,omitempty"`
+}
+
+func (o *BuildMinute) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *BuildMinute) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *BuildMinute) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *BuildMinute) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *BuildMinute) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *BuildMinute) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *BuildMinute) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *BuildMinute) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *BuildMinute) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -510,7 +1212,6 @@ const (
 func (e CreateTeamInterval) ToPointer() *CreateTeamInterval {
 	return &e
 }
-
 func (e *CreateTeamInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -525,45 +1226,9 @@ func (e *CreateTeamInterval) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type CreateTeamIntervalCount int64
-
-const (
-	CreateTeamIntervalCountOne    CreateTeamIntervalCount = 1
-	CreateTeamIntervalCountTwelve CreateTeamIntervalCount = 12
-	CreateTeamIntervalCountTwo    CreateTeamIntervalCount = 2
-	CreateTeamIntervalCountThree  CreateTeamIntervalCount = 3
-	CreateTeamIntervalCountSix    CreateTeamIntervalCount = 6
-)
-
-func (e CreateTeamIntervalCount) ToPointer() *CreateTeamIntervalCount {
-	return &e
-}
-
-func (e *CreateTeamIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 12:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		*e = CreateTeamIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateTeamIntervalCount: %v", v)
-	}
-}
-
 type CreateTeamFrequency struct {
-	Interval      CreateTeamInterval      `json:"interval"`
-	IntervalCount CreateTeamIntervalCount `json:"intervalCount"`
+	Interval      CreateTeamInterval `json:"interval"`
+	IntervalCount float64            `json:"intervalCount"`
 }
 
 func (o *CreateTeamFrequency) GetInterval() CreateTeamInterval {
@@ -573,34 +1238,35 @@ func (o *CreateTeamFrequency) GetInterval() CreateTeamInterval {
 	return o.Interval
 }
 
-func (o *CreateTeamFrequency) GetIntervalCount() CreateTeamIntervalCount {
+func (o *CreateTeamFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return CreateTeamIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // ConcurrentBuilds - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type ConcurrentBuilds struct {
-	CreatedAt   *int64               `json:"createdAt,omitempty"`
-	DisabledAt  *int64               `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeamFrequency `json:"frequency,omitempty"`
-	Hidden      bool                 `json:"hidden"`
-	MaxQuantity *int64               `json:"maxQuantity,omitempty"`
-	Name        *string              `json:"name,omitempty"`
-	Price       int64                `json:"price"`
-	Quantity    int64                `json:"quantity"`
-	Tier        *int64               `json:"tier,omitempty"`
+	CreatedAt       *float64             `json:"createdAt,omitempty"`
+	DisabledAt      *float64             `json:"disabledAt,omitempty"`
+	Frequency       *CreateTeamFrequency `json:"frequency,omitempty"`
+	Hidden          bool                 `json:"hidden"`
+	HighestQuantity *float64             `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64             `json:"maxQuantity,omitempty"`
+	Name            *string              `json:"name,omitempty"`
+	Price           float64              `json:"price"`
+	Quantity        float64              `json:"quantity"`
+	Tier            *float64             `json:"tier,omitempty"`
 }
 
-func (o *ConcurrentBuilds) GetCreatedAt() *int64 {
+func (o *ConcurrentBuilds) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *ConcurrentBuilds) GetDisabledAt() *int64 {
+func (o *ConcurrentBuilds) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -621,7 +1287,14 @@ func (o *ConcurrentBuilds) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *ConcurrentBuilds) GetMaxQuantity() *int64 {
+func (o *ConcurrentBuilds) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *ConcurrentBuilds) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -635,120 +1308,73 @@ func (o *ConcurrentBuilds) GetName() *string {
 	return o.Name
 }
 
-func (o *ConcurrentBuilds) GetPrice() int64 {
+func (o *ConcurrentBuilds) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *ConcurrentBuilds) GetQuantity() int64 {
+func (o *ConcurrentBuilds) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *ConcurrentBuilds) GetTier() *int64 {
+func (o *ConcurrentBuilds) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type CronJobInvocation struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheReadMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *CronJobInvocation) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheReadMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
 	}
-	return o.Batch
+	return o.DefaultUnitPrice
 }
 
-func (o *CronJobInvocation) GetDisabledAt() *int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheReadMatrix) GetDimensionPrices() map[string]string {
 	if o == nil {
-		return nil
+		return map[string]string{}
 	}
-	return o.DisabledAt
-}
-
-func (o *CronJobInvocation) GetEnabledAt() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.EnabledAt
-}
-
-func (o *CronJobInvocation) GetHidden() bool {
-	if o == nil {
-		return false
-	}
-	return o.Hidden
-}
-
-func (o *CronJobInvocation) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *CronJobInvocation) GetPrice() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Price
-}
-
-func (o *CronJobInvocation) GetThreshold() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Threshold
-}
-
-func (o *CronJobInvocation) GetTier() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Tier
+	return o.DimensionPrices
 }
 
 type DataCacheRead struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+	Batch      float64                                                                                      `json:"batch"`
+	DisabledAt *float64                                                                                     `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                     `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                         `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheReadMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                      `json:"name,omitempty"`
+	Price      float64                                                                                      `json:"price"`
+	Threshold  float64                                                                                      `json:"threshold"`
+	Tier       *float64                                                                                     `json:"tier,omitempty"`
 }
 
-func (o *DataCacheRead) GetBatch() int64 {
+func (o *DataCacheRead) GetBatch() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *DataCacheRead) GetDisabledAt() *int64 {
+func (o *DataCacheRead) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *DataCacheRead) GetEnabledAt() *int64 {
+func (o *DataCacheRead) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -762,6 +1388,13 @@ func (o *DataCacheRead) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *DataCacheRead) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheReadMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *DataCacheRead) GetName() *string {
 	if o == nil {
 		return nil
@@ -769,53 +1402,73 @@ func (o *DataCacheRead) GetName() *string {
 	return o.Name
 }
 
-func (o *DataCacheRead) GetPrice() int64 {
+func (o *DataCacheRead) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *DataCacheRead) GetThreshold() int64 {
+func (o *DataCacheRead) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *DataCacheRead) GetTier() *int64 {
+func (o *DataCacheRead) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type DataCacheRevalidation struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheRevalidationMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *DataCacheRevalidation) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheRevalidationMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheRevalidationMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type DataCacheRevalidation struct {
+	Batch      float64                                                                                              `json:"batch"`
+	DisabledAt *float64                                                                                             `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                             `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                                 `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheRevalidationMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                              `json:"name,omitempty"`
+	Price      float64                                                                                              `json:"price"`
+	Threshold  float64                                                                                              `json:"threshold"`
+	Tier       *float64                                                                                             `json:"tier,omitempty"`
+}
+
+func (o *DataCacheRevalidation) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *DataCacheRevalidation) GetDisabledAt() *int64 {
+func (o *DataCacheRevalidation) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *DataCacheRevalidation) GetEnabledAt() *int64 {
+func (o *DataCacheRevalidation) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -829,6 +1482,13 @@ func (o *DataCacheRevalidation) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *DataCacheRevalidation) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheRevalidationMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *DataCacheRevalidation) GetName() *string {
 	if o == nil {
 		return nil
@@ -836,53 +1496,73 @@ func (o *DataCacheRevalidation) GetName() *string {
 	return o.Name
 }
 
-func (o *DataCacheRevalidation) GetPrice() int64 {
+func (o *DataCacheRevalidation) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *DataCacheRevalidation) GetThreshold() int64 {
+func (o *DataCacheRevalidation) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *DataCacheRevalidation) GetTier() *int64 {
+func (o *DataCacheRevalidation) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type DataCacheWrite struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheWriteMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *DataCacheWrite) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheWriteMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheWriteMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type DataCacheWrite struct {
+	Batch      float64                                                                                       `json:"batch"`
+	DisabledAt *float64                                                                                      `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                      `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                          `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheWriteMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                       `json:"name,omitempty"`
+	Price      float64                                                                                       `json:"price"`
+	Threshold  float64                                                                                       `json:"threshold"`
+	Tier       *float64                                                                                      `json:"tier,omitempty"`
+}
+
+func (o *DataCacheWrite) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *DataCacheWrite) GetDisabledAt() *int64 {
+func (o *DataCacheWrite) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *DataCacheWrite) GetEnabledAt() *int64 {
+func (o *DataCacheWrite) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -896,6 +1576,13 @@ func (o *DataCacheWrite) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *DataCacheWrite) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsDataCacheWriteMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *DataCacheWrite) GetName() *string {
 	if o == nil {
 		return nil
@@ -903,53 +1590,73 @@ func (o *DataCacheWrite) GetName() *string {
 	return o.Name
 }
 
-func (o *DataCacheWrite) GetPrice() int64 {
+func (o *DataCacheWrite) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *DataCacheWrite) GetThreshold() int64 {
+func (o *DataCacheWrite) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *DataCacheWrite) GetTier() *int64 {
+func (o *DataCacheWrite) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type EdgeConfigRead struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeConfigReadMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *EdgeConfigRead) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeConfigReadMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeConfigReadMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeConfigRead struct {
+	Batch      float64                                                                                       `json:"batch"`
+	DisabledAt *float64                                                                                      `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                      `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                          `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeConfigReadMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                       `json:"name,omitempty"`
+	Price      float64                                                                                       `json:"price"`
+	Threshold  float64                                                                                       `json:"threshold"`
+	Tier       *float64                                                                                      `json:"tier,omitempty"`
+}
+
+func (o *EdgeConfigRead) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *EdgeConfigRead) GetDisabledAt() *int64 {
+func (o *EdgeConfigRead) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *EdgeConfigRead) GetEnabledAt() *int64 {
+func (o *EdgeConfigRead) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -963,6 +1670,13 @@ func (o *EdgeConfigRead) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *EdgeConfigRead) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeConfigReadMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *EdgeConfigRead) GetName() *string {
 	if o == nil {
 		return nil
@@ -970,53 +1684,73 @@ func (o *EdgeConfigRead) GetName() *string {
 	return o.Name
 }
 
-func (o *EdgeConfigRead) GetPrice() int64 {
+func (o *EdgeConfigRead) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *EdgeConfigRead) GetThreshold() int64 {
+func (o *EdgeConfigRead) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *EdgeConfigRead) GetTier() *int64 {
+func (o *EdgeConfigRead) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type EdgeConfigWrite struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeConfigWriteMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *EdgeConfigWrite) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeConfigWriteMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeConfigWriteMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeConfigWrite struct {
+	Batch      float64                                                                                        `json:"batch"`
+	DisabledAt *float64                                                                                       `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                       `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                           `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeConfigWriteMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                        `json:"name,omitempty"`
+	Price      float64                                                                                        `json:"price"`
+	Threshold  float64                                                                                        `json:"threshold"`
+	Tier       *float64                                                                                       `json:"tier,omitempty"`
+}
+
+func (o *EdgeConfigWrite) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *EdgeConfigWrite) GetDisabledAt() *int64 {
+func (o *EdgeConfigWrite) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *EdgeConfigWrite) GetEnabledAt() *int64 {
+func (o *EdgeConfigWrite) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1030,6 +1764,13 @@ func (o *EdgeConfigWrite) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *EdgeConfigWrite) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeConfigWriteMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *EdgeConfigWrite) GetName() *string {
 	if o == nil {
 		return nil
@@ -1037,53 +1778,73 @@ func (o *EdgeConfigWrite) GetName() *string {
 	return o.Name
 }
 
-func (o *EdgeConfigWrite) GetPrice() int64 {
+func (o *EdgeConfigWrite) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *EdgeConfigWrite) GetThreshold() int64 {
+func (o *EdgeConfigWrite) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *EdgeConfigWrite) GetTier() *int64 {
+func (o *EdgeConfigWrite) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type EdgeFunctionExecutionUnits struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *EdgeFunctionExecutionUnits) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeFunctionExecutionUnits struct {
+	Batch      float64                                                                                                   `json:"batch"`
+	DisabledAt *float64                                                                                                  `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                                  `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                                      `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                                   `json:"name,omitempty"`
+	Price      float64                                                                                                   `json:"price"`
+	Threshold  float64                                                                                                   `json:"threshold"`
+	Tier       *float64                                                                                                  `json:"tier,omitempty"`
+}
+
+func (o *EdgeFunctionExecutionUnits) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *EdgeFunctionExecutionUnits) GetDisabledAt() *int64 {
+func (o *EdgeFunctionExecutionUnits) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *EdgeFunctionExecutionUnits) GetEnabledAt() *int64 {
+func (o *EdgeFunctionExecutionUnits) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1097,6 +1858,13 @@ func (o *EdgeFunctionExecutionUnits) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *EdgeFunctionExecutionUnits) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeFunctionExecutionUnitsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *EdgeFunctionExecutionUnits) GetName() *string {
 	if o == nil {
 		return nil
@@ -1104,53 +1872,73 @@ func (o *EdgeFunctionExecutionUnits) GetName() *string {
 	return o.Name
 }
 
-func (o *EdgeFunctionExecutionUnits) GetPrice() int64 {
+func (o *EdgeFunctionExecutionUnits) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *EdgeFunctionExecutionUnits) GetThreshold() int64 {
+func (o *EdgeFunctionExecutionUnits) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *EdgeFunctionExecutionUnits) GetTier() *int64 {
+func (o *EdgeFunctionExecutionUnits) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type EdgeMiddlewareInvocations struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *EdgeMiddlewareInvocations) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeMiddlewareInvocations struct {
+	Batch      float64                                                                                                  `json:"batch"`
+	DisabledAt *float64                                                                                                 `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                                 `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                                     `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                                  `json:"name,omitempty"`
+	Price      float64                                                                                                  `json:"price"`
+	Threshold  float64                                                                                                  `json:"threshold"`
+	Tier       *float64                                                                                                 `json:"tier,omitempty"`
+}
+
+func (o *EdgeMiddlewareInvocations) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *EdgeMiddlewareInvocations) GetDisabledAt() *int64 {
+func (o *EdgeMiddlewareInvocations) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *EdgeMiddlewareInvocations) GetEnabledAt() *int64 {
+func (o *EdgeMiddlewareInvocations) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1164,6 +1952,13 @@ func (o *EdgeMiddlewareInvocations) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *EdgeMiddlewareInvocations) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeMiddlewareInvocationsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *EdgeMiddlewareInvocations) GetName() *string {
 	if o == nil {
 		return nil
@@ -1171,21 +1966,209 @@ func (o *EdgeMiddlewareInvocations) GetName() *string {
 	return o.Name
 }
 
-func (o *EdgeMiddlewareInvocations) GetPrice() int64 {
+func (o *EdgeMiddlewareInvocations) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *EdgeMiddlewareInvocations) GetThreshold() int64 {
+func (o *EdgeMiddlewareInvocations) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *EdgeMiddlewareInvocations) GetTier() *int64 {
+func (o *EdgeMiddlewareInvocations) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeRequestMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeRequestMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeRequestMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeRequest struct {
+	Batch      float64                                                                                    `json:"batch"`
+	DisabledAt *float64                                                                                   `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                   `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                       `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeRequestMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                    `json:"name,omitempty"`
+	Price      float64                                                                                    `json:"price"`
+	Threshold  float64                                                                                    `json:"threshold"`
+	Tier       *float64                                                                                   `json:"tier,omitempty"`
+}
+
+func (o *EdgeRequest) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *EdgeRequest) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *EdgeRequest) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *EdgeRequest) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *EdgeRequest) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeRequestMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *EdgeRequest) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *EdgeRequest) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *EdgeRequest) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *EdgeRequest) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeRequestAdditionalCPUDurationMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeRequestAdditionalCPUDurationMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeRequestAdditionalCPUDurationMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type EdgeRequestAdditionalCPUDuration struct {
+	Batch      float64                                                                                                         `json:"batch"`
+	DisabledAt *float64                                                                                                        `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                                        `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                                            `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeRequestAdditionalCPUDurationMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                                         `json:"name,omitempty"`
+	Price      float64                                                                                                         `json:"price"`
+	Threshold  float64                                                                                                         `json:"threshold"`
+	Tier       *float64                                                                                                        `json:"tier,omitempty"`
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsEdgeRequestAdditionalCPUDurationMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *EdgeRequestAdditionalCPUDuration) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1201,7 +2184,6 @@ const (
 func (e CreateTeamTeamsInterval) ToPointer() *CreateTeamTeamsInterval {
 	return &e
 }
-
 func (e *CreateTeamTeamsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1216,45 +2198,9 @@ func (e *CreateTeamTeamsInterval) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type CreateTeamTeamsIntervalCount int64
-
-const (
-	CreateTeamTeamsIntervalCountOne    CreateTeamTeamsIntervalCount = 1
-	CreateTeamTeamsIntervalCountTwelve CreateTeamTeamsIntervalCount = 12
-	CreateTeamTeamsIntervalCountTwo    CreateTeamTeamsIntervalCount = 2
-	CreateTeamTeamsIntervalCountThree  CreateTeamTeamsIntervalCount = 3
-	CreateTeamTeamsIntervalCountSix    CreateTeamTeamsIntervalCount = 6
-)
-
-func (e CreateTeamTeamsIntervalCount) ToPointer() *CreateTeamTeamsIntervalCount {
-	return &e
-}
-
-func (e *CreateTeamTeamsIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 12:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		*e = CreateTeamTeamsIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateTeamTeamsIntervalCount: %v", v)
-	}
-}
-
 type CreateTeamTeamsFrequency struct {
-	Interval      CreateTeamTeamsInterval      `json:"interval"`
-	IntervalCount CreateTeamTeamsIntervalCount `json:"intervalCount"`
+	Interval      CreateTeamTeamsInterval `json:"interval"`
+	IntervalCount float64                 `json:"intervalCount"`
 }
 
 func (o *CreateTeamTeamsFrequency) GetInterval() CreateTeamTeamsInterval {
@@ -1264,34 +2210,35 @@ func (o *CreateTeamTeamsFrequency) GetInterval() CreateTeamTeamsInterval {
 	return o.Interval
 }
 
-func (o *CreateTeamTeamsFrequency) GetIntervalCount() CreateTeamTeamsIntervalCount {
+func (o *CreateTeamTeamsFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return CreateTeamTeamsIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // Enterprise - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type Enterprise struct {
-	CreatedAt   *int64                    `json:"createdAt,omitempty"`
-	DisabledAt  *int64                    `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeamTeamsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                      `json:"hidden"`
-	MaxQuantity *int64                    `json:"maxQuantity,omitempty"`
-	Name        *string                   `json:"name,omitempty"`
-	Price       int64                     `json:"price"`
-	Quantity    int64                     `json:"quantity"`
-	Tier        *int64                    `json:"tier,omitempty"`
+	CreatedAt       *float64                  `json:"createdAt,omitempty"`
+	DisabledAt      *float64                  `json:"disabledAt,omitempty"`
+	Frequency       *CreateTeamTeamsFrequency `json:"frequency,omitempty"`
+	Hidden          bool                      `json:"hidden"`
+	HighestQuantity *float64                  `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                  `json:"maxQuantity,omitempty"`
+	Name            *string                   `json:"name,omitempty"`
+	Price           float64                   `json:"price"`
+	Quantity        float64                   `json:"quantity"`
+	Tier            *float64                  `json:"tier,omitempty"`
 }
 
-func (o *Enterprise) GetCreatedAt() *int64 {
+func (o *Enterprise) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *Enterprise) GetDisabledAt() *int64 {
+func (o *Enterprise) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1312,7 +2259,14 @@ func (o *Enterprise) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *Enterprise) GetMaxQuantity() *int64 {
+func (o *Enterprise) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *Enterprise) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1326,21 +2280,491 @@ func (o *Enterprise) GetName() *string {
 	return o.Name
 }
 
-func (o *Enterprise) GetPrice() int64 {
+func (o *Enterprise) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *Enterprise) GetQuantity() int64 {
+func (o *Enterprise) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *Enterprise) GetTier() *int64 {
+func (o *Enterprise) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFastDataTransferMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFastDataTransferMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFastDataTransferMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type FastDataTransfer struct {
+	Batch      float64                                                                                         `json:"batch"`
+	DisabledAt *float64                                                                                        `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                        `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                            `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFastDataTransferMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                         `json:"name,omitempty"`
+	Price      float64                                                                                         `json:"price"`
+	Threshold  float64                                                                                         `json:"threshold"`
+	Tier       *float64                                                                                        `json:"tier,omitempty"`
+}
+
+func (o *FastDataTransfer) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *FastDataTransfer) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *FastDataTransfer) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *FastDataTransfer) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *FastDataTransfer) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFastDataTransferMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *FastDataTransfer) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *FastDataTransfer) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *FastDataTransfer) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *FastDataTransfer) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFastOriginTransferMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFastOriginTransferMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFastOriginTransferMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type FastOriginTransfer struct {
+	Batch      float64                                                                                           `json:"batch"`
+	DisabledAt *float64                                                                                          `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                          `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                              `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFastOriginTransferMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                           `json:"name,omitempty"`
+	Price      float64                                                                                           `json:"price"`
+	Threshold  float64                                                                                           `json:"threshold"`
+	Tier       *float64                                                                                          `json:"tier,omitempty"`
+}
+
+func (o *FastOriginTransfer) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *FastOriginTransfer) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *FastOriginTransfer) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *FastOriginTransfer) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *FastOriginTransfer) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFastOriginTransferMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *FastOriginTransfer) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *FastOriginTransfer) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *FastOriginTransfer) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *FastOriginTransfer) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFunctionDurationMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFunctionDurationMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFunctionDurationMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type FunctionDuration struct {
+	Batch      float64                                                                                         `json:"batch"`
+	DisabledAt *float64                                                                                        `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                        `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                            `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFunctionDurationMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                         `json:"name,omitempty"`
+	Price      float64                                                                                         `json:"price"`
+	Threshold  float64                                                                                         `json:"threshold"`
+	Tier       *float64                                                                                        `json:"tier,omitempty"`
+}
+
+func (o *FunctionDuration) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *FunctionDuration) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *FunctionDuration) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *FunctionDuration) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *FunctionDuration) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFunctionDurationMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *FunctionDuration) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *FunctionDuration) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *FunctionDuration) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *FunctionDuration) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFunctionInvocationMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFunctionInvocationMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFunctionInvocationMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type FunctionInvocation struct {
+	Batch      float64                                                                                           `json:"batch"`
+	DisabledAt *float64                                                                                          `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                          `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                              `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFunctionInvocationMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                           `json:"name,omitempty"`
+	Price      float64                                                                                           `json:"price"`
+	Threshold  float64                                                                                           `json:"threshold"`
+	Tier       *float64                                                                                          `json:"tier,omitempty"`
+}
+
+func (o *FunctionInvocation) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *FunctionInvocation) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *FunctionInvocation) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *FunctionInvocation) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *FunctionInvocation) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFunctionInvocationMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *FunctionInvocation) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *FunctionInvocation) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *FunctionInvocation) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *FunctionInvocation) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsLogDrainsVolumeMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsLogDrainsVolumeMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsLogDrainsVolumeMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type LogDrainsVolume struct {
+	Batch      float64                                                                                        `json:"batch"`
+	DisabledAt *float64                                                                                       `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                       `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                           `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsLogDrainsVolumeMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                        `json:"name,omitempty"`
+	Price      float64                                                                                        `json:"price"`
+	Threshold  float64                                                                                        `json:"threshold"`
+	Tier       *float64                                                                                       `json:"tier,omitempty"`
+}
+
+func (o *LogDrainsVolume) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *LogDrainsVolume) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *LogDrainsVolume) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *LogDrainsVolume) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *LogDrainsVolume) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsLogDrainsVolumeMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *LogDrainsVolume) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *LogDrainsVolume) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *LogDrainsVolume) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *LogDrainsVolume) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1356,7 +2780,6 @@ const (
 func (e CreateTeamTeamsResponseInterval) ToPointer() *CreateTeamTeamsResponseInterval {
 	return &e
 }
-
 func (e *CreateTeamTeamsResponseInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1371,45 +2794,9 @@ func (e *CreateTeamTeamsResponseInterval) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type CreateTeamTeamsResponseIntervalCount int64
-
-const (
-	CreateTeamTeamsResponseIntervalCountOne    CreateTeamTeamsResponseIntervalCount = 1
-	CreateTeamTeamsResponseIntervalCountTwelve CreateTeamTeamsResponseIntervalCount = 12
-	CreateTeamTeamsResponseIntervalCountTwo    CreateTeamTeamsResponseIntervalCount = 2
-	CreateTeamTeamsResponseIntervalCountThree  CreateTeamTeamsResponseIntervalCount = 3
-	CreateTeamTeamsResponseIntervalCountSix    CreateTeamTeamsResponseIntervalCount = 6
-)
-
-func (e CreateTeamTeamsResponseIntervalCount) ToPointer() *CreateTeamTeamsResponseIntervalCount {
-	return &e
-}
-
-func (e *CreateTeamTeamsResponseIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 12:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		*e = CreateTeamTeamsResponseIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateTeamTeamsResponseIntervalCount: %v", v)
-	}
-}
-
 type CreateTeamTeamsResponseFrequency struct {
-	Interval      CreateTeamTeamsResponseInterval      `json:"interval"`
-	IntervalCount CreateTeamTeamsResponseIntervalCount `json:"intervalCount"`
+	Interval      CreateTeamTeamsResponseInterval `json:"interval"`
+	IntervalCount float64                         `json:"intervalCount"`
 }
 
 func (o *CreateTeamTeamsResponseFrequency) GetInterval() CreateTeamTeamsResponseInterval {
@@ -1419,34 +2806,35 @@ func (o *CreateTeamTeamsResponseFrequency) GetInterval() CreateTeamTeamsResponse
 	return o.Interval
 }
 
-func (o *CreateTeamTeamsResponseFrequency) GetIntervalCount() CreateTeamTeamsResponseIntervalCount {
+func (o *CreateTeamTeamsResponseFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return CreateTeamTeamsResponseIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // Monitoring - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type Monitoring struct {
-	CreatedAt   *int64                            `json:"createdAt,omitempty"`
-	DisabledAt  *int64                            `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeamTeamsResponseFrequency `json:"frequency,omitempty"`
-	Hidden      bool                              `json:"hidden"`
-	MaxQuantity *int64                            `json:"maxQuantity,omitempty"`
-	Name        *string                           `json:"name,omitempty"`
-	Price       int64                             `json:"price"`
-	Quantity    int64                             `json:"quantity"`
-	Tier        *int64                            `json:"tier,omitempty"`
+	CreatedAt       *float64                          `json:"createdAt,omitempty"`
+	DisabledAt      *float64                          `json:"disabledAt,omitempty"`
+	Frequency       *CreateTeamTeamsResponseFrequency `json:"frequency,omitempty"`
+	Hidden          bool                              `json:"hidden"`
+	HighestQuantity *float64                          `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                          `json:"maxQuantity,omitempty"`
+	Name            *string                           `json:"name,omitempty"`
+	Price           float64                           `json:"price"`
+	Quantity        float64                           `json:"quantity"`
+	Tier            *float64                          `json:"tier,omitempty"`
 }
 
-func (o *Monitoring) GetCreatedAt() *int64 {
+func (o *Monitoring) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *Monitoring) GetDisabledAt() *int64 {
+func (o *Monitoring) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1467,7 +2855,14 @@ func (o *Monitoring) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *Monitoring) GetMaxQuantity() *int64 {
+func (o *Monitoring) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *Monitoring) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1481,53 +2876,73 @@ func (o *Monitoring) GetName() *string {
 	return o.Name
 }
 
-func (o *Monitoring) GetPrice() int64 {
+func (o *Monitoring) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *Monitoring) GetQuantity() int64 {
+func (o *Monitoring) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *Monitoring) GetTier() *int64 {
+func (o *Monitoring) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type MonitoringMetric struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsMonitoringMetricMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *MonitoringMetric) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsMonitoringMetricMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsMonitoringMetricMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type MonitoringMetric struct {
+	Batch      float64                                                                                         `json:"batch"`
+	DisabledAt *float64                                                                                        `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                        `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                            `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsMonitoringMetricMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                         `json:"name,omitempty"`
+	Price      float64                                                                                         `json:"price"`
+	Threshold  float64                                                                                         `json:"threshold"`
+	Tier       *float64                                                                                        `json:"tier,omitempty"`
+}
+
+func (o *MonitoringMetric) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *MonitoringMetric) GetDisabledAt() *int64 {
+func (o *MonitoringMetric) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *MonitoringMetric) GetEnabledAt() *int64 {
+func (o *MonitoringMetric) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1541,6 +2956,13 @@ func (o *MonitoringMetric) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *MonitoringMetric) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsMonitoringMetricMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *MonitoringMetric) GetName() *string {
 	if o == nil {
 		return nil
@@ -1548,21 +2970,21 @@ func (o *MonitoringMetric) GetName() *string {
 	return o.Name
 }
 
-func (o *MonitoringMetric) GetPrice() int64 {
+func (o *MonitoringMetric) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *MonitoringMetric) GetThreshold() int64 {
+func (o *MonitoringMetric) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *MonitoringMetric) GetTier() *int64 {
+func (o *MonitoringMetric) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1578,7 +3000,6 @@ const (
 func (e CreateTeamTeamsResponse200Interval) ToPointer() *CreateTeamTeamsResponse200Interval {
 	return &e
 }
-
 func (e *CreateTeamTeamsResponse200Interval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1593,45 +3014,9 @@ func (e *CreateTeamTeamsResponse200Interval) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type CreateTeamTeamsResponse200IntervalCount int64
-
-const (
-	CreateTeamTeamsResponse200IntervalCountOne    CreateTeamTeamsResponse200IntervalCount = 1
-	CreateTeamTeamsResponse200IntervalCountTwelve CreateTeamTeamsResponse200IntervalCount = 12
-	CreateTeamTeamsResponse200IntervalCountTwo    CreateTeamTeamsResponse200IntervalCount = 2
-	CreateTeamTeamsResponse200IntervalCountThree  CreateTeamTeamsResponse200IntervalCount = 3
-	CreateTeamTeamsResponse200IntervalCountSix    CreateTeamTeamsResponse200IntervalCount = 6
-)
-
-func (e CreateTeamTeamsResponse200IntervalCount) ToPointer() *CreateTeamTeamsResponse200IntervalCount {
-	return &e
-}
-
-func (e *CreateTeamTeamsResponse200IntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 12:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		*e = CreateTeamTeamsResponse200IntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200IntervalCount: %v", v)
-	}
-}
-
 type CreateTeamTeamsResponse200Frequency struct {
-	Interval      CreateTeamTeamsResponse200Interval      `json:"interval"`
-	IntervalCount CreateTeamTeamsResponse200IntervalCount `json:"intervalCount"`
+	Interval      CreateTeamTeamsResponse200Interval `json:"interval"`
+	IntervalCount float64                            `json:"intervalCount"`
 }
 
 func (o *CreateTeamTeamsResponse200Frequency) GetInterval() CreateTeamTeamsResponse200Interval {
@@ -1641,34 +3026,35 @@ func (o *CreateTeamTeamsResponse200Frequency) GetInterval() CreateTeamTeamsRespo
 	return o.Interval
 }
 
-func (o *CreateTeamTeamsResponse200Frequency) GetIntervalCount() CreateTeamTeamsResponse200IntervalCount {
+func (o *CreateTeamTeamsResponse200Frequency) GetIntervalCount() float64 {
 	if o == nil {
-		return CreateTeamTeamsResponse200IntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // CreateTeamPasswordProtection - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type CreateTeamPasswordProtection struct {
-	CreatedAt   *int64                               `json:"createdAt,omitempty"`
-	DisabledAt  *int64                               `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeamTeamsResponse200Frequency `json:"frequency,omitempty"`
-	Hidden      bool                                 `json:"hidden"`
-	MaxQuantity *int64                               `json:"maxQuantity,omitempty"`
-	Name        *string                              `json:"name,omitempty"`
-	Price       int64                                `json:"price"`
-	Quantity    int64                                `json:"quantity"`
-	Tier        *int64                               `json:"tier,omitempty"`
+	CreatedAt       *float64                             `json:"createdAt,omitempty"`
+	DisabledAt      *float64                             `json:"disabledAt,omitempty"`
+	Frequency       *CreateTeamTeamsResponse200Frequency `json:"frequency,omitempty"`
+	Hidden          bool                                 `json:"hidden"`
+	HighestQuantity *float64                             `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                             `json:"maxQuantity,omitempty"`
+	Name            *string                              `json:"name,omitempty"`
+	Price           float64                              `json:"price"`
+	Quantity        float64                              `json:"quantity"`
+	Tier            *float64                             `json:"tier,omitempty"`
 }
 
-func (o *CreateTeamPasswordProtection) GetCreatedAt() *int64 {
+func (o *CreateTeamPasswordProtection) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeamPasswordProtection) GetDisabledAt() *int64 {
+func (o *CreateTeamPasswordProtection) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1689,7 +3075,14 @@ func (o *CreateTeamPasswordProtection) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *CreateTeamPasswordProtection) GetMaxQuantity() *int64 {
+func (o *CreateTeamPasswordProtection) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *CreateTeamPasswordProtection) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1703,53 +3096,73 @@ func (o *CreateTeamPasswordProtection) GetName() *string {
 	return o.Name
 }
 
-func (o *CreateTeamPasswordProtection) GetPrice() int64 {
+func (o *CreateTeamPasswordProtection) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *CreateTeamPasswordProtection) GetQuantity() int64 {
+func (o *CreateTeamPasswordProtection) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeamPasswordProtection) GetTier() *int64 {
+func (o *CreateTeamPasswordProtection) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type PostgresComputeTime struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresComputeTimeMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *PostgresComputeTime) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresComputeTimeMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresComputeTimeMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type PostgresComputeTime struct {
+	Batch      float64                                                                                            `json:"batch"`
+	DisabledAt *float64                                                                                           `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                           `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                               `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresComputeTimeMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                            `json:"name,omitempty"`
+	Price      float64                                                                                            `json:"price"`
+	Threshold  float64                                                                                            `json:"threshold"`
+	Tier       *float64                                                                                           `json:"tier,omitempty"`
+}
+
+func (o *PostgresComputeTime) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *PostgresComputeTime) GetDisabledAt() *int64 {
+func (o *PostgresComputeTime) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *PostgresComputeTime) GetEnabledAt() *int64 {
+func (o *PostgresComputeTime) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1763,6 +3176,13 @@ func (o *PostgresComputeTime) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *PostgresComputeTime) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresComputeTimeMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *PostgresComputeTime) GetName() *string {
 	if o == nil {
 		return nil
@@ -1770,53 +3190,73 @@ func (o *PostgresComputeTime) GetName() *string {
 	return o.Name
 }
 
-func (o *PostgresComputeTime) GetPrice() int64 {
+func (o *PostgresComputeTime) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PostgresComputeTime) GetThreshold() int64 {
+func (o *PostgresComputeTime) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *PostgresComputeTime) GetTier() *int64 {
+func (o *PostgresComputeTime) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type PostgresDataStorage struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDataStorageMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *PostgresDataStorage) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDataStorageMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDataStorageMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type PostgresDataStorage struct {
+	Batch      float64                                                                                            `json:"batch"`
+	DisabledAt *float64                                                                                           `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                           `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                               `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDataStorageMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                            `json:"name,omitempty"`
+	Price      float64                                                                                            `json:"price"`
+	Threshold  float64                                                                                            `json:"threshold"`
+	Tier       *float64                                                                                           `json:"tier,omitempty"`
+}
+
+func (o *PostgresDataStorage) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *PostgresDataStorage) GetDisabledAt() *int64 {
+func (o *PostgresDataStorage) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *PostgresDataStorage) GetEnabledAt() *int64 {
+func (o *PostgresDataStorage) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1830,6 +3270,13 @@ func (o *PostgresDataStorage) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *PostgresDataStorage) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDataStorageMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *PostgresDataStorage) GetName() *string {
 	if o == nil {
 		return nil
@@ -1837,53 +3284,73 @@ func (o *PostgresDataStorage) GetName() *string {
 	return o.Name
 }
 
-func (o *PostgresDataStorage) GetPrice() int64 {
+func (o *PostgresDataStorage) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PostgresDataStorage) GetThreshold() int64 {
+func (o *PostgresDataStorage) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *PostgresDataStorage) GetTier() *int64 {
+func (o *PostgresDataStorage) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type PostgresDataTransfer struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDataTransferMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *PostgresDataTransfer) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDataTransferMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDataTransferMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type PostgresDataTransfer struct {
+	Batch      float64                                                                                             `json:"batch"`
+	DisabledAt *float64                                                                                            `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                            `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                                `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDataTransferMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                             `json:"name,omitempty"`
+	Price      float64                                                                                             `json:"price"`
+	Threshold  float64                                                                                             `json:"threshold"`
+	Tier       *float64                                                                                            `json:"tier,omitempty"`
+}
+
+func (o *PostgresDataTransfer) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *PostgresDataTransfer) GetDisabledAt() *int64 {
+func (o *PostgresDataTransfer) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *PostgresDataTransfer) GetEnabledAt() *int64 {
+func (o *PostgresDataTransfer) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1897,6 +3364,13 @@ func (o *PostgresDataTransfer) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *PostgresDataTransfer) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDataTransferMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *PostgresDataTransfer) GetName() *string {
 	if o == nil {
 		return nil
@@ -1904,53 +3378,73 @@ func (o *PostgresDataTransfer) GetName() *string {
 	return o.Name
 }
 
-func (o *PostgresDataTransfer) GetPrice() int64 {
+func (o *PostgresDataTransfer) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PostgresDataTransfer) GetThreshold() int64 {
+func (o *PostgresDataTransfer) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *PostgresDataTransfer) GetTier() *int64 {
+func (o *PostgresDataTransfer) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type PostgresDatabase struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDatabaseMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *PostgresDatabase) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDatabaseMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDatabaseMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type PostgresDatabase struct {
+	Batch      float64                                                                                         `json:"batch"`
+	DisabledAt *float64                                                                                        `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                        `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                            `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDatabaseMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                         `json:"name,omitempty"`
+	Price      float64                                                                                         `json:"price"`
+	Threshold  float64                                                                                         `json:"threshold"`
+	Tier       *float64                                                                                        `json:"tier,omitempty"`
+}
+
+func (o *PostgresDatabase) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *PostgresDatabase) GetDisabledAt() *int64 {
+func (o *PostgresDatabase) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *PostgresDatabase) GetEnabledAt() *int64 {
+func (o *PostgresDatabase) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1964,6 +3458,13 @@ func (o *PostgresDatabase) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *PostgresDatabase) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresDatabaseMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *PostgresDatabase) GetName() *string {
 	if o == nil {
 		return nil
@@ -1971,53 +3472,73 @@ func (o *PostgresDatabase) GetName() *string {
 	return o.Name
 }
 
-func (o *PostgresDatabase) GetPrice() int64 {
+func (o *PostgresDatabase) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PostgresDatabase) GetThreshold() int64 {
+func (o *PostgresDatabase) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *PostgresDatabase) GetTier() *int64 {
+func (o *PostgresDatabase) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type PostgresWrittenData struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresWrittenDataMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *PostgresWrittenData) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresWrittenDataMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresWrittenDataMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type PostgresWrittenData struct {
+	Batch      float64                                                                                            `json:"batch"`
+	DisabledAt *float64                                                                                           `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                           `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                               `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresWrittenDataMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                            `json:"name,omitempty"`
+	Price      float64                                                                                            `json:"price"`
+	Threshold  float64                                                                                            `json:"threshold"`
+	Tier       *float64                                                                                           `json:"tier,omitempty"`
+}
+
+func (o *PostgresWrittenData) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *PostgresWrittenData) GetDisabledAt() *int64 {
+func (o *PostgresWrittenData) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *PostgresWrittenData) GetEnabledAt() *int64 {
+func (o *PostgresWrittenData) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2031,6 +3552,13 @@ func (o *PostgresWrittenData) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *PostgresWrittenData) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsPostgresWrittenDataMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *PostgresWrittenData) GetName() *string {
 	if o == nil {
 		return nil
@@ -2038,21 +3566,21 @@ func (o *PostgresWrittenData) GetName() *string {
 	return o.Name
 }
 
-func (o *PostgresWrittenData) GetPrice() int64 {
+func (o *PostgresWrittenData) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PostgresWrittenData) GetThreshold() int64 {
+func (o *PostgresWrittenData) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *PostgresWrittenData) GetTier() *int64 {
+func (o *PostgresWrittenData) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2068,7 +3596,6 @@ const (
 func (e CreateTeamTeamsResponse200ApplicationJSONInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONInterval {
 	return &e
 }
-
 func (e *CreateTeamTeamsResponse200ApplicationJSONInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2083,45 +3610,9 @@ func (e *CreateTeamTeamsResponse200ApplicationJSONInterval) UnmarshalJSON(data [
 	}
 }
 
-type CreateTeamTeamsResponse200ApplicationJSONIntervalCount int64
-
-const (
-	CreateTeamTeamsResponse200ApplicationJSONIntervalCountOne    CreateTeamTeamsResponse200ApplicationJSONIntervalCount = 1
-	CreateTeamTeamsResponse200ApplicationJSONIntervalCountTwelve CreateTeamTeamsResponse200ApplicationJSONIntervalCount = 12
-	CreateTeamTeamsResponse200ApplicationJSONIntervalCountTwo    CreateTeamTeamsResponse200ApplicationJSONIntervalCount = 2
-	CreateTeamTeamsResponse200ApplicationJSONIntervalCountThree  CreateTeamTeamsResponse200ApplicationJSONIntervalCount = 3
-	CreateTeamTeamsResponse200ApplicationJSONIntervalCountSix    CreateTeamTeamsResponse200ApplicationJSONIntervalCount = 6
-)
-
-func (e CreateTeamTeamsResponse200ApplicationJSONIntervalCount) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONIntervalCount {
-	return &e
-}
-
-func (e *CreateTeamTeamsResponse200ApplicationJSONIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 12:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		*e = CreateTeamTeamsResponse200ApplicationJSONIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONIntervalCount: %v", v)
-	}
-}
-
 type CreateTeamTeamsResponse200ApplicationJSONFrequency struct {
-	Interval      CreateTeamTeamsResponse200ApplicationJSONInterval      `json:"interval"`
-	IntervalCount CreateTeamTeamsResponse200ApplicationJSONIntervalCount `json:"intervalCount"`
+	Interval      CreateTeamTeamsResponse200ApplicationJSONInterval `json:"interval"`
+	IntervalCount float64                                           `json:"intervalCount"`
 }
 
 func (o *CreateTeamTeamsResponse200ApplicationJSONFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONInterval {
@@ -2131,34 +3622,35 @@ func (o *CreateTeamTeamsResponse200ApplicationJSONFrequency) GetInterval() Creat
 	return o.Interval
 }
 
-func (o *CreateTeamTeamsResponse200ApplicationJSONFrequency) GetIntervalCount() CreateTeamTeamsResponse200ApplicationJSONIntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return CreateTeamTeamsResponse200ApplicationJSONIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // PreviewDeploymentSuffix - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type PreviewDeploymentSuffix struct {
-	CreatedAt   *int64                                              `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                              `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeamTeamsResponse200ApplicationJSONFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                `json:"hidden"`
-	MaxQuantity *int64                                              `json:"maxQuantity,omitempty"`
-	Name        *string                                             `json:"name,omitempty"`
-	Price       int64                                               `json:"price"`
-	Quantity    int64                                               `json:"quantity"`
-	Tier        *int64                                              `json:"tier,omitempty"`
+	CreatedAt       *float64                                            `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                            `json:"disabledAt,omitempty"`
+	Frequency       *CreateTeamTeamsResponse200ApplicationJSONFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                                `json:"hidden"`
+	HighestQuantity *float64                                            `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                            `json:"maxQuantity,omitempty"`
+	Name            *string                                             `json:"name,omitempty"`
+	Price           float64                                             `json:"price"`
+	Quantity        float64                                             `json:"quantity"`
+	Tier            *float64                                            `json:"tier,omitempty"`
 }
 
-func (o *PreviewDeploymentSuffix) GetCreatedAt() *int64 {
+func (o *PreviewDeploymentSuffix) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *PreviewDeploymentSuffix) GetDisabledAt() *int64 {
+func (o *PreviewDeploymentSuffix) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2179,7 +3671,14 @@ func (o *PreviewDeploymentSuffix) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *PreviewDeploymentSuffix) GetMaxQuantity() *int64 {
+func (o *PreviewDeploymentSuffix) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *PreviewDeploymentSuffix) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2193,21 +3692,21 @@ func (o *PreviewDeploymentSuffix) GetName() *string {
 	return o.Name
 }
 
-func (o *PreviewDeploymentSuffix) GetPrice() int64 {
+func (o *PreviewDeploymentSuffix) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *PreviewDeploymentSuffix) GetQuantity() int64 {
+func (o *PreviewDeploymentSuffix) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *PreviewDeploymentSuffix) GetTier() *int64 {
+func (o *PreviewDeploymentSuffix) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2223,7 +3722,6 @@ const (
 func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval {
 	return &e
 }
-
 func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2238,45 +3736,9 @@ func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval) Unmarsha
 	}
 }
 
-type CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount int64
-
-const (
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCountOne    CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount = 1
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCountTwelve CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount = 12
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCountTwo    CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount = 2
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCountThree  CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount = 3
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCountSix    CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount = 6
-)
-
-func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount {
-	return &e
-}
-
-func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 12:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount: %v", v)
-	}
-}
-
 type CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency struct {
-	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval      `json:"interval"`
-	IntervalCount CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount `json:"intervalCount"`
+	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval `json:"interval"`
+	IntervalCount float64                                                       `json:"intervalCount"`
 }
 
 func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONResponseBodyInterval {
@@ -2286,34 +3748,35 @@ func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency) GetInte
 	return o.Interval
 }
 
-func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency) GetIntervalCount() CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // Pro - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type Pro struct {
-	CreatedAt   *int64                                                          `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                          `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                            `json:"hidden"`
-	MaxQuantity *int64                                                          `json:"maxQuantity,omitempty"`
-	Name        *string                                                         `json:"name,omitempty"`
-	Price       int64                                                           `json:"price"`
-	Quantity    int64                                                           `json:"quantity"`
-	Tier        *int64                                                          `json:"tier,omitempty"`
+	CreatedAt       *float64                                                        `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                                        `json:"disabledAt,omitempty"`
+	Frequency       *CreateTeamTeamsResponse200ApplicationJSONResponseBodyFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                                            `json:"hidden"`
+	HighestQuantity *float64                                                        `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                                        `json:"maxQuantity,omitempty"`
+	Name            *string                                                         `json:"name,omitempty"`
+	Price           float64                                                         `json:"price"`
+	Quantity        float64                                                         `json:"quantity"`
+	Tier            *float64                                                        `json:"tier,omitempty"`
 }
 
-func (o *Pro) GetCreatedAt() *int64 {
+func (o *Pro) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *Pro) GetDisabledAt() *int64 {
+func (o *Pro) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2334,7 +3797,14 @@ func (o *Pro) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *Pro) GetMaxQuantity() *int64 {
+func (o *Pro) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *Pro) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2348,21 +3818,21 @@ func (o *Pro) GetName() *string {
 	return o.Name
 }
 
-func (o *Pro) GetPrice() int64 {
+func (o *Pro) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *Pro) GetQuantity() int64 {
+func (o *Pro) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *Pro) GetTier() *int64 {
+func (o *Pro) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2378,7 +3848,6 @@ const (
 func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval {
 	return &e
 }
-
 func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2393,45 +3862,9 @@ func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval) U
 	}
 }
 
-type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount int64
-
-const (
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCountOne    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount = 1
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCountTwelve CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount = 12
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCountTwo    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount = 2
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCountThree  CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount = 3
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCountSix    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount = 6
-)
-
-func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount {
-	return &e
-}
-
-func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 12:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount: %v", v)
-	}
-}
-
 type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency struct {
-	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval      `json:"interval"`
-	IntervalCount CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount `json:"intervalCount"`
+	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval `json:"interval"`
+	IntervalCount float64                                                              `json:"intervalCount"`
 }
 
 func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInterval {
@@ -2441,34 +3874,35 @@ func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency) 
 	return o.Interval
 }
 
-func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency) GetIntervalCount() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // CreateTeamSaml - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type CreateTeamSaml struct {
-	CreatedAt   *int64                                                                 `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                                 `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                                   `json:"hidden"`
-	MaxQuantity *int64                                                                 `json:"maxQuantity,omitempty"`
-	Name        *string                                                                `json:"name,omitempty"`
-	Price       int64                                                                  `json:"price"`
-	Quantity    int64                                                                  `json:"quantity"`
-	Tier        *int64                                                                 `json:"tier,omitempty"`
+	CreatedAt       *float64                                                               `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                                               `json:"disabledAt,omitempty"`
+	Frequency       *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                                                   `json:"hidden"`
+	HighestQuantity *float64                                                               `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                                               `json:"maxQuantity,omitempty"`
+	Name            *string                                                                `json:"name,omitempty"`
+	Price           float64                                                                `json:"price"`
+	Quantity        float64                                                                `json:"quantity"`
+	Tier            *float64                                                               `json:"tier,omitempty"`
 }
 
-func (o *CreateTeamSaml) GetCreatedAt() *int64 {
+func (o *CreateTeamSaml) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *CreateTeamSaml) GetDisabledAt() *int64 {
+func (o *CreateTeamSaml) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2489,7 +3923,14 @@ func (o *CreateTeamSaml) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *CreateTeamSaml) GetMaxQuantity() *int64 {
+func (o *CreateTeamSaml) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *CreateTeamSaml) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2503,53 +3944,73 @@ func (o *CreateTeamSaml) GetName() *string {
 	return o.Name
 }
 
-func (o *CreateTeamSaml) GetPrice() int64 {
+func (o *CreateTeamSaml) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *CreateTeamSaml) GetQuantity() int64 {
+func (o *CreateTeamSaml) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *CreateTeamSaml) GetTier() *int64 {
+func (o *CreateTeamSaml) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type ServerlessFunctionExecution struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsServerlessFunctionExecutionMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *ServerlessFunctionExecution) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsServerlessFunctionExecutionMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsServerlessFunctionExecutionMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type ServerlessFunctionExecution struct {
+	Batch      float64                                                                                                    `json:"batch"`
+	DisabledAt *float64                                                                                                   `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                                   `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                                       `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsServerlessFunctionExecutionMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                                    `json:"name,omitempty"`
+	Price      float64                                                                                                    `json:"price"`
+	Threshold  float64                                                                                                    `json:"threshold"`
+	Tier       *float64                                                                                                   `json:"tier,omitempty"`
+}
+
+func (o *ServerlessFunctionExecution) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *ServerlessFunctionExecution) GetDisabledAt() *int64 {
+func (o *ServerlessFunctionExecution) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *ServerlessFunctionExecution) GetEnabledAt() *int64 {
+func (o *ServerlessFunctionExecution) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2563,6 +4024,13 @@ func (o *ServerlessFunctionExecution) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *ServerlessFunctionExecution) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsServerlessFunctionExecutionMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *ServerlessFunctionExecution) GetName() *string {
 	if o == nil {
 		return nil
@@ -2570,53 +4038,73 @@ func (o *ServerlessFunctionExecution) GetName() *string {
 	return o.Name
 }
 
-func (o *ServerlessFunctionExecution) GetPrice() int64 {
+func (o *ServerlessFunctionExecution) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *ServerlessFunctionExecution) GetThreshold() int64 {
+func (o *ServerlessFunctionExecution) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *ServerlessFunctionExecution) GetTier() *int64 {
+func (o *ServerlessFunctionExecution) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type SourceImages struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsSourceImagesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *SourceImages) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsSourceImagesMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsSourceImagesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type SourceImages struct {
+	Batch      float64                                                                                     `json:"batch"`
+	DisabledAt *float64                                                                                    `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                    `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                        `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsSourceImagesMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                     `json:"name,omitempty"`
+	Price      float64                                                                                     `json:"price"`
+	Threshold  float64                                                                                     `json:"threshold"`
+	Tier       *float64                                                                                    `json:"tier,omitempty"`
+}
+
+func (o *SourceImages) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *SourceImages) GetDisabledAt() *int64 {
+func (o *SourceImages) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *SourceImages) GetEnabledAt() *int64 {
+func (o *SourceImages) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2630,6 +4118,13 @@ func (o *SourceImages) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *SourceImages) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsSourceImagesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *SourceImages) GetName() *string {
 	if o == nil {
 		return nil
@@ -2637,53 +4132,73 @@ func (o *SourceImages) GetName() *string {
 	return o.Name
 }
 
-func (o *SourceImages) GetPrice() int64 {
+func (o *SourceImages) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *SourceImages) GetThreshold() int64 {
+func (o *SourceImages) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *SourceImages) GetTier() *int64 {
+func (o *SourceImages) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type StorageRedisTotalBandwidthInBytes struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type StorageRedisTotalBandwidthInBytes struct {
+	Batch      float64                                                                                                          `json:"batch"`
+	DisabledAt *float64                                                                                                         `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                                         `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                                             `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                                          `json:"name,omitempty"`
+	Price      float64                                                                                                          `json:"price"`
+	Threshold  float64                                                                                                          `json:"threshold"`
+	Tier       *float64                                                                                                         `json:"tier,omitempty"`
+}
+
+func (o *StorageRedisTotalBandwidthInBytes) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2697,6 +4212,13 @@ func (o *StorageRedisTotalBandwidthInBytes) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *StorageRedisTotalBandwidthInBytes) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalBandwidthInBytesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *StorageRedisTotalBandwidthInBytes) GetName() *string {
 	if o == nil {
 		return nil
@@ -2704,53 +4226,73 @@ func (o *StorageRedisTotalBandwidthInBytes) GetName() *string {
 	return o.Name
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetPrice() int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetThreshold() int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *StorageRedisTotalBandwidthInBytes) GetTier() *int64 {
+func (o *StorageRedisTotalBandwidthInBytes) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type StorageRedisTotalCommands struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalCommandsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *StorageRedisTotalCommands) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalCommandsMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalCommandsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type StorageRedisTotalCommands struct {
+	Batch      float64                                                                                                  `json:"batch"`
+	DisabledAt *float64                                                                                                 `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                                 `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                                     `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalCommandsMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                                  `json:"name,omitempty"`
+	Price      float64                                                                                                  `json:"price"`
+	Threshold  float64                                                                                                  `json:"threshold"`
+	Tier       *float64                                                                                                 `json:"tier,omitempty"`
+}
+
+func (o *StorageRedisTotalCommands) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *StorageRedisTotalCommands) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalCommands) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *StorageRedisTotalCommands) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalCommands) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2764,6 +4306,13 @@ func (o *StorageRedisTotalCommands) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *StorageRedisTotalCommands) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalCommandsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *StorageRedisTotalCommands) GetName() *string {
 	if o == nil {
 		return nil
@@ -2771,53 +4320,73 @@ func (o *StorageRedisTotalCommands) GetName() *string {
 	return o.Name
 }
 
-func (o *StorageRedisTotalCommands) GetPrice() int64 {
+func (o *StorageRedisTotalCommands) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *StorageRedisTotalCommands) GetThreshold() int64 {
+func (o *StorageRedisTotalCommands) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *StorageRedisTotalCommands) GetTier() *int64 {
+func (o *StorageRedisTotalCommands) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type StorageRedisTotalDailyAvgStorageInBytes struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type StorageRedisTotalDailyAvgStorageInBytes struct {
+	Batch      float64                                                                                                                `json:"batch"`
+	DisabledAt *float64                                                                                                               `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                                               `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                                                   `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                                                `json:"name,omitempty"`
+	Price      float64                                                                                                                `json:"price"`
+	Threshold  float64                                                                                                                `json:"threshold"`
+	Tier       *float64                                                                                                               `json:"tier,omitempty"`
+}
+
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2831,6 +4400,13 @@ func (o *StorageRedisTotalDailyAvgStorageInBytes) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalDailyAvgStorageInBytesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *StorageRedisTotalDailyAvgStorageInBytes) GetName() *string {
 	if o == nil {
 		return nil
@@ -2838,53 +4414,73 @@ func (o *StorageRedisTotalDailyAvgStorageInBytes) GetName() *string {
 	return o.Name
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetPrice() int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetThreshold() int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *StorageRedisTotalDailyAvgStorageInBytes) GetTier() *int64 {
+func (o *StorageRedisTotalDailyAvgStorageInBytes) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type StorageRedisTotalDatabases struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalDatabasesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *StorageRedisTotalDatabases) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalDatabasesMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalDatabasesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type StorageRedisTotalDatabases struct {
+	Batch      float64                                                                                                   `json:"batch"`
+	DisabledAt *float64                                                                                                  `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                                  `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                                      `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalDatabasesMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                                   `json:"name,omitempty"`
+	Price      float64                                                                                                   `json:"price"`
+	Threshold  float64                                                                                                   `json:"threshold"`
+	Tier       *float64                                                                                                  `json:"tier,omitempty"`
+}
+
+func (o *StorageRedisTotalDatabases) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *StorageRedisTotalDatabases) GetDisabledAt() *int64 {
+func (o *StorageRedisTotalDatabases) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *StorageRedisTotalDatabases) GetEnabledAt() *int64 {
+func (o *StorageRedisTotalDatabases) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2898,6 +4494,13 @@ func (o *StorageRedisTotalDatabases) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *StorageRedisTotalDatabases) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsStorageRedisTotalDatabasesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *StorageRedisTotalDatabases) GetName() *string {
 	if o == nil {
 		return nil
@@ -2905,21 +4508,21 @@ func (o *StorageRedisTotalDatabases) GetName() *string {
 	return o.Name
 }
 
-func (o *StorageRedisTotalDatabases) GetPrice() int64 {
+func (o *StorageRedisTotalDatabases) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *StorageRedisTotalDatabases) GetThreshold() int64 {
+func (o *StorageRedisTotalDatabases) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *StorageRedisTotalDatabases) GetTier() *int64 {
+func (o *StorageRedisTotalDatabases) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2935,7 +4538,6 @@ const (
 func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval {
 	return &e
 }
-
 func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2950,45 +4552,9 @@ func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItem
 	}
 }
 
-type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount int64
-
-const (
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCountOne    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount = 1
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCountTwelve CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount = 12
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCountTwo    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount = 2
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCountThree  CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount = 3
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCountSix    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount = 6
-)
-
-func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount {
-	return &e
-}
-
-func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 12:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount: %v", v)
-	}
-}
-
 type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFrequency struct {
-	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval      `json:"interval"`
-	IntervalCount CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount `json:"intervalCount"`
+	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval `json:"interval"`
+	IntervalCount float64                                                                          `json:"intervalCount"`
 }
 
 func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsInterval {
@@ -2998,34 +4564,35 @@ func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItem
 	return o.Interval
 }
 
-func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFrequency) GetIntervalCount() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 // TeamSeats - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 type TeamSeats struct {
-	CreatedAt   *int64                                                                             `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                                             `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                                               `json:"hidden"`
-	MaxQuantity *int64                                                                             `json:"maxQuantity,omitempty"`
-	Name        *string                                                                            `json:"name,omitempty"`
-	Price       int64                                                                              `json:"price"`
-	Quantity    int64                                                                              `json:"quantity"`
-	Tier        *int64                                                                             `json:"tier,omitempty"`
+	CreatedAt       *float64                                                                           `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                                                           `json:"disabledAt,omitempty"`
+	Frequency       *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                                                               `json:"hidden"`
+	HighestQuantity *float64                                                                           `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                                                           `json:"maxQuantity,omitempty"`
+	Name            *string                                                                            `json:"name,omitempty"`
+	Price           float64                                                                            `json:"price"`
+	Quantity        float64                                                                            `json:"quantity"`
+	Tier            *float64                                                                           `json:"tier,omitempty"`
 }
 
-func (o *TeamSeats) GetCreatedAt() *int64 {
+func (o *TeamSeats) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *TeamSeats) GetDisabledAt() *int64 {
+func (o *TeamSeats) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3046,7 +4613,14 @@ func (o *TeamSeats) GetHidden() bool {
 	return o.Hidden
 }
 
-func (o *TeamSeats) GetMaxQuantity() *int64 {
+func (o *TeamSeats) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *TeamSeats) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3060,21 +4634,209 @@ func (o *TeamSeats) GetName() *string {
 	return o.Name
 }
 
-func (o *TeamSeats) GetPrice() int64 {
+func (o *TeamSeats) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *TeamSeats) GetQuantity() int64 {
+func (o *TeamSeats) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *TeamSeats) GetTier() *int64 {
+func (o *TeamSeats) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWafOwaspExcessBytesMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWafOwaspExcessBytesMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWafOwaspExcessBytesMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type WafOwaspExcessBytes struct {
+	Batch      float64                                                                                            `json:"batch"`
+	DisabledAt *float64                                                                                           `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                           `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                               `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWafOwaspExcessBytesMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                            `json:"name,omitempty"`
+	Price      float64                                                                                            `json:"price"`
+	Threshold  float64                                                                                            `json:"threshold"`
+	Tier       *float64                                                                                           `json:"tier,omitempty"`
+}
+
+func (o *WafOwaspExcessBytes) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *WafOwaspExcessBytes) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *WafOwaspExcessBytes) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *WafOwaspExcessBytes) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *WafOwaspExcessBytes) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWafOwaspExcessBytesMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *WafOwaspExcessBytes) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *WafOwaspExcessBytes) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *WafOwaspExcessBytes) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *WafOwaspExcessBytes) GetTier() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Tier
+}
+
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWafOwaspRequestsMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWafOwaspRequestsMatrix) GetDefaultUnitPrice() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWafOwaspRequestsMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type WafOwaspRequests struct {
+	Batch      float64                                                                                         `json:"batch"`
+	DisabledAt *float64                                                                                        `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                        `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                            `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWafOwaspRequestsMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                         `json:"name,omitempty"`
+	Price      float64                                                                                         `json:"price"`
+	Threshold  float64                                                                                         `json:"threshold"`
+	Tier       *float64                                                                                        `json:"tier,omitempty"`
+}
+
+func (o *WafOwaspRequests) GetBatch() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Batch
+}
+
+func (o *WafOwaspRequests) GetDisabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.DisabledAt
+}
+
+func (o *WafOwaspRequests) GetEnabledAt() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.EnabledAt
+}
+
+func (o *WafOwaspRequests) GetHidden() bool {
+	if o == nil {
+		return false
+	}
+	return o.Hidden
+}
+
+func (o *WafOwaspRequests) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWafOwaspRequestsMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
+func (o *WafOwaspRequests) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *WafOwaspRequests) GetPrice() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Price
+}
+
+func (o *WafOwaspRequests) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *WafOwaspRequests) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3090,7 +4852,6 @@ const (
 func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval {
 	return &e
 }
-
 func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3105,45 +4866,9 @@ func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItem
 	}
 }
 
-type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount int64
-
-const (
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCountOne    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount = 1
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCountTwelve CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount = 12
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCountTwo    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount = 2
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCountThree  CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount = 3
-	CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCountSix    CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount = 6
-)
-
-func (e CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount) ToPointer() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount {
-	return &e
-}
-
-func (e *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 1:
-		fallthrough
-	case 12:
-		fallthrough
-	case 2:
-		fallthrough
-	case 3:
-		fallthrough
-	case 6:
-		*e = CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount: %v", v)
-	}
-}
-
 type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency struct {
-	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval      `json:"interval"`
-	IntervalCount CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount `json:"intervalCount"`
+	Interval      CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval `json:"interval"`
+	IntervalCount float64                                                                                      `json:"intervalCount"`
 }
 
 func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency) GetInterval() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsInterval {
@@ -3153,115 +4878,143 @@ func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItem
 	return o.Interval
 }
 
-func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency) GetIntervalCount() CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency) GetIntervalCount() float64 {
 	if o == nil {
-		return CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsIntervalCount(0)
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
-// WebAnalytics - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-type WebAnalytics struct {
-	CreatedAt   *int64                                                                                         `json:"createdAt,omitempty"`
-	DisabledAt  *int64                                                                                         `json:"disabledAt,omitempty"`
-	Frequency   *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency `json:"frequency,omitempty"`
-	Hidden      bool                                                                                           `json:"hidden"`
-	MaxQuantity *int64                                                                                         `json:"maxQuantity,omitempty"`
-	Name        *string                                                                                        `json:"name,omitempty"`
-	Price       int64                                                                                          `json:"price"`
-	Quantity    int64                                                                                          `json:"quantity"`
-	Tier        *int64                                                                                         `json:"tier,omitempty"`
+// CreateTeamWebAnalytics - Will be used to create an invoice item. The price must be in cents: 2000 for $20.
+type CreateTeamWebAnalytics struct {
+	CreatedAt       *float64                                                                                       `json:"createdAt,omitempty"`
+	DisabledAt      *float64                                                                                       `json:"disabledAt,omitempty"`
+	Frequency       *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency `json:"frequency,omitempty"`
+	Hidden          bool                                                                                           `json:"hidden"`
+	HighestQuantity *float64                                                                                       `json:"highestQuantity,omitempty"`
+	MaxQuantity     *float64                                                                                       `json:"maxQuantity,omitempty"`
+	Name            *string                                                                                        `json:"name,omitempty"`
+	Price           float64                                                                                        `json:"price"`
+	Quantity        float64                                                                                        `json:"quantity"`
+	Tier            *float64                                                                                       `json:"tier,omitempty"`
 }
 
-func (o *WebAnalytics) GetCreatedAt() *int64 {
+func (o *CreateTeamWebAnalytics) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAt
 }
 
-func (o *WebAnalytics) GetDisabledAt() *int64 {
+func (o *CreateTeamWebAnalytics) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *WebAnalytics) GetFrequency() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency {
+func (o *CreateTeamWebAnalytics) GetFrequency() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsFrequency {
 	if o == nil {
 		return nil
 	}
 	return o.Frequency
 }
 
-func (o *WebAnalytics) GetHidden() bool {
+func (o *CreateTeamWebAnalytics) GetHidden() bool {
 	if o == nil {
 		return false
 	}
 	return o.Hidden
 }
 
-func (o *WebAnalytics) GetMaxQuantity() *int64 {
+func (o *CreateTeamWebAnalytics) GetHighestQuantity() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.HighestQuantity
+}
+
+func (o *CreateTeamWebAnalytics) GetMaxQuantity() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxQuantity
 }
 
-func (o *WebAnalytics) GetName() *string {
+func (o *CreateTeamWebAnalytics) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *WebAnalytics) GetPrice() int64 {
+func (o *CreateTeamWebAnalytics) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *WebAnalytics) GetQuantity() int64 {
+func (o *CreateTeamWebAnalytics) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
-func (o *WebAnalytics) GetTier() *int64 {
+func (o *CreateTeamWebAnalytics) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Tier
 }
 
-type WebAnalyticsEvent struct {
-	Batch      int64   `json:"batch"`
-	DisabledAt *int64  `json:"disabledAt,omitempty"`
-	EnabledAt  *int64  `json:"enabledAt,omitempty"`
-	Hidden     bool    `json:"hidden"`
-	Name       *string `json:"name,omitempty"`
-	Price      int64   `json:"price"`
-	Threshold  int64   `json:"threshold"`
-	Tier       *int64  `json:"tier,omitempty"`
+type CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsEventMatrix struct {
+	DefaultUnitPrice string            `json:"defaultUnitPrice"`
+	DimensionPrices  map[string]string `json:"dimensionPrices"`
 }
 
-func (o *WebAnalyticsEvent) GetBatch() int64 {
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsEventMatrix) GetDefaultUnitPrice() string {
 	if o == nil {
-		return 0
+		return ""
+	}
+	return o.DefaultUnitPrice
+}
+
+func (o *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsEventMatrix) GetDimensionPrices() map[string]string {
+	if o == nil {
+		return map[string]string{}
+	}
+	return o.DimensionPrices
+}
+
+type WebAnalyticsEvent struct {
+	Batch      float64                                                                                          `json:"batch"`
+	DisabledAt *float64                                                                                         `json:"disabledAt,omitempty"`
+	EnabledAt  *float64                                                                                         `json:"enabledAt,omitempty"`
+	Hidden     bool                                                                                             `json:"hidden"`
+	Matrix     *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsEventMatrix `json:"matrix,omitempty"`
+	Name       *string                                                                                          `json:"name,omitempty"`
+	Price      float64                                                                                          `json:"price"`
+	Threshold  float64                                                                                          `json:"threshold"`
+	Tier       *float64                                                                                         `json:"tier,omitempty"`
+}
+
+func (o *WebAnalyticsEvent) GetBatch() float64 {
+	if o == nil {
+		return 0.0
 	}
 	return o.Batch
 }
 
-func (o *WebAnalyticsEvent) GetDisabledAt() *int64 {
+func (o *WebAnalyticsEvent) GetDisabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.DisabledAt
 }
 
-func (o *WebAnalyticsEvent) GetEnabledAt() *int64 {
+func (o *WebAnalyticsEvent) GetEnabledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3275,6 +5028,13 @@ func (o *WebAnalyticsEvent) GetHidden() bool {
 	return o.Hidden
 }
 
+func (o *WebAnalyticsEvent) GetMatrix() *CreateTeamTeamsResponse200ApplicationJSONResponseBodyBillingInvoiceItemsWebAnalyticsEventMatrix {
+	if o == nil {
+		return nil
+	}
+	return o.Matrix
+}
+
 func (o *WebAnalyticsEvent) GetName() *string {
 	if o == nil {
 		return nil
@@ -3282,21 +5042,21 @@ func (o *WebAnalyticsEvent) GetName() *string {
 	return o.Name
 }
 
-func (o *WebAnalyticsEvent) GetPrice() int64 {
+func (o *WebAnalyticsEvent) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }
 
-func (o *WebAnalyticsEvent) GetThreshold() int64 {
+func (o *WebAnalyticsEvent) GetThreshold() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Threshold
 }
 
-func (o *WebAnalyticsEvent) GetTier() *int64 {
+func (o *WebAnalyticsEvent) GetTier() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3305,22 +5065,34 @@ func (o *WebAnalyticsEvent) GetTier() *int64 {
 
 type InvoiceItems struct {
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	Analytics      *CreateTeamAnalytics `json:"analytics,omitempty"`
-	AnalyticsUsage *AnalyticsUsage      `json:"analyticsUsage,omitempty"`
-	Artifacts      *Artifacts           `json:"artifacts,omitempty"`
-	Bandwidth      *Bandwidth           `json:"bandwidth,omitempty"`
+	Analytics                             *CreateTeamAnalytics                   `json:"analytics,omitempty"`
+	AnalyticsUsage                        *AnalyticsUsage                        `json:"analyticsUsage,omitempty"`
+	Artifacts                             *Artifacts                             `json:"artifacts,omitempty"`
+	Bandwidth                             *Bandwidth                             `json:"bandwidth,omitempty"`
+	BlobStores                            *BlobStores                            `json:"blobStores,omitempty"`
+	BlobTotalAdvancedRequests             *BlobTotalAdvancedRequests             `json:"blobTotalAdvancedRequests,omitempty"`
+	BlobTotalAvgSizeInBytes               *BlobTotalAvgSizeInBytes               `json:"blobTotalAvgSizeInBytes,omitempty"`
+	BlobTotalGetResponseObjectSizeInBytes *BlobTotalGetResponseObjectSizeInBytes `json:"blobTotalGetResponseObjectSizeInBytes,omitempty"`
+	BlobTotalSimpleRequests               *BlobTotalSimpleRequests               `json:"blobTotalSimpleRequests,omitempty"`
+	BuildMinute                           *BuildMinute                           `json:"buildMinute,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	ConcurrentBuilds           *ConcurrentBuilds           `json:"concurrentBuilds,omitempty"`
-	CronJobInvocation          *CronJobInvocation          `json:"cronJobInvocation,omitempty"`
-	DataCacheRead              *DataCacheRead              `json:"dataCacheRead,omitempty"`
-	DataCacheRevalidation      *DataCacheRevalidation      `json:"dataCacheRevalidation,omitempty"`
-	DataCacheWrite             *DataCacheWrite             `json:"dataCacheWrite,omitempty"`
-	EdgeConfigRead             *EdgeConfigRead             `json:"edgeConfigRead,omitempty"`
-	EdgeConfigWrite            *EdgeConfigWrite            `json:"edgeConfigWrite,omitempty"`
-	EdgeFunctionExecutionUnits *EdgeFunctionExecutionUnits `json:"edgeFunctionExecutionUnits,omitempty"`
-	EdgeMiddlewareInvocations  *EdgeMiddlewareInvocations  `json:"edgeMiddlewareInvocations,omitempty"`
+	ConcurrentBuilds                 *ConcurrentBuilds                 `json:"concurrentBuilds,omitempty"`
+	DataCacheRead                    *DataCacheRead                    `json:"dataCacheRead,omitempty"`
+	DataCacheRevalidation            *DataCacheRevalidation            `json:"dataCacheRevalidation,omitempty"`
+	DataCacheWrite                   *DataCacheWrite                   `json:"dataCacheWrite,omitempty"`
+	EdgeConfigRead                   *EdgeConfigRead                   `json:"edgeConfigRead,omitempty"`
+	EdgeConfigWrite                  *EdgeConfigWrite                  `json:"edgeConfigWrite,omitempty"`
+	EdgeFunctionExecutionUnits       *EdgeFunctionExecutionUnits       `json:"edgeFunctionExecutionUnits,omitempty"`
+	EdgeMiddlewareInvocations        *EdgeMiddlewareInvocations        `json:"edgeMiddlewareInvocations,omitempty"`
+	EdgeRequest                      *EdgeRequest                      `json:"edgeRequest,omitempty"`
+	EdgeRequestAdditionalCPUDuration *EdgeRequestAdditionalCPUDuration `json:"edgeRequestAdditionalCpuDuration,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	Enterprise *Enterprise `json:"enterprise,omitempty"`
+	Enterprise         *Enterprise         `json:"enterprise,omitempty"`
+	FastDataTransfer   *FastDataTransfer   `json:"fastDataTransfer,omitempty"`
+	FastOriginTransfer *FastOriginTransfer `json:"fastOriginTransfer,omitempty"`
+	FunctionDuration   *FunctionDuration   `json:"functionDuration,omitempty"`
+	FunctionInvocation *FunctionInvocation `json:"functionInvocation,omitempty"`
+	LogDrainsVolume    *LogDrainsVolume    `json:"logDrainsVolume,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
 	Monitoring       *Monitoring       `json:"monitoring,omitempty"`
 	MonitoringMetric *MonitoringMetric `json:"monitoringMetric,omitempty"`
@@ -3344,10 +5116,12 @@ type InvoiceItems struct {
 	StorageRedisTotalDailyAvgStorageInBytes *StorageRedisTotalDailyAvgStorageInBytes `json:"storageRedisTotalDailyAvgStorageInBytes,omitempty"`
 	StorageRedisTotalDatabases              *StorageRedisTotalDatabases              `json:"storageRedisTotalDatabases,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	TeamSeats *TeamSeats `json:"teamSeats,omitempty"`
+	TeamSeats           *TeamSeats           `json:"teamSeats,omitempty"`
+	WafOwaspExcessBytes *WafOwaspExcessBytes `json:"wafOwaspExcessBytes,omitempty"`
+	WafOwaspRequests    *WafOwaspRequests    `json:"wafOwaspRequests,omitempty"`
 	// Will be used to create an invoice item. The price must be in cents: 2000 for $20.
-	WebAnalytics      *WebAnalytics      `json:"webAnalytics,omitempty"`
-	WebAnalyticsEvent *WebAnalyticsEvent `json:"webAnalyticsEvent,omitempty"`
+	WebAnalytics      *CreateTeamWebAnalytics `json:"webAnalytics,omitempty"`
+	WebAnalyticsEvent *WebAnalyticsEvent      `json:"webAnalyticsEvent,omitempty"`
 }
 
 func (o *InvoiceItems) GetAnalytics() *CreateTeamAnalytics {
@@ -3378,18 +5152,53 @@ func (o *InvoiceItems) GetBandwidth() *Bandwidth {
 	return o.Bandwidth
 }
 
+func (o *InvoiceItems) GetBlobStores() *BlobStores {
+	if o == nil {
+		return nil
+	}
+	return o.BlobStores
+}
+
+func (o *InvoiceItems) GetBlobTotalAdvancedRequests() *BlobTotalAdvancedRequests {
+	if o == nil {
+		return nil
+	}
+	return o.BlobTotalAdvancedRequests
+}
+
+func (o *InvoiceItems) GetBlobTotalAvgSizeInBytes() *BlobTotalAvgSizeInBytes {
+	if o == nil {
+		return nil
+	}
+	return o.BlobTotalAvgSizeInBytes
+}
+
+func (o *InvoiceItems) GetBlobTotalGetResponseObjectSizeInBytes() *BlobTotalGetResponseObjectSizeInBytes {
+	if o == nil {
+		return nil
+	}
+	return o.BlobTotalGetResponseObjectSizeInBytes
+}
+
+func (o *InvoiceItems) GetBlobTotalSimpleRequests() *BlobTotalSimpleRequests {
+	if o == nil {
+		return nil
+	}
+	return o.BlobTotalSimpleRequests
+}
+
+func (o *InvoiceItems) GetBuildMinute() *BuildMinute {
+	if o == nil {
+		return nil
+	}
+	return o.BuildMinute
+}
+
 func (o *InvoiceItems) GetConcurrentBuilds() *ConcurrentBuilds {
 	if o == nil {
 		return nil
 	}
 	return o.ConcurrentBuilds
-}
-
-func (o *InvoiceItems) GetCronJobInvocation() *CronJobInvocation {
-	if o == nil {
-		return nil
-	}
-	return o.CronJobInvocation
 }
 
 func (o *InvoiceItems) GetDataCacheRead() *DataCacheRead {
@@ -3441,11 +5250,60 @@ func (o *InvoiceItems) GetEdgeMiddlewareInvocations() *EdgeMiddlewareInvocations
 	return o.EdgeMiddlewareInvocations
 }
 
+func (o *InvoiceItems) GetEdgeRequest() *EdgeRequest {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeRequest
+}
+
+func (o *InvoiceItems) GetEdgeRequestAdditionalCPUDuration() *EdgeRequestAdditionalCPUDuration {
+	if o == nil {
+		return nil
+	}
+	return o.EdgeRequestAdditionalCPUDuration
+}
+
 func (o *InvoiceItems) GetEnterprise() *Enterprise {
 	if o == nil {
 		return nil
 	}
 	return o.Enterprise
+}
+
+func (o *InvoiceItems) GetFastDataTransfer() *FastDataTransfer {
+	if o == nil {
+		return nil
+	}
+	return o.FastDataTransfer
+}
+
+func (o *InvoiceItems) GetFastOriginTransfer() *FastOriginTransfer {
+	if o == nil {
+		return nil
+	}
+	return o.FastOriginTransfer
+}
+
+func (o *InvoiceItems) GetFunctionDuration() *FunctionDuration {
+	if o == nil {
+		return nil
+	}
+	return o.FunctionDuration
+}
+
+func (o *InvoiceItems) GetFunctionInvocation() *FunctionInvocation {
+	if o == nil {
+		return nil
+	}
+	return o.FunctionInvocation
+}
+
+func (o *InvoiceItems) GetLogDrainsVolume() *LogDrainsVolume {
+	if o == nil {
+		return nil
+	}
+	return o.LogDrainsVolume
 }
 
 func (o *InvoiceItems) GetMonitoring() *Monitoring {
@@ -3574,7 +5432,21 @@ func (o *InvoiceItems) GetTeamSeats() *TeamSeats {
 	return o.TeamSeats
 }
 
-func (o *InvoiceItems) GetWebAnalytics() *WebAnalytics {
+func (o *InvoiceItems) GetWafOwaspExcessBytes() *WafOwaspExcessBytes {
+	if o == nil {
+		return nil
+	}
+	return o.WafOwaspExcessBytes
+}
+
+func (o *InvoiceItems) GetWafOwaspRequests() *WafOwaspRequests {
+	if o == nil {
+		return nil
+	}
+	return o.WafOwaspRequests
+}
+
+func (o *InvoiceItems) GetWebAnalytics() *CreateTeamWebAnalytics {
 	if o == nil {
 		return nil
 	}
@@ -3600,20 +5472,20 @@ func (o *InvoiceSettings) GetFooter() *string {
 }
 
 type Period struct {
-	End   int64 `json:"end"`
-	Start int64 `json:"start"`
+	End   float64 `json:"end"`
+	Start float64 `json:"start"`
 }
 
-func (o *Period) GetEnd() int64 {
+func (o *Period) GetEnd() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.End
 }
 
-func (o *Period) GetStart() int64 {
+func (o *Period) GetStart() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Start
 }
@@ -3621,24 +5493,23 @@ func (o *Period) GetStart() int64 {
 type CreateTeamPlan string
 
 const (
-	CreateTeamPlanEnterprise CreateTeamPlan = "enterprise"
 	CreateTeamPlanPro        CreateTeamPlan = "pro"
+	CreateTeamPlanEnterprise CreateTeamPlan = "enterprise"
 	CreateTeamPlanHobby      CreateTeamPlan = "hobby"
 )
 
 func (e CreateTeamPlan) ToPointer() *CreateTeamPlan {
 	return &e
 }
-
 func (e *CreateTeamPlan) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "enterprise":
-		fallthrough
 	case "pro":
+		fallthrough
+	case "enterprise":
 		fallthrough
 	case "hobby":
 		*e = CreateTeamPlan(v)
@@ -3651,23 +5522,22 @@ func (e *CreateTeamPlan) UnmarshalJSON(data []byte) error {
 type Platform string
 
 const (
-	PlatformStripeTestMode Platform = "stripeTestMode"
 	PlatformStripe         Platform = "stripe"
+	PlatformStripeTestMode Platform = "stripeTestMode"
 )
 
 func (e Platform) ToPointer() *Platform {
 	return &e
 }
-
 func (e *Platform) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "stripeTestMode":
-		fallthrough
 	case "stripe":
+		fallthrough
+	case "stripeTestMode":
 		*e = Platform(v)
 		return nil
 	default:
@@ -3684,7 +5554,6 @@ const (
 func (e PricingExperiment) ToPointer() *PricingExperiment {
 	return &e
 }
-
 func (e *PricingExperiment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3709,7 +5578,6 @@ const (
 func (e ProgramType) ToPointer() *ProgramType {
 	return &e
 }
-
 func (e *ProgramType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3729,8 +5597,8 @@ func (e *ProgramType) UnmarshalJSON(data []byte) error {
 type CreateTeamStatus string
 
 const (
-	CreateTeamStatusTrialing CreateTeamStatus = "trialing"
 	CreateTeamStatusActive   CreateTeamStatus = "active"
+	CreateTeamStatusTrialing CreateTeamStatus = "trialing"
 	CreateTeamStatusOverdue  CreateTeamStatus = "overdue"
 	CreateTeamStatusExpired  CreateTeamStatus = "expired"
 	CreateTeamStatusCanceled CreateTeamStatus = "canceled"
@@ -3739,16 +5607,15 @@ const (
 func (e CreateTeamStatus) ToPointer() *CreateTeamStatus {
 	return &e
 }
-
 func (e *CreateTeamStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "trialing":
-		fallthrough
 	case "active":
+		fallthrough
+	case "trialing":
 		fallthrough
 	case "overdue":
 		fallthrough
@@ -3773,7 +5640,6 @@ const (
 func (e Duration) ToPointer() *Duration {
 	return &e
 }
-
 func (e *Duration) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3793,15 +5659,15 @@ func (e *Duration) UnmarshalJSON(data []byte) error {
 }
 
 type Coupon struct {
-	AmountOff        *int64   `json:"amountOff"`
+	AmountOff        *float64 `json:"amountOff"`
 	Duration         Duration `json:"duration"`
-	DurationInMonths *int64   `json:"durationInMonths"`
+	DurationInMonths *float64 `json:"durationInMonths"`
 	ID               string   `json:"id"`
 	Name             *string  `json:"name"`
-	PercentageOff    *int64   `json:"percentageOff"`
+	PercentageOff    *float64 `json:"percentageOff"`
 }
 
-func (o *Coupon) GetAmountOff() *int64 {
+func (o *Coupon) GetAmountOff() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3815,7 +5681,7 @@ func (o *Coupon) GetDuration() Duration {
 	return o.Duration
 }
 
-func (o *Coupon) GetDurationInMonths() *int64 {
+func (o *Coupon) GetDurationInMonths() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3836,7 +5702,7 @@ func (o *Coupon) GetName() *string {
 	return o.Name
 }
 
-func (o *Coupon) GetPercentageOff() *int64 {
+func (o *Coupon) GetPercentageOff() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3865,8 +5731,8 @@ func (o *Discount) GetID() string {
 type Interval string
 
 const (
-	IntervalDay   Interval = "day"
 	IntervalMonth Interval = "month"
+	IntervalDay   Interval = "day"
 	IntervalWeek  Interval = "week"
 	IntervalYear  Interval = "year"
 )
@@ -3874,16 +5740,15 @@ const (
 func (e Interval) ToPointer() *Interval {
 	return &e
 }
-
 func (e *Interval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "day":
-		fallthrough
 	case "month":
+		fallthrough
+	case "day":
 		fallthrough
 	case "week":
 		fallthrough
@@ -3897,7 +5762,7 @@ func (e *Interval) UnmarshalJSON(data []byte) error {
 
 type Frequency struct {
 	Interval      Interval `json:"interval"`
-	IntervalCount int64    `json:"intervalCount"`
+	IntervalCount float64  `json:"intervalCount"`
 }
 
 func (o *Frequency) GetInterval() Interval {
@@ -3907,24 +5772,24 @@ func (o *Frequency) GetInterval() Interval {
 	return o.Interval
 }
 
-func (o *Frequency) GetIntervalCount() int64 {
+func (o *Frequency) GetIntervalCount() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.IntervalCount
 }
 
 type Items struct {
-	Amount    int64  `json:"amount"`
-	ID        string `json:"id"`
-	PriceID   string `json:"priceId"`
-	ProductID string `json:"productId"`
-	Quantity  int64  `json:"quantity"`
+	Amount    float64 `json:"amount"`
+	ID        string  `json:"id"`
+	PriceID   string  `json:"priceId"`
+	ProductID string  `json:"productId"`
+	Quantity  float64 `json:"quantity"`
 }
 
-func (o *Items) GetAmount() int64 {
+func (o *Items) GetAmount() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Amount
 }
@@ -3950,47 +5815,47 @@ func (o *Items) GetProductID() string {
 	return o.ProductID
 }
 
-func (o *Items) GetQuantity() int64 {
+func (o *Items) GetQuantity() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Quantity
 }
 
 type CreateTeamPeriod struct {
-	End   int64 `json:"end"`
-	Start int64 `json:"start"`
+	End   float64 `json:"end"`
+	Start float64 `json:"start"`
 }
 
-func (o *CreateTeamPeriod) GetEnd() int64 {
+func (o *CreateTeamPeriod) GetEnd() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.End
 }
 
-func (o *CreateTeamPeriod) GetStart() int64 {
+func (o *CreateTeamPeriod) GetStart() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Start
 }
 
 type CreateTeamTrial struct {
-	End   int64 `json:"end"`
-	Start int64 `json:"start"`
+	End   float64 `json:"end"`
+	Start float64 `json:"start"`
 }
 
-func (o *CreateTeamTrial) GetEnd() int64 {
+func (o *CreateTeamTrial) GetEnd() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.End
 }
 
-func (o *CreateTeamTrial) GetStart() int64 {
+func (o *CreateTeamTrial) GetStart() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Start
 }
@@ -4066,27 +5931,27 @@ func (o *Tax) GetType() string {
 }
 
 type Trial struct {
-	End   int64 `json:"end"`
-	Start int64 `json:"start"`
+	End   float64 `json:"end"`
+	Start float64 `json:"start"`
 }
 
-func (o *Trial) GetEnd() int64 {
+func (o *Trial) GetEnd() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.End
 }
 
-func (o *Trial) GetStart() int64 {
+func (o *Trial) GetStart() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Start
 }
 
 type Billing struct {
 	Address                 *Address           `json:"address,omitempty"`
-	Cancelation             *int64             `json:"cancelation,omitempty"`
+	Cancelation             *float64           `json:"cancelation,omitempty"`
 	Contract                *Contract          `json:"contract,omitempty"`
 	Controls                *Controls          `json:"controls,omitempty"`
 	Currency                *Currency          `json:"currency,omitempty"`
@@ -4096,16 +5961,17 @@ type Billing struct {
 	Language                *string            `json:"language,omitempty"`
 	Name                    *string            `json:"name,omitempty"`
 	OrbCustomerID           *string            `json:"orbCustomerId,omitempty"`
-	OrbMigrationScheduledAt *int64             `json:"orbMigrationScheduledAt,omitempty"`
+	OrbMigrationScheduledAt *float64           `json:"orbMigrationScheduledAt,omitempty"`
 	Period                  *Period            `json:"period"`
 	Plan                    CreateTeamPlan     `json:"plan"`
+	PlanIteration           *string            `json:"planIteration,omitempty"`
 	Platform                *Platform          `json:"platform,omitempty"`
 	PricingExperiment       *PricingExperiment `json:"pricingExperiment,omitempty"`
 	ProgramType             *ProgramType       `json:"programType,omitempty"`
 	PurchaseOrder           *string            `json:"purchaseOrder,omitempty"`
 	Status                  *CreateTeamStatus  `json:"status,omitempty"`
 	Subscriptions           []Subscriptions    `json:"subscriptions,omitempty"`
-	SyncedAt                *int64             `json:"syncedAt,omitempty"`
+	SyncedAt                *float64           `json:"syncedAt,omitempty"`
 	Tax                     *Tax               `json:"tax,omitempty"`
 	Trial                   *Trial             `json:"trial,omitempty"`
 }
@@ -4117,7 +5983,7 @@ func (o *Billing) GetAddress() *Address {
 	return o.Address
 }
 
-func (o *Billing) GetCancelation() *int64 {
+func (o *Billing) GetCancelation() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -4187,7 +6053,7 @@ func (o *Billing) GetOrbCustomerID() *string {
 	return o.OrbCustomerID
 }
 
-func (o *Billing) GetOrbMigrationScheduledAt() *int64 {
+func (o *Billing) GetOrbMigrationScheduledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -4206,6 +6072,13 @@ func (o *Billing) GetPlan() CreateTeamPlan {
 		return CreateTeamPlan("")
 	}
 	return o.Plan
+}
+
+func (o *Billing) GetPlanIteration() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PlanIteration
 }
 
 func (o *Billing) GetPlatform() *Platform {
@@ -4250,7 +6123,7 @@ func (o *Billing) GetSubscriptions() []Subscriptions {
 	return o.Subscriptions
 }
 
-func (o *Billing) GetSyncedAt() *int64 {
+func (o *Billing) GetSyncedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -4275,7 +6148,8 @@ func (o *Billing) GetTrial() *Trial {
 type CreateTeamResponseBody struct {
 	Billing Billing `json:"billing"`
 	// Id of the created team
-	ID string `json:"id"`
+	ID   string `json:"id"`
+	Slug string `json:"slug"`
 }
 
 func (o *CreateTeamResponseBody) GetBilling() Billing {
@@ -4290,6 +6164,13 @@ func (o *CreateTeamResponseBody) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *CreateTeamResponseBody) GetSlug() string {
+	if o == nil {
+		return ""
+	}
+	return o.Slug
 }
 
 type CreateTeamResponse struct {

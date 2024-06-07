@@ -1,0 +1,12 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    my-source:
+        inputs:
+            - location: ./vercel-api.yaml
+        registry:
+            location: registry.speakeasyapi.dev/lukehagar/lukehagar/my-source
+targets:
+    Vercel-Terraform:
+        target: terraform
+        source: my-source

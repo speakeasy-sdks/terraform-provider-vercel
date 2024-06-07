@@ -9,7 +9,9 @@ import (
 type GetCertByIDRequest struct {
 	// The cert id
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -18,6 +20,13 @@ func (o *GetCertByIDRequest) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *GetCertByIDRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *GetCertByIDRequest) GetTeamID() *string {
@@ -30,8 +39,8 @@ func (o *GetCertByIDRequest) GetTeamID() *string {
 type GetCertByIDResponseBody struct {
 	AutoRenew bool     `json:"autoRenew"`
 	Cns       []string `json:"cns"`
-	CreatedAt int64    `json:"createdAt"`
-	ExpiresAt int64    `json:"expiresAt"`
+	CreatedAt float64  `json:"createdAt"`
+	ExpiresAt float64  `json:"expiresAt"`
 	ID        string   `json:"id"`
 }
 
@@ -49,16 +58,16 @@ func (o *GetCertByIDResponseBody) GetCns() []string {
 	return o.Cns
 }
 
-func (o *GetCertByIDResponseBody) GetCreatedAt() int64 {
+func (o *GetCertByIDResponseBody) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
 
-func (o *GetCertByIDResponseBody) GetExpiresAt() int64 {
+func (o *GetCertByIDResponseBody) GetExpiresAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ExpiresAt
 }

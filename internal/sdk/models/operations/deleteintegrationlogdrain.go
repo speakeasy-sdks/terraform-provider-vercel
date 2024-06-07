@@ -9,7 +9,9 @@ import (
 type DeleteIntegrationLogDrainRequest struct {
 	// ID of the log drain to be deleted
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -18,6 +20,13 @@ func (o *DeleteIntegrationLogDrainRequest) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *DeleteIntegrationLogDrainRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *DeleteIntegrationLogDrainRequest) GetTeamID() *string {

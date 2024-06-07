@@ -11,12 +11,22 @@ import (
 )
 
 type RemoveProjectEnvRequest struct {
+	CustomEnvironmentID *string `queryParam:"style=form,explode=true,name=customEnvironmentId"`
 	// The unique environment variable identifier
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 	// The unique project identifier or the project name
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *RemoveProjectEnvRequest) GetCustomEnvironmentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomEnvironmentID
 }
 
 func (o *RemoveProjectEnvRequest) GetID() string {
@@ -33,11 +43,102 @@ func (o *RemoveProjectEnvRequest) GetIDOrName() string {
 	return o.IDOrName
 }
 
+func (o *RemoveProjectEnvRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 func (o *RemoveProjectEnvRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TeamID
+}
+
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint14Type string
+
+const (
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint14TypeIntegrationStoreSecret RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint14Type = "integration-store-secret"
+)
+
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint14Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint14Type {
+	return &e
+}
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint14Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "integration-store-secret":
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint14Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint14Type: %v", v)
+	}
+}
+
+type RemoveProjectEnvProjectsResponse14 struct {
+	StoreID string                                                                           `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint14Type `json:"type"`
+}
+
+func (o *RemoveProjectEnvProjectsResponse14) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *RemoveProjectEnvProjectsResponse14) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint14Type {
+	if o == nil {
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint14Type("")
+	}
+	return o.Type
+}
+
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint13Type string
+
+const (
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint13TypePostgresURLNoSsl RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint13Type = "postgres-url-no-ssl"
+)
+
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint13Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint13Type {
+	return &e
+}
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint13Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-url-no-ssl":
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint13Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint13Type: %v", v)
+	}
+}
+
+type RemoveProjectEnvProjectsResponse13 struct {
+	StoreID string                                                                           `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint13Type `json:"type"`
+}
+
+func (o *RemoveProjectEnvProjectsResponse13) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *RemoveProjectEnvProjectsResponse13) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint13Type {
+	if o == nil {
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint13Type("")
+	}
+	return o.Type
 }
 
 type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type string
@@ -49,7 +150,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint12Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -92,7 +192,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHintType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -135,7 +234,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -178,7 +276,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -221,7 +318,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -264,7 +360,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -307,7 +402,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -350,7 +444,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -393,7 +486,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint4Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -436,7 +528,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -479,7 +570,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -522,7 +612,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody3ContentHint1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -571,6 +660,8 @@ const (
 	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse10                              RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_10"
 	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse11                              RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_11"
 	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse12                              RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_12"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse13                              RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_13"
+	RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse14                              RemoveProjectEnvProjectsResponseContentHintType = "removeProjectEnv_projects_response_14"
 )
 
 type RemoveProjectEnvProjectsResponseContentHint struct {
@@ -586,6 +677,8 @@ type RemoveProjectEnvProjectsResponseContentHint struct {
 	RemoveProjectEnvProjectsResponse10                              *RemoveProjectEnvProjectsResponse10
 	RemoveProjectEnvProjectsResponse11                              *RemoveProjectEnvProjectsResponse11
 	RemoveProjectEnvProjectsResponse12                              *RemoveProjectEnvProjectsResponse12
+	RemoveProjectEnvProjectsResponse13                              *RemoveProjectEnvProjectsResponse13
+	RemoveProjectEnvProjectsResponse14                              *RemoveProjectEnvProjectsResponse14
 
 	Type RemoveProjectEnvProjectsResponseContentHintType
 }
@@ -698,93 +791,125 @@ func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsRe
 	}
 }
 
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse13(removeProjectEnvProjectsResponse13 RemoveProjectEnvProjectsResponse13) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse13
+
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse13: &removeProjectEnvProjectsResponse13,
+		Type:                               typ,
+	}
+}
+
+func CreateRemoveProjectEnvProjectsResponseContentHintRemoveProjectEnvProjectsResponse14(removeProjectEnvProjectsResponse14 RemoveProjectEnvProjectsResponse14) RemoveProjectEnvProjectsResponseContentHint {
+	typ := RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse14
+
+	return RemoveProjectEnvProjectsResponseContentHint{
+		RemoveProjectEnvProjectsResponse14: &removeProjectEnvProjectsResponse14,
+		Type:                               typ,
+	}
+}
+
 func (u *RemoveProjectEnvProjectsResponseContentHint) UnmarshalJSON(data []byte) error {
 
-	removeProjectEnvProjectsResponse200ApplicationJSONResponseBody1 := RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1{}
+	var removeProjectEnvProjectsResponse200ApplicationJSONResponseBody1 RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1 = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody1, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1 = &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody1
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse200ApplicationJSONResponseBody2 := RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2{}
+	var removeProjectEnvProjectsResponse200ApplicationJSONResponseBody2 RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2 = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody2, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2 = &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody2
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse2003 := RemoveProjectEnvProjectsResponse2003{}
+	var removeProjectEnvProjectsResponse2003 RemoveProjectEnvProjectsResponse2003 = RemoveProjectEnvProjectsResponse2003{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse2003, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse2003 = &removeProjectEnvProjectsResponse2003
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse2003
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse4 := RemoveProjectEnvProjectsResponse4{}
+	var removeProjectEnvProjectsResponse4 RemoveProjectEnvProjectsResponse4 = RemoveProjectEnvProjectsResponse4{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse4, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse4 = &removeProjectEnvProjectsResponse4
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse4
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse5 := RemoveProjectEnvProjectsResponse5{}
+	var removeProjectEnvProjectsResponse5 RemoveProjectEnvProjectsResponse5 = RemoveProjectEnvProjectsResponse5{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse5, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse5 = &removeProjectEnvProjectsResponse5
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse5
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse6 := RemoveProjectEnvProjectsResponse6{}
+	var removeProjectEnvProjectsResponse6 RemoveProjectEnvProjectsResponse6 = RemoveProjectEnvProjectsResponse6{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse6, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse6 = &removeProjectEnvProjectsResponse6
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse6
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse7 := RemoveProjectEnvProjectsResponse7{}
+	var removeProjectEnvProjectsResponse7 RemoveProjectEnvProjectsResponse7 = RemoveProjectEnvProjectsResponse7{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse7, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse7 = &removeProjectEnvProjectsResponse7
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse7
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse8 := RemoveProjectEnvProjectsResponse8{}
+	var removeProjectEnvProjectsResponse8 RemoveProjectEnvProjectsResponse8 = RemoveProjectEnvProjectsResponse8{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse8, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse8 = &removeProjectEnvProjectsResponse8
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse8
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse9 := RemoveProjectEnvProjectsResponse9{}
+	var removeProjectEnvProjectsResponse9 RemoveProjectEnvProjectsResponse9 = RemoveProjectEnvProjectsResponse9{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse9, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse9 = &removeProjectEnvProjectsResponse9
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse9
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse10 := RemoveProjectEnvProjectsResponse10{}
+	var removeProjectEnvProjectsResponse10 RemoveProjectEnvProjectsResponse10 = RemoveProjectEnvProjectsResponse10{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse10, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse10 = &removeProjectEnvProjectsResponse10
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse10
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse11 := RemoveProjectEnvProjectsResponse11{}
+	var removeProjectEnvProjectsResponse11 RemoveProjectEnvProjectsResponse11 = RemoveProjectEnvProjectsResponse11{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse11, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse11 = &removeProjectEnvProjectsResponse11
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse11
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse12 := RemoveProjectEnvProjectsResponse12{}
+	var removeProjectEnvProjectsResponse12 RemoveProjectEnvProjectsResponse12 = RemoveProjectEnvProjectsResponse12{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse12, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse12 = &removeProjectEnvProjectsResponse12
 		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse12
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	var removeProjectEnvProjectsResponse13 RemoveProjectEnvProjectsResponse13 = RemoveProjectEnvProjectsResponse13{}
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse13, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse13 = &removeProjectEnvProjectsResponse13
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse13
+		return nil
+	}
+
+	var removeProjectEnvProjectsResponse14 RemoveProjectEnvProjectsResponse14 = RemoveProjectEnvProjectsResponse14{}
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse14, "", true, true); err == nil {
+		u.RemoveProjectEnvProjectsResponse14 = &removeProjectEnvProjectsResponse14
+		u.Type = RemoveProjectEnvProjectsResponseContentHintTypeRemoveProjectEnvProjectsResponse14
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for RemoveProjectEnvProjectsResponseContentHint", string(data))
 }
 
 func (u RemoveProjectEnvProjectsResponseContentHint) MarshalJSON() ([]byte, error) {
@@ -836,7 +961,59 @@ func (u RemoveProjectEnvProjectsResponseContentHint) MarshalJSON() ([]byte, erro
 		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse12, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	if u.RemoveProjectEnvProjectsResponse13 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse13, "", true)
+	}
+
+	if u.RemoveProjectEnvProjectsResponse14 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse14, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type RemoveProjectEnvProjectsResponseContentHint: all fields are null")
+}
+
+type RemoveProjectEnvProjectsResponse200ApplicationJSONType string
+
+const (
+	RemoveProjectEnvProjectsResponse200ApplicationJSONTypeFlagsSecret RemoveProjectEnvProjectsResponse200ApplicationJSONType = "flags-secret"
+)
+
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONType {
+	return &e
+}
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "flags-secret":
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONType: %v", v)
+	}
+}
+
+// RemoveProjectEnvProjectsResponseInternalContentHint - Similar to `contentHints`, but should not be exposed to the user.
+type RemoveProjectEnvProjectsResponseInternalContentHint struct {
+	// Contains the `value` of the env variable, encrypted with a special key to make decryption possible in the subscriber Lambda.
+	EncryptedValue string                                                 `json:"encryptedValue"`
+	Type           RemoveProjectEnvProjectsResponse200ApplicationJSONType `json:"type"`
+}
+
+func (o *RemoveProjectEnvProjectsResponseInternalContentHint) GetEncryptedValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.EncryptedValue
+}
+
+func (o *RemoveProjectEnvProjectsResponseInternalContentHint) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONType {
+	if o == nil {
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONType("")
+	}
+	return o.Type
 }
 
 type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 string
@@ -850,7 +1027,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -880,7 +1056,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -902,22 +1077,22 @@ func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31) Unmar
 type RemoveProjectEnvProjectsResponseTargetType string
 
 const (
-	RemoveProjectEnvProjectsResponseTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 RemoveProjectEnvProjectsResponseTargetType = "arrayOfremoveProjectEnv_projects_response_200_ApplicationJSON_responseBody_3_1"
+	RemoveProjectEnvProjectsResponseTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 RemoveProjectEnvProjectsResponseTargetType = "arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31"
 	RemoveProjectEnvProjectsResponseTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32        RemoveProjectEnvProjectsResponseTargetType = "removeProjectEnv_projects_response_200_ApplicationJSON_responseBody_3_2"
 )
 
 type RemoveProjectEnvProjectsResponseTarget struct {
-	ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
+	ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
 	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32        *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32
 
 	Type RemoveProjectEnvProjectsResponseTargetType
 }
 
-func CreateRemoveProjectEnvProjectsResponseTargetArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31(arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31) RemoveProjectEnvProjectsResponseTarget {
-	typ := RemoveProjectEnvProjectsResponseTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
+func CreateRemoveProjectEnvProjectsResponseTargetArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31(arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31) RemoveProjectEnvProjectsResponseTarget {
+	typ := RemoveProjectEnvProjectsResponseTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
 
 	return RemoveProjectEnvProjectsResponseTarget{
-		ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31: arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31,
+		ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31: arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31,
 		Type: typ,
 	}
 }
@@ -933,33 +1108,33 @@ func CreateRemoveProjectEnvProjectsResponseTargetRemoveProjectEnvProjectsRespons
 
 func (u *RemoveProjectEnvProjectsResponseTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 := []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 = arrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
-		u.Type = RemoveProjectEnvProjectsResponseTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
+	var arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 = []RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31{}
+	if err := utils.UnmarshalJSON(data, &arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31, "", true, true); err == nil {
+		u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 = arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
+		u.Type = RemoveProjectEnvProjectsResponseTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse200ApplicationJSONResponseBody32 := RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32("")
+	var removeProjectEnvProjectsResponse200ApplicationJSONResponseBody32 RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32("")
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody32, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 = &removeProjectEnvProjectsResponse200ApplicationJSONResponseBody32
 		u.Type = RemoveProjectEnvProjectsResponseTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for RemoveProjectEnvProjectsResponseTarget", string(data))
 }
 
 func (u RemoveProjectEnvProjectsResponseTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31, "", true)
+	if u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31 != nil {
+		return utils.MarshalJSON(u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody31, "", true)
 	}
 
 	if u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32 != nil {
 		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody32, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type RemoveProjectEnvProjectsResponseTarget: all fields are null")
 }
 
 type RemoveProjectEnvProjectsResponseType string
@@ -975,7 +1150,6 @@ const (
 func (e RemoveProjectEnvProjectsResponseType) ToPointer() *RemoveProjectEnvProjectsResponseType {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponseType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -999,22 +1173,33 @@ func (e *RemoveProjectEnvProjectsResponseType) UnmarshalJSON(data []byte) error 
 }
 
 type RemoveProjectEnv3 struct {
-	ConfigurationID *string                                      `json:"configurationId,omitempty"`
-	ContentHint     *RemoveProjectEnvProjectsResponseContentHint `json:"contentHint,omitempty"`
-	CreatedAt       *int64                                       `json:"createdAt,omitempty"`
-	CreatedBy       *string                                      `json:"createdBy,omitempty"`
+	Comment             *string                                      `json:"comment,omitempty"`
+	ConfigurationID     *string                                      `json:"configurationId,omitempty"`
+	ContentHint         *RemoveProjectEnvProjectsResponseContentHint `json:"contentHint,omitempty"`
+	CreatedAt           *float64                                     `json:"createdAt,omitempty"`
+	CreatedBy           *string                                      `json:"createdBy,omitempty"`
+	CustomEnvironmentID *string                                      `json:"customEnvironmentId,omitempty"`
 	// Whether `value` is decrypted.
-	Decrypted         *bool                                   `json:"decrypted,omitempty"`
-	EdgeConfigID      *string                                 `json:"edgeConfigId,omitempty"`
-	EdgeConfigTokenID *string                                 `json:"edgeConfigTokenId,omitempty"`
-	GitBranch         *string                                 `json:"gitBranch,omitempty"`
-	ID                *string                                 `json:"id,omitempty"`
-	Key               string                                  `json:"key"`
-	Target            *RemoveProjectEnvProjectsResponseTarget `json:"target,omitempty"`
-	Type              RemoveProjectEnvProjectsResponseType    `json:"type"`
-	UpdatedAt         *int64                                  `json:"updatedAt,omitempty"`
-	UpdatedBy         *string                                 `json:"updatedBy,omitempty"`
-	Value             string                                  `json:"value"`
+	Decrypted         *bool   `json:"decrypted,omitempty"`
+	EdgeConfigID      *string `json:"edgeConfigId,omitempty"`
+	EdgeConfigTokenID *string `json:"edgeConfigTokenId,omitempty"`
+	GitBranch         *string `json:"gitBranch,omitempty"`
+	ID                *string `json:"id,omitempty"`
+	// Similar to `contentHints`, but should not be exposed to the user.
+	InternalContentHint *RemoveProjectEnvProjectsResponseInternalContentHint `json:"internalContentHint,omitempty"`
+	Key                 string                                               `json:"key"`
+	Target              *RemoveProjectEnvProjectsResponseTarget              `json:"target,omitempty"`
+	Type                RemoveProjectEnvProjectsResponseType                 `json:"type"`
+	UpdatedAt           *float64                                             `json:"updatedAt,omitempty"`
+	UpdatedBy           *string                                              `json:"updatedBy,omitempty"`
+	Value               string                                               `json:"value"`
+}
+
+func (o *RemoveProjectEnv3) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
 }
 
 func (o *RemoveProjectEnv3) GetConfigurationID() *string {
@@ -1031,7 +1216,7 @@ func (o *RemoveProjectEnv3) GetContentHint() *RemoveProjectEnvProjectsResponseCo
 	return o.ContentHint
 }
 
-func (o *RemoveProjectEnv3) GetCreatedAt() *int64 {
+func (o *RemoveProjectEnv3) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1043,6 +1228,13 @@ func (o *RemoveProjectEnv3) GetCreatedBy() *string {
 		return nil
 	}
 	return o.CreatedBy
+}
+
+func (o *RemoveProjectEnv3) GetCustomEnvironmentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomEnvironmentID
 }
 
 func (o *RemoveProjectEnv3) GetDecrypted() *bool {
@@ -1080,6 +1272,13 @@ func (o *RemoveProjectEnv3) GetID() *string {
 	return o.ID
 }
 
+func (o *RemoveProjectEnv3) GetInternalContentHint() *RemoveProjectEnvProjectsResponseInternalContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.InternalContentHint
+}
+
 func (o *RemoveProjectEnv3) GetKey() string {
 	if o == nil {
 		return ""
@@ -1101,7 +1300,7 @@ func (o *RemoveProjectEnv3) GetType() RemoveProjectEnvProjectsResponseType {
 	return o.Type
 }
 
-func (o *RemoveProjectEnv3) GetUpdatedAt() *int64 {
+func (o *RemoveProjectEnv3) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1122,6 +1321,90 @@ func (o *RemoveProjectEnv3) GetValue() string {
 	return o.Value
 }
 
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint14Type string
+
+const (
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint14TypeIntegrationStoreSecret RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint14Type = "integration-store-secret"
+)
+
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint14Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint14Type {
+	return &e
+}
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint14Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "integration-store-secret":
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint14Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint14Type: %v", v)
+	}
+}
+
+type RemoveProjectEnvProjects14 struct {
+	StoreID string                                                                           `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint14Type `json:"type"`
+}
+
+func (o *RemoveProjectEnvProjects14) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *RemoveProjectEnvProjects14) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint14Type {
+	if o == nil {
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint14Type("")
+	}
+	return o.Type
+}
+
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint13Type string
+
+const (
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint13TypePostgresURLNoSsl RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint13Type = "postgres-url-no-ssl"
+)
+
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint13Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint13Type {
+	return &e
+}
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint13Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-url-no-ssl":
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint13Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint13Type: %v", v)
+	}
+}
+
+type RemoveProjectEnvProjects13 struct {
+	StoreID string                                                                           `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint13Type `json:"type"`
+}
+
+func (o *RemoveProjectEnvProjects13) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *RemoveProjectEnvProjects13) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint13Type {
+	if o == nil {
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint13Type("")
+	}
+	return o.Type
+}
+
 type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type string
 
 const (
@@ -1131,7 +1414,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint12Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1174,7 +1456,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHintType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1217,7 +1498,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1260,7 +1540,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1303,7 +1582,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1346,7 +1624,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1389,7 +1666,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1432,7 +1708,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1475,7 +1750,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint4Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1518,7 +1792,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint3Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1561,7 +1834,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1604,7 +1876,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody2ContentHint1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1653,6 +1924,8 @@ const (
 	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects10           RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_10"
 	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects11           RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_11"
 	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects12           RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_12"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects13           RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_13"
+	RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects14           RemoveProjectEnvProjectsContentHintType = "removeProjectEnv_projects_14"
 )
 
 type RemoveProjectEnvProjectsContentHint struct {
@@ -1668,6 +1941,8 @@ type RemoveProjectEnvProjectsContentHint struct {
 	RemoveProjectEnvProjects10           *RemoveProjectEnvProjects10
 	RemoveProjectEnvProjects11           *RemoveProjectEnvProjects11
 	RemoveProjectEnvProjects12           *RemoveProjectEnvProjects12
+	RemoveProjectEnvProjects13           *RemoveProjectEnvProjects13
+	RemoveProjectEnvProjects14           *RemoveProjectEnvProjects14
 
 	Type RemoveProjectEnvProjectsContentHintType
 }
@@ -1780,93 +2055,125 @@ func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects12(removeP
 	}
 }
 
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects13(removeProjectEnvProjects13 RemoveProjectEnvProjects13) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects13
+
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjects13: &removeProjectEnvProjects13,
+		Type:                       typ,
+	}
+}
+
+func CreateRemoveProjectEnvProjectsContentHintRemoveProjectEnvProjects14(removeProjectEnvProjects14 RemoveProjectEnvProjects14) RemoveProjectEnvProjectsContentHint {
+	typ := RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects14
+
+	return RemoveProjectEnvProjectsContentHint{
+		RemoveProjectEnvProjects14: &removeProjectEnvProjects14,
+		Type:                       typ,
+	}
+}
+
 func (u *RemoveProjectEnvProjectsContentHint) UnmarshalJSON(data []byte) error {
 
-	removeProjectEnvProjectsResponse2001 := RemoveProjectEnvProjectsResponse2001{}
+	var removeProjectEnvProjectsResponse2001 RemoveProjectEnvProjectsResponse2001 = RemoveProjectEnvProjectsResponse2001{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse2001, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse2001 = &removeProjectEnvProjectsResponse2001
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse2001
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse2002 := RemoveProjectEnvProjectsResponse2002{}
+	var removeProjectEnvProjectsResponse2002 RemoveProjectEnvProjectsResponse2002 = RemoveProjectEnvProjectsResponse2002{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse2002, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse2002 = &removeProjectEnvProjectsResponse2002
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse2002
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse3 := RemoveProjectEnvProjectsResponse3{}
+	var removeProjectEnvProjectsResponse3 RemoveProjectEnvProjectsResponse3 = RemoveProjectEnvProjectsResponse3{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse3, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse3 = &removeProjectEnvProjectsResponse3
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjectsResponse3
 		return nil
 	}
 
-	removeProjectEnvProjects4 := RemoveProjectEnvProjects4{}
+	var removeProjectEnvProjects4 RemoveProjectEnvProjects4 = RemoveProjectEnvProjects4{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects4, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects4 = &removeProjectEnvProjects4
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects4
 		return nil
 	}
 
-	removeProjectEnvProjects5 := RemoveProjectEnvProjects5{}
+	var removeProjectEnvProjects5 RemoveProjectEnvProjects5 = RemoveProjectEnvProjects5{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects5, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects5 = &removeProjectEnvProjects5
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects5
 		return nil
 	}
 
-	removeProjectEnvProjects6 := RemoveProjectEnvProjects6{}
+	var removeProjectEnvProjects6 RemoveProjectEnvProjects6 = RemoveProjectEnvProjects6{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects6, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects6 = &removeProjectEnvProjects6
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects6
 		return nil
 	}
 
-	removeProjectEnvProjects7 := RemoveProjectEnvProjects7{}
+	var removeProjectEnvProjects7 RemoveProjectEnvProjects7 = RemoveProjectEnvProjects7{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects7, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects7 = &removeProjectEnvProjects7
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects7
 		return nil
 	}
 
-	removeProjectEnvProjects8 := RemoveProjectEnvProjects8{}
+	var removeProjectEnvProjects8 RemoveProjectEnvProjects8 = RemoveProjectEnvProjects8{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects8, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects8 = &removeProjectEnvProjects8
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects8
 		return nil
 	}
 
-	removeProjectEnvProjects9 := RemoveProjectEnvProjects9{}
+	var removeProjectEnvProjects9 RemoveProjectEnvProjects9 = RemoveProjectEnvProjects9{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects9, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects9 = &removeProjectEnvProjects9
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects9
 		return nil
 	}
 
-	removeProjectEnvProjects10 := RemoveProjectEnvProjects10{}
+	var removeProjectEnvProjects10 RemoveProjectEnvProjects10 = RemoveProjectEnvProjects10{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects10, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects10 = &removeProjectEnvProjects10
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects10
 		return nil
 	}
 
-	removeProjectEnvProjects11 := RemoveProjectEnvProjects11{}
+	var removeProjectEnvProjects11 RemoveProjectEnvProjects11 = RemoveProjectEnvProjects11{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects11, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects11 = &removeProjectEnvProjects11
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects11
 		return nil
 	}
 
-	removeProjectEnvProjects12 := RemoveProjectEnvProjects12{}
+	var removeProjectEnvProjects12 RemoveProjectEnvProjects12 = RemoveProjectEnvProjects12{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects12, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects12 = &removeProjectEnvProjects12
 		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects12
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	var removeProjectEnvProjects13 RemoveProjectEnvProjects13 = RemoveProjectEnvProjects13{}
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects13, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects13 = &removeProjectEnvProjects13
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects13
+		return nil
+	}
+
+	var removeProjectEnvProjects14 RemoveProjectEnvProjects14 = RemoveProjectEnvProjects14{}
+	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects14, "", true, true); err == nil {
+		u.RemoveProjectEnvProjects14 = &removeProjectEnvProjects14
+		u.Type = RemoveProjectEnvProjectsContentHintTypeRemoveProjectEnvProjects14
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for RemoveProjectEnvProjectsContentHint", string(data))
 }
 
 func (u RemoveProjectEnvProjectsContentHint) MarshalJSON() ([]byte, error) {
@@ -1918,7 +2225,59 @@ func (u RemoveProjectEnvProjectsContentHint) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.RemoveProjectEnvProjects12, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	if u.RemoveProjectEnvProjects13 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects13, "", true)
+	}
+
+	if u.RemoveProjectEnvProjects14 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnvProjects14, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type RemoveProjectEnvProjectsContentHint: all fields are null")
+}
+
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType string
+
+const (
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyTypeFlagsSecret RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType = "flags-secret"
+)
+
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType {
+	return &e
+}
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "flags-secret":
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType: %v", v)
+	}
+}
+
+// RemoveProjectEnvProjectsInternalContentHint - Similar to `contentHints`, but should not be exposed to the user.
+type RemoveProjectEnvProjectsInternalContentHint struct {
+	// Contains the `value` of the env variable, encrypted with a special key to make decryption possible in the subscriber Lambda.
+	EncryptedValue string                                                             `json:"encryptedValue"`
+	Type           RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType `json:"type"`
+}
+
+func (o *RemoveProjectEnvProjectsInternalContentHint) GetEncryptedValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.EncryptedValue
+}
+
+func (o *RemoveProjectEnvProjectsInternalContentHint) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType {
+	if o == nil {
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType("")
+	}
+	return o.Type
 }
 
 type RemoveProjectEnvProjectsResponse200ApplicationJSON2 string
@@ -1932,7 +2291,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSON2) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSON2 {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSON2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1962,7 +2320,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSON1) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSON1 {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSON1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1984,22 +2341,22 @@ func (e *RemoveProjectEnvProjectsResponse200ApplicationJSON1) UnmarshalJSON(data
 type RemoveProjectEnvProjectsTargetType string
 
 const (
-	RemoveProjectEnvProjectsTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 RemoveProjectEnvProjectsTargetType = "arrayOfremoveProjectEnv_projects_response_200_ApplicationJSON_1"
+	RemoveProjectEnvProjectsTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1 RemoveProjectEnvProjectsTargetType = "arrayOfRemoveProjectEnvProjectsResponse200ApplicationJSON1"
 	RemoveProjectEnvProjectsTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSON2        RemoveProjectEnvProjectsTargetType = "removeProjectEnv_projects_response_200_ApplicationJSON_2"
 )
 
 type RemoveProjectEnvProjectsTarget struct {
-	ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 []RemoveProjectEnvProjectsResponse200ApplicationJSON1
+	ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1 []RemoveProjectEnvProjectsResponse200ApplicationJSON1
 	RemoveProjectEnvProjectsResponse200ApplicationJSON2        *RemoveProjectEnvProjectsResponse200ApplicationJSON2
 
 	Type RemoveProjectEnvProjectsTargetType
 }
 
-func CreateRemoveProjectEnvProjectsTargetArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1(arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 []RemoveProjectEnvProjectsResponse200ApplicationJSON1) RemoveProjectEnvProjectsTarget {
-	typ := RemoveProjectEnvProjectsTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1
+func CreateRemoveProjectEnvProjectsTargetArrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1(arrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1 []RemoveProjectEnvProjectsResponse200ApplicationJSON1) RemoveProjectEnvProjectsTarget {
+	typ := RemoveProjectEnvProjectsTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1
 
 	return RemoveProjectEnvProjectsTarget{
-		ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1: arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1,
+		ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1: arrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1,
 		Type: typ,
 	}
 }
@@ -2015,33 +2372,33 @@ func CreateRemoveProjectEnvProjectsTargetRemoveProjectEnvProjectsResponse200Appl
 
 func (u *RemoveProjectEnvProjectsTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 := []RemoveProjectEnvProjectsResponse200ApplicationJSON1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 = arrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1
-		u.Type = RemoveProjectEnvProjectsTargetTypeArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1
+	var arrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1 []RemoveProjectEnvProjectsResponse200ApplicationJSON1 = []RemoveProjectEnvProjectsResponse200ApplicationJSON1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1, "", true, true); err == nil {
+		u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1 = arrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1
+		u.Type = RemoveProjectEnvProjectsTargetTypeArrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse200ApplicationJSON2 := RemoveProjectEnvProjectsResponse200ApplicationJSON2("")
+	var removeProjectEnvProjectsResponse200ApplicationJSON2 RemoveProjectEnvProjectsResponse200ApplicationJSON2 = RemoveProjectEnvProjectsResponse200ApplicationJSON2("")
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse200ApplicationJSON2, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse200ApplicationJSON2 = &removeProjectEnvProjectsResponse200ApplicationJSON2
 		u.Type = RemoveProjectEnvProjectsTargetTypeRemoveProjectEnvProjectsResponse200ApplicationJSON2
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for RemoveProjectEnvProjectsTarget", string(data))
 }
 
 func (u RemoveProjectEnvProjectsTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnvProjectsResponse200ApplicationJSON1, "", true)
+	if u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1 != nil {
+		return utils.MarshalJSON(u.ArrayOfRemoveProjectEnvProjectsResponse200ApplicationJson1, "", true)
 	}
 
 	if u.RemoveProjectEnvProjectsResponse200ApplicationJSON2 != nil {
 		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse200ApplicationJSON2, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type RemoveProjectEnvProjectsTarget: all fields are null")
 }
 
 type RemoveProjectEnvProjectsType string
@@ -2057,7 +2414,6 @@ const (
 func (e RemoveProjectEnvProjectsType) ToPointer() *RemoveProjectEnvProjectsType {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2081,23 +2437,34 @@ func (e *RemoveProjectEnvProjectsType) UnmarshalJSON(data []byte) error {
 }
 
 type RemoveProjectEnv2 struct {
-	ConfigurationID *string                              `json:"configurationId,omitempty"`
-	ContentHint     *RemoveProjectEnvProjectsContentHint `json:"contentHint,omitempty"`
-	CreatedAt       *int64                               `json:"createdAt,omitempty"`
-	CreatedBy       *string                              `json:"createdBy,omitempty"`
+	Comment             *string                              `json:"comment,omitempty"`
+	ConfigurationID     *string                              `json:"configurationId,omitempty"`
+	ContentHint         *RemoveProjectEnvProjectsContentHint `json:"contentHint,omitempty"`
+	CreatedAt           *float64                             `json:"createdAt,omitempty"`
+	CreatedBy           *string                              `json:"createdBy,omitempty"`
+	CustomEnvironmentID *string                              `json:"customEnvironmentId,omitempty"`
 	// Whether `value` is decrypted.
-	Decrypted         *bool                           `json:"decrypted,omitempty"`
-	EdgeConfigID      *string                         `json:"edgeConfigId,omitempty"`
-	EdgeConfigTokenID *string                         `json:"edgeConfigTokenId,omitempty"`
-	GitBranch         *string                         `json:"gitBranch,omitempty"`
-	ID                *string                         `json:"id,omitempty"`
-	Key               string                          `json:"key"`
-	System            *bool                           `json:"system,omitempty"`
-	Target            *RemoveProjectEnvProjectsTarget `json:"target,omitempty"`
-	Type              RemoveProjectEnvProjectsType    `json:"type"`
-	UpdatedAt         *int64                          `json:"updatedAt,omitempty"`
-	UpdatedBy         *string                         `json:"updatedBy,omitempty"`
-	Value             string                          `json:"value"`
+	Decrypted         *bool   `json:"decrypted,omitempty"`
+	EdgeConfigID      *string `json:"edgeConfigId,omitempty"`
+	EdgeConfigTokenID *string `json:"edgeConfigTokenId,omitempty"`
+	GitBranch         *string `json:"gitBranch,omitempty"`
+	ID                *string `json:"id,omitempty"`
+	// Similar to `contentHints`, but should not be exposed to the user.
+	InternalContentHint *RemoveProjectEnvProjectsInternalContentHint `json:"internalContentHint,omitempty"`
+	Key                 string                                       `json:"key"`
+	System              *bool                                        `json:"system,omitempty"`
+	Target              *RemoveProjectEnvProjectsTarget              `json:"target,omitempty"`
+	Type                RemoveProjectEnvProjectsType                 `json:"type"`
+	UpdatedAt           *float64                                     `json:"updatedAt,omitempty"`
+	UpdatedBy           *string                                      `json:"updatedBy,omitempty"`
+	Value               string                                       `json:"value"`
+}
+
+func (o *RemoveProjectEnv2) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
 }
 
 func (o *RemoveProjectEnv2) GetConfigurationID() *string {
@@ -2114,7 +2481,7 @@ func (o *RemoveProjectEnv2) GetContentHint() *RemoveProjectEnvProjectsContentHin
 	return o.ContentHint
 }
 
-func (o *RemoveProjectEnv2) GetCreatedAt() *int64 {
+func (o *RemoveProjectEnv2) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2126,6 +2493,13 @@ func (o *RemoveProjectEnv2) GetCreatedBy() *string {
 		return nil
 	}
 	return o.CreatedBy
+}
+
+func (o *RemoveProjectEnv2) GetCustomEnvironmentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomEnvironmentID
 }
 
 func (o *RemoveProjectEnv2) GetDecrypted() *bool {
@@ -2163,6 +2537,13 @@ func (o *RemoveProjectEnv2) GetID() *string {
 	return o.ID
 }
 
+func (o *RemoveProjectEnv2) GetInternalContentHint() *RemoveProjectEnvProjectsInternalContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.InternalContentHint
+}
+
 func (o *RemoveProjectEnv2) GetKey() string {
 	if o == nil {
 		return ""
@@ -2191,7 +2572,7 @@ func (o *RemoveProjectEnv2) GetType() RemoveProjectEnvProjectsType {
 	return o.Type
 }
 
-func (o *RemoveProjectEnv2) GetUpdatedAt() *int64 {
+func (o *RemoveProjectEnv2) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2212,6 +2593,90 @@ func (o *RemoveProjectEnv2) GetValue() string {
 	return o.Value
 }
 
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint14Type string
+
+const (
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint14TypeIntegrationStoreSecret RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint14Type = "integration-store-secret"
+)
+
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint14Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint14Type {
+	return &e
+}
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint14Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "integration-store-secret":
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint14Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint14Type: %v", v)
+	}
+}
+
+type RemoveProjectEnv14 struct {
+	StoreID string                                                                           `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint14Type `json:"type"`
+}
+
+func (o *RemoveProjectEnv14) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *RemoveProjectEnv14) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint14Type {
+	if o == nil {
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint14Type("")
+	}
+	return o.Type
+}
+
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint13Type string
+
+const (
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint13TypePostgresURLNoSsl RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint13Type = "postgres-url-no-ssl"
+)
+
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint13Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint13Type {
+	return &e
+}
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint13Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "postgres-url-no-ssl":
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint13Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint13Type: %v", v)
+	}
+}
+
+type RemoveProjectEnv13 struct {
+	StoreID string                                                                           `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint13Type `json:"type"`
+}
+
+func (o *RemoveProjectEnv13) GetStoreID() string {
+	if o == nil {
+		return ""
+	}
+	return o.StoreID
+}
+
+func (o *RemoveProjectEnv13) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint13Type {
+	if o == nil {
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint13Type("")
+	}
+	return o.Type
+}
+
 type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type string
 
 const (
@@ -2221,7 +2686,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint12Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2264,7 +2728,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint11Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2307,7 +2770,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint10Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2350,7 +2812,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2393,7 +2854,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2436,7 +2896,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2479,7 +2938,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2513,33 +2971,32 @@ func (o *RemoveProjectEnv6) GetType() RemoveProjectEnvProjectsResponse200Applica
 	return o.Type
 }
 
-type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint5Type string
 
 const (
-	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintTypeBlobReadWriteToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType = "blob-read-write-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint5TypeBlobReadWriteToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint5Type = "blob-read-write-token"
 )
 
-func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint5Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint5Type {
 	return &e
 }
-
-func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "blob-read-write-token":
-		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint5Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint5Type: %v", v)
 	}
 }
 
 type RemoveProjectEnv5 struct {
-	StoreID string                                                                         `json:"storeId"`
-	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType `json:"type"`
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint5Type `json:"type"`
 }
 
 func (o *RemoveProjectEnv5) GetStoreID() string {
@@ -2549,40 +3006,39 @@ func (o *RemoveProjectEnv5) GetStoreID() string {
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv5) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType {
+func (o *RemoveProjectEnv5) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint5Type {
 	if o == nil {
-		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint5Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint4Type string
 
 const (
-	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1TypeRedisRestAPIReadOnlyToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type = "redis-rest-api-read-only-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint4TypeRedisRestAPIReadOnlyToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint4Type = "redis-rest-api-read-only-token"
 )
 
-func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint4Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint4Type {
 	return &e
 }
-
-func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint4Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-read-only-token":
-		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint4Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint4Type: %v", v)
 	}
 }
 
 type RemoveProjectEnv4 struct {
-	StoreID string                                                              `json:"storeId"`
-	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type `json:"type"`
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint4Type `json:"type"`
 }
 
 func (o *RemoveProjectEnv4) GetStoreID() string {
@@ -2592,40 +3048,39 @@ func (o *RemoveProjectEnv4) GetStoreID() string {
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnv4) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type {
+func (o *RemoveProjectEnv4) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint4Type {
 	if o == nil {
-		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint4Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType string
 
 const (
-	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyTypeRedisRestAPIToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType = "redis-rest-api-token"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintTypeRedisRestAPIToken RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType = "redis-rest-api-token"
 )
 
-func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType {
 	return &e
 }
-
-func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-token":
-		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType: %v", v)
 	}
 }
 
 type RemoveProjectEnvProjects3 struct {
-	StoreID string                                                             `json:"storeId"`
-	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType `json:"type"`
+	StoreID string                                                                         `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType `json:"type"`
 }
 
 func (o *RemoveProjectEnvProjects3) GetStoreID() string {
@@ -2635,40 +3090,39 @@ func (o *RemoveProjectEnvProjects3) GetStoreID() string {
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnvProjects3) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType {
+func (o *RemoveProjectEnvProjects3) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType {
 	if o == nil {
-		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBodyType("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHintType("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnvProjectsResponse200ApplicationJSONType string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type string
 
 const (
-	RemoveProjectEnvProjectsResponse200ApplicationJSONTypeRedisRestAPIURL RemoveProjectEnvProjectsResponse200ApplicationJSONType = "redis-rest-api-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1TypeRedisRestAPIURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type = "redis-rest-api-url"
 )
 
-func (e RemoveProjectEnvProjectsResponse200ApplicationJSONType) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONType {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type {
 	return &e
 }
-
-func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-rest-api-url":
-		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONType(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONType: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type: %v", v)
 	}
 }
 
 type RemoveProjectEnvProjects2 struct {
-	StoreID string                                                 `json:"storeId"`
-	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONType `json:"type"`
+	StoreID string                                                              `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type `json:"type"`
 }
 
 func (o *RemoveProjectEnvProjects2) GetStoreID() string {
@@ -2678,40 +3132,39 @@ func (o *RemoveProjectEnvProjects2) GetStoreID() string {
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnvProjects2) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONType {
+func (o *RemoveProjectEnvProjects2) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type {
 	if o == nil {
-		return RemoveProjectEnvProjectsResponse200ApplicationJSONType("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1Type("")
 	}
 	return o.Type
 }
 
-type RemoveProjectEnvProjectsResponse200Type string
+type RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint1Type string
 
 const (
-	RemoveProjectEnvProjectsResponse200TypeRedisURL RemoveProjectEnvProjectsResponse200Type = "redis-url"
+	RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint1TypeRedisURL RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint1Type = "redis-url"
 )
 
-func (e RemoveProjectEnvProjectsResponse200Type) ToPointer() *RemoveProjectEnvProjectsResponse200Type {
+func (e RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint1Type) ToPointer() *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint1Type {
 	return &e
 }
-
-func (e *RemoveProjectEnvProjectsResponse200Type) UnmarshalJSON(data []byte) error {
+func (e *RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis-url":
-		*e = RemoveProjectEnvProjectsResponse200Type(v)
+		*e = RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint1Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200Type: %v", v)
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint1Type: %v", v)
 	}
 }
 
 type RemoveProjectEnvProjects1 struct {
-	StoreID string                                  `json:"storeId"`
-	Type    RemoveProjectEnvProjectsResponse200Type `json:"type"`
+	StoreID string                                                                          `json:"storeId"`
+	Type    RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint1Type `json:"type"`
 }
 
 func (o *RemoveProjectEnvProjects1) GetStoreID() string {
@@ -2721,9 +3174,9 @@ func (o *RemoveProjectEnvProjects1) GetStoreID() string {
 	return o.StoreID
 }
 
-func (o *RemoveProjectEnvProjects1) GetType() RemoveProjectEnvProjectsResponse200Type {
+func (o *RemoveProjectEnvProjects1) GetType() RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint1Type {
 	if o == nil {
-		return RemoveProjectEnvProjectsResponse200Type("")
+		return RemoveProjectEnvProjectsResponse200ApplicationJSONResponseBody1ContentHint1Type("")
 	}
 	return o.Type
 }
@@ -2743,6 +3196,8 @@ const (
 	RemoveProjectEnvContentHintTypeRemoveProjectEnv10        RemoveProjectEnvContentHintType = "removeProjectEnv_10"
 	RemoveProjectEnvContentHintTypeRemoveProjectEnv11        RemoveProjectEnvContentHintType = "removeProjectEnv_11"
 	RemoveProjectEnvContentHintTypeRemoveProjectEnv12        RemoveProjectEnvContentHintType = "removeProjectEnv_12"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnv13        RemoveProjectEnvContentHintType = "removeProjectEnv_13"
+	RemoveProjectEnvContentHintTypeRemoveProjectEnv14        RemoveProjectEnvContentHintType = "removeProjectEnv_14"
 )
 
 type RemoveProjectEnvContentHint struct {
@@ -2758,6 +3213,8 @@ type RemoveProjectEnvContentHint struct {
 	RemoveProjectEnv10        *RemoveProjectEnv10
 	RemoveProjectEnv11        *RemoveProjectEnv11
 	RemoveProjectEnv12        *RemoveProjectEnv12
+	RemoveProjectEnv13        *RemoveProjectEnv13
+	RemoveProjectEnv14        *RemoveProjectEnv14
 
 	Type RemoveProjectEnvContentHintType
 }
@@ -2870,93 +3327,125 @@ func CreateRemoveProjectEnvContentHintRemoveProjectEnv12(removeProjectEnv12 Remo
 	}
 }
 
+func CreateRemoveProjectEnvContentHintRemoveProjectEnv13(removeProjectEnv13 RemoveProjectEnv13) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnv13
+
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnv13: &removeProjectEnv13,
+		Type:               typ,
+	}
+}
+
+func CreateRemoveProjectEnvContentHintRemoveProjectEnv14(removeProjectEnv14 RemoveProjectEnv14) RemoveProjectEnvContentHint {
+	typ := RemoveProjectEnvContentHintTypeRemoveProjectEnv14
+
+	return RemoveProjectEnvContentHint{
+		RemoveProjectEnv14: &removeProjectEnv14,
+		Type:               typ,
+	}
+}
+
 func (u *RemoveProjectEnvContentHint) UnmarshalJSON(data []byte) error {
 
-	removeProjectEnvProjects1 := RemoveProjectEnvProjects1{}
+	var removeProjectEnvProjects1 RemoveProjectEnvProjects1 = RemoveProjectEnvProjects1{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects1, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects1 = &removeProjectEnvProjects1
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects1
 		return nil
 	}
 
-	removeProjectEnvProjects2 := RemoveProjectEnvProjects2{}
+	var removeProjectEnvProjects2 RemoveProjectEnvProjects2 = RemoveProjectEnvProjects2{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects2, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects2 = &removeProjectEnvProjects2
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects2
 		return nil
 	}
 
-	removeProjectEnvProjects3 := RemoveProjectEnvProjects3{}
+	var removeProjectEnvProjects3 RemoveProjectEnvProjects3 = RemoveProjectEnvProjects3{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjects3, "", true, true); err == nil {
 		u.RemoveProjectEnvProjects3 = &removeProjectEnvProjects3
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnvProjects3
 		return nil
 	}
 
-	removeProjectEnv4 := RemoveProjectEnv4{}
+	var removeProjectEnv4 RemoveProjectEnv4 = RemoveProjectEnv4{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnv4, "", true, true); err == nil {
 		u.RemoveProjectEnv4 = &removeProjectEnv4
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv4
 		return nil
 	}
 
-	removeProjectEnv5 := RemoveProjectEnv5{}
+	var removeProjectEnv5 RemoveProjectEnv5 = RemoveProjectEnv5{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnv5, "", true, true); err == nil {
 		u.RemoveProjectEnv5 = &removeProjectEnv5
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv5
 		return nil
 	}
 
-	removeProjectEnv6 := RemoveProjectEnv6{}
+	var removeProjectEnv6 RemoveProjectEnv6 = RemoveProjectEnv6{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnv6, "", true, true); err == nil {
 		u.RemoveProjectEnv6 = &removeProjectEnv6
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv6
 		return nil
 	}
 
-	removeProjectEnv7 := RemoveProjectEnv7{}
+	var removeProjectEnv7 RemoveProjectEnv7 = RemoveProjectEnv7{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnv7, "", true, true); err == nil {
 		u.RemoveProjectEnv7 = &removeProjectEnv7
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv7
 		return nil
 	}
 
-	removeProjectEnv8 := RemoveProjectEnv8{}
+	var removeProjectEnv8 RemoveProjectEnv8 = RemoveProjectEnv8{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnv8, "", true, true); err == nil {
 		u.RemoveProjectEnv8 = &removeProjectEnv8
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv8
 		return nil
 	}
 
-	removeProjectEnv9 := RemoveProjectEnv9{}
+	var removeProjectEnv9 RemoveProjectEnv9 = RemoveProjectEnv9{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnv9, "", true, true); err == nil {
 		u.RemoveProjectEnv9 = &removeProjectEnv9
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv9
 		return nil
 	}
 
-	removeProjectEnv10 := RemoveProjectEnv10{}
+	var removeProjectEnv10 RemoveProjectEnv10 = RemoveProjectEnv10{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnv10, "", true, true); err == nil {
 		u.RemoveProjectEnv10 = &removeProjectEnv10
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv10
 		return nil
 	}
 
-	removeProjectEnv11 := RemoveProjectEnv11{}
+	var removeProjectEnv11 RemoveProjectEnv11 = RemoveProjectEnv11{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnv11, "", true, true); err == nil {
 		u.RemoveProjectEnv11 = &removeProjectEnv11
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv11
 		return nil
 	}
 
-	removeProjectEnv12 := RemoveProjectEnv12{}
+	var removeProjectEnv12 RemoveProjectEnv12 = RemoveProjectEnv12{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnv12, "", true, true); err == nil {
 		u.RemoveProjectEnv12 = &removeProjectEnv12
 		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv12
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	var removeProjectEnv13 RemoveProjectEnv13 = RemoveProjectEnv13{}
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv13, "", true, true); err == nil {
+		u.RemoveProjectEnv13 = &removeProjectEnv13
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv13
+		return nil
+	}
+
+	var removeProjectEnv14 RemoveProjectEnv14 = RemoveProjectEnv14{}
+	if err := utils.UnmarshalJSON(data, &removeProjectEnv14, "", true, true); err == nil {
+		u.RemoveProjectEnv14 = &removeProjectEnv14
+		u.Type = RemoveProjectEnvContentHintTypeRemoveProjectEnv14
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for RemoveProjectEnvContentHint", string(data))
 }
 
 func (u RemoveProjectEnvContentHint) MarshalJSON() ([]byte, error) {
@@ -3008,7 +3497,59 @@ func (u RemoveProjectEnvContentHint) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.RemoveProjectEnv12, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	if u.RemoveProjectEnv13 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv13, "", true)
+	}
+
+	if u.RemoveProjectEnv14 != nil {
+		return utils.MarshalJSON(u.RemoveProjectEnv14, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type RemoveProjectEnvContentHint: all fields are null")
+}
+
+type RemoveProjectEnvProjectsResponse200Type string
+
+const (
+	RemoveProjectEnvProjectsResponse200TypeFlagsSecret RemoveProjectEnvProjectsResponse200Type = "flags-secret"
+)
+
+func (e RemoveProjectEnvProjectsResponse200Type) ToPointer() *RemoveProjectEnvProjectsResponse200Type {
+	return &e
+}
+func (e *RemoveProjectEnvProjectsResponse200Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "flags-secret":
+		*e = RemoveProjectEnvProjectsResponse200Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RemoveProjectEnvProjectsResponse200Type: %v", v)
+	}
+}
+
+// RemoveProjectEnvInternalContentHint - Similar to `contentHints`, but should not be exposed to the user.
+type RemoveProjectEnvInternalContentHint struct {
+	// Contains the `value` of the env variable, encrypted with a special key to make decryption possible in the subscriber Lambda.
+	EncryptedValue string                                  `json:"encryptedValue"`
+	Type           RemoveProjectEnvProjectsResponse200Type `json:"type"`
+}
+
+func (o *RemoveProjectEnvInternalContentHint) GetEncryptedValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.EncryptedValue
+}
+
+func (o *RemoveProjectEnvInternalContentHint) GetType() RemoveProjectEnvProjectsResponse200Type {
+	if o == nil {
+		return RemoveProjectEnvProjectsResponse200Type("")
+	}
+	return o.Type
 }
 
 type RemoveProjectEnvProjectsResponse2 string
@@ -3022,7 +3563,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse2) ToPointer() *RemoveProjectEnvProjectsResponse2 {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3052,7 +3592,6 @@ const (
 func (e RemoveProjectEnvProjectsResponse1) ToPointer() *RemoveProjectEnvProjectsResponse1 {
 	return &e
 }
-
 func (e *RemoveProjectEnvProjectsResponse1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3074,22 +3613,22 @@ func (e *RemoveProjectEnvProjectsResponse1) UnmarshalJSON(data []byte) error {
 type RemoveProjectEnvTargetType string
 
 const (
-	RemoveProjectEnvTargetTypeArrayOfremoveProjectEnvProjectsResponse1 RemoveProjectEnvTargetType = "arrayOfremoveProjectEnv_projects_response_1"
+	RemoveProjectEnvTargetTypeArrayOfRemoveProjectEnvProjectsResponse1 RemoveProjectEnvTargetType = "arrayOfRemoveProjectEnvProjectsResponse1"
 	RemoveProjectEnvTargetTypeRemoveProjectEnvProjectsResponse2        RemoveProjectEnvTargetType = "removeProjectEnv_projects_response_2"
 )
 
 type RemoveProjectEnvTarget struct {
-	ArrayOfremoveProjectEnvProjectsResponse1 []RemoveProjectEnvProjectsResponse1
+	ArrayOfRemoveProjectEnvProjectsResponse1 []RemoveProjectEnvProjectsResponse1
 	RemoveProjectEnvProjectsResponse2        *RemoveProjectEnvProjectsResponse2
 
 	Type RemoveProjectEnvTargetType
 }
 
-func CreateRemoveProjectEnvTargetArrayOfremoveProjectEnvProjectsResponse1(arrayOfremoveProjectEnvProjectsResponse1 []RemoveProjectEnvProjectsResponse1) RemoveProjectEnvTarget {
-	typ := RemoveProjectEnvTargetTypeArrayOfremoveProjectEnvProjectsResponse1
+func CreateRemoveProjectEnvTargetArrayOfRemoveProjectEnvProjectsResponse1(arrayOfRemoveProjectEnvProjectsResponse1 []RemoveProjectEnvProjectsResponse1) RemoveProjectEnvTarget {
+	typ := RemoveProjectEnvTargetTypeArrayOfRemoveProjectEnvProjectsResponse1
 
 	return RemoveProjectEnvTarget{
-		ArrayOfremoveProjectEnvProjectsResponse1: arrayOfremoveProjectEnvProjectsResponse1,
+		ArrayOfRemoveProjectEnvProjectsResponse1: arrayOfRemoveProjectEnvProjectsResponse1,
 		Type:                                     typ,
 	}
 }
@@ -3105,33 +3644,33 @@ func CreateRemoveProjectEnvTargetRemoveProjectEnvProjectsResponse2(removeProject
 
 func (u *RemoveProjectEnvTarget) UnmarshalJSON(data []byte) error {
 
-	arrayOfremoveProjectEnvProjectsResponse1 := []RemoveProjectEnvProjectsResponse1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnvProjectsResponse1, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnvProjectsResponse1 = arrayOfremoveProjectEnvProjectsResponse1
-		u.Type = RemoveProjectEnvTargetTypeArrayOfremoveProjectEnvProjectsResponse1
+	var arrayOfRemoveProjectEnvProjectsResponse1 []RemoveProjectEnvProjectsResponse1 = []RemoveProjectEnvProjectsResponse1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfRemoveProjectEnvProjectsResponse1, "", true, true); err == nil {
+		u.ArrayOfRemoveProjectEnvProjectsResponse1 = arrayOfRemoveProjectEnvProjectsResponse1
+		u.Type = RemoveProjectEnvTargetTypeArrayOfRemoveProjectEnvProjectsResponse1
 		return nil
 	}
 
-	removeProjectEnvProjectsResponse2 := RemoveProjectEnvProjectsResponse2("")
+	var removeProjectEnvProjectsResponse2 RemoveProjectEnvProjectsResponse2 = RemoveProjectEnvProjectsResponse2("")
 	if err := utils.UnmarshalJSON(data, &removeProjectEnvProjectsResponse2, "", true, true); err == nil {
 		u.RemoveProjectEnvProjectsResponse2 = &removeProjectEnvProjectsResponse2
 		u.Type = RemoveProjectEnvTargetTypeRemoveProjectEnvProjectsResponse2
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for RemoveProjectEnvTarget", string(data))
 }
 
 func (u RemoveProjectEnvTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnvProjectsResponse1 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnvProjectsResponse1, "", true)
+	if u.ArrayOfRemoveProjectEnvProjectsResponse1 != nil {
+		return utils.MarshalJSON(u.ArrayOfRemoveProjectEnvProjectsResponse1, "", true)
 	}
 
 	if u.RemoveProjectEnvProjectsResponse2 != nil {
 		return utils.MarshalJSON(u.RemoveProjectEnvProjectsResponse2, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type RemoveProjectEnvTarget: all fields are null")
 }
 
 type RemoveProjectEnvType string
@@ -3147,7 +3686,6 @@ const (
 func (e RemoveProjectEnvType) ToPointer() *RemoveProjectEnvType {
 	return &e
 }
-
 func (e *RemoveProjectEnvType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3171,22 +3709,33 @@ func (e *RemoveProjectEnvType) UnmarshalJSON(data []byte) error {
 }
 
 type RemoveProjectEnv1 struct {
-	ConfigurationID *string                      `json:"configurationId,omitempty"`
-	ContentHint     *RemoveProjectEnvContentHint `json:"contentHint,omitempty"`
-	CreatedAt       *int64                       `json:"createdAt,omitempty"`
-	CreatedBy       *string                      `json:"createdBy,omitempty"`
+	Comment             *string                      `json:"comment,omitempty"`
+	ConfigurationID     *string                      `json:"configurationId,omitempty"`
+	ContentHint         *RemoveProjectEnvContentHint `json:"contentHint,omitempty"`
+	CreatedAt           *float64                     `json:"createdAt,omitempty"`
+	CreatedBy           *string                      `json:"createdBy,omitempty"`
+	CustomEnvironmentID *string                      `json:"customEnvironmentId,omitempty"`
 	// Whether `value` is decrypted.
-	Decrypted         *bool                   `json:"decrypted,omitempty"`
-	EdgeConfigID      *string                 `json:"edgeConfigId,omitempty"`
-	EdgeConfigTokenID *string                 `json:"edgeConfigTokenId,omitempty"`
-	GitBranch         *string                 `json:"gitBranch,omitempty"`
-	ID                *string                 `json:"id,omitempty"`
-	Key               string                  `json:"key"`
-	Target            *RemoveProjectEnvTarget `json:"target,omitempty"`
-	Type              RemoveProjectEnvType    `json:"type"`
-	UpdatedAt         *int64                  `json:"updatedAt,omitempty"`
-	UpdatedBy         *string                 `json:"updatedBy,omitempty"`
-	Value             string                  `json:"value"`
+	Decrypted         *bool   `json:"decrypted,omitempty"`
+	EdgeConfigID      *string `json:"edgeConfigId,omitempty"`
+	EdgeConfigTokenID *string `json:"edgeConfigTokenId,omitempty"`
+	GitBranch         *string `json:"gitBranch,omitempty"`
+	ID                *string `json:"id,omitempty"`
+	// Similar to `contentHints`, but should not be exposed to the user.
+	InternalContentHint *RemoveProjectEnvInternalContentHint `json:"internalContentHint,omitempty"`
+	Key                 string                               `json:"key"`
+	Target              *RemoveProjectEnvTarget              `json:"target,omitempty"`
+	Type                RemoveProjectEnvType                 `json:"type"`
+	UpdatedAt           *float64                             `json:"updatedAt,omitempty"`
+	UpdatedBy           *string                              `json:"updatedBy,omitempty"`
+	Value               string                               `json:"value"`
+}
+
+func (o *RemoveProjectEnv1) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
 }
 
 func (o *RemoveProjectEnv1) GetConfigurationID() *string {
@@ -3203,7 +3752,7 @@ func (o *RemoveProjectEnv1) GetContentHint() *RemoveProjectEnvContentHint {
 	return o.ContentHint
 }
 
-func (o *RemoveProjectEnv1) GetCreatedAt() *int64 {
+func (o *RemoveProjectEnv1) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3215,6 +3764,13 @@ func (o *RemoveProjectEnv1) GetCreatedBy() *string {
 		return nil
 	}
 	return o.CreatedBy
+}
+
+func (o *RemoveProjectEnv1) GetCustomEnvironmentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomEnvironmentID
 }
 
 func (o *RemoveProjectEnv1) GetDecrypted() *bool {
@@ -3252,6 +3808,13 @@ func (o *RemoveProjectEnv1) GetID() *string {
 	return o.ID
 }
 
+func (o *RemoveProjectEnv1) GetInternalContentHint() *RemoveProjectEnvInternalContentHint {
+	if o == nil {
+		return nil
+	}
+	return o.InternalContentHint
+}
+
 func (o *RemoveProjectEnv1) GetKey() string {
 	if o == nil {
 		return ""
@@ -3273,7 +3836,7 @@ func (o *RemoveProjectEnv1) GetType() RemoveProjectEnvType {
 	return o.Type
 }
 
-func (o *RemoveProjectEnv1) GetUpdatedAt() *int64 {
+func (o *RemoveProjectEnv1) GetUpdatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3297,25 +3860,25 @@ func (o *RemoveProjectEnv1) GetValue() string {
 type RemoveProjectEnvResponseBodyType string
 
 const (
-	RemoveProjectEnvResponseBodyTypeArrayOfremoveProjectEnv1 RemoveProjectEnvResponseBodyType = "arrayOfremoveProjectEnv_1"
+	RemoveProjectEnvResponseBodyTypeArrayOfRemoveProjectEnv1 RemoveProjectEnvResponseBodyType = "arrayOfRemoveProjectEnv1"
 	RemoveProjectEnvResponseBodyTypeRemoveProjectEnv2        RemoveProjectEnvResponseBodyType = "removeProjectEnv_2"
 	RemoveProjectEnvResponseBodyTypeRemoveProjectEnv3        RemoveProjectEnvResponseBodyType = "removeProjectEnv_3"
 )
 
 // RemoveProjectEnvResponseBody - The environment variable was successfully removed
 type RemoveProjectEnvResponseBody struct {
-	ArrayOfremoveProjectEnv1 []RemoveProjectEnv1
+	ArrayOfRemoveProjectEnv1 []RemoveProjectEnv1
 	RemoveProjectEnv2        *RemoveProjectEnv2
 	RemoveProjectEnv3        *RemoveProjectEnv3
 
 	Type RemoveProjectEnvResponseBodyType
 }
 
-func CreateRemoveProjectEnvResponseBodyArrayOfremoveProjectEnv1(arrayOfremoveProjectEnv1 []RemoveProjectEnv1) RemoveProjectEnvResponseBody {
-	typ := RemoveProjectEnvResponseBodyTypeArrayOfremoveProjectEnv1
+func CreateRemoveProjectEnvResponseBodyArrayOfRemoveProjectEnv1(arrayOfRemoveProjectEnv1 []RemoveProjectEnv1) RemoveProjectEnvResponseBody {
+	typ := RemoveProjectEnvResponseBodyTypeArrayOfRemoveProjectEnv1
 
 	return RemoveProjectEnvResponseBody{
-		ArrayOfremoveProjectEnv1: arrayOfremoveProjectEnv1,
+		ArrayOfRemoveProjectEnv1: arrayOfRemoveProjectEnv1,
 		Type:                     typ,
 	}
 }
@@ -3340,33 +3903,33 @@ func CreateRemoveProjectEnvResponseBodyRemoveProjectEnv3(removeProjectEnv3 Remov
 
 func (u *RemoveProjectEnvResponseBody) UnmarshalJSON(data []byte) error {
 
-	removeProjectEnv3 := RemoveProjectEnv3{}
+	var removeProjectEnv3 RemoveProjectEnv3 = RemoveProjectEnv3{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnv3, "", true, true); err == nil {
 		u.RemoveProjectEnv3 = &removeProjectEnv3
 		u.Type = RemoveProjectEnvResponseBodyTypeRemoveProjectEnv3
 		return nil
 	}
 
-	removeProjectEnv2 := RemoveProjectEnv2{}
+	var removeProjectEnv2 RemoveProjectEnv2 = RemoveProjectEnv2{}
 	if err := utils.UnmarshalJSON(data, &removeProjectEnv2, "", true, true); err == nil {
 		u.RemoveProjectEnv2 = &removeProjectEnv2
 		u.Type = RemoveProjectEnvResponseBodyTypeRemoveProjectEnv2
 		return nil
 	}
 
-	arrayOfremoveProjectEnv1 := []RemoveProjectEnv1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfremoveProjectEnv1, "", true, true); err == nil {
-		u.ArrayOfremoveProjectEnv1 = arrayOfremoveProjectEnv1
-		u.Type = RemoveProjectEnvResponseBodyTypeArrayOfremoveProjectEnv1
+	var arrayOfRemoveProjectEnv1 []RemoveProjectEnv1 = []RemoveProjectEnv1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfRemoveProjectEnv1, "", true, true); err == nil {
+		u.ArrayOfRemoveProjectEnv1 = arrayOfRemoveProjectEnv1
+		u.Type = RemoveProjectEnvResponseBodyTypeArrayOfRemoveProjectEnv1
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for RemoveProjectEnvResponseBody", string(data))
 }
 
 func (u RemoveProjectEnvResponseBody) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfremoveProjectEnv1 != nil {
-		return utils.MarshalJSON(u.ArrayOfremoveProjectEnv1, "", true)
+	if u.ArrayOfRemoveProjectEnv1 != nil {
+		return utils.MarshalJSON(u.ArrayOfRemoveProjectEnv1, "", true)
 	}
 
 	if u.RemoveProjectEnv2 != nil {
@@ -3377,7 +3940,7 @@ func (u RemoveProjectEnvResponseBody) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.RemoveProjectEnv3, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type RemoveProjectEnvResponseBody: all fields are null")
 }
 
 type RemoveProjectEnvResponse struct {

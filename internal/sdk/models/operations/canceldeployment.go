@@ -13,7 +13,9 @@ import (
 type CancelDeploymentRequest struct {
 	// The unique identifier of the deployment.
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -22,6 +24,13 @@ func (o *CancelDeploymentRequest) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *CancelDeploymentRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *CancelDeploymentRequest) GetTeamID() *string {
@@ -34,23 +43,23 @@ func (o *CancelDeploymentRequest) GetTeamID() *string {
 type AliasAssignedAtType string
 
 const (
-	AliasAssignedAtTypeInteger AliasAssignedAtType = "integer"
+	AliasAssignedAtTypeNumber  AliasAssignedAtType = "number"
 	AliasAssignedAtTypeBoolean AliasAssignedAtType = "boolean"
 )
 
 type AliasAssignedAt struct {
-	Integer *int64
+	Number  *float64
 	Boolean *bool
 
 	Type AliasAssignedAtType
 }
 
-func CreateAliasAssignedAtInteger(integer int64) AliasAssignedAt {
-	typ := AliasAssignedAtTypeInteger
+func CreateAliasAssignedAtNumber(number float64) AliasAssignedAt {
+	typ := AliasAssignedAtTypeNumber
 
 	return AliasAssignedAt{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -65,33 +74,33 @@ func CreateAliasAssignedAtBoolean(boolean bool) AliasAssignedAt {
 
 func (u *AliasAssignedAt) UnmarshalJSON(data []byte) error {
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = AliasAssignedAtTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = AliasAssignedAtTypeNumber
 		return nil
 	}
 
-	boolean := false
+	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
 		u.Type = AliasAssignedAtTypeBoolean
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for AliasAssignedAt", string(data))
 }
 
 func (u AliasAssignedAt) MarshalJSON() ([]byte, error) {
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type AliasAssignedAt: all fields are null")
 }
 
 // AliasError - An object that will contain a `code` and a `message` when the aliasing fails, otherwise the value will be `null`
@@ -149,12 +158,12 @@ func (o *AliasWarning) GetMessage() string {
 	return o.Message
 }
 
-type CancelDeploymentBuild struct {
+type Build struct {
 	// The keys of the environment variables that were assigned during the build phase.
 	Env []string `json:"env"`
 }
 
-func (o *CancelDeploymentBuild) GetEnv() []string {
+func (o *Build) GetEnv() []string {
 	if o == nil {
 		return []string{}
 	}
@@ -176,7 +185,6 @@ const (
 func (e ChecksConclusion) ToPointer() *ChecksConclusion {
 	return &e
 }
-
 func (e *ChecksConclusion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -208,7 +216,6 @@ const (
 func (e ChecksState) ToPointer() *ChecksState {
 	return &e
 }
-
 func (e *ChecksState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -229,10 +236,19 @@ func (e *ChecksState) UnmarshalJSON(data []byte) error {
 
 // CancelDeploymentCreator - Information about the deployment creator
 type CancelDeploymentCreator struct {
+	// The avatar of the user that created the deployment
+	Avatar *string `json:"avatar,omitempty"`
 	// The ID of the user that created the deployment
 	UID string `json:"uid"`
 	// The username of the user that created the deployment
 	Username *string `json:"username,omitempty"`
+}
+
+func (o *CancelDeploymentCreator) GetAvatar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Avatar
 }
 
 func (o *CancelDeploymentCreator) GetUID() string {
@@ -249,44 +265,64 @@ func (o *CancelDeploymentCreator) GetUsername() *string {
 	return o.Username
 }
 
-// CancelDeploymentFunctions - An object used to configure your Serverless Functions
-type CancelDeploymentFunctions struct {
-	ExcludeFiles *string `json:"excludeFiles,omitempty"`
-	IncludeFiles *string `json:"includeFiles,omitempty"`
-	MaxDuration  *int64  `json:"maxDuration,omitempty"`
-	Memory       *int64  `json:"memory,omitempty"`
-	Runtime      *string `json:"runtime,omitempty"`
+// Crons - The cron jobs associated with this deployment. Note that preview deployments are also allowed to have this property, but only production deployments create cron jobs. If a preview deployment is promoted to production, only then they'll take effect.
+type Crons struct {
+	Path     string `json:"path"`
+	Schedule string `json:"schedule"`
 }
 
-func (o *CancelDeploymentFunctions) GetExcludeFiles() *string {
+func (o *Crons) GetPath() string {
+	if o == nil {
+		return ""
+	}
+	return o.Path
+}
+
+func (o *Crons) GetSchedule() string {
+	if o == nil {
+		return ""
+	}
+	return o.Schedule
+}
+
+// Functions - An object used to configure your Serverless Functions
+type Functions struct {
+	ExcludeFiles *string  `json:"excludeFiles,omitempty"`
+	IncludeFiles *string  `json:"includeFiles,omitempty"`
+	MaxDuration  *float64 `json:"maxDuration,omitempty"`
+	Memory       *float64 `json:"memory,omitempty"`
+	Runtime      *string  `json:"runtime,omitempty"`
+}
+
+func (o *Functions) GetExcludeFiles() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ExcludeFiles
 }
 
-func (o *CancelDeploymentFunctions) GetIncludeFiles() *string {
+func (o *Functions) GetIncludeFiles() *string {
 	if o == nil {
 		return nil
 	}
 	return o.IncludeFiles
 }
 
-func (o *CancelDeploymentFunctions) GetMaxDuration() *int64 {
+func (o *Functions) GetMaxDuration() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxDuration
 }
 
-func (o *CancelDeploymentFunctions) GetMemory() *int64 {
+func (o *Functions) GetMemory() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Memory
 }
 
-func (o *CancelDeploymentFunctions) GetRuntime() *string {
+func (o *Functions) GetRuntime() *string {
 	if o == nil {
 		return nil
 	}
@@ -303,7 +339,6 @@ const (
 func (e CancelDeploymentDeploymentsOwnerType) ToPointer() *CancelDeploymentDeploymentsOwnerType {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -329,7 +364,6 @@ const (
 func (e CancelDeploymentDeploymentsResponseType) ToPointer() *CancelDeploymentDeploymentsResponseType {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponseType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -344,7 +378,7 @@ func (e *CancelDeploymentDeploymentsResponseType) UnmarshalJSON(data []byte) err
 	}
 }
 
-type CancelDeploymentDeploymentsResponse3 struct {
+type CancelDeployment3 struct {
 	DefaultBranch string                                  `json:"defaultBranch"`
 	Name          string                                  `json:"name"`
 	Owner         string                                  `json:"owner"`
@@ -357,70 +391,70 @@ type CancelDeploymentDeploymentsResponse3 struct {
 	WorkspaceUUID string                                  `json:"workspaceUuid"`
 }
 
-func (o *CancelDeploymentDeploymentsResponse3) GetDefaultBranch() string {
+func (o *CancelDeployment3) GetDefaultBranch() string {
 	if o == nil {
 		return ""
 	}
 	return o.DefaultBranch
 }
 
-func (o *CancelDeploymentDeploymentsResponse3) GetName() string {
+func (o *CancelDeployment3) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CancelDeploymentDeploymentsResponse3) GetOwner() string {
+func (o *CancelDeployment3) GetOwner() string {
 	if o == nil {
 		return ""
 	}
 	return o.Owner
 }
 
-func (o *CancelDeploymentDeploymentsResponse3) GetOwnerType() CancelDeploymentDeploymentsOwnerType {
+func (o *CancelDeployment3) GetOwnerType() CancelDeploymentDeploymentsOwnerType {
 	if o == nil {
 		return CancelDeploymentDeploymentsOwnerType("")
 	}
 	return o.OwnerType
 }
 
-func (o *CancelDeploymentDeploymentsResponse3) GetPath() string {
+func (o *CancelDeployment3) GetPath() string {
 	if o == nil {
 		return ""
 	}
 	return o.Path
 }
 
-func (o *CancelDeploymentDeploymentsResponse3) GetPrivate() bool {
+func (o *CancelDeployment3) GetPrivate() bool {
 	if o == nil {
 		return false
 	}
 	return o.Private
 }
 
-func (o *CancelDeploymentDeploymentsResponse3) GetRepoUUID() string {
+func (o *CancelDeployment3) GetRepoUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.RepoUUID
 }
 
-func (o *CancelDeploymentDeploymentsResponse3) GetSlug() string {
+func (o *CancelDeployment3) GetSlug() string {
 	if o == nil {
 		return ""
 	}
 	return o.Slug
 }
 
-func (o *CancelDeploymentDeploymentsResponse3) GetType() CancelDeploymentDeploymentsResponseType {
+func (o *CancelDeployment3) GetType() CancelDeploymentDeploymentsResponseType {
 	if o == nil {
 		return CancelDeploymentDeploymentsResponseType("")
 	}
 	return o.Type
 }
 
-func (o *CancelDeploymentDeploymentsResponse3) GetWorkspaceUUID() string {
+func (o *CancelDeployment3) GetWorkspaceUUID() string {
 	if o == nil {
 		return ""
 	}
@@ -437,7 +471,6 @@ const (
 func (e CancelDeploymentOwnerType) ToPointer() *CancelDeploymentOwnerType {
 	return &e
 }
-
 func (e *CancelDeploymentOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -463,7 +496,6 @@ const (
 func (e CancelDeploymentDeploymentsType) ToPointer() *CancelDeploymentDeploymentsType {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -486,7 +518,7 @@ type CancelDeployment2 struct {
 	Path          string                          `json:"path"`
 	Private       bool                            `json:"private"`
 	Repo          string                          `json:"repo"`
-	RepoID        int64                           `json:"repoId"`
+	RepoID        float64                         `json:"repoId"`
 	RepoOwnerID   string                          `json:"repoOwnerId"`
 	Type          CancelDeploymentDeploymentsType `json:"type"`
 }
@@ -540,9 +572,9 @@ func (o *CancelDeployment2) GetRepo() string {
 	return o.Repo
 }
 
-func (o *CancelDeployment2) GetRepoID() int64 {
+func (o *CancelDeployment2) GetRepoID() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.RepoID
 }
@@ -561,18 +593,17 @@ func (o *CancelDeployment2) GetType() CancelDeploymentDeploymentsType {
 	return o.Type
 }
 
-type OwnerType string
+type CancelDeploymentDeploymentsResponseOwnerType string
 
 const (
-	OwnerTypeUser OwnerType = "user"
-	OwnerTypeTeam OwnerType = "team"
+	CancelDeploymentDeploymentsResponseOwnerTypeUser CancelDeploymentDeploymentsResponseOwnerType = "user"
+	CancelDeploymentDeploymentsResponseOwnerTypeTeam CancelDeploymentDeploymentsResponseOwnerType = "team"
 )
 
-func (e OwnerType) ToPointer() *OwnerType {
+func (e CancelDeploymentDeploymentsResponseOwnerType) ToPointer() *CancelDeploymentDeploymentsResponseOwnerType {
 	return &e
 }
-
-func (e *OwnerType) UnmarshalJSON(data []byte) error {
+func (e *CancelDeploymentDeploymentsResponseOwnerType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -581,10 +612,10 @@ func (e *OwnerType) UnmarshalJSON(data []byte) error {
 	case "user":
 		fallthrough
 	case "team":
-		*e = OwnerType(v)
+		*e = CancelDeploymentDeploymentsResponseOwnerType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for OwnerType: %v", v)
+		return fmt.Errorf("invalid value for CancelDeploymentDeploymentsResponseOwnerType: %v", v)
 	}
 }
 
@@ -597,7 +628,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -616,10 +646,10 @@ type CancelDeployment1 struct {
 	DefaultBranch string                                                                       `json:"defaultBranch"`
 	Name          string                                                                       `json:"name"`
 	Namespace     string                                                                       `json:"namespace"`
-	OwnerType     OwnerType                                                                    `json:"ownerType"`
+	OwnerType     CancelDeploymentDeploymentsResponseOwnerType                                 `json:"ownerType"`
 	Path          string                                                                       `json:"path"`
 	Private       bool                                                                         `json:"private"`
-	ProjectID     int64                                                                        `json:"projectId"`
+	ProjectID     float64                                                                      `json:"projectId"`
 	Type          CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitRepoType `json:"type"`
 	URL           string                                                                       `json:"url"`
 }
@@ -645,9 +675,9 @@ func (o *CancelDeployment1) GetNamespace() string {
 	return o.Namespace
 }
 
-func (o *CancelDeployment1) GetOwnerType() OwnerType {
+func (o *CancelDeployment1) GetOwnerType() CancelDeploymentDeploymentsResponseOwnerType {
 	if o == nil {
-		return OwnerType("")
+		return CancelDeploymentDeploymentsResponseOwnerType("")
 	}
 	return o.OwnerType
 }
@@ -666,9 +696,9 @@ func (o *CancelDeployment1) GetPrivate() bool {
 	return o.Private
 }
 
-func (o *CancelDeployment1) GetProjectID() int64 {
+func (o *CancelDeployment1) GetProjectID() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ProjectID
 }
@@ -690,15 +720,15 @@ func (o *CancelDeployment1) GetURL() string {
 type GitRepoType string
 
 const (
-	GitRepoTypeCancelDeployment1                    GitRepoType = "cancelDeployment_1"
-	GitRepoTypeCancelDeployment2                    GitRepoType = "cancelDeployment_2"
-	GitRepoTypeCancelDeploymentDeploymentsResponse3 GitRepoType = "cancelDeployment_deployments_response_3"
+	GitRepoTypeCancelDeployment1 GitRepoType = "cancelDeployment_1"
+	GitRepoTypeCancelDeployment2 GitRepoType = "cancelDeployment_2"
+	GitRepoTypeCancelDeployment3 GitRepoType = "cancelDeployment_3"
 )
 
 type GitRepo struct {
-	CancelDeployment1                    *CancelDeployment1
-	CancelDeployment2                    *CancelDeployment2
-	CancelDeploymentDeploymentsResponse3 *CancelDeploymentDeploymentsResponse3
+	CancelDeployment1 *CancelDeployment1
+	CancelDeployment2 *CancelDeployment2
+	CancelDeployment3 *CancelDeployment3
 
 	Type GitRepoType
 }
@@ -721,39 +751,39 @@ func CreateGitRepoCancelDeployment2(cancelDeployment2 CancelDeployment2) GitRepo
 	}
 }
 
-func CreateGitRepoCancelDeploymentDeploymentsResponse3(cancelDeploymentDeploymentsResponse3 CancelDeploymentDeploymentsResponse3) GitRepo {
-	typ := GitRepoTypeCancelDeploymentDeploymentsResponse3
+func CreateGitRepoCancelDeployment3(cancelDeployment3 CancelDeployment3) GitRepo {
+	typ := GitRepoTypeCancelDeployment3
 
 	return GitRepo{
-		CancelDeploymentDeploymentsResponse3: &cancelDeploymentDeploymentsResponse3,
-		Type:                                 typ,
+		CancelDeployment3: &cancelDeployment3,
+		Type:              typ,
 	}
 }
 
 func (u *GitRepo) UnmarshalJSON(data []byte) error {
 
-	cancelDeployment1 := CancelDeployment1{}
+	var cancelDeployment1 CancelDeployment1 = CancelDeployment1{}
 	if err := utils.UnmarshalJSON(data, &cancelDeployment1, "", true, true); err == nil {
 		u.CancelDeployment1 = &cancelDeployment1
 		u.Type = GitRepoTypeCancelDeployment1
 		return nil
 	}
 
-	cancelDeployment2 := CancelDeployment2{}
+	var cancelDeployment2 CancelDeployment2 = CancelDeployment2{}
 	if err := utils.UnmarshalJSON(data, &cancelDeployment2, "", true, true); err == nil {
 		u.CancelDeployment2 = &cancelDeployment2
 		u.Type = GitRepoTypeCancelDeployment2
 		return nil
 	}
 
-	cancelDeploymentDeploymentsResponse3 := CancelDeploymentDeploymentsResponse3{}
-	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeploymentsResponse3, "", true, true); err == nil {
-		u.CancelDeploymentDeploymentsResponse3 = &cancelDeploymentDeploymentsResponse3
-		u.Type = GitRepoTypeCancelDeploymentDeploymentsResponse3
+	var cancelDeployment3 CancelDeployment3 = CancelDeployment3{}
+	if err := utils.UnmarshalJSON(data, &cancelDeployment3, "", true, true); err == nil {
+		u.CancelDeployment3 = &cancelDeployment3
+		u.Type = GitRepoTypeCancelDeployment3
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GitRepo", string(data))
 }
 
 func (u GitRepo) MarshalJSON() ([]byte, error) {
@@ -765,11 +795,11 @@ func (u GitRepo) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CancelDeployment2, "", true)
 	}
 
-	if u.CancelDeploymentDeploymentsResponse3 != nil {
-		return utils.MarshalJSON(u.CancelDeploymentDeploymentsResponse3, "", true)
+	if u.CancelDeployment3 != nil {
+		return utils.MarshalJSON(u.CancelDeployment3, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type GitRepo: all fields are null")
 }
 
 type CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type string
@@ -781,7 +811,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource9Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -864,7 +893,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -880,15 +908,15 @@ func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSou
 }
 
 type CancelDeployment8 struct {
-	ProjectID int64                                                                           `json:"projectId"`
+	ProjectID float64                                                                         `json:"projectId"`
 	Ref       string                                                                          `json:"ref"`
 	Sha       string                                                                          `json:"sha"`
 	Type      CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource8Type `json:"type"`
 }
 
-func (o *CancelDeployment8) GetProjectID() int64 {
+func (o *CancelDeployment8) GetProjectID() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ProjectID
 }
@@ -923,7 +951,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -942,7 +969,7 @@ type CancelDeployment7 struct {
 	Org    *string                                                                         `json:"org,omitempty"`
 	Ref    string                                                                          `json:"ref"`
 	Repo   *string                                                                         `json:"repo,omitempty"`
-	RepoID int64                                                                           `json:"repoId"`
+	RepoID float64                                                                         `json:"repoId"`
 	Sha    string                                                                          `json:"sha"`
 	Type   CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource7Type `json:"type"`
 }
@@ -968,9 +995,9 @@ func (o *CancelDeployment7) GetRepo() *string {
 	return o.Repo
 }
 
-func (o *CancelDeployment7) GetRepoID() int64 {
+func (o *CancelDeployment7) GetRepoID() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.RepoID
 }
@@ -998,7 +1025,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource6Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1057,7 +1083,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSource5Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1074,7 +1099,7 @@ func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSou
 
 type CancelDeployment5 struct {
 	Owner string                                                                          `json:"owner"`
-	PrID  *int64                                                                          `json:"prId,omitempty"`
+	PrID  *float64                                                                        `json:"prId,omitempty"`
 	Ref   *string                                                                         `json:"ref,omitempty"`
 	Sha   *string                                                                         `json:"sha,omitempty"`
 	Slug  string                                                                          `json:"slug"`
@@ -1088,7 +1113,7 @@ func (o *CancelDeployment5) GetOwner() string {
 	return o.Owner
 }
 
-func (o *CancelDeployment5) GetPrID() *int64 {
+func (o *CancelDeployment5) GetPrID() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1132,7 +1157,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSourceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1148,7 +1172,7 @@ func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyGitSou
 }
 
 type CancelDeployment4 struct {
-	PrID          *int64                                                                         `json:"prId,omitempty"`
+	PrID          *float64                                                                       `json:"prId,omitempty"`
 	Ref           *string                                                                        `json:"ref,omitempty"`
 	RepoUUID      string                                                                         `json:"repoUuid"`
 	Sha           *string                                                                        `json:"sha,omitempty"`
@@ -1156,7 +1180,7 @@ type CancelDeployment4 struct {
 	WorkspaceUUID *string                                                                        `json:"workspaceUuid,omitempty"`
 }
 
-func (o *CancelDeployment4) GetPrID() *int64 {
+func (o *CancelDeployment4) GetPrID() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1201,13 +1225,13 @@ func (o *CancelDeployment4) GetWorkspaceUUID() *string {
 type CancelDeploymentProjectIDType string
 
 const (
-	CancelDeploymentProjectIDTypeStr     CancelDeploymentProjectIDType = "str"
-	CancelDeploymentProjectIDTypeInteger CancelDeploymentProjectIDType = "integer"
+	CancelDeploymentProjectIDTypeStr    CancelDeploymentProjectIDType = "str"
+	CancelDeploymentProjectIDTypeNumber CancelDeploymentProjectIDType = "number"
 )
 
 type CancelDeploymentProjectID struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type CancelDeploymentProjectIDType
 }
@@ -1221,32 +1245,32 @@ func CreateCancelDeploymentProjectIDStr(str string) CancelDeploymentProjectID {
 	}
 }
 
-func CreateCancelDeploymentProjectIDInteger(integer int64) CancelDeploymentProjectID {
-	typ := CancelDeploymentProjectIDTypeInteger
+func CreateCancelDeploymentProjectIDNumber(number float64) CancelDeploymentProjectID {
+	typ := CancelDeploymentProjectIDTypeNumber
 
 	return CancelDeploymentProjectID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *CancelDeploymentProjectID) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = CancelDeploymentProjectIDTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = CancelDeploymentProjectIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CancelDeploymentProjectIDTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CancelDeploymentProjectID", string(data))
 }
 
 func (u CancelDeploymentProjectID) MarshalJSON() ([]byte, error) {
@@ -1254,11 +1278,11 @@ func (u CancelDeploymentProjectID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CancelDeploymentProjectID: all fields are null")
 }
 
 type CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType string
@@ -1270,7 +1294,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1285,43 +1308,43 @@ func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType) 
 	}
 }
 
-type CancelDeployment3 struct {
-	PrID      *int64                                                                `json:"prId,omitempty"`
+type CancelDeploymentDeployments3 struct {
+	PrID      *float64                                                              `json:"prId,omitempty"`
 	ProjectID CancelDeploymentProjectID                                             `json:"projectId"`
 	Ref       *string                                                               `json:"ref,omitempty"`
 	Sha       *string                                                               `json:"sha,omitempty"`
 	Type      CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType `json:"type"`
 }
 
-func (o *CancelDeployment3) GetPrID() *int64 {
+func (o *CancelDeploymentDeployments3) GetPrID() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.PrID
 }
 
-func (o *CancelDeployment3) GetProjectID() CancelDeploymentProjectID {
+func (o *CancelDeploymentDeployments3) GetProjectID() CancelDeploymentProjectID {
 	if o == nil {
 		return CancelDeploymentProjectID{}
 	}
 	return o.ProjectID
 }
 
-func (o *CancelDeployment3) GetRef() *string {
+func (o *CancelDeploymentDeployments3) GetRef() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Ref
 }
 
-func (o *CancelDeployment3) GetSha() *string {
+func (o *CancelDeploymentDeployments3) GetSha() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Sha
 }
 
-func (o *CancelDeployment3) GetType() CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType {
+func (o *CancelDeploymentDeployments3) GetType() CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType {
 	if o == nil {
 		return CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyType("")
 	}
@@ -1337,7 +1360,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONType) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONType {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1354,7 +1376,7 @@ func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONType) UnmarshalJSO
 
 type CancelDeploymentDeployments2 struct {
 	Org  string                                                    `json:"org"`
-	PrID *int64                                                    `json:"prId,omitempty"`
+	PrID *float64                                                  `json:"prId,omitempty"`
 	Ref  *string                                                   `json:"ref,omitempty"`
 	Repo string                                                    `json:"repo"`
 	Sha  *string                                                   `json:"sha,omitempty"`
@@ -1368,7 +1390,7 @@ func (o *CancelDeploymentDeployments2) GetOrg() string {
 	return o.Org
 }
 
-func (o *CancelDeploymentDeployments2) GetPrID() *int64 {
+func (o *CancelDeploymentDeployments2) GetPrID() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1406,13 +1428,13 @@ func (o *CancelDeploymentDeployments2) GetType() CancelDeploymentDeploymentsResp
 type CancelDeploymentRepoIDType string
 
 const (
-	CancelDeploymentRepoIDTypeStr     CancelDeploymentRepoIDType = "str"
-	CancelDeploymentRepoIDTypeInteger CancelDeploymentRepoIDType = "integer"
+	CancelDeploymentRepoIDTypeStr    CancelDeploymentRepoIDType = "str"
+	CancelDeploymentRepoIDTypeNumber CancelDeploymentRepoIDType = "number"
 )
 
 type CancelDeploymentRepoID struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type CancelDeploymentRepoIDType
 }
@@ -1426,32 +1448,32 @@ func CreateCancelDeploymentRepoIDStr(str string) CancelDeploymentRepoID {
 	}
 }
 
-func CreateCancelDeploymentRepoIDInteger(integer int64) CancelDeploymentRepoID {
-	typ := CancelDeploymentRepoIDTypeInteger
+func CreateCancelDeploymentRepoIDNumber(number float64) CancelDeploymentRepoID {
+	typ := CancelDeploymentRepoIDTypeNumber
 
 	return CancelDeploymentRepoID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *CancelDeploymentRepoID) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = CancelDeploymentRepoIDTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = CancelDeploymentRepoIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CancelDeploymentRepoIDTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CancelDeploymentRepoID", string(data))
 }
 
 func (u CancelDeploymentRepoID) MarshalJSON() ([]byte, error) {
@@ -1459,11 +1481,11 @@ func (u CancelDeploymentRepoID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CancelDeploymentRepoID: all fields are null")
 }
 
 type CancelDeploymentDeploymentsResponse200Type string
@@ -1475,7 +1497,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200Type) ToPointer() *CancelDeploymentDeploymentsResponse200Type {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1491,14 +1512,14 @@ func (e *CancelDeploymentDeploymentsResponse200Type) UnmarshalJSON(data []byte) 
 }
 
 type CancelDeploymentDeployments1 struct {
-	PrID   *int64                                     `json:"prId,omitempty"`
+	PrID   *float64                                   `json:"prId,omitempty"`
 	Ref    *string                                    `json:"ref,omitempty"`
 	RepoID CancelDeploymentRepoID                     `json:"repoId"`
 	Sha    *string                                    `json:"sha,omitempty"`
 	Type   CancelDeploymentDeploymentsResponse200Type `json:"type"`
 }
 
-func (o *CancelDeploymentDeployments1) GetPrID() *int64 {
+func (o *CancelDeploymentDeployments1) GetPrID() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1538,7 +1559,7 @@ type CancelDeploymentGitSourceType string
 const (
 	CancelDeploymentGitSourceTypeCancelDeploymentDeployments1 CancelDeploymentGitSourceType = "cancelDeployment_deployments_1"
 	CancelDeploymentGitSourceTypeCancelDeploymentDeployments2 CancelDeploymentGitSourceType = "cancelDeployment_deployments_2"
-	CancelDeploymentGitSourceTypeCancelDeployment3            CancelDeploymentGitSourceType = "cancelDeployment_3"
+	CancelDeploymentGitSourceTypeCancelDeploymentDeployments3 CancelDeploymentGitSourceType = "cancelDeployment_deployments_3"
 	CancelDeploymentGitSourceTypeCancelDeployment4            CancelDeploymentGitSourceType = "cancelDeployment_4"
 	CancelDeploymentGitSourceTypeCancelDeployment5            CancelDeploymentGitSourceType = "cancelDeployment_5"
 	CancelDeploymentGitSourceTypeCancelDeployment6            CancelDeploymentGitSourceType = "cancelDeployment_6"
@@ -1550,7 +1571,7 @@ const (
 type CancelDeploymentGitSource struct {
 	CancelDeploymentDeployments1 *CancelDeploymentDeployments1
 	CancelDeploymentDeployments2 *CancelDeploymentDeployments2
-	CancelDeployment3            *CancelDeployment3
+	CancelDeploymentDeployments3 *CancelDeploymentDeployments3
 	CancelDeployment4            *CancelDeployment4
 	CancelDeployment5            *CancelDeployment5
 	CancelDeployment6            *CancelDeployment6
@@ -1579,12 +1600,12 @@ func CreateCancelDeploymentGitSourceCancelDeploymentDeployments2(cancelDeploymen
 	}
 }
 
-func CreateCancelDeploymentGitSourceCancelDeployment3(cancelDeployment3 CancelDeployment3) CancelDeploymentGitSource {
-	typ := CancelDeploymentGitSourceTypeCancelDeployment3
+func CreateCancelDeploymentGitSourceCancelDeploymentDeployments3(cancelDeploymentDeployments3 CancelDeploymentDeployments3) CancelDeploymentGitSource {
+	typ := CancelDeploymentGitSourceTypeCancelDeploymentDeployments3
 
 	return CancelDeploymentGitSource{
-		CancelDeployment3: &cancelDeployment3,
-		Type:              typ,
+		CancelDeploymentDeployments3: &cancelDeploymentDeployments3,
+		Type:                         typ,
 	}
 }
 
@@ -1644,70 +1665,70 @@ func CreateCancelDeploymentGitSourceCancelDeployment9(cancelDeployment9 CancelDe
 
 func (u *CancelDeploymentGitSource) UnmarshalJSON(data []byte) error {
 
-	cancelDeployment6 := CancelDeployment6{}
+	var cancelDeployment6 CancelDeployment6 = CancelDeployment6{}
 	if err := utils.UnmarshalJSON(data, &cancelDeployment6, "", true, true); err == nil {
 		u.CancelDeployment6 = &cancelDeployment6
 		u.Type = CancelDeploymentGitSourceTypeCancelDeployment6
 		return nil
 	}
 
-	cancelDeployment8 := CancelDeployment8{}
+	var cancelDeployment8 CancelDeployment8 = CancelDeployment8{}
 	if err := utils.UnmarshalJSON(data, &cancelDeployment8, "", true, true); err == nil {
 		u.CancelDeployment8 = &cancelDeployment8
 		u.Type = CancelDeploymentGitSourceTypeCancelDeployment8
 		return nil
 	}
 
-	cancelDeploymentDeployments1 := CancelDeploymentDeployments1{}
+	var cancelDeploymentDeployments1 CancelDeploymentDeployments1 = CancelDeploymentDeployments1{}
 	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeployments1, "", true, true); err == nil {
 		u.CancelDeploymentDeployments1 = &cancelDeploymentDeployments1
 		u.Type = CancelDeploymentGitSourceTypeCancelDeploymentDeployments1
 		return nil
 	}
 
-	cancelDeployment3 := CancelDeployment3{}
-	if err := utils.UnmarshalJSON(data, &cancelDeployment3, "", true, true); err == nil {
-		u.CancelDeployment3 = &cancelDeployment3
-		u.Type = CancelDeploymentGitSourceTypeCancelDeployment3
+	var cancelDeploymentDeployments3 CancelDeploymentDeployments3 = CancelDeploymentDeployments3{}
+	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeployments3, "", true, true); err == nil {
+		u.CancelDeploymentDeployments3 = &cancelDeploymentDeployments3
+		u.Type = CancelDeploymentGitSourceTypeCancelDeploymentDeployments3
 		return nil
 	}
 
-	cancelDeploymentDeployments2 := CancelDeploymentDeployments2{}
+	var cancelDeploymentDeployments2 CancelDeploymentDeployments2 = CancelDeploymentDeployments2{}
 	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeployments2, "", true, true); err == nil {
 		u.CancelDeploymentDeployments2 = &cancelDeploymentDeployments2
 		u.Type = CancelDeploymentGitSourceTypeCancelDeploymentDeployments2
 		return nil
 	}
 
-	cancelDeployment4 := CancelDeployment4{}
+	var cancelDeployment4 CancelDeployment4 = CancelDeployment4{}
 	if err := utils.UnmarshalJSON(data, &cancelDeployment4, "", true, true); err == nil {
 		u.CancelDeployment4 = &cancelDeployment4
 		u.Type = CancelDeploymentGitSourceTypeCancelDeployment4
 		return nil
 	}
 
-	cancelDeployment5 := CancelDeployment5{}
+	var cancelDeployment5 CancelDeployment5 = CancelDeployment5{}
 	if err := utils.UnmarshalJSON(data, &cancelDeployment5, "", true, true); err == nil {
 		u.CancelDeployment5 = &cancelDeployment5
 		u.Type = CancelDeploymentGitSourceTypeCancelDeployment5
 		return nil
 	}
 
-	cancelDeployment7 := CancelDeployment7{}
+	var cancelDeployment7 CancelDeployment7 = CancelDeployment7{}
 	if err := utils.UnmarshalJSON(data, &cancelDeployment7, "", true, true); err == nil {
 		u.CancelDeployment7 = &cancelDeployment7
 		u.Type = CancelDeploymentGitSourceTypeCancelDeployment7
 		return nil
 	}
 
-	cancelDeployment9 := CancelDeployment9{}
+	var cancelDeployment9 CancelDeployment9 = CancelDeployment9{}
 	if err := utils.UnmarshalJSON(data, &cancelDeployment9, "", true, true); err == nil {
 		u.CancelDeployment9 = &cancelDeployment9
 		u.Type = CancelDeploymentGitSourceTypeCancelDeployment9
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CancelDeploymentGitSource", string(data))
 }
 
 func (u CancelDeploymentGitSource) MarshalJSON() ([]byte, error) {
@@ -1719,8 +1740,8 @@ func (u CancelDeploymentGitSource) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CancelDeploymentDeployments2, "", true)
 	}
 
-	if u.CancelDeployment3 != nil {
-		return utils.MarshalJSON(u.CancelDeployment3, "", true)
+	if u.CancelDeploymentDeployments3 != nil {
+		return utils.MarshalJSON(u.CancelDeploymentDeployments3, "", true)
 	}
 
 	if u.CancelDeployment4 != nil {
@@ -1747,7 +1768,7 @@ func (u CancelDeploymentGitSource) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CancelDeployment9, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CancelDeploymentGitSource: all fields are null")
 }
 
 type CancelDeploymentOutput struct {
@@ -1781,7 +1802,6 @@ const (
 func (e CancelDeploymentDeploymentsReadyState) ToPointer() *CancelDeploymentDeploymentsReadyState {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1803,15 +1823,15 @@ func (e *CancelDeploymentDeploymentsReadyState) UnmarshalJSON(data []byte) error
 }
 
 type Lambdas struct {
-	CreatedAt    *int64                                 `json:"createdAt,omitempty"`
+	CreatedAt    *float64                               `json:"createdAt,omitempty"`
 	Entrypoint   *string                                `json:"entrypoint,omitempty"`
 	ID           string                                 `json:"id"`
 	Output       []CancelDeploymentOutput               `json:"output"`
 	ReadyState   *CancelDeploymentDeploymentsReadyState `json:"readyState,omitempty"`
-	ReadyStateAt *int64                                 `json:"readyStateAt,omitempty"`
+	ReadyStateAt *float64                               `json:"readyStateAt,omitempty"`
 }
 
-func (o *Lambdas) GetCreatedAt() *int64 {
+func (o *Lambdas) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1846,7 +1866,7 @@ func (o *Lambdas) GetReadyState() *CancelDeploymentDeploymentsReadyState {
 	return o.ReadyState
 }
 
-func (o *Lambdas) GetReadyStateAt() *int64 {
+func (o *Lambdas) GetReadyStateAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -1860,13 +1880,11 @@ const (
 	PlanPro        Plan = "pro"
 	PlanEnterprise Plan = "enterprise"
 	PlanHobby      Plan = "hobby"
-	PlanOss        Plan = "oss"
 )
 
 func (e Plan) ToPointer() *Plan {
 	return &e
 }
-
 func (e *Plan) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1878,13 +1896,39 @@ func (e *Plan) UnmarshalJSON(data []byte) error {
 	case "enterprise":
 		fallthrough
 	case "hobby":
-		fallthrough
-	case "oss":
 		*e = Plan(v)
 		return nil
 	default:
 		return fmt.Errorf("invalid value for Plan: %v", v)
 	}
+}
+
+// Project - The public project information associated with the deployment.
+type Project struct {
+	Framework *string `json:"framework,omitempty"`
+	ID        string  `json:"id"`
+	Name      string  `json:"name"`
+}
+
+func (o *Project) GetFramework() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Framework
+}
+
+func (o *Project) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
+func (o *Project) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 // CancelDeploymentReadyState - The state of the deployment depending on the process of deploying, or if it is ready or in an error state
@@ -1902,7 +1946,6 @@ const (
 func (e CancelDeploymentReadyState) ToPointer() *CancelDeploymentReadyState {
 	return &e
 }
-
 func (e *CancelDeploymentReadyState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1938,7 +1981,6 @@ const (
 func (e ReadySubstate) ToPointer() *ReadySubstate {
 	return &e
 }
-
 func (e *ReadySubstate) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1955,74 +1997,49 @@ func (e *ReadySubstate) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type Middleware int64
-
-const (
-	MiddlewareZero Middleware = 0
-)
-
-func (e Middleware) ToPointer() *Middleware {
-	return &e
+// CancelDeploymentDeploymentsResponse3 - A list of routes objects used to rewrite paths to point towards other internal or external paths
+type CancelDeploymentDeploymentsResponse3 struct {
+	Continue   bool    `json:"continue"`
+	Middleware float64 `json:"middleware"`
+	Src        string  `json:"src"`
 }
 
-func (e *Middleware) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 0:
-		*e = Middleware(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Middleware: %v", v)
-	}
-}
-
-// CancelDeploymentDeployments3 - A list of routes objects used to rewrite paths to point towards other internal or external paths
-type CancelDeploymentDeployments3 struct {
-	Continue   bool       `json:"continue"`
-	Middleware Middleware `json:"middleware"`
-	Src        string     `json:"src"`
-}
-
-func (o *CancelDeploymentDeployments3) GetContinue() bool {
+func (o *CancelDeploymentDeploymentsResponse3) GetContinue() bool {
 	if o == nil {
 		return false
 	}
 	return o.Continue
 }
 
-func (o *CancelDeploymentDeployments3) GetMiddleware() Middleware {
+func (o *CancelDeploymentDeploymentsResponse3) GetMiddleware() float64 {
 	if o == nil {
-		return Middleware(0)
+		return 0.0
 	}
 	return o.Middleware
 }
 
-func (o *CancelDeploymentDeployments3) GetSrc() string {
+func (o *CancelDeploymentDeploymentsResponse3) GetSrc() string {
 	if o == nil {
 		return ""
 	}
 	return o.Src
 }
 
-type CancelDeploymentHandle string
+type Handle string
 
 const (
-	CancelDeploymentHandleError      CancelDeploymentHandle = "error"
-	CancelDeploymentHandleFilesystem CancelDeploymentHandle = "filesystem"
-	CancelDeploymentHandleHit        CancelDeploymentHandle = "hit"
-	CancelDeploymentHandleMiss       CancelDeploymentHandle = "miss"
-	CancelDeploymentHandleRewrite    CancelDeploymentHandle = "rewrite"
-	CancelDeploymentHandleResource   CancelDeploymentHandle = "resource"
+	HandleError      Handle = "error"
+	HandleFilesystem Handle = "filesystem"
+	HandleHit        Handle = "hit"
+	HandleMiss       Handle = "miss"
+	HandleRewrite    Handle = "rewrite"
+	HandleResource   Handle = "resource"
 )
 
-func (e CancelDeploymentHandle) ToPointer() *CancelDeploymentHandle {
+func (e Handle) ToPointer() *Handle {
 	return &e
 }
-
-func (e *CancelDeploymentHandle) UnmarshalJSON(data []byte) error {
+func (e *Handle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -2039,19 +2056,19 @@ func (e *CancelDeploymentHandle) UnmarshalJSON(data []byte) error {
 	case "rewrite":
 		fallthrough
 	case "resource":
-		*e = CancelDeploymentHandle(v)
+		*e = Handle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CancelDeploymentHandle: %v", v)
+		return fmt.Errorf("invalid value for Handle: %v", v)
 	}
 }
 
 // CancelDeploymentDeploymentsResponse2 - A list of routes objects used to rewrite paths to point towards other internal or external paths
 type CancelDeploymentDeploymentsResponse2 struct {
-	Dest   *string                `json:"dest,omitempty"`
-	Handle CancelDeploymentHandle `json:"handle"`
-	Src    *string                `json:"src,omitempty"`
-	Status *int64                 `json:"status,omitempty"`
+	Dest   *string  `json:"dest,omitempty"`
+	Handle Handle   `json:"handle"`
+	Src    *string  `json:"src,omitempty"`
+	Status *float64 `json:"status,omitempty"`
 }
 
 func (o *CancelDeploymentDeploymentsResponse2) GetDest() *string {
@@ -2061,9 +2078,9 @@ func (o *CancelDeploymentDeploymentsResponse2) GetDest() *string {
 	return o.Dest
 }
 
-func (o *CancelDeploymentDeploymentsResponse2) GetHandle() CancelDeploymentHandle {
+func (o *CancelDeploymentDeploymentsResponse2) GetHandle() Handle {
 	if o == nil {
-		return CancelDeploymentHandle("")
+		return Handle("")
 	}
 	return o.Handle
 }
@@ -2075,7 +2092,7 @@ func (o *CancelDeploymentDeploymentsResponse2) GetSrc() *string {
 	return o.Src
 }
 
-func (o *CancelDeploymentDeploymentsResponse2) GetStatus() *int64 {
+func (o *CancelDeploymentDeploymentsResponse2) GetStatus() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2093,7 +2110,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2148,7 +2164,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutesType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2182,58 +2197,58 @@ func (o *CancelDeploymentDeploymentsResponse2001) GetValue() string {
 	return o.Value
 }
 
-type CancelDeploymentHasType string
+type HasType string
 
 const (
-	CancelDeploymentHasTypeCancelDeploymentDeploymentsResponse2001 CancelDeploymentHasType = "cancelDeployment_deployments_response_200_1"
-	CancelDeploymentHasTypeCancelDeploymentDeploymentsResponse2002 CancelDeploymentHasType = "cancelDeployment_deployments_response_200_2"
+	HasTypeCancelDeploymentDeploymentsResponse2001 HasType = "cancelDeployment_deployments_response_200_1"
+	HasTypeCancelDeploymentDeploymentsResponse2002 HasType = "cancelDeployment_deployments_response_200_2"
 )
 
-type CancelDeploymentHas struct {
+type Has struct {
 	CancelDeploymentDeploymentsResponse2001 *CancelDeploymentDeploymentsResponse2001
 	CancelDeploymentDeploymentsResponse2002 *CancelDeploymentDeploymentsResponse2002
 
-	Type CancelDeploymentHasType
+	Type HasType
 }
 
-func CreateCancelDeploymentHasCancelDeploymentDeploymentsResponse2001(cancelDeploymentDeploymentsResponse2001 CancelDeploymentDeploymentsResponse2001) CancelDeploymentHas {
-	typ := CancelDeploymentHasTypeCancelDeploymentDeploymentsResponse2001
+func CreateHasCancelDeploymentDeploymentsResponse2001(cancelDeploymentDeploymentsResponse2001 CancelDeploymentDeploymentsResponse2001) Has {
+	typ := HasTypeCancelDeploymentDeploymentsResponse2001
 
-	return CancelDeploymentHas{
+	return Has{
 		CancelDeploymentDeploymentsResponse2001: &cancelDeploymentDeploymentsResponse2001,
 		Type:                                    typ,
 	}
 }
 
-func CreateCancelDeploymentHasCancelDeploymentDeploymentsResponse2002(cancelDeploymentDeploymentsResponse2002 CancelDeploymentDeploymentsResponse2002) CancelDeploymentHas {
-	typ := CancelDeploymentHasTypeCancelDeploymentDeploymentsResponse2002
+func CreateHasCancelDeploymentDeploymentsResponse2002(cancelDeploymentDeploymentsResponse2002 CancelDeploymentDeploymentsResponse2002) Has {
+	typ := HasTypeCancelDeploymentDeploymentsResponse2002
 
-	return CancelDeploymentHas{
+	return Has{
 		CancelDeploymentDeploymentsResponse2002: &cancelDeploymentDeploymentsResponse2002,
 		Type:                                    typ,
 	}
 }
 
-func (u *CancelDeploymentHas) UnmarshalJSON(data []byte) error {
+func (u *Has) UnmarshalJSON(data []byte) error {
 
-	cancelDeploymentDeploymentsResponse2001 := CancelDeploymentDeploymentsResponse2001{}
+	var cancelDeploymentDeploymentsResponse2001 CancelDeploymentDeploymentsResponse2001 = CancelDeploymentDeploymentsResponse2001{}
 	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeploymentsResponse2001, "", true, true); err == nil {
 		u.CancelDeploymentDeploymentsResponse2001 = &cancelDeploymentDeploymentsResponse2001
-		u.Type = CancelDeploymentHasTypeCancelDeploymentDeploymentsResponse2001
+		u.Type = HasTypeCancelDeploymentDeploymentsResponse2001
 		return nil
 	}
 
-	cancelDeploymentDeploymentsResponse2002 := CancelDeploymentDeploymentsResponse2002{}
+	var cancelDeploymentDeploymentsResponse2002 CancelDeploymentDeploymentsResponse2002 = CancelDeploymentDeploymentsResponse2002{}
 	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeploymentsResponse2002, "", true, true); err == nil {
 		u.CancelDeploymentDeploymentsResponse2002 = &cancelDeploymentDeploymentsResponse2002
-		u.Type = CancelDeploymentHasTypeCancelDeploymentDeploymentsResponse2002
+		u.Type = HasTypeCancelDeploymentDeploymentsResponse2002
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Has", string(data))
 }
 
-func (u CancelDeploymentHas) MarshalJSON() ([]byte, error) {
+func (u Has) MarshalJSON() ([]byte, error) {
 	if u.CancelDeploymentDeploymentsResponse2001 != nil {
 		return utils.MarshalJSON(u.CancelDeploymentDeploymentsResponse2001, "", true)
 	}
@@ -2242,22 +2257,22 @@ func (u CancelDeploymentHas) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CancelDeploymentDeploymentsResponse2002, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Has: all fields are null")
 }
 
-type CancelDeploymentLocale struct {
+type Locale struct {
 	Cookie   *string           `json:"cookie,omitempty"`
 	Redirect map[string]string `json:"redirect,omitempty"`
 }
 
-func (o *CancelDeploymentLocale) GetCookie() *string {
+func (o *Locale) GetCookie() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Cookie
 }
 
-func (o *CancelDeploymentLocale) GetRedirect() map[string]string {
+func (o *Locale) GetRedirect() map[string]string {
 	if o == nil {
 		return nil
 	}
@@ -2275,7 +2290,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1Missing2Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2330,7 +2344,6 @@ const (
 func (e CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType) ToPointer() *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType {
 	return &e
 }
-
 func (e *CancelDeploymentDeploymentsResponse200ApplicationJSONResponseBodyRoutes1MissingType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2364,58 +2377,58 @@ func (o *CancelDeploymentDeploymentsResponse200ApplicationJSON1) GetValue() stri
 	return o.Value
 }
 
-type CancelDeploymentMissingType string
+type MissingType string
 
 const (
-	CancelDeploymentMissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON1 CancelDeploymentMissingType = "cancelDeployment_deployments_response_200_ApplicationJSON_1"
-	CancelDeploymentMissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON2 CancelDeploymentMissingType = "cancelDeployment_deployments_response_200_ApplicationJSON_2"
+	MissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON1 MissingType = "cancelDeployment_deployments_response_200_ApplicationJSON_1"
+	MissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON2 MissingType = "cancelDeployment_deployments_response_200_ApplicationJSON_2"
 )
 
-type CancelDeploymentMissing struct {
+type Missing struct {
 	CancelDeploymentDeploymentsResponse200ApplicationJSON1 *CancelDeploymentDeploymentsResponse200ApplicationJSON1
 	CancelDeploymentDeploymentsResponse200ApplicationJSON2 *CancelDeploymentDeploymentsResponse200ApplicationJSON2
 
-	Type CancelDeploymentMissingType
+	Type MissingType
 }
 
-func CreateCancelDeploymentMissingCancelDeploymentDeploymentsResponse200ApplicationJSON1(cancelDeploymentDeploymentsResponse200ApplicationJSON1 CancelDeploymentDeploymentsResponse200ApplicationJSON1) CancelDeploymentMissing {
-	typ := CancelDeploymentMissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON1
+func CreateMissingCancelDeploymentDeploymentsResponse200ApplicationJSON1(cancelDeploymentDeploymentsResponse200ApplicationJSON1 CancelDeploymentDeploymentsResponse200ApplicationJSON1) Missing {
+	typ := MissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON1
 
-	return CancelDeploymentMissing{
+	return Missing{
 		CancelDeploymentDeploymentsResponse200ApplicationJSON1: &cancelDeploymentDeploymentsResponse200ApplicationJSON1,
 		Type: typ,
 	}
 }
 
-func CreateCancelDeploymentMissingCancelDeploymentDeploymentsResponse200ApplicationJSON2(cancelDeploymentDeploymentsResponse200ApplicationJSON2 CancelDeploymentDeploymentsResponse200ApplicationJSON2) CancelDeploymentMissing {
-	typ := CancelDeploymentMissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON2
+func CreateMissingCancelDeploymentDeploymentsResponse200ApplicationJSON2(cancelDeploymentDeploymentsResponse200ApplicationJSON2 CancelDeploymentDeploymentsResponse200ApplicationJSON2) Missing {
+	typ := MissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON2
 
-	return CancelDeploymentMissing{
+	return Missing{
 		CancelDeploymentDeploymentsResponse200ApplicationJSON2: &cancelDeploymentDeploymentsResponse200ApplicationJSON2,
 		Type: typ,
 	}
 }
 
-func (u *CancelDeploymentMissing) UnmarshalJSON(data []byte) error {
+func (u *Missing) UnmarshalJSON(data []byte) error {
 
-	cancelDeploymentDeploymentsResponse200ApplicationJSON1 := CancelDeploymentDeploymentsResponse200ApplicationJSON1{}
+	var cancelDeploymentDeploymentsResponse200ApplicationJSON1 CancelDeploymentDeploymentsResponse200ApplicationJSON1 = CancelDeploymentDeploymentsResponse200ApplicationJSON1{}
 	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeploymentsResponse200ApplicationJSON1, "", true, true); err == nil {
 		u.CancelDeploymentDeploymentsResponse200ApplicationJSON1 = &cancelDeploymentDeploymentsResponse200ApplicationJSON1
-		u.Type = CancelDeploymentMissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON1
+		u.Type = MissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON1
 		return nil
 	}
 
-	cancelDeploymentDeploymentsResponse200ApplicationJSON2 := CancelDeploymentDeploymentsResponse200ApplicationJSON2{}
+	var cancelDeploymentDeploymentsResponse200ApplicationJSON2 CancelDeploymentDeploymentsResponse200ApplicationJSON2 = CancelDeploymentDeploymentsResponse200ApplicationJSON2{}
 	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeploymentsResponse200ApplicationJSON2, "", true, true); err == nil {
 		u.CancelDeploymentDeploymentsResponse200ApplicationJSON2 = &cancelDeploymentDeploymentsResponse200ApplicationJSON2
-		u.Type = CancelDeploymentMissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON2
+		u.Type = MissingTypeCancelDeploymentDeploymentsResponse200ApplicationJSON2
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Missing", string(data))
 }
 
-func (u CancelDeploymentMissing) MarshalJSON() ([]byte, error) {
+func (u Missing) MarshalJSON() ([]byte, error) {
 	if u.CancelDeploymentDeploymentsResponse200ApplicationJSON1 != nil {
 		return utils.MarshalJSON(u.CancelDeploymentDeploymentsResponse200ApplicationJSON1, "", true)
 	}
@@ -2424,30 +2437,30 @@ func (u CancelDeploymentMissing) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CancelDeploymentDeploymentsResponse200ApplicationJSON2, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Missing: all fields are null")
 }
 
 // CancelDeploymentDeploymentsResponse1 - A list of routes objects used to rewrite paths to point towards other internal or external paths
 type CancelDeploymentDeploymentsResponse1 struct {
-	CaseSensitive *bool                   `json:"caseSensitive,omitempty"`
-	Check         *bool                   `json:"check,omitempty"`
-	Continue      *bool                   `json:"continue,omitempty"`
-	Dest          *string                 `json:"dest,omitempty"`
-	Has           []CancelDeploymentHas   `json:"has,omitempty"`
-	Headers       map[string]string       `json:"headers,omitempty"`
-	Important     *bool                   `json:"important,omitempty"`
-	Locale        *CancelDeploymentLocale `json:"locale,omitempty"`
-	Methods       []string                `json:"methods,omitempty"`
+	CaseSensitive *bool             `json:"caseSensitive,omitempty"`
+	Check         *bool             `json:"check,omitempty"`
+	Continue      *bool             `json:"continue,omitempty"`
+	Dest          *string           `json:"dest,omitempty"`
+	Has           []Has             `json:"has,omitempty"`
+	Headers       map[string]string `json:"headers,omitempty"`
+	Important     *bool             `json:"important,omitempty"`
+	Locale        *Locale           `json:"locale,omitempty"`
+	Methods       []string          `json:"methods,omitempty"`
 	// A middleware index in the `middleware` key under the build result
-	Middleware *int64 `json:"middleware,omitempty"`
+	Middleware *float64 `json:"middleware,omitempty"`
 	// A middleware key within the `output` key under the build result. Overrides a `middleware` definition.
 	MiddlewarePath *string `json:"middlewarePath,omitempty"`
 	// The original middleware matchers.
-	MiddlewareRawSrc []string                  `json:"middlewareRawSrc,omitempty"`
-	Missing          []CancelDeploymentMissing `json:"missing,omitempty"`
-	Override         *bool                     `json:"override,omitempty"`
-	Src              string                    `json:"src"`
-	Status           *int64                    `json:"status,omitempty"`
+	MiddlewareRawSrc []string  `json:"middlewareRawSrc,omitempty"`
+	Missing          []Missing `json:"missing,omitempty"`
+	Override         *bool     `json:"override,omitempty"`
+	Src              string    `json:"src"`
+	Status           *float64  `json:"status,omitempty"`
 }
 
 func (o *CancelDeploymentDeploymentsResponse1) GetCaseSensitive() *bool {
@@ -2478,7 +2491,7 @@ func (o *CancelDeploymentDeploymentsResponse1) GetDest() *string {
 	return o.Dest
 }
 
-func (o *CancelDeploymentDeploymentsResponse1) GetHas() []CancelDeploymentHas {
+func (o *CancelDeploymentDeploymentsResponse1) GetHas() []Has {
 	if o == nil {
 		return nil
 	}
@@ -2499,7 +2512,7 @@ func (o *CancelDeploymentDeploymentsResponse1) GetImportant() *bool {
 	return o.Important
 }
 
-func (o *CancelDeploymentDeploymentsResponse1) GetLocale() *CancelDeploymentLocale {
+func (o *CancelDeploymentDeploymentsResponse1) GetLocale() *Locale {
 	if o == nil {
 		return nil
 	}
@@ -2513,7 +2526,7 @@ func (o *CancelDeploymentDeploymentsResponse1) GetMethods() []string {
 	return o.Methods
 }
 
-func (o *CancelDeploymentDeploymentsResponse1) GetMiddleware() *int64 {
+func (o *CancelDeploymentDeploymentsResponse1) GetMiddleware() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -2534,7 +2547,7 @@ func (o *CancelDeploymentDeploymentsResponse1) GetMiddlewareRawSrc() []string {
 	return o.MiddlewareRawSrc
 }
 
-func (o *CancelDeploymentDeploymentsResponse1) GetMissing() []CancelDeploymentMissing {
+func (o *CancelDeploymentDeploymentsResponse1) GetMissing() []Missing {
 	if o == nil {
 		return nil
 	}
@@ -2555,83 +2568,83 @@ func (o *CancelDeploymentDeploymentsResponse1) GetSrc() string {
 	return o.Src
 }
 
-func (o *CancelDeploymentDeploymentsResponse1) GetStatus() *int64 {
+func (o *CancelDeploymentDeploymentsResponse1) GetStatus() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Status
 }
 
-type CancelDeploymentRoutesType string
+type RoutesType string
 
 const (
-	CancelDeploymentRoutesTypeCancelDeploymentDeploymentsResponse1 CancelDeploymentRoutesType = "cancelDeployment_deployments_response_1"
-	CancelDeploymentRoutesTypeCancelDeploymentDeploymentsResponse2 CancelDeploymentRoutesType = "cancelDeployment_deployments_response_2"
-	CancelDeploymentRoutesTypeCancelDeploymentDeployments3         CancelDeploymentRoutesType = "cancelDeployment_deployments_3"
+	RoutesTypeCancelDeploymentDeploymentsResponse1 RoutesType = "cancelDeployment_deployments_response_1"
+	RoutesTypeCancelDeploymentDeploymentsResponse2 RoutesType = "cancelDeployment_deployments_response_2"
+	RoutesTypeCancelDeploymentDeploymentsResponse3 RoutesType = "cancelDeployment_deployments_response_3"
 )
 
-type CancelDeploymentRoutes struct {
+type Routes struct {
 	CancelDeploymentDeploymentsResponse1 *CancelDeploymentDeploymentsResponse1
 	CancelDeploymentDeploymentsResponse2 *CancelDeploymentDeploymentsResponse2
-	CancelDeploymentDeployments3         *CancelDeploymentDeployments3
+	CancelDeploymentDeploymentsResponse3 *CancelDeploymentDeploymentsResponse3
 
-	Type CancelDeploymentRoutesType
+	Type RoutesType
 }
 
-func CreateCancelDeploymentRoutesCancelDeploymentDeploymentsResponse1(cancelDeploymentDeploymentsResponse1 CancelDeploymentDeploymentsResponse1) CancelDeploymentRoutes {
-	typ := CancelDeploymentRoutesTypeCancelDeploymentDeploymentsResponse1
+func CreateRoutesCancelDeploymentDeploymentsResponse1(cancelDeploymentDeploymentsResponse1 CancelDeploymentDeploymentsResponse1) Routes {
+	typ := RoutesTypeCancelDeploymentDeploymentsResponse1
 
-	return CancelDeploymentRoutes{
+	return Routes{
 		CancelDeploymentDeploymentsResponse1: &cancelDeploymentDeploymentsResponse1,
 		Type:                                 typ,
 	}
 }
 
-func CreateCancelDeploymentRoutesCancelDeploymentDeploymentsResponse2(cancelDeploymentDeploymentsResponse2 CancelDeploymentDeploymentsResponse2) CancelDeploymentRoutes {
-	typ := CancelDeploymentRoutesTypeCancelDeploymentDeploymentsResponse2
+func CreateRoutesCancelDeploymentDeploymentsResponse2(cancelDeploymentDeploymentsResponse2 CancelDeploymentDeploymentsResponse2) Routes {
+	typ := RoutesTypeCancelDeploymentDeploymentsResponse2
 
-	return CancelDeploymentRoutes{
+	return Routes{
 		CancelDeploymentDeploymentsResponse2: &cancelDeploymentDeploymentsResponse2,
 		Type:                                 typ,
 	}
 }
 
-func CreateCancelDeploymentRoutesCancelDeploymentDeployments3(cancelDeploymentDeployments3 CancelDeploymentDeployments3) CancelDeploymentRoutes {
-	typ := CancelDeploymentRoutesTypeCancelDeploymentDeployments3
+func CreateRoutesCancelDeploymentDeploymentsResponse3(cancelDeploymentDeploymentsResponse3 CancelDeploymentDeploymentsResponse3) Routes {
+	typ := RoutesTypeCancelDeploymentDeploymentsResponse3
 
-	return CancelDeploymentRoutes{
-		CancelDeploymentDeployments3: &cancelDeploymentDeployments3,
-		Type:                         typ,
+	return Routes{
+		CancelDeploymentDeploymentsResponse3: &cancelDeploymentDeploymentsResponse3,
+		Type:                                 typ,
 	}
 }
 
-func (u *CancelDeploymentRoutes) UnmarshalJSON(data []byte) error {
+func (u *Routes) UnmarshalJSON(data []byte) error {
 
-	cancelDeploymentDeployments3 := CancelDeploymentDeployments3{}
-	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeployments3, "", true, true); err == nil {
-		u.CancelDeploymentDeployments3 = &cancelDeploymentDeployments3
-		u.Type = CancelDeploymentRoutesTypeCancelDeploymentDeployments3
+	var cancelDeploymentDeploymentsResponse3 CancelDeploymentDeploymentsResponse3 = CancelDeploymentDeploymentsResponse3{}
+	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeploymentsResponse3, "", true, true); err == nil {
+		u.CancelDeploymentDeploymentsResponse3 = &cancelDeploymentDeploymentsResponse3
+		u.Type = RoutesTypeCancelDeploymentDeploymentsResponse3
 		return nil
 	}
 
-	cancelDeploymentDeploymentsResponse2 := CancelDeploymentDeploymentsResponse2{}
+	var cancelDeploymentDeploymentsResponse2 CancelDeploymentDeploymentsResponse2 = CancelDeploymentDeploymentsResponse2{}
 	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeploymentsResponse2, "", true, true); err == nil {
 		u.CancelDeploymentDeploymentsResponse2 = &cancelDeploymentDeploymentsResponse2
-		u.Type = CancelDeploymentRoutesTypeCancelDeploymentDeploymentsResponse2
+		u.Type = RoutesTypeCancelDeploymentDeploymentsResponse2
 		return nil
 	}
 
-	cancelDeploymentDeploymentsResponse1 := CancelDeploymentDeploymentsResponse1{}
+	var cancelDeploymentDeploymentsResponse1 CancelDeploymentDeploymentsResponse1 = CancelDeploymentDeploymentsResponse1{}
 	if err := utils.UnmarshalJSON(data, &cancelDeploymentDeploymentsResponse1, "", true, true); err == nil {
 		u.CancelDeploymentDeploymentsResponse1 = &cancelDeploymentDeploymentsResponse1
-		u.Type = CancelDeploymentRoutesTypeCancelDeploymentDeploymentsResponse1
+		u.Type = RoutesTypeCancelDeploymentDeploymentsResponse1
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Routes", string(data))
 }
 
-func (u CancelDeploymentRoutes) MarshalJSON() ([]byte, error) {
+func (u Routes) MarshalJSON() ([]byte, error) {
 	if u.CancelDeploymentDeploymentsResponse1 != nil {
 		return utils.MarshalJSON(u.CancelDeploymentDeploymentsResponse1, "", true)
 	}
@@ -2640,43 +2653,45 @@ func (u CancelDeploymentRoutes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CancelDeploymentDeploymentsResponse2, "", true)
 	}
 
-	if u.CancelDeploymentDeployments3 != nil {
-		return utils.MarshalJSON(u.CancelDeploymentDeployments3, "", true)
+	if u.CancelDeploymentDeploymentsResponse3 != nil {
+		return utils.MarshalJSON(u.CancelDeploymentDeploymentsResponse3, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Routes: all fields are null")
 }
 
 // CancelDeploymentSource - Where was the deployment created from
 type CancelDeploymentSource string
 
 const (
-	CancelDeploymentSourceCli        CancelDeploymentSource = "cli"
-	CancelDeploymentSourceGit        CancelDeploymentSource = "git"
-	CancelDeploymentSourceImport     CancelDeploymentSource = "import"
-	CancelDeploymentSourceImportRepo CancelDeploymentSource = "import/repo"
-	CancelDeploymentSourceCloneRepo  CancelDeploymentSource = "clone/repo"
+	CancelDeploymentSourceAPITriggerGitDeploy CancelDeploymentSource = "api-trigger-git-deploy"
+	CancelDeploymentSourceCli                 CancelDeploymentSource = "cli"
+	CancelDeploymentSourceCloneRepo           CancelDeploymentSource = "clone/repo"
+	CancelDeploymentSourceGit                 CancelDeploymentSource = "git"
+	CancelDeploymentSourceImport              CancelDeploymentSource = "import"
+	CancelDeploymentSourceImportRepo          CancelDeploymentSource = "import/repo"
 )
 
 func (e CancelDeploymentSource) ToPointer() *CancelDeploymentSource {
 	return &e
 }
-
 func (e *CancelDeploymentSource) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
+	case "api-trigger-git-deploy":
+		fallthrough
 	case "cli":
+		fallthrough
+	case "clone/repo":
 		fallthrough
 	case "git":
 		fallthrough
 	case "import":
 		fallthrough
 	case "import/repo":
-		fallthrough
-	case "clone/repo":
 		*e = CancelDeploymentSource(v)
 		return nil
 	default:
@@ -2695,7 +2710,6 @@ const (
 func (e CancelDeploymentTarget) ToPointer() *CancelDeploymentTarget {
 	return &e
 }
-
 func (e *CancelDeploymentTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2714,12 +2728,21 @@ func (e *CancelDeploymentTarget) UnmarshalJSON(data []byte) error {
 
 // Team - The team that owns the deployment if any
 type Team struct {
+	// The avatar of the team owner
+	Avatar *string `json:"avatar,omitempty"`
 	// The ID of the team owner
 	ID string `json:"id"`
 	// The name of the team owner
 	Name string `json:"name"`
 	// The slug of the team owner
 	Slug string `json:"slug"`
+}
+
+func (o *Team) GetAvatar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Avatar
 }
 
 func (o *Team) GetID() string {
@@ -2752,7 +2775,6 @@ const (
 func (e CancelDeploymentType) ToPointer() *CancelDeploymentType {
 	return &e
 }
-
 func (e *CancelDeploymentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2764,31 +2786,6 @@ func (e *CancelDeploymentType) UnmarshalJSON(data []byte) error {
 		return nil
 	default:
 		return fmt.Errorf("invalid value for CancelDeploymentType: %v", v)
-	}
-}
-
-// Version - The platform version that was used to create the deployment.
-type Version int64
-
-const (
-	VersionTwo Version = 2
-)
-
-func (e Version) ToPointer() *Version {
-	return &e
-}
-
-func (e *Version) UnmarshalJSON(data []byte) error {
-	var v int64
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case 2:
-		*e = Version(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Version: %v", v)
 	}
 }
 
@@ -2804,12 +2801,12 @@ type CancelDeploymentResponseBody struct {
 	AliasWarning            *AliasWarning            `json:"aliasWarning,omitempty"`
 	AutoAssignCustomDomains *bool                    `json:"autoAssignCustomDomains,omitempty"`
 	AutomaticAliases        []string                 `json:"automaticAliases,omitempty"`
-	BootedAt                int64                    `json:"bootedAt"`
-	Build                   CancelDeploymentBuild    `json:"build"`
-	BuildErrorAt            *int64                   `json:"buildErrorAt,omitempty"`
-	BuildingAt              int64                    `json:"buildingAt"`
+	BootedAt                float64                  `json:"bootedAt"`
+	Build                   Build                    `json:"build"`
+	BuildErrorAt            *float64                 `json:"buildErrorAt,omitempty"`
+	BuildingAt              float64                  `json:"buildingAt"`
 	Builds                  []CancelDeploymentBuilds `json:"builds,omitempty"`
-	CanceledAt              *int64                   `json:"canceledAt,omitempty"`
+	CanceledAt              *float64                 `json:"canceledAt,omitempty"`
 	ChecksConclusion        *ChecksConclusion        `json:"checksConclusion,omitempty"`
 	ChecksState             *ChecksState             `json:"checksState,omitempty"`
 	// The flag saying if Vercel Connect configuration is used for builds
@@ -2817,11 +2814,13 @@ type CancelDeploymentResponseBody struct {
 	// The ID of Vercel Connect configuration used for this deployment
 	ConnectConfigurationID *string `json:"connectConfigurationId,omitempty"`
 	// A number containing the date when the deployment was created in milliseconds
-	CreatedAt int64 `json:"createdAt"`
+	CreatedAt float64 `json:"createdAt"`
 	// The region where the deployment was first created
 	CreatedIn string `json:"createdIn"`
 	// Information about the deployment creator
 	Creator CancelDeploymentCreator `json:"creator"`
+	// The cron jobs associated with this deployment. Note that preview deployments are also allowed to have this property, but only production deployments create cron jobs. If a preview deployment is promoted to production, only then they'll take effect.
+	Crons []Crons `json:"crons,omitempty"`
 	// The keys of the environment variables that were assigned during runtime
 	Env          []string `json:"env"`
 	ErrorCode    *string  `json:"errorCode,omitempty"`
@@ -2829,9 +2828,9 @@ type CancelDeploymentResponseBody struct {
 	ErrorMessage *string  `json:"errorMessage,omitempty"`
 	ErrorStep    *string  `json:"errorStep,omitempty"`
 	// An object used to configure your Serverless Functions
-	Functions map[string]CancelDeploymentFunctions `json:"functions,omitempty"`
-	GitRepo   *GitRepo                             `json:"gitRepo,omitempty"`
-	GitSource *CancelDeploymentGitSource           `json:"gitSource,omitempty"`
+	Functions map[string]Functions       `json:"functions,omitempty"`
+	GitRepo   *GitRepo                   `json:"gitRepo,omitempty"`
+	GitSource *CancelDeploymentGitSource `json:"gitSource,omitempty"`
 	// A string holding the unique ID of the deployment
 	ID string `json:"id"`
 	// Vercel URL to inspect the deployment.
@@ -2847,10 +2846,15 @@ type CancelDeploymentResponseBody struct {
 	Name string `json:"name"`
 	// The unique ID of the user or team the deployment belongs to
 	OwnerID string `json:"ownerId"`
+	// The connect configuration ID used to deploy passive lambdas into for secure compute enabled deployments.
+	PassiveConnectConfigurationID *string  `json:"passiveConnectConfigurationId,omitempty"`
+	PassiveRegions                []string `json:"passiveRegions,omitempty"`
 	// The pricing plan the deployment was made under
 	Plan Plan `json:"plan"`
 	// Whether or not preview comments are enabled for the deployment
 	PreviewCommentsEnabled *bool `json:"previewCommentsEnabled,omitempty"`
+	// The public project information associated with the deployment.
+	Project *Project `json:"project,omitempty"`
 	// The ID of the project the deployment is associated with
 	ProjectID string `json:"projectId"`
 	// A boolean representing if the deployment is public or not. By default this is `false`
@@ -2862,7 +2866,7 @@ type CancelDeploymentResponseBody struct {
 	// The regions the deployment exists in
 	Regions []string `json:"regions"`
 	// A list of routes objects used to rewrite paths to point towards other internal or external paths
-	Routes []CancelDeploymentRoutes `json:"routes"`
+	Routes []Routes `json:"routes"`
 	// Where was the deployment created from
 	Source *CancelDeploymentSource `json:"source,omitempty"`
 	// If defined, either `staging` if a staging alias in the format `<project>.<team>.now.sh` was assigned upon creation, or `production` if the aliases from `alias` were assigned
@@ -2875,7 +2879,7 @@ type CancelDeploymentResponseBody struct {
 	// An array of domains that were provided by the user when creating the Deployment.
 	UserAliases []string `json:"userAliases,omitempty"`
 	// The platform version that was used to create the deployment.
-	Version Version `json:"version"`
+	Version float64 `json:"version"`
 }
 
 func (o *CancelDeploymentResponseBody) GetAlias() []string {
@@ -2934,30 +2938,30 @@ func (o *CancelDeploymentResponseBody) GetAutomaticAliases() []string {
 	return o.AutomaticAliases
 }
 
-func (o *CancelDeploymentResponseBody) GetBootedAt() int64 {
+func (o *CancelDeploymentResponseBody) GetBootedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.BootedAt
 }
 
-func (o *CancelDeploymentResponseBody) GetBuild() CancelDeploymentBuild {
+func (o *CancelDeploymentResponseBody) GetBuild() Build {
 	if o == nil {
-		return CancelDeploymentBuild{}
+		return Build{}
 	}
 	return o.Build
 }
 
-func (o *CancelDeploymentResponseBody) GetBuildErrorAt() *int64 {
+func (o *CancelDeploymentResponseBody) GetBuildErrorAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.BuildErrorAt
 }
 
-func (o *CancelDeploymentResponseBody) GetBuildingAt() int64 {
+func (o *CancelDeploymentResponseBody) GetBuildingAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.BuildingAt
 }
@@ -2969,7 +2973,7 @@ func (o *CancelDeploymentResponseBody) GetBuilds() []CancelDeploymentBuilds {
 	return o.Builds
 }
 
-func (o *CancelDeploymentResponseBody) GetCanceledAt() *int64 {
+func (o *CancelDeploymentResponseBody) GetCanceledAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -3004,9 +3008,9 @@ func (o *CancelDeploymentResponseBody) GetConnectConfigurationID() *string {
 	return o.ConnectConfigurationID
 }
 
-func (o *CancelDeploymentResponseBody) GetCreatedAt() int64 {
+func (o *CancelDeploymentResponseBody) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -3023,6 +3027,13 @@ func (o *CancelDeploymentResponseBody) GetCreator() CancelDeploymentCreator {
 		return CancelDeploymentCreator{}
 	}
 	return o.Creator
+}
+
+func (o *CancelDeploymentResponseBody) GetCrons() []Crons {
+	if o == nil {
+		return nil
+	}
+	return o.Crons
 }
 
 func (o *CancelDeploymentResponseBody) GetEnv() []string {
@@ -3060,7 +3071,7 @@ func (o *CancelDeploymentResponseBody) GetErrorStep() *string {
 	return o.ErrorStep
 }
 
-func (o *CancelDeploymentResponseBody) GetFunctions() map[string]CancelDeploymentFunctions {
+func (o *CancelDeploymentResponseBody) GetFunctions() map[string]Functions {
 	if o == nil {
 		return nil
 	}
@@ -3137,6 +3148,20 @@ func (o *CancelDeploymentResponseBody) GetOwnerID() string {
 	return o.OwnerID
 }
 
+func (o *CancelDeploymentResponseBody) GetPassiveConnectConfigurationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PassiveConnectConfigurationID
+}
+
+func (o *CancelDeploymentResponseBody) GetPassiveRegions() []string {
+	if o == nil {
+		return nil
+	}
+	return o.PassiveRegions
+}
+
 func (o *CancelDeploymentResponseBody) GetPlan() Plan {
 	if o == nil {
 		return Plan("")
@@ -3149,6 +3174,13 @@ func (o *CancelDeploymentResponseBody) GetPreviewCommentsEnabled() *bool {
 		return nil
 	}
 	return o.PreviewCommentsEnabled
+}
+
+func (o *CancelDeploymentResponseBody) GetProject() *Project {
+	if o == nil {
+		return nil
+	}
+	return o.Project
 }
 
 func (o *CancelDeploymentResponseBody) GetProjectID() string {
@@ -3186,7 +3218,7 @@ func (o *CancelDeploymentResponseBody) GetRegions() []string {
 	return o.Regions
 }
 
-func (o *CancelDeploymentResponseBody) GetRoutes() []CancelDeploymentRoutes {
+func (o *CancelDeploymentResponseBody) GetRoutes() []Routes {
 	if o == nil {
 		return nil
 	}
@@ -3235,9 +3267,9 @@ func (o *CancelDeploymentResponseBody) GetUserAliases() []string {
 	return o.UserAliases
 }
 
-func (o *CancelDeploymentResponseBody) GetVersion() Version {
+func (o *CancelDeploymentResponseBody) GetVersion() float64 {
 	if o == nil {
-		return Version(0)
+		return 0.0
 	}
 	return o.Version
 }

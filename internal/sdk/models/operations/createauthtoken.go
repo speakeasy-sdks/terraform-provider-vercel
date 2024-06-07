@@ -20,7 +20,6 @@ const (
 func (e CreateAuthTokenType) ToPointer() *CreateAuthTokenType {
 	return &e
 }
-
 func (e *CreateAuthTokenType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -37,7 +36,7 @@ func (e *CreateAuthTokenType) UnmarshalJSON(data []byte) error {
 
 type CreateAuthToken2 struct {
 	ClientID       *string             `json:"clientId,omitempty"`
-	ExpiresAt      *int64              `json:"expiresAt,omitempty"`
+	ExpiresAt      *float64            `json:"expiresAt,omitempty"`
 	InstallationID *string             `json:"installationId,omitempty"`
 	Name           string              `json:"name"`
 	Type           CreateAuthTokenType `json:"type"`
@@ -50,7 +49,7 @@ func (o *CreateAuthToken2) GetClientID() *string {
 	return o.ClientID
 }
 
-func (o *CreateAuthToken2) GetExpiresAt() *int64 {
+func (o *CreateAuthToken2) GetExpiresAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -79,11 +78,11 @@ func (o *CreateAuthToken2) GetType() CreateAuthTokenType {
 }
 
 type CreateAuthToken1 struct {
-	ExpiresAt *int64 `json:"expiresAt,omitempty"`
-	Name      string `json:"name"`
+	ExpiresAt *float64 `json:"expiresAt,omitempty"`
+	Name      string   `json:"name"`
 }
 
-func (o *CreateAuthToken1) GetExpiresAt() *int64 {
+func (o *CreateAuthToken1) GetExpiresAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -131,21 +130,21 @@ func CreateCreateAuthTokenRequestBodyCreateAuthToken2(createAuthToken2 CreateAut
 
 func (u *CreateAuthTokenRequestBody) UnmarshalJSON(data []byte) error {
 
-	createAuthToken1 := CreateAuthToken1{}
+	var createAuthToken1 CreateAuthToken1 = CreateAuthToken1{}
 	if err := utils.UnmarshalJSON(data, &createAuthToken1, "", true, true); err == nil {
 		u.CreateAuthToken1 = &createAuthToken1
 		u.Type = CreateAuthTokenRequestBodyTypeCreateAuthToken1
 		return nil
 	}
 
-	createAuthToken2 := CreateAuthToken2{}
+	var createAuthToken2 CreateAuthToken2 = CreateAuthToken2{}
 	if err := utils.UnmarshalJSON(data, &createAuthToken2, "", true, true); err == nil {
 		u.CreateAuthToken2 = &createAuthToken2
 		u.Type = CreateAuthTokenRequestBodyTypeCreateAuthToken2
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreateAuthTokenRequestBody", string(data))
 }
 
 func (u CreateAuthTokenRequestBody) MarshalJSON() ([]byte, error) {
@@ -157,12 +156,14 @@ func (u CreateAuthTokenRequestBody) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.CreateAuthToken2, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CreateAuthTokenRequestBody: all fields are null")
 }
 
 type CreateAuthTokenRequest struct {
 	RequestBody *CreateAuthTokenRequestBody `request:"mediaType=application/json"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -171,6 +172,13 @@ func (o *CreateAuthTokenRequest) GetRequestBody() *CreateAuthTokenRequestBody {
 		return nil
 	}
 	return o.RequestBody
+}
+
+func (o *CreateAuthTokenRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *CreateAuthTokenRequest) GetTeamID() *string {

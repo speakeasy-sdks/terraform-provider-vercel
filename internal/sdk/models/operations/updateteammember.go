@@ -10,10 +10,10 @@ import (
 )
 
 type UpdateTeamMemberJoinedFrom struct {
-	SsoUserID *string `json:"ssoUserId,omitempty"`
+	SsoUserID any `json:"ssoUserId,omitempty"`
 }
 
-func (o *UpdateTeamMemberJoinedFrom) GetSsoUserID() *string {
+func (o *UpdateTeamMemberJoinedFrom) GetSsoUserID() any {
 	if o == nil {
 		return nil
 	}
@@ -32,7 +32,6 @@ const (
 func (e UpdateTeamMemberRole) ToPointer() *UpdateTeamMemberRole {
 	return &e
 }
-
 func (e *UpdateTeamMemberRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -25,12 +25,13 @@ func newCerts(sdkConfig sdkConfiguration) *Certs {
 	}
 }
 
-// GetCertByID - Get cert by id
 // Get cert by id
-func (s *Certs) GetCertByID(ctx context.Context, request operations.GetCertByIDRequest) (*operations.GetCertByIDResponse, error) {
+// Get cert by id
+func (s *Certs) Get(ctx context.Context, request operations.GetCertByIDRequest) (*operations.GetCertByIDResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "getCertById",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -71,9 +72,11 @@ func (s *Certs) GetCertByID(ctx context.Context, request operations.GetCertByIDR
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -120,14 +123,16 @@ func (s *Certs) GetCertByID(ctx context.Context, request operations.GetCertByIDR
 	}
 
 	return res, nil
+
 }
 
-// IssueCert - Issue a new cert
 // Issue a new cert
-func (s *Certs) IssueCert(ctx context.Context, request operations.IssueCertRequest) (*operations.IssueCertResponse, error) {
+// Issue a new cert
+func (s *Certs) Issue(ctx context.Context, request operations.IssueCertRequest) (*operations.IssueCertResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "issueCert",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -174,9 +179,11 @@ func (s *Certs) IssueCert(ctx context.Context, request operations.IssueCertReque
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -229,14 +236,16 @@ func (s *Certs) IssueCert(ctx context.Context, request operations.IssueCertReque
 	}
 
 	return res, nil
+
 }
 
-// RemoveCert - Remove cert
 // Remove cert
-func (s *Certs) RemoveCert(ctx context.Context, request operations.RemoveCertRequest) (*operations.RemoveCertResponse, error) {
+// Remove cert
+func (s *Certs) Remove(ctx context.Context, request operations.RemoveCertRequest) (*operations.RemoveCertResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "removeCert",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -277,9 +286,11 @@ func (s *Certs) RemoveCert(ctx context.Context, request operations.RemoveCertReq
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -326,14 +337,16 @@ func (s *Certs) RemoveCert(ctx context.Context, request operations.RemoveCertReq
 	}
 
 	return res, nil
+
 }
 
-// UploadCert - Upload a cert
 // Upload a cert
-func (s *Certs) UploadCert(ctx context.Context, request operations.UploadCertRequest) (*operations.UploadCertResponse, error) {
+// Upload a cert
+func (s *Certs) Upload(ctx context.Context, request operations.UploadCertRequest) (*operations.UploadCertResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "uploadCert",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -380,9 +393,11 @@ func (s *Certs) UploadCert(ctx context.Context, request operations.UploadCertReq
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -429,4 +444,5 @@ func (s *Certs) UploadCert(ctx context.Context, request operations.UploadCertReq
 	}
 
 	return res, nil
+
 }

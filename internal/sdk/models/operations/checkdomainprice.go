@@ -19,7 +19,6 @@ const (
 func (e QueryParamType) ToPointer() *QueryParamType {
 	return &e
 }
-
 func (e *QueryParamType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -39,7 +38,9 @@ func (e *QueryParamType) UnmarshalJSON(data []byte) error {
 type CheckDomainPriceRequest struct {
 	// The name of the domain for which the price needs to be checked.
 	Name string `queryParam:"style=form,explode=true,name=name"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// In which status of the domain the price needs to be checked.
 	Type *QueryParamType `queryParam:"style=form,explode=true,name=type"`
@@ -50,6 +51,13 @@ func (o *CheckDomainPriceRequest) GetName() string {
 		return ""
 	}
 	return o.Name
+}
+
+func (o *CheckDomainPriceRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *CheckDomainPriceRequest) GetTeamID() *string {
@@ -69,21 +77,21 @@ func (o *CheckDomainPriceRequest) GetType() *QueryParamType {
 // CheckDomainPriceResponseBody - Successful response which returns the price of the domain and the period.
 type CheckDomainPriceResponseBody struct {
 	// The number of years the domain could be held before paying again.
-	Period int64 `json:"period"`
+	Period float64 `json:"period"`
 	// The domain price in USD.
-	Price int64 `json:"price"`
+	Price float64 `json:"price"`
 }
 
-func (o *CheckDomainPriceResponseBody) GetPeriod() int64 {
+func (o *CheckDomainPriceResponseBody) GetPeriod() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Period
 }
 
-func (o *CheckDomainPriceResponseBody) GetPrice() int64 {
+func (o *CheckDomainPriceResponseBody) GetPrice() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Price
 }

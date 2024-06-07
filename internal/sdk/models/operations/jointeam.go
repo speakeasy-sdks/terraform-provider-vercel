@@ -9,8 +9,6 @@ import (
 type JoinTeamRequestBody struct {
 	// The invite code to join the team.
 	InviteCode *string `json:"inviteCode,omitempty"`
-	// The team ID.
-	TeamID *string `json:"teamId,omitempty"`
 }
 
 func (o *JoinTeamRequestBody) GetInviteCode() *string {
@@ -18,13 +16,6 @@ func (o *JoinTeamRequestBody) GetInviteCode() *string {
 		return nil
 	}
 	return o.InviteCode
-}
-
-func (o *JoinTeamRequestBody) GetTeamID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TeamID
 }
 
 type JoinTeamRequest struct {

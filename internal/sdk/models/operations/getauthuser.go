@@ -4,6 +4,7 @@ package operations
 
 import (
 	"errors"
+	"fmt"
 	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
 	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
 	"net/http"
@@ -43,21 +44,21 @@ func CreateUserAuthUserLimited(authUserLimited shared.AuthUserLimited) User {
 
 func (u *User) UnmarshalJSON(data []byte) error {
 
-	authUserLimited := shared.AuthUserLimited{}
+	var authUserLimited shared.AuthUserLimited = shared.AuthUserLimited{}
 	if err := utils.UnmarshalJSON(data, &authUserLimited, "", true, true); err == nil {
 		u.AuthUserLimited = &authUserLimited
 		u.Type = UserTypeAuthUserLimited
 		return nil
 	}
 
-	authUser := shared.AuthUser{}
+	var authUser shared.AuthUser = shared.AuthUser{}
 	if err := utils.UnmarshalJSON(data, &authUser, "", true, true); err == nil {
 		u.AuthUser = &authUser
 		u.Type = UserTypeAuthUser
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for User", string(data))
 }
 
 func (u User) MarshalJSON() ([]byte, error) {
@@ -69,7 +70,7 @@ func (u User) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.AuthUserLimited, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type User: all fields are null")
 }
 
 // GetAuthUserResponseBody - Successful response.

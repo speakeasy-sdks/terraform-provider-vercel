@@ -8,7 +8,9 @@ import (
 
 type DeleteConfigurationRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -17,6 +19,13 @@ func (o *DeleteConfigurationRequest) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *DeleteConfigurationRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *DeleteConfigurationRequest) GetTeamID() *string {

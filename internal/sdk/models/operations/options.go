@@ -18,8 +18,8 @@ const (
 type AcceptHeaderEnum string
 
 const (
-	AcceptHeaderEnumWildcardWildcard          AcceptHeaderEnum = "*/*"
 	AcceptHeaderEnumApplicationJson           AcceptHeaderEnum = "application/json"
+	AcceptHeaderEnumWildcardWildcard          AcceptHeaderEnum = "*/*"
 	AcceptHeaderEnumApplicationStreamPlusJson AcceptHeaderEnum = "application/stream+json"
 )
 

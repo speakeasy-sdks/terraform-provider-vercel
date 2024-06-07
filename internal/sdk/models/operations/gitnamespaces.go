@@ -13,15 +13,15 @@ import (
 type Provider string
 
 const (
-	ProviderGithub    Provider = "github"
-	ProviderGitlab    Provider = "gitlab"
-	ProviderBitbucket Provider = "bitbucket"
+	ProviderGithub           Provider = "github"
+	ProviderGithubCustomHost Provider = "github-custom-host"
+	ProviderGitlab           Provider = "gitlab"
+	ProviderBitbucket        Provider = "bitbucket"
 )
 
 func (e Provider) ToPointer() *Provider {
 	return &e
 }
-
 func (e *Provider) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -29,6 +29,8 @@ func (e *Provider) UnmarshalJSON(data []byte) error {
 	}
 	switch v {
 	case "github":
+		fallthrough
+	case "github-custom-host":
 		fallthrough
 	case "gitlab":
 		fallthrough
@@ -41,9 +43,20 @@ func (e *Provider) UnmarshalJSON(data []byte) error {
 }
 
 type GitNamespacesRequest struct {
+	// The custom Git host if using a custom Git provider, like GitHub Enterprise Server
+	Host     *string   `queryParam:"style=form,explode=true,name=host"`
 	Provider *Provider `queryParam:"style=form,explode=true,name=provider"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *GitNamespacesRequest) GetHost() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Host
 }
 
 func (o *GitNamespacesRequest) GetProvider() *Provider {
@@ -51,6 +64,13 @@ func (o *GitNamespacesRequest) GetProvider() *Provider {
 		return nil
 	}
 	return o.Provider
+}
+
+func (o *GitNamespacesRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *GitNamespacesRequest) GetTeamID() *string {
@@ -63,13 +83,13 @@ func (o *GitNamespacesRequest) GetTeamID() *string {
 type IDType string
 
 const (
-	IDTypeStr     IDType = "str"
-	IDTypeInteger IDType = "integer"
+	IDTypeStr    IDType = "str"
+	IDTypeNumber IDType = "number"
 )
 
 type ID struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type IDType
 }
@@ -83,32 +103,32 @@ func CreateIDStr(str string) ID {
 	}
 }
 
-func CreateIDInteger(integer int64) ID {
-	typ := IDTypeInteger
+func CreateIDNumber(number float64) ID {
+	typ := IDTypeNumber
 
 	return ID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *ID) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = IDTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = IDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = IDTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ID", string(data))
 }
 
 func (u ID) MarshalJSON() ([]byte, error) {
@@ -116,22 +136,22 @@ func (u ID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type ID: all fields are null")
 }
 
 type GitNamespacesResponseBody struct {
-	ID                 ID      `json:"id"`
-	InstallationID     *int64  `json:"installationId,omitempty"`
-	IsAccessRestricted *bool   `json:"isAccessRestricted,omitempty"`
-	Name               *string `json:"name,omitempty"`
-	OwnerType          string  `json:"ownerType"`
-	Provider           string  `json:"provider"`
-	RequireReauth      *bool   `json:"requireReauth,omitempty"`
-	Slug               string  `json:"slug"`
+	ID                 ID       `json:"id"`
+	InstallationID     *float64 `json:"installationId,omitempty"`
+	IsAccessRestricted *bool    `json:"isAccessRestricted,omitempty"`
+	Name               *string  `json:"name,omitempty"`
+	OwnerType          string   `json:"ownerType"`
+	Provider           string   `json:"provider"`
+	RequireReauth      *bool    `json:"requireReauth,omitempty"`
+	Slug               string   `json:"slug"`
 }
 
 func (o *GitNamespacesResponseBody) GetID() ID {
@@ -141,7 +161,7 @@ func (o *GitNamespacesResponseBody) GetID() ID {
 	return o.ID
 }
 
-func (o *GitNamespacesResponseBody) GetInstallationID() *int64 {
+func (o *GitNamespacesResponseBody) GetInstallationID() *float64 {
 	if o == nil {
 		return nil
 	}

@@ -11,27 +11,36 @@ import (
 
 type GetDomainsRequest struct {
 	// Maximum number of domains to list from a request.
-	Limit *int64 `queryParam:"style=form,explode=true,name=limit"`
+	Limit *float64 `queryParam:"style=form,explode=true,name=limit"`
 	// Get domains created after this JavaScript timestamp.
-	Since *int64 `queryParam:"style=form,explode=true,name=since"`
-	// The Team identifier or slug to perform the request on behalf of.
+	Since *float64 `queryParam:"style=form,explode=true,name=since"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// Get domains created before this JavaScript timestamp.
-	Until *int64 `queryParam:"style=form,explode=true,name=until"`
+	Until *float64 `queryParam:"style=form,explode=true,name=until"`
 }
 
-func (o *GetDomainsRequest) GetLimit() *int64 {
+func (o *GetDomainsRequest) GetLimit() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Limit
 }
 
-func (o *GetDomainsRequest) GetSince() *int64 {
+func (o *GetDomainsRequest) GetSince() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Since
+}
+
+func (o *GetDomainsRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *GetDomainsRequest) GetTeamID() *string {
@@ -41,7 +50,7 @@ func (o *GetDomainsRequest) GetTeamID() *string {
 	return o.TeamID
 }
 
-func (o *GetDomainsRequest) GetUntil() *int64 {
+func (o *GetDomainsRequest) GetUntil() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -104,7 +113,6 @@ const (
 func (e GetDomainsServiceType) ToPointer() *GetDomainsServiceType {
 	return &e
 }
-
 func (e *GetDomainsServiceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -125,15 +133,15 @@ func (e *GetDomainsServiceType) UnmarshalJSON(data []byte) error {
 
 type Domains struct {
 	// If it was purchased through Vercel, the timestamp in milliseconds when it was purchased.
-	BoughtAt *int64 `json:"boughtAt"`
+	BoughtAt *float64 `json:"boughtAt"`
 	// Timestamp in milliseconds when the domain was created in the registry.
-	CreatedAt int64 `json:"createdAt"`
+	CreatedAt float64 `json:"createdAt"`
 	// An object containing information of the domain creator, including the user's id, username, and email.
 	Creator GetDomainsCreator `json:"creator"`
 	// A list of custom nameservers for the domain to point to. Only applies to domains purchased with Vercel.
 	CustomNameservers []string `json:"customNameservers,omitempty"`
 	// Timestamp in milliseconds at which the domain is set to expire. `null` if not bought with Vercel.
-	ExpiresAt *int64 `json:"expiresAt"`
+	ExpiresAt *float64 `json:"expiresAt"`
 	// The unique identifier of the domain.
 	ID string `json:"id"`
 	// A list of the intended nameservers for the domain to point to Vercel DNS.
@@ -143,29 +151,29 @@ type Domains struct {
 	// A list of the current nameservers of the domain.
 	Nameservers []string `json:"nameservers"`
 	// Timestamp in milliseconds at which the domain was ordered.
-	OrderedAt *int64 `json:"orderedAt,omitempty"`
+	OrderedAt *float64 `json:"orderedAt,omitempty"`
 	// Indicates whether the domain is set to automatically renew.
 	Renew *bool `json:"renew,omitempty"`
 	// The type of service the domain is handled by. `external` if the DNS is externally handled, `zeit.world` if handled with Vercel, or `na` if the service is not available.
 	ServiceType GetDomainsServiceType `json:"serviceType"`
 	// If transferred into Vercel, timestamp in milliseconds when the domain transfer was initiated.
-	TransferStartedAt *int64 `json:"transferStartedAt,omitempty"`
+	TransferStartedAt *float64 `json:"transferStartedAt,omitempty"`
 	// Timestamp in milliseconds at which the domain was successfully transferred into Vercel. `null` if the transfer is still processing or was never transferred in.
-	TransferredAt *int64 `json:"transferredAt,omitempty"`
+	TransferredAt *float64 `json:"transferredAt,omitempty"`
 	// If the domain has the ownership verified.
 	Verified bool `json:"verified"`
 }
 
-func (o *Domains) GetBoughtAt() *int64 {
+func (o *Domains) GetBoughtAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.BoughtAt
 }
 
-func (o *Domains) GetCreatedAt() int64 {
+func (o *Domains) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -184,7 +192,7 @@ func (o *Domains) GetCustomNameservers() []string {
 	return o.CustomNameservers
 }
 
-func (o *Domains) GetExpiresAt() *int64 {
+func (o *Domains) GetExpiresAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -219,7 +227,7 @@ func (o *Domains) GetNameservers() []string {
 	return o.Nameservers
 }
 
-func (o *Domains) GetOrderedAt() *int64 {
+func (o *Domains) GetOrderedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -240,14 +248,14 @@ func (o *Domains) GetServiceType() GetDomainsServiceType {
 	return o.ServiceType
 }
 
-func (o *Domains) GetTransferStartedAt() *int64 {
+func (o *Domains) GetTransferStartedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TransferStartedAt
 }
 
-func (o *Domains) GetTransferredAt() *int64 {
+func (o *Domains) GetTransferredAt() *float64 {
 	if o == nil {
 		return nil
 	}

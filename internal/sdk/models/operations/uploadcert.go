@@ -47,7 +47,9 @@ func (o *UploadCertRequestBody) GetSkipValidation() *bool {
 
 type UploadCertRequest struct {
 	RequestBody *UploadCertRequestBody `request:"mediaType=application/json"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -56,6 +58,13 @@ func (o *UploadCertRequest) GetRequestBody() *UploadCertRequestBody {
 		return nil
 	}
 	return o.RequestBody
+}
+
+func (o *UploadCertRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *UploadCertRequest) GetTeamID() *string {
@@ -68,8 +77,8 @@ func (o *UploadCertRequest) GetTeamID() *string {
 type UploadCertResponseBody struct {
 	AutoRenew bool     `json:"autoRenew"`
 	Cns       []string `json:"cns"`
-	CreatedAt int64    `json:"createdAt"`
-	ExpiresAt int64    `json:"expiresAt"`
+	CreatedAt float64  `json:"createdAt"`
+	ExpiresAt float64  `json:"expiresAt"`
 	ID        string   `json:"id"`
 }
 
@@ -87,16 +96,16 @@ func (o *UploadCertResponseBody) GetCns() []string {
 	return o.Cns
 }
 
-func (o *UploadCertResponseBody) GetCreatedAt() int64 {
+func (o *UploadCertResponseBody) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
 
-func (o *UploadCertResponseBody) GetExpiresAt() int64 {
+func (o *UploadCertResponseBody) GetExpiresAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ExpiresAt
 }

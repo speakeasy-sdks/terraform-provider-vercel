@@ -22,22 +22,21 @@ func (o *RemoteCaching) GetEnabled() *bool {
 	return o.Enabled
 }
 
-type PatchTeamRoles string
+type Roles string
 
 const (
-	PatchTeamRolesOwner       PatchTeamRoles = "OWNER"
-	PatchTeamRolesMember      PatchTeamRoles = "MEMBER"
-	PatchTeamRolesViewer      PatchTeamRoles = "VIEWER"
-	PatchTeamRolesDeveloper   PatchTeamRoles = "DEVELOPER"
-	PatchTeamRolesBilling     PatchTeamRoles = "BILLING"
-	PatchTeamRolesContributor PatchTeamRoles = "CONTRIBUTOR"
+	RolesOwner       Roles = "OWNER"
+	RolesMember      Roles = "MEMBER"
+	RolesDeveloper   Roles = "DEVELOPER"
+	RolesBilling     Roles = "BILLING"
+	RolesViewer      Roles = "VIEWER"
+	RolesContributor Roles = "CONTRIBUTOR"
 )
 
-func (e PatchTeamRoles) ToPointer() *PatchTeamRoles {
+func (e Roles) ToPointer() *Roles {
 	return &e
 }
-
-func (e *PatchTeamRoles) UnmarshalJSON(data []byte) error {
+func (e *Roles) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -47,24 +46,24 @@ func (e *PatchTeamRoles) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "MEMBER":
 		fallthrough
-	case "VIEWER":
-		fallthrough
 	case "DEVELOPER":
 		fallthrough
 	case "BILLING":
 		fallthrough
+	case "VIEWER":
+		fallthrough
 	case "CONTRIBUTOR":
-		*e = PatchTeamRoles(v)
+		*e = Roles(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for PatchTeamRoles: %v", v)
+		return fmt.Errorf("invalid value for Roles: %v", v)
 	}
 }
 
 type Saml struct {
 	// Require that members of the team use SAML Single Sign-On.
-	Enforced *bool                     `json:"enforced,omitempty"`
-	Roles    map[string]PatchTeamRoles `json:"roles,omitempty"`
+	Enforced *bool            `json:"enforced,omitempty"`
+	Roles    map[string]Roles `json:"roles,omitempty"`
 }
 
 func (o *Saml) GetEnforced() *bool {
@@ -74,7 +73,7 @@ func (o *Saml) GetEnforced() *bool {
 	return o.Enforced
 }
 
-func (o *Saml) GetRoles() map[string]PatchTeamRoles {
+func (o *Saml) GetRoles() map[string]Roles {
 	if o == nil {
 		return nil
 	}
@@ -91,8 +90,6 @@ type PatchTeamRequestBody struct {
 	EnablePreviewFeedback *string `json:"enablePreviewFeedback,omitempty"`
 	// Display or hide IP addresses in Monitoring queries.
 	HideIPAddresses *bool `json:"hideIpAddresses,omitempty"`
-	// Runs a task that migrates all existing environment variables to sensitive environment variables.
-	MigrateExistingEnvVariablesToSensitive *bool `json:"migrateExistingEnvVariablesToSensitive,omitempty"`
 	// The name of the team.
 	Name *string `json:"name,omitempty"`
 	// Suffix that will be used for all preview deployments.
@@ -141,13 +138,6 @@ func (o *PatchTeamRequestBody) GetHideIPAddresses() *bool {
 		return nil
 	}
 	return o.HideIPAddresses
-}
-
-func (o *PatchTeamRequestBody) GetMigrateExistingEnvVariablesToSensitive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.MigrateExistingEnvVariablesToSensitive
 }
 
 func (o *PatchTeamRequestBody) GetName() *string {
@@ -201,7 +191,9 @@ func (o *PatchTeamRequestBody) GetSlug() *string {
 
 type PatchTeamRequest struct {
 	RequestBody *PatchTeamRequestBody `request:"mediaType=application/json"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 }
 
@@ -210,6 +202,13 @@ func (o *PatchTeamRequest) GetRequestBody() *PatchTeamRequestBody {
 		return nil
 	}
 	return o.RequestBody
+}
+
+func (o *PatchTeamRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *PatchTeamRequest) GetTeamID() string {

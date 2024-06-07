@@ -21,7 +21,6 @@ const (
 func (e QueryParamDecrypt) ToPointer() *QueryParamDecrypt {
 	return &e
 }
-
 func (e *QueryParamDecrypt) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -43,7 +42,9 @@ type GetSecretRequest struct {
 	Decrypt *QueryParamDecrypt `queryParam:"style=form,explode=true,name=decrypt"`
 	// The name or the unique identifier to which the secret belongs to.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -61,6 +62,13 @@ func (o *GetSecretRequest) GetIDOrName() string {
 	return o.IDOrName
 }
 
+func (o *GetSecretRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 func (o *GetSecretRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -73,7 +81,7 @@ type GetSecretResponseBody struct {
 	// The date when the secret was created.
 	Created time.Time `json:"created"`
 	// Timestamp for when the secret was created.
-	CreatedAt *int64 `json:"createdAt,omitempty"`
+	CreatedAt *float64 `json:"createdAt,omitempty"`
 	// Indicates whether the secret value can be decrypted after it has been created.
 	Decryptable *bool `json:"decryptable,omitempty"`
 	// The name of the secret.
@@ -108,7 +116,7 @@ func (o *GetSecretResponseBody) GetCreated() time.Time {
 	return o.Created
 }
 
-func (o *GetSecretResponseBody) GetCreatedAt() *int64 {
+func (o *GetSecretResponseBody) GetCreatedAt() *float64 {
 	if o == nil {
 		return nil
 	}

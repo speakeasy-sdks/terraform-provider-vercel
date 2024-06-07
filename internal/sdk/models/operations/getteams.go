@@ -4,6 +4,7 @@ package operations
 
 import (
 	"errors"
+	"fmt"
 	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
 	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
 	"net/http"
@@ -11,28 +12,28 @@ import (
 
 type GetTeamsRequest struct {
 	// Maximum number of Teams which may be returned.
-	Limit *int64 `queryParam:"style=form,explode=true,name=limit"`
+	Limit *float64 `queryParam:"style=form,explode=true,name=limit"`
 	// Timestamp (in milliseconds) to only include Teams created since then.
-	Since *int64 `queryParam:"style=form,explode=true,name=since"`
+	Since *float64 `queryParam:"style=form,explode=true,name=since"`
 	// Timestamp (in milliseconds) to only include Teams created until then.
-	Until *int64 `queryParam:"style=form,explode=true,name=until"`
+	Until *float64 `queryParam:"style=form,explode=true,name=until"`
 }
 
-func (o *GetTeamsRequest) GetLimit() *int64 {
+func (o *GetTeamsRequest) GetLimit() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Limit
 }
 
-func (o *GetTeamsRequest) GetSince() *int64 {
+func (o *GetTeamsRequest) GetSince() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Since
 }
 
-func (o *GetTeamsRequest) GetUntil() *int64 {
+func (o *GetTeamsRequest) GetUntil() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -73,21 +74,21 @@ func CreateTeamsTeamLimited(teamLimited shared.TeamLimited) Teams {
 
 func (u *Teams) UnmarshalJSON(data []byte) error {
 
-	team := shared.Team{}
+	var team shared.Team = shared.Team{}
 	if err := utils.UnmarshalJSON(data, &team, "", true, true); err == nil {
 		u.Team = &team
 		u.Type = TeamsTypeTeam
 		return nil
 	}
 
-	teamLimited := shared.TeamLimited{}
+	var teamLimited shared.TeamLimited = shared.TeamLimited{}
 	if err := utils.UnmarshalJSON(data, &teamLimited, "", true, true); err == nil {
 		u.TeamLimited = &teamLimited
 		u.Type = TeamsTypeTeamLimited
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Teams", string(data))
 }
 
 func (u Teams) MarshalJSON() ([]byte, error) {
@@ -99,7 +100,7 @@ func (u Teams) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.TeamLimited, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Teams: all fields are null")
 }
 
 // GetTeamsResponseBody - A paginated list of teams.

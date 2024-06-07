@@ -11,7 +11,9 @@ import (
 type GetDomainRequest struct {
 	// The name of the domain.
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -20,6 +22,13 @@ func (o *GetDomainRequest) GetDomain() string {
 		return ""
 	}
 	return o.Domain
+}
+
+func (o *GetDomainRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *GetDomainRequest) GetTeamID() *string {
@@ -85,7 +94,6 @@ const (
 func (e GetDomainServiceType) ToPointer() *GetDomainServiceType {
 	return &e
 }
-
 func (e *GetDomainServiceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -106,15 +114,15 @@ func (e *GetDomainServiceType) UnmarshalJSON(data []byte) error {
 
 type GetDomainDomain struct {
 	// If it was purchased through Vercel, the timestamp in milliseconds when it was purchased.
-	BoughtAt *int64 `json:"boughtAt"`
+	BoughtAt *float64 `json:"boughtAt"`
 	// Timestamp in milliseconds when the domain was created in the registry.
-	CreatedAt int64 `json:"createdAt"`
+	CreatedAt float64 `json:"createdAt"`
 	// An object containing information of the domain creator, including the user's id, username, and email.
 	Creator GetDomainCreator `json:"creator"`
 	// A list of custom nameservers for the domain to point to. Only applies to domains purchased with Vercel.
 	CustomNameservers []string `json:"customNameservers,omitempty"`
 	// Timestamp in milliseconds at which the domain is set to expire. `null` if not bought with Vercel.
-	ExpiresAt *int64 `json:"expiresAt"`
+	ExpiresAt *float64 `json:"expiresAt"`
 	// The unique identifier of the domain.
 	ID string `json:"id"`
 	// A list of the intended nameservers for the domain to point to Vercel DNS.
@@ -124,30 +132,30 @@ type GetDomainDomain struct {
 	// A list of the current nameservers of the domain.
 	Nameservers []string `json:"nameservers"`
 	// Timestamp in milliseconds at which the domain was ordered.
-	OrderedAt *int64 `json:"orderedAt,omitempty"`
+	OrderedAt *float64 `json:"orderedAt,omitempty"`
 	// Indicates whether the domain is set to automatically renew.
 	Renew *bool `json:"renew,omitempty"`
 	// The type of service the domain is handled by. `external` if the DNS is externally handled, `zeit.world` if handled with Vercel, or `na` if the service is not available.
 	ServiceType GetDomainServiceType `json:"serviceType"`
 	Suffix      bool                 `json:"suffix"`
 	// If transferred into Vercel, timestamp in milliseconds when the domain transfer was initiated.
-	TransferStartedAt *int64 `json:"transferStartedAt,omitempty"`
+	TransferStartedAt *float64 `json:"transferStartedAt,omitempty"`
 	// Timestamp in milliseconds at which the domain was successfully transferred into Vercel. `null` if the transfer is still processing or was never transferred in.
-	TransferredAt *int64 `json:"transferredAt,omitempty"`
+	TransferredAt *float64 `json:"transferredAt,omitempty"`
 	// If the domain has the ownership verified.
 	Verified bool `json:"verified"`
 }
 
-func (o *GetDomainDomain) GetBoughtAt() *int64 {
+func (o *GetDomainDomain) GetBoughtAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.BoughtAt
 }
 
-func (o *GetDomainDomain) GetCreatedAt() int64 {
+func (o *GetDomainDomain) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -166,7 +174,7 @@ func (o *GetDomainDomain) GetCustomNameservers() []string {
 	return o.CustomNameservers
 }
 
-func (o *GetDomainDomain) GetExpiresAt() *int64 {
+func (o *GetDomainDomain) GetExpiresAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -201,7 +209,7 @@ func (o *GetDomainDomain) GetNameservers() []string {
 	return o.Nameservers
 }
 
-func (o *GetDomainDomain) GetOrderedAt() *int64 {
+func (o *GetDomainDomain) GetOrderedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -229,14 +237,14 @@ func (o *GetDomainDomain) GetSuffix() bool {
 	return o.Suffix
 }
 
-func (o *GetDomainDomain) GetTransferStartedAt() *int64 {
+func (o *GetDomainDomain) GetTransferStartedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TransferStartedAt
 }
 
-func (o *GetDomainDomain) GetTransferredAt() *int64 {
+func (o *GetDomainDomain) GetTransferredAt() *float64 {
 	if o == nil {
 		return nil
 	}

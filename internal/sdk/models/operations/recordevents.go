@@ -19,7 +19,6 @@ const (
 func (e Event) ToPointer() *Event {
 	return &e
 }
-
 func (e *Event) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -47,7 +46,6 @@ const (
 func (e Source) ToPointer() *Source {
 	return &e
 }
-
 func (e *Source) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -66,7 +64,7 @@ func (e *Source) UnmarshalJSON(data []byte) error {
 
 type RequestBody struct {
 	// The time taken to generate the artifact. This should be sent as a body parameter on `HIT` events.
-	Duration *int64 `json:"duration,omitempty"`
+	Duration *float64 `json:"duration,omitempty"`
 	// One of `HIT` or `MISS`. `HIT` specifies that a cached artifact for `hash` was found in the cache. `MISS` specifies that a cached artifact with `hash` was not found.
 	Event Event `json:"event"`
 	// The artifact hash
@@ -77,7 +75,7 @@ type RequestBody struct {
 	Source Source `json:"source"`
 }
 
-func (o *RequestBody) GetDuration() *int64 {
+func (o *RequestBody) GetDuration() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -114,7 +112,9 @@ func (o *RequestBody) GetSource() Source {
 
 type RecordEventsRequest struct {
 	RequestBody []RequestBody `request:"mediaType=application/json"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// The continuous integration or delivery environment where this artifact is downloaded.
 	XArtifactClientCi *string `header:"style=simple,explode=false,name=x-artifact-client-ci"`
@@ -127,6 +127,13 @@ func (o *RecordEventsRequest) GetRequestBody() []RequestBody {
 		return nil
 	}
 	return o.RequestBody
+}
+
+func (o *RecordEventsRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *RecordEventsRequest) GetTeamID() *string {

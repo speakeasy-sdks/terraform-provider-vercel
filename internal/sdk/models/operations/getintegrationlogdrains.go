@@ -9,8 +9,17 @@ import (
 )
 
 type GetIntegrationLogDrainsRequest struct {
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *GetIntegrationLogDrainsRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *GetIntegrationLogDrainsRequest) GetTeamID() *string {
@@ -31,7 +40,6 @@ const (
 func (e GetIntegrationLogDrainsCreatedFrom) ToPointer() *GetIntegrationLogDrainsCreatedFrom {
 	return &e
 }
-
 func (e *GetIntegrationLogDrainsCreatedFrom) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -60,7 +68,6 @@ const (
 func (e GetIntegrationLogDrainsDeliveryFormat) ToPointer() *GetIntegrationLogDrainsDeliveryFormat {
 	return &e
 }
-
 func (e *GetIntegrationLogDrainsDeliveryFormat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -79,31 +86,30 @@ func (e *GetIntegrationLogDrainsDeliveryFormat) UnmarshalJSON(data []byte) error
 	}
 }
 
-// GetIntegrationLogDrainsEnvironment - The environment of log drain
-type GetIntegrationLogDrainsEnvironment string
+// GetIntegrationLogDrainsEnvironments - The environment of log drain
+type GetIntegrationLogDrainsEnvironments string
 
 const (
-	GetIntegrationLogDrainsEnvironmentPreview    GetIntegrationLogDrainsEnvironment = "preview"
-	GetIntegrationLogDrainsEnvironmentProduction GetIntegrationLogDrainsEnvironment = "production"
+	GetIntegrationLogDrainsEnvironmentsProduction GetIntegrationLogDrainsEnvironments = "production"
+	GetIntegrationLogDrainsEnvironmentsPreview    GetIntegrationLogDrainsEnvironments = "preview"
 )
 
-func (e GetIntegrationLogDrainsEnvironment) ToPointer() *GetIntegrationLogDrainsEnvironment {
+func (e GetIntegrationLogDrainsEnvironments) ToPointer() *GetIntegrationLogDrainsEnvironments {
 	return &e
 }
-
-func (e *GetIntegrationLogDrainsEnvironment) UnmarshalJSON(data []byte) error {
+func (e *GetIntegrationLogDrainsEnvironments) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "preview":
-		fallthrough
 	case "production":
-		*e = GetIntegrationLogDrainsEnvironment(v)
+		fallthrough
+	case "preview":
+		*e = GetIntegrationLogDrainsEnvironments(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetIntegrationLogDrainsEnvironment: %v", v)
+		return fmt.Errorf("invalid value for GetIntegrationLogDrainsEnvironments: %v", v)
 	}
 }
 
@@ -111,35 +117,31 @@ func (e *GetIntegrationLogDrainsEnvironment) UnmarshalJSON(data []byte) error {
 type GetIntegrationLogDrainsSources string
 
 const (
-	GetIntegrationLogDrainsSourcesStatic     GetIntegrationLogDrainsSources = "static"
-	GetIntegrationLogDrainsSourcesLambda     GetIntegrationLogDrainsSources = "lambda"
-	GetIntegrationLogDrainsSourcesBuild      GetIntegrationLogDrainsSources = "build"
-	GetIntegrationLogDrainsSourcesEdge       GetIntegrationLogDrainsSources = "edge"
-	GetIntegrationLogDrainsSourcesExternal   GetIntegrationLogDrainsSources = "external"
-	GetIntegrationLogDrainsSourcesDeployment GetIntegrationLogDrainsSources = "deployment"
+	GetIntegrationLogDrainsSourcesBuild    GetIntegrationLogDrainsSources = "build"
+	GetIntegrationLogDrainsSourcesEdge     GetIntegrationLogDrainsSources = "edge"
+	GetIntegrationLogDrainsSourcesLambda   GetIntegrationLogDrainsSources = "lambda"
+	GetIntegrationLogDrainsSourcesStatic   GetIntegrationLogDrainsSources = "static"
+	GetIntegrationLogDrainsSourcesExternal GetIntegrationLogDrainsSources = "external"
 )
 
 func (e GetIntegrationLogDrainsSources) ToPointer() *GetIntegrationLogDrainsSources {
 	return &e
 }
-
 func (e *GetIntegrationLogDrainsSources) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "static":
-		fallthrough
-	case "lambda":
-		fallthrough
 	case "build":
 		fallthrough
 	case "edge":
 		fallthrough
-	case "external":
+	case "lambda":
 		fallthrough
-	case "deployment":
+	case "static":
+		fallthrough
+	case "external":
 		*e = GetIntegrationLogDrainsSources(v)
 		return nil
 	default:
@@ -155,13 +157,13 @@ type GetIntegrationLogDrainsResponseBody struct {
 	// The client configuration this log drain was created with
 	ConfigurationID *string `json:"configurationId,omitempty"`
 	// A timestamp that tells you when the log drain was created
-	CreatedAt int64 `json:"createdAt"`
+	CreatedAt float64 `json:"createdAt"`
 	// Whether the log drain was created by an integration or by a user
 	CreatedFrom *GetIntegrationLogDrainsCreatedFrom `json:"createdFrom,omitempty"`
 	// The delivery log format
 	DeliveryFormat *GetIntegrationLogDrainsDeliveryFormat `json:"deliveryFormat,omitempty"`
 	// The environment of log drain
-	Environment *GetIntegrationLogDrainsEnvironment `json:"environment,omitempty"`
+	Environments []GetIntegrationLogDrainsEnvironments `json:"environments"`
 	// The headers to send with the request
 	Headers map[string]string `json:"headers,omitempty"`
 	// The unique identifier of the log drain. Always prefixed with `ld_`
@@ -173,6 +175,8 @@ type GetIntegrationLogDrainsResponseBody struct {
 	ProjectID *string `json:"projectId,omitempty"`
 	// The identifier of the projects this log drain is associated with
 	ProjectIds []string `json:"projectIds,omitempty"`
+	// The sampling rate of log drain
+	SamplingRate *float64 `json:"samplingRate,omitempty"`
 	// The sources from which logs are currently being delivered to this log drain.
 	Sources []GetIntegrationLogDrainsSources `json:"sources,omitempty"`
 	// The URL to call when logs are generated
@@ -200,9 +204,9 @@ func (o *GetIntegrationLogDrainsResponseBody) GetConfigurationID() *string {
 	return o.ConfigurationID
 }
 
-func (o *GetIntegrationLogDrainsResponseBody) GetCreatedAt() int64 {
+func (o *GetIntegrationLogDrainsResponseBody) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -221,11 +225,11 @@ func (o *GetIntegrationLogDrainsResponseBody) GetDeliveryFormat() *GetIntegratio
 	return o.DeliveryFormat
 }
 
-func (o *GetIntegrationLogDrainsResponseBody) GetEnvironment() *GetIntegrationLogDrainsEnvironment {
+func (o *GetIntegrationLogDrainsResponseBody) GetEnvironments() []GetIntegrationLogDrainsEnvironments {
 	if o == nil {
-		return nil
+		return []GetIntegrationLogDrainsEnvironments{}
 	}
-	return o.Environment
+	return o.Environments
 }
 
 func (o *GetIntegrationLogDrainsResponseBody) GetHeaders() map[string]string {
@@ -268,6 +272,13 @@ func (o *GetIntegrationLogDrainsResponseBody) GetProjectIds() []string {
 		return nil
 	}
 	return o.ProjectIds
+}
+
+func (o *GetIntegrationLogDrainsResponseBody) GetSamplingRate() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.SamplingRate
 }
 
 func (o *GetIntegrationLogDrainsResponseBody) GetSources() []GetIntegrationLogDrainsSources {

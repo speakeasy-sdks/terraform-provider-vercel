@@ -17,7 +17,6 @@ const (
 func (e AuthUserLimitedVersion) ToPointer() *AuthUserLimitedVersion {
 	return &e
 }
-
 func (e *AuthUserLimitedVersion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -36,6 +35,8 @@ func (e *AuthUserLimitedVersion) UnmarshalJSON(data []byte) error {
 type AuthUserLimited struct {
 	// SHA1 hash of the avatar for the User account. Can be used in conjuction with the ... endpoint to retrieve the avatar image.
 	Avatar *string `json:"avatar"`
+	// The user's default team. Only applies if the user's `version` is `'northstar'`.
+	DefaultTeamID *string `json:"defaultTeamId"`
 	// Email address associated with the User account.
 	Email string `json:"email"`
 	// The User's unique identifier.
@@ -55,6 +56,13 @@ func (o *AuthUserLimited) GetAvatar() *string {
 		return nil
 	}
 	return o.Avatar
+}
+
+func (o *AuthUserLimited) GetDefaultTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultTeamID
 }
 
 func (o *AuthUserLimited) GetEmail() string {

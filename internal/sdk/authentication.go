@@ -25,12 +25,13 @@ func newAuthentication(sdkConfig sdkConfiguration) *Authentication {
 	}
 }
 
-// CreateAuthToken - Create an Auth Token
+// CreateToken - Create an Auth Token
 // Creates and returns a new authentication token for the currently authenticated User. The `bearerToken` property is only provided once, in the response body, so be sure to save it on the client for use with API requests.
-func (s *Authentication) CreateAuthToken(ctx context.Context, request operations.CreateAuthTokenRequest) (*operations.CreateAuthTokenResponse, error) {
+func (s *Authentication) CreateToken(ctx context.Context, request operations.CreateAuthTokenRequest) (*operations.CreateAuthTokenResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "createAuthToken",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -77,9 +78,11 @@ func (s *Authentication) CreateAuthToken(ctx context.Context, request operations
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -126,14 +129,16 @@ func (s *Authentication) CreateAuthToken(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
-// DeleteAuthToken - Delete an authentication token
+// DeleteToken - Delete an authentication token
 // Invalidate an authentication token, such that it will no longer be valid for future HTTP requests.
-func (s *Authentication) DeleteAuthToken(ctx context.Context, request operations.DeleteAuthTokenRequest) (*operations.DeleteAuthTokenResponse, error) {
+func (s *Authentication) DeleteToken(ctx context.Context, request operations.DeleteAuthTokenRequest) (*operations.DeleteAuthTokenResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "deleteAuthToken",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -170,9 +175,11 @@ func (s *Authentication) DeleteAuthToken(ctx context.Context, request operations
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -219,6 +226,7 @@ func (s *Authentication) DeleteAuthToken(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // EmailLogin - Login with email
@@ -227,6 +235,7 @@ func (s *Authentication) EmailLogin(ctx context.Context, request *operations.Ema
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "emailLogin",
+		OAuth2Scopes:   []string{},
 		SecuritySource: nil,
 	}
 
@@ -265,9 +274,11 @@ func (s *Authentication) EmailLogin(ctx context.Context, request *operations.Ema
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -298,7 +309,7 @@ func (s *Authentication) EmailLogin(ctx context.Context, request *operations.Ema
 				return nil, err
 			}
 
-			res.Object = &out
+			res.OneOf = &out
 		default:
 			return nil, errors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -308,6 +319,7 @@ func (s *Authentication) EmailLogin(ctx context.Context, request *operations.Ema
 	}
 
 	return res, nil
+
 }
 
 // GetAuthToken - Get Auth Token Metadata
@@ -316,6 +328,7 @@ func (s *Authentication) GetAuthToken(ctx context.Context, request operations.Ge
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "getAuthToken",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -352,9 +365,11 @@ func (s *Authentication) GetAuthToken(ctx context.Context, request operations.Ge
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -399,14 +414,16 @@ func (s *Authentication) GetAuthToken(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
-// ListAuthTokens - List Auth Tokens
+// ListTokens - List Auth Tokens
 // Retrieve a list of the current User's authentication tokens.
-func (s *Authentication) ListAuthTokens(ctx context.Context) (*operations.ListAuthTokensResponse, error) {
+func (s *Authentication) ListTokens(ctx context.Context) (*operations.ListAuthTokensResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "listAuthTokens",
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -443,9 +460,11 @@ func (s *Authentication) ListAuthTokens(ctx context.Context) (*operations.ListAu
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -490,6 +509,7 @@ func (s *Authentication) ListAuthTokens(ctx context.Context) (*operations.ListAu
 	}
 
 	return res, nil
+
 }
 
 // VerifyToken - Verify a login request to get an authentication token
@@ -498,6 +518,7 @@ func (s *Authentication) VerifyToken(ctx context.Context, request operations.Ver
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "verifyToken",
+		OAuth2Scopes:   []string{},
 		SecuritySource: nil,
 	}
 
@@ -534,9 +555,11 @@ func (s *Authentication) VerifyToken(ctx context.Context, request operations.Ver
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -581,4 +604,5 @@ func (s *Authentication) VerifyToken(ctx context.Context, request operations.Ver
 	}
 
 	return res, nil
+
 }

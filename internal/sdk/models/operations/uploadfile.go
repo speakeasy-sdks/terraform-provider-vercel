@@ -4,28 +4,38 @@ package operations
 
 import (
 	"errors"
+	"fmt"
 	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
 	"net/http"
 )
 
 type UploadFileRequest struct {
 	// The file size in bytes
-	ContentLength *int64 `header:"style=simple,explode=false,name=Content-Length"`
-	// The Team identifier or slug to perform the request on behalf of.
+	ContentLength *float64 `header:"style=simple,explode=false,name=Content-Length"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// The file SHA1 used to check the integrity
 	XNowDigest *string `header:"style=simple,explode=false,name=x-now-digest"`
 	// The file size as an alternative to `Content-Length`
-	XNowSize *int64 `header:"style=simple,explode=false,name=x-now-size"`
+	XNowSize *float64 `header:"style=simple,explode=false,name=x-now-size"`
 	// The file SHA1 used to check the integrity
 	XVercelDigest *string `header:"style=simple,explode=false,name=x-vercel-digest"`
 }
 
-func (o *UploadFileRequest) GetContentLength() *int64 {
+func (o *UploadFileRequest) GetContentLength() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.ContentLength
+}
+
+func (o *UploadFileRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *UploadFileRequest) GetTeamID() *string {
@@ -42,7 +52,7 @@ func (o *UploadFileRequest) GetXNowDigest() *string {
 	return o.XNowDigest
 }
 
-func (o *UploadFileRequest) GetXNowSize() *int64 {
+func (o *UploadFileRequest) GetXNowSize() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -107,21 +117,21 @@ func CreateUploadFileResponseBodyUploadFile2(uploadFile2 UploadFile2) UploadFile
 
 func (u *UploadFileResponseBody) UnmarshalJSON(data []byte) error {
 
-	uploadFile2 := UploadFile2{}
+	var uploadFile2 UploadFile2 = UploadFile2{}
 	if err := utils.UnmarshalJSON(data, &uploadFile2, "", true, true); err == nil {
 		u.UploadFile2 = &uploadFile2
 		u.Type = UploadFileResponseBodyTypeUploadFile2
 		return nil
 	}
 
-	uploadFile1 := UploadFile1{}
+	var uploadFile1 UploadFile1 = UploadFile1{}
 	if err := utils.UnmarshalJSON(data, &uploadFile1, "", true, true); err == nil {
 		u.UploadFile1 = &uploadFile1
 		u.Type = UploadFileResponseBodyTypeUploadFile1
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UploadFileResponseBody", string(data))
 }
 
 func (u UploadFileResponseBody) MarshalJSON() ([]byte, error) {
@@ -133,7 +143,7 @@ func (u UploadFileResponseBody) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.UploadFile2, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type UploadFileResponseBody: all fields are null")
 }
 
 type UploadFileResponse struct {

@@ -8,25 +8,27 @@ import (
 
 type UploadArtifactRequest struct {
 	// The artifact size in bytes
-	ContentLength int64  `header:"style=simple,explode=false,name=Content-Length"`
-	RequestBody   []byte `request:"mediaType=application/octet-stream"`
+	ContentLength float64 `header:"style=simple,explode=false,name=Content-Length"`
+	RequestBody   []byte  `request:"mediaType=application/octet-stream"`
 	// The artifact hash
 	Hash string `pathParam:"style=simple,explode=false,name=hash"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// The continuous integration or delivery environment where this artifact was generated.
 	XArtifactClientCi *string `header:"style=simple,explode=false,name=x-artifact-client-ci"`
 	// 1 if the client is an interactive shell. Otherwise 0
 	XArtifactClientInteractive *int64 `header:"style=simple,explode=false,name=x-artifact-client-interactive"`
 	// The time taken to generate the uploaded artifact in milliseconds.
-	XArtifactDuration *int64 `header:"style=simple,explode=false,name=x-artifact-duration"`
+	XArtifactDuration *float64 `header:"style=simple,explode=false,name=x-artifact-duration"`
 	// The base64 encoded tag for this artifact. The value is sent back to clients when the artifact is downloaded as the header `x-artifact-tag`
 	XArtifactTag *string `header:"style=simple,explode=false,name=x-artifact-tag"`
 }
 
-func (o *UploadArtifactRequest) GetContentLength() int64 {
+func (o *UploadArtifactRequest) GetContentLength() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ContentLength
 }
@@ -43,6 +45,13 @@ func (o *UploadArtifactRequest) GetHash() string {
 		return ""
 	}
 	return o.Hash
+}
+
+func (o *UploadArtifactRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *UploadArtifactRequest) GetTeamID() *string {
@@ -66,7 +75,7 @@ func (o *UploadArtifactRequest) GetXArtifactClientInteractive() *int64 {
 	return o.XArtifactClientInteractive
 }
 
-func (o *UploadArtifactRequest) GetXArtifactDuration() *int64 {
+func (o *UploadArtifactRequest) GetXArtifactDuration() *float64 {
 	if o == nil {
 		return nil
 	}

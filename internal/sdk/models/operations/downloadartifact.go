@@ -9,7 +9,9 @@ import (
 type DownloadArtifactRequest struct {
 	// The artifact hash
 	Hash string `pathParam:"style=simple,explode=false,name=hash"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// The continuous integration or delivery environment where this artifact is downloaded.
 	XArtifactClientCi *string `header:"style=simple,explode=false,name=x-artifact-client-ci"`
@@ -22,6 +24,13 @@ func (o *DownloadArtifactRequest) GetHash() string {
 		return ""
 	}
 	return o.Hash
+}
+
+func (o *DownloadArtifactRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *DownloadArtifactRequest) GetTeamID() *string {

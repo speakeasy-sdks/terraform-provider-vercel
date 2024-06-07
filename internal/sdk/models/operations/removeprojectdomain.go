@@ -11,7 +11,9 @@ type RemoveProjectDomainRequest struct {
 	Domain string `pathParam:"style=simple,explode=false,name=domain"`
 	// The unique project identifier or the project name
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -27,6 +29,13 @@ func (o *RemoveProjectDomainRequest) GetIDOrName() string {
 		return ""
 	}
 	return o.IDOrName
+}
+
+func (o *RemoveProjectDomainRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *RemoveProjectDomainRequest) GetTeamID() *string {

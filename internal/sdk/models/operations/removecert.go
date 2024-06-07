@@ -9,7 +9,9 @@ import (
 type RemoveCertRequest struct {
 	// The cert id to remove
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -18,6 +20,13 @@ func (o *RemoveCertRequest) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *RemoveCertRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *RemoveCertRequest) GetTeamID() *string {

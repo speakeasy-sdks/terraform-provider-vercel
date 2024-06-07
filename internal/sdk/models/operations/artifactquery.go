@@ -4,6 +4,7 @@ package operations
 
 import (
 	"errors"
+	"fmt"
 	"github.com/zchee/terraform-provider-vercel/internal/sdk/internal/utils"
 	"net/http"
 )
@@ -22,7 +23,9 @@ func (o *ArtifactQueryRequestBody) GetHashes() []string {
 
 type ArtifactQueryRequest struct {
 	RequestBody *ArtifactQueryRequestBody `request:"mediaType=application/json"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -31,6 +34,13 @@ func (o *ArtifactQueryRequest) GetRequestBody() *ArtifactQueryRequestBody {
 		return nil
 	}
 	return o.RequestBody
+}
+
+func (o *ArtifactQueryRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *ArtifactQueryRequest) GetTeamID() *string {
@@ -63,14 +73,14 @@ func (o *ArtifactQuery2) GetError() Error {
 }
 
 type ArtifactQuery1 struct {
-	Size           int64   `json:"size"`
+	Size           float64 `json:"size"`
 	Tag            *string `json:"tag,omitempty"`
-	TaskDurationMs int64   `json:"taskDurationMs"`
+	TaskDurationMs float64 `json:"taskDurationMs"`
 }
 
-func (o *ArtifactQuery1) GetSize() int64 {
+func (o *ArtifactQuery1) GetSize() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Size
 }
@@ -82,9 +92,9 @@ func (o *ArtifactQuery1) GetTag() *string {
 	return o.Tag
 }
 
-func (o *ArtifactQuery1) GetTaskDurationMs() int64 {
+func (o *ArtifactQuery1) GetTaskDurationMs() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.TaskDurationMs
 }
@@ -123,21 +133,21 @@ func CreateResponseBodyArtifactQuery2(artifactQuery2 ArtifactQuery2) ResponseBod
 
 func (u *ResponseBody) UnmarshalJSON(data []byte) error {
 
-	artifactQuery2 := ArtifactQuery2{}
+	var artifactQuery2 ArtifactQuery2 = ArtifactQuery2{}
 	if err := utils.UnmarshalJSON(data, &artifactQuery2, "", true, true); err == nil {
 		u.ArtifactQuery2 = &artifactQuery2
 		u.Type = ResponseBodyTypeArtifactQuery2
 		return nil
 	}
 
-	artifactQuery1 := ArtifactQuery1{}
+	var artifactQuery1 ArtifactQuery1 = ArtifactQuery1{}
 	if err := utils.UnmarshalJSON(data, &artifactQuery1, "", true, true); err == nil {
 		u.ArtifactQuery1 = &artifactQuery1
 		u.Type = ResponseBodyTypeArtifactQuery1
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ResponseBody", string(data))
 }
 
 func (u ResponseBody) MarshalJSON() ([]byte, error) {
@@ -149,7 +159,7 @@ func (u ResponseBody) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArtifactQuery2, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type ResponseBody: all fields are null")
 }
 
 type ArtifactQueryResponse struct {

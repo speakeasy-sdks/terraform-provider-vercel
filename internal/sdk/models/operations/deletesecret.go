@@ -9,7 +9,9 @@ import (
 type DeleteSecretRequest struct {
 	// The name or the unique identifier to which the secret belongs to.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -18,6 +20,13 @@ func (o *DeleteSecretRequest) GetIDOrName() string {
 		return ""
 	}
 	return o.IDOrName
+}
+
+func (o *DeleteSecretRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *DeleteSecretRequest) GetTeamID() *string {
@@ -29,16 +38,16 @@ func (o *DeleteSecretRequest) GetTeamID() *string {
 
 type DeleteSecretResponseBody struct {
 	// The date when the secret was created.
-	Created int64 `json:"created"`
+	Created float64 `json:"created"`
 	// The name of the deleted secret.
 	Name string `json:"name"`
 	// The unique identifier of the deleted secret.
 	UID string `json:"uid"`
 }
 
-func (o *DeleteSecretResponseBody) GetCreated() int64 {
+func (o *DeleteSecretResponseBody) GetCreated() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Created
 }

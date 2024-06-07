@@ -9,8 +9,17 @@ import (
 )
 
 type StatusRequest struct {
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
+}
+
+func (o *StatusRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *StatusRequest) GetTeamID() *string {
@@ -32,7 +41,6 @@ const (
 func (e StatusStatus) ToPointer() *StatusStatus {
 	return &e
 }
-
 func (e *StatusStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

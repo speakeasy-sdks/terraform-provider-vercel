@@ -3,14 +3,15 @@
 package operations
 
 import (
-	"github.com/zchee/terraform-provider-vercel/internal/sdk/models/shared"
 	"net/http"
 )
 
 type GetEdgeConfigItemRequest struct {
 	EdgeConfigID      string `pathParam:"style=simple,explode=false,name=edgeConfigId"`
 	EdgeConfigItemKey string `pathParam:"style=simple,explode=false,name=edgeConfigItemKey"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -28,6 +29,13 @@ func (o *GetEdgeConfigItemRequest) GetEdgeConfigItemKey() string {
 	return o.EdgeConfigItemKey
 }
 
+func (o *GetEdgeConfigItemRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 func (o *GetEdgeConfigItemRequest) GetTeamID() *string {
 	if o == nil {
 		return nil
@@ -38,8 +46,6 @@ func (o *GetEdgeConfigItemRequest) GetTeamID() *string {
 type GetEdgeConfigItemResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// The EdgeConfig.
-	EdgeConfigItem *shared.EdgeConfigItem
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
@@ -51,13 +57,6 @@ func (o *GetEdgeConfigItemResponse) GetContentType() string {
 		return ""
 	}
 	return o.ContentType
-}
-
-func (o *GetEdgeConfigItemResponse) GetEdgeConfigItem() *shared.EdgeConfigItem {
-	if o == nil {
-		return nil
-	}
-	return o.EdgeConfigItem
 }
 
 func (o *GetEdgeConfigItemResponse) GetStatusCode() int {

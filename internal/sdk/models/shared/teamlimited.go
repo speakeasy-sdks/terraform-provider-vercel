@@ -12,13 +12,13 @@ import (
 type TeamLimitedGitUserIDType string
 
 const (
-	TeamLimitedGitUserIDTypeStr     TeamLimitedGitUserIDType = "str"
-	TeamLimitedGitUserIDTypeInteger TeamLimitedGitUserIDType = "integer"
+	TeamLimitedGitUserIDTypeStr    TeamLimitedGitUserIDType = "str"
+	TeamLimitedGitUserIDTypeNumber TeamLimitedGitUserIDType = "number"
 )
 
 type TeamLimitedGitUserID struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type TeamLimitedGitUserIDType
 }
@@ -32,32 +32,32 @@ func CreateTeamLimitedGitUserIDStr(str string) TeamLimitedGitUserID {
 	}
 }
 
-func CreateTeamLimitedGitUserIDInteger(integer int64) TeamLimitedGitUserID {
-	typ := TeamLimitedGitUserIDTypeInteger
+func CreateTeamLimitedGitUserIDNumber(number float64) TeamLimitedGitUserID {
+	typ := TeamLimitedGitUserIDTypeNumber
 
 	return TeamLimitedGitUserID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *TeamLimitedGitUserID) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = TeamLimitedGitUserIDTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = TeamLimitedGitUserIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = TeamLimitedGitUserIDTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for TeamLimitedGitUserID", string(data))
 }
 
 func (u TeamLimitedGitUserID) MarshalJSON() ([]byte, error) {
@@ -65,11 +65,11 @@ func (u TeamLimitedGitUserID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type TeamLimitedGitUserID: all fields are null")
 }
 
 type TeamLimitedSchemasOrigin string
@@ -91,7 +91,6 @@ const (
 func (e TeamLimitedSchemasOrigin) ToPointer() *TeamLimitedSchemasOrigin {
 	return &e
 }
-
 func (e *TeamLimitedSchemasOrigin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -128,7 +127,7 @@ func (e *TeamLimitedSchemasOrigin) UnmarshalJSON(data []byte) error {
 
 type TeamLimitedJoinedFrom struct {
 	CommitID         *string                  `json:"commitId,omitempty"`
-	DsyncConnectedAt *int64                   `json:"dsyncConnectedAt,omitempty"`
+	DsyncConnectedAt *float64                 `json:"dsyncConnectedAt,omitempty"`
 	DsyncUserID      *string                  `json:"dsyncUserId,omitempty"`
 	GitUserID        *TeamLimitedGitUserID    `json:"gitUserId,omitempty"`
 	GitUserLogin     *string                  `json:"gitUserLogin,omitempty"`
@@ -136,7 +135,7 @@ type TeamLimitedJoinedFrom struct {
 	Origin           TeamLimitedSchemasOrigin `json:"origin"`
 	RepoID           *string                  `json:"repoId,omitempty"`
 	RepoPath         *string                  `json:"repoPath,omitempty"`
-	SsoConnectedAt   *int64                   `json:"ssoConnectedAt,omitempty"`
+	SsoConnectedAt   *float64                 `json:"ssoConnectedAt,omitempty"`
 	SsoUserID        *string                  `json:"ssoUserId,omitempty"`
 }
 
@@ -147,7 +146,7 @@ func (o *TeamLimitedJoinedFrom) GetCommitID() *string {
 	return o.CommitID
 }
 
-func (o *TeamLimitedJoinedFrom) GetDsyncConnectedAt() *int64 {
+func (o *TeamLimitedJoinedFrom) GetDsyncConnectedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -203,7 +202,7 @@ func (o *TeamLimitedJoinedFrom) GetRepoPath() *string {
 	return o.RepoPath
 }
 
-func (o *TeamLimitedJoinedFrom) GetSsoConnectedAt() *int64 {
+func (o *TeamLimitedJoinedFrom) GetSsoConnectedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -222,16 +221,15 @@ type TeamLimitedRole string
 const (
 	TeamLimitedRoleOwner       TeamLimitedRole = "OWNER"
 	TeamLimitedRoleMember      TeamLimitedRole = "MEMBER"
-	TeamLimitedRoleViewer      TeamLimitedRole = "VIEWER"
 	TeamLimitedRoleDeveloper   TeamLimitedRole = "DEVELOPER"
 	TeamLimitedRoleBilling     TeamLimitedRole = "BILLING"
+	TeamLimitedRoleViewer      TeamLimitedRole = "VIEWER"
 	TeamLimitedRoleContributor TeamLimitedRole = "CONTRIBUTOR"
 )
 
 func (e TeamLimitedRole) ToPointer() *TeamLimitedRole {
 	return &e
 }
-
 func (e *TeamLimitedRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -242,11 +240,11 @@ func (e *TeamLimitedRole) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "MEMBER":
 		fallthrough
-	case "VIEWER":
-		fallthrough
 	case "DEVELOPER":
 		fallthrough
 	case "BILLING":
+		fallthrough
+	case "VIEWER":
 		fallthrough
 	case "CONTRIBUTOR":
 		*e = TeamLimitedRole(v)
@@ -258,20 +256,20 @@ func (e *TeamLimitedRole) UnmarshalJSON(data []byte) error {
 
 // TeamLimited2 - The membership of the authenticated User in relation to the Team.
 type TeamLimited2 struct {
-	AccessRequestedAt int64                  `json:"accessRequestedAt"`
+	AccessRequestedAt float64                `json:"accessRequestedAt"`
 	Confirmed         bool                   `json:"confirmed"`
-	ConfirmedAt       *int64                 `json:"confirmedAt,omitempty"`
-	Created           int64                  `json:"created"`
-	CreatedAt         int64                  `json:"createdAt"`
+	ConfirmedAt       *float64               `json:"confirmedAt,omitempty"`
+	Created           float64                `json:"created"`
+	CreatedAt         float64                `json:"createdAt"`
 	JoinedFrom        *TeamLimitedJoinedFrom `json:"joinedFrom,omitempty"`
 	Role              TeamLimitedRole        `json:"role"`
 	TeamID            *string                `json:"teamId,omitempty"`
 	UID               string                 `json:"uid"`
 }
 
-func (o *TeamLimited2) GetAccessRequestedAt() int64 {
+func (o *TeamLimited2) GetAccessRequestedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.AccessRequestedAt
 }
@@ -283,23 +281,23 @@ func (o *TeamLimited2) GetConfirmed() bool {
 	return o.Confirmed
 }
 
-func (o *TeamLimited2) GetConfirmedAt() *int64 {
+func (o *TeamLimited2) GetConfirmedAt() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.ConfirmedAt
 }
 
-func (o *TeamLimited2) GetCreated() int64 {
+func (o *TeamLimited2) GetCreated() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Created
 }
 
-func (o *TeamLimited2) GetCreatedAt() int64 {
+func (o *TeamLimited2) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -335,13 +333,13 @@ func (o *TeamLimited2) GetUID() string {
 type GitUserIDType string
 
 const (
-	GitUserIDTypeStr     GitUserIDType = "str"
-	GitUserIDTypeInteger GitUserIDType = "integer"
+	GitUserIDTypeStr    GitUserIDType = "str"
+	GitUserIDTypeNumber GitUserIDType = "number"
 )
 
 type GitUserID struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type GitUserIDType
 }
@@ -355,32 +353,32 @@ func CreateGitUserIDStr(str string) GitUserID {
 	}
 }
 
-func CreateGitUserIDInteger(integer int64) GitUserID {
-	typ := GitUserIDTypeInteger
+func CreateGitUserIDNumber(number float64) GitUserID {
+	typ := GitUserIDTypeNumber
 
 	return GitUserID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *GitUserID) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = GitUserIDTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = GitUserIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = GitUserIDTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GitUserID", string(data))
 }
 
 func (u GitUserID) MarshalJSON() ([]byte, error) {
@@ -388,11 +386,11 @@ func (u GitUserID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type GitUserID: all fields are null")
 }
 
 type TeamLimitedOrigin string
@@ -414,7 +412,6 @@ const (
 func (e TeamLimitedOrigin) ToPointer() *TeamLimitedOrigin {
 	return &e
 }
-
 func (e *TeamLimitedOrigin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -451,7 +448,7 @@ func (e *TeamLimitedOrigin) UnmarshalJSON(data []byte) error {
 
 type JoinedFrom struct {
 	CommitID         *string           `json:"commitId,omitempty"`
-	DsyncConnectedAt *int64            `json:"dsyncConnectedAt,omitempty"`
+	DsyncConnectedAt *float64          `json:"dsyncConnectedAt,omitempty"`
 	DsyncUserID      *string           `json:"dsyncUserId,omitempty"`
 	GitUserID        *GitUserID        `json:"gitUserId,omitempty"`
 	GitUserLogin     *string           `json:"gitUserLogin,omitempty"`
@@ -459,7 +456,7 @@ type JoinedFrom struct {
 	Origin           TeamLimitedOrigin `json:"origin"`
 	RepoID           *string           `json:"repoId,omitempty"`
 	RepoPath         *string           `json:"repoPath,omitempty"`
-	SsoConnectedAt   *int64            `json:"ssoConnectedAt,omitempty"`
+	SsoConnectedAt   *float64          `json:"ssoConnectedAt,omitempty"`
 	SsoUserID        *string           `json:"ssoUserId,omitempty"`
 }
 
@@ -470,7 +467,7 @@ func (o *JoinedFrom) GetCommitID() *string {
 	return o.CommitID
 }
 
-func (o *JoinedFrom) GetDsyncConnectedAt() *int64 {
+func (o *JoinedFrom) GetDsyncConnectedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -526,7 +523,7 @@ func (o *JoinedFrom) GetRepoPath() *string {
 	return o.RepoPath
 }
 
-func (o *JoinedFrom) GetSsoConnectedAt() *int64 {
+func (o *JoinedFrom) GetSsoConnectedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -545,16 +542,15 @@ type Role string
 const (
 	RoleOwner       Role = "OWNER"
 	RoleMember      Role = "MEMBER"
-	RoleViewer      Role = "VIEWER"
 	RoleDeveloper   Role = "DEVELOPER"
 	RoleBilling     Role = "BILLING"
+	RoleViewer      Role = "VIEWER"
 	RoleContributor Role = "CONTRIBUTOR"
 )
 
 func (e Role) ToPointer() *Role {
 	return &e
 }
-
 func (e *Role) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -565,11 +561,11 @@ func (e *Role) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "MEMBER":
 		fallthrough
-	case "VIEWER":
-		fallthrough
 	case "DEVELOPER":
 		fallthrough
 	case "BILLING":
+		fallthrough
+	case "VIEWER":
 		fallthrough
 	case "CONTRIBUTOR":
 		*e = Role(v)
@@ -581,18 +577,18 @@ func (e *Role) UnmarshalJSON(data []byte) error {
 
 // TeamLimited1 - The membership of the authenticated User in relation to the Team.
 type TeamLimited1 struct {
-	AccessRequestedAt *int64      `json:"accessRequestedAt,omitempty"`
+	AccessRequestedAt *float64    `json:"accessRequestedAt,omitempty"`
 	Confirmed         bool        `json:"confirmed"`
-	ConfirmedAt       int64       `json:"confirmedAt"`
-	Created           int64       `json:"created"`
-	CreatedAt         int64       `json:"createdAt"`
+	ConfirmedAt       float64     `json:"confirmedAt"`
+	Created           float64     `json:"created"`
+	CreatedAt         float64     `json:"createdAt"`
 	JoinedFrom        *JoinedFrom `json:"joinedFrom,omitempty"`
 	Role              Role        `json:"role"`
 	TeamID            *string     `json:"teamId,omitempty"`
 	UID               string      `json:"uid"`
 }
 
-func (o *TeamLimited1) GetAccessRequestedAt() *int64 {
+func (o *TeamLimited1) GetAccessRequestedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -606,23 +602,23 @@ func (o *TeamLimited1) GetConfirmed() bool {
 	return o.Confirmed
 }
 
-func (o *TeamLimited1) GetConfirmedAt() int64 {
+func (o *TeamLimited1) GetConfirmedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ConfirmedAt
 }
 
-func (o *TeamLimited1) GetCreated() int64 {
+func (o *TeamLimited1) GetCreated() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Created
 }
 
-func (o *TeamLimited1) GetCreatedAt() int64 {
+func (o *TeamLimited1) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }
@@ -689,21 +685,21 @@ func CreateMembershipTeamLimited2(teamLimited2 TeamLimited2) Membership {
 
 func (u *Membership) UnmarshalJSON(data []byte) error {
 
-	teamLimited1 := TeamLimited1{}
+	var teamLimited1 TeamLimited1 = TeamLimited1{}
 	if err := utils.UnmarshalJSON(data, &teamLimited1, "", true, true); err == nil {
 		u.TeamLimited1 = &teamLimited1
 		u.Type = MembershipTypeTeamLimited1
 		return nil
 	}
 
-	teamLimited2 := TeamLimited2{}
+	var teamLimited2 TeamLimited2 = TeamLimited2{}
 	if err := utils.UnmarshalJSON(data, &teamLimited2, "", true, true); err == nil {
 		u.TeamLimited2 = &teamLimited2
 		u.Type = MembershipTypeTeamLimited2
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Membership", string(data))
 }
 
 func (u Membership) MarshalJSON() ([]byte, error) {
@@ -715,15 +711,15 @@ func (u Membership) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.TeamLimited2, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Membership: all fields are null")
 }
 
 // Connection - Information for the SAML Single Sign-On configuration.
 type Connection struct {
 	// Timestamp (in milliseconds) of when the configuration was connected.
-	ConnectedAt int64 `json:"connectedAt"`
+	ConnectedAt float64 `json:"connectedAt"`
 	// Timestamp (in milliseconds) of when the last webhook event was received from WorkOS.
-	LastReceivedWebhookEvent *int64 `json:"lastReceivedWebhookEvent,omitempty"`
+	LastReceivedWebhookEvent *float64 `json:"lastReceivedWebhookEvent,omitempty"`
 	// Current state of the connection.
 	State string `json:"state"`
 	// Current status of the connection.
@@ -732,14 +728,14 @@ type Connection struct {
 	Type string `json:"type"`
 }
 
-func (o *Connection) GetConnectedAt() int64 {
+func (o *Connection) GetConnectedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ConnectedAt
 }
 
-func (o *Connection) GetLastReceivedWebhookEvent() *int64 {
+func (o *Connection) GetLastReceivedWebhookEvent() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -770,9 +766,9 @@ func (o *Connection) GetType() string {
 // Directory - Information for the SAML Single Sign-On configuration.
 type Directory struct {
 	// Timestamp (in milliseconds) of when the configuration was connected.
-	ConnectedAt int64 `json:"connectedAt"`
+	ConnectedAt float64 `json:"connectedAt"`
 	// Timestamp (in milliseconds) of when the last webhook event was received from WorkOS.
-	LastReceivedWebhookEvent *int64 `json:"lastReceivedWebhookEvent,omitempty"`
+	LastReceivedWebhookEvent *float64 `json:"lastReceivedWebhookEvent,omitempty"`
 	// Current state of the connection.
 	State string `json:"state"`
 	// Current status of the connection.
@@ -781,14 +777,14 @@ type Directory struct {
 	Type string `json:"type"`
 }
 
-func (o *Directory) GetConnectedAt() int64 {
+func (o *Directory) GetConnectedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.ConnectedAt
 }
 
-func (o *Directory) GetLastReceivedWebhookEvent() *int64 {
+func (o *Directory) GetLastReceivedWebhookEvent() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -854,7 +850,7 @@ type TeamLimited struct {
 	// Will remain undocumented. Remove in v3 API.
 	Created string `json:"created"`
 	// UNIX timestamp (in milliseconds) when the Team was created.
-	CreatedAt int64 `json:"createdAt"`
+	CreatedAt float64 `json:"createdAt"`
 	// The Team's unique identifier.
 	ID string `json:"id"`
 	// Property indicating that this Team data contains only limited information, due to the authentication token missing privileges to read the full Team data. Re-login with the Team's configured SAML Single Sign-On provider in order to upgrade the authentication token with the necessary privileges.
@@ -882,9 +878,9 @@ func (o *TeamLimited) GetCreated() string {
 	return o.Created
 }
 
-func (o *TeamLimited) GetCreatedAt() int64 {
+func (o *TeamLimited) GetCreatedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.CreatedAt
 }

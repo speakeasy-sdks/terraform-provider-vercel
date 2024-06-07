@@ -21,7 +21,6 @@ const (
 func (e ACLAction) ToPointer() *ACLAction {
 	return &e
 }
-
 func (e *ACLAction) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

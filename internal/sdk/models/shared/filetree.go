@@ -22,7 +22,6 @@ const (
 func (e Type) ToPointer() *Type {
 	return &e
 }
-
 func (e *Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -54,7 +53,7 @@ type FileTree struct {
 	// The content-type of the file (only valid for the `file` type)
 	ContentType *string `json:"contentType,omitempty"`
 	// The file "mode" indicating file type and permissions.
-	Mode int64 `json:"mode"`
+	Mode float64 `json:"mode"`
 	// The name of the file tree entry
 	Name string `json:"name"`
 	// Not currently used. See `file-list-to-tree.ts`.
@@ -79,9 +78,9 @@ func (o *FileTree) GetContentType() *string {
 	return o.ContentType
 }
 
-func (o *FileTree) GetMode() int64 {
+func (o *FileTree) GetMode() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.Mode
 }

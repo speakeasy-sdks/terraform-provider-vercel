@@ -10,76 +10,6 @@ import (
 	"net/http"
 )
 
-// AddProjectMemberProjectMembersRequestRole - The project role of the member that will be added.
-type AddProjectMemberProjectMembersRequestRole string
-
-const (
-	AddProjectMemberProjectMembersRequestRoleAdmin            AddProjectMemberProjectMembersRequestRole = "ADMIN"
-	AddProjectMemberProjectMembersRequestRoleProjectDeveloper AddProjectMemberProjectMembersRequestRole = "PROJECT_DEVELOPER"
-	AddProjectMemberProjectMembersRequestRoleProjectViewer    AddProjectMemberProjectMembersRequestRole = "PROJECT_VIEWER"
-)
-
-func (e AddProjectMemberProjectMembersRequestRole) ToPointer() *AddProjectMemberProjectMembersRequestRole {
-	return &e
-}
-
-func (e *AddProjectMemberProjectMembersRequestRole) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ADMIN":
-		fallthrough
-	case "PROJECT_DEVELOPER":
-		fallthrough
-	case "PROJECT_VIEWER":
-		*e = AddProjectMemberProjectMembersRequestRole(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AddProjectMemberProjectMembersRequestRole: %v", v)
-	}
-}
-
-type AddProjectMember3 struct {
-	// The email of the team member that should be added to this project.
-	Email string `json:"email"`
-	// The project role of the member that will be added.
-	Role AddProjectMemberProjectMembersRequestRole `json:"role"`
-	// The ID of the team member that should be added to this project.
-	UID *string `json:"uid,omitempty"`
-	// The username of the team member that should be added to this project.
-	Username *string `json:"username,omitempty"`
-}
-
-func (o *AddProjectMember3) GetEmail() string {
-	if o == nil {
-		return ""
-	}
-	return o.Email
-}
-
-func (o *AddProjectMember3) GetRole() AddProjectMemberProjectMembersRequestRole {
-	if o == nil {
-		return AddProjectMemberProjectMembersRequestRole("")
-	}
-	return o.Role
-}
-
-func (o *AddProjectMember3) GetUID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.UID
-}
-
-func (o *AddProjectMember3) GetUsername() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Username
-}
-
 // AddProjectMemberProjectMembersRole - The project role of the member that will be added.
 type AddProjectMemberProjectMembersRole string
 
@@ -92,7 +22,6 @@ const (
 func (e AddProjectMemberProjectMembersRole) ToPointer() *AddProjectMemberProjectMembersRole {
 	return &e
 }
-
 func (e *AddProjectMemberProjectMembersRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -111,41 +40,41 @@ func (e *AddProjectMemberProjectMembersRole) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type AddProjectMember2 struct {
+type AddProjectMember3 struct {
 	// The email of the team member that should be added to this project.
-	Email *string `json:"email,omitempty"`
+	Email string `json:"email"`
 	// The project role of the member that will be added.
 	Role AddProjectMemberProjectMembersRole `json:"role"`
 	// The ID of the team member that should be added to this project.
 	UID *string `json:"uid,omitempty"`
 	// The username of the team member that should be added to this project.
-	Username string `json:"username"`
+	Username *string `json:"username,omitempty"`
 }
 
-func (o *AddProjectMember2) GetEmail() *string {
+func (o *AddProjectMember3) GetEmail() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.Email
 }
 
-func (o *AddProjectMember2) GetRole() AddProjectMemberProjectMembersRole {
+func (o *AddProjectMember3) GetRole() AddProjectMemberProjectMembersRole {
 	if o == nil {
 		return AddProjectMemberProjectMembersRole("")
 	}
 	return o.Role
 }
 
-func (o *AddProjectMember2) GetUID() *string {
+func (o *AddProjectMember3) GetUID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.UID
 }
 
-func (o *AddProjectMember2) GetUsername() string {
+func (o *AddProjectMember3) GetUsername() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Username
 }
@@ -162,7 +91,6 @@ const (
 func (e AddProjectMemberRole) ToPointer() *AddProjectMemberRole {
 	return &e
 }
-
 func (e *AddProjectMemberRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -181,11 +109,80 @@ func (e *AddProjectMemberRole) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type AddProjectMember1 struct {
+type AddProjectMember2 struct {
 	// The email of the team member that should be added to this project.
 	Email *string `json:"email,omitempty"`
 	// The project role of the member that will be added.
 	Role AddProjectMemberRole `json:"role"`
+	// The ID of the team member that should be added to this project.
+	UID *string `json:"uid,omitempty"`
+	// The username of the team member that should be added to this project.
+	Username string `json:"username"`
+}
+
+func (o *AddProjectMember2) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *AddProjectMember2) GetRole() AddProjectMemberRole {
+	if o == nil {
+		return AddProjectMemberRole("")
+	}
+	return o.Role
+}
+
+func (o *AddProjectMember2) GetUID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UID
+}
+
+func (o *AddProjectMember2) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+// AddProjectMemberProjectMembersRequestRole - The project role of the member that will be added.
+type AddProjectMemberProjectMembersRequestRole string
+
+const (
+	AddProjectMemberProjectMembersRequestRoleAdmin            AddProjectMemberProjectMembersRequestRole = "ADMIN"
+	AddProjectMemberProjectMembersRequestRoleProjectDeveloper AddProjectMemberProjectMembersRequestRole = "PROJECT_DEVELOPER"
+	AddProjectMemberProjectMembersRequestRoleProjectViewer    AddProjectMemberProjectMembersRequestRole = "PROJECT_VIEWER"
+)
+
+func (e AddProjectMemberProjectMembersRequestRole) ToPointer() *AddProjectMemberProjectMembersRequestRole {
+	return &e
+}
+func (e *AddProjectMemberProjectMembersRequestRole) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ADMIN":
+		fallthrough
+	case "PROJECT_DEVELOPER":
+		fallthrough
+	case "PROJECT_VIEWER":
+		*e = AddProjectMemberProjectMembersRequestRole(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for AddProjectMemberProjectMembersRequestRole: %v", v)
+	}
+}
+
+type AddProjectMember1 struct {
+	// The email of the team member that should be added to this project.
+	Email *string `json:"email,omitempty"`
+	// The project role of the member that will be added.
+	Role AddProjectMemberProjectMembersRequestRole `json:"role"`
 	// The ID of the team member that should be added to this project.
 	UID string `json:"uid"`
 	// The username of the team member that should be added to this project.
@@ -199,9 +196,9 @@ func (o *AddProjectMember1) GetEmail() *string {
 	return o.Email
 }
 
-func (o *AddProjectMember1) GetRole() AddProjectMemberRole {
+func (o *AddProjectMember1) GetRole() AddProjectMemberProjectMembersRequestRole {
 	if o == nil {
-		return AddProjectMemberRole("")
+		return AddProjectMemberProjectMembersRequestRole("")
 	}
 	return o.Role
 }
@@ -265,28 +262,28 @@ func CreateAddProjectMemberRequestBodyAddProjectMember3(addProjectMember3 AddPro
 
 func (u *AddProjectMemberRequestBody) UnmarshalJSON(data []byte) error {
 
-	addProjectMember1 := AddProjectMember1{}
+	var addProjectMember1 AddProjectMember1 = AddProjectMember1{}
 	if err := utils.UnmarshalJSON(data, &addProjectMember1, "", true, true); err == nil {
 		u.AddProjectMember1 = &addProjectMember1
 		u.Type = AddProjectMemberRequestBodyTypeAddProjectMember1
 		return nil
 	}
 
-	addProjectMember2 := AddProjectMember2{}
+	var addProjectMember2 AddProjectMember2 = AddProjectMember2{}
 	if err := utils.UnmarshalJSON(data, &addProjectMember2, "", true, true); err == nil {
 		u.AddProjectMember2 = &addProjectMember2
 		u.Type = AddProjectMemberRequestBodyTypeAddProjectMember2
 		return nil
 	}
 
-	addProjectMember3 := AddProjectMember3{}
+	var addProjectMember3 AddProjectMember3 = AddProjectMember3{}
 	if err := utils.UnmarshalJSON(data, &addProjectMember3, "", true, true); err == nil {
 		u.AddProjectMember3 = &addProjectMember3
 		u.Type = AddProjectMemberRequestBodyTypeAddProjectMember3
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for AddProjectMemberRequestBody", string(data))
 }
 
 func (u AddProjectMemberRequestBody) MarshalJSON() ([]byte, error) {
@@ -302,14 +299,16 @@ func (u AddProjectMemberRequestBody) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.AddProjectMember3, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type AddProjectMemberRequestBody: all fields are null")
 }
 
 type AddProjectMemberRequest struct {
 	RequestBody *AddProjectMemberRequestBody `request:"mediaType=application/json"`
 	// The ID or name of the Project.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 }
 
@@ -325,6 +324,13 @@ func (o *AddProjectMemberRequest) GetIDOrName() string {
 		return ""
 	}
 	return o.IDOrName
+}
+
+func (o *AddProjectMemberRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *AddProjectMemberRequest) GetTeamID() *string {

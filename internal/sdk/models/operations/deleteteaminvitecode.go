@@ -9,7 +9,7 @@ import (
 type DeleteTeamInviteCodeRequest struct {
 	// The Team invite code ID.
 	InviteID string `pathParam:"style=simple,explode=false,name=inviteId"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// the team id related to the invite code
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 }
 

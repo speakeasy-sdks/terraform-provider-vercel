@@ -68,13 +68,13 @@ func (o *Gitlab) GetLogin() *string {
 type GetTeamAccessRequestGitUserIDType string
 
 const (
-	GetTeamAccessRequestGitUserIDTypeStr     GetTeamAccessRequestGitUserIDType = "str"
-	GetTeamAccessRequestGitUserIDTypeInteger GetTeamAccessRequestGitUserIDType = "integer"
+	GetTeamAccessRequestGitUserIDTypeStr    GetTeamAccessRequestGitUserIDType = "str"
+	GetTeamAccessRequestGitUserIDTypeNumber GetTeamAccessRequestGitUserIDType = "number"
 )
 
 type GetTeamAccessRequestGitUserID struct {
-	Str     *string
-	Integer *int64
+	Str    *string
+	Number *float64
 
 	Type GetTeamAccessRequestGitUserIDType
 }
@@ -88,32 +88,32 @@ func CreateGetTeamAccessRequestGitUserIDStr(str string) GetTeamAccessRequestGitU
 	}
 }
 
-func CreateGetTeamAccessRequestGitUserIDInteger(integer int64) GetTeamAccessRequestGitUserID {
-	typ := GetTeamAccessRequestGitUserIDTypeInteger
+func CreateGetTeamAccessRequestGitUserIDNumber(number float64) GetTeamAccessRequestGitUserID {
+	typ := GetTeamAccessRequestGitUserIDTypeNumber
 
 	return GetTeamAccessRequestGitUserID{
-		Integer: &integer,
-		Type:    typ,
+		Number: &number,
+		Type:   typ,
 	}
 }
 
 func (u *GetTeamAccessRequestGitUserID) UnmarshalJSON(data []byte) error {
 
-	str := ""
+	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
 		u.Type = GetTeamAccessRequestGitUserIDTypeStr
 		return nil
 	}
 
-	integer := int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
-		u.Integer = &integer
-		u.Type = GetTeamAccessRequestGitUserIDTypeInteger
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = GetTeamAccessRequestGitUserIDTypeNumber
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GetTeamAccessRequestGitUserID", string(data))
 }
 
 func (u GetTeamAccessRequestGitUserID) MarshalJSON() ([]byte, error) {
@@ -121,18 +121,18 @@ func (u GetTeamAccessRequestGitUserID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
 
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type GetTeamAccessRequestGitUserID: all fields are null")
 }
 
 type GetTeamAccessRequestOrigin string
 
 const (
-	GetTeamAccessRequestOriginLink              GetTeamAccessRequestOrigin = "link"
 	GetTeamAccessRequestOriginMail              GetTeamAccessRequestOrigin = "mail"
+	GetTeamAccessRequestOriginLink              GetTeamAccessRequestOrigin = "link"
 	GetTeamAccessRequestOriginImport            GetTeamAccessRequestOrigin = "import"
 	GetTeamAccessRequestOriginTeams             GetTeamAccessRequestOrigin = "teams"
 	GetTeamAccessRequestOriginGithub            GetTeamAccessRequestOrigin = "github"
@@ -147,16 +147,15 @@ const (
 func (e GetTeamAccessRequestOrigin) ToPointer() *GetTeamAccessRequestOrigin {
 	return &e
 }
-
 func (e *GetTeamAccessRequestOrigin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "link":
-		fallthrough
 	case "mail":
+		fallthrough
+	case "link":
 		fallthrough
 	case "import":
 		fallthrough
@@ -185,7 +184,7 @@ func (e *GetTeamAccessRequestOrigin) UnmarshalJSON(data []byte) error {
 // GetTeamAccessRequestJoinedFrom - A map that describes the origin from where the user joined.
 type GetTeamAccessRequestJoinedFrom struct {
 	CommitID         *string                        `json:"commitId,omitempty"`
-	DsyncConnectedAt *int64                         `json:"dsyncConnectedAt,omitempty"`
+	DsyncConnectedAt *float64                       `json:"dsyncConnectedAt,omitempty"`
 	DsyncUserID      *string                        `json:"dsyncUserId,omitempty"`
 	GitUserID        *GetTeamAccessRequestGitUserID `json:"gitUserId,omitempty"`
 	GitUserLogin     *string                        `json:"gitUserLogin,omitempty"`
@@ -193,7 +192,7 @@ type GetTeamAccessRequestJoinedFrom struct {
 	Origin           GetTeamAccessRequestOrigin     `json:"origin"`
 	RepoID           *string                        `json:"repoId,omitempty"`
 	RepoPath         *string                        `json:"repoPath,omitempty"`
-	SsoConnectedAt   *int64                         `json:"ssoConnectedAt,omitempty"`
+	SsoConnectedAt   *float64                       `json:"ssoConnectedAt,omitempty"`
 	SsoUserID        *string                        `json:"ssoUserId,omitempty"`
 }
 
@@ -204,7 +203,7 @@ func (o *GetTeamAccessRequestJoinedFrom) GetCommitID() *string {
 	return o.CommitID
 }
 
-func (o *GetTeamAccessRequestJoinedFrom) GetDsyncConnectedAt() *int64 {
+func (o *GetTeamAccessRequestJoinedFrom) GetDsyncConnectedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -260,7 +259,7 @@ func (o *GetTeamAccessRequestJoinedFrom) GetRepoPath() *string {
 	return o.RepoPath
 }
 
-func (o *GetTeamAccessRequestJoinedFrom) GetSsoConnectedAt() *int64 {
+func (o *GetTeamAccessRequestJoinedFrom) GetSsoConnectedAt() *float64 {
 	if o == nil {
 		return nil
 	}
@@ -277,7 +276,7 @@ func (o *GetTeamAccessRequestJoinedFrom) GetSsoUserID() *string {
 // GetTeamAccessRequestResponseBody - Successfully
 type GetTeamAccessRequestResponseBody struct {
 	// Timestamp in milliseconds when the user requested access to the team.
-	AccessRequestedAt int64 `json:"accessRequestedAt"`
+	AccessRequestedAt float64 `json:"accessRequestedAt"`
 	// Map of the connected Bitbucket account.
 	Bitbucket *Bitbucket `json:"bitbucket"`
 	// Current status of the membership. Will be `true` if confirmed, if pending it'll be `false`.
@@ -294,9 +293,9 @@ type GetTeamAccessRequestResponseBody struct {
 	TeamSlug string `json:"teamSlug"`
 }
 
-func (o *GetTeamAccessRequestResponseBody) GetAccessRequestedAt() int64 {
+func (o *GetTeamAccessRequestResponseBody) GetAccessRequestedAt() float64 {
 	if o == nil {
-		return 0
+		return 0.0
 	}
 	return o.AccessRequestedAt
 }

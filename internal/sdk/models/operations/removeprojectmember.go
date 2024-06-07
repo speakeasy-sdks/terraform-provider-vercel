@@ -9,7 +9,9 @@ import (
 type RemoveProjectMemberRequest struct {
 	// The ID or name of the Project.
 	IDOrName string `pathParam:"style=simple,explode=false,name=idOrName"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID *string `queryParam:"style=form,explode=true,name=teamId"`
 	// The user ID of the member.
 	UID string `pathParam:"style=simple,explode=false,name=uid"`
@@ -20,6 +22,13 @@ func (o *RemoveProjectMemberRequest) GetIDOrName() string {
 		return ""
 	}
 	return o.IDOrName
+}
+
+func (o *RemoveProjectMemberRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }
 
 func (o *RemoveProjectMemberRequest) GetTeamID() *string {

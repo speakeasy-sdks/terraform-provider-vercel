@@ -42,7 +42,11 @@ func (o *DeleteTeamRequestBody) GetReasons() []Reasons {
 
 type DeleteTeamRequest struct {
 	RequestBody *DeleteTeamRequestBody `request:"mediaType=application/json"`
-	// The Team identifier or slug to perform the request on behalf of.
+	// Id of the team to be set as the new default team
+	NewDefaultTeamID *string `queryParam:"style=form,explode=true,name=newDefaultTeamId"`
+	// The Team slug to perform the request on behalf of.
+	Slug *string `queryParam:"style=form,explode=true,name=slug"`
+	// The Team identifier to perform the request on behalf of.
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 }
 
@@ -53,6 +57,20 @@ func (o *DeleteTeamRequest) GetRequestBody() *DeleteTeamRequestBody {
 	return o.RequestBody
 }
 
+func (o *DeleteTeamRequest) GetNewDefaultTeamID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NewDefaultTeamID
+}
+
+func (o *DeleteTeamRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
 func (o *DeleteTeamRequest) GetTeamID() string {
 	if o == nil {
 		return ""
@@ -60,10 +78,12 @@ func (o *DeleteTeamRequest) GetTeamID() string {
 	return o.TeamID
 }
 
-// DeleteTeamResponseBody - The Team was successfuly deleted
+// DeleteTeamResponseBody - The Team was successfully deleted
 type DeleteTeamResponseBody struct {
 	// The ID of the deleted Team
 	ID string `json:"id"`
+	// Signifies whether the default team update has failed, when newDefaultTeamId is provided in request query.
+	NewDefaultTeamIDError *bool `json:"newDefaultTeamIdError,omitempty"`
 }
 
 func (o *DeleteTeamResponseBody) GetID() string {
@@ -73,6 +93,13 @@ func (o *DeleteTeamResponseBody) GetID() string {
 	return o.ID
 }
 
+func (o *DeleteTeamResponseBody) GetNewDefaultTeamIDError() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.NewDefaultTeamIDError
+}
+
 type DeleteTeamResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -80,7 +107,7 @@ type DeleteTeamResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-	// The Team was successfuly deleted
+	// The Team was successfully deleted
 	Object *DeleteTeamResponseBody
 }
 

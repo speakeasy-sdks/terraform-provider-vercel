@@ -17,10 +17,14 @@ import (
 	"time"
 )
 
-// ServerList contains the list of servers available to the SDK
-var ServerList = []string{
+const (
 	// Production API
-	"https://api.vercel.com",
+	ServerProd string = "prod"
+)
+
+// ServerList contains the list of servers available to the SDK
+var ServerList = map[string]string{
+	ServerProd: "https://api.vercel.com",
 }
 
 // HTTPClient provides an interface for suplying the SDK with a custom HTTP client
@@ -50,7 +54,7 @@ type sdkConfiguration struct {
 	Client            HTTPClient
 	Security          func(context.Context) (interface{}, error)
 	ServerURL         string
-	ServerIndex       int
+	Server            string
 	Language          string
 	OpenAPIDocVersion string
 	SDKVersion        string
@@ -65,7 +69,11 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 		return c.ServerURL, nil
 	}
 
-	return ServerList[c.ServerIndex], nil
+	if c.Server == "" {
+		c.Server = "prod"
+	}
+
+	return ServerList[c.Server], nil
 }
 
 // Vercel API: Vercel combines the best developer experience with an obsessive focus on end-user performance. Our platform enables frontend teams to do their best work.
@@ -74,16 +82,17 @@ type Vercel struct {
 	Projects       *Projects
 	Checks         *Checks
 	DNS            *DNS
+	Domains        *Domains
 	EdgeConfig     *EdgeConfig
 	Integrations   *Integrations
 	LogDrains      *LogDrains
 	ProjectMembers *ProjectMembers
 	Teams          *Teams
 	User           *User
+	Webhooks       *Webhooks
 	Deployments    *Deployments
 	Aliases        *Aliases
 	Secrets        *Secrets
-	Domains        *Domains
 	Certs          *Certs
 	Artifacts      *Artifacts
 
@@ -110,14 +119,15 @@ func WithTemplatedServerURL(serverURL string, params map[string]string) SDKOptio
 	}
 }
 
-// WithServerIndex allows the overriding of the default server by index
-func WithServerIndex(serverIndex int) SDKOption {
+// WithServer allows the overriding of the default server by name
+func WithServer(server string) SDKOption {
 	return func(sdk *Vercel) {
-		if serverIndex < 0 || serverIndex >= len(ServerList) {
-			panic(fmt.Errorf("server index %d out of range", serverIndex))
+		_, ok := ServerList[server]
+		if !ok {
+			panic(fmt.Errorf("server %s not found", server))
 		}
 
-		sdk.sdkConfiguration.ServerIndex = serverIndex
+		sdk.sdkConfiguration.Server = server
 	}
 }
 
@@ -128,16 +138,10 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
-func withSecurity(security interface{}) func(context.Context) (interface{}, error) {
-	return func(context.Context) (interface{}, error) {
-		return security, nil
-	}
-}
-
 // WithSecurity configures the SDK to use the provided security details
 func WithSecurity(security shared.Security) SDKOption {
 	return func(sdk *Vercel) {
-		sdk.sdkConfiguration.Security = withSecurity(security)
+		sdk.sdkConfiguration.Security = utils.AsSecuritySource(security)
 	}
 }
 
@@ -163,8 +167,8 @@ func New(opts ...SDKOption) *Vercel {
 			Language:          "go",
 			OpenAPIDocVersion: "0.0.1",
 			SDKVersion:        "0.0.1",
-			GenVersion:        "2.286.4",
-			UserAgent:         "speakeasy-sdk/go 0.0.1 2.286.4 0.0.1 github.com/zchee/terraform-provider-vercel/internal/sdk",
+			GenVersion:        "2.339.1",
+			UserAgent:         "speakeasy-sdk/go 0.0.1 2.339.1 0.0.1 github.com/zchee/terraform-provider-vercel/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}
@@ -192,6 +196,8 @@ func New(opts ...SDKOption) *Vercel {
 
 	sdk.DNS = newDNS(sdk.sdkConfiguration)
 
+	sdk.Domains = newDomains(sdk.sdkConfiguration)
+
 	sdk.EdgeConfig = newEdgeConfig(sdk.sdkConfiguration)
 
 	sdk.Integrations = newIntegrations(sdk.sdkConfiguration)
@@ -204,13 +210,13 @@ func New(opts ...SDKOption) *Vercel {
 
 	sdk.User = newUser(sdk.sdkConfiguration)
 
+	sdk.Webhooks = newWebhooks(sdk.sdkConfiguration)
+
 	sdk.Deployments = newDeployments(sdk.sdkConfiguration)
 
 	sdk.Aliases = newAliases(sdk.sdkConfiguration)
 
 	sdk.Secrets = newSecrets(sdk.sdkConfiguration)
-
-	sdk.Domains = newDomains(sdk.sdkConfiguration)
 
 	sdk.Certs = newCerts(sdk.sdkConfiguration)
 
@@ -219,10 +225,103 @@ func New(opts ...SDKOption) *Vercel {
 	return sdk
 }
 
-func (s *Vercel) DeleteDataCachePurgeAll(ctx context.Context, request operations.DeleteDataCachePurgeAllRequest) (*operations.DeleteDataCachePurgeAllResponse, error) {
+// GetDeploymentBuilds - Retrieves the list of builds given their deployment's unique identifier. No longer listed as public API as of May 2023.
+func (s *Vercel) GetDeploymentBuilds(ctx context.Context, request operations.GetDeploymentBuildsRequest) (*operations.GetDeploymentBuildsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "delete_/data-cache/purge-all",
+		OperationID:    "getDeploymentBuilds",
+		OAuth2Scopes:   []string{},
+		SecuritySource: nil,
+	}
+
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/deployments/{deploymentId}/builds", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.GetDeploymentBuildsResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			var out operations.GetDeploymentBuildsResponseBody
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Object = &out
+		default:
+			return nil, errors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 401:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	default:
+		return nil, errors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
+}
+
+func (s *Vercel) PurgeDataCache(ctx context.Context, request operations.PurgeDataCacheRequest) (*operations.PurgeDataCacheResponse, error) {
+	hookCtx := hooks.HookContext{
+		Context:        ctx,
+		OperationID:    "purgeDataCache",
+		OAuth2Scopes:   []string{},
 		SecuritySource: nil,
 	}
 
@@ -259,9 +358,11 @@ func (s *Vercel) DeleteDataCachePurgeAll(ctx context.Context, request operations
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -270,7 +371,7 @@ func (s *Vercel) DeleteDataCachePurgeAll(ctx context.Context, request operations
 		}
 	}
 
-	res := &operations.DeleteDataCachePurgeAllResponse{
+	res := &operations.PurgeDataCacheResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -298,100 +399,14 @@ func (s *Vercel) DeleteDataCachePurgeAll(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
-// GetDeploymentsDeploymentIDBuilds - Retrieves the list of builds given their deployment's unique identifier. No longer listed as public API as of May 2023.
-func (s *Vercel) GetDeploymentsDeploymentIDBuilds(ctx context.Context, request operations.GetDeploymentsDeploymentIDBuildsRequest) (*operations.GetDeploymentsDeploymentIDBuildsResponse, error) {
+func (s *Vercel) UpdateBillingSettings(ctx context.Context, request *operations.UpdateBillingSettingsRequestBody) (*operations.UpdateBillingSettingsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "get_/deployments/{deploymentId}/builds",
-		SecuritySource: nil,
-	}
-
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	opURL, err := utils.GenerateURL(ctx, baseURL, "/deployments/{deploymentId}/builds", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-
-	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-	if err != nil {
-		return nil, err
-	}
-
-	httpRes, err := s.sdkConfiguration.Client.Do(req)
-	if err != nil || httpRes == nil {
-		if err != nil {
-			err = fmt.Errorf("error sending request: %w", err)
-		} else {
-			err = fmt.Errorf("error sending request: no response")
-		}
-
-		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-		return nil, err
-	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	res := &operations.GetDeploymentsDeploymentIDBuildsResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: httpRes.Header.Get("Content-Type"),
-		RawResponse: httpRes,
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			var out operations.GetDeploymentsDeploymentIDBuildsResponseBody
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Object = &out
-		default:
-			return nil, errors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 401:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-	default:
-		return nil, errors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
-	}
-
-	return res, nil
-}
-
-func (s *Vercel) PatchDataCacheBillingSettings(ctx context.Context, request *operations.PatchDataCacheBillingSettingsRequestBody) (*operations.PatchDataCacheBillingSettingsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "patch_/data-cache/billing-settings",
+		OperationID:    "updateBillingSettings",
+		OAuth2Scopes:   []string{},
 		SecuritySource: nil,
 	}
 
@@ -430,9 +445,11 @@ func (s *Vercel) PatchDataCacheBillingSettings(ctx context.Context, request *ope
 		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 		return nil, err
 	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
-		httpRes, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 		if err != nil {
 			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
 		}
 	} else {
 		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
@@ -441,7 +458,7 @@ func (s *Vercel) PatchDataCacheBillingSettings(ctx context.Context, request *ope
 		}
 	}
 
-	res := &operations.PatchDataCacheBillingSettingsResponse{
+	res := &operations.UpdateBillingSettingsResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -458,7 +475,7 @@ func (s *Vercel) PatchDataCacheBillingSettings(ctx context.Context, request *ope
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			var out operations.PatchDataCacheBillingSettingsResponseBody
+			var out operations.UpdateBillingSettingsResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -479,4 +496,5 @@ func (s *Vercel) PatchDataCacheBillingSettings(ctx context.Context, request *ope
 	}
 
 	return res, nil
+
 }
