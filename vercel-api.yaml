@@ -6023,6 +6023,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-entity: Deployment
                 properties:
                   build:
                     properties:
@@ -10666,7 +10667,6 @@ paths:
                   updatedAt:
                     type: number
                   id:
-                    x-speakeasy-match: edgeConfigId
                     type: string
                   slug:
                     type: string
@@ -10817,6 +10817,7 @@ paths:
         - name: edgeConfigId
           in: path
           required: true
+          x-speakeasy-match: id
           schema:
             type: string
         - description: The Team identifier to perform the request on behalf of.
@@ -10955,6 +10956,7 @@ paths:
       parameters:
         - name: edgeConfigId
           in: path
+          x-speakeasy-match: id
           required: true
           schema:
             type: string
@@ -33438,6 +33440,7 @@ paths:
         can obtain the ID, for example, by listing all deployments.
       operationId: deleteDeployment
       x-speakeasy-name-override: delete
+      x-speakeasy-entity-operation: Deployment#delete
       security:
         - bearerToken: []
       summary: Delete a Deployment
@@ -33957,7 +33960,6 @@ paths:
       security:
         - bearerToken: []
       summary: Delete a secret
-      x-speakeasy-entity-operation: Secret#delete
       tags:
         - secrets
       responses:
