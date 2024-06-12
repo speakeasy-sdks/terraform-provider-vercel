@@ -5,7 +5,7 @@ sources:
         inputs:
             - location: ./vercel-api.yaml
         registry:
-            location: registry.speakeasyapi.dev/Vercel/Vercel/vercel-api
+            location: registry.speakeasyapi.dev/vercel/vercel/vercel-api
 targets:
     Vercel-Terraform:
         target: terraform
