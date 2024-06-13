@@ -4,8 +4,6 @@ sources:
     vercel-api:
         inputs:
             - location: ./vercel-api.yaml
-        overlays:
-            - location: ./overlay.yaml
         registry:
             location: registry.speakeasyapi.dev/vercel/vercel/vercel-api
 targets:
