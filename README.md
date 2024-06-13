@@ -22,7 +22,9 @@
 </p>
 <br/>
 
-# terraform-provider-vercel
+> ⚠️ This is a sample provider that is not yet ready for production usage. It is not yet published to the Hashicorp Registry. Please follow the local build instructions below
+
+# Terraform Provider for Vercel
 
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
