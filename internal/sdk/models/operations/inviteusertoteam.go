@@ -6,26 +6,26 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
 	"net/http"
 )
 
-// Role - The role of the user to invite
-type Role string
+// InviteUserToTeamRole - The role of the user to invite
+type InviteUserToTeamRole string
 
 const (
-	RoleOwner       Role = "OWNER"
-	RoleMember      Role = "MEMBER"
-	RoleDeveloper   Role = "DEVELOPER"
-	RoleBilling     Role = "BILLING"
-	RoleViewer      Role = "VIEWER"
-	RoleContributor Role = "CONTRIBUTOR"
+	InviteUserToTeamRoleOwner       InviteUserToTeamRole = "OWNER"
+	InviteUserToTeamRoleMember      InviteUserToTeamRole = "MEMBER"
+	InviteUserToTeamRoleDeveloper   InviteUserToTeamRole = "DEVELOPER"
+	InviteUserToTeamRoleBilling     InviteUserToTeamRole = "BILLING"
+	InviteUserToTeamRoleViewer      InviteUserToTeamRole = "VIEWER"
+	InviteUserToTeamRoleContributor InviteUserToTeamRole = "CONTRIBUTOR"
 )
 
-func (e Role) ToPointer() *Role {
+func (e InviteUserToTeamRole) ToPointer() *InviteUserToTeamRole {
 	return &e
 }
-func (e *Role) UnmarshalJSON(data []byte) error {
+func (e *InviteUserToTeamRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -42,26 +42,26 @@ func (e *Role) UnmarshalJSON(data []byte) error {
 	case "VIEWER":
 		fallthrough
 	case "CONTRIBUTOR":
-		*e = Role(v)
+		*e = InviteUserToTeamRole(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Role: %v", v)
+		return fmt.Errorf("invalid value for InviteUserToTeamRole: %v", v)
 	}
 }
 
-// InviteUserToTeamRole - Sets the project roles for the invited user
-type InviteUserToTeamRole string
+// InviteUserToTeamTeamsRole - Sets the project roles for the invited user
+type InviteUserToTeamTeamsRole string
 
 const (
-	InviteUserToTeamRoleAdmin            InviteUserToTeamRole = "ADMIN"
-	InviteUserToTeamRoleProjectViewer    InviteUserToTeamRole = "PROJECT_VIEWER"
-	InviteUserToTeamRoleProjectDeveloper InviteUserToTeamRole = "PROJECT_DEVELOPER"
+	InviteUserToTeamTeamsRoleAdmin            InviteUserToTeamTeamsRole = "ADMIN"
+	InviteUserToTeamTeamsRoleProjectViewer    InviteUserToTeamTeamsRole = "PROJECT_VIEWER"
+	InviteUserToTeamTeamsRoleProjectDeveloper InviteUserToTeamTeamsRole = "PROJECT_DEVELOPER"
 )
 
-func (e InviteUserToTeamRole) ToPointer() *InviteUserToTeamRole {
+func (e InviteUserToTeamTeamsRole) ToPointer() *InviteUserToTeamTeamsRole {
 	return &e
 }
-func (e *InviteUserToTeamRole) UnmarshalJSON(data []byte) error {
+func (e *InviteUserToTeamTeamsRole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -72,10 +72,10 @@ func (e *InviteUserToTeamRole) UnmarshalJSON(data []byte) error {
 	case "PROJECT_VIEWER":
 		fallthrough
 	case "PROJECT_DEVELOPER":
-		*e = InviteUserToTeamRole(v)
+		*e = InviteUserToTeamTeamsRole(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for InviteUserToTeamRole: %v", v)
+		return fmt.Errorf("invalid value for InviteUserToTeamTeamsRole: %v", v)
 	}
 }
 
@@ -83,7 +83,7 @@ type Projects struct {
 	// The ID of the project.
 	ProjectID string `json:"projectId"`
 	// Sets the project roles for the invited user
-	Role InviteUserToTeamRole `json:"role"`
+	Role InviteUserToTeamTeamsRole `json:"role"`
 }
 
 func (o *Projects) GetProjectID() string {
@@ -93,9 +93,9 @@ func (o *Projects) GetProjectID() string {
 	return o.ProjectID
 }
 
-func (o *Projects) GetRole() InviteUserToTeamRole {
+func (o *Projects) GetRole() InviteUserToTeamTeamsRole {
 	if o == nil {
-		return InviteUserToTeamRole("")
+		return InviteUserToTeamTeamsRole("")
 	}
 	return o.Role
 }
@@ -106,8 +106,8 @@ type InviteUserToTeamRequestBody struct {
 	// The email address of the user to invite
 	Email *string `json:"email,omitempty"`
 	// The role of the user to invite
-	Role     *Role      `default:"MEMBER" json:"role"`
-	Projects []Projects `json:"projects,omitempty"`
+	Role     *InviteUserToTeamRole `default:"MEMBER" json:"role"`
+	Projects []Projects            `json:"projects,omitempty"`
 }
 
 func (i InviteUserToTeamRequestBody) MarshalJSON() ([]byte, error) {
@@ -135,7 +135,7 @@ func (o *InviteUserToTeamRequestBody) GetEmail() *string {
 	return o.Email
 }
 
-func (o *InviteUserToTeamRequestBody) GetRole() *Role {
+func (o *InviteUserToTeamRequestBody) GetRole() *InviteUserToTeamRole {
 	if o == nil {
 		return nil
 	}

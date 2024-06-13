@@ -6,11 +6,11 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/hooks"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/errors"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/shared"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/hooks"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/errors"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/shared"
 	"io"
 	"net/http"
 	"net/url"
@@ -660,10 +660,6 @@ func (s *Teams) RemoveMember(ctx context.Context, request operations.RemoveTeamM
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
-		return nil, fmt.Errorf("error populating query params: %w", err)
-	}
 
 	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
 		return nil, err

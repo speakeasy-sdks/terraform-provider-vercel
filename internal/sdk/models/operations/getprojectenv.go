@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
 	"net/http"
 )
 
@@ -49,18 +49,18 @@ func (o *GetProjectEnvRequest) GetSlug() *string {
 	return o.Slug
 }
 
-type GetProjectEnvTargetProjects2 string
+type GetProjectEnvResponseBodyProjectsTarget string
 
 const (
-	GetProjectEnvTargetProjects2Production  GetProjectEnvTargetProjects2 = "production"
-	GetProjectEnvTargetProjects2Preview     GetProjectEnvTargetProjects2 = "preview"
-	GetProjectEnvTargetProjects2Development GetProjectEnvTargetProjects2 = "development"
+	GetProjectEnvResponseBodyProjectsTargetProduction  GetProjectEnvResponseBodyProjectsTarget = "production"
+	GetProjectEnvResponseBodyProjectsTargetPreview     GetProjectEnvResponseBodyProjectsTarget = "preview"
+	GetProjectEnvResponseBodyProjectsTargetDevelopment GetProjectEnvResponseBodyProjectsTarget = "development"
 )
 
-func (e GetProjectEnvTargetProjects2) ToPointer() *GetProjectEnvTargetProjects2 {
+func (e GetProjectEnvResponseBodyProjectsTarget) ToPointer() *GetProjectEnvResponseBodyProjectsTarget {
 	return &e
 }
-func (e *GetProjectEnvTargetProjects2) UnmarshalJSON(data []byte) error {
+func (e *GetProjectEnvResponseBodyProjectsTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -71,103 +71,11 @@ func (e *GetProjectEnvTargetProjects2) UnmarshalJSON(data []byte) error {
 	case "preview":
 		fallthrough
 	case "development":
-		*e = GetProjectEnvTargetProjects2(v)
+		*e = GetProjectEnvResponseBodyProjectsTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetProjectEnvTargetProjects2: %v", v)
+		return fmt.Errorf("invalid value for GetProjectEnvResponseBodyProjectsTarget: %v", v)
 	}
-}
-
-type GetProjectEnvTargetProjects1 string
-
-const (
-	GetProjectEnvTargetProjects1Production  GetProjectEnvTargetProjects1 = "production"
-	GetProjectEnvTargetProjects1Preview     GetProjectEnvTargetProjects1 = "preview"
-	GetProjectEnvTargetProjects1Development GetProjectEnvTargetProjects1 = "development"
-)
-
-func (e GetProjectEnvTargetProjects1) ToPointer() *GetProjectEnvTargetProjects1 {
-	return &e
-}
-func (e *GetProjectEnvTargetProjects1) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "production":
-		fallthrough
-	case "preview":
-		fallthrough
-	case "development":
-		*e = GetProjectEnvTargetProjects1(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetProjectEnvTargetProjects1: %v", v)
-	}
-}
-
-type GetProjectEnvResponseBodyProjectsTargetType string
-
-const (
-	GetProjectEnvResponseBodyProjectsTargetTypeArrayOfGetProjectEnvTargetProjects1 GetProjectEnvResponseBodyProjectsTargetType = "arrayOfGetProjectEnvTargetProjects1"
-	GetProjectEnvResponseBodyProjectsTargetTypeGetProjectEnvTargetProjects2        GetProjectEnvResponseBodyProjectsTargetType = "getProjectEnv_target_projects_2"
-)
-
-type GetProjectEnvResponseBodyProjectsTarget struct {
-	ArrayOfGetProjectEnvTargetProjects1 []GetProjectEnvTargetProjects1
-	GetProjectEnvTargetProjects2        *GetProjectEnvTargetProjects2
-
-	Type GetProjectEnvResponseBodyProjectsTargetType
-}
-
-func CreateGetProjectEnvResponseBodyProjectsTargetArrayOfGetProjectEnvTargetProjects1(arrayOfGetProjectEnvTargetProjects1 []GetProjectEnvTargetProjects1) GetProjectEnvResponseBodyProjectsTarget {
-	typ := GetProjectEnvResponseBodyProjectsTargetTypeArrayOfGetProjectEnvTargetProjects1
-
-	return GetProjectEnvResponseBodyProjectsTarget{
-		ArrayOfGetProjectEnvTargetProjects1: arrayOfGetProjectEnvTargetProjects1,
-		Type:                                typ,
-	}
-}
-
-func CreateGetProjectEnvResponseBodyProjectsTargetGetProjectEnvTargetProjects2(getProjectEnvTargetProjects2 GetProjectEnvTargetProjects2) GetProjectEnvResponseBodyProjectsTarget {
-	typ := GetProjectEnvResponseBodyProjectsTargetTypeGetProjectEnvTargetProjects2
-
-	return GetProjectEnvResponseBodyProjectsTarget{
-		GetProjectEnvTargetProjects2: &getProjectEnvTargetProjects2,
-		Type:                         typ,
-	}
-}
-
-func (u *GetProjectEnvResponseBodyProjectsTarget) UnmarshalJSON(data []byte) error {
-
-	var arrayOfGetProjectEnvTargetProjects1 []GetProjectEnvTargetProjects1 = []GetProjectEnvTargetProjects1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfGetProjectEnvTargetProjects1, "", true, true); err == nil {
-		u.ArrayOfGetProjectEnvTargetProjects1 = arrayOfGetProjectEnvTargetProjects1
-		u.Type = GetProjectEnvResponseBodyProjectsTargetTypeArrayOfGetProjectEnvTargetProjects1
-		return nil
-	}
-
-	var getProjectEnvTargetProjects2 GetProjectEnvTargetProjects2 = GetProjectEnvTargetProjects2("")
-	if err := utils.UnmarshalJSON(data, &getProjectEnvTargetProjects2, "", true, true); err == nil {
-		u.GetProjectEnvTargetProjects2 = &getProjectEnvTargetProjects2
-		u.Type = GetProjectEnvResponseBodyProjectsTargetTypeGetProjectEnvTargetProjects2
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GetProjectEnvResponseBodyProjectsTarget", string(data))
-}
-
-func (u GetProjectEnvResponseBodyProjectsTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfGetProjectEnvTargetProjects1 != nil {
-		return utils.MarshalJSON(u.ArrayOfGetProjectEnvTargetProjects1, "", true)
-	}
-
-	if u.GetProjectEnvTargetProjects2 != nil {
-		return utils.MarshalJSON(u.GetProjectEnvTargetProjects2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type GetProjectEnvResponseBodyProjectsTarget: all fields are null")
 }
 
 type GetProjectEnvResponseBodyProjectsType string
@@ -1165,7 +1073,7 @@ func (o *GetProjectEnvResponseBodyProjectsInternalContentHint) GetEncryptedValue
 }
 
 type GetProjectEnvResponseBody2 struct {
-	Target            *GetProjectEnvResponseBodyProjectsTarget      `json:"target,omitempty"`
+	Target            []GetProjectEnvResponseBodyProjectsTarget     `json:"target,omitempty"`
 	Type              GetProjectEnvResponseBodyProjectsType         `json:"type"`
 	ID                *string                                       `json:"id,omitempty"`
 	Key               string                                        `json:"key"`
@@ -1187,7 +1095,7 @@ type GetProjectEnvResponseBody2 struct {
 	CustomEnvironmentID *string `json:"customEnvironmentId,omitempty"`
 }
 
-func (o *GetProjectEnvResponseBody2) GetTarget() *GetProjectEnvResponseBodyProjectsTarget {
+func (o *GetProjectEnvResponseBody2) GetTarget() []GetProjectEnvResponseBodyProjectsTarget {
 	if o == nil {
 		return nil
 	}
@@ -1313,18 +1221,18 @@ func (o *GetProjectEnvResponseBody2) GetCustomEnvironmentID() *string {
 	return o.CustomEnvironmentID
 }
 
-type GetProjectEnvTarget2 string
+type GetProjectEnvResponseBodyTarget string
 
 const (
-	GetProjectEnvTarget2Production  GetProjectEnvTarget2 = "production"
-	GetProjectEnvTarget2Preview     GetProjectEnvTarget2 = "preview"
-	GetProjectEnvTarget2Development GetProjectEnvTarget2 = "development"
+	GetProjectEnvResponseBodyTargetProduction  GetProjectEnvResponseBodyTarget = "production"
+	GetProjectEnvResponseBodyTargetPreview     GetProjectEnvResponseBodyTarget = "preview"
+	GetProjectEnvResponseBodyTargetDevelopment GetProjectEnvResponseBodyTarget = "development"
 )
 
-func (e GetProjectEnvTarget2) ToPointer() *GetProjectEnvTarget2 {
+func (e GetProjectEnvResponseBodyTarget) ToPointer() *GetProjectEnvResponseBodyTarget {
 	return &e
 }
-func (e *GetProjectEnvTarget2) UnmarshalJSON(data []byte) error {
+func (e *GetProjectEnvResponseBodyTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1335,103 +1243,11 @@ func (e *GetProjectEnvTarget2) UnmarshalJSON(data []byte) error {
 	case "preview":
 		fallthrough
 	case "development":
-		*e = GetProjectEnvTarget2(v)
+		*e = GetProjectEnvResponseBodyTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetProjectEnvTarget2: %v", v)
+		return fmt.Errorf("invalid value for GetProjectEnvResponseBodyTarget: %v", v)
 	}
-}
-
-type GetProjectEnvTarget1 string
-
-const (
-	GetProjectEnvTarget1Production  GetProjectEnvTarget1 = "production"
-	GetProjectEnvTarget1Preview     GetProjectEnvTarget1 = "preview"
-	GetProjectEnvTarget1Development GetProjectEnvTarget1 = "development"
-)
-
-func (e GetProjectEnvTarget1) ToPointer() *GetProjectEnvTarget1 {
-	return &e
-}
-func (e *GetProjectEnvTarget1) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "production":
-		fallthrough
-	case "preview":
-		fallthrough
-	case "development":
-		*e = GetProjectEnvTarget1(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetProjectEnvTarget1: %v", v)
-	}
-}
-
-type GetProjectEnvResponseBodyTargetType string
-
-const (
-	GetProjectEnvResponseBodyTargetTypeArrayOfGetProjectEnvTarget1 GetProjectEnvResponseBodyTargetType = "arrayOfGetProjectEnvTarget1"
-	GetProjectEnvResponseBodyTargetTypeGetProjectEnvTarget2        GetProjectEnvResponseBodyTargetType = "getProjectEnv_target_2"
-)
-
-type GetProjectEnvResponseBodyTarget struct {
-	ArrayOfGetProjectEnvTarget1 []GetProjectEnvTarget1
-	GetProjectEnvTarget2        *GetProjectEnvTarget2
-
-	Type GetProjectEnvResponseBodyTargetType
-}
-
-func CreateGetProjectEnvResponseBodyTargetArrayOfGetProjectEnvTarget1(arrayOfGetProjectEnvTarget1 []GetProjectEnvTarget1) GetProjectEnvResponseBodyTarget {
-	typ := GetProjectEnvResponseBodyTargetTypeArrayOfGetProjectEnvTarget1
-
-	return GetProjectEnvResponseBodyTarget{
-		ArrayOfGetProjectEnvTarget1: arrayOfGetProjectEnvTarget1,
-		Type:                        typ,
-	}
-}
-
-func CreateGetProjectEnvResponseBodyTargetGetProjectEnvTarget2(getProjectEnvTarget2 GetProjectEnvTarget2) GetProjectEnvResponseBodyTarget {
-	typ := GetProjectEnvResponseBodyTargetTypeGetProjectEnvTarget2
-
-	return GetProjectEnvResponseBodyTarget{
-		GetProjectEnvTarget2: &getProjectEnvTarget2,
-		Type:                 typ,
-	}
-}
-
-func (u *GetProjectEnvResponseBodyTarget) UnmarshalJSON(data []byte) error {
-
-	var arrayOfGetProjectEnvTarget1 []GetProjectEnvTarget1 = []GetProjectEnvTarget1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfGetProjectEnvTarget1, "", true, true); err == nil {
-		u.ArrayOfGetProjectEnvTarget1 = arrayOfGetProjectEnvTarget1
-		u.Type = GetProjectEnvResponseBodyTargetTypeArrayOfGetProjectEnvTarget1
-		return nil
-	}
-
-	var getProjectEnvTarget2 GetProjectEnvTarget2 = GetProjectEnvTarget2("")
-	if err := utils.UnmarshalJSON(data, &getProjectEnvTarget2, "", true, true); err == nil {
-		u.GetProjectEnvTarget2 = &getProjectEnvTarget2
-		u.Type = GetProjectEnvResponseBodyTargetTypeGetProjectEnvTarget2
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GetProjectEnvResponseBodyTarget", string(data))
-}
-
-func (u GetProjectEnvResponseBodyTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfGetProjectEnvTarget1 != nil {
-		return utils.MarshalJSON(u.ArrayOfGetProjectEnvTarget1, "", true)
-	}
-
-	if u.GetProjectEnvTarget2 != nil {
-		return utils.MarshalJSON(u.GetProjectEnvTarget2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type GetProjectEnvResponseBodyTarget: all fields are null")
 }
 
 type GetProjectEnvResponseBodyType string
@@ -2430,7 +2246,7 @@ func (o *GetProjectEnvResponseBodyInternalContentHint) GetEncryptedValue() strin
 
 type GetProjectEnvResponseBody1 struct {
 	Decrypted         bool                                  `json:"decrypted"`
-	Target            *GetProjectEnvResponseBodyTarget      `json:"target,omitempty"`
+	Target            []GetProjectEnvResponseBodyTarget     `json:"target,omitempty"`
 	Type              GetProjectEnvResponseBodyType         `json:"type"`
 	ID                *string                               `json:"id,omitempty"`
 	Key               string                                `json:"key"`
@@ -2456,7 +2272,7 @@ func (o *GetProjectEnvResponseBody1) GetDecrypted() bool {
 	return o.Decrypted
 }
 
-func (o *GetProjectEnvResponseBody1) GetTarget() *GetProjectEnvResponseBodyTarget {
+func (o *GetProjectEnvResponseBody1) GetTarget() []GetProjectEnvResponseBodyTarget {
 	if o == nil {
 		return nil
 	}

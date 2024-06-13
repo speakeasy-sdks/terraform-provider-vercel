@@ -5,7 +5,7 @@ package operations
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/shared"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/shared"
 	"net/http"
 )
 

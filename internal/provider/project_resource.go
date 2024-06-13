@@ -13,20 +13,20 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	speakeasy_boolplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/boolplanmodifier"
-	speakeasy_stringplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
-	tfTypes "github.com/vercel/terraform-provider-terraform/internal/provider/types"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
-	"github.com/vercel/terraform-provider-terraform/internal/validators"
+	tfTypes "github.com/vercel/terraform-provider-vercel/internal/provider/types"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
+	"github.com/vercel/terraform-provider-vercel/internal/validators"
+	speakeasy_listvalidators "github.com/vercel/terraform-provider-vercel/internal/validators/listvalidators"
+	speakeasy_stringvalidators "github.com/vercel/terraform-provider-vercel/internal/validators/stringvalidators"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -44,72 +44,71 @@ type ProjectResource struct {
 
 // ProjectResourceModel describes the resource data model.
 type ProjectResourceModel struct {
-	AccountID                            types.String                                     `tfsdk:"account_id"`
-	Analytics                            *tfTypes.CreateProjectAnalytics                  `tfsdk:"analytics"`
-	AutoAssignCustomDomains              types.Bool                                       `tfsdk:"auto_assign_custom_domains"`
-	AutoAssignCustomDomainsUpdatedBy     types.String                                     `tfsdk:"auto_assign_custom_domains_updated_by"`
-	AutoExposeSystemEnvs                 types.Bool                                       `tfsdk:"auto_expose_system_envs"`
-	BuildCommand                         types.String                                     `tfsdk:"build_command"`
-	CommandForIgnoringBuildStep          types.String                                     `tfsdk:"command_for_ignoring_build_step"`
-	ConcurrencyBucketName                types.String                                     `tfsdk:"concurrency_bucket_name"`
-	ConnectBuildsEnabled                 types.Bool                                       `tfsdk:"connect_builds_enabled"`
-	ConnectConfigurationID               types.String                                     `tfsdk:"connect_configuration_id"`
-	CreatedAt                            types.Number                                     `tfsdk:"created_at"`
-	Crons                                *tfTypes.CreateProjectCrons                      `tfsdk:"crons"`
-	CustomerSupportCodeVisibility        types.Bool                                       `tfsdk:"customer_support_code_visibility"`
-	DataCache                            *tfTypes.CreateProjectDataCache                  `tfsdk:"data_cache"`
-	DevCommand                           types.String                                     `tfsdk:"dev_command"`
-	DirectoryListing                     types.Bool                                       `tfsdk:"directory_listing"`
-	EnablePreviewFeedback                types.Bool                                       `tfsdk:"enable_preview_feedback"`
-	Env                                  []tfTypes.CreateProjectEnv                       `tfsdk:"env"`
-	EnvironmentVariables                 []tfTypes.EnvironmentVariables                   `tfsdk:"environment_variables"`
-	Framework                            types.String                                     `tfsdk:"framework"`
-	GitComments                          *tfTypes.CreateProjectGitComments                `tfsdk:"git_comments"`
-	GitForkProtection                    types.Bool                                       `tfsdk:"git_fork_protection"`
-	GitLFS                               types.Bool                                       `tfsdk:"git_lfs"`
-	GitRepository                        *tfTypes.GitRepository                           `tfsdk:"git_repository"`
-	HasActiveBranches                    types.Bool                                       `tfsdk:"has_active_branches"`
-	HasFloatingAliases                   types.Bool                                       `tfsdk:"has_floating_aliases"`
-	ID                                   types.String                                     `tfsdk:"id"`
-	IDOrName                             types.String                                     `tfsdk:"id_or_name"`
-	InstallCommand                       types.String                                     `tfsdk:"install_command"`
-	LastAliasRequest                     *tfTypes.CreateProjectLastAliasRequest           `tfsdk:"last_alias_request"`
-	LastRollbackTarget                   *tfTypes.GetEdgeConfigSchema                     `tfsdk:"last_rollback_target"`
-	LatestDeployments                    []tfTypes.CreateProjectLatestDeployments         `tfsdk:"latest_deployments"`
-	Link                                 *tfTypes.CreateProjectLink                       `tfsdk:"link"`
-	Live                                 types.Bool                                       `tfsdk:"live"`
-	Name                                 types.String                                     `tfsdk:"name"`
-	NodeVersion                          types.String                                     `tfsdk:"node_version"`
-	OidcTokenConfig                      *tfTypes.CreateProjectOidcTokenConfig            `tfsdk:"oidc_token_config"`
-	OptionsAllowlist                     *tfTypes.CreateProjectOptionsAllowlist           `tfsdk:"options_allowlist"`
-	OutputDirectory                      types.String                                     `tfsdk:"output_directory"`
-	PassiveConnectConfigurationID        types.String                                     `tfsdk:"passive_connect_configuration_id"`
-	PasswordProtection                   *tfTypes.GetEdgeConfigSchema                     `tfsdk:"password_protection"`
-	Paused                               types.Bool                                       `tfsdk:"paused"`
-	Permissions                          *tfTypes.CreateProjectPermissions                `tfsdk:"permissions"`
-	ProductionDeploymentsFastLane        types.Bool                                       `tfsdk:"production_deployments_fast_lane"`
-	ProtectionBypass                     map[string]tfTypes.CreateProjectProtectionBypass `tfsdk:"protection_bypass"`
-	PublicSource                         types.Bool                                       `tfsdk:"public_source"`
-	RootDirectory                        types.String                                     `tfsdk:"root_directory"`
-	Security                             *tfTypes.CreateProjectSecurity                   `tfsdk:"security"`
-	ServerlessFunctionRegion             types.String                                     `tfsdk:"serverless_function_region"`
-	ServerlessFunctionZeroConfigFailover types.Bool                                       `tfsdk:"serverless_function_zero_config_failover"`
-	SkewProtectionBoundaryAt             types.Number                                     `tfsdk:"skew_protection_boundary_at"`
-	SkewProtectionMaxAge                 types.Number                                     `tfsdk:"skew_protection_max_age"`
-	SkipGitConnectDuringLink             types.Bool                                       `tfsdk:"skip_git_connect_during_link"`
-	Slug                                 types.String                                     `tfsdk:"slug"`
-	SourceFilesOutsideRootDirectory      types.Bool                                       `tfsdk:"source_files_outside_root_directory"`
-	SpeedInsights                        *tfTypes.CreateProjectSpeedInsights              `tfsdk:"speed_insights"`
-	SsoProtection                        *tfTypes.CreateProjectSsoProtection              `tfsdk:"sso_protection"`
-	Targets                              map[string]tfTypes.CreateProjectOidcTokenClaims  `tfsdk:"targets"`
-	TeamID                               types.String                                     `tfsdk:"team_id"`
-	TransferCompletedAt                  types.Number                                     `tfsdk:"transfer_completed_at"`
-	TransferStartedAt                    types.Number                                     `tfsdk:"transfer_started_at"`
-	TransferToAccountID                  types.String                                     `tfsdk:"transfer_to_account_id"`
-	TransferredFromAccountID             types.String                                     `tfsdk:"transferred_from_account_id"`
-	TrustedIps                           *tfTypes.CreateProjectTrustedIps                 `tfsdk:"trusted_ips"`
-	UpdatedAt                            types.Number                                     `tfsdk:"updated_at"`
-	WebAnalytics                         *tfTypes.CreateProjectWebAnalytics               `tfsdk:"web_analytics"`
+	AccountID                            types.String                                  `tfsdk:"account_id"`
+	Analytics                            *tfTypes.GetProjectAnalytics                  `tfsdk:"analytics"`
+	AutoAssignCustomDomains              types.Bool                                    `tfsdk:"auto_assign_custom_domains"`
+	AutoAssignCustomDomainsUpdatedBy     types.String                                  `tfsdk:"auto_assign_custom_domains_updated_by"`
+	AutoExposeSystemEnvs                 types.Bool                                    `tfsdk:"auto_expose_system_envs"`
+	BuildCommand                         types.String                                  `tfsdk:"build_command"`
+	CommandForIgnoringBuildStep          types.String                                  `tfsdk:"command_for_ignoring_build_step"`
+	ConcurrencyBucketName                types.String                                  `tfsdk:"concurrency_bucket_name"`
+	ConnectBuildsEnabled                 types.Bool                                    `tfsdk:"connect_builds_enabled"`
+	ConnectConfigurationID               types.String                                  `tfsdk:"connect_configuration_id"`
+	CreatedAt                            types.Number                                  `tfsdk:"created_at"`
+	Crons                                *tfTypes.GetProjectCrons                      `tfsdk:"crons"`
+	CustomerSupportCodeVisibility        types.Bool                                    `tfsdk:"customer_support_code_visibility"`
+	DataCache                            *tfTypes.GetProjectDataCache                  `tfsdk:"data_cache"`
+	DevCommand                           types.String                                  `tfsdk:"dev_command"`
+	DirectoryListing                     types.Bool                                    `tfsdk:"directory_listing"`
+	EnablePreviewFeedback                types.Bool                                    `tfsdk:"enable_preview_feedback"`
+	Env                                  []tfTypes.GetProjectEnv                       `tfsdk:"env"`
+	EnvironmentVariables                 []tfTypes.EnvironmentVariables                `tfsdk:"environment_variables"`
+	Framework                            types.String                                  `tfsdk:"framework"`
+	GitComments                          *tfTypes.GetProjectGitComments                `tfsdk:"git_comments"`
+	GitForkProtection                    types.Bool                                    `tfsdk:"git_fork_protection"`
+	GitLFS                               types.Bool                                    `tfsdk:"git_lfs"`
+	GitRepository                        *tfTypes.GitRepository                        `tfsdk:"git_repository"`
+	HasActiveBranches                    types.Bool                                    `tfsdk:"has_active_branches"`
+	HasFloatingAliases                   types.Bool                                    `tfsdk:"has_floating_aliases"`
+	ID                                   types.String                                  `tfsdk:"id"`
+	InstallCommand                       types.String                                  `tfsdk:"install_command"`
+	LastAliasRequest                     *tfTypes.GetProjectLastAliasRequest           `tfsdk:"last_alias_request"`
+	LastRollbackTarget                   *tfTypes.GetProjectLastRollbackTarget         `tfsdk:"last_rollback_target"`
+	LatestDeployments                    []tfTypes.GetProjectLatestDeployments         `tfsdk:"latest_deployments"`
+	Link                                 *tfTypes.GetProjectLink                       `tfsdk:"link"`
+	Live                                 types.Bool                                    `tfsdk:"live"`
+	Name                                 types.String                                  `tfsdk:"name"`
+	NodeVersion                          types.String                                  `tfsdk:"node_version"`
+	OidcTokenConfig                      *tfTypes.GetProjectOidcTokenConfig            `tfsdk:"oidc_token_config"`
+	OptionsAllowlist                     *tfTypes.OptionsAllowlist                     `tfsdk:"options_allowlist"`
+	OutputDirectory                      types.String                                  `tfsdk:"output_directory"`
+	PassiveConnectConfigurationID        types.String                                  `tfsdk:"passive_connect_configuration_id"`
+	PasswordProtection                   *tfTypes.PasswordProtection                   `tfsdk:"password_protection"`
+	Paused                               types.Bool                                    `tfsdk:"paused"`
+	Permissions                          *tfTypes.GetProjectPermissions                `tfsdk:"permissions"`
+	ProductionDeploymentsFastLane        types.Bool                                    `tfsdk:"production_deployments_fast_lane"`
+	ProtectionBypass                     map[string]tfTypes.GetProjectProtectionBypass `tfsdk:"protection_bypass"`
+	PublicSource                         types.Bool                                    `tfsdk:"public_source"`
+	RootDirectory                        types.String                                  `tfsdk:"root_directory"`
+	Security                             *tfTypes.GetProjectSecurity                   `tfsdk:"security"`
+	ServerlessFunctionRegion             types.String                                  `tfsdk:"serverless_function_region"`
+	ServerlessFunctionZeroConfigFailover types.Bool                                    `tfsdk:"serverless_function_zero_config_failover"`
+	SkewProtectionBoundaryAt             types.Int64                                   `tfsdk:"skew_protection_boundary_at"`
+	SkewProtectionMaxAge                 types.Int64                                   `tfsdk:"skew_protection_max_age"`
+	SkipGitConnectDuringLink             types.Bool                                    `tfsdk:"skip_git_connect_during_link"`
+	Slug                                 types.String                                  `tfsdk:"slug"`
+	SourceFilesOutsideRootDirectory      types.Bool                                    `tfsdk:"source_files_outside_root_directory"`
+	SpeedInsights                        *tfTypes.GetProjectSpeedInsights              `tfsdk:"speed_insights"`
+	SsoProtection                        *tfTypes.SsoProtection                        `tfsdk:"sso_protection"`
+	Targets                              map[string]tfTypes.GetProjectOidcTokenClaims  `tfsdk:"targets"`
+	TeamID                               types.String                                  `tfsdk:"team_id"`
+	TransferCompletedAt                  types.Number                                  `tfsdk:"transfer_completed_at"`
+	TransferStartedAt                    types.Number                                  `tfsdk:"transfer_started_at"`
+	TransferToAccountID                  types.String                                  `tfsdk:"transfer_to_account_id"`
+	TransferredFromAccountID             types.String                                  `tfsdk:"transferred_from_account_id"`
+	TrustedIps                           *tfTypes.TrustedIps                           `tfsdk:"trusted_ips"`
+	UpdatedAt                            types.Number                                  `tfsdk:"updated_at"`
+	WebAnalytics                         *tfTypes.GetProjectWebAnalytics               `tfsdk:"web_analytics"`
 }
 
 func (r *ProjectResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -151,30 +150,24 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"auto_assign_custom_domains": schema.BoolAttribute{
 				Computed: true,
+				Optional: true,
 			},
 			"auto_assign_custom_domains_updated_by": schema.StringAttribute{
 				Computed: true,
+				Optional: true,
 			},
 			"auto_expose_system_envs": schema.BoolAttribute{
 				Computed: true,
+				Optional: true,
 			},
 			"build_command": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
+				Computed:    true,
 				Optional:    true,
-				Description: `The build command for this project. When ` + "`" + `null` + "`" + ` is used this value will be automatically detected. Requires replacement if changed. `,
+				Description: `The build command for this project. When ` + "`" + `null` + "`" + ` is used this value will be automatically detected`,
 			},
 			"command_for_ignoring_build_step": schema.StringAttribute{
 				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
-				Optional:    true,
-				Description: `Requires replacement if changed. `,
+				Optional: true,
 			},
 			"concurrency_bucket_name": schema.StringAttribute{
 				Computed: true,
@@ -228,7 +221,9 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"customer_support_code_visibility": schema.BoolAttribute{
-				Computed: true,
+				Computed:    true,
+				Optional:    true,
+				Description: `Specifies whether customer support can see git source for a deployment`,
 			},
 			"data_cache": schema.SingleNestedAttribute{
 				Computed: true,
@@ -245,19 +240,18 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"dev_command": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
+				Computed:    true,
 				Optional:    true,
-				Description: `The dev command for this project. When ` + "`" + `null` + "`" + ` is used this value will be automatically detected. Requires replacement if changed. `,
+				Description: `The dev command for this project. When ` + "`" + `null` + "`" + ` is used this value will be automatically detected`,
 			},
 			"directory_listing": schema.BoolAttribute{
 				Computed: true,
+				Optional: true,
 			},
 			"enable_preview_feedback": schema.BoolAttribute{
-				Computed: true,
+				Computed:    true,
+				Optional:    true,
+				Description: `Opt-in to Preview comments on the project level`,
 			},
 			"env": schema.ListNestedAttribute{
 				Computed: true,
@@ -800,36 +794,9 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 						"key": schema.StringAttribute{
 							Computed: true,
 						},
-						"target": schema.SingleNestedAttribute{
-							Computed: true,
-							Attributes: map[string]schema.Attribute{
-								"array_of_one": schema.ListAttribute{
-									Computed:    true,
-									ElementType: types.StringType,
-									Validators: []validator.List{
-										listvalidator.ConflictsWith(path.Expressions{
-											path.MatchRelative().AtParent().AtName("two"),
-										}...),
-									},
-								},
-								"two": schema.StringAttribute{
-									Computed:    true,
-									Description: `must be one of ["production", "preview", "development"]`,
-									Validators: []validator.String{
-										stringvalidator.ConflictsWith(path.Expressions{
-											path.MatchRelative().AtParent().AtName("array_of_one"),
-										}...),
-										stringvalidator.OneOf(
-											"production",
-											"preview",
-											"development",
-										),
-									},
-								},
-							},
-							Validators: []validator.Object{
-								validators.ExactlyOneChild(),
-							},
+						"target": schema.ListAttribute{
+							Computed:    true,
+							ElementType: types.StringType,
 						},
 						"type": schema.StringAttribute{
 							Computed:    true,
@@ -877,47 +844,13 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 							Required:    true,
 							Description: `Name of the ENV variable. Requires replacement if changed. `,
 						},
-						"target": schema.SingleNestedAttribute{
-							PlanModifiers: []planmodifier.Object{
-								objectplanmodifier.RequiresReplaceIfConfigured(),
+						"target": schema.ListAttribute{
+							PlanModifiers: []planmodifier.List{
+								listplanmodifier.RequiresReplaceIfConfigured(),
 							},
-							Required: true,
-							Attributes: map[string]schema.Attribute{
-								"array_of_two": schema.ListAttribute{
-									PlanModifiers: []planmodifier.List{
-										listplanmodifier.RequiresReplaceIfConfigured(),
-									},
-									Optional:    true,
-									ElementType: types.StringType,
-									Description: `Requires replacement if changed. `,
-									Validators: []validator.List{
-										listvalidator.ConflictsWith(path.Expressions{
-											path.MatchRelative().AtParent().AtName("one"),
-										}...),
-									},
-								},
-								"one": schema.StringAttribute{
-									PlanModifiers: []planmodifier.String{
-										stringplanmodifier.RequiresReplaceIfConfigured(),
-									},
-									Optional:    true,
-									Description: `Requires replacement if changed. ; must be one of ["production", "preview", "development"]`,
-									Validators: []validator.String{
-										stringvalidator.ConflictsWith(path.Expressions{
-											path.MatchRelative().AtParent().AtName("array_of_two"),
-										}...),
-										stringvalidator.OneOf(
-											"production",
-											"preview",
-											"development",
-										),
-									},
-								},
-							},
+							Required:    true,
+							ElementType: types.StringType,
 							Description: `Deployment Target or Targets in which the ENV variable will be used. Requires replacement if changed. `,
-							Validators: []validator.Object{
-								validators.ExactlyOneChild(),
-							},
 						},
 						"type": schema.StringAttribute{
 							PlanModifiers: []planmodifier.String{
@@ -947,13 +880,9 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Description: `Collection of ENV Variables the Project will use. Requires replacement if changed. `,
 			},
 			"framework": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
+				Computed:    true,
 				Optional:    true,
-				Description: `The framework that is being used for this project. When ` + "`" + `null` + "`" + ` is used no framework is selected. Requires replacement if changed. ; must be one of ["blitzjs", "nextjs", "gatsby", "remix", "astro", "hexo", "eleventy", "docusaurus-2", "docusaurus", "preact", "solidstart-1", "solidstart", "dojo", "ember", "vue", "scully", "ionic-angular", "angular", "polymer", "svelte", "sveltekit", "sveltekit-1", "ionic-react", "create-react-app", "gridsome", "umijs", "sapper", "saber", "stencil", "nuxtjs", "redwoodjs", "hugo", "jekyll", "brunch", "middleman", "zola", "hydrogen", "vite", "vitepress", "vuepress", "parcel", "sanity", "storybook"]`,
+				Description: `The framework that is being used for this project. When ` + "`" + `null` + "`" + ` is used no framework is selected. must be one of ["blitzjs", "nextjs", "gatsby", "remix", "astro", "hexo", "eleventy", "docusaurus-2", "docusaurus", "preact", "solidstart-1", "solidstart", "dojo", "ember", "vue", "scully", "ionic-angular", "angular", "polymer", "svelte", "sveltekit", "sveltekit-1", "ionic-react", "create-react-app", "gridsome", "umijs", "sapper", "saber", "stencil", "nuxtjs", "redwoodjs", "hugo", "jekyll", "brunch", "middleman", "zola", "hydrogen", "vite", "vitepress", "vuepress", "parcel", "sanity", "storybook"]`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"blitzjs",
@@ -1016,10 +945,14 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"git_fork_protection": schema.BoolAttribute{
-				Computed: true,
+				Computed:    true,
+				Optional:    true,
+				Description: `Specifies whether PRs from Git forks should require a team member's authorization before it can be deployed`,
 			},
 			"git_lfs": schema.BoolAttribute{
-				Computed: true,
+				Computed:    true,
+				Optional:    true,
+				Description: `Specifies whether Git LFS is enabled for this project.`,
 			},
 			"git_repository": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -1058,20 +991,13 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Computed: true,
 			},
 			"id": schema.StringAttribute{
-				Computed: true,
-			},
-			"id_or_name": schema.StringAttribute{
-				Required:    true,
+				Computed:    true,
 				Description: `The unique project identifier or the project name`,
 			},
 			"install_command": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
+				Computed:    true,
 				Optional:    true,
-				Description: `The install command for this project. When ` + "`" + `null` + "`" + ` is used this value will be automatically detected. Requires replacement if changed. `,
+				Description: `The install command for this project. When ` + "`" + `null` + "`" + ` is used this value will be automatically detected`,
 			},
 			"last_alias_request": schema.SingleNestedAttribute{
 				Computed: true,
@@ -1581,16 +1507,13 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
 				Required:    true,
-				Description: `The desired name for the project. Requires replacement if changed. `,
+				Description: `The desired name for the project`,
 			},
 			"node_version": schema.StringAttribute{
 				Computed:    true,
-				Description: `must be one of ["20.x", "18.x", "16.x", "14.x", "12.x", "10.x", "8.10.x"]`,
+				Optional:    true,
+				Description: `must be one of ["20.x", "18.x", "16.x", "14.x", "12.x", "10.x"]`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"20.x",
@@ -1599,7 +1522,6 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 						"14.x",
 						"12.x",
 						"10.x",
-						"8.10.x",
 					),
 				},
 			},
@@ -1613,34 +1535,63 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"options_allowlist": schema.SingleNestedAttribute{
 				Computed: true,
+				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"paths": schema.ListNestedAttribute{
 						Computed: true,
+						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"value": schema.StringAttribute{
-									Computed: true,
+									Computed:    true,
+									Optional:    true,
+									Description: `The regex path that should not be protected by Deployment Protection. Not Null`,
+									Validators: []validator.String{
+										speakeasy_stringvalidators.NotNull(),
+									},
 								},
 							},
 						},
+						Description: `Not Null`,
+						Validators: []validator.List{
+							speakeasy_listvalidators.NotNull(),
+						},
 					},
 				},
+				Description: `Specify a list of paths that should not be protected by Deployment Protection to enable Cors preflight requests`,
 			},
 			"output_directory": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
+				Computed:    true,
 				Optional:    true,
-				Description: `The output directory of the project. When ` + "`" + `null` + "`" + ` is used this value will be automatically detected. Requires replacement if changed. `,
+				Description: `The output directory of the project. When ` + "`" + `null` + "`" + ` is used this value will be automatically detected`,
 			},
 			"passive_connect_configuration_id": schema.StringAttribute{
 				Computed: true,
 			},
 			"password_protection": schema.SingleNestedAttribute{
-				Computed:   true,
-				Attributes: map[string]schema.Attribute{},
+				Computed: true,
+				Optional: true,
+				Attributes: map[string]schema.Attribute{
+					"deployment_type": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Description: `Specify if the password will apply to every Deployment Target or just Preview. Not Null; must be one of ["all", "preview", "prod_deployment_urls_and_all_previews"]`,
+						Validators: []validator.String{
+							speakeasy_stringvalidators.NotNull(),
+							stringvalidator.OneOf(
+								"all",
+								"preview",
+								"prod_deployment_urls_and_all_previews",
+							),
+						},
+					},
+					"password": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Description: `The password that will be used to protect Project Deployments`,
+					},
+				},
+				Description: `Allows to protect project deployments with a password`,
 			},
 			"paused": schema.BoolAttribute{
 				Computed: true,
@@ -2336,22 +2287,14 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"public_source": schema.BoolAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.Bool{
-					boolplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
-				},
+				Computed:    true,
 				Optional:    true,
-				Description: `Specifies whether the source code and logs of the deployments for this project should be public or not. Requires replacement if changed. `,
+				Description: `Specifies whether the source code and logs of the deployments for this project should be public or not`,
 			},
 			"root_directory": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
+				Computed:    true,
 				Optional:    true,
-				Description: `The name of a directory or relative path to the source code of your project. When ` + "`" + `null` + "`" + ` is used it will default to the project root. Requires replacement if changed. `,
+				Description: `The name of a directory or relative path to the source code of your project. When ` + "`" + `null` + "`" + ` is used it will default to the project root`,
 			},
 			"security": schema.SingleNestedAttribute{
 				Computed: true,
@@ -2371,314 +2314,6 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 					"firewall_enabled": schema.BoolAttribute{
 						Computed: true,
 					},
-					"firewall_routes": schema.ListNestedAttribute{
-						Computed: true,
-						NestedObject: schema.NestedAttributeObject{
-							Attributes: map[string]schema.Attribute{
-								"dest": schema.StringAttribute{
-									Computed: true,
-								},
-								"handle": schema.StringAttribute{
-									Computed:    true,
-									Description: `must be one of ["init", "finalize"]`,
-									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"init",
-											"finalize",
-										),
-									},
-								},
-								"has": schema.ListNestedAttribute{
-									Computed: true,
-									NestedObject: schema.NestedAttributeObject{
-										Attributes: map[string]schema.Attribute{
-											"key": schema.StringAttribute{
-												Computed: true,
-											},
-											"type": schema.StringAttribute{
-												Computed:    true,
-												Description: `must be one of ["host", "method", "path", "header", "cookie", "query", "ip_address", "protocol", "scheme", "region"]`,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"host",
-														"method",
-														"path",
-														"header",
-														"cookie",
-														"query",
-														"ip_address",
-														"protocol",
-														"scheme",
-														"region",
-													),
-												},
-											},
-											"value": schema.SingleNestedAttribute{
-												Computed: true,
-												Attributes: map[string]schema.Attribute{
-													"str": schema.StringAttribute{
-														Computed: true,
-														Validators: []validator.String{
-															stringvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("two"),
-															}...),
-														},
-													},
-													"two": schema.SingleNestedAttribute{
-														Computed: true,
-														Attributes: map[string]schema.Attribute{
-															"eq": schema.StringAttribute{
-																Computed: true,
-															},
-															"gt": schema.NumberAttribute{
-																Computed: true,
-															},
-															"gte": schema.NumberAttribute{
-																Computed: true,
-															},
-															"inc": schema.ListAttribute{
-																Computed:    true,
-																ElementType: types.StringType,
-															},
-															"lt": schema.NumberAttribute{
-																Computed: true,
-															},
-															"lte": schema.NumberAttribute{
-																Computed: true,
-															},
-															"neq": schema.StringAttribute{
-																Computed: true,
-															},
-															"ninc": schema.ListAttribute{
-																Computed:    true,
-																ElementType: types.StringType,
-															},
-															"pre": schema.StringAttribute{
-																Computed: true,
-															},
-															"re": schema.StringAttribute{
-																Computed: true,
-															},
-															"suf": schema.StringAttribute{
-																Computed: true,
-															},
-														},
-														Validators: []validator.Object{
-															objectvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("str"),
-															}...),
-														},
-													},
-												},
-												Validators: []validator.Object{
-													validators.ExactlyOneChild(),
-												},
-											},
-										},
-									},
-								},
-								"missing": schema.ListNestedAttribute{
-									Computed: true,
-									NestedObject: schema.NestedAttributeObject{
-										Attributes: map[string]schema.Attribute{
-											"key": schema.StringAttribute{
-												Computed: true,
-											},
-											"type": schema.StringAttribute{
-												Computed:    true,
-												Description: `must be one of ["host", "method", "path", "header", "cookie", "query", "ip_address", "protocol", "scheme", "region"]`,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"host",
-														"method",
-														"path",
-														"header",
-														"cookie",
-														"query",
-														"ip_address",
-														"protocol",
-														"scheme",
-														"region",
-													),
-												},
-											},
-											"value": schema.SingleNestedAttribute{
-												Computed: true,
-												Attributes: map[string]schema.Attribute{
-													"str": schema.StringAttribute{
-														Computed: true,
-														Validators: []validator.String{
-															stringvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("two"),
-															}...),
-														},
-													},
-													"two": schema.SingleNestedAttribute{
-														Computed: true,
-														Attributes: map[string]schema.Attribute{
-															"eq": schema.StringAttribute{
-																Computed: true,
-															},
-															"gt": schema.NumberAttribute{
-																Computed: true,
-															},
-															"gte": schema.NumberAttribute{
-																Computed: true,
-															},
-															"inc": schema.ListAttribute{
-																Computed:    true,
-																ElementType: types.StringType,
-															},
-															"lt": schema.NumberAttribute{
-																Computed: true,
-															},
-															"lte": schema.NumberAttribute{
-																Computed: true,
-															},
-															"neq": schema.StringAttribute{
-																Computed: true,
-															},
-															"ninc": schema.ListAttribute{
-																Computed:    true,
-																ElementType: types.StringType,
-															},
-															"pre": schema.StringAttribute{
-																Computed: true,
-															},
-															"re": schema.StringAttribute{
-																Computed: true,
-															},
-															"suf": schema.StringAttribute{
-																Computed: true,
-															},
-														},
-														Validators: []validator.Object{
-															objectvalidator.ConflictsWith(path.Expressions{
-																path.MatchRelative().AtParent().AtName("str"),
-															}...),
-														},
-													},
-												},
-												Validators: []validator.Object{
-													validators.ExactlyOneChild(),
-												},
-											},
-										},
-									},
-								},
-								"mitigate": schema.SingleNestedAttribute{
-									Computed: true,
-									Attributes: map[string]schema.Attribute{
-										"action": schema.StringAttribute{
-											Computed:    true,
-											Description: `must be one of ["deny", "challenge", "log", "bypass", "rate_limit"]`,
-											Validators: []validator.String{
-												stringvalidator.OneOf(
-													"deny",
-													"challenge",
-													"log",
-													"bypass",
-													"rate_limit",
-												),
-											},
-										},
-										"erl": schema.SingleNestedAttribute{
-											Computed: true,
-											Attributes: map[string]schema.Attribute{
-												"algo": schema.StringAttribute{
-													Computed:    true,
-													Description: `must be one of ["fixed_window", "token_bucket"]`,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"fixed_window",
-															"token_bucket",
-														),
-													},
-												},
-												"keys": schema.ListAttribute{
-													Computed:    true,
-													ElementType: types.StringType,
-												},
-												"limit": schema.NumberAttribute{
-													Computed: true,
-												},
-												"window": schema.NumberAttribute{
-													Computed: true,
-												},
-											},
-										},
-										"rule_id": schema.StringAttribute{
-											Computed: true,
-										},
-									},
-								},
-								"src": schema.SingleNestedAttribute{
-									Computed: true,
-									Attributes: map[string]schema.Attribute{
-										"str": schema.StringAttribute{
-											Computed: true,
-											Validators: []validator.String{
-												stringvalidator.ConflictsWith(path.Expressions{
-													path.MatchRelative().AtParent().AtName("two"),
-												}...),
-											},
-										},
-										"two": schema.SingleNestedAttribute{
-											Computed: true,
-											Attributes: map[string]schema.Attribute{
-												"eq": schema.StringAttribute{
-													Computed: true,
-												},
-												"gt": schema.NumberAttribute{
-													Computed: true,
-												},
-												"gte": schema.NumberAttribute{
-													Computed: true,
-												},
-												"inc": schema.ListAttribute{
-													Computed:    true,
-													ElementType: types.StringType,
-												},
-												"lt": schema.NumberAttribute{
-													Computed: true,
-												},
-												"lte": schema.NumberAttribute{
-													Computed: true,
-												},
-												"neq": schema.StringAttribute{
-													Computed: true,
-												},
-												"ninc": schema.ListAttribute{
-													Computed:    true,
-													ElementType: types.StringType,
-												},
-												"pre": schema.StringAttribute{
-													Computed: true,
-												},
-												"re": schema.StringAttribute{
-													Computed: true,
-												},
-												"suf": schema.StringAttribute{
-													Computed: true,
-												},
-											},
-											Validators: []validator.Object{
-												objectvalidator.ConflictsWith(path.Expressions{
-													path.MatchRelative().AtParent().AtName("str"),
-												}...),
-											},
-										},
-									},
-									Validators: []validator.Object{
-										validators.ExactlyOneChild(),
-									},
-								},
-								"status": schema.NumberAttribute{
-									Computed: true,
-								},
-							},
-						},
-					},
 					"firewall_seawall_enabled": schema.BoolAttribute{
 						Computed: true,
 					},
@@ -2694,47 +2329,38 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"serverless_function_region": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
+				Computed:    true,
 				Optional:    true,
-				Description: `The region to deploy Serverless Functions in this project. Requires replacement if changed. `,
+				Description: `The region to deploy Serverless Functions in this project`,
 			},
 			"serverless_function_zero_config_failover": schema.BoolAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.Bool{
-					boolplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
-				},
+				Computed:    true,
 				Optional:    true,
-				Description: `Specifies whether Zero Config Failover is enabled for this project. Requires replacement if changed. `,
+				Description: `Specifies whether Zero Config Failover is enabled for this project.`,
 			},
-			"skew_protection_boundary_at": schema.NumberAttribute{
-				Computed: true,
+			"skew_protection_boundary_at": schema.Int64Attribute{
+				Computed:    true,
+				Optional:    true,
+				Description: `Deployments created before this absolute datetime have Skew Protection disabled. Value is in milliseconds since epoch to match \"createdAt\" fields.`,
 			},
-			"skew_protection_max_age": schema.NumberAttribute{
-				Computed: true,
+			"skew_protection_max_age": schema.Int64Attribute{
+				Computed:    true,
+				Optional:    true,
+				Description: `Deployments created before this rolling window have Skew Protection disabled. Value is in seconds to match \"revalidate\" fields.`,
 			},
 			"skip_git_connect_during_link": schema.BoolAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.Bool{
-					boolplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
-				},
+				Computed:    true,
 				Optional:    true,
-				Description: `Opts-out of the message prompting a CLI user to connect a Git repository in ` + "`" + `vercel link` + "`" + `. Requires replacement if changed. `,
+				Description: `Opts-out of the message prompting a CLI user to connect a Git repository in ` + "`" + `vercel link` + "`" + `.`,
 			},
 			"slug": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-				},
 				Optional:    true,
-				Description: `The Team slug to perform the request on behalf of. Requires replacement if changed. `,
+				Description: `The Team slug to perform the request on behalf of.`,
 			},
 			"source_files_outside_root_directory": schema.BoolAttribute{
-				Computed: true,
+				Computed:    true,
+				Optional:    true,
+				Description: `Indicates if there are source files outside of the root directory`,
 			},
 			"speed_insights": schema.SingleNestedAttribute{
 				Computed: true,
@@ -2761,10 +2387,13 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"sso_protection": schema.SingleNestedAttribute{
 				Computed: true,
+				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"deployment_type": schema.StringAttribute{
 						Computed:    true,
-						Description: `must be one of ["all", "preview", "prod_deployment_urls_and_all_previews"]`,
+						Optional:    true,
+						Default:     stringdefault.StaticString("preview"),
+						Description: `Specify if the Vercel Authentication (SSO Protection) will apply to every Deployment Target or just Preview. must be one of ["all", "preview", "prod_deployment_urls_and_all_previews"]; Default: "preview"`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"all",
@@ -2774,6 +2403,7 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 						},
 					},
 				},
+				Description: `Ensures visitors to your Preview Deployments are logged into Vercel and have a minimum of Viewer access on your team`,
 			},
 			"targets": schema.MapNestedAttribute{
 				Computed: true,
@@ -2803,11 +2433,8 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"team_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-				},
 				Optional:    true,
-				Description: `The Team identifier to perform the request on behalf of. Requires replacement if changed. `,
+				Description: `The Team identifier to perform the request on behalf of.`,
 			},
 			"transfer_completed_at": schema.NumberAttribute{
 				Computed: true,
@@ -2823,78 +2450,62 @@ func (r *ProjectResource) Schema(ctx context.Context, req resource.SchemaRequest
 			},
 			"trusted_ips": schema.SingleNestedAttribute{
 				Computed: true,
+				Optional: true,
 				Attributes: map[string]schema.Attribute{
-					"one": schema.SingleNestedAttribute{
+					"addresses": schema.ListNestedAttribute{
 						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"addresses": schema.ListNestedAttribute{
-								Computed: true,
-								NestedObject: schema.NestedAttributeObject{
-									Attributes: map[string]schema.Attribute{
-										"note": schema.StringAttribute{
-											Computed: true,
-										},
-										"value": schema.StringAttribute{
-											Computed: true,
-										},
+						Optional: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"note": schema.StringAttribute{
+									Computed:    true,
+									Optional:    true,
+									Description: `An optional note explaining what the IP address or subnet is used for`,
+								},
+								"value": schema.StringAttribute{
+									Computed:    true,
+									Optional:    true,
+									Description: `The IP addresses that are allowlisted. Supports IPv4 addresses and CIDR notations. IPv6 is not supported. Not Null`,
+									Validators: []validator.String{
+										speakeasy_stringvalidators.NotNull(),
 									},
 								},
 							},
-							"deployment_type": schema.StringAttribute{
-								Computed:    true,
-								Description: `must be one of ["all", "preview", "prod_deployment_urls_and_all_previews", "production"]`,
-								Validators: []validator.String{
-									stringvalidator.OneOf(
-										"all",
-										"preview",
-										"prod_deployment_urls_and_all_previews",
-										"production",
-									),
-								},
-							},
-							"protection_mode": schema.StringAttribute{
-								Computed:    true,
-								Description: `must be one of ["additional", "exclusive"]`,
-								Validators: []validator.String{
-									stringvalidator.OneOf(
-										"additional",
-										"exclusive",
-									),
-								},
-							},
 						},
-						Validators: []validator.Object{
-							objectvalidator.ConflictsWith(path.Expressions{
-								path.MatchRelative().AtParent().AtName("two"),
-							}...),
+						Description: `Not Null`,
+						Validators: []validator.List{
+							speakeasy_listvalidators.NotNull(),
+							listvalidator.SizeAtLeast(1),
 						},
 					},
-					"two": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"deployment_type": schema.StringAttribute{
-								Computed:    true,
-								Description: `must be one of ["all", "preview", "prod_deployment_urls_and_all_previews", "production"]`,
-								Validators: []validator.String{
-									stringvalidator.OneOf(
-										"all",
-										"preview",
-										"prod_deployment_urls_and_all_previews",
-										"production",
-									),
-								},
-							},
+					"deployment_type": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Description: `Specify if the Trusted IPs will apply to every Deployment Target or just Preview. Not Null; must be one of ["all", "preview", "production", "prod_deployment_urls_and_all_previews"]`,
+						Validators: []validator.String{
+							speakeasy_stringvalidators.NotNull(),
+							stringvalidator.OneOf(
+								"all",
+								"preview",
+								"production",
+								"prod_deployment_urls_and_all_previews",
+							),
 						},
-						Validators: []validator.Object{
-							objectvalidator.ConflictsWith(path.Expressions{
-								path.MatchRelative().AtParent().AtName("one"),
-							}...),
+					},
+					"protection_mode": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Description: `exclusive: ip match is enough to bypass deployment protection (regardless of other settings). additional: ip must match + any other protection should be also provided (password, vercel auth, shareable link, automation bypass header, automation bypass query param). Not Null; must be one of ["exclusive", "additional"]`,
+						Validators: []validator.String{
+							speakeasy_stringvalidators.NotNull(),
+							stringvalidator.OneOf(
+								"exclusive",
+								"additional",
+							),
 						},
 					},
 				},
-				Validators: []validator.Object{
-					validators.ExactlyOneChild(),
-				},
+				Description: `Restricts access to deployments based on the incoming request IP address`,
 			},
 			"updated_at": schema.NumberAttribute{
 				Computed: true,
@@ -2995,11 +2606,93 @@ func (r *ProjectResource) Create(ctx context.Context, req resource.CreateRequest
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.Object == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromOperationsCreateProjectResponseBody(res.Object)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	idOrName := data.ID.ValueString()
+	teamId1 := new(string)
+	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
+		*teamId1 = data.TeamID.ValueString()
+	} else {
+		teamId1 = nil
+	}
+	slug1 := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug1 = data.Slug.ValueString()
+	} else {
+		slug1 = nil
+	}
+	requestBody1 := data.ToOperationsUpdateProjectRequestBody()
+	request1 := operations.UpdateProjectRequest{
+		IDOrName:    idOrName,
+		TeamID:      teamId1,
+		Slug:        slug1,
+		RequestBody: requestBody1,
+	}
+	res1, err := r.client.Projects.Update(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if !(res1.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromOperationsUpdateProjectResponseBody(res1.Object)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	idOrName1 := data.ID.ValueString()
+	teamId2 := new(string)
+	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
+		*teamId2 = data.TeamID.ValueString()
+	} else {
+		teamId2 = nil
+	}
+	slug2 := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug2 = data.Slug.ValueString()
+	} else {
+		slug2 = nil
+	}
+	request2 := operations.GetProjectRequest{
+		IDOrName: idOrName1,
+		TeamID:   teamId2,
+		Slug:     slug2,
+	}
+	res2, err := r.client.Projects.GetProject(ctx, request2)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res2 != nil && res2.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res2.RawResponse))
+		}
+		return
+	}
+	if res2 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res2))
+		return
+	}
+	if res2.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res2.StatusCode), debugResponse(res2.RawResponse))
+		return
+	}
+	if !(res2.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res2.RawResponse))
+		return
+	}
+	data.RefreshFromOperationsGetProjectResponseBody(res2.Object)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -3024,7 +2717,49 @@ func (r *ProjectResource) Read(ctx context.Context, req resource.ReadRequest, re
 		return
 	}
 
-	// Not Implemented; we rely entirely on CREATE API request response
+	idOrName := data.ID.ValueString()
+	teamID := new(string)
+	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
+		*teamID = data.TeamID.ValueString()
+	} else {
+		teamID = nil
+	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
+	request := operations.GetProjectRequest{
+		IDOrName: idOrName,
+		TeamID:   teamID,
+		Slug:     slug,
+	}
+	res, err := r.client.Projects.GetProject(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	}
+	if res.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+	if !(res.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromOperationsGetProjectResponseBody(res.Object)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -3044,7 +2779,88 @@ func (r *ProjectResource) Update(ctx context.Context, req resource.UpdateRequest
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	idOrName := data.ID.ValueString()
+	teamID := new(string)
+	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
+		*teamID = data.TeamID.ValueString()
+	} else {
+		teamID = nil
+	}
+	slug := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug = data.Slug.ValueString()
+	} else {
+		slug = nil
+	}
+	requestBody := data.ToOperationsUpdateProjectRequestBody()
+	request := operations.UpdateProjectRequest{
+		IDOrName:    idOrName,
+		TeamID:      teamID,
+		Slug:        slug,
+		RequestBody: requestBody,
+	}
+	res, err := r.client.Projects.Update(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+	if !(res.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromOperationsUpdateProjectResponseBody(res.Object)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	idOrName1 := data.ID.ValueString()
+	teamId1 := new(string)
+	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
+		*teamId1 = data.TeamID.ValueString()
+	} else {
+		teamId1 = nil
+	}
+	slug1 := new(string)
+	if !data.Slug.IsUnknown() && !data.Slug.IsNull() {
+		*slug1 = data.Slug.ValueString()
+	} else {
+		slug1 = nil
+	}
+	request1 := operations.GetProjectRequest{
+		IDOrName: idOrName1,
+		TeamID:   teamId1,
+		Slug:     slug1,
+	}
+	res1, err := r.client.Projects.GetProject(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if !(res1.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromOperationsGetProjectResponseBody(res1.Object)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -3068,7 +2884,7 @@ func (r *ProjectResource) Delete(ctx context.Context, req resource.DeleteRequest
 		return
 	}
 
-	idOrName := data.IDOrName.ValueString()
+	idOrName := data.ID.ValueString()
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
@@ -3106,5 +2922,5 @@ func (r *ProjectResource) Delete(ctx context.Context, req resource.DeleteRequest
 }
 
 func (r *ProjectResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resp.Diagnostics.AddError("Not Implemented", "No available import state operation is available for resource project.")
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), req.ID)...)
 }

@@ -8,14 +8,14 @@ import (
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
-	"github.com/vercel/terraform-provider-terraform/internal/provider"
+	"github.com/vercel/terraform-provider-vercel/internal/provider"
 )
 
 // Run "go generate" to generate the docs for the registry/website on each regeneration of the provider.
 
 // Run the docs generation tool, check its repository for more information on how it works and how docs
 // can be customized.
-//go:generate go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs generate --provider-name terraform-provider-terraform --rendered-provider-name terraform-provider-terraform
+//go:generate go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs generate --provider-name terraform-provider-vercel --rendered-provider-name terraform-provider-vercel
 
 var (
 	// these will be set by the goreleaser configuration
@@ -30,7 +30,7 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		Address: "registry.terraform.io/vercel/terraform",
+		Address: "registry.terraform.io/vercel/vercel",
 		Debug:   debug,
 	}
 

@@ -4,364 +4,342 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/vercel/terraform-provider-terraform/internal/provider/types"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
-	"math/big"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
 )
 
 func (r *DNSResourceModel) ToOperationsCreateRecordRequestBody() *operations.CreateRecordRequestBody {
 	var out operations.CreateRecordRequestBody
-	var requestBody1 *operations.RequestBody1
-	if r.One != nil {
-		name := r.One.Name.ValueString()
-		typeVar := operations.RequestBodyType(r.One.Type.ValueString())
+	var a *operations.A
+	if r.A != nil {
+		name := r.A.Name.ValueString()
 		ttl := new(float64)
-		if !r.One.TTL.IsUnknown() && !r.One.TTL.IsNull() {
-			*ttl, _ = r.One.TTL.ValueBigFloat().Float64()
+		if !r.A.TTL.IsUnknown() && !r.A.TTL.IsNull() {
+			*ttl, _ = r.A.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl = nil
 		}
-		value := r.One.Value.ValueString()
+		value := r.A.Value.ValueString()
 		comment := new(string)
-		if !r.One.Comment.IsUnknown() && !r.One.Comment.IsNull() {
-			*comment = r.One.Comment.ValueString()
+		if !r.A.Comment.IsUnknown() && !r.A.Comment.IsNull() {
+			*comment = r.A.Comment.ValueString()
 		} else {
 			comment = nil
 		}
-		requestBody1 = &operations.RequestBody1{
+		a = &operations.A{
 			Name:    name,
-			Type:    typeVar,
 			TTL:     ttl,
 			Value:   value,
 			Comment: comment,
 		}
 	}
-	if requestBody1 != nil {
+	if a != nil {
 		out = operations.CreateRecordRequestBody{
-			RequestBody1: requestBody1,
+			A: a,
 		}
 	}
-	var requestBody2 *operations.RequestBody2
-	if r.Two != nil {
-		name1 := r.Two.Name.ValueString()
-		typeVar1 := operations.CreateRecordRequestBodyType(r.Two.Type.ValueString())
+	var aaaa *operations.Aaaa
+	if r.Aaaa != nil {
+		name1 := r.Aaaa.Name.ValueString()
 		ttl1 := new(float64)
-		if !r.Two.TTL.IsUnknown() && !r.Two.TTL.IsNull() {
-			*ttl1, _ = r.Two.TTL.ValueBigFloat().Float64()
+		if !r.Aaaa.TTL.IsUnknown() && !r.Aaaa.TTL.IsNull() {
+			*ttl1, _ = r.Aaaa.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl1 = nil
 		}
-		value1 := r.Two.Value.ValueString()
+		value1 := r.Aaaa.Value.ValueString()
 		comment1 := new(string)
-		if !r.Two.Comment.IsUnknown() && !r.Two.Comment.IsNull() {
-			*comment1 = r.Two.Comment.ValueString()
+		if !r.Aaaa.Comment.IsUnknown() && !r.Aaaa.Comment.IsNull() {
+			*comment1 = r.Aaaa.Comment.ValueString()
 		} else {
 			comment1 = nil
 		}
-		requestBody2 = &operations.RequestBody2{
+		aaaa = &operations.Aaaa{
 			Name:    name1,
-			Type:    typeVar1,
 			TTL:     ttl1,
 			Value:   value1,
 			Comment: comment1,
 		}
 	}
-	if requestBody2 != nil {
+	if aaaa != nil {
 		out = operations.CreateRecordRequestBody{
-			RequestBody2: requestBody2,
+			Aaaa: aaaa,
 		}
 	}
-	var requestBody3 *operations.RequestBody3
-	if r.Three != nil {
-		name2 := r.Three.Name.ValueString()
-		typeVar2 := operations.CreateRecordRequestBodyDNSType(r.Three.Type.ValueString())
+	var alias *operations.Alias
+	if r.Alias != nil {
+		name2 := r.Alias.Name.ValueString()
 		ttl2 := new(float64)
-		if !r.Three.TTL.IsUnknown() && !r.Three.TTL.IsNull() {
-			*ttl2, _ = r.Three.TTL.ValueBigFloat().Float64()
+		if !r.Alias.TTL.IsUnknown() && !r.Alias.TTL.IsNull() {
+			*ttl2, _ = r.Alias.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl2 = nil
 		}
-		value2 := r.Three.Value.ValueString()
+		value2 := r.Alias.Value.ValueString()
 		comment2 := new(string)
-		if !r.Three.Comment.IsUnknown() && !r.Three.Comment.IsNull() {
-			*comment2 = r.Three.Comment.ValueString()
+		if !r.Alias.Comment.IsUnknown() && !r.Alias.Comment.IsNull() {
+			*comment2 = r.Alias.Comment.ValueString()
 		} else {
 			comment2 = nil
 		}
-		requestBody3 = &operations.RequestBody3{
+		alias = &operations.Alias{
 			Name:    name2,
-			Type:    typeVar2,
 			TTL:     ttl2,
 			Value:   value2,
 			Comment: comment2,
 		}
 	}
-	if requestBody3 != nil {
+	if alias != nil {
 		out = operations.CreateRecordRequestBody{
-			RequestBody3: requestBody3,
+			Alias: alias,
 		}
 	}
-	var requestBody4 *operations.RequestBody4
-	if r.Four != nil {
-		name3 := r.Four.Name.ValueString()
-		typeVar3 := operations.CreateRecordRequestBodyDNSRequestType(r.Four.Type.ValueString())
+	var caa *operations.Caa
+	if r.Caa != nil {
+		name3 := r.Caa.Name.ValueString()
 		ttl3 := new(float64)
-		if !r.Four.TTL.IsUnknown() && !r.Four.TTL.IsNull() {
-			*ttl3, _ = r.Four.TTL.ValueBigFloat().Float64()
+		if !r.Caa.TTL.IsUnknown() && !r.Caa.TTL.IsNull() {
+			*ttl3, _ = r.Caa.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl3 = nil
 		}
-		value3 := r.Four.Value.ValueString()
+		value3 := r.Caa.Value.ValueString()
 		comment3 := new(string)
-		if !r.Four.Comment.IsUnknown() && !r.Four.Comment.IsNull() {
-			*comment3 = r.Four.Comment.ValueString()
+		if !r.Caa.Comment.IsUnknown() && !r.Caa.Comment.IsNull() {
+			*comment3 = r.Caa.Comment.ValueString()
 		} else {
 			comment3 = nil
 		}
-		requestBody4 = &operations.RequestBody4{
+		caa = &operations.Caa{
 			Name:    name3,
-			Type:    typeVar3,
 			TTL:     ttl3,
 			Value:   value3,
 			Comment: comment3,
 		}
 	}
-	if requestBody4 != nil {
+	if caa != nil {
 		out = operations.CreateRecordRequestBody{
-			RequestBody4: requestBody4,
+			Caa: caa,
 		}
 	}
-	var requestBody5 *operations.RequestBody5
-	if r.Five != nil {
-		name4 := r.Five.Name.ValueString()
-		typeVar4 := operations.CreateRecordRequestBodyDNSRequest5Type(r.Five.Type.ValueString())
+	var cname *operations.Cname
+	if r.Cname != nil {
+		name4 := r.Cname.Name.ValueString()
 		ttl4 := new(float64)
-		if !r.Five.TTL.IsUnknown() && !r.Five.TTL.IsNull() {
-			*ttl4, _ = r.Five.TTL.ValueBigFloat().Float64()
+		if !r.Cname.TTL.IsUnknown() && !r.Cname.TTL.IsNull() {
+			*ttl4, _ = r.Cname.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl4 = nil
 		}
 		value4 := new(string)
-		if !r.Five.Value.IsUnknown() && !r.Five.Value.IsNull() {
-			*value4 = r.Five.Value.ValueString()
+		if !r.Cname.Value.IsUnknown() && !r.Cname.Value.IsNull() {
+			*value4 = r.Cname.Value.ValueString()
 		} else {
 			value4 = nil
 		}
 		comment4 := new(string)
-		if !r.Five.Comment.IsUnknown() && !r.Five.Comment.IsNull() {
-			*comment4 = r.Five.Comment.ValueString()
+		if !r.Cname.Comment.IsUnknown() && !r.Cname.Comment.IsNull() {
+			*comment4 = r.Cname.Comment.ValueString()
 		} else {
 			comment4 = nil
 		}
-		requestBody5 = &operations.RequestBody5{
+		cname = &operations.Cname{
 			Name:    name4,
-			Type:    typeVar4,
 			TTL:     ttl4,
 			Value:   value4,
 			Comment: comment4,
 		}
 	}
-	if requestBody5 != nil {
+	if cname != nil {
 		out = operations.CreateRecordRequestBody{
-			RequestBody5: requestBody5,
+			Cname: cname,
 		}
 	}
-	var six *operations.Six
-	if r.Six != nil {
-		name5 := r.Six.Name.ValueString()
-		typeVar5 := operations.CreateRecordRequestBodyDNSRequest6Type(r.Six.Type.ValueString())
+	var mx *operations.Mx
+	if r.Mx != nil {
+		name5 := r.Mx.Name.ValueString()
 		ttl5 := new(float64)
-		if !r.Six.TTL.IsUnknown() && !r.Six.TTL.IsNull() {
-			*ttl5, _ = r.Six.TTL.ValueBigFloat().Float64()
+		if !r.Mx.TTL.IsUnknown() && !r.Mx.TTL.IsNull() {
+			*ttl5, _ = r.Mx.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl5 = nil
 		}
-		value5 := r.Six.Value.ValueString()
-		mxPriority, _ := r.Six.MxPriority.ValueBigFloat().Float64()
+		value5 := r.Mx.Value.ValueString()
+		mxPriority, _ := r.Mx.MxPriority.ValueBigFloat().Float64()
 		comment5 := new(string)
-		if !r.Six.Comment.IsUnknown() && !r.Six.Comment.IsNull() {
-			*comment5 = r.Six.Comment.ValueString()
+		if !r.Mx.Comment.IsUnknown() && !r.Mx.Comment.IsNull() {
+			*comment5 = r.Mx.Comment.ValueString()
 		} else {
 			comment5 = nil
 		}
-		six = &operations.Six{
+		mx = &operations.Mx{
 			Name:       name5,
-			Type:       typeVar5,
 			TTL:        ttl5,
 			Value:      value5,
 			MxPriority: mxPriority,
 			Comment:    comment5,
 		}
 	}
-	if six != nil {
+	if mx != nil {
 		out = operations.CreateRecordRequestBody{
-			Six: six,
+			Mx: mx,
 		}
 	}
-	var seven *operations.Seven
-	if r.Seven != nil {
-		name6 := r.Seven.Name.ValueString()
-		typeVar6 := operations.CreateRecordRequestBodyDNSRequest7Type(r.Seven.Type.ValueString())
+	var requestBodySRV *operations.RequestBodySRV
+	if r.Srv != nil {
+		name6 := r.Srv.Name.ValueString()
 		ttl6 := new(float64)
-		if !r.Seven.TTL.IsUnknown() && !r.Seven.TTL.IsNull() {
-			*ttl6, _ = r.Seven.TTL.ValueBigFloat().Float64()
+		if !r.Srv.TTL.IsUnknown() && !r.Srv.TTL.IsNull() {
+			*ttl6, _ = r.Srv.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl6 = nil
 		}
 		priority := new(float64)
-		if !r.Seven.Srv.Priority.IsUnknown() && !r.Seven.Srv.Priority.IsNull() {
-			*priority, _ = r.Seven.Srv.Priority.ValueBigFloat().Float64()
+		if !r.Srv.Srv.Priority.IsUnknown() && !r.Srv.Srv.Priority.IsNull() {
+			*priority, _ = r.Srv.Srv.Priority.ValueBigFloat().Float64()
 		} else {
 			priority = nil
 		}
 		weight := new(float64)
-		if !r.Seven.Srv.Weight.IsUnknown() && !r.Seven.Srv.Weight.IsNull() {
-			*weight, _ = r.Seven.Srv.Weight.ValueBigFloat().Float64()
+		if !r.Srv.Srv.Weight.IsUnknown() && !r.Srv.Srv.Weight.IsNull() {
+			*weight, _ = r.Srv.Srv.Weight.ValueBigFloat().Float64()
 		} else {
 			weight = nil
 		}
 		port := new(float64)
-		if !r.Seven.Srv.Port.IsUnknown() && !r.Seven.Srv.Port.IsNull() {
-			*port, _ = r.Seven.Srv.Port.ValueBigFloat().Float64()
+		if !r.Srv.Srv.Port.IsUnknown() && !r.Srv.Srv.Port.IsNull() {
+			*port, _ = r.Srv.Srv.Port.ValueBigFloat().Float64()
 		} else {
 			port = nil
 		}
-		target := r.Seven.Srv.Target.ValueString()
-		srv := operations.RequestBodySrv{
+		target := r.Srv.Srv.Target.ValueString()
+		srv := operations.CreateRecordRequestBodySrv{
 			Priority: priority,
 			Weight:   weight,
 			Port:     port,
 			Target:   target,
 		}
 		comment6 := new(string)
-		if !r.Seven.Comment.IsUnknown() && !r.Seven.Comment.IsNull() {
-			*comment6 = r.Seven.Comment.ValueString()
+		if !r.Srv.Comment.IsUnknown() && !r.Srv.Comment.IsNull() {
+			*comment6 = r.Srv.Comment.ValueString()
 		} else {
 			comment6 = nil
 		}
-		seven = &operations.Seven{
+		requestBodySRV = &operations.RequestBodySRV{
 			Name:    name6,
-			Type:    typeVar6,
 			TTL:     ttl6,
 			Srv:     srv,
 			Comment: comment6,
 		}
 	}
-	if seven != nil {
+	if requestBodySRV != nil {
 		out = operations.CreateRecordRequestBody{
-			Seven: seven,
+			RequestBodySRV: requestBodySRV,
 		}
 	}
-	var eight *operations.Eight
-	if r.Eight != nil {
-		name7 := r.Eight.Name.ValueString()
-		typeVar7 := operations.CreateRecordRequestBodyDNSRequest8Type(r.Eight.Type.ValueString())
+	var txt *operations.Txt
+	if r.Txt != nil {
+		name7 := r.Txt.Name.ValueString()
 		ttl7 := new(float64)
-		if !r.Eight.TTL.IsUnknown() && !r.Eight.TTL.IsNull() {
-			*ttl7, _ = r.Eight.TTL.ValueBigFloat().Float64()
+		if !r.Txt.TTL.IsUnknown() && !r.Txt.TTL.IsNull() {
+			*ttl7, _ = r.Txt.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl7 = nil
 		}
-		value6 := r.Eight.Value.ValueString()
+		value6 := r.Txt.Value.ValueString()
 		comment7 := new(string)
-		if !r.Eight.Comment.IsUnknown() && !r.Eight.Comment.IsNull() {
-			*comment7 = r.Eight.Comment.ValueString()
+		if !r.Txt.Comment.IsUnknown() && !r.Txt.Comment.IsNull() {
+			*comment7 = r.Txt.Comment.ValueString()
 		} else {
 			comment7 = nil
 		}
-		eight = &operations.Eight{
+		txt = &operations.Txt{
 			Name:    name7,
-			Type:    typeVar7,
 			TTL:     ttl7,
 			Value:   value6,
 			Comment: comment7,
 		}
 	}
-	if eight != nil {
+	if txt != nil {
 		out = operations.CreateRecordRequestBody{
-			Eight: eight,
+			Txt: txt,
 		}
 	}
-	var nine *operations.Nine
-	if r.Nine != nil {
-		name8 := r.Nine.Name.ValueString()
-		typeVar8 := operations.CreateRecordRequestBodyDNSRequest9Type(r.Nine.Type.ValueString())
+	var ns *operations.Ns
+	if r.Ns != nil {
+		name8 := r.Ns.Name.ValueString()
 		ttl8 := new(float64)
-		if !r.Nine.TTL.IsUnknown() && !r.Nine.TTL.IsNull() {
-			*ttl8, _ = r.Nine.TTL.ValueBigFloat().Float64()
+		if !r.Ns.TTL.IsUnknown() && !r.Ns.TTL.IsNull() {
+			*ttl8, _ = r.Ns.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl8 = nil
 		}
 		value7 := new(string)
-		if !r.Nine.Value.IsUnknown() && !r.Nine.Value.IsNull() {
-			*value7 = r.Nine.Value.ValueString()
+		if !r.Ns.Value.IsUnknown() && !r.Ns.Value.IsNull() {
+			*value7 = r.Ns.Value.ValueString()
 		} else {
 			value7 = nil
 		}
 		comment8 := new(string)
-		if !r.Nine.Comment.IsUnknown() && !r.Nine.Comment.IsNull() {
-			*comment8 = r.Nine.Comment.ValueString()
+		if !r.Ns.Comment.IsUnknown() && !r.Ns.Comment.IsNull() {
+			*comment8 = r.Ns.Comment.ValueString()
 		} else {
 			comment8 = nil
 		}
-		nine = &operations.Nine{
+		ns = &operations.Ns{
 			Name:    name8,
-			Type:    typeVar8,
 			TTL:     ttl8,
 			Value:   value7,
 			Comment: comment8,
 		}
 	}
-	if nine != nil {
+	if ns != nil {
 		out = operations.CreateRecordRequestBody{
-			Nine: nine,
+			Ns: ns,
 		}
 	}
-	var ten *operations.Ten
-	if r.Ten != nil {
-		name9 := r.Ten.Name.ValueString()
-		typeVar9 := operations.CreateRecordRequestBodyDNSRequest10Type(r.Ten.Type.ValueString())
+	var requestBodyHTTPS *operations.RequestBodyHTTPS
+	if r.HTTPS != nil {
+		name9 := r.HTTPS.Name.ValueString()
 		ttl9 := new(float64)
-		if !r.Ten.TTL.IsUnknown() && !r.Ten.TTL.IsNull() {
-			*ttl9, _ = r.Ten.TTL.ValueBigFloat().Float64()
+		if !r.HTTPS.TTL.IsUnknown() && !r.HTTPS.TTL.IsNull() {
+			*ttl9, _ = r.HTTPS.TTL.ValueBigFloat().Float64()
 		} else {
 			ttl9 = nil
 		}
 		priority1 := new(float64)
-		if !r.Ten.HTTPS.Priority.IsUnknown() && !r.Ten.HTTPS.Priority.IsNull() {
-			*priority1, _ = r.Ten.HTTPS.Priority.ValueBigFloat().Float64()
+		if !r.HTTPS.HTTPS.Priority.IsUnknown() && !r.HTTPS.HTTPS.Priority.IsNull() {
+			*priority1, _ = r.HTTPS.HTTPS.Priority.ValueBigFloat().Float64()
 		} else {
 			priority1 = nil
 		}
-		target1 := r.Ten.HTTPS.Target.ValueString()
+		target1 := r.HTTPS.HTTPS.Target.ValueString()
 		params := new(string)
-		if !r.Ten.HTTPS.Params.IsUnknown() && !r.Ten.HTTPS.Params.IsNull() {
-			*params = r.Ten.HTTPS.Params.ValueString()
+		if !r.HTTPS.HTTPS.Params.IsUnknown() && !r.HTTPS.HTTPS.Params.IsNull() {
+			*params = r.HTTPS.HTTPS.Params.ValueString()
 		} else {
 			params = nil
 		}
-		https := operations.RequestBodyHTTPS{
+		https := operations.CreateRecordRequestBodyHTTPS{
 			Priority: priority1,
 			Target:   target1,
 			Params:   params,
 		}
 		comment9 := new(string)
-		if !r.Ten.Comment.IsUnknown() && !r.Ten.Comment.IsNull() {
-			*comment9 = r.Ten.Comment.ValueString()
+		if !r.HTTPS.Comment.IsUnknown() && !r.HTTPS.Comment.IsNull() {
+			*comment9 = r.HTTPS.Comment.ValueString()
 		} else {
 			comment9 = nil
 		}
-		ten = &operations.Ten{
+		requestBodyHTTPS = &operations.RequestBodyHTTPS{
 			Name:    name9,
-			Type:    typeVar9,
 			TTL:     ttl9,
 			HTTPS:   https,
 			Comment: comment9,
 		}
 	}
-	if ten != nil {
+	if requestBodyHTTPS != nil {
 		out = operations.CreateRecordRequestBody{
-			Ten: ten,
+			RequestBodyHTTPS: requestBodyHTTPS,
 		}
 	}
 	return &out
@@ -369,40 +347,6 @@ func (r *DNSResourceModel) ToOperationsCreateRecordRequestBody() *operations.Cre
 
 func (r *DNSResourceModel) RefreshFromOperationsCreateRecordResponseBody(resp *operations.CreateRecordResponseBody) {
 	if resp != nil {
-		if resp.CreateRecordResponseBody1 != nil {
-			r.One = &tfTypes.RequestBody1{}
-			r.One.UID = types.StringValue(resp.CreateRecordResponseBody1.UID)
-			r.UID = r.One.UID
-			r.One.Updated = types.NumberValue(big.NewFloat(float64(resp.CreateRecordResponseBody1.Updated)))
-		}
-		if resp.CreateRecordResponseBody != nil {
-			r.Ten = &tfTypes.Ten{}
-		}
-		if resp.CreateRecordResponseBody2 != nil {
-			r.Two = &tfTypes.RequestBody2{}
-			r.Two.UID = types.StringValue(resp.CreateRecordResponseBody2.UID)
-			r.UID = r.Two.UID
-		}
-		if resp.CreateRecordResponseBody != nil {
-			r.Three = &tfTypes.Eight{}
-		}
-		if resp.CreateRecordResponseBody != nil {
-			r.Four = &tfTypes.Eight{}
-		}
-		if resp.CreateRecordResponseBody != nil {
-			r.Five = &tfTypes.RequestBody5{}
-		}
-		if resp.CreateRecordResponseBody != nil {
-			r.Six = &tfTypes.Six{}
-		}
-		if resp.CreateRecordResponseBody != nil {
-			r.Seven = &tfTypes.Seven{}
-		}
-		if resp.CreateRecordResponseBody != nil {
-			r.Eight = &tfTypes.Eight{}
-		}
-		if resp.CreateRecordResponseBody != nil {
-			r.Nine = &tfTypes.RequestBody5{}
-		}
+		r.ID = types.StringPointerValue(resp.ID)
 	}
 }

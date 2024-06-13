@@ -6,12 +6,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
 	"net/http"
 )
 
-// CreateOrTransferDomainRequestBody3 - transfer-in
-type CreateOrTransferDomainRequestBody3 struct {
+// RequestBody3 - transfer-in
+type RequestBody3 struct {
 	// The domain name you want to add.
 	Name string `json:"name"`
 	// The domain operation to perform. It can be either `add` or `transfer-in`.
@@ -22,36 +22,36 @@ type CreateOrTransferDomainRequestBody3 struct {
 	ExpectedPrice *float64 `json:"expectedPrice,omitempty"`
 }
 
-func (o *CreateOrTransferDomainRequestBody3) GetName() string {
+func (o *RequestBody3) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateOrTransferDomainRequestBody3) GetMethod() string {
+func (o *RequestBody3) GetMethod() string {
 	if o == nil {
 		return ""
 	}
 	return o.Method
 }
 
-func (o *CreateOrTransferDomainRequestBody3) GetAuthCode() *string {
+func (o *RequestBody3) GetAuthCode() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AuthCode
 }
 
-func (o *CreateOrTransferDomainRequestBody3) GetExpectedPrice() *float64 {
+func (o *RequestBody3) GetExpectedPrice() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.ExpectedPrice
 }
 
-// CreateOrTransferDomainRequestBody2 - move-in
-type CreateOrTransferDomainRequestBody2 struct {
+// RequestBody2 - move-in
+type RequestBody2 struct {
 	// The domain name you want to add.
 	Name string `json:"name"`
 	// The domain operation to perform. It can be either `add` or `transfer-in`.
@@ -60,29 +60,29 @@ type CreateOrTransferDomainRequestBody2 struct {
 	Token *string `json:"token,omitempty"`
 }
 
-func (o *CreateOrTransferDomainRequestBody2) GetName() string {
+func (o *RequestBody2) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateOrTransferDomainRequestBody2) GetMethod() string {
+func (o *RequestBody2) GetMethod() string {
 	if o == nil {
 		return ""
 	}
 	return o.Method
 }
 
-func (o *CreateOrTransferDomainRequestBody2) GetToken() *string {
+func (o *RequestBody2) GetToken() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Token
 }
 
-// CreateOrTransferDomainRequestBody1 - add
-type CreateOrTransferDomainRequestBody1 struct {
+// RequestBody1 - add
+type RequestBody1 struct {
 	// The domain name you want to add.
 	Name string `json:"name"`
 	// Whether the domain has the Vercel Edge Network enabled or not.
@@ -92,28 +92,28 @@ type CreateOrTransferDomainRequestBody1 struct {
 	Method *string `json:"method,omitempty"`
 }
 
-func (o *CreateOrTransferDomainRequestBody1) GetName() string {
+func (o *RequestBody1) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *CreateOrTransferDomainRequestBody1) GetCdnEnabled() *bool {
+func (o *RequestBody1) GetCdnEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.CdnEnabled
 }
 
-func (o *CreateOrTransferDomainRequestBody1) GetZone() *bool {
+func (o *RequestBody1) GetZone() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Zone
 }
 
-func (o *CreateOrTransferDomainRequestBody1) GetMethod() *string {
+func (o *RequestBody1) GetMethod() *string {
 	if o == nil {
 		return nil
 	}
@@ -123,66 +123,66 @@ func (o *CreateOrTransferDomainRequestBody1) GetMethod() *string {
 type CreateOrTransferDomainRequestBodyType string
 
 const (
-	CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody1 CreateOrTransferDomainRequestBodyType = "createOrTransferDomain_requestBody_1"
-	CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody2 CreateOrTransferDomainRequestBodyType = "createOrTransferDomain_requestBody_2"
-	CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody3 CreateOrTransferDomainRequestBodyType = "createOrTransferDomain_requestBody_3"
+	CreateOrTransferDomainRequestBodyTypeRequestBody1 CreateOrTransferDomainRequestBodyType = "requestBody_1"
+	CreateOrTransferDomainRequestBodyTypeRequestBody2 CreateOrTransferDomainRequestBodyType = "requestBody_2"
+	CreateOrTransferDomainRequestBodyTypeRequestBody3 CreateOrTransferDomainRequestBodyType = "requestBody_3"
 )
 
 type CreateOrTransferDomainRequestBody struct {
-	CreateOrTransferDomainRequestBody1 *CreateOrTransferDomainRequestBody1
-	CreateOrTransferDomainRequestBody2 *CreateOrTransferDomainRequestBody2
-	CreateOrTransferDomainRequestBody3 *CreateOrTransferDomainRequestBody3
+	RequestBody1 *RequestBody1
+	RequestBody2 *RequestBody2
+	RequestBody3 *RequestBody3
 
 	Type CreateOrTransferDomainRequestBodyType
 }
 
-func CreateCreateOrTransferDomainRequestBodyCreateOrTransferDomainRequestBody1(createOrTransferDomainRequestBody1 CreateOrTransferDomainRequestBody1) CreateOrTransferDomainRequestBody {
-	typ := CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody1
+func CreateCreateOrTransferDomainRequestBodyRequestBody1(requestBody1 RequestBody1) CreateOrTransferDomainRequestBody {
+	typ := CreateOrTransferDomainRequestBodyTypeRequestBody1
 
 	return CreateOrTransferDomainRequestBody{
-		CreateOrTransferDomainRequestBody1: &createOrTransferDomainRequestBody1,
-		Type:                               typ,
+		RequestBody1: &requestBody1,
+		Type:         typ,
 	}
 }
 
-func CreateCreateOrTransferDomainRequestBodyCreateOrTransferDomainRequestBody2(createOrTransferDomainRequestBody2 CreateOrTransferDomainRequestBody2) CreateOrTransferDomainRequestBody {
-	typ := CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody2
+func CreateCreateOrTransferDomainRequestBodyRequestBody2(requestBody2 RequestBody2) CreateOrTransferDomainRequestBody {
+	typ := CreateOrTransferDomainRequestBodyTypeRequestBody2
 
 	return CreateOrTransferDomainRequestBody{
-		CreateOrTransferDomainRequestBody2: &createOrTransferDomainRequestBody2,
-		Type:                               typ,
+		RequestBody2: &requestBody2,
+		Type:         typ,
 	}
 }
 
-func CreateCreateOrTransferDomainRequestBodyCreateOrTransferDomainRequestBody3(createOrTransferDomainRequestBody3 CreateOrTransferDomainRequestBody3) CreateOrTransferDomainRequestBody {
-	typ := CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody3
+func CreateCreateOrTransferDomainRequestBodyRequestBody3(requestBody3 RequestBody3) CreateOrTransferDomainRequestBody {
+	typ := CreateOrTransferDomainRequestBodyTypeRequestBody3
 
 	return CreateOrTransferDomainRequestBody{
-		CreateOrTransferDomainRequestBody3: &createOrTransferDomainRequestBody3,
-		Type:                               typ,
+		RequestBody3: &requestBody3,
+		Type:         typ,
 	}
 }
 
 func (u *CreateOrTransferDomainRequestBody) UnmarshalJSON(data []byte) error {
 
-	var createOrTransferDomainRequestBody2 CreateOrTransferDomainRequestBody2 = CreateOrTransferDomainRequestBody2{}
-	if err := utils.UnmarshalJSON(data, &createOrTransferDomainRequestBody2, "", true, true); err == nil {
-		u.CreateOrTransferDomainRequestBody2 = &createOrTransferDomainRequestBody2
-		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody2
+	var requestBody2 RequestBody2 = RequestBody2{}
+	if err := utils.UnmarshalJSON(data, &requestBody2, "", true, true); err == nil {
+		u.RequestBody2 = &requestBody2
+		u.Type = CreateOrTransferDomainRequestBodyTypeRequestBody2
 		return nil
 	}
 
-	var createOrTransferDomainRequestBody1 CreateOrTransferDomainRequestBody1 = CreateOrTransferDomainRequestBody1{}
-	if err := utils.UnmarshalJSON(data, &createOrTransferDomainRequestBody1, "", true, true); err == nil {
-		u.CreateOrTransferDomainRequestBody1 = &createOrTransferDomainRequestBody1
-		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody1
+	var requestBody1 RequestBody1 = RequestBody1{}
+	if err := utils.UnmarshalJSON(data, &requestBody1, "", true, true); err == nil {
+		u.RequestBody1 = &requestBody1
+		u.Type = CreateOrTransferDomainRequestBodyTypeRequestBody1
 		return nil
 	}
 
-	var createOrTransferDomainRequestBody3 CreateOrTransferDomainRequestBody3 = CreateOrTransferDomainRequestBody3{}
-	if err := utils.UnmarshalJSON(data, &createOrTransferDomainRequestBody3, "", true, true); err == nil {
-		u.CreateOrTransferDomainRequestBody3 = &createOrTransferDomainRequestBody3
-		u.Type = CreateOrTransferDomainRequestBodyTypeCreateOrTransferDomainRequestBody3
+	var requestBody3 RequestBody3 = RequestBody3{}
+	if err := utils.UnmarshalJSON(data, &requestBody3, "", true, true); err == nil {
+		u.RequestBody3 = &requestBody3
+		u.Type = CreateOrTransferDomainRequestBodyTypeRequestBody3
 		return nil
 	}
 
@@ -190,16 +190,16 @@ func (u *CreateOrTransferDomainRequestBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateOrTransferDomainRequestBody) MarshalJSON() ([]byte, error) {
-	if u.CreateOrTransferDomainRequestBody1 != nil {
-		return utils.MarshalJSON(u.CreateOrTransferDomainRequestBody1, "", true)
+	if u.RequestBody1 != nil {
+		return utils.MarshalJSON(u.RequestBody1, "", true)
 	}
 
-	if u.CreateOrTransferDomainRequestBody2 != nil {
-		return utils.MarshalJSON(u.CreateOrTransferDomainRequestBody2, "", true)
+	if u.RequestBody2 != nil {
+		return utils.MarshalJSON(u.RequestBody2, "", true)
 	}
 
-	if u.CreateOrTransferDomainRequestBody3 != nil {
-		return utils.MarshalJSON(u.CreateOrTransferDomainRequestBody3, "", true)
+	if u.RequestBody3 != nil {
+		return utils.MarshalJSON(u.RequestBody3, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CreateOrTransferDomainRequestBody: all fields are null")

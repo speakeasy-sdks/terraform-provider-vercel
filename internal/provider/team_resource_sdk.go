@@ -4,9 +4,9 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/vercel/terraform-provider-terraform/internal/provider/types"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/shared"
+	tfTypes "github.com/vercel/terraform-provider-vercel/internal/provider/types"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/shared"
 	"math/big"
 )
 
@@ -2095,20 +2095,4 @@ func (r *TeamResourceModel) RefreshFromOperationsCreateTeamResponseBody(resp *op
 func (r *TeamResourceModel) RefreshFromSharedTeam(resp *shared.Team) {
 	if resp != nil {
 	}
-}
-
-func (r *TeamResourceModel) ToOperationsDeleteTeamRequestBody() *operations.DeleteTeamRequestBody {
-	var reasons []operations.Reasons = []operations.Reasons{}
-	for _, reasonsItem := range r.Reasons {
-		slug := reasonsItem.Slug.ValueString()
-		description := reasonsItem.Description.ValueString()
-		reasons = append(reasons, operations.Reasons{
-			Slug:        slug,
-			Description: description,
-		})
-	}
-	out := operations.DeleteTeamRequestBody{
-		Reasons: reasons,
-	}
-	return &out
 }

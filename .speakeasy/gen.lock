@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: caf7c544-62b7-44aa-b855-63bc279fd8bc
 management:
-  docChecksum: 280752ac1b754d581e2413069fa88cde
+  docChecksum: b0d05df8371987e51d66b59e7b37c6b8
   docVersion: 0.0.1
-  speakeasyVersion: 1.303.2
-  generationVersion: 2.339.1
-  releaseVersion: 0.0.3
-  configChecksum: dac2682b770e04d56ddfcf719f30d98a
+  speakeasyVersion: internal
+  generationVersion: internal
+  releaseVersion: 0.5.3
+  configChecksum: 311c724b33fafe42b4ac14c731f7c7e0
   repoURL: https://github.com/speakeasy-sdks/terraform-provider-vercel.git
   repoSubDirectory: .
   published: true
@@ -14,16 +14,17 @@ features:
   terraform:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.4
-    core: 3.21.2
+    core: 3.21.3
     deprecations: 2.81.1
     enums: 2.81.2
     globalSecurity: 2.81.6
     globalServerURLs: 2.82.1
+    ignores: 2.81.1
     nameOverrides: 2.81.2
     nullables: 0.0.0
     serverIDs: 2.81.1
     typeOverrides: 2.81.1
-    unions: 2.81.14
+    unions: 2.81.15
 generatedFiles:
   - internal/sdk/artifacts.go
   - internal/sdk/checks.go
@@ -76,6 +77,7 @@ generatedFiles:
   - internal/sdk/models/operations/updateprojectdatacache.go
   - internal/sdk/models/operations/getprojects.go
   - internal/sdk/models/operations/createproject.go
+  - internal/sdk/models/operations/getproject.go
   - internal/sdk/models/operations/updateproject.go
   - internal/sdk/models/operations/deleteproject.go
   - internal/sdk/models/operations/getprojectdomain.go
@@ -195,8 +197,10 @@ generatedFiles:
   - internal/sdk/models/shared/teamlimited.go
   - internal/sdk/models/shared/authtoken.go
   - internal/sdk/models/shared/security.go
+  - internal/sdk/.gitignore
   - internal/sdk/models/operations/options.go
   - internal/sdk/.gitattributes
+  - internal/sdk/internal/hooks/registration.go
   - internal/sdk/internal/hooks/hooks.go
   - examples/README.md
   - go.mod
@@ -242,122 +246,62 @@ generatedFiles:
   - main.go
   - terraform-registry-manifest.json
   - tools/tools.go
-  - internal/provider/types/alias_assigned_at.go
-  - internal/provider/types/alias_error.go
-  - internal/provider/types/alias_warning.go
-  - internal/provider/types/build.go
-  - internal/provider/types/creator.go
-  - internal/provider/types/create_deployment_crons.go
-  - internal/provider/types/inlined_file.go
-  - internal/provider/types/uploaded_file.go
-  - internal/provider/types/files.go
-  - internal/provider/types/functions.go
-  - internal/provider/types/git_metadata.go
-  - internal/provider/types/git_repo1.go
-  - internal/provider/types/git_repo2.go
-  - internal/provider/types/git_repo3.go
-  - internal/provider/types/git_repo.go
-  - internal/provider/types/repo_id.go
-  - internal/provider/types/one.go
-  - internal/provider/types/two.go
-  - internal/provider/types/three.go
-  - internal/provider/types/four.go
-  - internal/provider/types/five.go
-  - internal/provider/types/create_deployment_git_source6.go
-  - internal/provider/types/create_deployment_git_source7.go
-  - internal/provider/types/create_deployment_git_source8.go
-  - internal/provider/types/create_deployment_git_source9.go
-  - internal/provider/types/git_source.go
-  - internal/provider/types/create_deployment_output.go
-  - internal/provider/types/lambdas.go
-  - internal/provider/types/get_deployment_has1.go
-  - internal/provider/types/get_deployment_has2.go
-  - internal/provider/types/get_deployment_routes_has.go
-  - internal/provider/types/get_deployment_routes_locale.go
-  - internal/provider/types/get_deployment_routes1.go
-  - internal/provider/types/get_deployment_routes2.go
-  - internal/provider/types/get_deployment_routes3.go
-  - internal/provider/types/response_body_routes.go
-  - internal/provider/types/get_deployment_response_body_project.go
-  - internal/provider/types/get_deployment_response_body_team.go
-  - internal/provider/types/get_deployment_git_source_deployments1.go
-  - internal/provider/types/get_deployment_git_source_deployments2.go
-  - internal/provider/types/get_deployment_git_source_deployments3.go
-  - internal/provider/types/get_deployment_git_source_deployments4.go
-  - internal/provider/types/get_deployment_git_source_deployments5.go
-  - internal/provider/types/get_deployment_response_body_git_source.go
-  - internal/provider/types/get_deployment_response_body1.go
-  - internal/provider/types/project_settings.go
-  - internal/provider/types/get_deployment_response_body2.go
-  - internal/provider/types/eight.go
-  - internal/provider/types/request_body5.go
-  - internal/provider/types/request_body1.go
-  - internal/provider/types/request_body_srv.go
-  - internal/provider/types/seven.go
-  - internal/provider/types/six.go
+  - internal/provider/types/a.go
+  - internal/provider/types/cname.go
+  - internal/provider/types/create_record_request_body_https.go
   - internal/provider/types/request_body_https.go
-  - internal/provider/types/ten.go
-  - internal/provider/types/request_body2.go
-  - internal/provider/types/get_edge_config_schema.go
-  - internal/provider/types/get_edge_config_transfer.go
-  - internal/provider/types/add_project_member_request_body1.go
-  - internal/provider/types/add_project_member_request_body3.go
-  - internal/provider/types/add_project_member_request_body2.go
-  - internal/provider/types/create_project_analytics.go
-  - internal/provider/types/create_project_definitions.go
-  - internal/provider/types/create_project_crons.go
-  - internal/provider/types/create_project_data_cache.go
-  - internal/provider/types/create_project_content_hint1.go
-  - internal/provider/types/create_project_content_hint10.go
+  - internal/provider/types/mx.go
+  - internal/provider/types/create_record_request_body_srv.go
+  - internal/provider/types/request_body_srv.go
+  - internal/provider/types/get_project_analytics.go
+  - internal/provider/types/get_project_definitions.go
+  - internal/provider/types/get_project_crons.go
+  - internal/provider/types/get_project_data_cache.go
+  - internal/provider/types/get_project_content_hint1.go
+  - internal/provider/types/content_hint10.go
   - internal/provider/types/content_hint11.go
   - internal/provider/types/content_hint12.go
   - internal/provider/types/content_hint13.go
   - internal/provider/types/content_hint14.go
-  - internal/provider/types/create_project_content_hint2.go
-  - internal/provider/types/create_project_content_hint3.go
-  - internal/provider/types/create_project_content_hint4.go
-  - internal/provider/types/create_project_content_hint5.go
-  - internal/provider/types/create_project_content_hint6.go
-  - internal/provider/types/create_project_content_hint7.go
-  - internal/provider/types/create_project_content_hint8.go
-  - internal/provider/types/create_project_content_hint9.go
-  - internal/provider/types/create_project_content_hint.go
-  - internal/provider/types/create_project_internal_content_hint.go
-  - internal/provider/types/create_project_projects_target.go
-  - internal/provider/types/create_project_env.go
-  - internal/provider/types/create_project_target.go
+  - internal/provider/types/get_project_content_hint2.go
+  - internal/provider/types/get_project_content_hint3.go
+  - internal/provider/types/get_project_content_hint4.go
+  - internal/provider/types/get_project_content_hint5.go
+  - internal/provider/types/get_project_content_hint6.go
+  - internal/provider/types/get_project_content_hint7.go
+  - internal/provider/types/get_project_content_hint8.go
+  - internal/provider/types/get_project_content_hint9.go
+  - internal/provider/types/get_project_content_hint.go
+  - internal/provider/types/get_project_internal_content_hint.go
+  - internal/provider/types/get_project_env.go
   - internal/provider/types/environment_variables.go
-  - internal/provider/types/create_project_git_comments.go
+  - internal/provider/types/get_project_git_comments.go
   - internal/provider/types/git_repository.go
-  - internal/provider/types/create_project_last_alias_request.go
-  - internal/provider/types/create_project_builds.go
-  - internal/provider/types/create_project_creator.go
-  - internal/provider/types/create_project_oidc_token_claims.go
-  - internal/provider/types/create_project_latest_deployments.go
-  - internal/provider/types/create_project_link_deploy_hooks.go
-  - internal/provider/types/create_project_link1.go
-  - internal/provider/types/create_project_link2.go
-  - internal/provider/types/create_project_link3.go
-  - internal/provider/types/create_project_link.go
-  - internal/provider/types/create_project_oidc_token_config.go
-  - internal/provider/types/create_project_paths.go
-  - internal/provider/types/create_project_options_allowlist.go
-  - internal/provider/types/create_project_permissions.go
-  - internal/provider/types/create_project_protection_bypass.go
-  - internal/provider/types/create_project_value2.go
-  - internal/provider/types/create_project_value.go
-  - internal/provider/types/create_project_has.go
-  - internal/provider/types/create_project_erl.go
-  - internal/provider/types/create_project_mitigate.go
-  - internal/provider/types/create_project_firewall_routes.go
-  - internal/provider/types/create_project_security.go
-  - internal/provider/types/create_project_speed_insights.go
-  - internal/provider/types/create_project_sso_protection.go
-  - internal/provider/types/trusted_ips_addresses.go
-  - internal/provider/types/create_project_trusted_ips1.go
-  - internal/provider/types/create_project_trusted_ips2.go
-  - internal/provider/types/create_project_trusted_ips.go
-  - internal/provider/types/create_project_web_analytics.go
+  - internal/provider/types/get_project_last_alias_request.go
+  - internal/provider/types/get_project_last_rollback_target.go
+  - internal/provider/types/get_project_alias_assigned.go
+  - internal/provider/types/get_project_alias_error.go
+  - internal/provider/types/get_project_builds.go
+  - internal/provider/types/get_project_creator.go
+  - internal/provider/types/get_project_oidc_token_claims.go
+  - internal/provider/types/get_project_latest_deployments.go
+  - internal/provider/types/get_project_link_deploy_hooks.go
+  - internal/provider/types/get_project_link1.go
+  - internal/provider/types/get_project_link2.go
+  - internal/provider/types/get_project_link3.go
+  - internal/provider/types/get_project_link.go
+  - internal/provider/types/get_project_oidc_token_config.go
+  - internal/provider/types/paths.go
+  - internal/provider/types/options_allowlist.go
+  - internal/provider/types/password_protection.go
+  - internal/provider/types/get_project_permissions.go
+  - internal/provider/types/get_project_protection_bypass.go
+  - internal/provider/types/get_project_security.go
+  - internal/provider/types/get_project_speed_insights.go
+  - internal/provider/types/sso_protection.go
+  - internal/provider/types/addresses.go
+  - internal/provider/types/trusted_ips.go
+  - internal/provider/types/get_project_web_analytics.go
   - internal/provider/types/utm.go
   - internal/provider/types/attribution.go
   - internal/provider/types/address.go
@@ -377,6 +321,8 @@ generatedFiles:
   - internal/provider/types/tax.go
   - internal/provider/types/billing.go
   - internal/provider/types/reasons.go
+  - internal/provider/types/get_edge_config_transfer.go
+  - internal/provider/types/get_project_sso_protection.go
   - internal/provider/types/active_dashboard_views.go
   - internal/provider/types/data_cache.go
   - internal/provider/types/dismissals.go
@@ -386,6 +332,7 @@ generatedFiles:
   - internal/provider/types/favorite_projects_and_spaces.go
   - internal/provider/types/web_analytics.go
   - internal/provider/types/feature_blocks.go
+  - internal/provider/types/import_flow_git_namespace.go
   - internal/provider/types/migration.go
   - internal/provider/types/northstar.go
   - internal/provider/types/northstar_migration.go
@@ -399,51 +346,40 @@ generatedFiles:
   - USAGE.md
   - internal/provider/provider.go
   - examples/provider/provider.tf
-  - examples/resources/terraform_deployment/import.sh
-  - internal/provider/deployment_resource.go
-  - internal/provider/deployment_resource_sdk.go
-  - examples/resources/terraform_deployment/resource.tf
   - internal/provider/dns_resource.go
   - internal/provider/dns_resource_sdk.go
-  - examples/resources/terraform_dns/resource.tf
-  - examples/resources/terraform_edge_config/import.sh
-  - internal/provider/edgeconfig_resource.go
-  - internal/provider/edgeconfig_resource_sdk.go
-  - examples/resources/terraform_edge_config/resource.tf
-  - examples/resources/terraform_edge_config_schema/import.sh
-  - internal/provider/edgeconfigschema_resource.go
-  - internal/provider/edgeconfigschema_resource_sdk.go
-  - examples/resources/terraform_edge_config_schema/resource.tf
+  - examples/resources/vercel_dns/resource.tf
   - internal/provider/member_resource.go
   - internal/provider/member_resource_sdk.go
-  - examples/resources/terraform_member/resource.tf
+  - examples/resources/vercel_member/resource.tf
+  - examples/resources/vercel_project/import.sh
   - internal/provider/project_resource.go
   - internal/provider/project_resource_sdk.go
-  - examples/resources/terraform_project/resource.tf
-  - examples/resources/terraform_team/import.sh
+  - examples/resources/vercel_project/resource.tf
+  - examples/resources/vercel_team/import.sh
   - internal/provider/team_resource.go
   - internal/provider/team_resource_sdk.go
-  - examples/resources/terraform_team/resource.tf
-  - examples/resources/terraform_webhook/import.sh
+  - examples/resources/vercel_team/resource.tf
+  - examples/resources/vercel_webhook/import.sh
   - internal/provider/webhook_resource.go
   - internal/provider/webhook_resource_sdk.go
-  - examples/resources/terraform_webhook/resource.tf
-  - internal/provider/deployment_data_source.go
-  - internal/provider/deployment_data_source_sdk.go
-  - examples/data-sources/terraform_deployment/data-source.tf
+  - examples/resources/vercel_webhook/resource.tf
   - internal/provider/edgeconfig_data_source.go
   - internal/provider/edgeconfig_data_source_sdk.go
-  - examples/data-sources/terraform_edge_config/data-source.tf
+  - examples/data-sources/vercel_edge_config/data-source.tf
   - internal/provider/edgeconfigschema_data_source.go
   - internal/provider/edgeconfigschema_data_source_sdk.go
-  - examples/data-sources/terraform_edge_config_schema/data-source.tf
+  - examples/data-sources/vercel_edge_config_schema/data-source.tf
+  - internal/provider/project_data_source.go
+  - internal/provider/project_data_source_sdk.go
+  - examples/data-sources/vercel_project/data-source.tf
   - internal/provider/team_data_source.go
   - internal/provider/team_data_source_sdk.go
-  - examples/data-sources/terraform_team/data-source.tf
+  - examples/data-sources/vercel_team/data-source.tf
   - internal/provider/user_data_source.go
   - internal/provider/user_data_source_sdk.go
-  - examples/data-sources/terraform_user/data-source.tf
+  - examples/data-sources/vercel_user/data-source.tf
   - internal/provider/webhook_data_source.go
   - internal/provider/webhook_data_source_sdk.go
-  - examples/data-sources/terraform_webhook/data-source.tf
+  - examples/data-sources/vercel_webhook/data-source.tf
   - .gitattributes

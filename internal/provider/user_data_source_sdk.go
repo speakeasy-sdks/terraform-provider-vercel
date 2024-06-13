@@ -4,8 +4,8 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/vercel/terraform-provider-terraform/internal/provider/types"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
+	tfTypes "github.com/vercel/terraform-provider-vercel/internal/provider/types"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
 	"math/big"
 )
 
@@ -2135,7 +2135,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 			if resp.User.AuthUser.ImportFlowGitNamespace == nil {
 				r.User.AuthUser.ImportFlowGitNamespace = nil
 			} else {
-				r.User.AuthUser.ImportFlowGitNamespace = &tfTypes.RepoID{}
+				r.User.AuthUser.ImportFlowGitNamespace = &tfTypes.ImportFlowGitNamespace{}
 				if resp.User.AuthUser.ImportFlowGitNamespace.Str != nil {
 					r.User.AuthUser.ImportFlowGitNamespace.Str = types.StringPointerValue(resp.User.AuthUser.ImportFlowGitNamespace.Str)
 				}
@@ -2150,7 +2150,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 			if resp.User.AuthUser.ImportFlowGitNamespaceID == nil {
 				r.User.AuthUser.ImportFlowGitNamespaceID = nil
 			} else {
-				r.User.AuthUser.ImportFlowGitNamespaceID = &tfTypes.RepoID{}
+				r.User.AuthUser.ImportFlowGitNamespaceID = &tfTypes.ImportFlowGitNamespace{}
 				if resp.User.AuthUser.ImportFlowGitNamespaceID.Str != nil {
 					r.User.AuthUser.ImportFlowGitNamespaceID.Str = types.StringPointerValue(resp.User.AuthUser.ImportFlowGitNamespaceID.Str)
 				}
@@ -2201,7 +2201,7 @@ func (r *UserDataSourceModel) RefreshFromOperationsGetAuthUserResponseBody(resp 
 				if preferredScopesAndGitNamespacesItem.GitNamespaceID == nil {
 					preferredScopesAndGitNamespaces1.GitNamespaceID = nil
 				} else {
-					preferredScopesAndGitNamespaces1.GitNamespaceID = &tfTypes.RepoID{}
+					preferredScopesAndGitNamespaces1.GitNamespaceID = &tfTypes.ImportFlowGitNamespace{}
 					if preferredScopesAndGitNamespacesItem.GitNamespaceID.Str != nil {
 						preferredScopesAndGitNamespaces1.GitNamespaceID.Str = types.StringPointerValue(preferredScopesAndGitNamespacesItem.GitNamespaceID.Str)
 					}

@@ -5,20 +5,18 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	tfTypes "github.com/vercel/terraform-provider-terraform/internal/provider/types"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
+	speakeasy_stringplanmodifier "github.com/vercel/terraform-provider-vercel/internal/planmodifiers/stringplanmodifier"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -36,14 +34,13 @@ type MemberResource struct {
 
 // MemberResourceModel describes the resource data model.
 type MemberResourceModel struct {
-	ID       types.String                          `tfsdk:"id"`
-	IDOrName types.String                          `tfsdk:"id_or_name"`
-	One      *tfTypes.AddProjectMemberRequestBody1 `tfsdk:"one" tfPlanOnly:"true"`
-	Slug     types.String                          `tfsdk:"slug"`
-	TeamID   types.String                          `tfsdk:"team_id"`
-	Three    *tfTypes.AddProjectMemberRequestBody3 `tfsdk:"three" tfPlanOnly:"true"`
-	Two      *tfTypes.AddProjectMemberRequestBody2 `tfsdk:"two" tfPlanOnly:"true"`
-	UID      types.String                          `tfsdk:"uid"`
+	Email     types.String `tfsdk:"email"`
+	ProjectID types.String `tfsdk:"project_id"`
+	Role      types.String `tfsdk:"role"`
+	Slug      types.String `tfsdk:"slug"`
+	TeamID    types.String `tfsdk:"team_id"`
+	UID       types.String `tfsdk:"uid"`
+	Username  types.String `tfsdk:"username"`
 }
 
 func (r *MemberResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,64 +51,39 @@ func (r *MemberResource) Schema(ctx context.Context, req resource.SchemaRequest,
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Member Resource",
 		Attributes: map[string]schema.Attribute{
-			"id": schema.StringAttribute{
-				Computed: true,
-			},
-			"id_or_name": schema.StringAttribute{
+			"email": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Optional:    true,
+				Description: `The email of the team member that should be added to this project. Requires replacement if changed. `,
+				Validators: []validator.String{
+					stringvalidator.ExactlyOneOf(path.Expressions{
+						path.MatchRelative().AtParent().AtName("uid"),
+						path.MatchRelative().AtParent().AtName("username"),
+					}...),
+				},
+			},
+			"project_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `The ID or name of the Project. Requires replacement if changed. `,
 			},
-			"one": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplaceIfConfigured(),
+			"role": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
-				Optional: true,
-				Attributes: map[string]schema.Attribute{
-					"email": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Optional:    true,
-						Description: `The email of the team member that should be added to this project. Requires replacement if changed. `,
-					},
-					"role": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The project role of the member that will be added. Requires replacement if changed. ; must be one of ["ADMIN", "PROJECT_DEVELOPER", "PROJECT_VIEWER"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"ADMIN",
-								"PROJECT_DEVELOPER",
-								"PROJECT_VIEWER",
-							),
-						},
-					},
-					"uid": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The ID of the team member that should be added to this project. Requires replacement if changed. `,
-					},
-					"username": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Optional:    true,
-						Description: `The username of the team member that should be added to this project. Requires replacement if changed. `,
-					},
-				},
-				Description: `Requires replacement if changed. `,
-				Validators: []validator.Object{
-					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("two"),
-						path.MatchRelative().AtParent().AtName("three"),
-					}...),
+				Required:    true,
+				Description: `The project role of the member that will be added. Requires replacement if changed. ; must be one of ["ADMIN", "PROJECT_DEVELOPER", "PROJECT_VIEWER"]`,
+				Validators: []validator.String{
+					stringvalidator.OneOf(
+						"ADMIN",
+						"PROJECT_DEVELOPER",
+						"PROJECT_VIEWER",
+					),
 				},
 			},
 			"slug": schema.StringAttribute{
@@ -128,109 +100,31 @@ func (r *MemberResource) Schema(ctx context.Context, req resource.SchemaRequest,
 				Optional:    true,
 				Description: `The Team identifier to perform the request on behalf of. Requires replacement if changed. `,
 			},
-			"three": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplaceIfConfigured(),
-				},
-				Optional: true,
-				Attributes: map[string]schema.Attribute{
-					"email": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The email of the team member that should be added to this project. Requires replacement if changed. `,
-					},
-					"role": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The project role of the member that will be added. Requires replacement if changed. ; must be one of ["ADMIN", "PROJECT_DEVELOPER", "PROJECT_VIEWER"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"ADMIN",
-								"PROJECT_DEVELOPER",
-								"PROJECT_VIEWER",
-							),
-						},
-					},
-					"uid": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Optional:    true,
-						Description: `The ID of the team member that should be added to this project. Requires replacement if changed. `,
-					},
-					"username": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Optional:    true,
-						Description: `The username of the team member that should be added to this project. Requires replacement if changed. `,
-					},
-				},
-				Description: `Requires replacement if changed. `,
-				Validators: []validator.Object{
-					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("one"),
-						path.MatchRelative().AtParent().AtName("two"),
-					}...),
-				},
-			},
-			"two": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplaceIfConfigured(),
-				},
-				Optional: true,
-				Attributes: map[string]schema.Attribute{
-					"email": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Optional:    true,
-						Description: `The email of the team member that should be added to this project. Requires replacement if changed. `,
-					},
-					"role": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The project role of the member that will be added. Requires replacement if changed. ; must be one of ["ADMIN", "PROJECT_DEVELOPER", "PROJECT_VIEWER"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"ADMIN",
-								"PROJECT_DEVELOPER",
-								"PROJECT_VIEWER",
-							),
-						},
-					},
-					"uid": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Optional:    true,
-						Description: `The ID of the team member that should be added to this project. Requires replacement if changed. `,
-					},
-					"username": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The username of the team member that should be added to this project. Requires replacement if changed. `,
-					},
-				},
-				Description: `Requires replacement if changed. `,
-				Validators: []validator.Object{
-					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("one"),
-						path.MatchRelative().AtParent().AtName("three"),
-					}...),
-				},
-			},
 			"uid": schema.StringAttribute{
-				Required:    true,
-				Description: `The user ID of the member.`,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Optional:    true,
+				Description: `The user ID of the member. Requires replacement if changed. `,
+				Validators: []validator.String{
+					stringvalidator.ExactlyOneOf(path.Expressions{
+						path.MatchRelative().AtParent().AtName("username"),
+						path.MatchRelative().AtParent().AtName("email"),
+					}...),
+				},
+			},
+			"username": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Optional:    true,
+				Description: `The username of the team member that should be added to this project. Requires replacement if changed. `,
+				Validators: []validator.String{
+					stringvalidator.ExactlyOneOf(path.Expressions{
+						path.MatchRelative().AtParent().AtName("uid"),
+						path.MatchRelative().AtParent().AtName("email"),
+					}...),
+				},
 			},
 		},
 	}
@@ -274,7 +168,7 @@ func (r *MemberResource) Create(ctx context.Context, req resource.CreateRequest,
 		return
 	}
 
-	idOrName := data.IDOrName.ValueString()
+	projectID := data.ProjectID.ValueString()
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
@@ -289,7 +183,7 @@ func (r *MemberResource) Create(ctx context.Context, req resource.CreateRequest,
 	}
 	requestBody := data.ToOperationsAddProjectMemberRequestBody()
 	request := operations.AddProjectMemberRequest{
-		IDOrName:    idOrName,
+		ProjectID:   projectID,
 		TeamID:      teamID,
 		Slug:        slug,
 		RequestBody: requestBody,
@@ -310,8 +204,8 @@ func (r *MemberResource) Create(ctx context.Context, req resource.CreateRequest,
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.Object == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromOperationsAddProjectMemberResponseBody(res.Object)
@@ -383,7 +277,7 @@ func (r *MemberResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		return
 	}
 
-	idOrName := data.IDOrName.ValueString()
+	projectID := data.ProjectID.ValueString()
 	uid := data.UID.ValueString()
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
@@ -398,10 +292,10 @@ func (r *MemberResource) Delete(ctx context.Context, req resource.DeleteRequest,
 		slug = nil
 	}
 	request := operations.RemoveProjectMemberRequest{
-		IDOrName: idOrName,
-		UID:      uid,
-		TeamID:   teamID,
-		Slug:     slug,
+		ProjectID: projectID,
+		UID:       uid,
+		TeamID:    teamID,
+		Slug:      slug,
 	}
 	res, err := r.client.ProjectMembers.Delete(ctx, request)
 	if err != nil {

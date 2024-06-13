@@ -10,8 +10,6 @@ type RemoveTeamMemberRequest struct {
 	TeamID string `pathParam:"style=simple,explode=false,name=teamId"`
 	// The user ID of the member.
 	UID string `pathParam:"style=simple,explode=false,name=uid"`
-	// The ID of the team to set as the new default team for the Northstar user.
-	NewDefaultTeamID *string `queryParam:"style=form,explode=true,name=newDefaultTeamId"`
 }
 
 func (o *RemoveTeamMemberRequest) GetTeamID() string {
@@ -26,13 +24,6 @@ func (o *RemoveTeamMemberRequest) GetUID() string {
 		return ""
 	}
 	return o.UID
-}
-
-func (o *RemoveTeamMemberRequest) GetNewDefaultTeamID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.NewDefaultTeamID
 }
 
 // RemoveTeamMemberResponseBody - Successfully removed a member of the team.

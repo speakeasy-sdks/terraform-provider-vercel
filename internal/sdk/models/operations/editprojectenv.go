@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
 	"net/http"
 )
 
@@ -187,18 +187,18 @@ func (o *EditProjectEnvRequest) GetRequestBody() *EditProjectEnvRequestBody {
 	return o.RequestBody
 }
 
-type EditProjectEnvTarget2 string
+type Target2 string
 
 const (
-	EditProjectEnvTarget2Production  EditProjectEnvTarget2 = "production"
-	EditProjectEnvTarget2Preview     EditProjectEnvTarget2 = "preview"
-	EditProjectEnvTarget2Development EditProjectEnvTarget2 = "development"
+	Target2Production  Target2 = "production"
+	Target2Preview     Target2 = "preview"
+	Target2Development Target2 = "development"
 )
 
-func (e EditProjectEnvTarget2) ToPointer() *EditProjectEnvTarget2 {
+func (e Target2) ToPointer() *Target2 {
 	return &e
 }
-func (e *EditProjectEnvTarget2) UnmarshalJSON(data []byte) error {
+func (e *Target2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -209,25 +209,25 @@ func (e *EditProjectEnvTarget2) UnmarshalJSON(data []byte) error {
 	case "preview":
 		fallthrough
 	case "development":
-		*e = EditProjectEnvTarget2(v)
+		*e = Target2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for EditProjectEnvTarget2: %v", v)
+		return fmt.Errorf("invalid value for Target2: %v", v)
 	}
 }
 
-type EditProjectEnvTarget1 string
+type Target1 string
 
 const (
-	EditProjectEnvTarget1Production  EditProjectEnvTarget1 = "production"
-	EditProjectEnvTarget1Preview     EditProjectEnvTarget1 = "preview"
-	EditProjectEnvTarget1Development EditProjectEnvTarget1 = "development"
+	Target1Production  Target1 = "production"
+	Target1Preview     Target1 = "preview"
+	Target1Development Target1 = "development"
 )
 
-func (e EditProjectEnvTarget1) ToPointer() *EditProjectEnvTarget1 {
+func (e Target1) ToPointer() *Target1 {
 	return &e
 }
-func (e *EditProjectEnvTarget1) UnmarshalJSON(data []byte) error {
+func (e *Target1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -238,58 +238,58 @@ func (e *EditProjectEnvTarget1) UnmarshalJSON(data []byte) error {
 	case "preview":
 		fallthrough
 	case "development":
-		*e = EditProjectEnvTarget1(v)
+		*e = Target1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for EditProjectEnvTarget1: %v", v)
+		return fmt.Errorf("invalid value for Target1: %v", v)
 	}
 }
 
 type EditProjectEnvProjectsTargetType string
 
 const (
-	EditProjectEnvProjectsTargetTypeArrayOfEditProjectEnvTarget1 EditProjectEnvProjectsTargetType = "arrayOfEditProjectEnvTarget1"
-	EditProjectEnvProjectsTargetTypeEditProjectEnvTarget2        EditProjectEnvProjectsTargetType = "editProjectEnv_target_2"
+	EditProjectEnvProjectsTargetTypeArrayOfTarget1 EditProjectEnvProjectsTargetType = "arrayOfTarget1"
+	EditProjectEnvProjectsTargetTypeTarget2        EditProjectEnvProjectsTargetType = "target_2"
 )
 
 type EditProjectEnvProjectsTarget struct {
-	ArrayOfEditProjectEnvTarget1 []EditProjectEnvTarget1
-	EditProjectEnvTarget2        *EditProjectEnvTarget2
+	ArrayOfTarget1 []Target1
+	Target2        *Target2
 
 	Type EditProjectEnvProjectsTargetType
 }
 
-func CreateEditProjectEnvProjectsTargetArrayOfEditProjectEnvTarget1(arrayOfEditProjectEnvTarget1 []EditProjectEnvTarget1) EditProjectEnvProjectsTarget {
-	typ := EditProjectEnvProjectsTargetTypeArrayOfEditProjectEnvTarget1
+func CreateEditProjectEnvProjectsTargetArrayOfTarget1(arrayOfTarget1 []Target1) EditProjectEnvProjectsTarget {
+	typ := EditProjectEnvProjectsTargetTypeArrayOfTarget1
 
 	return EditProjectEnvProjectsTarget{
-		ArrayOfEditProjectEnvTarget1: arrayOfEditProjectEnvTarget1,
-		Type:                         typ,
+		ArrayOfTarget1: arrayOfTarget1,
+		Type:           typ,
 	}
 }
 
-func CreateEditProjectEnvProjectsTargetEditProjectEnvTarget2(editProjectEnvTarget2 EditProjectEnvTarget2) EditProjectEnvProjectsTarget {
-	typ := EditProjectEnvProjectsTargetTypeEditProjectEnvTarget2
+func CreateEditProjectEnvProjectsTargetTarget2(target2 Target2) EditProjectEnvProjectsTarget {
+	typ := EditProjectEnvProjectsTargetTypeTarget2
 
 	return EditProjectEnvProjectsTarget{
-		EditProjectEnvTarget2: &editProjectEnvTarget2,
-		Type:                  typ,
+		Target2: &target2,
+		Type:    typ,
 	}
 }
 
 func (u *EditProjectEnvProjectsTarget) UnmarshalJSON(data []byte) error {
 
-	var arrayOfEditProjectEnvTarget1 []EditProjectEnvTarget1 = []EditProjectEnvTarget1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfEditProjectEnvTarget1, "", true, true); err == nil {
-		u.ArrayOfEditProjectEnvTarget1 = arrayOfEditProjectEnvTarget1
-		u.Type = EditProjectEnvProjectsTargetTypeArrayOfEditProjectEnvTarget1
+	var arrayOfTarget1 []Target1 = []Target1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfTarget1, "", true, true); err == nil {
+		u.ArrayOfTarget1 = arrayOfTarget1
+		u.Type = EditProjectEnvProjectsTargetTypeArrayOfTarget1
 		return nil
 	}
 
-	var editProjectEnvTarget2 EditProjectEnvTarget2 = EditProjectEnvTarget2("")
-	if err := utils.UnmarshalJSON(data, &editProjectEnvTarget2, "", true, true); err == nil {
-		u.EditProjectEnvTarget2 = &editProjectEnvTarget2
-		u.Type = EditProjectEnvProjectsTargetTypeEditProjectEnvTarget2
+	var target2 Target2 = Target2("")
+	if err := utils.UnmarshalJSON(data, &target2, "", true, true); err == nil {
+		u.Target2 = &target2
+		u.Type = EditProjectEnvProjectsTargetTypeTarget2
 		return nil
 	}
 
@@ -297,12 +297,12 @@ func (u *EditProjectEnvProjectsTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u EditProjectEnvProjectsTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfEditProjectEnvTarget1 != nil {
-		return utils.MarshalJSON(u.ArrayOfEditProjectEnvTarget1, "", true)
+	if u.ArrayOfTarget1 != nil {
+		return utils.MarshalJSON(u.ArrayOfTarget1, "", true)
 	}
 
-	if u.EditProjectEnvTarget2 != nil {
-		return utils.MarshalJSON(u.EditProjectEnvTarget2, "", true)
+	if u.Target2 != nil {
+		return utils.MarshalJSON(u.Target2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type EditProjectEnvProjectsTarget: all fields are null")
@@ -534,19 +534,19 @@ func (e *EditProjectEnvContentHintProjectsResponse200ApplicationJSONResponseBody
 	}
 }
 
-type ContentHint10 struct {
+type Ten struct {
 	Type    EditProjectEnvContentHintProjectsResponse200ApplicationJSONResponseBody10Type `json:"type"`
 	StoreID string                                                                        `json:"storeId"`
 }
 
-func (o *ContentHint10) GetType() EditProjectEnvContentHintProjectsResponse200ApplicationJSONResponseBody10Type {
+func (o *Ten) GetType() EditProjectEnvContentHintProjectsResponse200ApplicationJSONResponseBody10Type {
 	if o == nil {
 		return EditProjectEnvContentHintProjectsResponse200ApplicationJSONResponseBody10Type("")
 	}
 	return o.Type
 }
 
-func (o *ContentHint10) GetStoreID() string {
+func (o *Ten) GetStoreID() string {
 	if o == nil {
 		return ""
 	}
@@ -934,37 +934,37 @@ func (o *ContentHint1) GetStoreID() string {
 type ContentHintUnionType string
 
 const (
-	ContentHintUnionTypeContentHint1  ContentHintUnionType = "contentHint_1"
-	ContentHintUnionTypeContentHint2  ContentHintUnionType = "contentHint_2"
-	ContentHintUnionTypeContentHint3  ContentHintUnionType = "contentHint_3"
-	ContentHintUnionTypeContentHint4  ContentHintUnionType = "contentHint_4"
-	ContentHintUnionTypeContentHint5  ContentHintUnionType = "contentHint_5"
-	ContentHintUnionTypeContentHint6  ContentHintUnionType = "contentHint_6"
-	ContentHintUnionTypeContentHint7  ContentHintUnionType = "contentHint_7"
-	ContentHintUnionTypeContentHint8  ContentHintUnionType = "contentHint_8"
-	ContentHintUnionTypeContentHint9  ContentHintUnionType = "contentHint_9"
-	ContentHintUnionTypeContentHint10 ContentHintUnionType = "contentHint_10"
-	ContentHintUnionTypeEleven        ContentHintUnionType = "11"
-	ContentHintUnionTypeTwelve        ContentHintUnionType = "12"
-	ContentHintUnionTypeThirteen      ContentHintUnionType = "13"
-	ContentHintUnionTypeFourteen      ContentHintUnionType = "14"
+	ContentHintUnionTypeContentHint1 ContentHintUnionType = "contentHint_1"
+	ContentHintUnionTypeContentHint2 ContentHintUnionType = "contentHint_2"
+	ContentHintUnionTypeContentHint3 ContentHintUnionType = "contentHint_3"
+	ContentHintUnionTypeContentHint4 ContentHintUnionType = "contentHint_4"
+	ContentHintUnionTypeContentHint5 ContentHintUnionType = "contentHint_5"
+	ContentHintUnionTypeContentHint6 ContentHintUnionType = "contentHint_6"
+	ContentHintUnionTypeContentHint7 ContentHintUnionType = "contentHint_7"
+	ContentHintUnionTypeContentHint8 ContentHintUnionType = "contentHint_8"
+	ContentHintUnionTypeContentHint9 ContentHintUnionType = "contentHint_9"
+	ContentHintUnionTypeTen          ContentHintUnionType = "10"
+	ContentHintUnionTypeEleven       ContentHintUnionType = "11"
+	ContentHintUnionTypeTwelve       ContentHintUnionType = "12"
+	ContentHintUnionTypeThirteen     ContentHintUnionType = "13"
+	ContentHintUnionTypeFourteen     ContentHintUnionType = "14"
 )
 
 type ContentHint struct {
-	ContentHint1  *ContentHint1
-	ContentHint2  *ContentHint2
-	ContentHint3  *ContentHint3
-	ContentHint4  *ContentHint4
-	ContentHint5  *ContentHint5
-	ContentHint6  *ContentHint6
-	ContentHint7  *ContentHint7
-	ContentHint8  *ContentHint8
-	ContentHint9  *ContentHint9
-	ContentHint10 *ContentHint10
-	Eleven        *Eleven
-	Twelve        *Twelve
-	Thirteen      *Thirteen
-	Fourteen      *Fourteen
+	ContentHint1 *ContentHint1
+	ContentHint2 *ContentHint2
+	ContentHint3 *ContentHint3
+	ContentHint4 *ContentHint4
+	ContentHint5 *ContentHint5
+	ContentHint6 *ContentHint6
+	ContentHint7 *ContentHint7
+	ContentHint8 *ContentHint8
+	ContentHint9 *ContentHint9
+	Ten          *Ten
+	Eleven       *Eleven
+	Twelve       *Twelve
+	Thirteen     *Thirteen
+	Fourteen     *Fourteen
 
 	Type ContentHintUnionType
 }
@@ -1050,12 +1050,12 @@ func CreateContentHintContentHint9(contentHint9 ContentHint9) ContentHint {
 	}
 }
 
-func CreateContentHintContentHint10(contentHint10 ContentHint10) ContentHint {
-	typ := ContentHintUnionTypeContentHint10
+func CreateContentHintTen(ten Ten) ContentHint {
+	typ := ContentHintUnionTypeTen
 
 	return ContentHint{
-		ContentHint10: &contentHint10,
-		Type:          typ,
+		Ten:  &ten,
+		Type: typ,
 	}
 }
 
@@ -1160,10 +1160,10 @@ func (u *ContentHint) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var contentHint10 ContentHint10 = ContentHint10{}
-	if err := utils.UnmarshalJSON(data, &contentHint10, "", true, true); err == nil {
-		u.ContentHint10 = &contentHint10
-		u.Type = ContentHintUnionTypeContentHint10
+	var ten Ten = Ten{}
+	if err := utils.UnmarshalJSON(data, &ten, "", true, true); err == nil {
+		u.Ten = &ten
+		u.Type = ContentHintUnionTypeTen
 		return nil
 	}
 
@@ -1235,8 +1235,8 @@ func (u ContentHint) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ContentHint9, "", true)
 	}
 
-	if u.ContentHint10 != nil {
-		return utils.MarshalJSON(u.ContentHint10, "", true)
+	if u.Ten != nil {
+		return utils.MarshalJSON(u.Ten, "", true)
 	}
 
 	if u.Eleven != nil {

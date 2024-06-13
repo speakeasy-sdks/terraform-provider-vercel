@@ -6,24 +6,15 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
 	"net/http"
 )
 
-// CreateRecordRequestBodyDNSRequest10Type - The type of record, it could be one of the valid DNS records.
+// CreateRecordRequestBodyDNSRequest10Type - Must be of type `HTTPS`.
 type CreateRecordRequestBodyDNSRequest10Type string
 
 const (
-	CreateRecordRequestBodyDNSRequest10TypeA     CreateRecordRequestBodyDNSRequest10Type = "A"
-	CreateRecordRequestBodyDNSRequest10TypeAaaa  CreateRecordRequestBodyDNSRequest10Type = "AAAA"
-	CreateRecordRequestBodyDNSRequest10TypeAlias CreateRecordRequestBodyDNSRequest10Type = "ALIAS"
-	CreateRecordRequestBodyDNSRequest10TypeCaa   CreateRecordRequestBodyDNSRequest10Type = "CAA"
-	CreateRecordRequestBodyDNSRequest10TypeCname CreateRecordRequestBodyDNSRequest10Type = "CNAME"
 	CreateRecordRequestBodyDNSRequest10TypeHTTPS CreateRecordRequestBodyDNSRequest10Type = "HTTPS"
-	CreateRecordRequestBodyDNSRequest10TypeMx    CreateRecordRequestBodyDNSRequest10Type = "MX"
-	CreateRecordRequestBodyDNSRequest10TypeSrv   CreateRecordRequestBodyDNSRequest10Type = "SRV"
-	CreateRecordRequestBodyDNSRequest10TypeTxt   CreateRecordRequestBodyDNSRequest10Type = "TXT"
-	CreateRecordRequestBodyDNSRequest10TypeNs    CreateRecordRequestBodyDNSRequest10Type = "NS"
 )
 
 func (e CreateRecordRequestBodyDNSRequest10Type) ToPointer() *CreateRecordRequestBodyDNSRequest10Type {
@@ -35,25 +26,7 @@ func (e *CreateRecordRequestBodyDNSRequest10Type) UnmarshalJSON(data []byte) err
 		return err
 	}
 	switch v {
-	case "A":
-		fallthrough
-	case "AAAA":
-		fallthrough
-	case "ALIAS":
-		fallthrough
-	case "CAA":
-		fallthrough
-	case "CNAME":
-		fallthrough
 	case "HTTPS":
-		fallthrough
-	case "MX":
-		fallthrough
-	case "SRV":
-		fallthrough
-	case "TXT":
-		fallthrough
-	case "NS":
 		*e = CreateRecordRequestBodyDNSRequest10Type(v)
 		return nil
 	default:
@@ -61,94 +34,93 @@ func (e *CreateRecordRequestBodyDNSRequest10Type) UnmarshalJSON(data []byte) err
 	}
 }
 
-type RequestBodyHTTPS struct {
+type CreateRecordRequestBodyHTTPS struct {
 	Priority *float64 `json:"priority"`
 	Target   string   `json:"target"`
 	Params   *string  `json:"params,omitempty"`
 }
 
-func (o *RequestBodyHTTPS) GetPriority() *float64 {
+func (o *CreateRecordRequestBodyHTTPS) GetPriority() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Priority
 }
 
-func (o *RequestBodyHTTPS) GetTarget() string {
+func (o *CreateRecordRequestBodyHTTPS) GetTarget() string {
 	if o == nil {
 		return ""
 	}
 	return o.Target
 }
 
-func (o *RequestBodyHTTPS) GetParams() *string {
+func (o *CreateRecordRequestBodyHTTPS) GetParams() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Params
 }
 
-type Ten struct {
+type RequestBodyHTTPS struct {
 	// A subdomain name or an empty string for the root domain.
 	Name string `json:"name"`
-	// The type of record, it could be one of the valid DNS records.
-	Type CreateRecordRequestBodyDNSRequest10Type `json:"type"`
+	// Must be of type `HTTPS`.
+	type_ CreateRecordRequestBodyDNSRequest10Type `const:"HTTPS" json:"type"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
-	TTL   *float64         `json:"ttl,omitempty"`
-	HTTPS RequestBodyHTTPS `json:"https"`
+	TTL   *float64                     `json:"ttl,omitempty"`
+	HTTPS CreateRecordRequestBodyHTTPS `json:"https"`
 	// A comment to add context on what this DNS record is for
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *Ten) GetName() string {
+func (r RequestBodyHTTPS) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *RequestBodyHTTPS) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *RequestBodyHTTPS) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *Ten) GetType() CreateRecordRequestBodyDNSRequest10Type {
-	if o == nil {
-		return CreateRecordRequestBodyDNSRequest10Type("")
-	}
-	return o.Type
+func (o *RequestBodyHTTPS) GetType() CreateRecordRequestBodyDNSRequest10Type {
+	return CreateRecordRequestBodyDNSRequest10TypeHTTPS
 }
 
-func (o *Ten) GetTTL() *float64 {
+func (o *RequestBodyHTTPS) GetTTL() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TTL
 }
 
-func (o *Ten) GetHTTPS() RequestBodyHTTPS {
+func (o *RequestBodyHTTPS) GetHTTPS() CreateRecordRequestBodyHTTPS {
 	if o == nil {
-		return RequestBodyHTTPS{}
+		return CreateRecordRequestBodyHTTPS{}
 	}
 	return o.HTTPS
 }
 
-func (o *Ten) GetComment() *string {
+func (o *RequestBodyHTTPS) GetComment() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Comment
 }
 
-// CreateRecordRequestBodyDNSRequest9Type - The type of record, it could be one of the valid DNS records.
+// CreateRecordRequestBodyDNSRequest9Type - Must be of type `NS`.
 type CreateRecordRequestBodyDNSRequest9Type string
 
 const (
-	CreateRecordRequestBodyDNSRequest9TypeA     CreateRecordRequestBodyDNSRequest9Type = "A"
-	CreateRecordRequestBodyDNSRequest9TypeAaaa  CreateRecordRequestBodyDNSRequest9Type = "AAAA"
-	CreateRecordRequestBodyDNSRequest9TypeAlias CreateRecordRequestBodyDNSRequest9Type = "ALIAS"
-	CreateRecordRequestBodyDNSRequest9TypeCaa   CreateRecordRequestBodyDNSRequest9Type = "CAA"
-	CreateRecordRequestBodyDNSRequest9TypeCname CreateRecordRequestBodyDNSRequest9Type = "CNAME"
-	CreateRecordRequestBodyDNSRequest9TypeHTTPS CreateRecordRequestBodyDNSRequest9Type = "HTTPS"
-	CreateRecordRequestBodyDNSRequest9TypeMx    CreateRecordRequestBodyDNSRequest9Type = "MX"
-	CreateRecordRequestBodyDNSRequest9TypeSrv   CreateRecordRequestBodyDNSRequest9Type = "SRV"
-	CreateRecordRequestBodyDNSRequest9TypeTxt   CreateRecordRequestBodyDNSRequest9Type = "TXT"
-	CreateRecordRequestBodyDNSRequest9TypeNs    CreateRecordRequestBodyDNSRequest9Type = "NS"
+	CreateRecordRequestBodyDNSRequest9TypeNs CreateRecordRequestBodyDNSRequest9Type = "NS"
 )
 
 func (e CreateRecordRequestBodyDNSRequest9Type) ToPointer() *CreateRecordRequestBodyDNSRequest9Type {
@@ -160,24 +132,6 @@ func (e *CreateRecordRequestBodyDNSRequest9Type) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	switch v {
-	case "A":
-		fallthrough
-	case "AAAA":
-		fallthrough
-	case "ALIAS":
-		fallthrough
-	case "CAA":
-		fallthrough
-	case "CNAME":
-		fallthrough
-	case "HTTPS":
-		fallthrough
-	case "MX":
-		fallthrough
-	case "SRV":
-		fallthrough
-	case "TXT":
-		fallthrough
 	case "NS":
 		*e = CreateRecordRequestBodyDNSRequest9Type(v)
 		return nil
@@ -186,11 +140,11 @@ func (e *CreateRecordRequestBodyDNSRequest9Type) UnmarshalJSON(data []byte) erro
 	}
 }
 
-type Nine struct {
+type Ns struct {
 	// A subdomain name.
 	Name string `json:"name"`
-	// The type of record, it could be one of the valid DNS records.
-	Type CreateRecordRequestBodyDNSRequest9Type `json:"type"`
+	// Must be of type `NS`.
+	type_ CreateRecordRequestBodyDNSRequest9Type `const:"NS" json:"type"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *float64 `json:"ttl,omitempty"`
 	// An NS domain value.
@@ -199,55 +153,54 @@ type Nine struct {
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *Nine) GetName() string {
+func (n Ns) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(n, "", false)
+}
+
+func (n *Ns) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &n, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Ns) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *Nine) GetType() CreateRecordRequestBodyDNSRequest9Type {
-	if o == nil {
-		return CreateRecordRequestBodyDNSRequest9Type("")
-	}
-	return o.Type
+func (o *Ns) GetType() CreateRecordRequestBodyDNSRequest9Type {
+	return CreateRecordRequestBodyDNSRequest9TypeNs
 }
 
-func (o *Nine) GetTTL() *float64 {
+func (o *Ns) GetTTL() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TTL
 }
 
-func (o *Nine) GetValue() *string {
+func (o *Ns) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-func (o *Nine) GetComment() *string {
+func (o *Ns) GetComment() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Comment
 }
 
-// CreateRecordRequestBodyDNSRequest8Type - The type of record, it could be one of the valid DNS records.
+// CreateRecordRequestBodyDNSRequest8Type - Must be of type `TXT`.
 type CreateRecordRequestBodyDNSRequest8Type string
 
 const (
-	CreateRecordRequestBodyDNSRequest8TypeA     CreateRecordRequestBodyDNSRequest8Type = "A"
-	CreateRecordRequestBodyDNSRequest8TypeAaaa  CreateRecordRequestBodyDNSRequest8Type = "AAAA"
-	CreateRecordRequestBodyDNSRequest8TypeAlias CreateRecordRequestBodyDNSRequest8Type = "ALIAS"
-	CreateRecordRequestBodyDNSRequest8TypeCaa   CreateRecordRequestBodyDNSRequest8Type = "CAA"
-	CreateRecordRequestBodyDNSRequest8TypeCname CreateRecordRequestBodyDNSRequest8Type = "CNAME"
-	CreateRecordRequestBodyDNSRequest8TypeHTTPS CreateRecordRequestBodyDNSRequest8Type = "HTTPS"
-	CreateRecordRequestBodyDNSRequest8TypeMx    CreateRecordRequestBodyDNSRequest8Type = "MX"
-	CreateRecordRequestBodyDNSRequest8TypeSrv   CreateRecordRequestBodyDNSRequest8Type = "SRV"
-	CreateRecordRequestBodyDNSRequest8TypeTxt   CreateRecordRequestBodyDNSRequest8Type = "TXT"
-	CreateRecordRequestBodyDNSRequest8TypeNs    CreateRecordRequestBodyDNSRequest8Type = "NS"
+	CreateRecordRequestBodyDNSRequest8TypeTxt CreateRecordRequestBodyDNSRequest8Type = "TXT"
 )
 
 func (e CreateRecordRequestBodyDNSRequest8Type) ToPointer() *CreateRecordRequestBodyDNSRequest8Type {
@@ -259,25 +212,7 @@ func (e *CreateRecordRequestBodyDNSRequest8Type) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	switch v {
-	case "A":
-		fallthrough
-	case "AAAA":
-		fallthrough
-	case "ALIAS":
-		fallthrough
-	case "CAA":
-		fallthrough
-	case "CNAME":
-		fallthrough
-	case "HTTPS":
-		fallthrough
-	case "MX":
-		fallthrough
-	case "SRV":
-		fallthrough
 	case "TXT":
-		fallthrough
-	case "NS":
 		*e = CreateRecordRequestBodyDNSRequest8Type(v)
 		return nil
 	default:
@@ -285,11 +220,11 @@ func (e *CreateRecordRequestBodyDNSRequest8Type) UnmarshalJSON(data []byte) erro
 	}
 }
 
-type Eight struct {
+type Txt struct {
 	// A subdomain name or an empty string for the root domain.
 	Name string `json:"name"`
-	// The type of record, it could be one of the valid DNS records.
-	Type CreateRecordRequestBodyDNSRequest8Type `json:"type"`
+	// Must be of type `TXT`.
+	type_ CreateRecordRequestBodyDNSRequest8Type `const:"TXT" json:"type"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *float64 `json:"ttl,omitempty"`
 	// A TXT record containing arbitrary text.
@@ -298,55 +233,54 @@ type Eight struct {
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *Eight) GetName() string {
+func (t Txt) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *Txt) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Txt) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *Eight) GetType() CreateRecordRequestBodyDNSRequest8Type {
-	if o == nil {
-		return CreateRecordRequestBodyDNSRequest8Type("")
-	}
-	return o.Type
+func (o *Txt) GetType() CreateRecordRequestBodyDNSRequest8Type {
+	return CreateRecordRequestBodyDNSRequest8TypeTxt
 }
 
-func (o *Eight) GetTTL() *float64 {
+func (o *Txt) GetTTL() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TTL
 }
 
-func (o *Eight) GetValue() string {
+func (o *Txt) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-func (o *Eight) GetComment() *string {
+func (o *Txt) GetComment() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Comment
 }
 
-// CreateRecordRequestBodyDNSRequest7Type - The type of record, it could be one of the valid DNS records.
+// CreateRecordRequestBodyDNSRequest7Type - Must be of type `SRV`.
 type CreateRecordRequestBodyDNSRequest7Type string
 
 const (
-	CreateRecordRequestBodyDNSRequest7TypeA     CreateRecordRequestBodyDNSRequest7Type = "A"
-	CreateRecordRequestBodyDNSRequest7TypeAaaa  CreateRecordRequestBodyDNSRequest7Type = "AAAA"
-	CreateRecordRequestBodyDNSRequest7TypeAlias CreateRecordRequestBodyDNSRequest7Type = "ALIAS"
-	CreateRecordRequestBodyDNSRequest7TypeCaa   CreateRecordRequestBodyDNSRequest7Type = "CAA"
-	CreateRecordRequestBodyDNSRequest7TypeCname CreateRecordRequestBodyDNSRequest7Type = "CNAME"
-	CreateRecordRequestBodyDNSRequest7TypeHTTPS CreateRecordRequestBodyDNSRequest7Type = "HTTPS"
-	CreateRecordRequestBodyDNSRequest7TypeMx    CreateRecordRequestBodyDNSRequest7Type = "MX"
-	CreateRecordRequestBodyDNSRequest7TypeSrv   CreateRecordRequestBodyDNSRequest7Type = "SRV"
-	CreateRecordRequestBodyDNSRequest7TypeTxt   CreateRecordRequestBodyDNSRequest7Type = "TXT"
-	CreateRecordRequestBodyDNSRequest7TypeNs    CreateRecordRequestBodyDNSRequest7Type = "NS"
+	CreateRecordRequestBodyDNSRequest7TypeSrv CreateRecordRequestBodyDNSRequest7Type = "SRV"
 )
 
 func (e CreateRecordRequestBodyDNSRequest7Type) ToPointer() *CreateRecordRequestBodyDNSRequest7Type {
@@ -358,25 +292,7 @@ func (e *CreateRecordRequestBodyDNSRequest7Type) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	switch v {
-	case "A":
-		fallthrough
-	case "AAAA":
-		fallthrough
-	case "ALIAS":
-		fallthrough
-	case "CAA":
-		fallthrough
-	case "CNAME":
-		fallthrough
-	case "HTTPS":
-		fallthrough
-	case "MX":
-		fallthrough
 	case "SRV":
-		fallthrough
-	case "TXT":
-		fallthrough
-	case "NS":
 		*e = CreateRecordRequestBodyDNSRequest7Type(v)
 		return nil
 	default:
@@ -384,102 +300,101 @@ func (e *CreateRecordRequestBodyDNSRequest7Type) UnmarshalJSON(data []byte) erro
 	}
 }
 
-type RequestBodySrv struct {
+type CreateRecordRequestBodySrv struct {
 	Priority *float64 `json:"priority"`
 	Weight   *float64 `json:"weight"`
 	Port     *float64 `json:"port"`
 	Target   string   `json:"target"`
 }
 
-func (o *RequestBodySrv) GetPriority() *float64 {
+func (o *CreateRecordRequestBodySrv) GetPriority() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Priority
 }
 
-func (o *RequestBodySrv) GetWeight() *float64 {
+func (o *CreateRecordRequestBodySrv) GetWeight() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Weight
 }
 
-func (o *RequestBodySrv) GetPort() *float64 {
+func (o *CreateRecordRequestBodySrv) GetPort() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Port
 }
 
-func (o *RequestBodySrv) GetTarget() string {
+func (o *CreateRecordRequestBodySrv) GetTarget() string {
 	if o == nil {
 		return ""
 	}
 	return o.Target
 }
 
-type Seven struct {
+type RequestBodySRV struct {
 	// A subdomain name or an empty string for the root domain.
 	Name string `json:"name"`
-	// The type of record, it could be one of the valid DNS records.
-	Type CreateRecordRequestBodyDNSRequest7Type `json:"type"`
+	// Must be of type `SRV`.
+	type_ CreateRecordRequestBodyDNSRequest7Type `const:"SRV" json:"type"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
-	TTL *float64       `json:"ttl,omitempty"`
-	Srv RequestBodySrv `json:"srv"`
+	TTL *float64                   `json:"ttl,omitempty"`
+	Srv CreateRecordRequestBodySrv `json:"srv"`
 	// A comment to add context on what this DNS record is for
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *Seven) GetName() string {
+func (r RequestBodySRV) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *RequestBodySRV) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *RequestBodySRV) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *Seven) GetType() CreateRecordRequestBodyDNSRequest7Type {
-	if o == nil {
-		return CreateRecordRequestBodyDNSRequest7Type("")
-	}
-	return o.Type
+func (o *RequestBodySRV) GetType() CreateRecordRequestBodyDNSRequest7Type {
+	return CreateRecordRequestBodyDNSRequest7TypeSrv
 }
 
-func (o *Seven) GetTTL() *float64 {
+func (o *RequestBodySRV) GetTTL() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TTL
 }
 
-func (o *Seven) GetSrv() RequestBodySrv {
+func (o *RequestBodySRV) GetSrv() CreateRecordRequestBodySrv {
 	if o == nil {
-		return RequestBodySrv{}
+		return CreateRecordRequestBodySrv{}
 	}
 	return o.Srv
 }
 
-func (o *Seven) GetComment() *string {
+func (o *RequestBodySRV) GetComment() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Comment
 }
 
-// CreateRecordRequestBodyDNSRequest6Type - The type of record, it could be one of the valid DNS records.
+// CreateRecordRequestBodyDNSRequest6Type - Must be of type `MX`.
 type CreateRecordRequestBodyDNSRequest6Type string
 
 const (
-	CreateRecordRequestBodyDNSRequest6TypeA     CreateRecordRequestBodyDNSRequest6Type = "A"
-	CreateRecordRequestBodyDNSRequest6TypeAaaa  CreateRecordRequestBodyDNSRequest6Type = "AAAA"
-	CreateRecordRequestBodyDNSRequest6TypeAlias CreateRecordRequestBodyDNSRequest6Type = "ALIAS"
-	CreateRecordRequestBodyDNSRequest6TypeCaa   CreateRecordRequestBodyDNSRequest6Type = "CAA"
-	CreateRecordRequestBodyDNSRequest6TypeCname CreateRecordRequestBodyDNSRequest6Type = "CNAME"
-	CreateRecordRequestBodyDNSRequest6TypeHTTPS CreateRecordRequestBodyDNSRequest6Type = "HTTPS"
-	CreateRecordRequestBodyDNSRequest6TypeMx    CreateRecordRequestBodyDNSRequest6Type = "MX"
-	CreateRecordRequestBodyDNSRequest6TypeSrv   CreateRecordRequestBodyDNSRequest6Type = "SRV"
-	CreateRecordRequestBodyDNSRequest6TypeTxt   CreateRecordRequestBodyDNSRequest6Type = "TXT"
-	CreateRecordRequestBodyDNSRequest6TypeNs    CreateRecordRequestBodyDNSRequest6Type = "NS"
+	CreateRecordRequestBodyDNSRequest6TypeMx CreateRecordRequestBodyDNSRequest6Type = "MX"
 )
 
 func (e CreateRecordRequestBodyDNSRequest6Type) ToPointer() *CreateRecordRequestBodyDNSRequest6Type {
@@ -491,25 +406,7 @@ func (e *CreateRecordRequestBodyDNSRequest6Type) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	switch v {
-	case "A":
-		fallthrough
-	case "AAAA":
-		fallthrough
-	case "ALIAS":
-		fallthrough
-	case "CAA":
-		fallthrough
-	case "CNAME":
-		fallthrough
-	case "HTTPS":
-		fallthrough
 	case "MX":
-		fallthrough
-	case "SRV":
-		fallthrough
-	case "TXT":
-		fallthrough
-	case "NS":
 		*e = CreateRecordRequestBodyDNSRequest6Type(v)
 		return nil
 	default:
@@ -517,11 +414,11 @@ func (e *CreateRecordRequestBodyDNSRequest6Type) UnmarshalJSON(data []byte) erro
 	}
 }
 
-type Six struct {
+type Mx struct {
 	// A subdomain name or an empty string for the root domain.
 	Name string `json:"name"`
-	// The type of record, it could be one of the valid DNS records.
-	Type CreateRecordRequestBodyDNSRequest6Type `json:"type"`
+	// Must be of type `MX`.
+	type_ CreateRecordRequestBodyDNSRequest6Type `const:"MX" json:"type"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *float64 `json:"ttl,omitempty"`
 	// An MX record specifying the mail server responsible for accepting messages on behalf of the domain name.
@@ -531,62 +428,61 @@ type Six struct {
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *Six) GetName() string {
+func (m Mx) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(m, "", false)
+}
+
+func (m *Mx) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &m, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Mx) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *Six) GetType() CreateRecordRequestBodyDNSRequest6Type {
-	if o == nil {
-		return CreateRecordRequestBodyDNSRequest6Type("")
-	}
-	return o.Type
+func (o *Mx) GetType() CreateRecordRequestBodyDNSRequest6Type {
+	return CreateRecordRequestBodyDNSRequest6TypeMx
 }
 
-func (o *Six) GetTTL() *float64 {
+func (o *Mx) GetTTL() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TTL
 }
 
-func (o *Six) GetValue() string {
+func (o *Mx) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-func (o *Six) GetMxPriority() float64 {
+func (o *Mx) GetMxPriority() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.MxPriority
 }
 
-func (o *Six) GetComment() *string {
+func (o *Mx) GetComment() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Comment
 }
 
-// CreateRecordRequestBodyDNSRequest5Type - The type of record, it could be one of the valid DNS records.
+// CreateRecordRequestBodyDNSRequest5Type - Must be of type `CNAME`.
 type CreateRecordRequestBodyDNSRequest5Type string
 
 const (
-	CreateRecordRequestBodyDNSRequest5TypeA     CreateRecordRequestBodyDNSRequest5Type = "A"
-	CreateRecordRequestBodyDNSRequest5TypeAaaa  CreateRecordRequestBodyDNSRequest5Type = "AAAA"
-	CreateRecordRequestBodyDNSRequest5TypeAlias CreateRecordRequestBodyDNSRequest5Type = "ALIAS"
-	CreateRecordRequestBodyDNSRequest5TypeCaa   CreateRecordRequestBodyDNSRequest5Type = "CAA"
 	CreateRecordRequestBodyDNSRequest5TypeCname CreateRecordRequestBodyDNSRequest5Type = "CNAME"
-	CreateRecordRequestBodyDNSRequest5TypeHTTPS CreateRecordRequestBodyDNSRequest5Type = "HTTPS"
-	CreateRecordRequestBodyDNSRequest5TypeMx    CreateRecordRequestBodyDNSRequest5Type = "MX"
-	CreateRecordRequestBodyDNSRequest5TypeSrv   CreateRecordRequestBodyDNSRequest5Type = "SRV"
-	CreateRecordRequestBodyDNSRequest5TypeTxt   CreateRecordRequestBodyDNSRequest5Type = "TXT"
-	CreateRecordRequestBodyDNSRequest5TypeNs    CreateRecordRequestBodyDNSRequest5Type = "NS"
 )
 
 func (e CreateRecordRequestBodyDNSRequest5Type) ToPointer() *CreateRecordRequestBodyDNSRequest5Type {
@@ -598,25 +494,7 @@ func (e *CreateRecordRequestBodyDNSRequest5Type) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	switch v {
-	case "A":
-		fallthrough
-	case "AAAA":
-		fallthrough
-	case "ALIAS":
-		fallthrough
-	case "CAA":
-		fallthrough
 	case "CNAME":
-		fallthrough
-	case "HTTPS":
-		fallthrough
-	case "MX":
-		fallthrough
-	case "SRV":
-		fallthrough
-	case "TXT":
-		fallthrough
-	case "NS":
 		*e = CreateRecordRequestBodyDNSRequest5Type(v)
 		return nil
 	default:
@@ -624,11 +502,11 @@ func (e *CreateRecordRequestBodyDNSRequest5Type) UnmarshalJSON(data []byte) erro
 	}
 }
 
-type RequestBody5 struct {
+type Cname struct {
 	// A subdomain name or an empty string for the root domain.
 	Name string `json:"name"`
-	// The type of record, it could be one of the valid DNS records.
-	Type CreateRecordRequestBodyDNSRequest5Type `json:"type"`
+	// Must be of type `CNAME`.
+	type_ CreateRecordRequestBodyDNSRequest5Type `const:"CNAME" json:"type"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *float64 `json:"ttl,omitempty"`
 	// A CNAME record mapping to another domain name.
@@ -637,55 +515,54 @@ type RequestBody5 struct {
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *RequestBody5) GetName() string {
+func (c Cname) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *Cname) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Cname) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *RequestBody5) GetType() CreateRecordRequestBodyDNSRequest5Type {
-	if o == nil {
-		return CreateRecordRequestBodyDNSRequest5Type("")
-	}
-	return o.Type
+func (o *Cname) GetType() CreateRecordRequestBodyDNSRequest5Type {
+	return CreateRecordRequestBodyDNSRequest5TypeCname
 }
 
-func (o *RequestBody5) GetTTL() *float64 {
+func (o *Cname) GetTTL() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TTL
 }
 
-func (o *RequestBody5) GetValue() *string {
+func (o *Cname) GetValue() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Value
 }
 
-func (o *RequestBody5) GetComment() *string {
+func (o *Cname) GetComment() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Comment
 }
 
-// CreateRecordRequestBodyDNSRequestType - The type of record, it could be one of the valid DNS records.
+// CreateRecordRequestBodyDNSRequestType - Must be of type `CAA`.
 type CreateRecordRequestBodyDNSRequestType string
 
 const (
-	CreateRecordRequestBodyDNSRequestTypeA     CreateRecordRequestBodyDNSRequestType = "A"
-	CreateRecordRequestBodyDNSRequestTypeAaaa  CreateRecordRequestBodyDNSRequestType = "AAAA"
-	CreateRecordRequestBodyDNSRequestTypeAlias CreateRecordRequestBodyDNSRequestType = "ALIAS"
-	CreateRecordRequestBodyDNSRequestTypeCaa   CreateRecordRequestBodyDNSRequestType = "CAA"
-	CreateRecordRequestBodyDNSRequestTypeCname CreateRecordRequestBodyDNSRequestType = "CNAME"
-	CreateRecordRequestBodyDNSRequestTypeHTTPS CreateRecordRequestBodyDNSRequestType = "HTTPS"
-	CreateRecordRequestBodyDNSRequestTypeMx    CreateRecordRequestBodyDNSRequestType = "MX"
-	CreateRecordRequestBodyDNSRequestTypeSrv   CreateRecordRequestBodyDNSRequestType = "SRV"
-	CreateRecordRequestBodyDNSRequestTypeTxt   CreateRecordRequestBodyDNSRequestType = "TXT"
-	CreateRecordRequestBodyDNSRequestTypeNs    CreateRecordRequestBodyDNSRequestType = "NS"
+	CreateRecordRequestBodyDNSRequestTypeCaa CreateRecordRequestBodyDNSRequestType = "CAA"
 )
 
 func (e CreateRecordRequestBodyDNSRequestType) ToPointer() *CreateRecordRequestBodyDNSRequestType {
@@ -697,25 +574,7 @@ func (e *CreateRecordRequestBodyDNSRequestType) UnmarshalJSON(data []byte) error
 		return err
 	}
 	switch v {
-	case "A":
-		fallthrough
-	case "AAAA":
-		fallthrough
-	case "ALIAS":
-		fallthrough
 	case "CAA":
-		fallthrough
-	case "CNAME":
-		fallthrough
-	case "HTTPS":
-		fallthrough
-	case "MX":
-		fallthrough
-	case "SRV":
-		fallthrough
-	case "TXT":
-		fallthrough
-	case "NS":
 		*e = CreateRecordRequestBodyDNSRequestType(v)
 		return nil
 	default:
@@ -723,11 +582,11 @@ func (e *CreateRecordRequestBodyDNSRequestType) UnmarshalJSON(data []byte) error
 	}
 }
 
-type RequestBody4 struct {
+type Caa struct {
 	// A subdomain name or an empty string for the root domain.
 	Name string `json:"name"`
-	// The type of record, it could be one of the valid DNS records.
-	Type CreateRecordRequestBodyDNSRequestType `json:"type"`
+	// Must be of type `CAA`.
+	type_ CreateRecordRequestBodyDNSRequestType `const:"CAA" json:"type"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *float64 `json:"ttl,omitempty"`
 	// A CAA record to specify which Certificate Authorities (CAs) are allowed to issue certificates for the domain.
@@ -736,55 +595,54 @@ type RequestBody4 struct {
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *RequestBody4) GetName() string {
+func (c Caa) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *Caa) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Caa) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *RequestBody4) GetType() CreateRecordRequestBodyDNSRequestType {
-	if o == nil {
-		return CreateRecordRequestBodyDNSRequestType("")
-	}
-	return o.Type
+func (o *Caa) GetType() CreateRecordRequestBodyDNSRequestType {
+	return CreateRecordRequestBodyDNSRequestTypeCaa
 }
 
-func (o *RequestBody4) GetTTL() *float64 {
+func (o *Caa) GetTTL() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TTL
 }
 
-func (o *RequestBody4) GetValue() string {
+func (o *Caa) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-func (o *RequestBody4) GetComment() *string {
+func (o *Caa) GetComment() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Comment
 }
 
-// CreateRecordRequestBodyDNSType - The type of record, it could be one of the valid DNS records.
+// CreateRecordRequestBodyDNSType - Must be of type `ALIAS`.
 type CreateRecordRequestBodyDNSType string
 
 const (
-	CreateRecordRequestBodyDNSTypeA     CreateRecordRequestBodyDNSType = "A"
-	CreateRecordRequestBodyDNSTypeAaaa  CreateRecordRequestBodyDNSType = "AAAA"
 	CreateRecordRequestBodyDNSTypeAlias CreateRecordRequestBodyDNSType = "ALIAS"
-	CreateRecordRequestBodyDNSTypeCaa   CreateRecordRequestBodyDNSType = "CAA"
-	CreateRecordRequestBodyDNSTypeCname CreateRecordRequestBodyDNSType = "CNAME"
-	CreateRecordRequestBodyDNSTypeHTTPS CreateRecordRequestBodyDNSType = "HTTPS"
-	CreateRecordRequestBodyDNSTypeMx    CreateRecordRequestBodyDNSType = "MX"
-	CreateRecordRequestBodyDNSTypeSrv   CreateRecordRequestBodyDNSType = "SRV"
-	CreateRecordRequestBodyDNSTypeTxt   CreateRecordRequestBodyDNSType = "TXT"
-	CreateRecordRequestBodyDNSTypeNs    CreateRecordRequestBodyDNSType = "NS"
 )
 
 func (e CreateRecordRequestBodyDNSType) ToPointer() *CreateRecordRequestBodyDNSType {
@@ -796,25 +654,7 @@ func (e *CreateRecordRequestBodyDNSType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
-	case "A":
-		fallthrough
-	case "AAAA":
-		fallthrough
 	case "ALIAS":
-		fallthrough
-	case "CAA":
-		fallthrough
-	case "CNAME":
-		fallthrough
-	case "HTTPS":
-		fallthrough
-	case "MX":
-		fallthrough
-	case "SRV":
-		fallthrough
-	case "TXT":
-		fallthrough
-	case "NS":
 		*e = CreateRecordRequestBodyDNSType(v)
 		return nil
 	default:
@@ -822,11 +662,11 @@ func (e *CreateRecordRequestBodyDNSType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type RequestBody3 struct {
+type Alias struct {
 	// A subdomain name or an empty string for the root domain.
 	Name string `json:"name"`
-	// The type of record, it could be one of the valid DNS records.
-	Type CreateRecordRequestBodyDNSType `json:"type"`
+	// Must be of type `ALIAS`.
+	type_ CreateRecordRequestBodyDNSType `const:"ALIAS" json:"type"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *float64 `json:"ttl,omitempty"`
 	// An ALIAS virtual record pointing to a hostname resolved to an A record on server side.
@@ -835,55 +675,54 @@ type RequestBody3 struct {
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *RequestBody3) GetName() string {
+func (a Alias) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *Alias) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Alias) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *RequestBody3) GetType() CreateRecordRequestBodyDNSType {
-	if o == nil {
-		return CreateRecordRequestBodyDNSType("")
-	}
-	return o.Type
+func (o *Alias) GetType() CreateRecordRequestBodyDNSType {
+	return CreateRecordRequestBodyDNSTypeAlias
 }
 
-func (o *RequestBody3) GetTTL() *float64 {
+func (o *Alias) GetTTL() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TTL
 }
 
-func (o *RequestBody3) GetValue() string {
+func (o *Alias) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-func (o *RequestBody3) GetComment() *string {
+func (o *Alias) GetComment() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Comment
 }
 
-// CreateRecordRequestBodyType - The type of record, it could be one of the valid DNS records.
+// CreateRecordRequestBodyType - Must be of type `AAAA`.
 type CreateRecordRequestBodyType string
 
 const (
-	CreateRecordRequestBodyTypeA     CreateRecordRequestBodyType = "A"
-	CreateRecordRequestBodyTypeAaaa  CreateRecordRequestBodyType = "AAAA"
-	CreateRecordRequestBodyTypeAlias CreateRecordRequestBodyType = "ALIAS"
-	CreateRecordRequestBodyTypeCaa   CreateRecordRequestBodyType = "CAA"
-	CreateRecordRequestBodyTypeCname CreateRecordRequestBodyType = "CNAME"
-	CreateRecordRequestBodyTypeHTTPS CreateRecordRequestBodyType = "HTTPS"
-	CreateRecordRequestBodyTypeMx    CreateRecordRequestBodyType = "MX"
-	CreateRecordRequestBodyTypeSrv   CreateRecordRequestBodyType = "SRV"
-	CreateRecordRequestBodyTypeTxt   CreateRecordRequestBodyType = "TXT"
-	CreateRecordRequestBodyTypeNs    CreateRecordRequestBodyType = "NS"
+	CreateRecordRequestBodyTypeAaaa CreateRecordRequestBodyType = "AAAA"
 )
 
 func (e CreateRecordRequestBodyType) ToPointer() *CreateRecordRequestBodyType {
@@ -895,25 +734,7 @@ func (e *CreateRecordRequestBodyType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
-	case "A":
-		fallthrough
 	case "AAAA":
-		fallthrough
-	case "ALIAS":
-		fallthrough
-	case "CAA":
-		fallthrough
-	case "CNAME":
-		fallthrough
-	case "HTTPS":
-		fallthrough
-	case "MX":
-		fallthrough
-	case "SRV":
-		fallthrough
-	case "TXT":
-		fallthrough
-	case "NS":
 		*e = CreateRecordRequestBodyType(v)
 		return nil
 	default:
@@ -921,11 +742,11 @@ func (e *CreateRecordRequestBodyType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type RequestBody2 struct {
+type Aaaa struct {
 	// A subdomain name or an empty string for the root domain.
 	Name string `json:"name"`
-	// The type of record, it could be one of the valid DNS records.
-	Type CreateRecordRequestBodyType `json:"type"`
+	// Must be of type `AAAA`.
+	type_ CreateRecordRequestBodyType `const:"AAAA" json:"type"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *float64 `json:"ttl,omitempty"`
 	// An AAAA record pointing to an IPv6 address.
@@ -934,55 +755,54 @@ type RequestBody2 struct {
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *RequestBody2) GetName() string {
+func (a Aaaa) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *Aaaa) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Aaaa) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *RequestBody2) GetType() CreateRecordRequestBodyType {
-	if o == nil {
-		return CreateRecordRequestBodyType("")
-	}
-	return o.Type
+func (o *Aaaa) GetType() CreateRecordRequestBodyType {
+	return CreateRecordRequestBodyTypeAaaa
 }
 
-func (o *RequestBody2) GetTTL() *float64 {
+func (o *Aaaa) GetTTL() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TTL
 }
 
-func (o *RequestBody2) GetValue() string {
+func (o *Aaaa) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-func (o *RequestBody2) GetComment() *string {
+func (o *Aaaa) GetComment() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Comment
 }
 
-// RequestBodyType - The type of record, it could be one of the valid DNS records.
+// RequestBodyType - Must be of type `A`.
 type RequestBodyType string
 
 const (
-	RequestBodyTypeA     RequestBodyType = "A"
-	RequestBodyTypeAaaa  RequestBodyType = "AAAA"
-	RequestBodyTypeAlias RequestBodyType = "ALIAS"
-	RequestBodyTypeCaa   RequestBodyType = "CAA"
-	RequestBodyTypeCname RequestBodyType = "CNAME"
-	RequestBodyTypeHTTPS RequestBodyType = "HTTPS"
-	RequestBodyTypeMx    RequestBodyType = "MX"
-	RequestBodyTypeSrv   RequestBodyType = "SRV"
-	RequestBodyTypeTxt   RequestBodyType = "TXT"
-	RequestBodyTypeNs    RequestBodyType = "NS"
+	RequestBodyTypeA RequestBodyType = "A"
 )
 
 func (e RequestBodyType) ToPointer() *RequestBodyType {
@@ -995,24 +815,6 @@ func (e *RequestBodyType) UnmarshalJSON(data []byte) error {
 	}
 	switch v {
 	case "A":
-		fallthrough
-	case "AAAA":
-		fallthrough
-	case "ALIAS":
-		fallthrough
-	case "CAA":
-		fallthrough
-	case "CNAME":
-		fallthrough
-	case "HTTPS":
-		fallthrough
-	case "MX":
-		fallthrough
-	case "SRV":
-		fallthrough
-	case "TXT":
-		fallthrough
-	case "NS":
 		*e = RequestBodyType(v)
 		return nil
 	default:
@@ -1020,11 +822,11 @@ func (e *RequestBodyType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type RequestBody1 struct {
+type A struct {
 	// A subdomain name or an empty string for the root domain.
 	Name string `json:"name"`
-	// The type of record, it could be one of the valid DNS records.
-	Type RequestBodyType `json:"type"`
+	// Must be of type `A`.
+	type_ RequestBodyType `const:"A" json:"type"`
 	// The TTL value. Must be a number between 60 and 2147483647. Default value is 60.
 	TTL *float64 `json:"ttl,omitempty"`
 	// The record value must be a valid IPv4 address.
@@ -1033,35 +835,43 @@ type RequestBody1 struct {
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *RequestBody1) GetName() string {
+func (a A) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *A) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *A) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *RequestBody1) GetType() RequestBodyType {
-	if o == nil {
-		return RequestBodyType("")
-	}
-	return o.Type
+func (o *A) GetType() RequestBodyType {
+	return RequestBodyTypeA
 }
 
-func (o *RequestBody1) GetTTL() *float64 {
+func (o *A) GetTTL() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.TTL
 }
 
-func (o *RequestBody1) GetValue() string {
+func (o *A) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-func (o *RequestBody1) GetComment() *string {
+func (o *A) GetComment() *string {
 	if o == nil {
 		return nil
 	}
@@ -1071,192 +881,192 @@ func (o *RequestBody1) GetComment() *string {
 type CreateRecordRequestBodyUnionType string
 
 const (
-	CreateRecordRequestBodyUnionTypeRequestBody1 CreateRecordRequestBodyUnionType = "requestBody_1"
-	CreateRecordRequestBodyUnionTypeRequestBody2 CreateRecordRequestBodyUnionType = "requestBody_2"
-	CreateRecordRequestBodyUnionTypeRequestBody3 CreateRecordRequestBodyUnionType = "requestBody_3"
-	CreateRecordRequestBodyUnionTypeRequestBody4 CreateRecordRequestBodyUnionType = "requestBody_4"
-	CreateRecordRequestBodyUnionTypeRequestBody5 CreateRecordRequestBodyUnionType = "requestBody_5"
-	CreateRecordRequestBodyUnionTypeSix          CreateRecordRequestBodyUnionType = "6"
-	CreateRecordRequestBodyUnionTypeSeven        CreateRecordRequestBodyUnionType = "7"
-	CreateRecordRequestBodyUnionTypeEight        CreateRecordRequestBodyUnionType = "8"
-	CreateRecordRequestBodyUnionTypeNine         CreateRecordRequestBodyUnionType = "9"
-	CreateRecordRequestBodyUnionTypeTen          CreateRecordRequestBodyUnionType = "10"
+	CreateRecordRequestBodyUnionTypeA                CreateRecordRequestBodyUnionType = "A"
+	CreateRecordRequestBodyUnionTypeAaaa             CreateRecordRequestBodyUnionType = "AAAA"
+	CreateRecordRequestBodyUnionTypeAlias            CreateRecordRequestBodyUnionType = "ALIAS"
+	CreateRecordRequestBodyUnionTypeCaa              CreateRecordRequestBodyUnionType = "CAA"
+	CreateRecordRequestBodyUnionTypeCname            CreateRecordRequestBodyUnionType = "CNAME"
+	CreateRecordRequestBodyUnionTypeMx               CreateRecordRequestBodyUnionType = "MX"
+	CreateRecordRequestBodyUnionTypeRequestBodySRV   CreateRecordRequestBodyUnionType = "requestBody_SRV"
+	CreateRecordRequestBodyUnionTypeTxt              CreateRecordRequestBodyUnionType = "TXT"
+	CreateRecordRequestBodyUnionTypeNs               CreateRecordRequestBodyUnionType = "NS"
+	CreateRecordRequestBodyUnionTypeRequestBodyHTTPS CreateRecordRequestBodyUnionType = "requestBody_HTTPS"
 )
 
 type CreateRecordRequestBody struct {
-	RequestBody1 *RequestBody1
-	RequestBody2 *RequestBody2
-	RequestBody3 *RequestBody3
-	RequestBody4 *RequestBody4
-	RequestBody5 *RequestBody5
-	Six          *Six
-	Seven        *Seven
-	Eight        *Eight
-	Nine         *Nine
-	Ten          *Ten
+	A                *A
+	Aaaa             *Aaaa
+	Alias            *Alias
+	Caa              *Caa
+	Cname            *Cname
+	Mx               *Mx
+	RequestBodySRV   *RequestBodySRV
+	Txt              *Txt
+	Ns               *Ns
+	RequestBodyHTTPS *RequestBodyHTTPS
 
 	Type CreateRecordRequestBodyUnionType
 }
 
-func CreateCreateRecordRequestBodyRequestBody1(requestBody1 RequestBody1) CreateRecordRequestBody {
-	typ := CreateRecordRequestBodyUnionTypeRequestBody1
+func CreateCreateRecordRequestBodyA(a A) CreateRecordRequestBody {
+	typ := CreateRecordRequestBodyUnionTypeA
 
 	return CreateRecordRequestBody{
-		RequestBody1: &requestBody1,
-		Type:         typ,
-	}
-}
-
-func CreateCreateRecordRequestBodyRequestBody2(requestBody2 RequestBody2) CreateRecordRequestBody {
-	typ := CreateRecordRequestBodyUnionTypeRequestBody2
-
-	return CreateRecordRequestBody{
-		RequestBody2: &requestBody2,
-		Type:         typ,
-	}
-}
-
-func CreateCreateRecordRequestBodyRequestBody3(requestBody3 RequestBody3) CreateRecordRequestBody {
-	typ := CreateRecordRequestBodyUnionTypeRequestBody3
-
-	return CreateRecordRequestBody{
-		RequestBody3: &requestBody3,
-		Type:         typ,
-	}
-}
-
-func CreateCreateRecordRequestBodyRequestBody4(requestBody4 RequestBody4) CreateRecordRequestBody {
-	typ := CreateRecordRequestBodyUnionTypeRequestBody4
-
-	return CreateRecordRequestBody{
-		RequestBody4: &requestBody4,
-		Type:         typ,
-	}
-}
-
-func CreateCreateRecordRequestBodyRequestBody5(requestBody5 RequestBody5) CreateRecordRequestBody {
-	typ := CreateRecordRequestBodyUnionTypeRequestBody5
-
-	return CreateRecordRequestBody{
-		RequestBody5: &requestBody5,
-		Type:         typ,
-	}
-}
-
-func CreateCreateRecordRequestBodySix(six Six) CreateRecordRequestBody {
-	typ := CreateRecordRequestBodyUnionTypeSix
-
-	return CreateRecordRequestBody{
-		Six:  &six,
+		A:    &a,
 		Type: typ,
 	}
 }
 
-func CreateCreateRecordRequestBodySeven(seven Seven) CreateRecordRequestBody {
-	typ := CreateRecordRequestBodyUnionTypeSeven
+func CreateCreateRecordRequestBodyAaaa(aaaa Aaaa) CreateRecordRequestBody {
+	typ := CreateRecordRequestBodyUnionTypeAaaa
 
 	return CreateRecordRequestBody{
-		Seven: &seven,
+		Aaaa: &aaaa,
+		Type: typ,
+	}
+}
+
+func CreateCreateRecordRequestBodyAlias(alias Alias) CreateRecordRequestBody {
+	typ := CreateRecordRequestBodyUnionTypeAlias
+
+	return CreateRecordRequestBody{
+		Alias: &alias,
 		Type:  typ,
 	}
 }
 
-func CreateCreateRecordRequestBodyEight(eight Eight) CreateRecordRequestBody {
-	typ := CreateRecordRequestBodyUnionTypeEight
+func CreateCreateRecordRequestBodyCaa(caa Caa) CreateRecordRequestBody {
+	typ := CreateRecordRequestBodyUnionTypeCaa
 
 	return CreateRecordRequestBody{
-		Eight: &eight,
+		Caa:  &caa,
+		Type: typ,
+	}
+}
+
+func CreateCreateRecordRequestBodyCname(cname Cname) CreateRecordRequestBody {
+	typ := CreateRecordRequestBodyUnionTypeCname
+
+	return CreateRecordRequestBody{
+		Cname: &cname,
 		Type:  typ,
 	}
 }
 
-func CreateCreateRecordRequestBodyNine(nine Nine) CreateRecordRequestBody {
-	typ := CreateRecordRequestBodyUnionTypeNine
+func CreateCreateRecordRequestBodyMx(mx Mx) CreateRecordRequestBody {
+	typ := CreateRecordRequestBodyUnionTypeMx
 
 	return CreateRecordRequestBody{
-		Nine: &nine,
+		Mx:   &mx,
 		Type: typ,
 	}
 }
 
-func CreateCreateRecordRequestBodyTen(ten Ten) CreateRecordRequestBody {
-	typ := CreateRecordRequestBodyUnionTypeTen
+func CreateCreateRecordRequestBodyRequestBodySRV(requestBodySRV RequestBodySRV) CreateRecordRequestBody {
+	typ := CreateRecordRequestBodyUnionTypeRequestBodySRV
 
 	return CreateRecordRequestBody{
-		Ten:  &ten,
+		RequestBodySRV: &requestBodySRV,
+		Type:           typ,
+	}
+}
+
+func CreateCreateRecordRequestBodyTxt(txt Txt) CreateRecordRequestBody {
+	typ := CreateRecordRequestBodyUnionTypeTxt
+
+	return CreateRecordRequestBody{
+		Txt:  &txt,
 		Type: typ,
+	}
+}
+
+func CreateCreateRecordRequestBodyNs(ns Ns) CreateRecordRequestBody {
+	typ := CreateRecordRequestBodyUnionTypeNs
+
+	return CreateRecordRequestBody{
+		Ns:   &ns,
+		Type: typ,
+	}
+}
+
+func CreateCreateRecordRequestBodyRequestBodyHTTPS(requestBodyHTTPS RequestBodyHTTPS) CreateRecordRequestBody {
+	typ := CreateRecordRequestBodyUnionTypeRequestBodyHTTPS
+
+	return CreateRecordRequestBody{
+		RequestBodyHTTPS: &requestBodyHTTPS,
+		Type:             typ,
 	}
 }
 
 func (u *CreateRecordRequestBody) UnmarshalJSON(data []byte) error {
 
-	var requestBody1 RequestBody1 = RequestBody1{}
-	if err := utils.UnmarshalJSON(data, &requestBody1, "", true, true); err == nil {
-		u.RequestBody1 = &requestBody1
-		u.Type = CreateRecordRequestBodyUnionTypeRequestBody1
+	var a A = A{}
+	if err := utils.UnmarshalJSON(data, &a, "", true, true); err == nil {
+		u.A = &a
+		u.Type = CreateRecordRequestBodyUnionTypeA
 		return nil
 	}
 
-	var requestBody2 RequestBody2 = RequestBody2{}
-	if err := utils.UnmarshalJSON(data, &requestBody2, "", true, true); err == nil {
-		u.RequestBody2 = &requestBody2
-		u.Type = CreateRecordRequestBodyUnionTypeRequestBody2
+	var aaaa Aaaa = Aaaa{}
+	if err := utils.UnmarshalJSON(data, &aaaa, "", true, true); err == nil {
+		u.Aaaa = &aaaa
+		u.Type = CreateRecordRequestBodyUnionTypeAaaa
 		return nil
 	}
 
-	var requestBody3 RequestBody3 = RequestBody3{}
-	if err := utils.UnmarshalJSON(data, &requestBody3, "", true, true); err == nil {
-		u.RequestBody3 = &requestBody3
-		u.Type = CreateRecordRequestBodyUnionTypeRequestBody3
+	var alias Alias = Alias{}
+	if err := utils.UnmarshalJSON(data, &alias, "", true, true); err == nil {
+		u.Alias = &alias
+		u.Type = CreateRecordRequestBodyUnionTypeAlias
 		return nil
 	}
 
-	var requestBody4 RequestBody4 = RequestBody4{}
-	if err := utils.UnmarshalJSON(data, &requestBody4, "", true, true); err == nil {
-		u.RequestBody4 = &requestBody4
-		u.Type = CreateRecordRequestBodyUnionTypeRequestBody4
+	var caa Caa = Caa{}
+	if err := utils.UnmarshalJSON(data, &caa, "", true, true); err == nil {
+		u.Caa = &caa
+		u.Type = CreateRecordRequestBodyUnionTypeCaa
 		return nil
 	}
 
-	var requestBody5 RequestBody5 = RequestBody5{}
-	if err := utils.UnmarshalJSON(data, &requestBody5, "", true, true); err == nil {
-		u.RequestBody5 = &requestBody5
-		u.Type = CreateRecordRequestBodyUnionTypeRequestBody5
+	var cname Cname = Cname{}
+	if err := utils.UnmarshalJSON(data, &cname, "", true, true); err == nil {
+		u.Cname = &cname
+		u.Type = CreateRecordRequestBodyUnionTypeCname
 		return nil
 	}
 
-	var seven Seven = Seven{}
-	if err := utils.UnmarshalJSON(data, &seven, "", true, true); err == nil {
-		u.Seven = &seven
-		u.Type = CreateRecordRequestBodyUnionTypeSeven
+	var requestBodySRV RequestBodySRV = RequestBodySRV{}
+	if err := utils.UnmarshalJSON(data, &requestBodySRV, "", true, true); err == nil {
+		u.RequestBodySRV = &requestBodySRV
+		u.Type = CreateRecordRequestBodyUnionTypeRequestBodySRV
 		return nil
 	}
 
-	var eight Eight = Eight{}
-	if err := utils.UnmarshalJSON(data, &eight, "", true, true); err == nil {
-		u.Eight = &eight
-		u.Type = CreateRecordRequestBodyUnionTypeEight
+	var txt Txt = Txt{}
+	if err := utils.UnmarshalJSON(data, &txt, "", true, true); err == nil {
+		u.Txt = &txt
+		u.Type = CreateRecordRequestBodyUnionTypeTxt
 		return nil
 	}
 
-	var nine Nine = Nine{}
-	if err := utils.UnmarshalJSON(data, &nine, "", true, true); err == nil {
-		u.Nine = &nine
-		u.Type = CreateRecordRequestBodyUnionTypeNine
+	var ns Ns = Ns{}
+	if err := utils.UnmarshalJSON(data, &ns, "", true, true); err == nil {
+		u.Ns = &ns
+		u.Type = CreateRecordRequestBodyUnionTypeNs
 		return nil
 	}
 
-	var ten Ten = Ten{}
-	if err := utils.UnmarshalJSON(data, &ten, "", true, true); err == nil {
-		u.Ten = &ten
-		u.Type = CreateRecordRequestBodyUnionTypeTen
+	var requestBodyHTTPS RequestBodyHTTPS = RequestBodyHTTPS{}
+	if err := utils.UnmarshalJSON(data, &requestBodyHTTPS, "", true, true); err == nil {
+		u.RequestBodyHTTPS = &requestBodyHTTPS
+		u.Type = CreateRecordRequestBodyUnionTypeRequestBodyHTTPS
 		return nil
 	}
 
-	var six Six = Six{}
-	if err := utils.UnmarshalJSON(data, &six, "", true, true); err == nil {
-		u.Six = &six
-		u.Type = CreateRecordRequestBodyUnionTypeSix
+	var mx Mx = Mx{}
+	if err := utils.UnmarshalJSON(data, &mx, "", true, true); err == nil {
+		u.Mx = &mx
+		u.Type = CreateRecordRequestBodyUnionTypeMx
 		return nil
 	}
 
@@ -1264,44 +1074,44 @@ func (u *CreateRecordRequestBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateRecordRequestBody) MarshalJSON() ([]byte, error) {
-	if u.RequestBody1 != nil {
-		return utils.MarshalJSON(u.RequestBody1, "", true)
+	if u.A != nil {
+		return utils.MarshalJSON(u.A, "", true)
 	}
 
-	if u.RequestBody2 != nil {
-		return utils.MarshalJSON(u.RequestBody2, "", true)
+	if u.Aaaa != nil {
+		return utils.MarshalJSON(u.Aaaa, "", true)
 	}
 
-	if u.RequestBody3 != nil {
-		return utils.MarshalJSON(u.RequestBody3, "", true)
+	if u.Alias != nil {
+		return utils.MarshalJSON(u.Alias, "", true)
 	}
 
-	if u.RequestBody4 != nil {
-		return utils.MarshalJSON(u.RequestBody4, "", true)
+	if u.Caa != nil {
+		return utils.MarshalJSON(u.Caa, "", true)
 	}
 
-	if u.RequestBody5 != nil {
-		return utils.MarshalJSON(u.RequestBody5, "", true)
+	if u.Cname != nil {
+		return utils.MarshalJSON(u.Cname, "", true)
 	}
 
-	if u.Six != nil {
-		return utils.MarshalJSON(u.Six, "", true)
+	if u.Mx != nil {
+		return utils.MarshalJSON(u.Mx, "", true)
 	}
 
-	if u.Seven != nil {
-		return utils.MarshalJSON(u.Seven, "", true)
+	if u.RequestBodySRV != nil {
+		return utils.MarshalJSON(u.RequestBodySRV, "", true)
 	}
 
-	if u.Eight != nil {
-		return utils.MarshalJSON(u.Eight, "", true)
+	if u.Txt != nil {
+		return utils.MarshalJSON(u.Txt, "", true)
 	}
 
-	if u.Nine != nil {
-		return utils.MarshalJSON(u.Nine, "", true)
+	if u.Ns != nil {
+		return utils.MarshalJSON(u.Ns, "", true)
 	}
 
-	if u.Ten != nil {
-		return utils.MarshalJSON(u.Ten, "", true)
+	if u.RequestBodyHTTPS != nil {
+		return utils.MarshalJSON(u.RequestBodyHTTPS, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CreateRecordRequestBody: all fields are null")
@@ -1345,99 +1155,17 @@ func (o *CreateRecordRequest) GetRequestBody() *CreateRecordRequestBody {
 	return o.RequestBody
 }
 
-type CreateRecordResponseBody2 struct {
-	// The id of the newly created DNS record
-	UID string `json:"uid"`
-}
-
-func (o *CreateRecordResponseBody2) GetUID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UID
-}
-
-type CreateRecordResponseBody1 struct {
-	UID     string  `json:"uid"`
-	Updated float64 `json:"updated"`
-}
-
-func (o *CreateRecordResponseBody1) GetUID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UID
-}
-
-func (o *CreateRecordResponseBody1) GetUpdated() float64 {
-	if o == nil {
-		return 0.0
-	}
-	return o.Updated
-}
-
-type CreateRecordResponseBodyType string
-
-const (
-	CreateRecordResponseBodyTypeCreateRecordResponseBody1 CreateRecordResponseBodyType = "createRecord_responseBody_1"
-	CreateRecordResponseBodyTypeCreateRecordResponseBody2 CreateRecordResponseBodyType = "createRecord_responseBody_2"
-)
-
 // CreateRecordResponseBody - Successful response showing the uid of the newly created DNS record.
 type CreateRecordResponseBody struct {
-	CreateRecordResponseBody1 *CreateRecordResponseBody1
-	CreateRecordResponseBody2 *CreateRecordResponseBody2
-
-	Type CreateRecordResponseBodyType
+	// The id of the newly created DNS record
+	ID *string `json:"uid,omitempty"`
 }
 
-func CreateCreateRecordResponseBodyCreateRecordResponseBody1(createRecordResponseBody1 CreateRecordResponseBody1) CreateRecordResponseBody {
-	typ := CreateRecordResponseBodyTypeCreateRecordResponseBody1
-
-	return CreateRecordResponseBody{
-		CreateRecordResponseBody1: &createRecordResponseBody1,
-		Type:                      typ,
-	}
-}
-
-func CreateCreateRecordResponseBodyCreateRecordResponseBody2(createRecordResponseBody2 CreateRecordResponseBody2) CreateRecordResponseBody {
-	typ := CreateRecordResponseBodyTypeCreateRecordResponseBody2
-
-	return CreateRecordResponseBody{
-		CreateRecordResponseBody2: &createRecordResponseBody2,
-		Type:                      typ,
-	}
-}
-
-func (u *CreateRecordResponseBody) UnmarshalJSON(data []byte) error {
-
-	var createRecordResponseBody2 CreateRecordResponseBody2 = CreateRecordResponseBody2{}
-	if err := utils.UnmarshalJSON(data, &createRecordResponseBody2, "", true, true); err == nil {
-		u.CreateRecordResponseBody2 = &createRecordResponseBody2
-		u.Type = CreateRecordResponseBodyTypeCreateRecordResponseBody2
+func (o *CreateRecordResponseBody) GetID() *string {
+	if o == nil {
 		return nil
 	}
-
-	var createRecordResponseBody1 CreateRecordResponseBody1 = CreateRecordResponseBody1{}
-	if err := utils.UnmarshalJSON(data, &createRecordResponseBody1, "", true, true); err == nil {
-		u.CreateRecordResponseBody1 = &createRecordResponseBody1
-		u.Type = CreateRecordResponseBodyTypeCreateRecordResponseBody1
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreateRecordResponseBody", string(data))
-}
-
-func (u CreateRecordResponseBody) MarshalJSON() ([]byte, error) {
-	if u.CreateRecordResponseBody1 != nil {
-		return utils.MarshalJSON(u.CreateRecordResponseBody1, "", true)
-	}
-
-	if u.CreateRecordResponseBody2 != nil {
-		return utils.MarshalJSON(u.CreateRecordResponseBody2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CreateRecordResponseBody: all fields are null")
+	return o.ID
 }
 
 type CreateRecordResponse struct {
@@ -1448,7 +1176,7 @@ type CreateRecordResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Successful response showing the uid of the newly created DNS record.
-	OneOf *CreateRecordResponseBody
+	Object *CreateRecordResponseBody
 }
 
 func (o *CreateRecordResponse) GetContentType() string {
@@ -1472,9 +1200,9 @@ func (o *CreateRecordResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateRecordResponse) GetOneOf() *CreateRecordResponseBody {
+func (o *CreateRecordResponse) GetObject() *CreateRecordResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.OneOf
+	return o.Object
 }

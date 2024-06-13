@@ -4,7 +4,7 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
 	"math/big"
 )
 

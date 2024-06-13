@@ -6,7 +6,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -17,13 +16,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	speakeasy_numberplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/numberplanmodifier"
-	speakeasy_objectplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/objectplanmodifier"
-	speakeasy_stringplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
-	tfTypes "github.com/vercel/terraform-provider-terraform/internal/provider/types"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
-	speakeasy_stringvalidators "github.com/vercel/terraform-provider-terraform/internal/validators/stringvalidators"
+	tfTypes "github.com/vercel/terraform-provider-vercel/internal/provider/types"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -41,21 +36,20 @@ type DNSResource struct {
 
 // DNSResourceModel describes the resource data model.
 type DNSResourceModel struct {
-	Domain   types.String          `tfsdk:"domain"`
-	Eight    *tfTypes.Eight        `tfsdk:"eight" tfPlanOnly:"true"`
-	Five     *tfTypes.RequestBody5 `tfsdk:"five" tfPlanOnly:"true"`
-	Four     *tfTypes.Eight        `tfsdk:"four" tfPlanOnly:"true"`
-	Nine     *tfTypes.RequestBody5 `tfsdk:"nine" tfPlanOnly:"true"`
-	One      *tfTypes.RequestBody1 `tfsdk:"one" tfPlanOnly:"true"`
-	RecordID types.String          `tfsdk:"record_id"`
-	Seven    *tfTypes.Seven        `tfsdk:"seven" tfPlanOnly:"true"`
-	Six      *tfTypes.Six          `tfsdk:"six" tfPlanOnly:"true"`
-	Slug     types.String          `tfsdk:"slug"`
-	TeamID   types.String          `tfsdk:"team_id"`
-	Ten      *tfTypes.Ten          `tfsdk:"ten" tfPlanOnly:"true"`
-	Three    *tfTypes.Eight        `tfsdk:"three" tfPlanOnly:"true"`
-	Two      *tfTypes.RequestBody2 `tfsdk:"two" tfPlanOnly:"true"`
-	UID      types.String          `tfsdk:"uid"`
+	A      *tfTypes.A                `tfsdk:"a" tfPlanOnly:"true"`
+	Aaaa   *tfTypes.A                `tfsdk:"aaaa" tfPlanOnly:"true"`
+	Alias  *tfTypes.A                `tfsdk:"alias" tfPlanOnly:"true"`
+	Caa    *tfTypes.A                `tfsdk:"caa" tfPlanOnly:"true"`
+	Cname  *tfTypes.Cname            `tfsdk:"cname" tfPlanOnly:"true"`
+	Domain types.String              `tfsdk:"domain"`
+	HTTPS  *tfTypes.RequestBodyHTTPS `tfsdk:"https" tfPlanOnly:"true"`
+	ID     types.String              `tfsdk:"id"`
+	Mx     *tfTypes.Mx               `tfsdk:"mx" tfPlanOnly:"true"`
+	Ns     *tfTypes.Cname            `tfsdk:"ns" tfPlanOnly:"true"`
+	Slug   types.String              `tfsdk:"slug"`
+	Srv    *tfTypes.RequestBodySRV   `tfsdk:"srv" tfPlanOnly:"true"`
+	TeamID types.String              `tfsdk:"team_id"`
+	Txt    *tfTypes.A                `tfsdk:"txt" tfPlanOnly:"true"`
 }
 
 func (r *DNSResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -66,14 +60,7 @@ func (r *DNSResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DNS Resource",
 		Attributes: map[string]schema.Attribute{
-			"domain": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-				},
-				Required:    true,
-				Description: `The domain used to create the DNS record. Requires replacement if changed. `,
-			},
-			"eight": schema.SingleNestedAttribute{
+			"a": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
 					objectplanmodifier.RequiresReplaceIfConfigured(),
 				},
@@ -99,52 +86,31 @@ func (r *DNSResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 						},
 						Optional:    true,
 						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
-					},
-					"type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The type of record, it could be one of the valid DNS records. Requires replacement if changed. ; must be one of ["A", "AAAA", "ALIAS", "CAA", "CNAME", "HTTPS", "MX", "SRV", "TXT", "NS"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"A",
-								"AAAA",
-								"ALIAS",
-								"CAA",
-								"CNAME",
-								"HTTPS",
-								"MX",
-								"SRV",
-								"TXT",
-								"NS",
-							),
-						},
 					},
 					"value": schema.StringAttribute{
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplaceIfConfigured(),
 						},
 						Required:    true,
-						Description: `A TXT record containing arbitrary text. Requires replacement if changed. `,
+						Description: `The record value must be a valid IPv4 address. Requires replacement if changed. `,
 					},
 				},
 				Description: `Requires replacement if changed. `,
 				Validators: []validator.Object{
 					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("one"),
-						path.MatchRelative().AtParent().AtName("ten"),
-						path.MatchRelative().AtParent().AtName("two"),
-						path.MatchRelative().AtParent().AtName("three"),
-						path.MatchRelative().AtParent().AtName("four"),
-						path.MatchRelative().AtParent().AtName("five"),
-						path.MatchRelative().AtParent().AtName("six"),
-						path.MatchRelative().AtParent().AtName("seven"),
-						path.MatchRelative().AtParent().AtName("nine"),
+						path.MatchRelative().AtParent().AtName("aaaa"),
+						path.MatchRelative().AtParent().AtName("alias"),
+						path.MatchRelative().AtParent().AtName("caa"),
+						path.MatchRelative().AtParent().AtName("cname"),
+						path.MatchRelative().AtParent().AtName("https"),
+						path.MatchRelative().AtParent().AtName("mx"),
+						path.MatchRelative().AtParent().AtName("ns"),
+						path.MatchRelative().AtParent().AtName("srv"),
+						path.MatchRelative().AtParent().AtName("txt"),
 					}...),
 				},
 			},
-			"five": schema.SingleNestedAttribute{
+			"aaaa": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
 					objectplanmodifier.RequiresReplaceIfConfigured(),
 				},
@@ -170,52 +136,31 @@ func (r *DNSResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 						},
 						Optional:    true,
 						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
-					},
-					"type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The type of record, it could be one of the valid DNS records. Requires replacement if changed. ; must be one of ["A", "AAAA", "ALIAS", "CAA", "CNAME", "HTTPS", "MX", "SRV", "TXT", "NS"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"A",
-								"AAAA",
-								"ALIAS",
-								"CAA",
-								"CNAME",
-								"HTTPS",
-								"MX",
-								"SRV",
-								"TXT",
-								"NS",
-							),
-						},
 					},
 					"value": schema.StringAttribute{
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplaceIfConfigured(),
 						},
-						Optional:    true,
-						Description: `A CNAME record mapping to another domain name. Requires replacement if changed. `,
+						Required:    true,
+						Description: `An AAAA record pointing to an IPv6 address. Requires replacement if changed. `,
 					},
 				},
 				Description: `Requires replacement if changed. `,
 				Validators: []validator.Object{
 					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("one"),
-						path.MatchRelative().AtParent().AtName("ten"),
-						path.MatchRelative().AtParent().AtName("two"),
-						path.MatchRelative().AtParent().AtName("three"),
-						path.MatchRelative().AtParent().AtName("four"),
-						path.MatchRelative().AtParent().AtName("six"),
-						path.MatchRelative().AtParent().AtName("seven"),
-						path.MatchRelative().AtParent().AtName("eight"),
-						path.MatchRelative().AtParent().AtName("nine"),
+						path.MatchRelative().AtParent().AtName("a"),
+						path.MatchRelative().AtParent().AtName("alias"),
+						path.MatchRelative().AtParent().AtName("caa"),
+						path.MatchRelative().AtParent().AtName("cname"),
+						path.MatchRelative().AtParent().AtName("https"),
+						path.MatchRelative().AtParent().AtName("mx"),
+						path.MatchRelative().AtParent().AtName("ns"),
+						path.MatchRelative().AtParent().AtName("srv"),
+						path.MatchRelative().AtParent().AtName("txt"),
 					}...),
 				},
 			},
-			"four": schema.SingleNestedAttribute{
+			"alias": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
 					objectplanmodifier.RequiresReplaceIfConfigured(),
 				},
@@ -242,26 +187,55 @@ func (r *DNSResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 						Optional:    true,
 						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
 					},
-					"type": schema.StringAttribute{
+					"value": schema.StringAttribute{
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplaceIfConfigured(),
 						},
 						Required:    true,
-						Description: `The type of record, it could be one of the valid DNS records. Requires replacement if changed. ; must be one of ["A", "AAAA", "ALIAS", "CAA", "CNAME", "HTTPS", "MX", "SRV", "TXT", "NS"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"A",
-								"AAAA",
-								"ALIAS",
-								"CAA",
-								"CNAME",
-								"HTTPS",
-								"MX",
-								"SRV",
-								"TXT",
-								"NS",
-							),
+						Description: `An ALIAS virtual record pointing to a hostname resolved to an A record on server side. Requires replacement if changed. `,
+					},
+				},
+				Description: `Requires replacement if changed. `,
+				Validators: []validator.Object{
+					objectvalidator.ConflictsWith(path.Expressions{
+						path.MatchRelative().AtParent().AtName("a"),
+						path.MatchRelative().AtParent().AtName("aaaa"),
+						path.MatchRelative().AtParent().AtName("caa"),
+						path.MatchRelative().AtParent().AtName("cname"),
+						path.MatchRelative().AtParent().AtName("https"),
+						path.MatchRelative().AtParent().AtName("mx"),
+						path.MatchRelative().AtParent().AtName("ns"),
+						path.MatchRelative().AtParent().AtName("srv"),
+						path.MatchRelative().AtParent().AtName("txt"),
+					}...),
+				},
+			},
+			"caa": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					objectplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Optional: true,
+				Attributes: map[string]schema.Attribute{
+					"comment": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.RequiresReplaceIfConfigured(),
 						},
+						Optional:    true,
+						Description: `A comment to add context on what this DNS record is for. Requires replacement if changed. `,
+					},
+					"name": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Required:    true,
+						Description: `A subdomain name or an empty string for the root domain. Requires replacement if changed. `,
+					},
+					"ttl": schema.NumberAttribute{
+						PlanModifiers: []planmodifier.Number{
+							numberplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional:    true,
+						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
 					},
 					"value": schema.StringAttribute{
 						PlanModifiers: []planmodifier.String{
@@ -274,19 +248,210 @@ func (r *DNSResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Description: `Requires replacement if changed. `,
 				Validators: []validator.Object{
 					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("one"),
-						path.MatchRelative().AtParent().AtName("ten"),
-						path.MatchRelative().AtParent().AtName("two"),
-						path.MatchRelative().AtParent().AtName("three"),
-						path.MatchRelative().AtParent().AtName("five"),
-						path.MatchRelative().AtParent().AtName("six"),
-						path.MatchRelative().AtParent().AtName("seven"),
-						path.MatchRelative().AtParent().AtName("eight"),
-						path.MatchRelative().AtParent().AtName("nine"),
+						path.MatchRelative().AtParent().AtName("a"),
+						path.MatchRelative().AtParent().AtName("aaaa"),
+						path.MatchRelative().AtParent().AtName("alias"),
+						path.MatchRelative().AtParent().AtName("cname"),
+						path.MatchRelative().AtParent().AtName("https"),
+						path.MatchRelative().AtParent().AtName("mx"),
+						path.MatchRelative().AtParent().AtName("ns"),
+						path.MatchRelative().AtParent().AtName("srv"),
+						path.MatchRelative().AtParent().AtName("txt"),
 					}...),
 				},
 			},
-			"nine": schema.SingleNestedAttribute{
+			"cname": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					objectplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Optional: true,
+				Attributes: map[string]schema.Attribute{
+					"comment": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional:    true,
+						Description: `A comment to add context on what this DNS record is for. Requires replacement if changed. `,
+					},
+					"name": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Required:    true,
+						Description: `A subdomain name or an empty string for the root domain. Requires replacement if changed. `,
+					},
+					"ttl": schema.NumberAttribute{
+						PlanModifiers: []planmodifier.Number{
+							numberplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional:    true,
+						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
+					},
+					"value": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional:    true,
+						Description: `A CNAME record mapping to another domain name. Requires replacement if changed. `,
+					},
+				},
+				Description: `Requires replacement if changed. `,
+				Validators: []validator.Object{
+					objectvalidator.ConflictsWith(path.Expressions{
+						path.MatchRelative().AtParent().AtName("a"),
+						path.MatchRelative().AtParent().AtName("aaaa"),
+						path.MatchRelative().AtParent().AtName("alias"),
+						path.MatchRelative().AtParent().AtName("caa"),
+						path.MatchRelative().AtParent().AtName("https"),
+						path.MatchRelative().AtParent().AtName("mx"),
+						path.MatchRelative().AtParent().AtName("ns"),
+						path.MatchRelative().AtParent().AtName("srv"),
+						path.MatchRelative().AtParent().AtName("txt"),
+					}...),
+				},
+			},
+			"domain": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Required:    true,
+				Description: `The domain used to create the DNS record. Requires replacement if changed. `,
+			},
+			"https": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					objectplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Optional: true,
+				Attributes: map[string]schema.Attribute{
+					"comment": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional:    true,
+						Description: `A comment to add context on what this DNS record is for. Requires replacement if changed. `,
+					},
+					"https": schema.SingleNestedAttribute{
+						PlanModifiers: []planmodifier.Object{
+							objectplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Required: true,
+						Attributes: map[string]schema.Attribute{
+							"params": schema.StringAttribute{
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+								},
+								Optional:    true,
+								Description: `Requires replacement if changed. `,
+							},
+							"priority": schema.NumberAttribute{
+								PlanModifiers: []planmodifier.Number{
+									numberplanmodifier.RequiresReplaceIfConfigured(),
+								},
+								Required:    true,
+								Description: `Requires replacement if changed. `,
+							},
+							"target": schema.StringAttribute{
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+								},
+								Required:    true,
+								Description: `Requires replacement if changed. `,
+							},
+						},
+						Description: `Requires replacement if changed. `,
+					},
+					"name": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Required:    true,
+						Description: `A subdomain name or an empty string for the root domain. Requires replacement if changed. `,
+					},
+					"ttl": schema.NumberAttribute{
+						PlanModifiers: []planmodifier.Number{
+							numberplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional:    true,
+						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
+					},
+				},
+				Description: `Requires replacement if changed. `,
+				Validators: []validator.Object{
+					objectvalidator.ConflictsWith(path.Expressions{
+						path.MatchRelative().AtParent().AtName("a"),
+						path.MatchRelative().AtParent().AtName("aaaa"),
+						path.MatchRelative().AtParent().AtName("alias"),
+						path.MatchRelative().AtParent().AtName("caa"),
+						path.MatchRelative().AtParent().AtName("cname"),
+						path.MatchRelative().AtParent().AtName("mx"),
+						path.MatchRelative().AtParent().AtName("ns"),
+						path.MatchRelative().AtParent().AtName("srv"),
+						path.MatchRelative().AtParent().AtName("txt"),
+					}...),
+				},
+			},
+			"id": schema.StringAttribute{
+				Computed:    true,
+				Description: `The id of the newly created DNS record`,
+			},
+			"mx": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					objectplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Optional: true,
+				Attributes: map[string]schema.Attribute{
+					"comment": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional:    true,
+						Description: `A comment to add context on what this DNS record is for. Requires replacement if changed. `,
+					},
+					"mx_priority": schema.NumberAttribute{
+						PlanModifiers: []planmodifier.Number{
+							numberplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Required:    true,
+						Description: `Requires replacement if changed. `,
+					},
+					"name": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Required:    true,
+						Description: `A subdomain name or an empty string for the root domain. Requires replacement if changed. `,
+					},
+					"ttl": schema.NumberAttribute{
+						PlanModifiers: []planmodifier.Number{
+							numberplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional:    true,
+						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
+					},
+					"value": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Required:    true,
+						Description: `An MX record specifying the mail server responsible for accepting messages on behalf of the domain name. Requires replacement if changed. `,
+					},
+				},
+				Description: `Requires replacement if changed. `,
+				Validators: []validator.Object{
+					objectvalidator.ConflictsWith(path.Expressions{
+						path.MatchRelative().AtParent().AtName("a"),
+						path.MatchRelative().AtParent().AtName("aaaa"),
+						path.MatchRelative().AtParent().AtName("alias"),
+						path.MatchRelative().AtParent().AtName("caa"),
+						path.MatchRelative().AtParent().AtName("cname"),
+						path.MatchRelative().AtParent().AtName("https"),
+						path.MatchRelative().AtParent().AtName("ns"),
+						path.MatchRelative().AtParent().AtName("srv"),
+						path.MatchRelative().AtParent().AtName("txt"),
+					}...),
+				},
+			},
+			"ns": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
 					objectplanmodifier.RequiresReplaceIfConfigured(),
 				},
@@ -313,27 +478,6 @@ func (r *DNSResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 						Optional:    true,
 						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
 					},
-					"type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The type of record, it could be one of the valid DNS records. Requires replacement if changed. ; must be one of ["A", "AAAA", "ALIAS", "CAA", "CNAME", "HTTPS", "MX", "SRV", "TXT", "NS"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"A",
-								"AAAA",
-								"ALIAS",
-								"CAA",
-								"CNAME",
-								"HTTPS",
-								"MX",
-								"SRV",
-								"TXT",
-								"NS",
-							),
-						},
-					},
 					"value": schema.StringAttribute{
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplaceIfConfigured(),
@@ -345,118 +489,26 @@ func (r *DNSResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Description: `Requires replacement if changed. `,
 				Validators: []validator.Object{
 					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("one"),
-						path.MatchRelative().AtParent().AtName("ten"),
-						path.MatchRelative().AtParent().AtName("two"),
-						path.MatchRelative().AtParent().AtName("three"),
-						path.MatchRelative().AtParent().AtName("four"),
-						path.MatchRelative().AtParent().AtName("five"),
-						path.MatchRelative().AtParent().AtName("six"),
-						path.MatchRelative().AtParent().AtName("seven"),
-						path.MatchRelative().AtParent().AtName("eight"),
+						path.MatchRelative().AtParent().AtName("a"),
+						path.MatchRelative().AtParent().AtName("aaaa"),
+						path.MatchRelative().AtParent().AtName("alias"),
+						path.MatchRelative().AtParent().AtName("caa"),
+						path.MatchRelative().AtParent().AtName("cname"),
+						path.MatchRelative().AtParent().AtName("https"),
+						path.MatchRelative().AtParent().AtName("mx"),
+						path.MatchRelative().AtParent().AtName("srv"),
+						path.MatchRelative().AtParent().AtName("txt"),
 					}...),
 				},
 			},
-			"one": schema.SingleNestedAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+			"slug": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
-				Optional: true,
-				Attributes: map[string]schema.Attribute{
-					"comment": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `A comment to add context on what this DNS record is for. Requires replacement if changed. `,
-					},
-					"name": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `A subdomain name or an empty string for the root domain. Requires replacement if changed. ; Not Null`,
-						Validators: []validator.String{
-							speakeasy_stringvalidators.NotNull(),
-						},
-					},
-					"ttl": schema.NumberAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Number{
-							numberplanmodifier.RequiresReplaceIfConfigured(),
-							speakeasy_numberplanmodifier.SuppressDiff(speakeasy_numberplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
-					},
-					"type": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `The type of record, it could be one of the valid DNS records. Requires replacement if changed. ; Not Null; must be one of ["A", "AAAA", "ALIAS", "CAA", "CNAME", "HTTPS", "MX", "SRV", "TXT", "NS"]`,
-						Validators: []validator.String{
-							speakeasy_stringvalidators.NotNull(),
-							stringvalidator.OneOf(
-								"A",
-								"AAAA",
-								"ALIAS",
-								"CAA",
-								"CNAME",
-								"HTTPS",
-								"MX",
-								"SRV",
-								"TXT",
-								"NS",
-							),
-						},
-					},
-					"uid": schema.StringAttribute{
-						Computed: true,
-					},
-					"updated": schema.NumberAttribute{
-						Computed: true,
-					},
-					"value": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `The record value must be a valid IPv4 address. Requires replacement if changed. ; Not Null`,
-						Validators: []validator.String{
-							speakeasy_stringvalidators.NotNull(),
-						},
-					},
-				},
-				Description: `Requires replacement if changed. `,
-				Validators: []validator.Object{
-					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("ten"),
-						path.MatchRelative().AtParent().AtName("two"),
-						path.MatchRelative().AtParent().AtName("three"),
-						path.MatchRelative().AtParent().AtName("four"),
-						path.MatchRelative().AtParent().AtName("five"),
-						path.MatchRelative().AtParent().AtName("six"),
-						path.MatchRelative().AtParent().AtName("seven"),
-						path.MatchRelative().AtParent().AtName("eight"),
-						path.MatchRelative().AtParent().AtName("nine"),
-					}...),
-				},
+				Optional:    true,
+				Description: `The Team slug to perform the request on behalf of. Requires replacement if changed. `,
 			},
-			"record_id": schema.StringAttribute{
-				Required: true,
-			},
-			"seven": schema.SingleNestedAttribute{
+			"srv": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
 					objectplanmodifier.RequiresReplaceIfConfigured(),
 				},
@@ -520,127 +572,21 @@ func (r *DNSResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 						Optional:    true,
 						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
 					},
-					"type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The type of record, it could be one of the valid DNS records. Requires replacement if changed. ; must be one of ["A", "AAAA", "ALIAS", "CAA", "CNAME", "HTTPS", "MX", "SRV", "TXT", "NS"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"A",
-								"AAAA",
-								"ALIAS",
-								"CAA",
-								"CNAME",
-								"HTTPS",
-								"MX",
-								"SRV",
-								"TXT",
-								"NS",
-							),
-						},
-					},
 				},
 				Description: `Requires replacement if changed. `,
 				Validators: []validator.Object{
 					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("one"),
-						path.MatchRelative().AtParent().AtName("ten"),
-						path.MatchRelative().AtParent().AtName("two"),
-						path.MatchRelative().AtParent().AtName("three"),
-						path.MatchRelative().AtParent().AtName("four"),
-						path.MatchRelative().AtParent().AtName("five"),
-						path.MatchRelative().AtParent().AtName("six"),
-						path.MatchRelative().AtParent().AtName("eight"),
-						path.MatchRelative().AtParent().AtName("nine"),
+						path.MatchRelative().AtParent().AtName("a"),
+						path.MatchRelative().AtParent().AtName("aaaa"),
+						path.MatchRelative().AtParent().AtName("alias"),
+						path.MatchRelative().AtParent().AtName("caa"),
+						path.MatchRelative().AtParent().AtName("cname"),
+						path.MatchRelative().AtParent().AtName("https"),
+						path.MatchRelative().AtParent().AtName("mx"),
+						path.MatchRelative().AtParent().AtName("ns"),
+						path.MatchRelative().AtParent().AtName("txt"),
 					}...),
 				},
-			},
-			"six": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplaceIfConfigured(),
-				},
-				Optional: true,
-				Attributes: map[string]schema.Attribute{
-					"comment": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Optional:    true,
-						Description: `A comment to add context on what this DNS record is for. Requires replacement if changed. `,
-					},
-					"mx_priority": schema.NumberAttribute{
-						PlanModifiers: []planmodifier.Number{
-							numberplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `Requires replacement if changed. `,
-					},
-					"name": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `A subdomain name or an empty string for the root domain. Requires replacement if changed. `,
-					},
-					"ttl": schema.NumberAttribute{
-						PlanModifiers: []planmodifier.Number{
-							numberplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Optional:    true,
-						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
-					},
-					"type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The type of record, it could be one of the valid DNS records. Requires replacement if changed. ; must be one of ["A", "AAAA", "ALIAS", "CAA", "CNAME", "HTTPS", "MX", "SRV", "TXT", "NS"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"A",
-								"AAAA",
-								"ALIAS",
-								"CAA",
-								"CNAME",
-								"HTTPS",
-								"MX",
-								"SRV",
-								"TXT",
-								"NS",
-							),
-						},
-					},
-					"value": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `An MX record specifying the mail server responsible for accepting messages on behalf of the domain name. Requires replacement if changed. `,
-					},
-				},
-				Description: `Requires replacement if changed. `,
-				Validators: []validator.Object{
-					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("one"),
-						path.MatchRelative().AtParent().AtName("ten"),
-						path.MatchRelative().AtParent().AtName("two"),
-						path.MatchRelative().AtParent().AtName("three"),
-						path.MatchRelative().AtParent().AtName("four"),
-						path.MatchRelative().AtParent().AtName("five"),
-						path.MatchRelative().AtParent().AtName("seven"),
-						path.MatchRelative().AtParent().AtName("eight"),
-						path.MatchRelative().AtParent().AtName("nine"),
-					}...),
-				},
-			},
-			"slug": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
-				},
-				Optional:    true,
-				Description: `The Team slug to perform the request on behalf of. Requires replacement if changed. `,
 			},
 			"team_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -649,101 +595,7 @@ func (r *DNSResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 				Optional:    true,
 				Description: `The Team identifier to perform the request on behalf of. Requires replacement if changed. `,
 			},
-			"ten": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplaceIfConfigured(),
-				},
-				Optional: true,
-				Attributes: map[string]schema.Attribute{
-					"comment": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Optional:    true,
-						Description: `A comment to add context on what this DNS record is for. Requires replacement if changed. `,
-					},
-					"https": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required: true,
-						Attributes: map[string]schema.Attribute{
-							"params": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
-								Optional:    true,
-								Description: `Requires replacement if changed. `,
-							},
-							"priority": schema.NumberAttribute{
-								PlanModifiers: []planmodifier.Number{
-									numberplanmodifier.RequiresReplaceIfConfigured(),
-								},
-								Required:    true,
-								Description: `Requires replacement if changed. `,
-							},
-							"target": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
-								Required:    true,
-								Description: `Requires replacement if changed. `,
-							},
-						},
-						Description: `Requires replacement if changed. `,
-					},
-					"name": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `A subdomain name or an empty string for the root domain. Requires replacement if changed. `,
-					},
-					"ttl": schema.NumberAttribute{
-						PlanModifiers: []planmodifier.Number{
-							numberplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Optional:    true,
-						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
-					},
-					"type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The type of record, it could be one of the valid DNS records. Requires replacement if changed. ; must be one of ["A", "AAAA", "ALIAS", "CAA", "CNAME", "HTTPS", "MX", "SRV", "TXT", "NS"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"A",
-								"AAAA",
-								"ALIAS",
-								"CAA",
-								"CNAME",
-								"HTTPS",
-								"MX",
-								"SRV",
-								"TXT",
-								"NS",
-							),
-						},
-					},
-				},
-				Description: `Requires replacement if changed. `,
-				Validators: []validator.Object{
-					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("one"),
-						path.MatchRelative().AtParent().AtName("two"),
-						path.MatchRelative().AtParent().AtName("three"),
-						path.MatchRelative().AtParent().AtName("four"),
-						path.MatchRelative().AtParent().AtName("five"),
-						path.MatchRelative().AtParent().AtName("six"),
-						path.MatchRelative().AtParent().AtName("seven"),
-						path.MatchRelative().AtParent().AtName("eight"),
-						path.MatchRelative().AtParent().AtName("nine"),
-					}...),
-				},
-			},
-			"three": schema.SingleNestedAttribute{
+			"txt": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
 					objectplanmodifier.RequiresReplaceIfConfigured(),
 				},
@@ -770,146 +622,28 @@ func (r *DNSResource) Schema(ctx context.Context, req resource.SchemaRequest, re
 						Optional:    true,
 						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
 					},
-					"type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-						},
-						Required:    true,
-						Description: `The type of record, it could be one of the valid DNS records. Requires replacement if changed. ; must be one of ["A", "AAAA", "ALIAS", "CAA", "CNAME", "HTTPS", "MX", "SRV", "TXT", "NS"]`,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"A",
-								"AAAA",
-								"ALIAS",
-								"CAA",
-								"CNAME",
-								"HTTPS",
-								"MX",
-								"SRV",
-								"TXT",
-								"NS",
-							),
-						},
-					},
 					"value": schema.StringAttribute{
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplaceIfConfigured(),
 						},
 						Required:    true,
-						Description: `An ALIAS virtual record pointing to a hostname resolved to an A record on server side. Requires replacement if changed. `,
+						Description: `A TXT record containing arbitrary text. Requires replacement if changed. `,
 					},
 				},
 				Description: `Requires replacement if changed. `,
 				Validators: []validator.Object{
 					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("one"),
-						path.MatchRelative().AtParent().AtName("ten"),
-						path.MatchRelative().AtParent().AtName("two"),
-						path.MatchRelative().AtParent().AtName("four"),
-						path.MatchRelative().AtParent().AtName("five"),
-						path.MatchRelative().AtParent().AtName("six"),
-						path.MatchRelative().AtParent().AtName("seven"),
-						path.MatchRelative().AtParent().AtName("eight"),
-						path.MatchRelative().AtParent().AtName("nine"),
+						path.MatchRelative().AtParent().AtName("a"),
+						path.MatchRelative().AtParent().AtName("aaaa"),
+						path.MatchRelative().AtParent().AtName("alias"),
+						path.MatchRelative().AtParent().AtName("caa"),
+						path.MatchRelative().AtParent().AtName("cname"),
+						path.MatchRelative().AtParent().AtName("https"),
+						path.MatchRelative().AtParent().AtName("mx"),
+						path.MatchRelative().AtParent().AtName("ns"),
+						path.MatchRelative().AtParent().AtName("srv"),
 					}...),
 				},
-			},
-			"two": schema.SingleNestedAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplaceIfConfigured(),
-					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
-				},
-				Optional: true,
-				Attributes: map[string]schema.Attribute{
-					"comment": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `A comment to add context on what this DNS record is for. Requires replacement if changed. `,
-					},
-					"name": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `A subdomain name or an empty string for the root domain. Requires replacement if changed. ; Not Null`,
-						Validators: []validator.String{
-							speakeasy_stringvalidators.NotNull(),
-						},
-					},
-					"ttl": schema.NumberAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Number{
-							numberplanmodifier.RequiresReplaceIfConfigured(),
-							speakeasy_numberplanmodifier.SuppressDiff(speakeasy_numberplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `The TTL value. Must be a number between 60 and 2147483647. Default value is 60. Requires replacement if changed. `,
-					},
-					"type": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `The type of record, it could be one of the valid DNS records. Requires replacement if changed. ; Not Null; must be one of ["A", "AAAA", "ALIAS", "CAA", "CNAME", "HTTPS", "MX", "SRV", "TXT", "NS"]`,
-						Validators: []validator.String{
-							speakeasy_stringvalidators.NotNull(),
-							stringvalidator.OneOf(
-								"A",
-								"AAAA",
-								"ALIAS",
-								"CAA",
-								"CNAME",
-								"HTTPS",
-								"MX",
-								"SRV",
-								"TXT",
-								"NS",
-							),
-						},
-					},
-					"uid": schema.StringAttribute{
-						Computed:    true,
-						Description: `The id of the newly created DNS record`,
-					},
-					"value": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplaceIfConfigured(),
-							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `An AAAA record pointing to an IPv6 address. Requires replacement if changed. ; Not Null`,
-						Validators: []validator.String{
-							speakeasy_stringvalidators.NotNull(),
-						},
-					},
-				},
-				Description: `Requires replacement if changed. `,
-				Validators: []validator.Object{
-					objectvalidator.ConflictsWith(path.Expressions{
-						path.MatchRelative().AtParent().AtName("one"),
-						path.MatchRelative().AtParent().AtName("ten"),
-						path.MatchRelative().AtParent().AtName("three"),
-						path.MatchRelative().AtParent().AtName("four"),
-						path.MatchRelative().AtParent().AtName("five"),
-						path.MatchRelative().AtParent().AtName("six"),
-						path.MatchRelative().AtParent().AtName("seven"),
-						path.MatchRelative().AtParent().AtName("eight"),
-						path.MatchRelative().AtParent().AtName("nine"),
-					}...),
-				},
-			},
-			"uid": schema.StringAttribute{
-				Computed: true,
 			},
 		},
 	}
@@ -989,11 +723,11 @@ func (r *DNSResource) Create(ctx context.Context, req resource.CreateRequest, re
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.OneOf == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromOperationsCreateRecordResponseBody(res.OneOf)
+	data.RefreshFromOperationsCreateRecordResponseBody(res.Object)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -1063,7 +797,7 @@ func (r *DNSResource) Delete(ctx context.Context, req resource.DeleteRequest, re
 	}
 
 	domain := data.Domain.ValueString()
-	recordID := data.RecordID.ValueString()
+	recordID := data.ID.ValueString()
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()

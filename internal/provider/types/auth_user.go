@@ -17,8 +17,8 @@ type AuthUser struct {
 	FeatureBlocks                   *FeatureBlocks                    `tfsdk:"feature_blocks"`
 	HasTrialAvailable               types.Bool                        `tfsdk:"has_trial_available"`
 	ID                              types.String                      `tfsdk:"id"`
-	ImportFlowGitNamespace          *RepoID                           `tfsdk:"import_flow_git_namespace"`
-	ImportFlowGitNamespaceID        *RepoID                           `tfsdk:"import_flow_git_namespace_id"`
+	ImportFlowGitNamespace          *ImportFlowGitNamespace           `tfsdk:"import_flow_git_namespace"`
+	ImportFlowGitNamespaceID        *ImportFlowGitNamespace           `tfsdk:"import_flow_git_namespace_id"`
 	ImportFlowGitProvider           types.String                      `tfsdk:"import_flow_git_provider"`
 	Name                            types.String                      `tfsdk:"name"`
 	Northstar                       *Northstar                        `tfsdk:"northstar"`

@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/shared"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/shared"
 	"net/http"
 )
 
@@ -370,18 +370,18 @@ func (o *GetProjectsDataCache) GetUnlimited() *bool {
 	return o.Unlimited
 }
 
-type GetProjectsTarget2 string
+type GetProjectsTarget string
 
 const (
-	GetProjectsTarget2Production  GetProjectsTarget2 = "production"
-	GetProjectsTarget2Preview     GetProjectsTarget2 = "preview"
-	GetProjectsTarget2Development GetProjectsTarget2 = "development"
+	GetProjectsTargetProduction  GetProjectsTarget = "production"
+	GetProjectsTargetPreview     GetProjectsTarget = "preview"
+	GetProjectsTargetDevelopment GetProjectsTarget = "development"
 )
 
-func (e GetProjectsTarget2) ToPointer() *GetProjectsTarget2 {
+func (e GetProjectsTarget) ToPointer() *GetProjectsTarget {
 	return &e
 }
-func (e *GetProjectsTarget2) UnmarshalJSON(data []byte) error {
+func (e *GetProjectsTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -392,103 +392,11 @@ func (e *GetProjectsTarget2) UnmarshalJSON(data []byte) error {
 	case "preview":
 		fallthrough
 	case "development":
-		*e = GetProjectsTarget2(v)
+		*e = GetProjectsTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetProjectsTarget2: %v", v)
+		return fmt.Errorf("invalid value for GetProjectsTarget: %v", v)
 	}
-}
-
-type GetProjectsTarget1 string
-
-const (
-	GetProjectsTarget1Production  GetProjectsTarget1 = "production"
-	GetProjectsTarget1Preview     GetProjectsTarget1 = "preview"
-	GetProjectsTarget1Development GetProjectsTarget1 = "development"
-)
-
-func (e GetProjectsTarget1) ToPointer() *GetProjectsTarget1 {
-	return &e
-}
-func (e *GetProjectsTarget1) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "production":
-		fallthrough
-	case "preview":
-		fallthrough
-	case "development":
-		*e = GetProjectsTarget1(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetProjectsTarget1: %v", v)
-	}
-}
-
-type GetProjectsTargetType string
-
-const (
-	GetProjectsTargetTypeArrayOfGetProjectsTarget1 GetProjectsTargetType = "arrayOfGetProjectsTarget1"
-	GetProjectsTargetTypeGetProjectsTarget2        GetProjectsTargetType = "getProjects_target_2"
-)
-
-type GetProjectsTarget struct {
-	ArrayOfGetProjectsTarget1 []GetProjectsTarget1
-	GetProjectsTarget2        *GetProjectsTarget2
-
-	Type GetProjectsTargetType
-}
-
-func CreateGetProjectsTargetArrayOfGetProjectsTarget1(arrayOfGetProjectsTarget1 []GetProjectsTarget1) GetProjectsTarget {
-	typ := GetProjectsTargetTypeArrayOfGetProjectsTarget1
-
-	return GetProjectsTarget{
-		ArrayOfGetProjectsTarget1: arrayOfGetProjectsTarget1,
-		Type:                      typ,
-	}
-}
-
-func CreateGetProjectsTargetGetProjectsTarget2(getProjectsTarget2 GetProjectsTarget2) GetProjectsTarget {
-	typ := GetProjectsTargetTypeGetProjectsTarget2
-
-	return GetProjectsTarget{
-		GetProjectsTarget2: &getProjectsTarget2,
-		Type:               typ,
-	}
-}
-
-func (u *GetProjectsTarget) UnmarshalJSON(data []byte) error {
-
-	var arrayOfGetProjectsTarget1 []GetProjectsTarget1 = []GetProjectsTarget1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfGetProjectsTarget1, "", true, true); err == nil {
-		u.ArrayOfGetProjectsTarget1 = arrayOfGetProjectsTarget1
-		u.Type = GetProjectsTargetTypeArrayOfGetProjectsTarget1
-		return nil
-	}
-
-	var getProjectsTarget2 GetProjectsTarget2 = GetProjectsTarget2("")
-	if err := utils.UnmarshalJSON(data, &getProjectsTarget2, "", true, true); err == nil {
-		u.GetProjectsTarget2 = &getProjectsTarget2
-		u.Type = GetProjectsTargetTypeGetProjectsTarget2
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GetProjectsTarget", string(data))
-}
-
-func (u GetProjectsTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfGetProjectsTarget1 != nil {
-		return utils.MarshalJSON(u.ArrayOfGetProjectsTarget1, "", true)
-	}
-
-	if u.GetProjectsTarget2 != nil {
-		return utils.MarshalJSON(u.GetProjectsTarget2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type GetProjectsTarget: all fields are null")
 }
 
 type GetProjectsType string
@@ -1486,7 +1394,7 @@ func (o *GetProjectsInternalContentHint) GetEncryptedValue() string {
 }
 
 type GetProjectsEnv struct {
-	Target            *GetProjectsTarget      `json:"target,omitempty"`
+	Target            []GetProjectsTarget     `json:"target,omitempty"`
 	Type              GetProjectsType         `json:"type"`
 	ID                *string                 `json:"id,omitempty"`
 	Key               string                  `json:"key"`
@@ -1508,7 +1416,7 @@ type GetProjectsEnv struct {
 	CustomEnvironmentID *string `json:"customEnvironmentId,omitempty"`
 }
 
-func (o *GetProjectsEnv) GetTarget() *GetProjectsTarget {
+func (o *GetProjectsEnv) GetTarget() []GetProjectsTarget {
 	if o == nil {
 		return nil
 	}
@@ -4664,19 +4572,19 @@ func (o *GetProjectsProtectionBypass) GetScope() GetProjectsScope {
 	return o.Scope
 }
 
-type GetProjectsTrustedIpsProjectsDeploymentType string
+type GetProjectsProjectsDeploymentType string
 
 const (
-	GetProjectsTrustedIpsProjectsDeploymentTypeAll                              GetProjectsTrustedIpsProjectsDeploymentType = "all"
-	GetProjectsTrustedIpsProjectsDeploymentTypePreview                          GetProjectsTrustedIpsProjectsDeploymentType = "preview"
-	GetProjectsTrustedIpsProjectsDeploymentTypeProdDeploymentUrlsAndAllPreviews GetProjectsTrustedIpsProjectsDeploymentType = "prod_deployment_urls_and_all_previews"
-	GetProjectsTrustedIpsProjectsDeploymentTypeProduction                       GetProjectsTrustedIpsProjectsDeploymentType = "production"
+	GetProjectsProjectsDeploymentTypeAll                              GetProjectsProjectsDeploymentType = "all"
+	GetProjectsProjectsDeploymentTypePreview                          GetProjectsProjectsDeploymentType = "preview"
+	GetProjectsProjectsDeploymentTypeProdDeploymentUrlsAndAllPreviews GetProjectsProjectsDeploymentType = "prod_deployment_urls_and_all_previews"
+	GetProjectsProjectsDeploymentTypeProduction                       GetProjectsProjectsDeploymentType = "production"
 )
 
-func (e GetProjectsTrustedIpsProjectsDeploymentType) ToPointer() *GetProjectsTrustedIpsProjectsDeploymentType {
+func (e GetProjectsProjectsDeploymentType) ToPointer() *GetProjectsProjectsDeploymentType {
 	return &e
 }
-func (e *GetProjectsTrustedIpsProjectsDeploymentType) UnmarshalJSON(data []byte) error {
+func (e *GetProjectsProjectsDeploymentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4689,86 +4597,43 @@ func (e *GetProjectsTrustedIpsProjectsDeploymentType) UnmarshalJSON(data []byte)
 	case "prod_deployment_urls_and_all_previews":
 		fallthrough
 	case "production":
-		*e = GetProjectsTrustedIpsProjectsDeploymentType(v)
+		*e = GetProjectsProjectsDeploymentType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetProjectsTrustedIpsProjectsDeploymentType: %v", v)
+		return fmt.Errorf("invalid value for GetProjectsProjectsDeploymentType: %v", v)
 	}
 }
 
-type GetProjectsTrustedIps2 struct {
-	DeploymentType GetProjectsTrustedIpsProjectsDeploymentType `json:"deploymentType"`
-}
-
-func (o *GetProjectsTrustedIps2) GetDeploymentType() GetProjectsTrustedIpsProjectsDeploymentType {
-	if o == nil {
-		return GetProjectsTrustedIpsProjectsDeploymentType("")
-	}
-	return o.DeploymentType
-}
-
-type GetProjectsTrustedIpsDeploymentType string
-
-const (
-	GetProjectsTrustedIpsDeploymentTypeAll                              GetProjectsTrustedIpsDeploymentType = "all"
-	GetProjectsTrustedIpsDeploymentTypePreview                          GetProjectsTrustedIpsDeploymentType = "preview"
-	GetProjectsTrustedIpsDeploymentTypeProdDeploymentUrlsAndAllPreviews GetProjectsTrustedIpsDeploymentType = "prod_deployment_urls_and_all_previews"
-	GetProjectsTrustedIpsDeploymentTypeProduction                       GetProjectsTrustedIpsDeploymentType = "production"
-)
-
-func (e GetProjectsTrustedIpsDeploymentType) ToPointer() *GetProjectsTrustedIpsDeploymentType {
-	return &e
-}
-func (e *GetProjectsTrustedIpsDeploymentType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "all":
-		fallthrough
-	case "preview":
-		fallthrough
-	case "prod_deployment_urls_and_all_previews":
-		fallthrough
-	case "production":
-		*e = GetProjectsTrustedIpsDeploymentType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GetProjectsTrustedIpsDeploymentType: %v", v)
-	}
-}
-
-type GetProjectsTrustedIpsAddresses struct {
+type GetProjectsAddresses struct {
 	Value string  `json:"value"`
 	Note  *string `json:"note,omitempty"`
 }
 
-func (o *GetProjectsTrustedIpsAddresses) GetValue() string {
+func (o *GetProjectsAddresses) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-func (o *GetProjectsTrustedIpsAddresses) GetNote() *string {
+func (o *GetProjectsAddresses) GetNote() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Note
 }
 
-type GetProjectsTrustedIpsProtectionMode string
+type GetProjectsProtectionMode string
 
 const (
-	GetProjectsTrustedIpsProtectionModeAdditional GetProjectsTrustedIpsProtectionMode = "additional"
-	GetProjectsTrustedIpsProtectionModeExclusive  GetProjectsTrustedIpsProtectionMode = "exclusive"
+	GetProjectsProtectionModeAdditional GetProjectsProtectionMode = "additional"
+	GetProjectsProtectionModeExclusive  GetProjectsProtectionMode = "exclusive"
 )
 
-func (e GetProjectsTrustedIpsProtectionMode) ToPointer() *GetProjectsTrustedIpsProtectionMode {
+func (e GetProjectsProtectionMode) ToPointer() *GetProjectsProtectionMode {
 	return &e
 }
-func (e *GetProjectsTrustedIpsProtectionMode) UnmarshalJSON(data []byte) error {
+func (e *GetProjectsProtectionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4777,101 +4642,38 @@ func (e *GetProjectsTrustedIpsProtectionMode) UnmarshalJSON(data []byte) error {
 	case "additional":
 		fallthrough
 	case "exclusive":
-		*e = GetProjectsTrustedIpsProtectionMode(v)
+		*e = GetProjectsProtectionMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for GetProjectsTrustedIpsProtectionMode: %v", v)
+		return fmt.Errorf("invalid value for GetProjectsProtectionMode: %v", v)
 	}
 }
 
-type GetProjectsTrustedIps1 struct {
-	DeploymentType GetProjectsTrustedIpsDeploymentType `json:"deploymentType"`
-	Addresses      []GetProjectsTrustedIpsAddresses    `json:"addresses"`
-	ProtectionMode GetProjectsTrustedIpsProtectionMode `json:"protectionMode"`
+type GetProjectsTrustedIps struct {
+	DeploymentType GetProjectsProjectsDeploymentType `json:"deploymentType"`
+	Addresses      []GetProjectsAddresses            `json:"addresses"`
+	ProtectionMode GetProjectsProtectionMode         `json:"protectionMode"`
 }
 
-func (o *GetProjectsTrustedIps1) GetDeploymentType() GetProjectsTrustedIpsDeploymentType {
+func (o *GetProjectsTrustedIps) GetDeploymentType() GetProjectsProjectsDeploymentType {
 	if o == nil {
-		return GetProjectsTrustedIpsDeploymentType("")
+		return GetProjectsProjectsDeploymentType("")
 	}
 	return o.DeploymentType
 }
 
-func (o *GetProjectsTrustedIps1) GetAddresses() []GetProjectsTrustedIpsAddresses {
+func (o *GetProjectsTrustedIps) GetAddresses() []GetProjectsAddresses {
 	if o == nil {
-		return []GetProjectsTrustedIpsAddresses{}
+		return []GetProjectsAddresses{}
 	}
 	return o.Addresses
 }
 
-func (o *GetProjectsTrustedIps1) GetProtectionMode() GetProjectsTrustedIpsProtectionMode {
+func (o *GetProjectsTrustedIps) GetProtectionMode() GetProjectsProtectionMode {
 	if o == nil {
-		return GetProjectsTrustedIpsProtectionMode("")
+		return GetProjectsProtectionMode("")
 	}
 	return o.ProtectionMode
-}
-
-type GetProjectsTrustedIpsType string
-
-const (
-	GetProjectsTrustedIpsTypeGetProjectsTrustedIps1 GetProjectsTrustedIpsType = "getProjects_trustedIps_1"
-	GetProjectsTrustedIpsTypeGetProjectsTrustedIps2 GetProjectsTrustedIpsType = "getProjects_trustedIps_2"
-)
-
-type GetProjectsTrustedIps struct {
-	GetProjectsTrustedIps1 *GetProjectsTrustedIps1
-	GetProjectsTrustedIps2 *GetProjectsTrustedIps2
-
-	Type GetProjectsTrustedIpsType
-}
-
-func CreateGetProjectsTrustedIpsGetProjectsTrustedIps1(getProjectsTrustedIps1 GetProjectsTrustedIps1) GetProjectsTrustedIps {
-	typ := GetProjectsTrustedIpsTypeGetProjectsTrustedIps1
-
-	return GetProjectsTrustedIps{
-		GetProjectsTrustedIps1: &getProjectsTrustedIps1,
-		Type:                   typ,
-	}
-}
-
-func CreateGetProjectsTrustedIpsGetProjectsTrustedIps2(getProjectsTrustedIps2 GetProjectsTrustedIps2) GetProjectsTrustedIps {
-	typ := GetProjectsTrustedIpsTypeGetProjectsTrustedIps2
-
-	return GetProjectsTrustedIps{
-		GetProjectsTrustedIps2: &getProjectsTrustedIps2,
-		Type:                   typ,
-	}
-}
-
-func (u *GetProjectsTrustedIps) UnmarshalJSON(data []byte) error {
-
-	var getProjectsTrustedIps2 GetProjectsTrustedIps2 = GetProjectsTrustedIps2{}
-	if err := utils.UnmarshalJSON(data, &getProjectsTrustedIps2, "", true, true); err == nil {
-		u.GetProjectsTrustedIps2 = &getProjectsTrustedIps2
-		u.Type = GetProjectsTrustedIpsTypeGetProjectsTrustedIps2
-		return nil
-	}
-
-	var getProjectsTrustedIps1 GetProjectsTrustedIps1 = GetProjectsTrustedIps1{}
-	if err := utils.UnmarshalJSON(data, &getProjectsTrustedIps1, "", true, true); err == nil {
-		u.GetProjectsTrustedIps1 = &getProjectsTrustedIps1
-		u.Type = GetProjectsTrustedIpsTypeGetProjectsTrustedIps1
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GetProjectsTrustedIps", string(data))
-}
-
-func (u GetProjectsTrustedIps) MarshalJSON() ([]byte, error) {
-	if u.GetProjectsTrustedIps1 != nil {
-		return utils.MarshalJSON(u.GetProjectsTrustedIps1, "", true)
-	}
-
-	if u.GetProjectsTrustedIps2 != nil {
-		return utils.MarshalJSON(u.GetProjectsTrustedIps2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type GetProjectsTrustedIps: all fields are null")
 }
 
 type GetProjectsGitComments struct {
@@ -5892,8 +5694,8 @@ type GetProjectsProjects struct {
 	RootDirectory                        *string                                `json:"rootDirectory,omitempty"`
 	ServerlessFunctionRegion             *string                                `json:"serverlessFunctionRegion,omitempty"`
 	ServerlessFunctionZeroConfigFailover *bool                                  `json:"serverlessFunctionZeroConfigFailover,omitempty"`
-	SkewProtectionBoundaryAt             *float64                               `json:"skewProtectionBoundaryAt,omitempty"`
-	SkewProtectionMaxAge                 *float64                               `json:"skewProtectionMaxAge,omitempty"`
+	SkewProtectionBoundaryAt             *int64                                 `json:"skewProtectionBoundaryAt,omitempty"`
+	SkewProtectionMaxAge                 *int64                                 `json:"skewProtectionMaxAge,omitempty"`
 	SkipGitConnectDuringLink             *bool                                  `json:"skipGitConnectDuringLink,omitempty"`
 	SourceFilesOutsideRootDirectory      *bool                                  `json:"sourceFilesOutsideRootDirectory,omitempty"`
 	SsoProtection                        *GetProjectsSsoProtection              `json:"ssoProtection,omitempty"`
@@ -6165,14 +5967,14 @@ func (o *GetProjectsProjects) GetServerlessFunctionZeroConfigFailover() *bool {
 	return o.ServerlessFunctionZeroConfigFailover
 }
 
-func (o *GetProjectsProjects) GetSkewProtectionBoundaryAt() *float64 {
+func (o *GetProjectsProjects) GetSkewProtectionBoundaryAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.SkewProtectionBoundaryAt
 }
 
-func (o *GetProjectsProjects) GetSkewProtectionMaxAge() *float64 {
+func (o *GetProjectsProjects) GetSkewProtectionMaxAge() *int64 {
 	if o == nil {
 		return nil
 	}

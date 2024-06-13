@@ -32,14 +32,14 @@ To install this provider, copy and paste this code into your Terraform configura
 ```hcl
 terraform {
   required_providers {
-    terraform = {
-      source  = "vercel/terraform"
-      version = "0.0.3"
+    vercel = {
+      source  = "vercel/vercel"
+      version = "0.5.3"
     }
   }
 }
 
-provider "terraform" {
+provider "vercel" {
   # Configuration options
 }
 ```

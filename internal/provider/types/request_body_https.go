@@ -5,7 +5,8 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type RequestBodyHTTPS struct {
-	Params   types.String `tfsdk:"params"`
-	Priority types.Number `tfsdk:"priority"`
-	Target   types.String `tfsdk:"target"`
+	Comment types.String                 `tfsdk:"comment"`
+	HTTPS   CreateRecordRequestBodyHTTPS `tfsdk:"https"`
+	Name    types.String                 `tfsdk:"name"`
+	TTL     types.Number                 `tfsdk:"ttl"`
 }

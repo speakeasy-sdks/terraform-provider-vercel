@@ -4,9 +4,9 @@ package types
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type RequestBodySrv struct {
-	Port     types.Number `tfsdk:"port"`
-	Priority types.Number `tfsdk:"priority"`
-	Target   types.String `tfsdk:"target"`
-	Weight   types.Number `tfsdk:"weight"`
+type RequestBodySRV struct {
+	Comment types.String               `tfsdk:"comment"`
+	Name    types.String               `tfsdk:"name"`
+	Srv     CreateRecordRequestBodySrv `tfsdk:"srv"`
+	TTL     types.Number               `tfsdk:"ttl"`
 }

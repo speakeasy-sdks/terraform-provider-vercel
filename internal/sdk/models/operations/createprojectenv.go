@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
 	"net/http"
 )
 
@@ -380,18 +380,18 @@ func (o *CreateProjectEnvRequest) GetRequestBody() *CreateProjectEnvRequestBody 
 	return o.RequestBody
 }
 
-type CreateProjectEnvTargetProjects2 string
+type CreateProjectEnvTarget2 string
 
 const (
-	CreateProjectEnvTargetProjects2Production  CreateProjectEnvTargetProjects2 = "production"
-	CreateProjectEnvTargetProjects2Preview     CreateProjectEnvTargetProjects2 = "preview"
-	CreateProjectEnvTargetProjects2Development CreateProjectEnvTargetProjects2 = "development"
+	CreateProjectEnvTarget2Production  CreateProjectEnvTarget2 = "production"
+	CreateProjectEnvTarget2Preview     CreateProjectEnvTarget2 = "preview"
+	CreateProjectEnvTarget2Development CreateProjectEnvTarget2 = "development"
 )
 
-func (e CreateProjectEnvTargetProjects2) ToPointer() *CreateProjectEnvTargetProjects2 {
+func (e CreateProjectEnvTarget2) ToPointer() *CreateProjectEnvTarget2 {
 	return &e
 }
-func (e *CreateProjectEnvTargetProjects2) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvTarget2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -402,25 +402,25 @@ func (e *CreateProjectEnvTargetProjects2) UnmarshalJSON(data []byte) error {
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnvTargetProjects2(v)
+		*e = CreateProjectEnvTarget2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnvTargetProjects2: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvTarget2: %v", v)
 	}
 }
 
-type CreateProjectEnvTargetProjects1 string
+type CreateProjectEnvTarget1 string
 
 const (
-	CreateProjectEnvTargetProjects1Production  CreateProjectEnvTargetProjects1 = "production"
-	CreateProjectEnvTargetProjects1Preview     CreateProjectEnvTargetProjects1 = "preview"
-	CreateProjectEnvTargetProjects1Development CreateProjectEnvTargetProjects1 = "development"
+	CreateProjectEnvTarget1Production  CreateProjectEnvTarget1 = "production"
+	CreateProjectEnvTarget1Preview     CreateProjectEnvTarget1 = "preview"
+	CreateProjectEnvTarget1Development CreateProjectEnvTarget1 = "development"
 )
 
-func (e CreateProjectEnvTargetProjects1) ToPointer() *CreateProjectEnvTargetProjects1 {
+func (e CreateProjectEnvTarget1) ToPointer() *CreateProjectEnvTarget1 {
 	return &e
 }
-func (e *CreateProjectEnvTargetProjects1) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvTarget1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -431,58 +431,58 @@ func (e *CreateProjectEnvTargetProjects1) UnmarshalJSON(data []byte) error {
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnvTargetProjects1(v)
+		*e = CreateProjectEnvTarget1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnvTargetProjects1: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvTarget1: %v", v)
 	}
 }
 
 type CreateProjectEnvCreatedTargetType string
 
 const (
-	CreateProjectEnvCreatedTargetTypeArrayOfCreateProjectEnvTargetProjects1 CreateProjectEnvCreatedTargetType = "arrayOfCreateProjectEnvTargetProjects1"
-	CreateProjectEnvCreatedTargetTypeCreateProjectEnvTargetProjects2        CreateProjectEnvCreatedTargetType = "createProjectEnv_target_projects_2"
+	CreateProjectEnvCreatedTargetTypeArrayOfCreateProjectEnvTarget1 CreateProjectEnvCreatedTargetType = "arrayOfCreateProjectEnvTarget1"
+	CreateProjectEnvCreatedTargetTypeCreateProjectEnvTarget2        CreateProjectEnvCreatedTargetType = "createProjectEnv_target_2"
 )
 
 type CreateProjectEnvCreatedTarget struct {
-	ArrayOfCreateProjectEnvTargetProjects1 []CreateProjectEnvTargetProjects1
-	CreateProjectEnvTargetProjects2        *CreateProjectEnvTargetProjects2
+	ArrayOfCreateProjectEnvTarget1 []CreateProjectEnvTarget1
+	CreateProjectEnvTarget2        *CreateProjectEnvTarget2
 
 	Type CreateProjectEnvCreatedTargetType
 }
 
-func CreateCreateProjectEnvCreatedTargetArrayOfCreateProjectEnvTargetProjects1(arrayOfCreateProjectEnvTargetProjects1 []CreateProjectEnvTargetProjects1) CreateProjectEnvCreatedTarget {
-	typ := CreateProjectEnvCreatedTargetTypeArrayOfCreateProjectEnvTargetProjects1
+func CreateCreateProjectEnvCreatedTargetArrayOfCreateProjectEnvTarget1(arrayOfCreateProjectEnvTarget1 []CreateProjectEnvTarget1) CreateProjectEnvCreatedTarget {
+	typ := CreateProjectEnvCreatedTargetTypeArrayOfCreateProjectEnvTarget1
 
 	return CreateProjectEnvCreatedTarget{
-		ArrayOfCreateProjectEnvTargetProjects1: arrayOfCreateProjectEnvTargetProjects1,
-		Type:                                   typ,
+		ArrayOfCreateProjectEnvTarget1: arrayOfCreateProjectEnvTarget1,
+		Type:                           typ,
 	}
 }
 
-func CreateCreateProjectEnvCreatedTargetCreateProjectEnvTargetProjects2(createProjectEnvTargetProjects2 CreateProjectEnvTargetProjects2) CreateProjectEnvCreatedTarget {
-	typ := CreateProjectEnvCreatedTargetTypeCreateProjectEnvTargetProjects2
+func CreateCreateProjectEnvCreatedTargetCreateProjectEnvTarget2(createProjectEnvTarget2 CreateProjectEnvTarget2) CreateProjectEnvCreatedTarget {
+	typ := CreateProjectEnvCreatedTargetTypeCreateProjectEnvTarget2
 
 	return CreateProjectEnvCreatedTarget{
-		CreateProjectEnvTargetProjects2: &createProjectEnvTargetProjects2,
-		Type:                            typ,
+		CreateProjectEnvTarget2: &createProjectEnvTarget2,
+		Type:                    typ,
 	}
 }
 
 func (u *CreateProjectEnvCreatedTarget) UnmarshalJSON(data []byte) error {
 
-	var arrayOfCreateProjectEnvTargetProjects1 []CreateProjectEnvTargetProjects1 = []CreateProjectEnvTargetProjects1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectEnvTargetProjects1, "", true, true); err == nil {
-		u.ArrayOfCreateProjectEnvTargetProjects1 = arrayOfCreateProjectEnvTargetProjects1
-		u.Type = CreateProjectEnvCreatedTargetTypeArrayOfCreateProjectEnvTargetProjects1
+	var arrayOfCreateProjectEnvTarget1 []CreateProjectEnvTarget1 = []CreateProjectEnvTarget1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectEnvTarget1, "", true, true); err == nil {
+		u.ArrayOfCreateProjectEnvTarget1 = arrayOfCreateProjectEnvTarget1
+		u.Type = CreateProjectEnvCreatedTargetTypeArrayOfCreateProjectEnvTarget1
 		return nil
 	}
 
-	var createProjectEnvTargetProjects2 CreateProjectEnvTargetProjects2 = CreateProjectEnvTargetProjects2("")
-	if err := utils.UnmarshalJSON(data, &createProjectEnvTargetProjects2, "", true, true); err == nil {
-		u.CreateProjectEnvTargetProjects2 = &createProjectEnvTargetProjects2
-		u.Type = CreateProjectEnvCreatedTargetTypeCreateProjectEnvTargetProjects2
+	var createProjectEnvTarget2 CreateProjectEnvTarget2 = CreateProjectEnvTarget2("")
+	if err := utils.UnmarshalJSON(data, &createProjectEnvTarget2, "", true, true); err == nil {
+		u.CreateProjectEnvTarget2 = &createProjectEnvTarget2
+		u.Type = CreateProjectEnvCreatedTargetTypeCreateProjectEnvTarget2
 		return nil
 	}
 
@@ -490,12 +490,12 @@ func (u *CreateProjectEnvCreatedTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateProjectEnvCreatedTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfCreateProjectEnvTargetProjects1 != nil {
-		return utils.MarshalJSON(u.ArrayOfCreateProjectEnvTargetProjects1, "", true)
+	if u.ArrayOfCreateProjectEnvTarget1 != nil {
+		return utils.MarshalJSON(u.ArrayOfCreateProjectEnvTarget1, "", true)
 	}
 
-	if u.CreateProjectEnvTargetProjects2 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnvTargetProjects2, "", true)
+	if u.CreateProjectEnvTarget2 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvTarget2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CreateProjectEnvCreatedTarget: all fields are null")
@@ -1652,18 +1652,18 @@ func (o *Created2) GetSystem() *bool {
 	return o.System
 }
 
-type CreateProjectEnvTarget2 string
+type CreatedTarget string
 
 const (
-	CreateProjectEnvTarget2Production  CreateProjectEnvTarget2 = "production"
-	CreateProjectEnvTarget2Preview     CreateProjectEnvTarget2 = "preview"
-	CreateProjectEnvTarget2Development CreateProjectEnvTarget2 = "development"
+	CreatedTargetProduction  CreatedTarget = "production"
+	CreatedTargetPreview     CreatedTarget = "preview"
+	CreatedTargetDevelopment CreatedTarget = "development"
 )
 
-func (e CreateProjectEnvTarget2) ToPointer() *CreateProjectEnvTarget2 {
+func (e CreatedTarget) ToPointer() *CreatedTarget {
 	return &e
 }
-func (e *CreateProjectEnvTarget2) UnmarshalJSON(data []byte) error {
+func (e *CreatedTarget) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1674,103 +1674,11 @@ func (e *CreateProjectEnvTarget2) UnmarshalJSON(data []byte) error {
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnvTarget2(v)
+		*e = CreatedTarget(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnvTarget2: %v", v)
+		return fmt.Errorf("invalid value for CreatedTarget: %v", v)
 	}
-}
-
-type CreateProjectEnvTarget1 string
-
-const (
-	CreateProjectEnvTarget1Production  CreateProjectEnvTarget1 = "production"
-	CreateProjectEnvTarget1Preview     CreateProjectEnvTarget1 = "preview"
-	CreateProjectEnvTarget1Development CreateProjectEnvTarget1 = "development"
-)
-
-func (e CreateProjectEnvTarget1) ToPointer() *CreateProjectEnvTarget1 {
-	return &e
-}
-func (e *CreateProjectEnvTarget1) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "production":
-		fallthrough
-	case "preview":
-		fallthrough
-	case "development":
-		*e = CreateProjectEnvTarget1(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CreateProjectEnvTarget1: %v", v)
-	}
-}
-
-type CreatedTargetType string
-
-const (
-	CreatedTargetTypeArrayOfCreateProjectEnvTarget1 CreatedTargetType = "arrayOfCreateProjectEnvTarget1"
-	CreatedTargetTypeCreateProjectEnvTarget2        CreatedTargetType = "createProjectEnv_target_2"
-)
-
-type CreatedTarget struct {
-	ArrayOfCreateProjectEnvTarget1 []CreateProjectEnvTarget1
-	CreateProjectEnvTarget2        *CreateProjectEnvTarget2
-
-	Type CreatedTargetType
-}
-
-func CreateCreatedTargetArrayOfCreateProjectEnvTarget1(arrayOfCreateProjectEnvTarget1 []CreateProjectEnvTarget1) CreatedTarget {
-	typ := CreatedTargetTypeArrayOfCreateProjectEnvTarget1
-
-	return CreatedTarget{
-		ArrayOfCreateProjectEnvTarget1: arrayOfCreateProjectEnvTarget1,
-		Type:                           typ,
-	}
-}
-
-func CreateCreatedTargetCreateProjectEnvTarget2(createProjectEnvTarget2 CreateProjectEnvTarget2) CreatedTarget {
-	typ := CreatedTargetTypeCreateProjectEnvTarget2
-
-	return CreatedTarget{
-		CreateProjectEnvTarget2: &createProjectEnvTarget2,
-		Type:                    typ,
-	}
-}
-
-func (u *CreatedTarget) UnmarshalJSON(data []byte) error {
-
-	var arrayOfCreateProjectEnvTarget1 []CreateProjectEnvTarget1 = []CreateProjectEnvTarget1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectEnvTarget1, "", true, true); err == nil {
-		u.ArrayOfCreateProjectEnvTarget1 = arrayOfCreateProjectEnvTarget1
-		u.Type = CreatedTargetTypeArrayOfCreateProjectEnvTarget1
-		return nil
-	}
-
-	var createProjectEnvTarget2 CreateProjectEnvTarget2 = CreateProjectEnvTarget2("")
-	if err := utils.UnmarshalJSON(data, &createProjectEnvTarget2, "", true, true); err == nil {
-		u.CreateProjectEnvTarget2 = &createProjectEnvTarget2
-		u.Type = CreatedTargetTypeCreateProjectEnvTarget2
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CreatedTarget", string(data))
-}
-
-func (u CreatedTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfCreateProjectEnvTarget1 != nil {
-		return utils.MarshalJSON(u.ArrayOfCreateProjectEnvTarget1, "", true)
-	}
-
-	if u.CreateProjectEnvTarget2 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnvTarget2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CreatedTarget: all fields are null")
 }
 
 type CreatedType string
@@ -2768,7 +2676,7 @@ func (o *CreatedInternalContentHint) GetEncryptedValue() string {
 }
 
 type Created1 struct {
-	Target            *CreatedTarget      `json:"target,omitempty"`
+	Target            []CreatedTarget     `json:"target,omitempty"`
 	Type              *CreatedType        `json:"type,omitempty"`
 	ID                *string             `json:"id,omitempty"`
 	Key               *string             `json:"key,omitempty"`
@@ -2791,7 +2699,7 @@ type Created1 struct {
 	System              *bool   `json:"system,omitempty"`
 }
 
-func (o *Created1) GetTarget() *CreatedTarget {
+func (o *Created1) GetTarget() []CreatedTarget {
 	if o == nil {
 		return nil
 	}
@@ -3079,18 +2987,18 @@ func (u CreateProjectEnvValue) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CreateProjectEnvValue: all fields are null")
 }
 
-type CreateProjectEnvTargetProjectsResponse2 string
+type CreateProjectEnvTargetProjects2 string
 
 const (
-	CreateProjectEnvTargetProjectsResponse2Production  CreateProjectEnvTargetProjectsResponse2 = "production"
-	CreateProjectEnvTargetProjectsResponse2Preview     CreateProjectEnvTargetProjectsResponse2 = "preview"
-	CreateProjectEnvTargetProjectsResponse2Development CreateProjectEnvTargetProjectsResponse2 = "development"
+	CreateProjectEnvTargetProjects2Production  CreateProjectEnvTargetProjects2 = "production"
+	CreateProjectEnvTargetProjects2Preview     CreateProjectEnvTargetProjects2 = "preview"
+	CreateProjectEnvTargetProjects2Development CreateProjectEnvTargetProjects2 = "development"
 )
 
-func (e CreateProjectEnvTargetProjectsResponse2) ToPointer() *CreateProjectEnvTargetProjectsResponse2 {
+func (e CreateProjectEnvTargetProjects2) ToPointer() *CreateProjectEnvTargetProjects2 {
 	return &e
 }
-func (e *CreateProjectEnvTargetProjectsResponse2) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvTargetProjects2) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3101,25 +3009,25 @@ func (e *CreateProjectEnvTargetProjectsResponse2) UnmarshalJSON(data []byte) err
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnvTargetProjectsResponse2(v)
+		*e = CreateProjectEnvTargetProjects2(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnvTargetProjectsResponse2: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvTargetProjects2: %v", v)
 	}
 }
 
-type CreateProjectEnvTargetProjectsResponse1 string
+type CreateProjectEnvTargetProjects1 string
 
 const (
-	CreateProjectEnvTargetProjectsResponse1Production  CreateProjectEnvTargetProjectsResponse1 = "production"
-	CreateProjectEnvTargetProjectsResponse1Preview     CreateProjectEnvTargetProjectsResponse1 = "preview"
-	CreateProjectEnvTargetProjectsResponse1Development CreateProjectEnvTargetProjectsResponse1 = "development"
+	CreateProjectEnvTargetProjects1Production  CreateProjectEnvTargetProjects1 = "production"
+	CreateProjectEnvTargetProjects1Preview     CreateProjectEnvTargetProjects1 = "preview"
+	CreateProjectEnvTargetProjects1Development CreateProjectEnvTargetProjects1 = "development"
 )
 
-func (e CreateProjectEnvTargetProjectsResponse1) ToPointer() *CreateProjectEnvTargetProjectsResponse1 {
+func (e CreateProjectEnvTargetProjects1) ToPointer() *CreateProjectEnvTargetProjects1 {
 	return &e
 }
-func (e *CreateProjectEnvTargetProjectsResponse1) UnmarshalJSON(data []byte) error {
+func (e *CreateProjectEnvTargetProjects1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3130,58 +3038,58 @@ func (e *CreateProjectEnvTargetProjectsResponse1) UnmarshalJSON(data []byte) err
 	case "preview":
 		fallthrough
 	case "development":
-		*e = CreateProjectEnvTargetProjectsResponse1(v)
+		*e = CreateProjectEnvTargetProjects1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreateProjectEnvTargetProjectsResponse1: %v", v)
+		return fmt.Errorf("invalid value for CreateProjectEnvTargetProjects1: %v", v)
 	}
 }
 
 type CreateProjectEnvTargetType string
 
 const (
-	CreateProjectEnvTargetTypeArrayOfCreateProjectEnvTargetProjectsResponse1 CreateProjectEnvTargetType = "arrayOfCreateProjectEnvTargetProjectsResponse1"
-	CreateProjectEnvTargetTypeCreateProjectEnvTargetProjectsResponse2        CreateProjectEnvTargetType = "createProjectEnv_target_projects_response_2"
+	CreateProjectEnvTargetTypeArrayOfCreateProjectEnvTargetProjects1 CreateProjectEnvTargetType = "arrayOfCreateProjectEnvTargetProjects1"
+	CreateProjectEnvTargetTypeCreateProjectEnvTargetProjects2        CreateProjectEnvTargetType = "createProjectEnv_target_projects_2"
 )
 
 type CreateProjectEnvTarget struct {
-	ArrayOfCreateProjectEnvTargetProjectsResponse1 []CreateProjectEnvTargetProjectsResponse1
-	CreateProjectEnvTargetProjectsResponse2        *CreateProjectEnvTargetProjectsResponse2
+	ArrayOfCreateProjectEnvTargetProjects1 []CreateProjectEnvTargetProjects1
+	CreateProjectEnvTargetProjects2        *CreateProjectEnvTargetProjects2
 
 	Type CreateProjectEnvTargetType
 }
 
-func CreateCreateProjectEnvTargetArrayOfCreateProjectEnvTargetProjectsResponse1(arrayOfCreateProjectEnvTargetProjectsResponse1 []CreateProjectEnvTargetProjectsResponse1) CreateProjectEnvTarget {
-	typ := CreateProjectEnvTargetTypeArrayOfCreateProjectEnvTargetProjectsResponse1
+func CreateCreateProjectEnvTargetArrayOfCreateProjectEnvTargetProjects1(arrayOfCreateProjectEnvTargetProjects1 []CreateProjectEnvTargetProjects1) CreateProjectEnvTarget {
+	typ := CreateProjectEnvTargetTypeArrayOfCreateProjectEnvTargetProjects1
 
 	return CreateProjectEnvTarget{
-		ArrayOfCreateProjectEnvTargetProjectsResponse1: arrayOfCreateProjectEnvTargetProjectsResponse1,
-		Type: typ,
+		ArrayOfCreateProjectEnvTargetProjects1: arrayOfCreateProjectEnvTargetProjects1,
+		Type:                                   typ,
 	}
 }
 
-func CreateCreateProjectEnvTargetCreateProjectEnvTargetProjectsResponse2(createProjectEnvTargetProjectsResponse2 CreateProjectEnvTargetProjectsResponse2) CreateProjectEnvTarget {
-	typ := CreateProjectEnvTargetTypeCreateProjectEnvTargetProjectsResponse2
+func CreateCreateProjectEnvTargetCreateProjectEnvTargetProjects2(createProjectEnvTargetProjects2 CreateProjectEnvTargetProjects2) CreateProjectEnvTarget {
+	typ := CreateProjectEnvTargetTypeCreateProjectEnvTargetProjects2
 
 	return CreateProjectEnvTarget{
-		CreateProjectEnvTargetProjectsResponse2: &createProjectEnvTargetProjectsResponse2,
-		Type:                                    typ,
+		CreateProjectEnvTargetProjects2: &createProjectEnvTargetProjects2,
+		Type:                            typ,
 	}
 }
 
 func (u *CreateProjectEnvTarget) UnmarshalJSON(data []byte) error {
 
-	var arrayOfCreateProjectEnvTargetProjectsResponse1 []CreateProjectEnvTargetProjectsResponse1 = []CreateProjectEnvTargetProjectsResponse1{}
-	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectEnvTargetProjectsResponse1, "", true, true); err == nil {
-		u.ArrayOfCreateProjectEnvTargetProjectsResponse1 = arrayOfCreateProjectEnvTargetProjectsResponse1
-		u.Type = CreateProjectEnvTargetTypeArrayOfCreateProjectEnvTargetProjectsResponse1
+	var arrayOfCreateProjectEnvTargetProjects1 []CreateProjectEnvTargetProjects1 = []CreateProjectEnvTargetProjects1{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCreateProjectEnvTargetProjects1, "", true, true); err == nil {
+		u.ArrayOfCreateProjectEnvTargetProjects1 = arrayOfCreateProjectEnvTargetProjects1
+		u.Type = CreateProjectEnvTargetTypeArrayOfCreateProjectEnvTargetProjects1
 		return nil
 	}
 
-	var createProjectEnvTargetProjectsResponse2 CreateProjectEnvTargetProjectsResponse2 = CreateProjectEnvTargetProjectsResponse2("")
-	if err := utils.UnmarshalJSON(data, &createProjectEnvTargetProjectsResponse2, "", true, true); err == nil {
-		u.CreateProjectEnvTargetProjectsResponse2 = &createProjectEnvTargetProjectsResponse2
-		u.Type = CreateProjectEnvTargetTypeCreateProjectEnvTargetProjectsResponse2
+	var createProjectEnvTargetProjects2 CreateProjectEnvTargetProjects2 = CreateProjectEnvTargetProjects2("")
+	if err := utils.UnmarshalJSON(data, &createProjectEnvTargetProjects2, "", true, true); err == nil {
+		u.CreateProjectEnvTargetProjects2 = &createProjectEnvTargetProjects2
+		u.Type = CreateProjectEnvTargetTypeCreateProjectEnvTargetProjects2
 		return nil
 	}
 
@@ -3189,12 +3097,12 @@ func (u *CreateProjectEnvTarget) UnmarshalJSON(data []byte) error {
 }
 
 func (u CreateProjectEnvTarget) MarshalJSON() ([]byte, error) {
-	if u.ArrayOfCreateProjectEnvTargetProjectsResponse1 != nil {
-		return utils.MarshalJSON(u.ArrayOfCreateProjectEnvTargetProjectsResponse1, "", true)
+	if u.ArrayOfCreateProjectEnvTargetProjects1 != nil {
+		return utils.MarshalJSON(u.ArrayOfCreateProjectEnvTargetProjects1, "", true)
 	}
 
-	if u.CreateProjectEnvTargetProjectsResponse2 != nil {
-		return utils.MarshalJSON(u.CreateProjectEnvTargetProjectsResponse2, "", true)
+	if u.CreateProjectEnvTargetProjects2 != nil {
+		return utils.MarshalJSON(u.CreateProjectEnvTargetProjects2, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CreateProjectEnvTarget: all fields are null")

@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
 	"net/http"
 )
 
@@ -3116,7 +3116,7 @@ func (e *CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseB
 	}
 }
 
-type CreateDeploymentGitSource9 struct {
+type Nine struct {
 	Type          CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody9Type `json:"type"`
 	Ref           string                                                                          `json:"ref"`
 	Sha           string                                                                          `json:"sha"`
@@ -3126,49 +3126,49 @@ type CreateDeploymentGitSource9 struct {
 	RepoUUID      string                                                                          `json:"repoUuid"`
 }
 
-func (o *CreateDeploymentGitSource9) GetType() CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody9Type {
+func (o *Nine) GetType() CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody9Type {
 	if o == nil {
 		return CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody9Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentGitSource9) GetRef() string {
+func (o *Nine) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeploymentGitSource9) GetSha() string {
+func (o *Nine) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentGitSource9) GetOwner() *string {
+func (o *Nine) GetOwner() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Owner
 }
 
-func (o *CreateDeploymentGitSource9) GetSlug() *string {
+func (o *Nine) GetSlug() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Slug
 }
 
-func (o *CreateDeploymentGitSource9) GetWorkspaceUUID() string {
+func (o *Nine) GetWorkspaceUUID() string {
 	if o == nil {
 		return ""
 	}
 	return o.WorkspaceUUID
 }
 
-func (o *CreateDeploymentGitSource9) GetRepoUUID() string {
+func (o *Nine) GetRepoUUID() string {
 	if o == nil {
 		return ""
 	}
@@ -3198,35 +3198,35 @@ func (e *CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseB
 	}
 }
 
-type CreateDeploymentGitSource8 struct {
+type Eight struct {
 	Type      CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody8Type `json:"type"`
 	Ref       string                                                                          `json:"ref"`
 	Sha       string                                                                          `json:"sha"`
 	ProjectID float64                                                                         `json:"projectId"`
 }
 
-func (o *CreateDeploymentGitSource8) GetType() CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody8Type {
+func (o *Eight) GetType() CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody8Type {
 	if o == nil {
 		return CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody8Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentGitSource8) GetRef() string {
+func (o *Eight) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeploymentGitSource8) GetSha() string {
+func (o *Eight) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentGitSource8) GetProjectID() float64 {
+func (o *Eight) GetProjectID() float64 {
 	if o == nil {
 		return 0.0
 	}
@@ -3256,7 +3256,7 @@ func (e *CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseB
 	}
 }
 
-type CreateDeploymentGitSource7 struct {
+type Seven struct {
 	Type   CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody7Type `json:"type"`
 	Ref    string                                                                          `json:"ref"`
 	Sha    string                                                                          `json:"sha"`
@@ -3265,42 +3265,42 @@ type CreateDeploymentGitSource7 struct {
 	Repo   *string                                                                         `json:"repo,omitempty"`
 }
 
-func (o *CreateDeploymentGitSource7) GetType() CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody7Type {
+func (o *Seven) GetType() CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody7Type {
 	if o == nil {
 		return CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody7Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentGitSource7) GetRef() string {
+func (o *Seven) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeploymentGitSource7) GetSha() string {
+func (o *Seven) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentGitSource7) GetRepoID() float64 {
+func (o *Seven) GetRepoID() float64 {
 	if o == nil {
 		return 0.0
 	}
 	return o.RepoID
 }
 
-func (o *CreateDeploymentGitSource7) GetOrg() *string {
+func (o *Seven) GetOrg() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Org
 }
 
-func (o *CreateDeploymentGitSource7) GetRepo() *string {
+func (o *Seven) GetRepo() *string {
 	if o == nil {
 		return nil
 	}
@@ -3330,35 +3330,35 @@ func (e *CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseB
 	}
 }
 
-type CreateDeploymentGitSource6 struct {
+type Six struct {
 	Type   CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody6Type `json:"type"`
 	Ref    string                                                                          `json:"ref"`
 	Sha    string                                                                          `json:"sha"`
 	GitURL string                                                                          `json:"gitUrl"`
 }
 
-func (o *CreateDeploymentGitSource6) GetType() CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody6Type {
+func (o *Six) GetType() CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody6Type {
 	if o == nil {
 		return CreateDeploymentGitSourceDeploymentsResponse200ApplicationJSONResponseBody6Type("")
 	}
 	return o.Type
 }
 
-func (o *CreateDeploymentGitSource6) GetRef() string {
+func (o *Six) GetRef() string {
 	if o == nil {
 		return ""
 	}
 	return o.Ref
 }
 
-func (o *CreateDeploymentGitSource6) GetSha() string {
+func (o *Six) GetSha() string {
 	if o == nil {
 		return ""
 	}
 	return o.Sha
 }
 
-func (o *CreateDeploymentGitSource6) GetGitURL() string {
+func (o *Six) GetGitURL() string {
 	if o == nil {
 		return ""
 	}
@@ -3848,27 +3848,27 @@ func (o *GitSource1) GetPrID() *float64 {
 type CreateDeploymentGitSourceUnionType string
 
 const (
-	CreateDeploymentGitSourceUnionTypeGitSource1                 CreateDeploymentGitSourceUnionType = "gitSource_1"
-	CreateDeploymentGitSourceUnionTypeGitSource2                 CreateDeploymentGitSourceUnionType = "gitSource_2"
-	CreateDeploymentGitSourceUnionTypeGitSource3                 CreateDeploymentGitSourceUnionType = "gitSource_3"
-	CreateDeploymentGitSourceUnionTypeGitSource4                 CreateDeploymentGitSourceUnionType = "gitSource_4"
-	CreateDeploymentGitSourceUnionTypeGitSource5                 CreateDeploymentGitSourceUnionType = "gitSource_5"
-	CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource6 CreateDeploymentGitSourceUnionType = "createDeployment_gitSource_6"
-	CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource7 CreateDeploymentGitSourceUnionType = "createDeployment_gitSource_7"
-	CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource8 CreateDeploymentGitSourceUnionType = "createDeployment_gitSource_8"
-	CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource9 CreateDeploymentGitSourceUnionType = "createDeployment_gitSource_9"
+	CreateDeploymentGitSourceUnionTypeGitSource1 CreateDeploymentGitSourceUnionType = "gitSource_1"
+	CreateDeploymentGitSourceUnionTypeGitSource2 CreateDeploymentGitSourceUnionType = "gitSource_2"
+	CreateDeploymentGitSourceUnionTypeGitSource3 CreateDeploymentGitSourceUnionType = "gitSource_3"
+	CreateDeploymentGitSourceUnionTypeGitSource4 CreateDeploymentGitSourceUnionType = "gitSource_4"
+	CreateDeploymentGitSourceUnionTypeGitSource5 CreateDeploymentGitSourceUnionType = "gitSource_5"
+	CreateDeploymentGitSourceUnionTypeSix        CreateDeploymentGitSourceUnionType = "6"
+	CreateDeploymentGitSourceUnionTypeSeven      CreateDeploymentGitSourceUnionType = "7"
+	CreateDeploymentGitSourceUnionTypeEight      CreateDeploymentGitSourceUnionType = "8"
+	CreateDeploymentGitSourceUnionTypeNine       CreateDeploymentGitSourceUnionType = "9"
 )
 
 type CreateDeploymentGitSource struct {
-	GitSource1                 *GitSource1
-	GitSource2                 *GitSource2
-	GitSource3                 *GitSource3
-	GitSource4                 *GitSource4
-	GitSource5                 *GitSource5
-	CreateDeploymentGitSource6 *CreateDeploymentGitSource6
-	CreateDeploymentGitSource7 *CreateDeploymentGitSource7
-	CreateDeploymentGitSource8 *CreateDeploymentGitSource8
-	CreateDeploymentGitSource9 *CreateDeploymentGitSource9
+	GitSource1 *GitSource1
+	GitSource2 *GitSource2
+	GitSource3 *GitSource3
+	GitSource4 *GitSource4
+	GitSource5 *GitSource5
+	Six        *Six
+	Seven      *Seven
+	Eight      *Eight
+	Nine       *Nine
 
 	Type CreateDeploymentGitSourceUnionType
 }
@@ -3918,55 +3918,55 @@ func CreateCreateDeploymentGitSourceGitSource5(gitSource5 GitSource5) CreateDepl
 	}
 }
 
-func CreateCreateDeploymentGitSourceCreateDeploymentGitSource6(createDeploymentGitSource6 CreateDeploymentGitSource6) CreateDeploymentGitSource {
-	typ := CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource6
+func CreateCreateDeploymentGitSourceSix(six Six) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceUnionTypeSix
 
 	return CreateDeploymentGitSource{
-		CreateDeploymentGitSource6: &createDeploymentGitSource6,
-		Type:                       typ,
+		Six:  &six,
+		Type: typ,
 	}
 }
 
-func CreateCreateDeploymentGitSourceCreateDeploymentGitSource7(createDeploymentGitSource7 CreateDeploymentGitSource7) CreateDeploymentGitSource {
-	typ := CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource7
+func CreateCreateDeploymentGitSourceSeven(seven Seven) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceUnionTypeSeven
 
 	return CreateDeploymentGitSource{
-		CreateDeploymentGitSource7: &createDeploymentGitSource7,
-		Type:                       typ,
+		Seven: &seven,
+		Type:  typ,
 	}
 }
 
-func CreateCreateDeploymentGitSourceCreateDeploymentGitSource8(createDeploymentGitSource8 CreateDeploymentGitSource8) CreateDeploymentGitSource {
-	typ := CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource8
+func CreateCreateDeploymentGitSourceEight(eight Eight) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceUnionTypeEight
 
 	return CreateDeploymentGitSource{
-		CreateDeploymentGitSource8: &createDeploymentGitSource8,
-		Type:                       typ,
+		Eight: &eight,
+		Type:  typ,
 	}
 }
 
-func CreateCreateDeploymentGitSourceCreateDeploymentGitSource9(createDeploymentGitSource9 CreateDeploymentGitSource9) CreateDeploymentGitSource {
-	typ := CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource9
+func CreateCreateDeploymentGitSourceNine(nine Nine) CreateDeploymentGitSource {
+	typ := CreateDeploymentGitSourceUnionTypeNine
 
 	return CreateDeploymentGitSource{
-		CreateDeploymentGitSource9: &createDeploymentGitSource9,
-		Type:                       typ,
+		Nine: &nine,
+		Type: typ,
 	}
 }
 
 func (u *CreateDeploymentGitSource) UnmarshalJSON(data []byte) error {
 
-	var createDeploymentGitSource6 CreateDeploymentGitSource6 = CreateDeploymentGitSource6{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentGitSource6, "", true, true); err == nil {
-		u.CreateDeploymentGitSource6 = &createDeploymentGitSource6
-		u.Type = CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource6
+	var six Six = Six{}
+	if err := utils.UnmarshalJSON(data, &six, "", true, true); err == nil {
+		u.Six = &six
+		u.Type = CreateDeploymentGitSourceUnionTypeSix
 		return nil
 	}
 
-	var createDeploymentGitSource8 CreateDeploymentGitSource8 = CreateDeploymentGitSource8{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentGitSource8, "", true, true); err == nil {
-		u.CreateDeploymentGitSource8 = &createDeploymentGitSource8
-		u.Type = CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource8
+	var eight Eight = Eight{}
+	if err := utils.UnmarshalJSON(data, &eight, "", true, true); err == nil {
+		u.Eight = &eight
+		u.Type = CreateDeploymentGitSourceUnionTypeEight
 		return nil
 	}
 
@@ -4005,17 +4005,17 @@ func (u *CreateDeploymentGitSource) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var createDeploymentGitSource7 CreateDeploymentGitSource7 = CreateDeploymentGitSource7{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentGitSource7, "", true, true); err == nil {
-		u.CreateDeploymentGitSource7 = &createDeploymentGitSource7
-		u.Type = CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource7
+	var seven Seven = Seven{}
+	if err := utils.UnmarshalJSON(data, &seven, "", true, true); err == nil {
+		u.Seven = &seven
+		u.Type = CreateDeploymentGitSourceUnionTypeSeven
 		return nil
 	}
 
-	var createDeploymentGitSource9 CreateDeploymentGitSource9 = CreateDeploymentGitSource9{}
-	if err := utils.UnmarshalJSON(data, &createDeploymentGitSource9, "", true, true); err == nil {
-		u.CreateDeploymentGitSource9 = &createDeploymentGitSource9
-		u.Type = CreateDeploymentGitSourceUnionTypeCreateDeploymentGitSource9
+	var nine Nine = Nine{}
+	if err := utils.UnmarshalJSON(data, &nine, "", true, true); err == nil {
+		u.Nine = &nine
+		u.Type = CreateDeploymentGitSourceUnionTypeNine
 		return nil
 	}
 
@@ -4043,20 +4043,20 @@ func (u CreateDeploymentGitSource) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.GitSource5, "", true)
 	}
 
-	if u.CreateDeploymentGitSource6 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentGitSource6, "", true)
+	if u.Six != nil {
+		return utils.MarshalJSON(u.Six, "", true)
 	}
 
-	if u.CreateDeploymentGitSource7 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentGitSource7, "", true)
+	if u.Seven != nil {
+		return utils.MarshalJSON(u.Seven, "", true)
 	}
 
-	if u.CreateDeploymentGitSource8 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentGitSource8, "", true)
+	if u.Eight != nil {
+		return utils.MarshalJSON(u.Eight, "", true)
 	}
 
-	if u.CreateDeploymentGitSource9 != nil {
-		return utils.MarshalJSON(u.CreateDeploymentGitSource9, "", true)
+	if u.Nine != nil {
+		return utils.MarshalJSON(u.Nine, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CreateDeploymentGitSource: all fields are null")

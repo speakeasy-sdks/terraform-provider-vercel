@@ -15,10 +15,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	speakeasy_listplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/listplanmodifier"
-	speakeasy_stringplanmodifier "github.com/vercel/terraform-provider-terraform/internal/planmodifiers/stringplanmodifier"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
+	speakeasy_listplanmodifier "github.com/vercel/terraform-provider-vercel/internal/planmodifiers/listplanmodifier"
+	speakeasy_stringplanmodifier "github.com/vercel/terraform-provider-vercel/internal/planmodifiers/stringplanmodifier"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -199,8 +199,8 @@ func (r *WebhookResource) Create(ctx context.Context, req resource.CreateRequest
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.Object == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromOperationsCreateWebhookResponseBody(res.Object)
@@ -239,8 +239,8 @@ func (r *WebhookResource) Create(ctx context.Context, req resource.CreateRequest
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.Object == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+	if !(res1.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
 	data.RefreshFromOperationsGetWebhookResponseBody(res1.Object)
@@ -306,8 +306,8 @@ func (r *WebhookResource) Read(ctx context.Context, req resource.ReadRequest, re
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.Object == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromOperationsGetWebhookResponseBody(res.Object)

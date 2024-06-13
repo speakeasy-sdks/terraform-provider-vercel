@@ -9,9 +9,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	tfTypes "github.com/vercel/terraform-provider-terraform/internal/provider/types"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
+	tfTypes "github.com/vercel/terraform-provider-vercel/internal/provider/types"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -29,18 +29,17 @@ type EdgeConfigDataSource struct {
 
 // EdgeConfigDataSourceModel describes the data model.
 type EdgeConfigDataSourceModel struct {
-	CreatedAt    types.Number                   `tfsdk:"created_at"`
-	Digest       types.String                   `tfsdk:"digest"`
-	EdgeConfigID types.String                   `tfsdk:"edge_config_id"`
-	ID           types.String                   `tfsdk:"id"`
-	ItemCount    types.Number                   `tfsdk:"item_count"`
-	OwnerID      types.String                   `tfsdk:"owner_id"`
-	Schema       *tfTypes.GetEdgeConfigSchema   `tfsdk:"schema"`
-	SizeInBytes  types.Number                   `tfsdk:"size_in_bytes"`
-	Slug         types.String                   `tfsdk:"slug"`
-	TeamID       types.String                   `tfsdk:"team_id"`
-	Transfer     *tfTypes.GetEdgeConfigTransfer `tfsdk:"transfer"`
-	UpdatedAt    types.Number                   `tfsdk:"updated_at"`
+	CreatedAt   types.Number                          `tfsdk:"created_at"`
+	Digest      types.String                          `tfsdk:"digest"`
+	ID          types.String                          `tfsdk:"id"`
+	ItemCount   types.Number                          `tfsdk:"item_count"`
+	OwnerID     types.String                          `tfsdk:"owner_id"`
+	Schema      *tfTypes.GetProjectLastRollbackTarget `tfsdk:"schema"`
+	SizeInBytes types.Number                          `tfsdk:"size_in_bytes"`
+	Slug        types.String                          `tfsdk:"slug"`
+	TeamID      types.String                          `tfsdk:"team_id"`
+	Transfer    *tfTypes.GetEdgeConfigTransfer        `tfsdk:"transfer"`
+	UpdatedAt   types.Number                          `tfsdk:"updated_at"`
 }
 
 // Metadata returns the data source type name.
@@ -60,11 +59,8 @@ func (r *EdgeConfigDataSource) Schema(ctx context.Context, req datasource.Schema
 			"digest": schema.StringAttribute{
 				Computed: true,
 			},
-			"edge_config_id": schema.StringAttribute{
-				Required: true,
-			},
 			"id": schema.StringAttribute{
-				Computed: true,
+				Required: true,
 			},
 			"item_count": schema.NumberAttribute{
 				Computed: true,
@@ -148,7 +144,7 @@ func (r *EdgeConfigDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		return
 	}
 
-	edgeConfigID := data.EdgeConfigID.ValueString()
+	edgeConfigID := data.ID.ValueString()
 	teamID := new(string)
 	if !data.TeamID.IsUnknown() && !data.TeamID.IsNull() {
 		*teamID = data.TeamID.ValueString()
@@ -186,8 +182,8 @@ func (r *EdgeConfigDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.Object == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.Object != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromOperationsGetEdgeConfigResponseBody(res.Object)

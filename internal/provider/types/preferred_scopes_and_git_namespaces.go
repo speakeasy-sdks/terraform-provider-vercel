@@ -5,6 +5,6 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type PreferredScopesAndGitNamespaces struct {
-	GitNamespaceID *RepoID      `tfsdk:"git_namespace_id"`
-	ScopeID        types.String `tfsdk:"scope_id"`
+	GitNamespaceID *ImportFlowGitNamespace `tfsdk:"git_namespace_id"`
+	ScopeID        types.String            `tfsdk:"scope_id"`
 }

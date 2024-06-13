@@ -6,10 +6,10 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/hooks"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/errors"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/hooks"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/errors"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
 	"io"
 	"net/http"
 )
@@ -213,7 +213,7 @@ func (s *DNS) Create(ctx context.Context, request operations.CreateRecordRequest
 				return nil, err
 			}
 
-			res.OneOf = &out
+			res.Object = &out
 		default:
 			return nil, errors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}

@@ -4,110 +4,40 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/vercel/terraform-provider-terraform/internal/provider/types"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
 )
 
 func (r *MemberResourceModel) ToOperationsAddProjectMemberRequestBody() *operations.AddProjectMemberRequestBody {
-	var out operations.AddProjectMemberRequestBody
-	var addProjectMemberRequestBody1 *operations.AddProjectMemberRequestBody1
-	if r.One != nil {
-		uid := r.One.UID.ValueString()
-		username := new(string)
-		if !r.One.Username.IsUnknown() && !r.One.Username.IsNull() {
-			*username = r.One.Username.ValueString()
-		} else {
-			username = nil
-		}
-		email := new(string)
-		if !r.One.Email.IsUnknown() && !r.One.Email.IsNull() {
-			*email = r.One.Email.ValueString()
-		} else {
-			email = nil
-		}
-		role := operations.AddProjectMemberRequestBodyProjectMembersRole(r.One.Role.ValueString())
-		addProjectMemberRequestBody1 = &operations.AddProjectMemberRequestBody1{
-			UID:      uid,
-			Username: username,
-			Email:    email,
-			Role:     role,
-		}
+	uid := new(string)
+	if !r.UID.IsUnknown() && !r.UID.IsNull() {
+		*uid = r.UID.ValueString()
+	} else {
+		uid = nil
 	}
-	if addProjectMemberRequestBody1 != nil {
-		out = operations.AddProjectMemberRequestBody{
-			AddProjectMemberRequestBody1: addProjectMemberRequestBody1,
-		}
+	username := new(string)
+	if !r.Username.IsUnknown() && !r.Username.IsNull() {
+		*username = r.Username.ValueString()
+	} else {
+		username = nil
 	}
-	var addProjectMemberRequestBody2 *operations.AddProjectMemberRequestBody2
-	if r.Two != nil {
-		uid1 := new(string)
-		if !r.Two.UID.IsUnknown() && !r.Two.UID.IsNull() {
-			*uid1 = r.Two.UID.ValueString()
-		} else {
-			uid1 = nil
-		}
-		username1 := r.Two.Username.ValueString()
-		email1 := new(string)
-		if !r.Two.Email.IsUnknown() && !r.Two.Email.IsNull() {
-			*email1 = r.Two.Email.ValueString()
-		} else {
-			email1 = nil
-		}
-		role1 := operations.RequestBodyRole(r.Two.Role.ValueString())
-		addProjectMemberRequestBody2 = &operations.AddProjectMemberRequestBody2{
-			UID:      uid1,
-			Username: username1,
-			Email:    email1,
-			Role:     role1,
-		}
+	email := new(string)
+	if !r.Email.IsUnknown() && !r.Email.IsNull() {
+		*email = r.Email.ValueString()
+	} else {
+		email = nil
 	}
-	if addProjectMemberRequestBody2 != nil {
-		out = operations.AddProjectMemberRequestBody{
-			AddProjectMemberRequestBody2: addProjectMemberRequestBody2,
-		}
-	}
-	var addProjectMemberRequestBody3 *operations.AddProjectMemberRequestBody3
-	if r.Three != nil {
-		uid2 := new(string)
-		if !r.Three.UID.IsUnknown() && !r.Three.UID.IsNull() {
-			*uid2 = r.Three.UID.ValueString()
-		} else {
-			uid2 = nil
-		}
-		username2 := new(string)
-		if !r.Three.Username.IsUnknown() && !r.Three.Username.IsNull() {
-			*username2 = r.Three.Username.ValueString()
-		} else {
-			username2 = nil
-		}
-		email2 := r.Three.Email.ValueString()
-		role2 := operations.AddProjectMemberRequestBodyRole(r.Three.Role.ValueString())
-		addProjectMemberRequestBody3 = &operations.AddProjectMemberRequestBody3{
-			UID:      uid2,
-			Username: username2,
-			Email:    email2,
-			Role:     role2,
-		}
-	}
-	if addProjectMemberRequestBody3 != nil {
-		out = operations.AddProjectMemberRequestBody{
-			AddProjectMemberRequestBody3: addProjectMemberRequestBody3,
-		}
+	role := operations.Role(r.Role.ValueString())
+	out := operations.AddProjectMemberRequestBody{
+		UID:      uid,
+		Username: username,
+		Email:    email,
+		Role:     role,
 	}
 	return &out
 }
 
 func (r *MemberResourceModel) RefreshFromOperationsAddProjectMemberResponseBody(resp *operations.AddProjectMemberResponseBody) {
 	if resp != nil {
-		r.ID = types.StringValue(resp.ID)
-		if resp.AddProjectMemberResponseBody != nil {
-			r.One = &tfTypes.AddProjectMemberRequestBody1{}
-		}
-		if resp.AddProjectMemberResponseBody != nil {
-			r.Two = &tfTypes.AddProjectMemberRequestBody2{}
-		}
-		if resp.AddProjectMemberResponseBody != nil {
-			r.Three = &tfTypes.AddProjectMemberRequestBody3{}
-		}
+		r.ProjectID = types.StringPointerValue(resp.ProjectID)
 	}
 }

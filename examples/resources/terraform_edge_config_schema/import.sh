@@ -1,1 +1,0 @@
-terraform import terraform_edge_config_schema.my_terraform_edge_config_schema ""

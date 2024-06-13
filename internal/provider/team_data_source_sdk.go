@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/shared"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/shared"
 )
 
 func (r *TeamDataSourceModel) RefreshFromSharedTeam(resp *shared.Team) {

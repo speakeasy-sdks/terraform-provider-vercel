@@ -6,11 +6,11 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/hooks"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/errors"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/shared"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/hooks"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/errors"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/shared"
 	"io"
 	"net/http"
 	"net/url"
@@ -167,8 +167,8 @@ func New(opts ...SDKOption) *SDK {
 			Language:          "go",
 			OpenAPIDocVersion: "0.0.1",
 			SDKVersion:        "0.0.1",
-			GenVersion:        "2.339.1",
-			UserAgent:         "speakeasy-sdk/go 0.0.1 2.339.1 0.0.1 github.com/vercel/terraform-provider-terraform/internal/sdk",
+			GenVersion:        "internal",
+			UserAgent:         "speakeasy-sdk/go 0.0.1 internal 0.0.1 github.com/vercel/terraform-provider-vercel/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}

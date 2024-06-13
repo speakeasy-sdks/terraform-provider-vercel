@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/internal/utils"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/shared"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/internal/utils"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/shared"
 	"net/http"
 )
 
@@ -2985,18 +2985,18 @@ func (o *UpdateProjectDataCacheOptionsAllowlist) GetPaths() []UpdateProjectDataC
 type UpdateProjectDataCachePasswordProtection struct {
 }
 
-type UpdateProjectDataCacheDeploymentType string
+type UpdateProjectDataCacheProjectsDeploymentType string
 
 const (
-	UpdateProjectDataCacheDeploymentTypeAll                              UpdateProjectDataCacheDeploymentType = "all"
-	UpdateProjectDataCacheDeploymentTypePreview                          UpdateProjectDataCacheDeploymentType = "preview"
-	UpdateProjectDataCacheDeploymentTypeProdDeploymentUrlsAndAllPreviews UpdateProjectDataCacheDeploymentType = "prod_deployment_urls_and_all_previews"
+	UpdateProjectDataCacheProjectsDeploymentTypeAll                              UpdateProjectDataCacheProjectsDeploymentType = "all"
+	UpdateProjectDataCacheProjectsDeploymentTypePreview                          UpdateProjectDataCacheProjectsDeploymentType = "preview"
+	UpdateProjectDataCacheProjectsDeploymentTypeProdDeploymentUrlsAndAllPreviews UpdateProjectDataCacheProjectsDeploymentType = "prod_deployment_urls_and_all_previews"
 )
 
-func (e UpdateProjectDataCacheDeploymentType) ToPointer() *UpdateProjectDataCacheDeploymentType {
+func (e UpdateProjectDataCacheProjectsDeploymentType) ToPointer() *UpdateProjectDataCacheProjectsDeploymentType {
 	return &e
 }
-func (e *UpdateProjectDataCacheDeploymentType) UnmarshalJSON(data []byte) error {
+func (e *UpdateProjectDataCacheProjectsDeploymentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -3007,20 +3007,20 @@ func (e *UpdateProjectDataCacheDeploymentType) UnmarshalJSON(data []byte) error 
 	case "preview":
 		fallthrough
 	case "prod_deployment_urls_and_all_previews":
-		*e = UpdateProjectDataCacheDeploymentType(v)
+		*e = UpdateProjectDataCacheProjectsDeploymentType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheDeploymentType: %v", v)
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheProjectsDeploymentType: %v", v)
 	}
 }
 
 type UpdateProjectDataCacheSsoProtection struct {
-	DeploymentType UpdateProjectDataCacheDeploymentType `json:"deploymentType"`
+	DeploymentType UpdateProjectDataCacheProjectsDeploymentType `json:"deploymentType"`
 }
 
-func (o *UpdateProjectDataCacheSsoProtection) GetDeploymentType() UpdateProjectDataCacheDeploymentType {
+func (o *UpdateProjectDataCacheSsoProtection) GetDeploymentType() UpdateProjectDataCacheProjectsDeploymentType {
 	if o == nil {
-		return UpdateProjectDataCacheDeploymentType("")
+		return UpdateProjectDataCacheProjectsDeploymentType("")
 	}
 	return o.DeploymentType
 }
@@ -4568,19 +4568,19 @@ func (o *ProtectionBypass) GetScope() Scope {
 	return o.Scope
 }
 
-type UpdateProjectDataCacheTrustedIpsDeploymentType string
+type UpdateProjectDataCacheDeploymentType string
 
 const (
-	UpdateProjectDataCacheTrustedIpsDeploymentTypeAll                              UpdateProjectDataCacheTrustedIpsDeploymentType = "all"
-	UpdateProjectDataCacheTrustedIpsDeploymentTypePreview                          UpdateProjectDataCacheTrustedIpsDeploymentType = "preview"
-	UpdateProjectDataCacheTrustedIpsDeploymentTypeProdDeploymentUrlsAndAllPreviews UpdateProjectDataCacheTrustedIpsDeploymentType = "prod_deployment_urls_and_all_previews"
-	UpdateProjectDataCacheTrustedIpsDeploymentTypeProduction                       UpdateProjectDataCacheTrustedIpsDeploymentType = "production"
+	UpdateProjectDataCacheDeploymentTypeAll                              UpdateProjectDataCacheDeploymentType = "all"
+	UpdateProjectDataCacheDeploymentTypePreview                          UpdateProjectDataCacheDeploymentType = "preview"
+	UpdateProjectDataCacheDeploymentTypeProdDeploymentUrlsAndAllPreviews UpdateProjectDataCacheDeploymentType = "prod_deployment_urls_and_all_previews"
+	UpdateProjectDataCacheDeploymentTypeProduction                       UpdateProjectDataCacheDeploymentType = "production"
 )
 
-func (e UpdateProjectDataCacheTrustedIpsDeploymentType) ToPointer() *UpdateProjectDataCacheTrustedIpsDeploymentType {
+func (e UpdateProjectDataCacheDeploymentType) ToPointer() *UpdateProjectDataCacheDeploymentType {
 	return &e
 }
-func (e *UpdateProjectDataCacheTrustedIpsDeploymentType) UnmarshalJSON(data []byte) error {
+func (e *UpdateProjectDataCacheDeploymentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4593,86 +4593,43 @@ func (e *UpdateProjectDataCacheTrustedIpsDeploymentType) UnmarshalJSON(data []by
 	case "prod_deployment_urls_and_all_previews":
 		fallthrough
 	case "production":
-		*e = UpdateProjectDataCacheTrustedIpsDeploymentType(v)
+		*e = UpdateProjectDataCacheDeploymentType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheTrustedIpsDeploymentType: %v", v)
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheDeploymentType: %v", v)
 	}
 }
 
-type TrustedIps2 struct {
-	DeploymentType UpdateProjectDataCacheTrustedIpsDeploymentType `json:"deploymentType"`
-}
-
-func (o *TrustedIps2) GetDeploymentType() UpdateProjectDataCacheTrustedIpsDeploymentType {
-	if o == nil {
-		return UpdateProjectDataCacheTrustedIpsDeploymentType("")
-	}
-	return o.DeploymentType
-}
-
-type TrustedIpsDeploymentType string
-
-const (
-	TrustedIpsDeploymentTypeAll                              TrustedIpsDeploymentType = "all"
-	TrustedIpsDeploymentTypePreview                          TrustedIpsDeploymentType = "preview"
-	TrustedIpsDeploymentTypeProdDeploymentUrlsAndAllPreviews TrustedIpsDeploymentType = "prod_deployment_urls_and_all_previews"
-	TrustedIpsDeploymentTypeProduction                       TrustedIpsDeploymentType = "production"
-)
-
-func (e TrustedIpsDeploymentType) ToPointer() *TrustedIpsDeploymentType {
-	return &e
-}
-func (e *TrustedIpsDeploymentType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "all":
-		fallthrough
-	case "preview":
-		fallthrough
-	case "prod_deployment_urls_and_all_previews":
-		fallthrough
-	case "production":
-		*e = TrustedIpsDeploymentType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for TrustedIpsDeploymentType: %v", v)
-	}
-}
-
-type UpdateProjectDataCacheTrustedIpsAddresses struct {
+type UpdateProjectDataCacheAddresses struct {
 	Value string  `json:"value"`
 	Note  *string `json:"note,omitempty"`
 }
 
-func (o *UpdateProjectDataCacheTrustedIpsAddresses) GetValue() string {
+func (o *UpdateProjectDataCacheAddresses) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-func (o *UpdateProjectDataCacheTrustedIpsAddresses) GetNote() *string {
+func (o *UpdateProjectDataCacheAddresses) GetNote() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Note
 }
 
-type UpdateProjectDataCacheTrustedIpsProtectionMode string
+type UpdateProjectDataCacheProtectionMode string
 
 const (
-	UpdateProjectDataCacheTrustedIpsProtectionModeAdditional UpdateProjectDataCacheTrustedIpsProtectionMode = "additional"
-	UpdateProjectDataCacheTrustedIpsProtectionModeExclusive  UpdateProjectDataCacheTrustedIpsProtectionMode = "exclusive"
+	UpdateProjectDataCacheProtectionModeAdditional UpdateProjectDataCacheProtectionMode = "additional"
+	UpdateProjectDataCacheProtectionModeExclusive  UpdateProjectDataCacheProtectionMode = "exclusive"
 )
 
-func (e UpdateProjectDataCacheTrustedIpsProtectionMode) ToPointer() *UpdateProjectDataCacheTrustedIpsProtectionMode {
+func (e UpdateProjectDataCacheProtectionMode) ToPointer() *UpdateProjectDataCacheProtectionMode {
 	return &e
 }
-func (e *UpdateProjectDataCacheTrustedIpsProtectionMode) UnmarshalJSON(data []byte) error {
+func (e *UpdateProjectDataCacheProtectionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -4681,101 +4638,38 @@ func (e *UpdateProjectDataCacheTrustedIpsProtectionMode) UnmarshalJSON(data []by
 	case "additional":
 		fallthrough
 	case "exclusive":
-		*e = UpdateProjectDataCacheTrustedIpsProtectionMode(v)
+		*e = UpdateProjectDataCacheProtectionMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UpdateProjectDataCacheTrustedIpsProtectionMode: %v", v)
+		return fmt.Errorf("invalid value for UpdateProjectDataCacheProtectionMode: %v", v)
 	}
 }
 
-type TrustedIps1 struct {
-	DeploymentType TrustedIpsDeploymentType                       `json:"deploymentType"`
-	Addresses      []UpdateProjectDataCacheTrustedIpsAddresses    `json:"addresses"`
-	ProtectionMode UpdateProjectDataCacheTrustedIpsProtectionMode `json:"protectionMode"`
+type UpdateProjectDataCacheTrustedIps struct {
+	DeploymentType UpdateProjectDataCacheDeploymentType `json:"deploymentType"`
+	Addresses      []UpdateProjectDataCacheAddresses    `json:"addresses"`
+	ProtectionMode UpdateProjectDataCacheProtectionMode `json:"protectionMode"`
 }
 
-func (o *TrustedIps1) GetDeploymentType() TrustedIpsDeploymentType {
+func (o *UpdateProjectDataCacheTrustedIps) GetDeploymentType() UpdateProjectDataCacheDeploymentType {
 	if o == nil {
-		return TrustedIpsDeploymentType("")
+		return UpdateProjectDataCacheDeploymentType("")
 	}
 	return o.DeploymentType
 }
 
-func (o *TrustedIps1) GetAddresses() []UpdateProjectDataCacheTrustedIpsAddresses {
+func (o *UpdateProjectDataCacheTrustedIps) GetAddresses() []UpdateProjectDataCacheAddresses {
 	if o == nil {
-		return []UpdateProjectDataCacheTrustedIpsAddresses{}
+		return []UpdateProjectDataCacheAddresses{}
 	}
 	return o.Addresses
 }
 
-func (o *TrustedIps1) GetProtectionMode() UpdateProjectDataCacheTrustedIpsProtectionMode {
+func (o *UpdateProjectDataCacheTrustedIps) GetProtectionMode() UpdateProjectDataCacheProtectionMode {
 	if o == nil {
-		return UpdateProjectDataCacheTrustedIpsProtectionMode("")
+		return UpdateProjectDataCacheProtectionMode("")
 	}
 	return o.ProtectionMode
-}
-
-type UpdateProjectDataCacheTrustedIpsType string
-
-const (
-	UpdateProjectDataCacheTrustedIpsTypeTrustedIps1 UpdateProjectDataCacheTrustedIpsType = "trustedIps_1"
-	UpdateProjectDataCacheTrustedIpsTypeTrustedIps2 UpdateProjectDataCacheTrustedIpsType = "trustedIps_2"
-)
-
-type UpdateProjectDataCacheTrustedIps struct {
-	TrustedIps1 *TrustedIps1
-	TrustedIps2 *TrustedIps2
-
-	Type UpdateProjectDataCacheTrustedIpsType
-}
-
-func CreateUpdateProjectDataCacheTrustedIpsTrustedIps1(trustedIps1 TrustedIps1) UpdateProjectDataCacheTrustedIps {
-	typ := UpdateProjectDataCacheTrustedIpsTypeTrustedIps1
-
-	return UpdateProjectDataCacheTrustedIps{
-		TrustedIps1: &trustedIps1,
-		Type:        typ,
-	}
-}
-
-func CreateUpdateProjectDataCacheTrustedIpsTrustedIps2(trustedIps2 TrustedIps2) UpdateProjectDataCacheTrustedIps {
-	typ := UpdateProjectDataCacheTrustedIpsTypeTrustedIps2
-
-	return UpdateProjectDataCacheTrustedIps{
-		TrustedIps2: &trustedIps2,
-		Type:        typ,
-	}
-}
-
-func (u *UpdateProjectDataCacheTrustedIps) UnmarshalJSON(data []byte) error {
-
-	var trustedIps2 TrustedIps2 = TrustedIps2{}
-	if err := utils.UnmarshalJSON(data, &trustedIps2, "", true, true); err == nil {
-		u.TrustedIps2 = &trustedIps2
-		u.Type = UpdateProjectDataCacheTrustedIpsTypeTrustedIps2
-		return nil
-	}
-
-	var trustedIps1 TrustedIps1 = TrustedIps1{}
-	if err := utils.UnmarshalJSON(data, &trustedIps1, "", true, true); err == nil {
-		u.TrustedIps1 = &trustedIps1
-		u.Type = UpdateProjectDataCacheTrustedIpsTypeTrustedIps1
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateProjectDataCacheTrustedIps", string(data))
-}
-
-func (u UpdateProjectDataCacheTrustedIps) MarshalJSON() ([]byte, error) {
-	if u.TrustedIps1 != nil {
-		return utils.MarshalJSON(u.TrustedIps1, "", true)
-	}
-
-	if u.TrustedIps2 != nil {
-		return utils.MarshalJSON(u.TrustedIps2, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type UpdateProjectDataCacheTrustedIps: all fields are null")
 }
 
 type GitComments struct {
@@ -5796,8 +5690,8 @@ type UpdateProjectDataCacheResponseBody struct {
 	RootDirectory                        *string                                   `json:"rootDirectory,omitempty"`
 	ServerlessFunctionRegion             *string                                   `json:"serverlessFunctionRegion,omitempty"`
 	ServerlessFunctionZeroConfigFailover *bool                                     `json:"serverlessFunctionZeroConfigFailover,omitempty"`
-	SkewProtectionBoundaryAt             *float64                                  `json:"skewProtectionBoundaryAt,omitempty"`
-	SkewProtectionMaxAge                 *float64                                  `json:"skewProtectionMaxAge,omitempty"`
+	SkewProtectionBoundaryAt             *int64                                    `json:"skewProtectionBoundaryAt,omitempty"`
+	SkewProtectionMaxAge                 *int64                                    `json:"skewProtectionMaxAge,omitempty"`
 	SkipGitConnectDuringLink             *bool                                     `json:"skipGitConnectDuringLink,omitempty"`
 	SourceFilesOutsideRootDirectory      *bool                                     `json:"sourceFilesOutsideRootDirectory,omitempty"`
 	SsoProtection                        *UpdateProjectDataCacheSsoProtection      `json:"ssoProtection,omitempty"`
@@ -6069,14 +5963,14 @@ func (o *UpdateProjectDataCacheResponseBody) GetServerlessFunctionZeroConfigFail
 	return o.ServerlessFunctionZeroConfigFailover
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetSkewProtectionBoundaryAt() *float64 {
+func (o *UpdateProjectDataCacheResponseBody) GetSkewProtectionBoundaryAt() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.SkewProtectionBoundaryAt
 }
 
-func (o *UpdateProjectDataCacheResponseBody) GetSkewProtectionMaxAge() *float64 {
+func (o *UpdateProjectDataCacheResponseBody) GetSkewProtectionMaxAge() *int64 {
 	if o == nil {
 		return nil
 	}

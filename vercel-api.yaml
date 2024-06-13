@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   title: Vercel API
   description:
@@ -2582,9 +2582,9 @@ paths:
                   serverlessFunctionZeroConfigFailover:
                     type: boolean
                   skewProtectionBoundaryAt:
-                    type: number
+                    type: integer
                   skewProtectionMaxAge:
-                    type: number
+                    type: integer
                   skipGitConnectDuringLink:
                     type: boolean
                   sourceFilesOutsideRootDirectory:
@@ -3342,47 +3342,35 @@ paths:
                     type: boolean
                   trustedIps:
                     nullable: true
-                    oneOf:
-                      - properties:
-                          deploymentType:
-                            type: string
-                            enum:
-                              - all
-                              - preview
-                              - prod_deployment_urls_and_all_previews
-                              - production
-                          addresses:
-                            items:
-                              properties:
-                                value:
-                                  type: string
-                                note:
-                                  type: string
-                              required:
-                                - value
-                              type: object
-                            type: array
-                          protectionMode:
-                            type: string
-                            enum:
-                              - additional
-                              - exclusive
-                        required:
-                          - deploymentType
-                          - addresses
-                          - protectionMode
-                        type: object
-                      - properties:
-                          deploymentType:
-                            type: string
-                            enum:
-                              - all
-                              - preview
-                              - prod_deployment_urls_and_all_previews
-                              - production
-                        required:
-                          - deploymentType
-                        type: object
+                    properties:
+                      deploymentType:
+                        type: string
+                        enum:
+                          - all
+                          - preview
+                          - prod_deployment_urls_and_all_previews
+                          - production
+                      addresses:
+                        items:
+                          properties:
+                            value:
+                              type: string
+                            note:
+                              type: string
+                          required:
+                            - value
+                          type: object
+                        type: array
+                      protectionMode:
+                        type: string
+                        enum:
+                          - additional
+                          - exclusive
+                    required:
+                      - deploymentType
+                      - addresses
+                      - protectionMode
+                    type: object
                   gitComments:
                     properties:
                       onPullRequest:
@@ -4511,7 +4499,6 @@ paths:
       security:
         - bearerToken: []
       summary: Get a deployment by ID or URL
-      x-speakeasy-entity-operation: Deployment#read
       tags:
         - deployments
       responses:
@@ -6014,7 +6001,6 @@ paths:
       security:
         - bearerToken: []
       summary: Create a new deployment
-      x-speakeasy-entity-operation: Deployment#create
       tags:
         - deployments
       responses:
@@ -8772,24 +8758,15 @@ paths:
             application/json:
               schema:
                 x-speakeasy-entity: DNS
-                oneOf:
-                  - properties:
-                      uid:
-                        type: string
-                      updated:
-                        type: number
-                    required:
-                      - uid
-                      - updated
-                    type: object
-                  - properties:
-                      uid:
-                        type: string
-                        description: The id of the newly created DNS record
-                        example: rec_V0fra8eEgQwEpFhYG2vTzC3K
-                    required:
-                      - uid
-                    type: object
+                type: object
+                properties:
+                  uid:
+                    type: string
+                    description: The id of the newly created DNS record
+                    x-speakeasy-name-override: id
+                    example: rec_V0fra8eEgQwEpFhYG2vTzC3K
+                required:
+                  - uid
         "400":
           description: |-
             One of the provided values in the request body is invalid.
@@ -8829,28 +8806,10 @@ paths:
         content:
           application/json:
             schema:
-              required:
-                - type
-              properties:
-                type:
-                  description:
-                    The type of record, it could be one of the valid DNS
-                    records.
-                  type: string
-                  enum:
-                    - A
-                    - AAAA
-                    - ALIAS
-                    - CAA
-                    - CNAME
-                    - HTTPS
-                    - MX
-                    - SRV
-                    - TXT
-                    - NS
-              anyOf:
+              oneOf:
                 - type: object
                   additionalProperties: false
+                  title: A
                   required:
                     - type
                     - value
@@ -8867,6 +8826,7 @@ paths:
                       type: string
                       enum:
                         - A
+                      const: A
                     ttl:
                       description:
                         The TTL value. Must be a number between 60 and 2147483647.
@@ -8888,6 +8848,7 @@ paths:
                       example: used to verify ownership of domain
                       maxLength: 500
                 - type: object
+                  title: AAAA
                   additionalProperties: false
                   required:
                     - type
@@ -8905,6 +8866,7 @@ paths:
                       type: string
                       enum:
                         - AAAA
+                      const: AAAA
                     ttl:
                       description:
                         The TTL value. Must be a number between 60 and 2147483647.
@@ -8931,6 +8893,7 @@ paths:
                     - type
                     - value
                     - name
+                  title: ALIAS
                   properties:
                     name:
                       description:
@@ -8941,6 +8904,7 @@ paths:
                     type:
                       description: Must be of type `ALIAS`.
                       type: string
+                      const: ALIAS
                       enum:
                         - ALIAS
                     ttl:
@@ -8965,6 +8929,7 @@ paths:
                       example: used to verify ownership of domain
                       maxLength: 500
                 - type: object
+                  title: CAA
                   additionalProperties: false
                   required:
                     - type
@@ -8982,6 +8947,7 @@ paths:
                       type: string
                       enum:
                         - CAA
+                      const: CAA
                     ttl:
                       description:
                         The TTL value. Must be a number between 60 and 2147483647.
@@ -9005,6 +8971,7 @@ paths:
                       maxLength: 500
                 - type: object
                   additionalProperties: false
+                  title: CNAME
                   required:
                     - type
                     - name
@@ -9020,6 +8987,7 @@ paths:
                       type: string
                       enum:
                         - CNAME
+                      const: CNAME
                     ttl:
                       description:
                         The TTL value. Must be a number between 60 and 2147483647.
@@ -9041,6 +9009,7 @@ paths:
                       maxLength: 500
                 - type: object
                   additionalProperties: false
+                  title: MX
                   required:
                     - type
                     - value
@@ -9058,6 +9027,7 @@ paths:
                       type: string
                       enum:
                         - MX
+                      const: MX
                     ttl:
                       description:
                         The TTL value. Must be a number between 60 and 2147483647.
@@ -9085,6 +9055,7 @@ paths:
                       example: used to verify ownership of domain
                       maxLength: 500
                 - type: object
+                  title: SRV
                   required:
                     - type
                     - name
@@ -9100,6 +9071,7 @@ paths:
                       type: string
                       enum:
                         - SRV
+                      const: SRV
                     ttl:
                       description:
                         The TTL value. Must be a number between 60 and 2147483647.
@@ -9147,6 +9119,7 @@ paths:
                       maxLength: 500
                 - type: object
                   additionalProperties: false
+                  title: TXT
                   required:
                     - type
                     - value
@@ -9162,6 +9135,7 @@ paths:
                       type: string
                       enum:
                         - TXT
+                      const: TXT
                     ttl:
                       description:
                         The TTL value. Must be a number between 60 and 2147483647.
@@ -9183,6 +9157,7 @@ paths:
                       maxLength: 500
                 - type: object
                   additionalProperties: false
+                  title: NS
                   required:
                     - type
                     - name
@@ -9196,6 +9171,7 @@ paths:
                       type: string
                       enum:
                         - NS
+                      const: NS
                     ttl:
                       description:
                         The TTL value. Must be a number between 60 and 2147483647.
@@ -9217,6 +9193,7 @@ paths:
                       maxLength: 500
                 - type: object
                   additionalProperties: false
+                  title: HTTPS
                   required:
                     - type
                     - name
@@ -9232,6 +9209,7 @@ paths:
                       type: string
                       enum:
                         - HTTPS
+                      const: HTTPS
                     ttl:
                       description:
                         The TTL value. Must be a number between 60 and 2147483647.
@@ -9348,6 +9326,7 @@ paths:
           description: The id of the DNS record
           in: path
           required: true
+          x-speakeasy-match: id
           schema:
             description: The id of the DNS record
             example: rec_2qn7pzrx89yxy34vezpd31y9
@@ -9500,6 +9479,7 @@ paths:
         - name: recordId
           in: path
           required: true
+          x-speakeasy-match: id
           schema:
             type: string
             example: rec_V0fra8eEgQwEpFhYG2vTzC3K
@@ -10651,7 +10631,7 @@ paths:
       security:
         - bearerToken: []
       summary: Create an Edge Config
-      x-speakeasy-entity-operation: EdgeConfig#create
+#      x-speakeasy-entity-operation: EdgeConfig#create
       tags:
         - edge-config
       responses:
@@ -11200,7 +11180,7 @@ paths:
       security:
         - bearerToken: []
       summary: Update Edge Config schema
-      x-speakeasy-entity-operation: EdgeConfigSchema#create
+#      x-speakeasy-entity-operation: EdgeConfigSchema#create
       tags:
         - edge-config
       responses:
@@ -14038,6 +14018,7 @@ paths:
                 x-speakeasy-entity: Member
                 properties:
                   id:
+                    x-speakeasy-name-override: project_id
                     type: string
                 required:
                   - id
@@ -14058,6 +14039,7 @@ paths:
           description: The ID or name of the Project.
           in: path
           required: true
+          x-speakeasy-name-override: project_id
           schema:
             type: string
             description: The ID or name of the Project.
@@ -14080,16 +14062,10 @@ paths:
               additionalProperties: false
               required:
                 - role
-              oneOf:
-                - required:
-                    - uid
-                - required:
-                    - username
-                - required:
-                    - email
               properties:
                 uid:
                   type: string
+                  x-speakeasy-xor-with: [username, email]
                   maxLength: 256
                   example: ndlgr43fadlPyCtREAqxxdyFK
                   description:
@@ -14097,6 +14073,7 @@ paths:
                     project.
                 username:
                   type: string
+                  x-speakeasy-xor-with: [uid, email]
                   maxLength: 256
                   example: example
                   description:
@@ -14105,6 +14082,7 @@ paths:
                 email:
                   type: string
                   format: email
+                  x-speakeasy-xor-with: [uid, username]
                   example: entity@example.com
                   description:
                     The email of the team member that should be added to
@@ -14137,6 +14115,7 @@ paths:
                 x-speakeasy-entity: Member
                 properties:
                   id:
+                    x-speakeasy-name-override: project_id
                     type: string
                 required:
                   - id
@@ -14152,6 +14131,7 @@ paths:
           description: The ID or name of the Project.
           in: path
           required: true
+          x-speakeasy-name-override: project_id
           schema:
             type: string
             description: The ID or name of the Project.
@@ -14337,19 +14317,13 @@ paths:
                           items:
                             properties:
                               target:
-                                oneOf:
-                                  - items:
-                                      type: string
-                                      enum:
-                                        - production
-                                        - preview
-                                        - development
-                                    type: array
-                                  - type: string
-                                    enum:
-                                      - production
-                                      - preview
-                                      - development
+                                items:
+                                  type: string
+                                  enum:
+                                    - production
+                                    - preview
+                                    - development
+                                type: array
                               type:
                                 type: string
                                 enum:
@@ -14990,9 +14964,9 @@ paths:
                         serverlessFunctionZeroConfigFailover:
                           type: boolean
                         skewProtectionBoundaryAt:
-                          type: number
+                          type: integer
                         skewProtectionMaxAge:
-                          type: number
+                          type: integer
                         skipGitConnectDuringLink:
                           type: boolean
                         sourceFilesOutsideRootDirectory:
@@ -15750,47 +15724,35 @@ paths:
                           type: boolean
                         trustedIps:
                           nullable: true
-                          oneOf:
-                            - properties:
-                                deploymentType:
-                                  type: string
-                                  enum:
-                                    - all
-                                    - preview
-                                    - prod_deployment_urls_and_all_previews
-                                    - production
-                                addresses:
-                                  items:
-                                    properties:
-                                      value:
-                                        type: string
-                                      note:
-                                        type: string
-                                    required:
-                                      - value
-                                    type: object
-                                  type: array
-                                protectionMode:
-                                  type: string
-                                  enum:
-                                    - additional
-                                    - exclusive
-                              required:
-                                - deploymentType
-                                - addresses
-                                - protectionMode
-                              type: object
-                            - properties:
-                                deploymentType:
-                                  type: string
-                                  enum:
-                                    - all
-                                    - preview
-                                    - prod_deployment_urls_and_all_previews
-                                    - production
-                              required:
-                                - deploymentType
-                              type: object
+                          properties:
+                            deploymentType:
+                              type: string
+                              enum:
+                                - all
+                                - preview
+                                - prod_deployment_urls_and_all_previews
+                                - production
+                            addresses:
+                              items:
+                                properties:
+                                  value:
+                                    type: string
+                                  note:
+                                    type: string
+                                required:
+                                  - value
+                                type: object
+                              type: array
+                            protectionMode:
+                              type: string
+                              enum:
+                                - additional
+                                - exclusive
+                          required:
+                            - deploymentType
+                            - addresses
+                            - protectionMode
+                          type: object
                         gitComments:
                           properties:
                             onPullRequest:
@@ -15842,6 +15804,7 @@ paths:
                             firewallConfigVersion:
                               type: number
                             firewallRoutes:
+                              x-speakeasy-terraform-ignore: true
                               items:
                                 properties:
                                   src:
@@ -16310,19 +16273,13 @@ paths:
                     items:
                       properties:
                         target:
-                          oneOf:
-                            - items:
-                                type: string
-                                enum:
-                                  - production
-                                  - preview
-                                  - development
-                              type: array
-                            - type: string
-                              enum:
-                                - production
-                                - preview
-                                - development
+                          items:
+                            type: string
+                            enum:
+                              - production
+                              - preview
+                              - development
+                          type: array
                         type:
                           type: string
                           enum:
@@ -16963,9 +16920,9 @@ paths:
                   serverlessFunctionZeroConfigFailover:
                     type: boolean
                   skewProtectionBoundaryAt:
-                    type: number
+                    type: integer
                   skewProtectionMaxAge:
-                    type: number
+                    type: integer
                   skipGitConnectDuringLink:
                     type: boolean
                   sourceFilesOutsideRootDirectory:
@@ -17723,47 +17680,35 @@ paths:
                     type: boolean
                   trustedIps:
                     nullable: true
-                    oneOf:
-                      - properties:
-                          deploymentType:
-                            type: string
-                            enum:
-                              - all
-                              - preview
-                              - prod_deployment_urls_and_all_previews
-                              - production
-                          addresses:
-                            items:
-                              properties:
-                                value:
-                                  type: string
-                                note:
-                                  type: string
-                              required:
-                                - value
-                              type: object
-                            type: array
-                          protectionMode:
-                            type: string
-                            enum:
-                              - additional
-                              - exclusive
-                        required:
-                          - deploymentType
-                          - addresses
-                          - protectionMode
-                        type: object
-                      - properties:
-                          deploymentType:
-                            type: string
-                            enum:
-                              - all
-                              - preview
-                              - prod_deployment_urls_and_all_previews
-                              - production
-                        required:
-                          - deploymentType
-                        type: object
+                    properties:
+                      deploymentType:
+                        type: string
+                        enum:
+                          - all
+                          - preview
+                          - prod_deployment_urls_and_all_previews
+                          - production
+                      addresses:
+                        items:
+                          properties:
+                            value:
+                              type: string
+                            note:
+                              type: string
+                          required:
+                            - value
+                          type: object
+                        type: array
+                      protectionMode:
+                        type: string
+                        enum:
+                          - additional
+                          - exclusive
+                    required:
+                      - deploymentType
+                      - addresses
+                      - protectionMode
+                    type: object
                   gitComments:
                     properties:
                       onPullRequest:
@@ -17811,6 +17756,7 @@ paths:
                       firewallConfigVersion:
                         type: number
                       firewallRoutes:
+                        x-speakeasy-terraform-ignore: true
                         items:
                           properties:
                             src:
@@ -18081,17 +18027,12 @@ paths:
                         description:
                           Deployment Target or Targets in which the ENV
                           variable will be used
-                        oneOf:
-                          - enum:
-                              - production
-                              - preview
-                              - development
-                          - items:
-                              enum:
-                                - production
-                                - preview
-                                - development
-                            type: array
+                        items:
+                          enum:
+                            - production
+                            - preview
+                            - development
+                        type: array
                       gitBranch:
                         description:
                           If defined, the git branch of the environment
@@ -18396,19 +18337,13 @@ paths:
                     items:
                       properties:
                         target:
-                          oneOf:
-                            - items:
-                                type: string
-                                enum:
-                                  - production
-                                  - preview
-                                  - development
-                              type: array
-                            - type: string
-                              enum:
-                                - production
-                                - preview
-                                - development
+                          items:
+                            type: string
+                            enum:
+                              - production
+                              - preview
+                              - development
+                          type: array
                         type:
                           type: string
                           enum:
@@ -19049,9 +18984,9 @@ paths:
                   serverlessFunctionZeroConfigFailover:
                     type: boolean
                   skewProtectionBoundaryAt:
-                    type: number
+                    type: integer
                   skewProtectionMaxAge:
-                    type: number
+                    type: integer
                   skipGitConnectDuringLink:
                     type: boolean
                   sourceFilesOutsideRootDirectory:
@@ -19809,47 +19744,35 @@ paths:
                     type: boolean
                   trustedIps:
                     nullable: true
-                    oneOf:
-                      - properties:
-                          deploymentType:
-                            type: string
-                            enum:
-                              - all
-                              - preview
-                              - prod_deployment_urls_and_all_previews
-                              - production
-                          addresses:
-                            items:
-                              properties:
-                                value:
-                                  type: string
-                                note:
-                                  type: string
-                              required:
-                                - value
-                              type: object
-                            type: array
-                          protectionMode:
-                            type: string
-                            enum:
-                              - additional
-                              - exclusive
-                        required:
-                          - deploymentType
-                          - addresses
-                          - protectionMode
-                        type: object
-                      - properties:
-                          deploymentType:
-                            type: string
-                            enum:
-                              - all
-                              - preview
-                              - prod_deployment_urls_and_all_previews
-                              - production
-                        required:
-                          - deploymentType
-                        type: object
+                    properties:
+                      deploymentType:
+                        type: string
+                        enum:
+                          - all
+                          - preview
+                          - prod_deployment_urls_and_all_previews
+                          - production
+                      addresses:
+                        items:
+                          properties:
+                            value:
+                              type: string
+                            note:
+                              type: string
+                          required:
+                            - value
+                          type: object
+                        type: array
+                      protectionMode:
+                        type: string
+                        enum:
+                          - additional
+                          - exclusive
+                    required:
+                      - deploymentType
+                      - addresses
+                      - protectionMode
+                    type: object
                   gitComments:
                     properties:
                       onPullRequest:
@@ -19897,6 +19820,7 @@ paths:
                       firewallConfigVersion:
                         type: number
                       firewallRoutes:
+                        x-speakeasy-terraform-ignore: true
                         items:
                           properties:
                             src:
@@ -20116,11 +20040,10 @@ paths:
           description: The unique project identifier or the project name
           in: path
           required: true
+          x-speakeasy-match: id
           schema:
             description: The unique project identifier or the project name
-            oneOf:
-              - type: string
-              - type: boolean
+            type: string
         - description: The Team identifier to perform the request on behalf of.
           in: query
           name: teamId
@@ -20138,6 +20061,7 @@ paths:
       security:
         - bearerToken: []
       summary: Update an existing project
+      x-speakeasy-entity-operation: [Project#create#2, Project#update]
       tags:
         - projects
       responses:
@@ -20146,6 +20070,7 @@ paths:
           content:
             application/json:
               schema:
+                x-speakeasy-entity: Project
                 properties:
                   accountId:
                     type: string
@@ -20285,19 +20210,13 @@ paths:
                     items:
                       properties:
                         target:
-                          oneOf:
-                            - items:
-                                type: string
-                                enum:
-                                  - production
-                                  - preview
-                                  - development
-                              type: array
-                            - type: string
-                              enum:
-                                - production
-                                - preview
-                                - development
+                          items:
+                            type: string
+                            enum:
+                              - production
+                              - preview
+                              - development
+                          type: array
                         type:
                           type: string
                           enum:
@@ -20938,9 +20857,9 @@ paths:
                   serverlessFunctionZeroConfigFailover:
                     type: boolean
                   skewProtectionBoundaryAt:
-                    type: number
+                    type: integer
                   skewProtectionMaxAge:
-                    type: number
+                    type: integer
                   skipGitConnectDuringLink:
                     type: boolean
                   sourceFilesOutsideRootDirectory:
@@ -21698,47 +21617,35 @@ paths:
                     type: boolean
                   trustedIps:
                     nullable: true
-                    oneOf:
-                      - properties:
-                          deploymentType:
-                            type: string
-                            enum:
-                              - all
-                              - preview
-                              - prod_deployment_urls_and_all_previews
-                              - production
-                          addresses:
-                            items:
-                              properties:
-                                value:
-                                  type: string
-                                note:
-                                  type: string
-                              required:
-                                - value
-                              type: object
-                            type: array
-                          protectionMode:
-                            type: string
-                            enum:
-                              - exclusive
-                              - additional
-                        required:
-                          - deploymentType
-                          - addresses
-                          - protectionMode
-                        type: object
-                      - properties:
-                          deploymentType:
-                            type: string
-                            enum:
-                              - all
-                              - preview
-                              - prod_deployment_urls_and_all_previews
-                              - production
-                        required:
-                          - deploymentType
-                        type: object
+                    properties:
+                      deploymentType:
+                        type: string
+                        enum:
+                          - all
+                          - preview
+                          - prod_deployment_urls_and_all_previews
+                          - production
+                      addresses:
+                        items:
+                          properties:
+                            value:
+                              type: string
+                            note:
+                              type: string
+                          required:
+                            - value
+                          type: object
+                        type: array
+                      protectionMode:
+                        type: string
+                        enum:
+                          - exclusive
+                          - additional
+                    required:
+                      - deploymentType
+                      - addresses
+                      - protectionMode
+                    type: object
                   gitComments:
                     properties:
                       onPullRequest:
@@ -21786,6 +21693,7 @@ paths:
                       firewallConfigVersion:
                         type: number
                       firewallRoutes:
+                        x-speakeasy-terraform-ignore: true
                         items:
                           properties:
                             src:
@@ -22018,6 +21926,7 @@ paths:
           description: The unique project identifier or the project name
           in: path
           required: true
+          x-speakeasy-match: id
           schema:
             example: prj_12HKQaOmR5t5Uy6vdcQsNIiZgHGB
             description: The unique project identifier or the project name
@@ -22037,6 +21946,7 @@ paths:
           application/json:
             schema:
               additionalProperties: false
+              x-speakeasy-entity: Project
               properties:
                 autoExposeSystemEnvs:
                   type: boolean
@@ -22359,6 +22269,7 @@ paths:
         - name: idOrName
           description: The unique project identifier or the project name
           in: path
+          x-speakeasy-match: id
           required: true
           schema:
             example: prj_12HKQaOmR5t5Uy6vdcQsNIiZgHGB
@@ -23247,19 +23158,13 @@ paths:
                 oneOf:
                   - properties:
                       target:
-                        oneOf:
-                          - items:
-                              type: string
-                              enum:
-                                - production
-                                - preview
-                                - development
-                            type: array
-                          - type: string
-                            enum:
-                              - production
-                              - preview
-                              - development
+                        items:
+                          type: string
+                          enum:
+                            - production
+                            - preview
+                            - development
+                        type: array
                       type:
                         type: string
                         enum:
@@ -23487,19 +23392,13 @@ paths:
                         items:
                           properties:
                             target:
-                              oneOf:
-                                - items:
-                                    type: string
-                                    enum:
-                                      - production
-                                      - preview
-                                      - development
-                                  type: array
-                                - type: string
-                                  enum:
-                                    - production
-                                    - preview
-                                    - development
+                              items:
+                                type: string
+                                enum:
+                                  - production
+                                  - preview
+                                  - development
+                              type: array
                             type:
                               type: string
                               enum:
@@ -23734,19 +23633,13 @@ paths:
                         items:
                           properties:
                             target:
-                              oneOf:
-                                - items:
-                                    type: string
-                                    enum:
-                                      - production
-                                      - preview
-                                      - development
-                                  type: array
-                                - type: string
-                                  enum:
-                                    - production
-                                    - preview
-                                    - development
+                              items:
+                                type: string
+                                enum:
+                                  - production
+                                  - preview
+                                  - development
+                              type: array
                             type:
                               type: string
                               enum:
@@ -24063,19 +23956,13 @@ paths:
                       decrypted:
                         type: boolean
                       target:
-                        oneOf:
-                          - items:
-                              type: string
-                              enum:
-                                - production
-                                - preview
-                                - development
-                            type: array
-                          - type: string
-                            enum:
-                              - production
-                              - preview
-                              - development
+                        items:
+                          type: string
+                          enum:
+                            - production
+                            - preview
+                            - development
+                        type: array
                       type:
                         type: string
                         enum:
@@ -24297,19 +24184,13 @@ paths:
                     type: object
                   - properties:
                       target:
-                        oneOf:
-                          - items:
-                              type: string
-                              enum:
-                                - production
-                                - preview
-                                - development
-                            type: array
-                          - type: string
-                            enum:
-                              - production
-                              - preview
-                              - development
+                        items:
+                          type: string
+                          enum:
+                            - production
+                            - preview
+                            - development
+                        type: array
                       type:
                         type: string
                         enum:
@@ -24594,19 +24475,13 @@ paths:
                     oneOf:
                       - properties:
                           target:
-                            oneOf:
-                              - items:
-                                  type: string
-                                  enum:
-                                    - production
-                                    - preview
-                                    - development
-                                type: array
-                              - type: string
-                                enum:
-                                  - production
-                                  - preview
-                                  - development
+                            items:
+                              type: string
+                              enum:
+                                - production
+                                - preview
+                                - development
+                            type: array
                           type:
                             type: string
                             enum:
@@ -27692,6 +27567,7 @@ paths:
             The ID of the team to set as the new default team for the Northstar
             user.
           in: query
+          x-speakeasy-ignore: true
           required: false
           schema:
             type: string
@@ -30267,6 +30143,7 @@ paths:
             schema:
               type: object
               additionalProperties: false
+              x-speakeasy-ignore: true
               properties:
                 reasons:
                   type: array
@@ -33440,7 +33317,6 @@ paths:
         can obtain the ID, for example, by listing all deployments.
       operationId: deleteDeployment
       x-speakeasy-name-override: delete
-      x-speakeasy-entity-operation: Deployment#delete
       security:
         - bearerToken: []
       summary: Delete a Deployment

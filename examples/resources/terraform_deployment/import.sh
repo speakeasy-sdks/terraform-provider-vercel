@@ -1,1 +1,0 @@
-terraform import terraform_deployment.my_terraform_deployment "dpl_89qyp1cskzkLrVicDaZoDbjyHuDJ"

@@ -12,11 +12,11 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
 terraform:
-  version: 0.0.3
+  version: 0.5.3
   additionalDataSources: []
   additionalDependencies: {}
   additionalResources: []
   allowUnknownFieldsInWeakUnions: false
   author: vercel
   environmentVariables: []
-  packageName: terraform
+  packageName: vercel

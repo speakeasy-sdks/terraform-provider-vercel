@@ -5,9 +5,9 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type EnvironmentVariables struct {
-	GitBranch types.String        `tfsdk:"git_branch"`
-	Key       types.String        `tfsdk:"key"`
-	Target    CreateProjectTarget `tfsdk:"target"`
-	Type      types.String        `tfsdk:"type"`
-	Value     types.String        `tfsdk:"value"`
+	GitBranch types.String   `tfsdk:"git_branch"`
+	Key       types.String   `tfsdk:"key"`
+	Target    []types.String `tfsdk:"target"`
+	Type      types.String   `tfsdk:"type"`
+	Value     types.String   `tfsdk:"value"`
 }

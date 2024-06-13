@@ -4,8 +4,8 @@ package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	tfTypes "github.com/vercel/terraform-provider-terraform/internal/provider/types"
-	"github.com/vercel/terraform-provider-terraform/internal/sdk/models/operations"
+	tfTypes "github.com/vercel/terraform-provider-vercel/internal/provider/types"
+	"github.com/vercel/terraform-provider-vercel/internal/sdk/models/operations"
 	"math/big"
 )
 
@@ -23,7 +23,7 @@ func (r *EdgeConfigDataSourceModel) RefreshFromOperationsGetEdgeConfigResponseBo
 		if resp.Schema == nil {
 			r.Schema = nil
 		} else {
-			r.Schema = &tfTypes.GetEdgeConfigSchema{}
+			r.Schema = &tfTypes.GetProjectLastRollbackTarget{}
 		}
 		r.SizeInBytes = types.NumberValue(big.NewFloat(float64(resp.SizeInBytes)))
 		r.Slug = types.StringPointerValue(resp.Slug)
