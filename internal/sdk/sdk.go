@@ -167,8 +167,8 @@ func New(opts ...SDKOption) *SDK {
 			Language:          "go",
 			OpenAPIDocVersion: "0.0.1",
 			SDKVersion:        "0.0.1",
-			GenVersion:        "internal",
-			UserAgent:         "speakeasy-sdk/go 0.0.1 internal 0.0.1 github.com/vercel/terraform-provider-vercel/internal/sdk",
+			GenVersion:        "2.349.6",
+			UserAgent:         "speakeasy-sdk/go 0.0.1 2.349.6 0.0.1 github.com/vercel/terraform-provider-vercel/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}

@@ -2,7 +2,7 @@ module github.com/vercel/terraform-provider-vercel
 
 go 1.21
 
-toolchain go1.22.4
+toolchain go1.21.10
 
 require (
 	github.com/cenkalti/backoff/v4 v4.2.0

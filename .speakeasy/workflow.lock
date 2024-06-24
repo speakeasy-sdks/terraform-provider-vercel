@@ -1,4 +1,4 @@
-speakeasyVersion: 1.300.1
+speakeasyVersion: 1.314.2
 sources:
     my-source:
         sourceNamespace: my-source
@@ -6,23 +6,30 @@ sources:
         sourceBlobDigest: sha256:de923806cc8f4b060a593af74d943dadf02909438f071a747bf5540ade3503cf
         tags:
             - latest
+    vercel-api:
+        sourceNamespace: vercel-api
+        sourceRevisionDigest: sha256:79869a37ee776ec4a5e57a090a68c8bff2672a322c92b0c4779b5aff098478bf
+        sourceBlobDigest: sha256:69499949ad04fc395c0a5d7402d6c725e8995a6d51aac40302672b1bd15e62f5
+        tags:
+            - latest
+            - main
 targets:
     Vercel-Terraform:
-        source: my-source
-        sourceNamespace: my-source
-        sourceRevisionDigest: sha256:efe0fd51ba62494f8cde03e36912d70bb6cd0f38bbe1728ad2f9dabb59558cda
-        sourceBlobDigest: sha256:de923806cc8f4b060a593af74d943dadf02909438f071a747bf5540ade3503cf
-        outLocation: C:\Users\Luke\Documents\GitHub\terraform-provider-vercel-og
+        source: vercel-api
+        sourceNamespace: vercel-api
+        sourceRevisionDigest: sha256:79869a37ee776ec4a5e57a090a68c8bff2672a322c92b0c4779b5aff098478bf
+        sourceBlobDigest: sha256:69499949ad04fc395c0a5d7402d6c725e8995a6d51aac40302672b1bd15e62f5
+        outLocation: /github/workspace/repo
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
     sources:
-        my-source:
+        vercel-api:
             inputs:
                 - location: ./vercel-api.yaml
             registry:
-                location: registry.speakeasyapi.dev/lukehagar/lukehagar/my-source
+                location: registry.speakeasyapi.dev/vercel/vercel/vercel-api
     targets:
         Vercel-Terraform:
             target: terraform
-            source: my-source
+            source: vercel-api
